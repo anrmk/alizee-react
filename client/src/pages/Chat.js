@@ -15,7 +15,6 @@ import {
 
 const Chat = () => {
   const [userId, setUserId] = useState("9a5a334d-424f-46d6-8e78-0e913fda95d4");
-  const SERVER_API_URL = 'https://localhost:44341/api';
 
   const [newChat, setNewChat] = useState(false);
   const [rooms, setRooms] = useState([]);
@@ -23,15 +22,7 @@ const Chat = () => {
 
   const {roomId} = useParams();
   const [roomName, setRoomName] = useState("");
-
   const [hubConnection, setHubConnection] = useState(null);
-
-  useEffect(() => {
-    console.log(process.env)
-    // if(roomId) {
-    //   setRoomName("")
-    // }
-  }, [])
 
  /* useEffect(() => {
     if(hubConnection) {
@@ -59,7 +50,7 @@ const Chat = () => {
     if (newChat) {
      
     } else {
-      axios.get(`${SERVER_API_URL}/chat/getrooms`, {params: {userId: '13289f92-6ca2-4416-9236-f6bc50dcb854'}})
+      axios.get(`${process.env.REACT_APP_SERVER_API_URL}/chat/getrooms`, {params: {userId: '13289f92-6ca2-4416-9236-f6bc50dcb854'}})
       .then((res) => {
         setRooms(res.data);
       });
@@ -67,7 +58,7 @@ const Chat = () => {
  }, [newChat]);
 
   const getListOfFollowers = (e) => {
-    axios.get(`${SERVER_API_URL}/follower/getfollowers`, {params : {userId: '13289f92-6ca2-4416-9236-f6bc50dcb854'}}).then((res) => {
+    axios.get(`${process.env.REACT_APP_SERVER_API_URL}/follower/getfollowers`, {params : {userId: '13289f92-6ca2-4416-9236-f6bc50dcb854'}}).then((res) => {
       setRooms(res.data);
     });
   }

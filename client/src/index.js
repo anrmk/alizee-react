@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './assets/scss/index.scss';
 
+import "jquery/dist/jquery.slim";
+import "bootstrap/dist/js/bootstrap.bundle";
+
 import { StateProvider } from "./components/StateProvider";
 import reducer, { initialState } from "./components/reducer";
 

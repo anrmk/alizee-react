@@ -30,8 +30,8 @@ body {
   overflow: hidden;
 
   .avatar__icon {
-    width: 48px;
-    height: 48px;
+    width: 36px;
+    height: 36px;
     margin-right: .5rem;
   }
   .avatar__header {
@@ -39,6 +39,7 @@ body {
     display: inline-block;
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    font-size: 13px;
   }
 }
 
