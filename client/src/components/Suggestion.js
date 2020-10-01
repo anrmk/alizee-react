@@ -3,8 +3,6 @@ import Badge from '@material-ui/core/Badge';
 import { Avatar, IconButton } from "@material-ui/core";
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
-import db from "../firebase";
-
 const StyledBadge = withStyles((theme) => ({
   badge: {
     backgroundColor: '#44b700',
@@ -38,11 +36,7 @@ function Suggestion() {
   const [suggestions, setSuggestions] = useState([]);
 
    useEffect(() => {
-     db.collection("account")
-     .limit(10)
-     .onSnapshot((datas) => {
-       setSuggestions(datas.docs.map((d) => ({ id: d.id, data: d.data() })));
-     });
+
    }, []);
 
   return (

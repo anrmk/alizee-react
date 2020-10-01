@@ -4,11 +4,17 @@ import axios from "axios";
 
 import Sidebar from "../domain/Chat/Sidebar";
 import Room from "../domain/Chat/Room";
+import { USER_TOKEN } from '../constants/user';
 
 import * as signalR from "@microsoft/signalr";
 import { red } from "@material-ui/core/colors";
 
 const Chat = () => {
+  const token = localStorage.getItem(USER_TOKEN);
+  const options = {
+    headers: {'Authorization': token}
+  };
+
   const [userId, setUserId] = useState("13289f92-6ca2-4416-9236-f6bc50dcb854");
   const [modalShow, setModalShow] = useState(false);
   const [followers, setFollowers] = useState([]);
@@ -48,13 +54,14 @@ const Chat = () => {
 
   useEffect(() => {
     if(modalShow) {
-      axios.get(`${process.env.REACT_APP_SERVER_API_URL}/follower/getfollowers`, { params: { userId }})
+      axios.get(`${process.env.REACT_APP_SERVER_API_URL}/follower/getfollowers`, { params: { userId }, options})
         .then((res) => {
           setFollowers(res.data);
           setFilteredFollowers(res.data);
         });
       } else {
-      axios.get(`${process.env.REACT_APP_SERVER_API_URL}/chat/getrooms`, { params: { userId } })
+      axios
+        .get(`${process.env.REACT_APP_SERVER_API_URL}/chat/getrooms`, { params: { userId }, options })
         .then((res) => {
           setRooms(res.data);
         });
@@ -70,7 +77,7 @@ const Chat = () => {
   };
 
   const handleGetRoom = (roomId, name) => {
-    axios.get(`${process.env.REACT_APP_SERVER_API_URL}/chat/GetRoom`, {params: { id: roomId }})
+    axios.get(`${process.env.REACT_APP_SERVER_API_URL}/chat/GetRoom`, {params: { id: roomId }, options})
       .then((res) => {
         setRoom(res.data);
         console.log(res.data.messages)

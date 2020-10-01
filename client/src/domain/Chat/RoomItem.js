@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 
-import { Avatar, IconButton } from "@material-ui/core";
+import { Avatar } from "@material-ui/core";
 
 function RoomItem(props) {
   return (

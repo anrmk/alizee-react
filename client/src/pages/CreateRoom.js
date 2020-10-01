@@ -7,11 +7,10 @@ function CreateRoom() {
   const history = useHistory();
   const userVideo = useRef(null);
   const [alert, setAlert] = useState("");
-  const [roomId, setRoomId] = useState(uuid());
+  const [roomId, setRoomId] = useState();
 
   useEffect(() => {
-    // console.log("Room Id: " + roomId);
-    //setRoomId();
+    setRoomId(uuid());
 
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: true })

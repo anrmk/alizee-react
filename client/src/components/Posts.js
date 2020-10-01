@@ -5,17 +5,12 @@ import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineO
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import MonetizationOnOutlinedIcon from '@material-ui/icons/MonetizationOnOutlined';
 
-import db from "../firebase";
-
 import "./../components/Posts.scss"
 
 function Posts() {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    db.collection("posts")
-    .onSnapshot((datas) => {
-      setPosts(datas.docs.map((d) => ({ id: d.id, data: d.data() })));
-    });
+
   }, []);
 
   return (

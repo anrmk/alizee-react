@@ -1,14 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import axios from "axios";
-
+import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 
-import { IconButton } from "@material-ui/core";
 import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 import SidebarSearch from "./SidebarSearch";
-
 import RoomItem from "./RoomItem";
 
 function Sidebar(props) {
