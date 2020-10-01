@@ -12,41 +12,28 @@ import SidebarSearch from "./SidebarSearch";
 import RoomItem from "./RoomItem";
 
 function Sidebar(props) {
-  const userId = "13289f92-6ca2-4416-9236-f6bc50dcb854"; //depricated
-  const [followers, setFollowers] = useState([]);
-  const [filteredFollowers, setFilteredFollowers] = useState([]);
-  const [newRoom, setNewRoom] = useState(false);
-
-  const createNewRoom = (followerId) => {
-    console.log(followerId)
-     axios.post(`${process.env.REACT_APP_SERVER_API_URL}/chat/createRoom`, {id: followerId}).then((res) => {
-       console.log(res.data);
-     }).catch((e) => {
-       console.log(e)
-     });
+  const handleModalToggle = () => {
+    props.onModalToggle && props.onModalToggle();
   }
 
-  const filterRoom = (e) => {
-    setFilteredFollowers(followers.filter(item => item.followerName.toLowerCase().includes(e.target.value.toLowerCase())))
+  const handleGetRoom = (roomId) => {
+    props.onGetRoom && props.onGetRoom(roomId);
   }
 
-  useEffect(() => {
-    axios.get(`${process.env.REACT_APP_SERVER_API_URL}/follower/getfollowers`, { params: { userId } }).then((res) => {
-        setFollowers(res.data);
-        setFilteredFollowers(res.data)
-      });
-  }, []);
+  const handleCreateRoom = (followerId) => {
+    props.onCreateRoom && props.onCreateRoom(followerId)
+  }
 
   return (
     <div>
       <div className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="navbar-brand brand">{props.newChat ? "New chat" : "Direct"}</div>
+        <div className="navbar-brand brand">{props.modalShow ? "New chat" : "Direct"}</div>
         <div className="navbar-nav ml-auto">
           <li className="nav-item">
-            <a className="nav-link" onClick={() => setNewRoom(true)}>
+            <a className="nav-link" onClick={handleModalToggle}>
               <ChatIcon />
             </a>
-            <Modal show={newRoom} backdrop="static" centered keyboard={false} onHide={() => setNewRoom(false)} aria-labelledby="contained-modal-title-vcenter">
+            <Modal show={props.modalShow} backdrop="static" centered keyboard={false} onHide={handleModalToggle} aria-labelledby="contained-modal-title-vcenter">
               <Modal.Header closeButton>
                 <Modal.Title className="h6">New Message</Modal.Title>
               </Modal.Header>
@@ -54,15 +41,15 @@ function Sidebar(props) {
                 <form>
                   <div className="form-group row">
                     <div className="col">
-                      <input type="text" className="form-control border-0" placeholder="Search ..." onChange={filterRoom} />
+                      <input type="text" className="form-control border-0" placeholder="Search ..." onChange={props.onFilterFollowers} />
                     </div>
                   </div>
 
                   <h6>Suggested</h6>
                   <div className="form-group">
                     <ul className="list-group list-group-flush">
-                      {filteredFollowers.map((follower) => (
-                        <RoomItem key={follower.id} name={follower.followerName} profileUrl={`https://avatars.dicebear.com/api/human/${Math.floor(Math.random() * 5000)}.svg`} onClick={(e) => createNewRoom(follower.id)} />
+                      {props.followers.map((user) => (
+                        <RoomItem key={user.id} name={user.followerName} profileUrl={`https://avatars.dicebear.com/api/human/${Math.floor(Math.random() * 5000)}.svg`} onClick={(e) => handleCreateRoom(user.followerId)} />
                       ))}
                     </ul>
                   </div>
@@ -80,7 +67,7 @@ function Sidebar(props) {
       <SidebarSearch />
       <ul className="list-group list-group-flush">
         {props.rooms.map((room) => (
-          <RoomItem key={room.id} name={room.followerName} onClick={(e) => props.onClick(e, "GET_MESSAGES", room.id)} />
+          <RoomItem key={room.id} name={room.name} profileUrl={`https://avatars.dicebear.com/api/human/${Math.floor(Math.random() * 5000)}.svg`} onClick={(e) => handleGetRoom(room.id)} />
         ))}
       </ul>
     </div>

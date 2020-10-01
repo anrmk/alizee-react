@@ -3,14 +3,14 @@ import React, { useState } from 'react'
 import SentimentSatisfiedOutlinedIcon from '@material-ui/icons/SentimentSatisfiedOutlined';
 import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
 
-function MessageSend() {
+function MessageSend(props) {
+  const {roomId} = useState(props.roomId)
   const [input, setInput] = useState("");
 
-  const sendMessage = (e) => {
+  const handleSendMessage = (e) => {
     e.preventDefault();
-    console.log("You type: " + input)
-
-    setInput("");
+    props.onCreateMessage && props.onCreateMessage(input);
+    setInput("")
   }
 
   return (
@@ -24,7 +24,7 @@ function MessageSend() {
             </div>
 
             <input type="text" className="form-control border-0" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Type a message" />
-            <button type="submit" className="sr-only" onClick={sendMessage}>
+            <button type="submit" className="sr-only" onClick={handleSendMessage}>
               Submit
             </button>
 
@@ -39,4 +39,4 @@ function MessageSend() {
   )
 }
 
-export default MessageSend
+export default MessageSend;

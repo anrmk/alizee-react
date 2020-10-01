@@ -20,7 +20,7 @@ function Room(props) {
     <div className="chat">
       <div className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="avatar">
-          <Avatar className="avatar__icon"/> {props.name}
+          <Avatar className="avatar__icon" src=""/> {props.room?.name}
         </div>
 
         <ul className="navbar-nav ml-auto">
@@ -37,20 +37,20 @@ function Room(props) {
         </ul>
       </div>
       <div className="chat__body">
-        <p className="d-block text-secondary p-2 rounded text-break bg-success ">
-          {messages.map(msg => (
-            <div className="d-flex align-items-top justify-content-between">
-              {msg}
+        <div className="d-block text-secondary p-2 rounded text-break ">
+          {props.messages.map(msg => (
+            <div className={props.userId === msg.userId ? "d-flex align-items-top justify-content-end" : "d-flex align-items-top justify-content-between"} key={msg.id}>
+              <p>{msg.message}</p>
               <small className="ml-3">3.30 PM</small>  
             </div>
           ))}
-        </p>
+        </div>
       </div>
       <div className="chat__footer">
-        <MessageSend />
+        <MessageSend onCreateMessage={props.onCreateMessage} roomId={props.room.Id} />
       </div>
     </div>
   );
 }
 
-export default Room
+export default Room;
