@@ -9,7 +9,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-
 .flex-container {
   display: flex;
   align-content: center;
@@ -17,9 +16,15 @@ body {
   height: calc(100vh - 180px);
 }
 
-#root {
-  margin-bottom: 80px;
+.container {
+  &.full-container {
+    height: calc(100vh - 125px) !important
+  }
 }
+
+// #root {
+//   margin-bottom: 80px;
+// }
 
 .avatar {
   align-items: center!important;
@@ -52,4 +57,8 @@ body {
 .avatar__large {
   width: 56px !important;
   height: 56px !important;
+}
+
+.o-8 {
+  opacity: 0.8;
 }

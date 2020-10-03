@@ -20,7 +20,7 @@ import { Avatar } from "@material-ui/core";
 function Header(props) {
   const match = useRouteMatch();
 
-  const { isAuthenticated, avatarUrl } = props;
+  const { avatarUrl } = props;
   const { onSignOut } = props;
 
   const handleSignOut = () => {
@@ -105,9 +105,6 @@ function Header(props) {
                 <span className="d-block">Notification</span>
               </Link>
             </li>
-
-            {isAuthenticated && (
-              <>
                 <li className="nav-item text-center">
                   <Link className="nav-link" to={"/me"} >
                     <Avatar src={avatarUrl} />
@@ -122,9 +119,6 @@ function Header(props) {
                     </div>
                   </Link>
                 </li>
-              </>
-            )}
-
           </div>
         </div>
       </div>

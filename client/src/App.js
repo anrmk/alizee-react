@@ -5,9 +5,11 @@ import { connect } from "react-redux";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
-import PrivateRoute from './pages/PrivateRoute';
+import HubComponent from "./domain/Hub/NotificationHub";
+
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import PrivateRoute from "./pages/PrivateRoute";
 import Chat from "./pages/Chat";
 
 import Feed from "./pages/Feed";
@@ -15,27 +17,24 @@ import Feed from "./pages/Feed";
 import CreateRoom from "./pages/CreateRoom";
 import Meeting from "./pages/Meeting";
 import Room from "./pages/Room";
-import { signOutUser } from './store/actions/signIn';
+import { signOutUser } from "./store/actions/signIn";
 
 function App({ signOut, isAuthenticated, avatarUrl }) {
   return (
     <Router>
-      <Header
-        onSignOut={signOut}
-        isAuthenticated={isAuthenticated}
-        avatarUrl={avatarUrl} />
-      <div className="py-4">
+      {isAuthenticated && <Header onSignOut={signOut} avatarUrl={avatarUrl} />}
         <Switch>
-          <PrivateRoute exact path="/" component={Feed} />
-          <PrivateRoute path="/meet" component={Meeting} />
-          <PrivateRoute path="/chat" component={Chat} />
-          <PrivateRoute exact path="/room" component={CreateRoom} />
-          <PrivateRoute path="/room/:roomID" component={Room} />
+          {/* <HubComponent> */}
+            <PrivateRoute exact path="/" component={Feed} />
+            <PrivateRoute path="/meet" component={Meeting} />
+            <PrivateRoute path="/chat" component={Chat} />
+            <PrivateRoute exact path="/room" component={CreateRoom} />
+            <PrivateRoute path="/room/:roomID" component={Room} />
+          {/* </HubComponent> */}
           <Route path="/signUp" component={SignUp} />
           <Route path="/signIn" component={SignIn} />
         </Switch>
-      </div>
-      <Footer />
+      {isAuthenticated && <Footer />}
     </Router>
   );
 }
@@ -43,14 +42,14 @@ function App({ signOut, isAuthenticated, avatarUrl }) {
 function mapStateToProps(state) {
   return {
     isAuthenticated: state.signIn.isAuthenticated,
-    avatarUrl: state.signUp?.userInfo?.avatar || state.signIn?.userInfo?.avatar
-  }
+    avatarUrl: state.signUp?.userInfo?.avatar || state.signIn?.userInfo?.avatar,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    signOut: api => dispatch(signOutUser(api))
-  }
+    signOut: (api) => dispatch(signOutUser(api)),
+  };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -1,75 +1,45 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { connect } from "react-redux";
+
 import axios from "axios";
+import ApiContext from '../context/ApiContext';
 
 import Sidebar from "../domain/Chat/Sidebar";
 import Room from "../domain/Chat/Room";
+
 import { USER_TOKEN } from '../constants/user';
 
-import * as signalR from "@microsoft/signalr";
+
 import { red } from "@material-ui/core/colors";
 
-const Chat = () => {
-  const token = localStorage.getItem(USER_TOKEN);
-  const options = {
-    headers: {'Authorization': token}
-  };
+import * as actionFollower from '../store/actions/follower';
+import * as actionChat from '../store/actions/chat';
 
-  const [userId, setUserId] = useState("13289f92-6ca2-4416-9236-f6bc50dcb854");
+const Chat = (props) => {
+  const apiClient = useContext(ApiContext);
+
+  const { follower, getFollowers, filterFollowers } = props;
+  const { chat, getRoom, getRooms, filterRooms, createRoom } = props;
+
   const [modalShow, setModalShow] = useState(false);
-  const [followers, setFollowers] = useState([]);
-  const [filteredFollowers, setFilteredFollowers] = useState([]);
   
   const [rooms, setRooms] = useState([]); //all available rooms
   const [room, setRoom] = useState(null); //selected room
   const [messages, setMessages] = useState([]); //selected room messages
 
-  const [hubConnection, setHubConnection] = useState(null);
-
-   useEffect(() => {
-    const newHubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:44341/chat')
-      .withAutomaticReconnect()
-      .configureLogging(signalR.LogLevel.Information)  
-      .build();
-
-      setHubConnection(newHubConnection);
-  }, []);
-
   useEffect(() => {
-    if(hubConnection) {
-      hubConnection
-        .start({ withCredentials: false })
-        .then((result) => {
-          console.log("hub connected!");
-
-          hubConnection.on("ReceiveMessage", (data) => {
-            console.log(messages)
-            setMessages([...messages, { ...data }])
-          });
-        })
-        .catch((err) => console.log("Error connection SignalR " + JSON.stringify(err)));
-    }
-  }, [hubConnection])
-
-  useEffect(() => {
-    if(modalShow) {
-      axios.get(`${process.env.REACT_APP_SERVER_API_URL}/follower/getfollowers`, { params: { userId }, options})
-        .then((res) => {
-          setFollowers(res.data);
-          setFilteredFollowers(res.data);
-        });
-      } else {
-      axios
-        .get(`${process.env.REACT_APP_SERVER_API_URL}/chat/getrooms`, { params: { userId }, options })
-        .then((res) => {
-          setRooms(res.data);
-        });
+    if (modalShow) {
+      getFollowers(apiClient); //work
+    } else {
+      getRooms(apiClient); // ?
+      console.log(follower)
+      console.log('get rooms')
     }
   }, [modalShow]);
 
   const handleFilterFollowers = (e) => {
-    setFilteredFollowers(followers.filter((item) => item.followerName.toLowerCase().includes(e.target.value.toLowerCase())));
+    filterFollowers(e.target.value.toLowerCase());
   };
 
   const handleModalToggle = (e) => {
@@ -77,23 +47,25 @@ const Chat = () => {
   };
 
   const handleGetRoom = (roomId, name) => {
-    axios.get(`${process.env.REACT_APP_SERVER_API_URL}/chat/GetRoom`, {params: { id: roomId }, options})
-      .then((res) => {
-        setRoom(res.data);
-        console.log(res.data.messages)
-        setMessages(res.data.messages)
-      });
+    getRoom(apiClient, roomId);
+    // axios.get(`${process.env.REACT_APP_SERVER_API_URL}/chat/GetRoom`, {params: { id: roomId }})
+    //   .then((res) => {
+    //     setRoom(res.data);
+    //     setMessages(res.data.messages)
+    //   });
   };
 
   const handleCreateRoom = (followerId) => {
-     axios.post(`${process.env.REACT_APP_SERVER_API_URL}/chat/createRoom?followerId=${followerId}`)
-       .then((res) => {
-         if (rooms.filter((item) => item.id === res.data.id).length == 0) {
-           setRooms([...rooms, res.data]);
-         }
+    createRoom(apiClient, followerId);
+    setModalShow(false);
+    //  axios.post(`${process.env.REACT_APP_SERVER_API_URL}/chat/createRoom?followerId=${followerId}`)
+    //    .then((res) => {
+    //      if (rooms.filter((item) => item.id === res.data.id).length == 0) {
+    //        setRooms([...rooms, res.data]);
+    //      }
 
-         setModalShow(false);
-       });
+    //      setModalShow(false);
+    //    });
   };
 
   const handleCreateMessage = async (message) => {
@@ -108,38 +80,69 @@ const Chat = () => {
     //     console.log(res)
     //   });
 
-    if (hubConnection.connectionStarted) {
-      try {
-        await hubConnection.send('SendMessage', {
-          message, userId, roomId: room.id
-        });
-      }
-    catch(e) {
-        console.log(e);
-      }
-    }
+    // if (hubConnection.connectionStarted) {
+    //   try {
+    //     await hubConnection.send('SendMessage', {
+    //       message, 'userId': '', roomId: room.id
+    //     });
+    //   }
+    // catch(e) {
+    //     console.log(e);
+    //   }
+    // }
   };
 
   return (
-    <div className="container">
-      <div className="row row-cols-2 no-gutters">
+    <div className="container-fluid container-xl full-container">
+      <div className="row row-cols-2 no-gutters h-100">
         <div className="col-4 border-right">
+
           <Sidebar
-            rooms={rooms}
+            modalShow={modalShow}
+            rooms={chat.data}
             onGetRoom={handleGetRoom}
             onCreateRoom={handleCreateRoom}
-            modalShow={modalShow}
             onModalToggle={handleModalToggle}
-            followers={filteredFollowers}
+            followers={follower.data}
             onFilterFollowers={handleFilterFollowers}
           />
         </div>
         <div className="col-8">
-          {room && <Room room={room} messages={messages} userId={userId} onCreateMessage={handleCreateMessage} />}
+          {room && <Room room={room} messages={messages} onCreateMessage={handleCreateMessage} />}
         </div>
       </div>
     </div>
   );
 };
 
-export default Chat;
+
+function mapStateToProps(state) {
+  return {
+    follower: {
+      isFetching: state.follower.isFetching,
+      data: actionFollower.getFilteredFollowers(state),
+      errorMessage: state.follower.errorMessage,
+      keywords: state.keywords,
+    },
+    chat: {
+      isFetching: state.chat.isFetching,
+      data: actionChat.getFilteredRooms(state),
+      errorMessage: state.chat.errorMessage,
+      keywords: state.keywords,
+    },
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getFollowers: api => dispatch(actionFollower.getFollowers(api)),
+    filterFollowers: query => dispatch(actionFollower.filter(query)),
+
+    getRoom: (api, id) => dispatch(actionChat.getRoom(api, id)),
+    getRooms: api => dispatch(actionChat.getRooms(api)),
+    createRoom: (api, id) => dispatch(actionChat.createRoom(api, id)),
+    filterRooms: query => dispatch(actionChat.filter(query))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Chat)

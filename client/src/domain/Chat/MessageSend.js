@@ -4,7 +4,6 @@ import SentimentSatisfiedOutlinedIcon from '@material-ui/icons/SentimentSatisfie
 import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
 
 function MessageSend(props) {
-  const {roomId} = useState(props.roomId)
   const [input, setInput] = useState("");
 
   const handleSendMessage = (e) => {

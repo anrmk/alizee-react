@@ -40,12 +40,11 @@ function Sidebar(props) {
                       <input type="text" className="form-control border-0" placeholder="Search ..." onChange={props.onFilterFollowers} />
                     </div>
                   </div>
-
                   <h6>Suggested</h6>
                   <div className="form-group">
                     <ul className="list-group list-group-flush">
                       {props.followers.map((user) => (
-                        <RoomItem key={user.id} name={user.followerName} profileUrl={`https://avatars.dicebear.com/api/human/${Math.floor(Math.random() * 5000)}.svg`} onClick={(e) => handleCreateRoom(user.followerId)} />
+                        <RoomItem key={user.id} name={user.followerName} profileUrl={user.followerUrl} onClick={(e) => handleCreateRoom(user.followerId)} />
                       ))}
                     </ul>
                   </div>
