@@ -8,7 +8,7 @@ import MonetizationOnOutlinedIcon from '@material-ui/icons/MonetizationOnOutline
 import "./../components/Posts.scss"
 
 function Posts() {
-  const [posts, setPosts] = useState([]);
+  const [posts] = useState([]);
   useEffect(() => {
 
   }, []);

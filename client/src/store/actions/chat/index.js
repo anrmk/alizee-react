@@ -1,7 +1,7 @@
 export { getRoom } from "./getRoom";
 export { getRooms, getFilteredRooms, filter } from "./getRooms";
 export { createRoom } from "./createRoom";
-export { addMessage } from "./addMessage";
+export { createMessage, addMessage } from "./createMessage";
 
 export {
   GET_ROOM_REQUEST,
@@ -23,5 +23,8 @@ export {
 } from "./createRoom";
 
 export {
-  ADD_MESSAGE
-} from "./addMessage";
+  CREATE_MESSAGE_REQUEST,
+  CREATE_MESSAGE_SUCCESS,
+  CREATE_MESSAGE_FAILURE,
+  CREATE_MESSAGE
+} from "./createMessage";

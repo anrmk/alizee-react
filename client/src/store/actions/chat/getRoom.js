@@ -20,7 +20,7 @@ function receiveGetRoom(room) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      data: room,
+      currentRoom: room
     },
   };
 }
@@ -39,7 +39,7 @@ export function getRoom(api, id) {
   return async (dispatch) => {
     dispatch(requestGetRoom());
 
-    const url = generateUrl("GetRoom");
+    const url = generateUrl("getRoom");
     try {
       const { status, data } = await api
         .setMethod("GET")

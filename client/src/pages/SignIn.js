@@ -60,6 +60,7 @@ function SignIn(props) {
               <div className="card-body">
                 <h1 className="text-center font-weight-lighter">Alizee</h1>
                 <form onSubmit={handleFormSubmit} onChange={handleFormChange}>
+                  {errorMessage ?? ""}
                   <div className="form-group">
                     <input
                       className="form-control"

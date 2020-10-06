@@ -24,13 +24,14 @@ function App({ signOut, isAuthenticated, avatarUrl }) {
     <Router>
       {isAuthenticated && <Header onSignOut={signOut} avatarUrl={avatarUrl} />}
         <Switch>
-          {/* <HubComponent> */}
+          {isAuthenticated && 
+          <HubComponent>
             <PrivateRoute exact path="/" component={Feed} />
             <PrivateRoute path="/meet" component={Meeting} />
             <PrivateRoute path="/chat" component={Chat} />
             <PrivateRoute exact path="/room" component={CreateRoom} />
             <PrivateRoute path="/room/:roomID" component={Room} />
-          {/* </HubComponent> */}
+          </HubComponent> }
           <Route path="/signUp" component={SignUp} />
           <Route path="/signIn" component={SignIn} />
         </Switch>

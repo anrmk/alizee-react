@@ -1,24 +1,16 @@
-.chat {
+.sidebar {
   display: flex;
   flex-direction: column;
   height: 100%;
 
-  .chat__header {
-  }
-
-  .chat__body {
-    // background-image: url("https://web.whatsapp.com/img/bg-chat-tile-dark_9f39e76b5a0e039e53afc5d9d4bdd780.png");
-    // background-repeat: repeat;
-    // background-position: center;
-    //background-color: lightgray;
+  .sidebar__body {
     overflow: auto;
     position: relative;
     z-index: 1;
-    flex: 1 1 0;
+    flex: 1 1;
     order: 2;
 
     > div {
-      padding: 30px;
       position: absolute;
       top: 0;
       z-index: 100;
@@ -30,10 +22,5 @@
       overflow-x: hidden;
       overflow-y: auto;
     }
-  }
-
-  .chat__footer {
-    flex: none;
-    order: 3;
   }
 }

@@ -7,6 +7,8 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import SidebarSearch from "./SidebarSearch";
 import RoomItem from "./RoomItem";
 
+import "./Sidebar.scss";
+
 function Sidebar(props) {
   const handleModalToggle = () => {
     props.onModalToggle && props.onModalToggle();
@@ -21,10 +23,10 @@ function Sidebar(props) {
   }
 
   return (
-    <div>
-      <div className="navbar navbar-expand-lg navbar-light bg-light">
+    <div className="sidebar">
+      <div className="sidebar__header navbar navbar-expand-lg navbar-light bg-light">
         <div className="navbar-brand brand">{props.modalShow ? "New chat" : "Direct"}</div>
-        <div className="navbar-nav ml-auto">
+        <ul className="navbar-nav ml-auto">
           <li className="nav-item">
             <a className="nav-link" onClick={handleModalToggle}>
               <ChatIcon />
@@ -57,14 +59,18 @@ function Sidebar(props) {
               <MoreVertIcon />
             </a>
           </li>
+        </ul>
+      </div>
+      <SidebarSearch onFilterRooms={props.onFilterRooms} />
+      <div className="sidebar__body">
+        <div>
+          <ul className="list-group list-group-flush">
+            {props.rooms.map((room) => (
+              <RoomItem key={room.id} name={room.name} avatarUrl={room.avatarUrl} message={room.messages[room.messages.length - 1].message} onClick={(e) => handleGetRoom(room.id)} />
+            ))}
+          </ul>
         </div>
       </div>
-      <SidebarSearch />
-      <ul className="list-group list-group-flush">
-        {props.rooms.map((room) => (
-          <RoomItem key={room.id} name={room.name} profileUrl={`https://avatars.dicebear.com/api/human/${Math.floor(Math.random() * 5000)}.svg`} onClick={(e) => handleGetRoom(room.id)} />
-        ))}
-      </ul>
     </div>
   )
 }

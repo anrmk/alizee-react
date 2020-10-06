@@ -6,8 +6,10 @@ export default {
     getPosts: "post/getposts",
     getFollowers: "follower/getfollowers",
     // CHAT
-    getRoom: "chat/room/id",
-    getRooms: "chat/getrooms",
+    getRoom: "chat/getRoom",
+    getRooms: "chat/getRooms",
     createRoom: "chat/createRoom",
+
+    createMessage: "chat/createMessage"
   },
 };

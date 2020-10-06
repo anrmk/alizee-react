@@ -9,22 +9,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.flex-container {
-  display: flex;
-  align-content: center;
-  flex-wrap: wrap;
-  height: calc(100vh - 180px);
-}
+
 
 .container {
   &.full-container {
-    height: calc(100vh - 125px) !important
+    height: calc(100vh - 124px) !important
   }
 }
-
-// #root {
-//   margin-bottom: 80px;
-// }
 
 .avatar {
   align-items: center!important;

@@ -110,6 +110,7 @@ function SignUp(props) {
             onFailure={handleGoogleFailure}
           />
         </div>
+        <p>{errorMessage}</p>
       </form>
     </div>
   );

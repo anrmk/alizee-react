@@ -1,17 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 
-import axios from "axios";
 import ApiContext from '../context/ApiContext';
 
 import Sidebar from "../domain/Chat/Sidebar";
 import Room from "../domain/Chat/Room";
 
-import { USER_TOKEN } from '../constants/user';
-
-
-import { red } from "@material-ui/core/colors";
 
 import * as actionFollower from '../store/actions/follower';
 import * as actionChat from '../store/actions/chat';
@@ -20,21 +14,16 @@ const Chat = (props) => {
   const apiClient = useContext(ApiContext);
 
   const { follower, getFollowers, filterFollowers } = props;
-  const { chat, getRoom, getRooms, filterRooms, createRoom } = props;
+  const { chat, getRoom, createRoom, getRooms, filterRooms } = props;
+  const { createMessage } = props;
 
   const [modalShow, setModalShow] = useState(false);
   
-  const [rooms, setRooms] = useState([]); //all available rooms
-  const [room, setRoom] = useState(null); //selected room
-  const [messages, setMessages] = useState([]); //selected room messages
-
   useEffect(() => {
     if (modalShow) {
-      getFollowers(apiClient); //work
+      getFollowers(apiClient);
     } else {
-      getRooms(apiClient); // ?
-      console.log(follower)
-      console.log('get rooms')
+      getRooms(apiClient);
     }
   }, [modalShow]);
 
@@ -46,60 +35,30 @@ const Chat = (props) => {
     setModalShow(!modalShow);
   };
 
+  const handleFilterRooms = (e) => {
+    filterRooms(e.target.value.toLowerCase());
+  }
+
   const handleGetRoom = (roomId, name) => {
     getRoom(apiClient, roomId);
-    // axios.get(`${process.env.REACT_APP_SERVER_API_URL}/chat/GetRoom`, {params: { id: roomId }})
-    //   .then((res) => {
-    //     setRoom(res.data);
-    //     setMessages(res.data.messages)
-    //   });
   };
 
   const handleCreateRoom = (followerId) => {
     createRoom(apiClient, followerId);
-    setModalShow(false);
-    //  axios.post(`${process.env.REACT_APP_SERVER_API_URL}/chat/createRoom?followerId=${followerId}`)
-    //    .then((res) => {
-    //      if (rooms.filter((item) => item.id === res.data.id).length == 0) {
-    //        setRooms([...rooms, res.data]);
-    //      }
-
-    //      setModalShow(false);
-    //    });
   };
 
   const handleCreateMessage = async (message) => {
-    // axios
-    //   .post(`${process.env.REACT_APP_SERVER_API_URL}/chat/createMessage`, {
-    //     message,
-    //     userId,
-    //     roomId: room.id,
-    //   })
-    //   .then((res) => {
-    //     setMessages([...messages, { ...res.data }])
-    //     console.log(res)
-    //   });
-
-    // if (hubConnection.connectionStarted) {
-    //   try {
-    //     await hubConnection.send('SendMessage', {
-    //       message, 'userId': '', roomId: room.id
-    //     });
-    //   }
-    // catch(e) {
-    //     console.log(e);
-    //   }
-    // }
+    createMessage(apiClient, chat.currentRoom.id, message);
   };
 
   return (
-    <div className="container-fluid container-xl full-container">
-      <div className="row row-cols-2 no-gutters h-100">
+    <div className="container full-container p-4">
+      <div className="row row-cols-2 no-gutters h-100 border">
         <div className="col-4 border-right">
-
           <Sidebar
             modalShow={modalShow}
             rooms={chat.data}
+            onFilterRooms={handleFilterRooms}
             onGetRoom={handleGetRoom}
             onCreateRoom={handleCreateRoom}
             onModalToggle={handleModalToggle}
@@ -108,7 +67,7 @@ const Chat = (props) => {
           />
         </div>
         <div className="col-8">
-          {room && <Room room={room} messages={messages} onCreateMessage={handleCreateMessage} />}
+          {chat.currentRoom && <Room room={chat.currentRoom} onCreateMessage={handleCreateMessage} />}
         </div>
       </div>
     </div>
@@ -129,7 +88,8 @@ function mapStateToProps(state) {
       data: actionChat.getFilteredRooms(state),
       errorMessage: state.chat.errorMessage,
       keywords: state.keywords,
-    },
+      currentRoom: state.chat?.currentRoom
+    }
   };
 }
 
@@ -137,11 +97,14 @@ function mapDispatchToProps(dispatch) {
   return {
     getFollowers: api => dispatch(actionFollower.getFollowers(api)),
     filterFollowers: query => dispatch(actionFollower.filter(query)),
+    getRooms: api => dispatch(actionChat.getRooms(api)),
+    filterRooms: query => dispatch(actionChat.filter(query)),
 
     getRoom: (api, id) => dispatch(actionChat.getRoom(api, id)),
-    getRooms: api => dispatch(actionChat.getRooms(api)),
     createRoom: (api, id) => dispatch(actionChat.createRoom(api, id)),
-    filterRooms: query => dispatch(actionChat.filter(query))
+    deleteRoom: (api, id) => {},
+    
+    createMessage: (api, id, message) => dispatch(actionChat.createMessage(api, id, message)),
   }
 }
 

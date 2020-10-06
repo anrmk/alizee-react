@@ -36,7 +36,6 @@ function errorCreateRoom(message) {
 }
 
 export function createRoom(api, id) {
-  console.log("CreateRoom action", api, id)
   return async (dispatch) => {
     dispatch(requestCreateRoom());
 

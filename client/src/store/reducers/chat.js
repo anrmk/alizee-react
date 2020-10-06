@@ -2,17 +2,17 @@ import {
   GET_ROOM_REQUEST,
   GET_ROOM_SUCCESS,
   GET_ROOM_FAILURE,
-
   GET_ROOMS_REQUEST,
   GET_ROOMS_SUCCESS,
   GET_ROOMS_FAILURE,
   FILTER_ROOMS,
-  
   CREATE_ROOM_REQUEST,
   CREATE_ROOM_SUCCESS,
   CREATE_ROOM_FAILURE,
-
-  ADD_MESSAGE
+  CREATE_MESSAGE_REQUEST,
+  CREATE_MESSAGE_SUCCESS,
+  CREATE_MESSAGE_FAILURE,
+  CREATE_MESSAGE,
 } from "../actions/chat";
 
 export default function followerReducer(
@@ -66,7 +66,7 @@ export default function followerReducer(
       return {
         ...state,
         ...action.payload,
-        data: [...state.data, { ...action.payload.data }]
+        data: [...state.data, { ...action.payload.data }],
       };
     case CREATE_ROOM_FAILURE:
       return {
@@ -74,23 +74,30 @@ export default function followerReducer(
         ...action.payload,
       };
 
-    case ADD_MESSAGE:
+    case CREATE_MESSAGE_REQUEST:
       return {
         ...state,
         ...action.payload,
-        //add message to room
-        // data: _ => {
-        //   const rooms = state.data;
-        //   const room = rooms.filter(x => x.id === action.payload.data.roomId)[0];
-        //   if(room === null)
-        //     {
-        //       //создать или получить отсутствующий ROOM
-        //     }
-        //   room.messages.push(payload.data)
-        //   const newRooms = [...rooms, room];
-
-        //   return newRooms;
-        // }
+      };
+    case CREATE_MESSAGE_SUCCESS:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case CREATE_MESSAGE_FAILURE:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case CREATE_MESSAGE:
+      return {
+        ...state,
+        currentRoom: {
+          ...state.currentRoom,
+          ...{
+            messages: [...state.currentRoom.messages, action.payload.data],
+          },
+        },
       };
     default:
       return state;
