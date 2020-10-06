@@ -1,0 +1,43 @@
+$card-content-wrapper-width: 100%;
+
+$react-player-controls-transition: .5s;
+$react-player-btn-play-size: 8rem;
+$react-player-btn-color: #e2dfdf;
+$react-player-btn-mute-size: 2rem;
+$react-player-btn-mute-margin: 10px;
+
+.card-content-wrapper {
+  position: relative;
+  width: $card-content-wrapper-width;
+  overflow: hidden;
+}
+
+.react-player {
+  pointer-events: none;
+  video {
+    object-fit: cover;
+  }
+
+  &__controls {
+    position: absolute;
+    transition: opacity $react-player-controls-transition;
+    &-margin {
+      left: $react-player-btn-mute-margin;
+      bottom: $react-player-btn-mute-margin;
+    }
+  }
+
+  &-btn-play {
+    & > svg {
+      font-size: $react-player-btn-play-size;
+      color: $react-player-btn-color;
+    }
+  }
+
+  &-btn-mute {
+    & > svg {
+      font-size: $react-player-btn-mute-size;
+      color: $react-player-btn-color;
+    }
+  }
+}

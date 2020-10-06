@@ -1,0 +1,14 @@
+$avatar-small-size: 24px;
+$avatar-large-size: 56px;
+
+.avatar {
+  &__small {
+    width: $avatar-small-size;
+    height: $avatar-small-size;
+  }
+
+  &__large {
+    width: $avatar-large-size;
+    height: $avatar-large-size;
+  }
+}

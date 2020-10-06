@@ -1,6 +1,5 @@
  @import 'bootstrap/scss/bootstrap.scss';
 
-
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -10,38 +9,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-
-.flex-container {
-  display: flex;
-  align-content: center;
-  flex-wrap: wrap;
-  height: calc(100vh - 180px);
-}
-
 #root {
   margin-bottom: 80px;
-}
-
-.avatar {
-  align-items: center!important;
-  display: flex!important;
-  font-weight: bolder;
-  white-space: nowrap;
-
-  .avatar__icon {
-    width: 30px;
-    height: 30px;
-    margin-right: .5rem;
-  }
-}
-
-// AVATAR SIZE
-.avatar__small {
-  width: 24px !important;
-  height: 24px !important;
-}
-
-.avatar__large {
-  width: 56px !important;
-  height: 56px !important;
 }
