@@ -4,15 +4,13 @@ import './Avatar.scss';
 
 function Avatar({ url, size }) {
   return (
-    <div>
-      <img className={`avatar__${size} rounded-circle`} src={url} />
-    </div>
+    <img className={`avatar__${size} rounded-circle ml-1 mr-2`} src={url} />
   );
 }
 
 Avatar.defaultProps = {
   url: '',
-  size: 'small'
+  size: 'medium'
 };
 
 export default Avatar;

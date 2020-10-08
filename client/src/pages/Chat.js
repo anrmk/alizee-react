@@ -1,47 +1,111 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { connect } from "react-redux";
+
+import ApiContext from '../context/ApiContext';
 
 import Sidebar from "../domain/Chat/Sidebar";
-import Message from "../domain/Chat/Message";
+import Room from "../domain/Chat/Room";
 
-import {
-  HubConnection,
-  HubConnectionBuilder,
-  HttpClient,
-  LogLevel,
-  HttpTransportType,
-} from "@aspnet/signalr";
+import * as actionFollower from '../store/actions/follower';
+import * as actionChat from '../store/actions/chat';
 
-const Chat = () => {
-  const [hubConnection, setHubConnection] = useState(
-    new HubConnectionBuilder()
-      .configureLogging(LogLevel.Debug)
-      .withUrl("http://194.67.93.7:8000/")
-      .build()
-  );
+const Chat = (props) => {
+  const apiClient = useContext(ApiContext);
+
+  const { follower, getFollowers, filterFollowers } = props;
+  const { chat, getRoom, createRoom, getRooms, filterRooms } = props;
+  const { createMessage } = props;
+
+  const [modalShow, setModalShow] = useState(false);
+  
   useEffect(() => {
-    hubConnection.on("SendMessage", (data) => {
-      console.log("send data: " + data);
-    });
-    /*
-    hubConnection
-      .start()
-      .then(() => console.log("SignalR started"))
-      .catch((err) => console.log("Error connection SignalR " + err));
-      */
-  }, []);
+    if (modalShow) {
+      getFollowers(apiClient);
+    } else {
+      getRooms(apiClient);
+    }
+  }, [modalShow]);
+
+  const handleFilterFollowers = (e) => {
+    filterFollowers(e.target.value.toLowerCase());
+  };
+
+  const handleModalToggle = (e) => {
+    setModalShow(!modalShow);
+  };
+
+  const handleFilterRooms = (e) => {
+    filterRooms(e.target.value.toLowerCase());
+  }
+
+  const handleGetRoom = (roomId, name) => {
+    getRoom(apiClient, roomId);
+  };
+
+  const handleCreateRoom = (followerId) => {
+    createRoom(apiClient, followerId);
+    setModalShow(false);
+  };
+
+  const handleCreateMessage = async (message) => {
+    createMessage(apiClient, chat.currentRoom.id, message);
+  };
 
   return (
-    <div className="container">
-      <div className="row row-cols-2 no-gutters">
+    <div className="container full-container p-4">
+      <div className="row row-cols-2 no-gutters h-100 border">
         <div className="col-4 border-right">
-          <Sidebar />
+          <Sidebar
+            modalShow={modalShow}
+            rooms={chat.data}
+            onFilterRooms={handleFilterRooms}
+            onGetRoom={handleGetRoom}
+            onCreateRoom={handleCreateRoom}
+            onModalToggle={handleModalToggle}
+            followers={follower.data}
+            onFilterFollowers={handleFilterFollowers}
+          />
         </div>
         <div className="col-8">
-          <Message />
+          {chat.currentRoom && <Room room={chat.currentRoom} onCreateMessage={handleCreateMessage} />}
         </div>
       </div>
     </div>
   );
 };
 
-export default Chat;
+
+function mapStateToProps(state) {
+  return {
+    follower: {
+      isFetching: state.follower.isFetching,
+      data: actionFollower.getFilteredFollowers(state),
+      errorMessage: state.follower.errorMessage,
+      keywords: state.keywords,
+    },
+    chat: {
+      isFetching: state.chat.isFetching,
+      data: actionChat.getFilteredRooms(state),
+      errorMessage: state.chat.errorMessage,
+      keywords: state.keywords,
+      currentRoom: state.chat?.currentRoom
+    }
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getFollowers: api => dispatch(actionFollower.getFollowers(api)),
+    filterFollowers: query => dispatch(actionFollower.filter(query)),
+    getRooms: api => dispatch(actionChat.getRooms(api)),
+    filterRooms: query => dispatch(actionChat.filter(query)),
+
+    getRoom: (api, id) => dispatch(actionChat.getRoom(api, id)),
+    createRoom: (api, id) => dispatch(actionChat.createRoom(api, id)),
+    deleteRoom: (api, id) => {},
+    
+    createMessage: (api, id, message) => dispatch(actionChat.createMessage(api, id, message)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Chat)

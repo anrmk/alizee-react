@@ -1,17 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { v1 as uuid } from "uuid";
+
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function CreateRoom() {
   const history = useHistory();
   const userVideo = useRef(null);
   const [alert, setAlert] = useState("");
-  const [roomId, setRoomId] = useState(uuid());
+  const [roomId, setRoomId] = useState();
 
   useEffect(() => {
-    // console.log("Room Id: " + roomId);
-    //setRoomId();
+    setRoomId(uuid());
 
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: true })

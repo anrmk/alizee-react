@@ -1,4 +1,5 @@
-import ENDPOINTS from '../constants/endpoints';
+import ENDPOINTS from "../constants/endpoints";
+import { USER_TOKEN } from "../constants/user";
 
 /**
  * Generate URL string
@@ -9,12 +10,12 @@ import ENDPOINTS from '../constants/endpoints';
  */
 export function generateUrl(endpoint, api = ENDPOINTS, postfix = null) {
   if (!api.endpoints.hasOwnProperty(endpoint)) {
-    console.warn(`There is no ${endpoint} endpoint`)
-    return endpoint
+    console.warn(`There is no ${endpoint} endpoint`);
+    return endpoint;
   }
-  const endpointUrl = api.endpoints[endpoint]
-  const url = `${api.url}/${endpointUrl}`
-  return postfix ? `${url}/${postfix}` : url
+  const endpointUrl = api.endpoints[endpoint];
+  const url = `${api.url}/${endpointUrl}`;
+  return postfix ? `${url}/${postfix}` : url;
 }
 
 /**
@@ -23,7 +24,15 @@ export function generateUrl(endpoint, api = ENDPOINTS, postfix = null) {
  * @return {string}
  */
 export function wrapHttps(url) {
-  return `https://${url}`
+  return `https://${url}`;
+}
+
+export function getToken() {
+  const token = localStorage.getItem(USER_TOKEN);
+  if (token) {
+    return token;
+  }
+  return null;
 }
 
 /**
@@ -34,9 +43,7 @@ export function wrapHttps(url) {
  * @return {number} new offset
  */
 export function getOffset(currentOffset, total, step = 1) {
-  if (typeof currentOffset !== 'number' || typeof total !== 'number') return 0;
+  if (typeof currentOffset !== "number" || typeof total !== "number") return 0;
 
-  return currentOffset + step >= total
-    ? total + step
-    : currentOffset + step;
+  return currentOffset + step >= total ? total + step : currentOffset + step;
 }

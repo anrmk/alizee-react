@@ -1,9 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Badge from '@material-ui/core/Badge';  
-import { Avatar, IconButton } from "@material-ui/core";
+import Avatar from "../components/Avatar";
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-
-import db from "../firebase";
 
 const StyledBadge = withStyles((theme) => ({
   badge: {
@@ -38,11 +36,7 @@ function Suggestion() {
   const [suggestions, setSuggestions] = useState([]);
 
    useEffect(() => {
-     db.collection("account")
-     .limit(10)
-     .onSnapshot((datas) => {
-       setSuggestions(datas.docs.map((d) => ({ id: d.id, data: d.data() })));
-     });
+      
    }, []);
 
   return (
@@ -53,7 +47,7 @@ function Suggestion() {
           <li className="list-group-item d-flex justify-content-between align-items-center p-1" key={suggestion.id}>
             <div >
               <StyledBadge overlap="circle" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} variant="dot" >
-                <Avatar src={suggestion.data.avatarURL} />
+                <Avatar url={suggestion.data.avatarURL} />
               </StyledBadge>
               <small className="ml-2">
                 {suggestion.data.name}

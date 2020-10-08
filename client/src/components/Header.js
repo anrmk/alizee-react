@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Redirect, Link, useRouteMatch } from "react-router-dom";
+import React from "react";
+import { Link, useRouteMatch } from "react-router-dom";
 import iconSrc from "../assets/img/logo.png";
 
 import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
@@ -8,29 +8,24 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HomeIcon from "@material-ui/icons/HomeOutlined";
 import StorefrontOutlinedIcon from '@material-ui/icons/StorefrontOutlined';
 import SendOutlinedIcon from '@material-ui/icons/SendOutlined';
-import { Avatar, IconButton } from "@material-ui/core";
+import Avatar from "../components/Avatar";
 
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+// import AppBar from '@material-ui/core/AppBar';
+// import Toolbar from '@material-ui/core/Toolbar';
+// import MenuItem from '@material-ui/core/MenuItem';
+// import Menu from '@material-ui/core/Menu';
+// import BottomNavigation from '@material-ui/core/BottomNavigation';
+// import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 
 function Header(props) {
   const match = useRouteMatch();
 
-  const { isAuthenticated, avatarUrl } = props;
+  const { avatarUrl } = props;
   const { onSignOut } = props;
 
   const handleSignOut = () => {
     onSignOut && onSignOut();
   }
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   const [value, setValue] = React.useState('recents');
 
@@ -41,8 +36,7 @@ function Header(props) {
     //   <BottomNavigationAction label="Nearby" value="nearby" icon={<StorefrontOutlinedIcon />} />
     //   <BottomNavigationAction label="Folder" value="folder" icon={<SendOutlinedIcon />} />
     // </BottomNavigation>
-
-    <div className="navbar navbar-expand-lg bg-light sticky-top py-1">
+    <div className="navbar navbar-expand-lg navbar-light bg-light sticky-top py-1">
       <div className="container">
         <span className="navbar-brand mb-0 h1">
           <img
@@ -107,12 +101,9 @@ function Header(props) {
                 <span className="d-block">Notification</span>
               </Link>
             </li>
-
-            {isAuthenticated && (
-              <>
                 <li className="nav-item text-center">
                   <Link className="nav-link" to={"/me"} >
-                    <Avatar src={avatarUrl} />
+                    <Avatar url={avatarUrl} />
                   </Link>
                 </li>
 
@@ -124,9 +115,6 @@ function Header(props) {
                     </div>
                   </Link>
                 </li>
-              </>
-            )}
-
           </div>
         </div>
       </div>

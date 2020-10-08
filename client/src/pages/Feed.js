@@ -26,7 +26,7 @@ function Feed(props) {
     <div className="container">
       <div className="row">
         <div className="col-lg-8 col-md-12">
-          <PostList items={data} onFetchMore={handleFetchMore} />
+          {data && data.length !== 0 && (<PostList items={data} onFetchMore={handleFetchMore} />)}
         </div>
         <div className="col-lg-4 d-none d-lg-block d-xl-block">
           <Suggestion />

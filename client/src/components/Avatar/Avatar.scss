@@ -1,10 +1,16 @@
 $avatar-small-size: 24px;
+$avatar-medium-size: 40px;
 $avatar-large-size: 56px;
 
 .avatar {
   &__small {
     width: $avatar-small-size;
     height: $avatar-small-size;
+  }
+
+  &__medium {
+    width: $avatar-medium-size;
+    height: $avatar-medium-size;
   }
 
   &__large {
