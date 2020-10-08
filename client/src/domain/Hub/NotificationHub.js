@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import * as signalR from "@microsoft/signalr";
-import { getToken } from "../../helpers/functions";
+import { getToken, wrapHttps } from "../../helpers/functions";
 
 import * as actionAddMessage from "../../store/actions/chat";
 
 function NotificationHub(props) {
   const { chat } = props;
-  const { addMessage } = props;
+  const { addMessage, addMessageCount } = props;
   const [hubConnection, setHubConnection] = useState(null);
-  const [msg, setMsg] = useState({});
+  const [msg, setMsg] = useState();
 
   useEffect(() => {
     const newHubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(`${process.env.REACT_APP_DOMAIN}/hubs/chat`, {
+      .withUrl(wrapHttps(`${process.env.REACT_APP_TESTING_DOMAIN}/hubs/chat`), {
         accessTokenFactory: () => getToken(),
       })
       .withAutomaticReconnect()
@@ -27,7 +27,9 @@ function NotificationHub(props) {
     if (chat.currentRoom) {
       if (data.roomId == chat.currentRoom.id) {
         addMessage(data);
-      }
+      } 
+    } else {
+      addMessageCount(data.roomId, 1);
     }
   };
 
@@ -68,6 +70,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     addMessage: (message) => dispatch(actionAddMessage.addMessage(message)),
+    addMessageCount: (roomId, count) => dispatch(actionAddMessage.addNewMessageCount(roomId, count))
   };
 }
 

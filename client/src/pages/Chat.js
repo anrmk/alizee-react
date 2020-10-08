@@ -74,7 +74,6 @@ const Chat = (props) => {
   );
 };
 
-
 function mapStateToProps(state) {
   return {
     follower: {

@@ -53,7 +53,6 @@ function successSignOut() {
 export function signInUser(creds, api) {
   return async dispatch => {
     dispatch(requestSignIn(creds));
-
     const url = generateUrl("signIn");
     try {
       const { status, data } = await api

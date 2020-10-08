@@ -1,5 +1,5 @@
 export { getRoom } from "./getRoom";
-export { getRooms, getFilteredRooms, filter } from "./getRooms";
+export { getRooms, getFilteredRooms, filter, addNewMessageCount } from "./getRooms";
 export { createRoom } from "./createRoom";
 export { createMessage, addMessage } from "./createMessage";
 
@@ -14,6 +14,7 @@ export {
   GET_ROOMS_SUCCESS,
   GET_ROOMS_FAILURE,
   FILTER_ROOMS,
+  ADD_NEW_MESSAGE
 } from "./getRooms";
 
 export {

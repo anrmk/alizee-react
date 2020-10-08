@@ -20,12 +20,10 @@ function CreateRoom() {
       })
       .catch((res) => {
         setAlert(res.message);
-        console.log(res);
       });
   }, []);
 
   const joiningLiveStream = () => {
-    console.log({ roomId });
     history.push(`/room/${roomId}`);
   };
 

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { TYPE_OBJECT, TYPE_ARRAY, TYPE_JSON } from '../constants/request_types';
-import { wrapHttps, getToken  } from '../helpers/functions';
+import { wrapHttps } from '../helpers/functions';
+import { USER_TOKEN } from '../constants/user';
 
 export default function ApiClient() {
   let _type = TYPE_OBJECT;
@@ -23,11 +24,17 @@ export default function ApiClient() {
     _method = 'POST'
     _data = null
     _withCredentials = false
-    _params = null
   }
 
+  function _getToken() {
+    const token = localStorage.getItem(USER_TOKEN);
+    if (token) {
+      return token;
+    }
+    return null
+  }
 
-  /*
+  /**
    * API
    */
   this.setType = function (type) {
@@ -69,7 +76,7 @@ export default function ApiClient() {
 
     let config = {}
     if ([TYPE_ARRAY, TYPE_OBJECT].includes(_type)) {
-      const token = getToken();
+      const token = _getToken();
       if (token) {
         config.headers = { 'Authorization': token }
       }

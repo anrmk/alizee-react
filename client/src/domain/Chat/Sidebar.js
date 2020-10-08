@@ -66,7 +66,7 @@ function Sidebar(props) {
         <div>
           <ul className="list-group list-group-flush">
             {props.rooms.map((room) => (
-              <RoomItem key={room.id} title={room.name} url={room.avatarUrl} subTitle={room.messages[room.messages.length - 1]?.message} onClick={(e) => handleGetRoom(room.id)} />
+              <RoomItem key={room.id} title={room.name} url={room.avatarUrl} subTitle={room.messages[room.messages.length - 1]?.message}  onClick={(e) => handleGetRoom(room.id)} />
             ))}
           </ul>
         </div>

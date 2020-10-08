@@ -6,6 +6,7 @@ import {
   GET_ROOMS_SUCCESS,
   GET_ROOMS_FAILURE,
   FILTER_ROOMS,
+  ADD_NEW_MESSAGE,
   CREATE_ROOM_REQUEST,
   CREATE_ROOM_SUCCESS,
   CREATE_ROOM_FAILURE,
@@ -45,6 +46,7 @@ export default function followerReducer(
       return {
         ...state,
         ...action.payload,
+        data: action.payload.data.reduce((acc, curr) => ([...acc, { ...curr, newMessagesCount: 0 }]), [])
       };
     case GET_ROOMS_FAILURE:
       return {
@@ -100,6 +102,18 @@ export default function followerReducer(
             messages: [...state.currentRoom.messages, action.payload.data],
           },
         },
+      };
+    case ADD_NEW_MESSAGE:
+      const rooms = [...state.data];
+      const roomIndex = rooms.findIndex(room => room.id === action.payload.roomId);
+
+      if(roomIndex != -1) {
+        rooms[roomIndex].newMessagesCount += action.payload.newMessagesCount;
+      }
+
+      return {
+        ...state,
+        data: rooms
       };
     default:
       return state;

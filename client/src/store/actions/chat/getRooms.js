@@ -6,6 +6,7 @@ export const GET_ROOMS_REQUEST = "GET_ROOMS_REQUEST";
 export const GET_ROOMS_SUCCESS = "GET_ROOMS_SUCCESS";
 export const GET_ROOMS_FAILURE = "GET_ROOMS_FAILURE";
 export const FILTER_ROOMS = "FILTER_ROOMS";
+export const ADD_NEW_MESSAGE = "ADD_NEW_MESSAGE";
 
 function requestGetRooms() {
   return {
@@ -75,7 +76,10 @@ const dataSelector = (state) => state.chat.data;
 export const getFilteredRooms = createSelector(
   [querySelector, dataSelector],
   (query, data) => {
-    return data.filter((item) => item?.name.toLowerCase().includes(query));
+    const res = data
+      .filter((item) => item?.name.toLowerCase().includes(query))
+      .sort((a, b) => b.newMessagesCount - a.newMessagesCount);
+    return res;
   }
 );
 
@@ -83,4 +87,14 @@ export function filter(query) {
   return async (dispatch) => {
     dispatch(filterRooms(query));
   };
+}
+
+export function addNewMessageCount(roomId, count) {
+  return dispatch => dispatch({
+    type: ADD_NEW_MESSAGE,
+    payload: {
+      roomId,
+      newMessagesCount: count
+    },
+  });
 }

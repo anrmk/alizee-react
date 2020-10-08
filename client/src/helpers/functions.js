@@ -23,8 +23,8 @@ export function generateUrl(endpoint, api = ENDPOINTS, postfix = null) {
  * @param {string} url
  * @return {string}
  */
-export function wrapHttps(url) {
-  return `https://${url}`;
+export function wrapHttps(url, https) {
+  return `${https ? 'https' : 'http'}://${url}`;
 }
 
 export function getToken() {
