@@ -63,10 +63,12 @@ export default function followerReducer(
         ...action.payload,
       };
     case CREATE_ROOM_SUCCESS:
+      const existedRoom = state.data.filter(room => room.id === action.payload.data.id);
       return {
         ...state,
         ...action.payload,
-        data: [...state.data, { ...action.payload.data }],
+        data: existedRoom.length ? [...state.data] : [...state.data,  {...action.payload.data }],
+        currentRoom: { ...action.payload.data }
       };
     case CREATE_ROOM_FAILURE:
       return {

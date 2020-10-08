@@ -4,8 +4,8 @@ import Modal from 'react-bootstrap/Modal';
 import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
-import SidebarSearch from "./SidebarSearch";
 import RoomItem from "./RoomItem";
+import Search from "../../components/Search"
 
 import "./Sidebar.scss";
 
@@ -25,8 +25,8 @@ function Sidebar(props) {
   return (
     <div className="sidebar">
       <div className="sidebar__header navbar navbar-expand-lg navbar-light bg-light">
-        <div className="navbar-brand brand">{props.modalShow ? "New chat" : "Direct"}</div>
-        <ul className="navbar-nav ml-auto">
+        <div className="navbar-brand brand">Direct</div>
+        <ul className="navbar-nav ml-auto">``
           <li className="nav-item">
             <a className="nav-link" onClick={handleModalToggle}>
               <ChatIcon />
@@ -39,14 +39,14 @@ function Sidebar(props) {
                 <form>
                   <div className="form-group row">
                     <div className="col">
-                      <input type="text" className="form-control border-0" placeholder="Search ..." onChange={props.onFilterFollowers} />
+                      <Search className="mb-1" onChange={props.onFilterFollowers}/>
                     </div>
                   </div>
                   <h6>Suggested</h6>
                   <div className="form-group">
                     <ul className="list-group list-group-flush">
                       {props.followers.map((user) => (
-                        <RoomItem key={user.id} name={user.followerName} profileUrl={user.followerUrl} onClick={(e) => handleCreateRoom(user.followerId)} />
+                        <RoomItem key={user.id} title={user.followerName} url={user.followerUrl} onClick={(e) => handleCreateRoom(user.followerId)} />
                       ))}
                     </ul>
                   </div>
@@ -61,12 +61,12 @@ function Sidebar(props) {
           </li>
         </ul>
       </div>
-      <SidebarSearch onFilterRooms={props.onFilterRooms} />
+      <Search className="p-1" onChange={props.onFilterRooms} />
       <div className="sidebar__body">
         <div>
           <ul className="list-group list-group-flush">
             {props.rooms.map((room) => (
-              <RoomItem key={room.id} name={room.name} avatarUrl={room.avatarUrl} message={room.messages[room.messages.length - 1].message} onClick={(e) => handleGetRoom(room.id)} />
+              <RoomItem key={room.id} title={room.name} url={room.avatarUrl} subTitle={room.messages[room.messages.length - 1]?.message} onClick={(e) => handleGetRoom(room.id)} />
             ))}
           </ul>
         </div>

@@ -8,7 +8,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HomeIcon from "@material-ui/icons/HomeOutlined";
 import StorefrontOutlinedIcon from '@material-ui/icons/StorefrontOutlined';
 import SendOutlinedIcon from '@material-ui/icons/SendOutlined';
-import { Avatar } from "@material-ui/core";
+import Avatar from "../components/Avatar";
 
 // import AppBar from '@material-ui/core/AppBar';
 // import Toolbar from '@material-ui/core/Toolbar';
@@ -26,10 +26,6 @@ function Header(props) {
   const handleSignOut = () => {
     onSignOut && onSignOut();
   }
-
-  // const handleChange = (event, newValue) => {
-  //   setValue(newValue);
-  // };
 
   const [value, setValue] = React.useState('recents');
 
@@ -107,7 +103,7 @@ function Header(props) {
             </li>
                 <li className="nav-item text-center">
                   <Link className="nav-link" to={"/me"} >
-                    <Avatar src={avatarUrl} />
+                    <Avatar url={avatarUrl} />
                   </Link>
                 </li>
 

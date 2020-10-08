@@ -34,3 +34,16 @@ export function getToken() {
   }
   return null;
 }
+
+/**
+ * Get new offset
+ * @param {number} currentOffset
+ * @param {number} total
+ * @param {number} step
+ * @return {number} new offset
+ */
+export function getOffset(currentOffset, total, step = 1) {
+  if (typeof currentOffset !== "number" || typeof total !== "number") return 0;
+
+  return currentOffset + step >= total ? total + step : currentOffset + step;
+}

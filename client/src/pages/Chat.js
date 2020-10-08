@@ -6,7 +6,6 @@ import ApiContext from '../context/ApiContext';
 import Sidebar from "../domain/Chat/Sidebar";
 import Room from "../domain/Chat/Room";
 
-
 import * as actionFollower from '../store/actions/follower';
 import * as actionChat from '../store/actions/chat';
 
@@ -45,6 +44,7 @@ const Chat = (props) => {
 
   const handleCreateRoom = (followerId) => {
     createRoom(apiClient, followerId);
+    setModalShow(false);
   };
 
   const handleCreateMessage = async (message) => {

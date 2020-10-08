@@ -75,7 +75,7 @@ const dataSelector = (state) => state.chat.data;
 export const getFilteredRooms = createSelector(
   [querySelector, dataSelector],
   (query, data) => {
-    return data.filter((item) => item.name.toLowerCase().includes(query));
+    return data.filter((item) => item?.name.toLowerCase().includes(query));
   }
 );
 
