@@ -13,7 +13,7 @@ function NotificationHub(props) {
 
   useEffect(() => {
     const newHubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(wrapHttps(`${process.env.REACT_APP_TESTING_DOMAIN}/hubs/chat`), {
+      .withUrl(wrapHttps(`${process.env.REACT_APP_TESTING_DOMAIN}/hubs/chat`, true), {
         accessTokenFactory: () => getToken(),
       })
       .withAutomaticReconnect()

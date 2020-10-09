@@ -4,8 +4,9 @@ import Modal from 'react-bootstrap/Modal';
 import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
-import RoomItem from "./RoomItem";
 import Search from "../../components/Search"
+
+import { AvatarItem} from "../../components/Avatar";
 
 import "./Sidebar.scss";
 
@@ -26,7 +27,7 @@ function Sidebar(props) {
     <div className="sidebar">
       <div className="sidebar__header navbar navbar-expand-lg navbar-light bg-light">
         <div className="navbar-brand brand">Direct</div>
-        <ul className="navbar-nav ml-auto">``
+        <ul className="navbar-nav ml-auto">
           <li className="nav-item">
             <a className="nav-link" onClick={handleModalToggle}>
               <ChatIcon />
@@ -46,7 +47,9 @@ function Sidebar(props) {
                   <div className="form-group">
                     <ul className="list-group list-group-flush">
                       {props.followers.map((user) => (
-                        <RoomItem key={user.id} title={user.followerName} url={user.followerUrl} onClick={(e) => handleCreateRoom(user.followerId)} />
+                        <li className="list-group-item list-group-item-action" onClick={(e) => handleCreateRoom(user.followerId)}  key={user.id}>
+                          <AvatarItem url={user.followerUrl} title={user.followerName} />
+                        </li>
                       ))}
                     </ul>
                   </div>
@@ -66,7 +69,10 @@ function Sidebar(props) {
         <div>
           <ul className="list-group list-group-flush">
             {props.rooms.map((room) => (
-              <RoomItem key={room.id} title={room.name} url={room.avatarUrl} subTitle={room.messages[room.messages.length - 1]?.message}  onClick={(e) => handleGetRoom(room.id)} />
+              <li className="list-group-item list-group-item-action d-flex justify-content-between align-items-center" onClick={(e) => handleGetRoom(room.id)} key={room.id}>
+                <AvatarItem url={room.avatarUrl} title={room.name} subtitle={room.messages[room.messages.length - 1]?.message} />
+                <span className="badge badge-primary badge-pill">{room.newMessagesCount}</span>
+              </li>
             ))}
           </ul>
         </div>

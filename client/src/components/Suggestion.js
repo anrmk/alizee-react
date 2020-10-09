@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Badge from '@material-ui/core/Badge';  
-import Avatar from "../components/Avatar";
+import {Avatar} from "../components/Avatar";
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 const StyledBadge = withStyles((theme) => ({

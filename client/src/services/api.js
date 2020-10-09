@@ -16,7 +16,7 @@ export default function ApiClient() {
   function _getUrl(query) {
     query = query || '/'
 
-    return wrapHttps(`${process.env.REACT_APP_TESTING_DOMAIN}${query}`)
+    return wrapHttps(`${process.env.REACT_APP_TESTING_DOMAIN}${query}`, true)
   }
 
   function _reset() {

@@ -3,7 +3,7 @@ import React, {useRef, useEffect, useState } from "react";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined';
 
-import Avatar from "../../components/Avatar";
+import {Avatar}  from "../../components/Avatar";
 import MessageSender from "./MessageSender";
 
 import "./Room.scss";
@@ -37,14 +37,17 @@ function Room(props) {
       </div>
       <div className="chat__body">
         <div ref={messageContainer}>
-          {props.room.messages.map((msg) => (
-            <div className={ msg.isOwner ? "d-flex align-items-center justify-content-end " : "d-flex align-items-center justify-content-between"} key={msg.id} >
-              <p className={msg.isOwner ? "mb-2 p-2 rounded shadow bg-info text-white" : "mb-2 p-2 rounded shadow bg-light"}>
-                <span>{msg.message}</span>
-                <small className="ml-3"><em>{msg.createdDate}</em></small>
-              </p>
-            </div>
-          ))}
+          {props.room.messages.map((msg) => {
+            const isOwner = msg.userId !== '';
+            return (
+              <div className={`d-flex align-items-center ${isOwner ? "justify-content-end" : "justify-content-between"}`} key={msg.id} >
+                <p className={`mb-2 p-2 rounded shadow ${isOwner ? "bg-info text-white" : "bg-light"}` }>
+                  <span>{msg.message}</span>
+                  <small className="ml-3"><em>{msg.createdDate}</em></small>
+                </p>
+              </div>
+            )
+          })}
         </div>
       </div>
       <div className="chat__footer">

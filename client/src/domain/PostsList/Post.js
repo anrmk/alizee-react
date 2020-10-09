@@ -7,7 +7,7 @@ import MonetizationOnOutlinedIcon from '@material-ui/icons/MonetizationOnOutline
 
 import './Post.scss';
 import { MEDIA_IMAGE, MEDIA_VIDEO } from '../../constants/media_types';
-import Avatar from '../../components/Avatar';
+import {Avatar} from '../../components/Avatar';
 import ImagesContent from './ImagesContent';
 import VideoContent from './VideoContent';
 

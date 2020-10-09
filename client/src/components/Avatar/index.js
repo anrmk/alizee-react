@@ -1,3 +1,4 @@
-import LocalAvatar from './Avatar';
+import  Avatar  from "./Avatar";
+import  AvatarItem   from "./AvatarItem";
 
-export default LocalAvatar;
+export {Avatar, AvatarItem}

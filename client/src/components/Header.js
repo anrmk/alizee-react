@@ -8,7 +8,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HomeIcon from "@material-ui/icons/HomeOutlined";
 import StorefrontOutlinedIcon from '@material-ui/icons/StorefrontOutlined';
 import SendOutlinedIcon from '@material-ui/icons/SendOutlined';
-import Avatar from "../components/Avatar";
+import {Avatar} from "../components/Avatar";
 
 // import AppBar from '@material-ui/core/AppBar';
 // import Toolbar from '@material-ui/core/Toolbar';
