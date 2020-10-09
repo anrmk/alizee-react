@@ -9,6 +9,8 @@ import HubComponent from "./domain/Hub/NotificationHub";
 
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import EmailConfirmation from './pages/EmailConfirmation';
+import EmailVerify from './pages/EmailVerify';
 import PrivateRoute from "./pages/PrivateRoute";
 import Chat from "./pages/Chat";
 
@@ -34,6 +36,8 @@ function App({ signOut, isAuthenticated, avatarUrl }) {
           </HubComponent> }
           <Route path="/signUp" component={SignUp} />
           <Route path="/signIn" component={SignIn} />
+          <Route path="/email-confirmation" component={EmailConfirmation} />
+          <Route path="/email-verify" component={EmailVerify} />
         </Switch>
       {isAuthenticated && <Footer />}
     </Router>
@@ -43,8 +47,8 @@ function App({ signOut, isAuthenticated, avatarUrl }) {
 function mapStateToProps(state) {
   return {
     isAuthenticated: state.signIn.isAuthenticated,
-    avatarUrl: state.signUp?.userInfo?.avatar || state.signIn?.userInfo?.avatar,
-  };
+    avatarUrl: state.signIn.userInfo?.avatarUrl
+  }
 }
 
 function mapDispatchToProps(dispatch) {

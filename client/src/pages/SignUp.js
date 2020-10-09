@@ -27,29 +27,31 @@ function SignUp(props) {
   } = props;
 
   const [formData, setFormData] = useState({
+    name: '',
+    surname: '',
     username: '',
     email: ''
   });
 
   if (isSignUp) {
-    return <Redirect to="signIn" />
+    return <Redirect to="email-confirmation" />
   }
 
   const handleFormChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    if (!formData.username || !formData.email) return;
+    if (!formData.username || !formData.email || !formData.name || !formData.surname) return;
 
     // TODO: replace mock data
     signUp({
-        name: MOCK_SIGNUP_INFO.name,
-        surname: MOCK_SIGNUP_INFO.surname,
+        name: formData.name,
+        surname: formData.surname,
+        birthday: formData.birthday,
         username: formData.username,
         email: formData.email,
-        phoneNumber: MOCK_SIGNUP_INFO.phoneNumber,
-        avatar: MOCK_SIGNUP_INFO.avatar,
-        tokenId: MOCK_SIGNUP_INFO.token
+        phoneNumber: formData.phoneNumber,
+        avatarUrl: MOCK_SIGNUP_INFO.avatarUrl
       },
       apiClient);
   };
@@ -75,16 +77,56 @@ function SignUp(props) {
       <form onSubmit={handleFormSubmit} onChange={handleFormChange}>
         <div className="form-row">
           <div className="form-group col-md-6">
+            <label htmlFor="name">First name</label>
+            <input
+              className="form-control"
+              type="text"
+              name="name"
+              placeholder="Name"
+              onChange={() => { }}
+              value={formData.name}
+            />
+          </div>
+        </div>
+        <div className="form-row">
+          <div className="form-group col-md-6">
+            <label htmlFor="surname">Last name</label>
+            <input
+              className="form-control"
+              type="text"
+              name="surname"
+              placeholder="Surname"
+              onChange={() => { }}
+              value={formData.surname}
+            />
+          </div>
+        </div>
+        <div className="form-row">
+          <div className="form-group col-md-6">
+            <label htmlFor="birthday">Birth day</label>
+            <input
+              className="form-control"
+              type="date"
+              name="birthday"
+              onChange={() => { }}
+              value={formData.birthday}
+            />
+          </div>
+        </div>
+        <div className="form-row">
+          <div className="form-group col-md-6">
             <label htmlFor="username">Username</label>
             <input
               className="form-control"
               type="text"
               name="username"
-              placeholder="Username"
+              placeholder="Nickname"
               onChange={() => { }}
               value={formData.username}
             />
           </div>
+        </div>
+        <div className="form-row">
           <div className="form-group col-md-6">
             <label htmlFor="email">Email address</label>
             <input
@@ -97,6 +139,7 @@ function SignUp(props) {
             />
           </div>
         </div>
+        <br />
         <div className="form-row">
           <button type="submit" className="btn btn-primary form-group col-md-3">SignUp</button>
         </div>

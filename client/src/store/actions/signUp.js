@@ -88,11 +88,11 @@ export function signUpUser(creds, api) {
         .setData({
           name: creds.name,
           surname: creds.surname,
+          birthday: creds.birthday,
           userName: creds.username,
           email: creds.email,
           phoneNumber: creds.phoneNumber,
-          avatar: creds.imageUrl,
-          tokenId: creds.tokenId
+          avatarUrl: creds.imageUrl
         })
         .query(url);
 
@@ -120,11 +120,11 @@ export function signUpSocial(socialType, socialData, api) {
       creds = {
         name: socialData?.profileObj?.givenName,
         surname: socialData?.profileObj?.familyName,
+        birthday: socialData?.profileObj?.birthday,
         username: socialData?.profileObj?.email,
         email: socialData?.profileObj?.email,
-        phoneNumber: MOCK_SIGNUP_INFO.phoneNumber, // TODO: remove it
-        imageUrl: socialData?.profileObj?.imageUrl,
-        tokenId: socialData?.tokenId
+        phoneNumber: socialData?.profileObj?.phoneNumber, // TODO: remove it
+        imageUrl: socialData?.profileObj?.imageUrl
       }
     }
 

@@ -8,7 +8,8 @@ import { USER_TOKEN } from '../../constants/user';
 
 export default function signIn(state = {
   isFetching: false,
-  isAuthenticated: !!localStorage.getItem(USER_TOKEN)
+  isAuthenticated: !!localStorage.getItem(USER_TOKEN),
+  isVerified: false
 }, action) {
   switch (action.type) {
     case SIGNIN_REQUEST:

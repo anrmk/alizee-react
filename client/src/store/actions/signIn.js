@@ -6,6 +6,9 @@ export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS';
 export const SIGNIN_FAILURE = 'SIGNIN_FAILURE';
 export const SIGNOUT_SUCCESS = 'SIGNOUT_SUCCESS';
 
+export const VERIFIED_SUCCESS = 'VERIFIED_SUCCESS';
+export const VERIFIED_FAILURE = 'VERIFIED_FAILURE';
+
 function requestSignIn(creds) {
   return {
     type: SIGNIN_REQUEST,
@@ -25,18 +28,21 @@ function receiveSignIn(userInfo) {
       isFetching: false,
       isAuthenticated: true,
       errorMessage: '',
+      isVerified: true,
       userInfo
     }
   }
 }
 
-function errorSignIn(message) {
+function errorSignIn(message, status) {
   return {
     type: SIGNIN_FAILURE,
     payload: {
       isFetching: false,
       isAuthenticated: false,
-      errorMessage: message
+      isVerified: false,
+      errorMessage: message,
+      errorStatus: status
     }
   }
 }
@@ -55,25 +61,22 @@ export function signInUser(creds, api) {
     dispatch(requestSignIn(creds));
     const url = generateUrl("signIn");
     try {
-      const { status, data } = await api
+      const { data } = await api
+        .setMethod("POST")
         .setData({
           userName: creds.userName,
           password: creds.password,
-          rememberMe: creds.rememberMe
+          rememberMe: creds?.rememberMe || false
         })
         .query(url);
-
-      if (status !== 200) {
-        return dispatch(errorSignIn(data.message));
-      }
 
       if (creds.rememberMe) {
         localStorage.setItem(USER_TOKEN, data.token);
       }
 
       dispatch(receiveSignIn(data));
-    } catch {
-      dispatch(errorSignIn("Error: SignIn"));
+    } catch(e) {
+      dispatch(errorSignIn(e.message, e.response?.status || 500));
     }
   }
 }
