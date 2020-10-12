@@ -64,7 +64,7 @@ export function signInUser(creds, api) {
       const { data } = await api
         .setMethod("POST")
         .setData({
-          userName: creds.userName,
+          email: creds.email,
           password: creds.password,
           rememberMe: creds?.rememberMe || false
         })

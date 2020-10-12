@@ -17,7 +17,7 @@ function SignIn(props) {
   const { from } = props.location.state || { from: { pathname: "/" } };
 
   const [formData, setFormData] = useState({
-    userName: "",
+    email: "",
     password: "",
     rememberMe: true,
   });
@@ -39,11 +39,11 @@ function SignIn(props) {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    if (!formData.userName || !formData.password) return;
+    if (!formData.email || !formData.password) return;
 
     signIn(
       {
-        userName: formData.userName,
+        email: formData.email,
         password: formData.password,
         rememberMe: formData.rememberMe,
       },
@@ -65,10 +65,10 @@ function SignIn(props) {
                     <input
                       className="form-control"
                       type="text"
-                      name="userName"
-                      placeholder="Username"
+                      name="email"
+                      placeholder="Email"
                       onChange={() => {}}
-                      value={formData.userName}
+                      value={formData.email}
                     />
                   </div>
                   <div className="form-group">
