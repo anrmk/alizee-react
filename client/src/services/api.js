@@ -22,6 +22,7 @@ export default function ApiClient() {
   function _reset() {
     _type = TYPE_OBJECT
     _method = 'POST'
+    _params = null
     _data = null
     _withCredentials = false
   }
@@ -65,7 +66,7 @@ export default function ApiClient() {
     return this
   }
 
-  this.query = function (query) {
+  this.query = function (query, headers) {
     if (process.env.VUE_APP_USE_SSO_AUTH === 'no') {
       return new Promise(() => { })
     }
@@ -75,10 +76,14 @@ export default function ApiClient() {
     }
 
     let config = {}
+    if (headers) {
+      config.headers = headers;
+    }
+
     if ([TYPE_ARRAY, TYPE_OBJECT].includes(_type)) {
       const token = _getToken();
       if (token) {
-        config.headers = { 'Authorization': token }
+        config.headers = { ...config.headers, 'Authorization': token }
       }
     }
 

@@ -1,0 +1,96 @@
+$drop-zone-flex: 1;
+$drop-zone-padding: 20px;
+$drop-zone-border-width: 2px;
+$drop-zone-border-radius: 2px;
+$drop-zone-border-color: #eeeeee;
+$drop-zone-bg-color: #fafafa;
+$drop-zone-color: #bdbdbd;
+$drop-zone-transition-time: .24s;
+
+$thumbs-list-margin-top: 16px;
+
+$thumb-border-radius: 2px;
+$thumb-border: 1px;
+$thumb-border-color: #eaeaea;
+$thumb-margin-bottom: 8px;
+$thumb-margin-right: 8px;
+$thumb-width: 100px;
+$thumb-height: 100px;
+$thumb-padding: 4px;
+$thumb-media-height: 100%;
+$thumb-video-width: 160px;
+$thumb-close-btn-right: 5px;
+$thumb-close-btn-top: 5px;
+$thumb-close-z-index: 2px;
+$thumb-inner-width: 0;
+$thumb-inner-img-width: 100%;
+
+.drop-zone {
+  flex: $drop-zone-flex;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $drop-zone-padding;
+  border-width: $drop-zone-border-width;
+  border-radius: $drop-zone-border-radius;
+  border-color: $drop-zone-border-color;
+  border-style: dashed;
+  background-color: $drop-zone-bg-color;
+  color: $drop-zone-color;
+  outline: none;
+  transition: border $drop-zone-transition-time ease-in-out;
+}
+
+.thumbs-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: $thumbs-list-margin-top;
+  justify-content: center;
+  overflow-x: auto;
+}
+
+.thumb {
+  display: inline-flex;
+  position: relative;
+  border-radius: $thumb-border-radius;
+  border: $thumb-border solid $thumb-border-color;
+  margin-bottom: $thumb-margin-bottom;
+  margin-right: $thumb-margin-right;
+  width: $thumb-width;
+  height: $thumb-height;
+  padding: $thumb-padding;
+  box-sizing: border-box;
+
+  &__media {
+    display: block;
+    width: auto;
+    height: $thumb-media-height;
+  }
+
+  &__video {
+    & > video {
+      width: $thumb-video-width !important;
+      height: auto !important;
+    }
+  }
+
+  &__inner {
+    display: flex;
+    min-width: $thumb-inner-width;
+    overflow: hidden;
+    & > img {
+      width: $thumb-inner-img-width;
+      object-fit: cover;
+      object-position: top;
+    }
+  }
+
+  &__close-btn {
+    pointer-events: all;
+    position: absolute;
+    right: $thumb-close-btn-right;
+    top: $thumb-close-btn-top;
+    z-index: $thumb-close-z-index;
+  }
+}

@@ -1,0 +1,2 @@
+export const FILE_UPLOADER_MAX_FILE_SIZE = 4;
+export const FILE_UPLOADER_MAX_FILES_COUNT = 10;

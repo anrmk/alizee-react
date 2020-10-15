@@ -3,17 +3,20 @@ $avatar-medium-size: 40px;
 $avatar-large-size: 56px;
 
 .avatar {
-  &__small {
+  object-fit: cover;
+  object-position: top;
+
+  &--small {
     width: $avatar-small-size;
     height: $avatar-small-size;
   }
 
-  &__medium {
+  &--medium {
     width: $avatar-medium-size;
     height: $avatar-medium-size;
   }
 
-  &__large {
+  &--large {
     width: $avatar-large-size;
     height: $avatar-large-size;
   }

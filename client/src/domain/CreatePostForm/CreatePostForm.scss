@@ -1,0 +1,8 @@
+$text-area-border-radius: 2px;
+
+.create-post-form {
+  &__text-area {
+    border-radius: $text-area-border-radius;
+    resize: none;
+  }
+}

@@ -1,4 +1,5 @@
 $card-content-wrapper-width: 100%;
+$card-content-wrapper-max-height: 700px;
 
 $react-player-controls-transition: .5s;
 $react-player-btn-play-size: 8rem;
@@ -6,10 +7,44 @@ $react-player-btn-color: #e2dfdf;
 $react-player-btn-mute-size: 2rem;
 $react-player-btn-mute-margin: 10px;
 
+$react-carousel-slide-height: 100%;
+$react-carousel-max-height: 700px;
+
+$payable-content-width: 100%;
+$payable-content-height: 500px;
+$payable-content-bg-color: rgb(233, 233, 233);
+$payable-content-z-index: 1;
+$payable-content-icon-size: 6rem;
+$payable-content-color: rgb(207, 207, 207);
+
+$username-color: #d83cbe;
+
 .card-content-wrapper {
   position: relative;
   width: $card-content-wrapper-width;
   overflow: hidden;
+  .carousel-root .carousel .slider-wrapper .slider .slide {
+    div, div > img {
+      height: $react-carousel-slide-height;
+      max-height: $react-carousel-max-height;
+    }
+  }
+}
+
+.payable-content {
+  width: $payable-content-width;
+  height: $payable-content-height;
+  background-color: $payable-content-bg-color;
+  z-index: $payable-content-z-index;
+
+  & > svg {
+    font-size: $payable-content-icon-size;
+    color: $payable-content-color
+  }
+
+  & > h1 {
+    color: $payable-content-color
+  }
 }
 
 .react-player {
@@ -40,4 +75,12 @@ $react-player-btn-mute-margin: 10px;
       color: $react-player-btn-color;
     }
   }
+}
+
+.username {
+  color: $username-color;
+}
+
+.post-share-modal {
+  max-width: 400px;
 }

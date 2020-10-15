@@ -13,31 +13,36 @@ import EmailConfirmation from './pages/EmailConfirmation';
 import EmailVerify from './pages/EmailVerify';
 import PrivateRoute from "./pages/PrivateRoute";
 import Chat from "./pages/Chat";
-
+import Post from "./pages/Post";
 import Feed from "./pages/Feed";
-
 import CreateRoom from "./pages/CreateRoom";
 import Meeting from "./pages/Meeting";
 import Room from "./pages/Room";
-import { signOutUser } from "./store/actions/signIn";
+
+import { signOutUser } from './store/actions/signIn';
+import * as Routes from './constants/routes';
 
 function App({ signOut, isAuthenticated, avatarUrl }) {
   return (
     <Router>
       {isAuthenticated && <Header onSignOut={signOut} avatarUrl={avatarUrl} />}
         <Switch>
-          {isAuthenticated && 
+          <Route path={Routes.SIGN_UP_ROUTE} component={SignUp} />
+          <Route path={Routes.SIGN_IN_ROUTE} component={SignIn} />
+          <Route path={Routes.EMAIL_CONFIRMATION} component={EmailConfirmation} />
+          <Route path={Routes.EMAIL_VERIFY} component={EmailVerify} />
+          {/* 
+            TODO: if routes are wrapped to some parent Element(not route). 
+            All PrivateRoute execute render(in general redirect cause user isn't auth)
+          */}
           <HubComponent>
-            <PrivateRoute exact path="/" component={Feed} />
-            <PrivateRoute path="/meet" component={Meeting} />
-            <PrivateRoute path="/chat" component={Chat} />
-            <PrivateRoute exact path="/room" component={CreateRoom} />
-            <PrivateRoute path="/room/:roomID" component={Room} />
-          </HubComponent> }
-          <Route path="/signUp" component={SignUp} />
-          <Route path="/signIn" component={SignIn} />
-          <Route path="/email-confirmation" component={EmailConfirmation} />
-          <Route path="/email-verify" component={EmailVerify} />
+            <PrivateRoute exact path={Routes.HOME_ROUTE} component={Feed} />
+            <PrivateRoute path={Routes.POST_ID_ROUTE} component={Post} />
+            <PrivateRoute path={Routes.MEET_ROUTE} component={Meeting} />
+            <PrivateRoute path={Routes.CHAT_ROUTE} component={Chat} />
+            <PrivateRoute path={Routes.ROOM_ROUTE} component={CreateRoom} />
+            <PrivateRoute path={Routes.ROOM_ID_ROUTE} component={Room} />
+          </HubComponent>
         </Switch>
       {isAuthenticated && <Footer />}
     </Router>

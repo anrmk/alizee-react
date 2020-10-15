@@ -9,6 +9,7 @@ import StatusError from "../components/StatusError";
 function EmailVerify({ signIn, confirmingEmail, confirmEmail }) {
   const apiClient = useContext(ApiContext);
 
+  console.log(signIn, confirmingEmail)
   if (signIn.isVerified) {
     return <Redirect to="/" />
   }

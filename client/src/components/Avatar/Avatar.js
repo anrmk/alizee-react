@@ -4,7 +4,9 @@ import "./Avatar.scss";
 
 function Avatar({ url, size }) {
   return (
-    <img className={`avatar__${size} border rounded-circle ml-1 mr-2`} src={url} />
+    <div>
+      <img className={`avatar avatar--${size} rounded-circle`} src={url} />
+    </div>
   );
 }
 
