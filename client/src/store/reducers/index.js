@@ -6,14 +6,17 @@ import confirmEmail from './confirmEmail';
 import posts from "./posts";
 import media from './media';
 
-import follower from "./follower";
+import relationship from "./relationship";
+import suggestion from "./suggestion";
+
 import chat from "./chat";
 
 export default combineReducers({
   signUp,
   signIn,
   confirmEmail,
-  follower,
+  relationship,
+  suggestion,
   chat,
   posts,
   media

@@ -9,3 +9,4 @@ export const SIGN_IN_ROUTE = "/signIn";
 export const SIGN_UP_ROUTE = "/signUp";
 export const EMAIL_CONFIRMATION = "/email-confirmation";
 export const EMAIL_VERIFY = "/email-verify";
+export const SUGESTED_PEOPLE = "/people/suggested";

@@ -17,13 +17,13 @@ function requestGetFollowers() {
   };
 }
 
-function receiveGetFollowers(followers) {
+function receiveGetFollowers(followersData) {
   return {
     type: GET_FOLLOWERS_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
-      data: followers || [],
+      followers: followersData || [],
     },
   };
 }
@@ -38,7 +38,7 @@ function errorGetFollowers(message) {
   };
 }
 
-function filterFollowers(query) {
+function _filterFollowers(query) {
   return {
     type: FILTER_FOLLOWERS,
     payload: {
@@ -54,6 +54,7 @@ export function getFollowers(api) {
     dispatch(requestGetFollowers());
 
     const url = generateUrl("getFollowers");
+    console.log("URL", url)
     try {
       const { status, data } = await api.setMethod("GET").query(url);
 
@@ -81,8 +82,8 @@ export const getFilteredFollowers = createSelector(
   }
 );
 
-export function filter(query) {
+export function filterFollowers(query) {
   return async (dispatch) => {
-    dispatch(filterFollowers(query));
+    dispatch(_filterFollowers(query));
   };
 }

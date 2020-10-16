@@ -9,10 +9,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route {...rest} render={(props) => (
       isAuthenticated === true
         ? <Component {...props} />
-        : <Redirect to={{
-          pathname: '/signIn',
-          state: { from: props.location }
-        }} />
+        : <Redirect to={{pathname: '/signIn', state: { from: props.location } }} />
     )} />
   )
 }
@@ -20,7 +17,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 function mapStateToProps(state) {
   return {
     isAuthenticated: state.signIn.isAuthenticated,
-  }
+  };
 }
 
-export default connect(mapStateToProps)(PrivateRoute)
+export default connect(mapStateToProps)(PrivateRoute);

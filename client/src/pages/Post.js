@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Spinner } from 'react-bootstrap';
 
 import { Post } from '../domain/PostsList';
-import Suggestion from '../components/Suggestion';
+
 import { fetchPost } from '../store/actions/post';
 import ApiContext from '../context/ApiContext';
 import { Redirect } from 'react-router-dom';
@@ -52,7 +52,7 @@ function PostPage(props) {
           }
         </div>
         <div className="col-lg-4 d-none d-lg-block d-xl-block">
-          <Suggestion />
+
         </div>
       </div>
     </div>

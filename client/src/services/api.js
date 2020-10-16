@@ -101,6 +101,7 @@ export default function ApiClient() {
     return new Promise((resolve, reject) => {
       axios(config)
         .then(response => {
+          response.success = true;
           resolve(response)
         })
         .catch(error => {

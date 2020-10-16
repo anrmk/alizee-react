@@ -36,7 +36,7 @@ function Header(props) {
     //   <BottomNavigationAction label="Nearby" value="nearby" icon={<StorefrontOutlinedIcon />} />
     //   <BottomNavigationAction label="Folder" value="folder" icon={<SendOutlinedIcon />} />
     // </BottomNavigation>
-    <div className="navbar navbar-expand-lg navbar-light bg-light sticky-top py-1">
+    <div className="navbar navbar-expand-lg navbar-light bg-light border-bottom sticky-top py-1">
       <div className="container">
         <span className="navbar-brand mb-0 h1">
           <img

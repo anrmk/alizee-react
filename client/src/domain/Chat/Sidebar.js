@@ -5,7 +5,6 @@ import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 import Search from "../../components/Search"
-
 import { AvatarItem} from "../../components/Avatar";
 
 import "./Sidebar.scss";
@@ -46,9 +45,9 @@ function Sidebar(props) {
                   <h6>Suggested</h6>
                   <div className="form-group">
                     <ul className="list-group list-group-flush">
-                      {props.followers.map((user) => (
-                        <li className="list-group-item list-group-item-action" onClick={(e) => handleCreateRoom(user.followerId)}  key={user.id}>
-                          <AvatarItem url={user.followerUrl} title={user.followerName} />
+                      {props.followings.map((item) => (
+                        <li className="list-group-item list-group-item-action" onClick={(e) => handleCreateRoom(item.userId)}  key={item.id}>
+                          <AvatarItem url={item.userUrl} title={item.userName} subtitle="" />
                         </li>
                       ))}
                     </ul>
@@ -68,12 +67,14 @@ function Sidebar(props) {
       <div className="sidebar__body">
         <div>
           <ul className="list-group list-group-flush">
-            {props.rooms.map((room) => (
-              <li className="list-group-item list-group-item-action d-flex justify-content-between align-items-center" onClick={(e) => handleGetRoom(room.id)} key={room.id}>
+            {props.rooms.map((room) => {
+              const isActive = props.room?.id == room.id ? "active" : "";
+              return (
+              <li className={`list-group-item list-group-item-action d-flex justify-content-between align-items-center ${isActive}`} onClick={(e) => handleGetRoom(room.id)} key={room.id}>
                 <AvatarItem url={room.avatarUrl} title={room.name} subtitle={room.messages[room.messages.length - 1]?.message} />
-                <span className="badge badge-primary badge-pill">{room.newMessagesCount}</span>
+                {room.newMessagesCount > 0 ? <span className="badge badge-light badge-pill">{room.newMessagesCount}</span> : ""}
               </li>
-            ))}
+            )})}
           </ul>
         </div>
       </div>

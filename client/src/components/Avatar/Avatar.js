@@ -2,10 +2,10 @@ import React from "react";
 
 import "./Avatar.scss";
 
-function Avatar({ url, size }) {
+function Avatar({ url, size, className }) {
   return (
-    <div>
-      <img className={`avatar avatar--${size} rounded-circle`} src={url} />
+    <div className={className}>
+      <img className={`avatar avatar--${size} rounded-circle`} src={url} alt="" />
     </div>
   );
 }
@@ -13,6 +13,7 @@ function Avatar({ url, size }) {
 Avatar.defaultProps = {
   url: "",
   size: "medium",
+  className: ""
 };
 
 export default Avatar;

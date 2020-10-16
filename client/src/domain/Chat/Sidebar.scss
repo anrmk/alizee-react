@@ -22,5 +22,11 @@
       overflow-x: hidden;
       overflow-y: auto;
     }
+
+    .list-group-item.active {
+      color: #212529;
+      background-color: #e9ecef;
+      border-color: rgba(0, 0, 0, 0.125);
+    }
   }
 }

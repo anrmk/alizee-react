@@ -16,7 +16,7 @@ import {
   CREATE_MESSAGE,
 } from "../actions/chat";
 
-export default function followerReducer(
+export default function chatReducer(
   state = { isFetching: false, data: [], query: "" },
   action
 ) {
@@ -26,11 +26,20 @@ export default function followerReducer(
         ...state,
         ...action.payload,
       };
-    case GET_ROOM_SUCCESS:
+    case GET_ROOM_SUCCESS: {
+      const rooms = [...state.data];
+      const roomIndex = rooms.findIndex(room => room.id === action.payload.currentRoom.id);
+
+      if(roomIndex != -1) {
+        rooms[roomIndex].newMessagesCount = 0;
+      }
+
       return {
         ...state,
         ...action.payload,
+        data: rooms
       };
+    }
     case GET_ROOM_FAILURE:
       return {
         ...state,
@@ -64,14 +73,16 @@ export default function followerReducer(
         ...state,
         ...action.payload,
       };
-    case CREATE_ROOM_SUCCESS:
+    case CREATE_ROOM_SUCCESS: {
       const existedRoom = state.data.filter(room => room.id === action.payload.data.id);
+      
       return {
         ...state,
         ...action.payload,
         data: existedRoom.length ? [...state.data] : [...state.data,  {...action.payload.data }],
         currentRoom: { ...action.payload.data }
       };
+    }
     case CREATE_ROOM_FAILURE:
       return {
         ...state,
@@ -103,7 +114,7 @@ export default function followerReducer(
           },
         },
       };
-    case ADD_NEW_MESSAGE:
+    case ADD_NEW_MESSAGE: {
       const rooms = [...state.data];
       const roomIndex = rooms.findIndex(room => room.id === action.payload.roomId);
 
@@ -115,6 +126,7 @@ export default function followerReducer(
         ...state,
         data: rooms
       };
+    }
     default:
       return state;
   }

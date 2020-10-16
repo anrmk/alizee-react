@@ -38,7 +38,7 @@ function Room(props) {
       <div className="chat__body">
         <div ref={messageContainer}>
           {props.room.messages.map((msg) => {
-            const isOwner = msg.userId !== '';
+            const isOwner = msg.userId == props.userId;
             return (
               <div className={`d-flex align-items-center ${isOwner ? "justify-content-end" : "justify-content-between"}`} key={msg.id} >
                 <p className={`mb-2 p-2 rounded shadow ${isOwner ? "bg-info text-white" : "bg-light"}` }>

@@ -4,30 +4,33 @@ import { connect } from "react-redux";
 import ApiContext from '../context/ApiContext';
 
 import Sidebar from "../domain/Chat/Sidebar";
-import Room from "../domain/Chat/Room";
+import { Room, Empty } from "../domain/Chat";
 
-import * as actionFollower from '../store/actions/follower';
+import * as actionRelationship from '../store/actions/relationship';
 import * as actionChat from '../store/actions/chat';
 
-const Chat = (props) => {
+function Chat(props) {
   const apiClient = useContext(ApiContext);
 
-  const { follower, getFollowers, filterFollowers } = props;
+  const { user } = props;
+  const { followings, getFollowings, filterFollowings } = props;
   const { chat, getRoom, createRoom, getRooms, filterRooms } = props;
   const { createMessage } = props;
 
   const [modalShow, setModalShow] = useState(false);
   
   useEffect(() => {
+    console.log(followings)
+
     if (modalShow) {
-      getFollowers(apiClient);
+      getFollowings(apiClient);
     } else {
       getRooms(apiClient);
     }
   }, [modalShow]);
 
-  const handleFilterFollowers = (e) => {
-    filterFollowers(e.target.value.toLowerCase());
+  const handleFilterFollowings = (e) => {
+    filterFollowings(e.target.value.toLowerCase());
   };
 
   const handleModalToggle = (e) => {
@@ -48,7 +51,9 @@ const Chat = (props) => {
   };
 
   const handleCreateMessage = async (message) => {
-    createMessage(apiClient, chat.currentRoom.id, message);
+    if(message && message.length > 0) {
+      createMessage(apiClient, chat.currentRoom.id, message);
+    }
   };
 
   return (
@@ -58,28 +63,33 @@ const Chat = (props) => {
           <Sidebar
             modalShow={modalShow}
             rooms={chat.data}
+            room={chat.currentRoom}
             onFilterRooms={handleFilterRooms}
             onGetRoom={handleGetRoom}
             onCreateRoom={handleCreateRoom}
             onModalToggle={handleModalToggle}
-            followers={follower.data}
-            onFilterFollowers={handleFilterFollowers}
+            followings={followings.data}
+            onFilterFollowers={handleFilterFollowings}
           />
         </div>
         <div className="col-8">
-          {chat.currentRoom && <Room room={chat.currentRoom} onCreateMessage={handleCreateMessage} />}
+          {chat.currentRoom ? <Room room={chat.currentRoom} userId={user.id} onCreateMessage={handleCreateMessage} /> : <Empty />}
         </div>
       </div>
     </div>
   );
 };
 
+
 function mapStateToProps(state) {
   return {
-    follower: {
-      isFetching: state.follower.isFetching,
-      data: actionFollower.getFilteredFollowers(state),
-      errorMessage: state.follower.errorMessage,
+    user: {
+      id: state.signIn?.userInfo?.id,
+    },
+    followings: {
+      isFetching: state.relationship.isFetching,
+      data: actionRelationship.getFilteredFollowings(state),
+      errorMessage: state.relationship.errorMessage,
       keywords: state.keywords,
     },
     chat: {
@@ -94,8 +104,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getFollowers: api => dispatch(actionFollower.getFollowers(api)),
-    filterFollowers: query => dispatch(actionFollower.filter(query)),
+    getFollowings: api => dispatch(actionRelationship.getFollowings(api)),
+    filterFollowings: query => dispatch(actionRelationship.filterFollowings(query)),
+
     getRooms: api => dispatch(actionChat.getRooms(api)),
     filterRooms: query => dispatch(actionChat.filter(query)),
 
