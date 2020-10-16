@@ -24,12 +24,12 @@ function Feed(props) {
   const { fetchPosts, createPost } = props;
 
   useEffect(() => {
-    fetchPosts(apiClient, { offset, length: POSTS_LENGTH });
+    fetchPosts(apiClient, { offset: posts.offset, length: POSTS_LENGTH });
     getPeopleSuggestions(apiClient, 6)
   }, []);
 
   const handleFetchMore = () => {
-    fetchPosts(apiClient, { offset, length: POSTS_LENGTH });
+    fetchPosts(apiClient, { offset: posts.offset, length: POSTS_LENGTH });
   }
 
   const handleFormSubmit = async (formData, mediaData) => {
@@ -73,15 +73,10 @@ function Feed(props) {
 
 function mapStateToProps(state) {
   return {
-    // isFetching: state.posts.isFetching,
-    // offset: state.posts.offset,
-    // data: state.posts.data,
-    // errorMessage: state.posts.errorMessage,
-
     userInfo: {
-      userName: state.signIn.userInfo.userName,
-      avatarUrl: state.signIn.userInfo.avatarUrl,
-      fullName: state.signIn.userInfo.name +" "+ state.signIn.userInfo.surname
+      userName: state.signIn?.userInfo?.userName,
+      avatarUrl: state.signIn?.userInfo?.avatarUrl,
+      fullName: state.signIn?.userInfo?.name +" "+ state.signIn?.userInfo?.surname
     },
     posts: {
       isFetching: state.posts.isFetching,

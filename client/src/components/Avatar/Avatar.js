@@ -1,11 +1,13 @@
 import React from "react";
 
+import defaultAvatar from "../../assets/img/avatar.png"
+
 import "./Avatar.scss";
 
 function Avatar({ url, size, className }) {
   return (
     <div className={className}>
-      <img className={`avatar avatar--${size} rounded-circle`} src={url} alt="" />
+      <img className={`avatar avatar--${size} rounded-circle`} src={url || defaultAvatar} alt="" />
     </div>
   );
 }

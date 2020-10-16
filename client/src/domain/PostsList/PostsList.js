@@ -44,7 +44,7 @@ function PostsList({
         centered
         onHide={handleModalHide}>
         <Modal.Header closeButton>
-          <Modal.Title className="h6 ml-auto">Share</Modal.Title>
+          <Modal.Title className="h6 ml-auto pl-4">Share</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <ShareList {...shareData} />

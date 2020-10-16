@@ -73,8 +73,10 @@ export function createPost(api, postData, mediaData=[]) {
       }
 
       // Extend relative path to absolute (to remote server)
-      const avatarUrl = data.user.avatarUrl;
-      data.user.avatarUrl = generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, avatarUrl);
+      const avatarUrl = getState().signIn?.userInfo?.avatarUrl;
+      if (avatarUrl) {
+        data.user.avatarUrl = avatarUrl;
+      }
       data.media.forEach(item => {
         item.url = generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, item.url);
       });

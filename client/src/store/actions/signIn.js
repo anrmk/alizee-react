@@ -1,4 +1,4 @@
-import { generateUrl } from '../../helpers/functions';
+import { generateUrl, generateFileUrl } from '../../helpers/functions';
 import { USER_TOKEN } from '../../constants/user';
 
 export const SIGNIN_REQUEST = 'SIGNIN_REQUEST';
@@ -70,8 +70,11 @@ export function signInUser(creds, api) {
         })
         .query(url);
 
-      if (creds.rememberMe) {
-        localStorage.setItem(USER_TOKEN, data.token);
+      localStorage.setItem(USER_TOKEN, data.token);
+
+      const avatarUrl = data?.avatarUrl;
+      if (avatarUrl) {
+        data.avatarUrl = generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, avatarUrl);
       }
 
       dispatch(receiveSignIn(data));

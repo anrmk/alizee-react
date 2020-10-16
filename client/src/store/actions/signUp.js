@@ -1,6 +1,5 @@
 import { generateUrl } from '../../helpers/functions';
 import { SOCIAL_GOOGLE } from '../../constants/social_types';
-import { MOCK_SIGNUP_INFO } from '../../mock/user';
 
 export const SIGNUP_REQUEST = 'SIGNUP_REQUEST';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
@@ -123,7 +122,7 @@ export function signUpSocial(socialType, socialData, api) {
         birthday: socialData?.profileObj?.birthday,
         username: socialData?.profileObj?.email,
         email: socialData?.profileObj?.email,
-        phoneNumber: socialData?.profileObj?.phoneNumber, // TODO: remove it
+        phoneNumber: socialData?.profileObj?.phoneNumber,
         imageUrl: socialData?.profileObj?.imageUrl
       }
     }

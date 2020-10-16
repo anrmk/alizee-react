@@ -8,6 +8,7 @@ export default {
     resendEmailVerification: 'account/resendemailverification',
 
     getPost: 'post/getpost',
+    getPosts: 'post/getposts',
     createPost: 'post/createpost',
     createMedia: 'media/createmedia',
     getFollowers: "follower/getfollowers",

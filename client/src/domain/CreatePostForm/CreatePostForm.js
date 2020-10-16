@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import { Card, Form, InputGroup, Button } from "react-bootstrap";
 
 import FileUploader from "../../components/FileUploader";
 
@@ -103,7 +102,7 @@ export default function CreatePostForm({ onSubmit }) {
             </div>
           </div>
           <FileUploader ref={uploaderRef} className="mb-3" onChange={handleFilesAdded} />
-          <Button variant="primary" type="submit">Create</Button>
+          <button type="submit" class="btn btn-primary">Create</button>
         </form>
       </div>
     </div>
