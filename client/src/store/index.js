@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === 'development') {
   ));
 } else {
   store = createStore(
-    rootReducer,
+    persistedReducer,
     applyMiddleware(thunk)
   );
 }

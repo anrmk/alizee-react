@@ -1,9 +1,6 @@
 {
   "name": "alizee-react-client",
   "version": "0.1.0",
-  "private": true,
-  "proxy": "http://127.0.0.1:8000",
-  "secure": false,
   "dependencies": {
     "@aspnet/signalr": "^1.1.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
@@ -20,7 +17,6 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.5.3",
     "dotenv": "^8.2.0",
-    "firebase": "^7.24.0",
     "history": "^4.9.0",
     "install": "^0.13.0",
     "jquery": "^3.5.1",

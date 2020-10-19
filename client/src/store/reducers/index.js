@@ -11,7 +11,9 @@ import suggestion from "./suggestion";
 
 import chat from "./chat";
 
-export default combineReducers({
+import { SIGNOUT_SUCCESS } from "../actions/signIn";
+
+const appReducer = combineReducers({
   signUp,
   signIn,
   confirmEmail,
@@ -21,3 +23,10 @@ export default combineReducers({
   posts,
   media
 });
+
+export default function(state, action) {
+  if (action.type === SIGNOUT_SUCCESS) {
+    state = undefined;
+  }
+  return appReducer(state, action);
+}
