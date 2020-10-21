@@ -70,7 +70,31 @@ export function getOffset(currentOffset, total, step = 1) {
 export function getUrlTo(location, route, id) {
   if (!location || !route || !id) return null;
 
-  return `${location.substr(0, location.length-1)}${route}/${id}`
+  return `${location}${route}/${id}`
+}
+
+/**
+ * Get hostname from url
+ * @param {number} location current location
+ * @return {number} hostname
+ */
+export function getHostFromUrl(url) {
+  var hostname;
+
+  // Find & remove protocol (http, ftp, etc.) and get hostname
+  if (url.indexOf("//") > -1) {
+    hostname = url.split('/')[2];
+  }
+  else {
+    hostname = url.split('/')[0];
+  }
+
+  // Find & remove port number
+  hostname = hostname.split(':')[0];
+  // Find & remove "?"
+  hostname = hostname.split('?')[0];
+
+  return hostname;
 }
 
 /**

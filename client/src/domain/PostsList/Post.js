@@ -1,47 +1,28 @@
-import React from 'react'
+import React from "react";
+
+import MoreHorizIcon from "@material-ui/icons/MoreHorizOutlined";
 import { Link } from "react-router-dom";
 
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
-import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
-import MonetizationOnOutlinedIcon from '@material-ui/icons/MonetizationOnOutlined';
+import ImagesContent from "./ImagesContent";
+import VideoContent from "./VideoContent";
+import PayableContent from "./PayableContent";
 
-import ImagesContent from './ImagesContent';
-import VideoContent from './VideoContent';
-import PayableContent from './PayableContent';
-import { MEDIA_IMAGE, MEDIA_VIDEO } from '../../constants/media_types';
-import { Avatar } from '../../components/Avatar';
+import { MEDIA_IMAGE, MEDIA_VIDEO } from "../../constants/media_types";
+import { AvatarItem } from "../../components/Avatar";
+import { Tools } from "../../components/Post";
 
-import './Post.scss';
+import "./Post.scss";
 
-function Post({ 
-  id,
-  userId,
-  avatarUrl,
-  username,
-  altText,
-  mediaUrls,
-  amount,
-  description,
-  commentable = false,
-  onFavoriteClick,
-  onCommentsClick,
-  onBuyClick,
-  onShareClick
-}) {
-  const handleFavoriteBtnClick = () => {
+function Post({id, userId, avatarUrl, username, createdDate, altText, mediaUrls, amount, description, commentable = false, hideToolbar = false, hideHeader = false, onFavoriteClick, onBuyClick, onShareClick}) {
+  const handleOnFavoriteClick = () => {
     onFavoriteClick && onFavoriteClick();
   }
 
-  const handleCommentsBtnClick = () => {
-    onCommentsClick && onCommentsClick();
-  }
-
-  const handleBuyBtnClick = () => {
+  const handleOnBuyClick = () => {
     onBuyClick && onBuyClick();
   }
 
-  const handleShareBtnClick = () => {
+  const handleOnShareClick = () => {
     const data = { id, title: username, quote: description };
 
     onShareClick && onShareClick(data);
@@ -50,7 +31,7 @@ function Post({
   const renderContent = (items, altText, amount) => {
     if (amount > 0) return <PayableContent amount={amount} />;
 
-    if (!items || !items.length) return <p>Media not found</p>
+    if (!items || !items.length) return <p></p>
 
     if (items.length === 1) {
       switch(items[0].kind) {
@@ -66,21 +47,24 @@ function Post({
 
   return (
     <div className="card mb-5" key={id}>
-      <Link to={`/users/${userId}`} as="div">
-        <div className="card-header d-flex align-items-center">
-          <Avatar url={avatarUrl} size="large" />
-          <p className="username mb-0 ml-3 font-weight-bold">{username}</p>
+      { !hideHeader &&
+        <div className="card-header d-flex align-items-center justify-content-between py-2">
+          <Link to={`/users/${userId}`}>
+            <AvatarItem url={avatarUrl} title={username} subtitle={createdDate ?? ""} />
+          </Link>
+          <MoreHorizIcon />
         </div>
-      </Link>
+      }
+      
       <div className="card-content-wrapper">
         {renderContent(mediaUrls, altText, amount)}
       </div>
+      
+      { !hideToolbar && 
+        <Tools userId={userId} id={id} commentable={commentable} onShareClick={handleOnShareClick} onFavoriteClick={handleOnFavoriteClick} onBuyClick={handleOnBuyClick} /> 
+      }
       <div className="card-body">
-        <p>{description}</p>
-        <FavoriteBorderIcon className="mr-3" fontSize="large" />
-        {commentable && <ChatBubbleOutlineOutlinedIcon className="mr-3" fontSize="large"/>}
-        <ShareOutlinedIcon className="mr-3" fontSize="large" onClick={handleShareBtnClick} />
-        <MonetizationOnOutlinedIcon className="mr-3" fontSize="large"/>
+        <p><strong>{username}</strong> {description}</p>
       </div>
     </div>
   )

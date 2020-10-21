@@ -54,11 +54,9 @@ export function createPost(api, postData, mediaData=[]) {
         }
       }
 
-
       const { status, data } = await api
         .setData({ 
           description: postData.description,
-          altText: postData?.altText || postData.description,
           isCommentable: postData.commentable,
           kind: postData.private ? POST_PRIVATE : POST_PUBLIC,
           amount: Number(postData.amount),

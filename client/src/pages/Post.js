@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Spinner } from 'react-bootstrap';
 
 import { Post } from '../domain/PostsList';
+import { Tools } from "../components/Post";
+import { AvatarItem } from "../components/Avatar";
 
 import { fetchPost } from '../store/actions/post';
 import ApiContext from '../context/ApiContext';
@@ -30,15 +32,15 @@ function PostPage(props) {
   );
 
   return (
-    <div className="container">
+    <div className="container p-4">
       <div className="row">
         <div className="col-lg-8 col-md-12">
           {isFetching 
-            ? (
-              renderLoader()
-            )
+            ? (renderLoader())
             : (
               <Post 
+              hideToolbar="true"
+              hideHeader="true"
               id={data?.id}
               userId={data?.user?.id}
               avatarUrl={data?.user?.avatarUrl}
@@ -52,7 +54,10 @@ function PostPage(props) {
           }
         </div>
         <div className="col-lg-4 d-none d-lg-block d-xl-block">
-
+          <div className="p-2 mb-3 border-bottom">
+            <AvatarItem size="large" url={data?.user?.avatarUrl} title={data?.user?.userName} />
+          </div>
+          <Tools userId={data?.user?.id} id={data?.id} commentable={data?.isCommentable}/>
         </div>
       </div>
     </div>

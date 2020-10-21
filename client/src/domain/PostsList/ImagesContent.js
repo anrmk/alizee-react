@@ -5,7 +5,7 @@ import { Carousel } from 'react-responsive-carousel';
 function renderImage(id, url, altText) {
   return (
     <div key={id}>
-      <img className="card-img" style={{ objectFit: 'cover' }} src={url} alt={altText} />
+      <img style={{ objectFit: 'cover' }} src={url} alt={altText} />
     </div>
   )
 }

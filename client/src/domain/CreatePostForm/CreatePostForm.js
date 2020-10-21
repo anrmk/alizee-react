@@ -1,68 +1,106 @@
 import React, { useState, useRef } from "react";
 
-import FileUploader from "../../components/FileUploader";
+import Thumbnail from "../../components/Thumbnail";
+
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import LockOpenOutlinedIcon from '@material-ui/icons/LockOpenOutlined';
+import CommentOutlinedIcon from '@material-ui/icons/CommentOutlined';
+import CommentBlockOutlinedIcon from '@material-ui/icons/ModeCommentOutlined';
+import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
+import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
 
 import './CreatePostForm.scss';
 
 const initialFormData = {
-  description: '',
+  description: "",
   commentable: false,
   private: false,
   amount: 0
 }
 
-export default function CreatePostForm({ onSubmit }) {
-  const uploaderRef = useRef();
+export default function CreatePostForm({ onSubmit, user }) {
+  //const uploaderRef = useRef();
+  const privateRef = useRef();
+  const commentableRef = useRef();
+  const mediasRef = useRef();
+  const messageRef = useRef();
+
   const [media, setMedia] = useState([]);
   const [formData, setFormData] = useState(initialFormData)
 
   const resetFormData = () => {
     setFormData(initialFormData);
     setMedia([]);
-    uploaderRef.current.resetData();
   }
-
-  const handleFormChange = (event) => {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-
-    if (!name) return;
-
-    setFormData({
-      ...formData,
-      [name]: value
-    })
-  };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    if(formData.description.trim().length == 0 && media.length == 0)
+      return;
 
     onSubmit && onSubmit(formData, media);
     resetFormData();
   }
 
-  const handleFilesAdded = (files) => {
-    setMedia(files);
+  const handleFormTextChange = (e) => {
+    setFormData({ ...formData, [e.current.name]: e.current.value})
+  }
+
+  const handleFormDataChange = (e) => {
+    setFormData({ ...formData, [e.current.name]: !formData[e.current.name]})
+  }
+
+  const handleFormMediaChange = (e) => {
+    var mediaFiles =[...e.current.files]
+    mediaFiles.forEach(file => file.previewURL = URL.createObjectURL(file))
+    setMedia(mediaFiles)
   }
 
   return (
-    <div className="card mb-3">
+    <div className="card shadow mb-3">
       <div className="card-body">
-        <form onSubmit={handleFormSubmit} onChange={handleFormChange}>
-          <div className="form-group">
-            <textarea 
-              className="form-control create-post-form__text-area mb-3"
-              name="description"
-              maxLength="2048"
-              placeholder="Your description"
-              value={formData.description}
-              onChange={() => {}} />
-            <div className="input-group mb-3">
+        <form onSubmit={handleFormSubmit} autoComplete="off">
+          <input type="hidden" name="private" value={formData.private} ref={privateRef} />
+          <input type="hidden" name="commentable" value={formData.commentable} ref={commentableRef}/>
+
+          <div className="">
+            <div className="input-group">
+              <div className="input-group-prepend">
+                <button className="btn btn-outline-secondary" type="button" onClick={(e) => handleFormDataChange(privateRef)} >
+                  {formData.private ? <LockOutlinedIcon fontSize="small" /> : <LockOpenOutlinedIcon fontSize="small" />}
+                </button>
+                <button className="btn btn-outline-secondary" type="button" onClick={(e) => handleFormDataChange(commentableRef)} >
+                  {formData.commentable ? <CommentOutlinedIcon fontSize="small" /> : <CommentBlockOutlinedIcon fontSize="small" />}
+                </button>
+              </div>
+              <input className="form-control" type="text" 
+                ref={messageRef} 
+                name="description"
+                autoFocus
+                maxLength="2048" 
+                placeholder={`What's on your mind, ${user.fullName}?`} 
+                value={formData.description} 
+                onChange={(e) => handleFormTextChange(messageRef)} />
+              <div className="input-group-append">
+                <label className="btn btn-outline-secondary m-0">
+                  <PhotoLibraryIcon fontSize="small" />
+                  <input type="file" 
+                    ref={mediasRef} 
+                    name="medias" 
+                    style={{display: "none"}} 
+                    multiple 
+                    onChange={(e) => handleFormMediaChange(mediasRef)} />
+                </label>
+              </div>
+            </div>
+            <small className="form-text text-muted">Characters entered  {formData.description.length} out of 2048</small>
+            
+            {/* <div className="input-group mb-3">
               <div className="input-group-prepend">
                 <div className="input-group-text">$</div>
               </div>
               <input 
+                ref={lockRef}
                 className="form-control"
                 name="amount"
                 type="number"
@@ -71,39 +109,16 @@ export default function CreatePostForm({ onSubmit }) {
                 placeholder="Amount"
                 value={formData.amount}
                 onChange={() => {}} />
-            </div>
+            </div> */}
           </div>
-          <div className="form-group d-flex mb-3">
-            <div className="form-check">
-              <input 
-                className="form-check-input"
-                id="commentable"
-                type="checkbox"
-                name="commentable"
-                label="Commentable"
-                checked={formData.commentable}
-                onChange={() => {}} />
-              <label className="form-check-label" htmlFor="commentable">
-                Commentable
-              </label>
-            </div>
-            <div className="form-check ml-3">
-              <input 
-                className="form-check-input"
-                id="private"
-                name="private"
-                type="checkbox"
-                label="Private"
-                checked={formData.private}
-                onChange={() => {}} />
-              <label className="form-check-label" htmlFor="private">
-                Private
-              </label>
-            </div>
-          </div>
-          <FileUploader ref={uploaderRef} className="mb-3" onChange={handleFilesAdded} />
-          <button type="submit" class="btn btn-primary">Create</button>
+          <button type="submit" className="sr-only">Create</button>
         </form>
+        
+        {media.map((item) => (
+            <Thumbnail key={item.name} name={item.name} url={item.previewURL} />
+          ))
+        }
+       
       </div>
     </div>
   );

@@ -33,8 +33,6 @@ function Feed(props) {
   }
 
   const handleFormSubmit = async (formData, mediaData) => {
-    if (!formData.description) return;
-
     createPost(apiClient, formData, mediaData);
   };
 
@@ -49,11 +47,8 @@ function Feed(props) {
     <div className="container p-4">
       <div className="row">
         <div className="col-lg-8 col-md-12">
-        <CreatePostForm onSubmit={handleFormSubmit} />
-          <PostList 
-            items={posts.data}
-            hasMore={posts.hasMore}
-            onFetchMore={handleFetchMore}/>
+          <CreatePostForm onSubmit={handleFormSubmit} user={userInfo} />
+          <PostList items={posts.data} hasMore={posts.hasMore} onFetchMore={handleFetchMore}/>
         </div>
         <div className="col-lg-4 d-none d-lg-block d-xl-block">
           {/* TODO: Go to Profile page on click */}

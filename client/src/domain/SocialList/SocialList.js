@@ -13,9 +13,10 @@ import SocialItem from './SocialItem';
 
 import './SocialList.scss';
 
-export default function ShareList({ id, username, description }) {
-  const location = window.location.href;
+export default function SocialList({ id, username, description }) {
+  const location = window.location.origin;
   const postUrl = getUrlTo(location, POST_ROUTE, id);
+  console.log(postUrl, POST_ROUTE, id)
 
   const renderFacebookBtn = ({ children }) => {
     return (
