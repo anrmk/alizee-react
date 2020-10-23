@@ -5,7 +5,6 @@ export const LIKE_POST_SUCCESS = "LIKE_POST_SUCCESS";
 export const LIKE_POST_FAILURE = "LIKE_POST_FAILURE";
 
 function requestLikePost() {
-  console.log("requestLikePost")
   return {
     type: LIKE_POST_REQUEST,
     payload: {
@@ -37,9 +36,7 @@ function errorLikePost(message) {
 }
 
 export function likePost(api, id) {
-  console.log("likePost", id)
   return async (dispatch, getState) => {
-    console.log("inside")
     dispatch(requestLikePost());
 
     const url = generateUrl("likePost");

@@ -90,13 +90,15 @@ export default function signIn(state = {
         posts[postIndex].iLike = !action.payload.data.inactive;
       }
 
-      const current = [...state.data.current];
-      console.log("Current", current)
+      const currentPost = state.currentPost;
+      currentPost.likes += action.payload.data.inactive ? -1 : 1;
+      currentPost.iLike = !action.payload.data.inactive;
 
       return { 
         ...state,
         ...action.payload,
-        data: posts
+        data: posts,
+        currentPost
       }
     }
     case LIKE_POST_FAILURE:

@@ -5,17 +5,16 @@ import { connect } from "react-redux";
 import { Spinner } from "react-bootstrap";
 
 import { Post, Tools } from "../components/Post";
-
 import { AvatarItem } from "../components/Avatar";
 
-import { fetchPost, likePost } from "../store/actions/post";
+import * as postActions from '../store/actions/post';
 import ApiContext from "../context/ApiContext";
 
 function PostPage(props) {
   const apiClient = useContext(ApiContext);
 
   const { isFetching, data, errorMessage } = props;
-  const { getPost } = props;
+  const { getPost, likePost } = props;
   const postId = props.match.params.id;
 
   useEffect(() => {
@@ -29,8 +28,7 @@ function PostPage(props) {
   }, []);
 
   const handleOnFavoriteClick = (id, isLoading) => {
-    //!isLoading && 
-    likePost(apiClient, id);
+    !isLoading && likePost(apiClient, id);
   }
 
   const renderLoader = () => (
@@ -94,8 +92,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getPost: (api, id) => dispatch(fetchPost(api, id)),
-    likePost: (api, id) => dispatch(likePost(api, id)),
+    getPost: (api, id) => dispatch(postActions.fetchPost(api, id)),
+    likePost: (api, id) => dispatch(postActions.likePost(api, id)),
   };
 }
 

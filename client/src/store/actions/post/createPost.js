@@ -77,7 +77,6 @@ export function createPost(api, postData, mediaData=[]) {
 
       dispatch(receiveCreatePost(data));
     } catch(e) {
-      console.log(e)
       dispatch(errorCreatePost("Error: something went wrong"));
     }
   }

@@ -54,7 +54,6 @@ export function getFollowings(api) {
     dispatch(requestGetFollowings());
 
     const url = generateUrl("getFollowings");
-    console.log("URL", url)
     try {
       const { data } = await api.setMethod("GET").query(url);
       dispatch(receiveGetFollowings(data));
