@@ -41,23 +41,20 @@ export function fetchPost(api, id) {
 
     const url = generateUrl('getPost');
     try {
-      const { status, data } = await api
+      const { data } = await api
         .setMethod('GET')
         .setParams({ id })
         .query(url);
 
-      if (status !== 200) {
-        throw data?.message;
-      }
-
       // Extend relative path to absolute (to remote server)
-      const avatarUrl = data.user.profile.avatarUrl;
+      const avatarUrl = data.user.avatarUrl;
       data.user = { 
         ...data.user, 
         avatarUrl: generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, avatarUrl)
       };
       data.media.forEach(item => {
         item.url = generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, item.url);
+        item.thumbnailUrl = generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, item.thumbnailUrl);
       });
 
       dispatch(receiveGetPost(data));

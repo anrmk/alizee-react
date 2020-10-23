@@ -27,7 +27,7 @@ function Header(props) {
     onSignOut && onSignOut();
   }
 
-  const [value, setValue] = React.useState('recents');
+  //const [value, setValue] = React.useState('recents');
 
   return (
     // <BottomNavigation value={value} onChange={(event, newValue) => {setValue(newValue)}}>

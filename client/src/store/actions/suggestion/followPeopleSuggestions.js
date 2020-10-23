@@ -42,7 +42,7 @@ export function followPeopleSuggestions(api, userId) {
 
     const url = generateUrl("followPeopleSuggestions");
     try {
-      const {status, data} = await api.setParams({ id: userId }).query(url);
+      const {data} = await api.setParams({ id: userId }).query(url);
 
       dispatch(receiveFollowPeopleSuggestions(Object.assign({}, data, {userId, isFollowing: true})))
     } catch (e) {

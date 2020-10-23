@@ -18,3 +18,10 @@ export {
   CREATE_POST_FAILURE,
   createPost
 } from './createPost';
+
+export { 
+  LIKE_POST_REQUEST,
+  LIKE_POST_SUCCESS,
+  LIKE_POST_FAILURE,
+  likePost
+} from './likePost';

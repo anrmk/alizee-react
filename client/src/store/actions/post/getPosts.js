@@ -45,7 +45,7 @@ export function getPosts(api, opts) {
 
     const url = generateUrl('getPosts');
     try {
-      const { status, data } = await api
+      const { data } = await api
         .setMethod('GET')
         .setParams({
           start: opts.offset,
@@ -53,19 +53,16 @@ export function getPosts(api, opts) {
         })
         .query(url);
 
-      if (status !== 200) {
-        throw data?.message;
-      }
-
       // Extend relative path to absolute (to remote server)
       data.data.forEach(item => {
-        const avatarUrl = item.user.profile.avatarUrl;
+        const avatarUrl = item.user.avatarUrl;
         item.user = { 
           ...item.user, 
           avatarUrl: generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, avatarUrl)
         };
-        item.media.forEach(media => {
-          media.url = generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, media.url);
+        item.media.forEach(item => {
+          item.url = generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, item.url);
+          item.thumbnailUrl = generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, item.thumbnailUrl);
         })
       });
 

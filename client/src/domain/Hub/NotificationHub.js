@@ -24,7 +24,7 @@ function NotificationHub(props) {
   }, []);
 
   const handleReciveMessage = (data) => {
-    if (chat.currentRoom && data.roomId == chat.currentRoom.id) {
+    if (chat.currentRoom && data.roomId === chat.currentRoom.id) {
       addMessage(data);
     } else {
       addMessageCount(data.roomId, 1);

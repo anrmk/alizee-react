@@ -54,7 +54,7 @@ export function createPost(api, postData, mediaData=[]) {
         }
       }
 
-      const { status, data } = await api
+      const { data } = await api
         .setData({ 
           description: postData.description,
           isCommentable: postData.commentable,
@@ -65,10 +65,6 @@ export function createPost(api, postData, mediaData=[]) {
           media: mediaFromState
          })
         .query(url);
-
-      if (status !== 201) {
-        throw data?.message;
-      }
 
       // Extend relative path to absolute (to remote server)
       const avatarUrl = getState().signIn?.userInfo?.avatarUrl;

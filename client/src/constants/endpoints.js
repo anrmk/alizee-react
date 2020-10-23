@@ -11,7 +11,7 @@ export default {
     getPosts: 'post/getposts',
     createPost: 'post/createpost',
     createMedia: 'media/createmedia',
-    getFollowers: "follower/getfollowers",
+    likePost: "post/like",
     
     // CHAT
     getRoom: "chat/getRoom",

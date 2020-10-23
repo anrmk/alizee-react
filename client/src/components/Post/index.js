@@ -1,3 +1,4 @@
 import Tools from "./Tools";
+import Post from "./Post";
 
-export { Tools };
+export { Post, Tools };

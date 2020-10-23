@@ -41,14 +41,10 @@ export function getRoom(api, id) {
 
     const url = generateUrl("getRoom");
     try {
-      const { status, data } = await api
+      const { data } = await api
         .setMethod("GET")
         .setParams({ id })
         .query(url);
-
-      if (status !== 200) {
-        throw data?.message;
-      }
 
       dispatch(receiveGetRoom(data));
     } catch (e) {

@@ -41,11 +41,7 @@ export function createRoom(api, id) {
 
     const url = generateUrl("createRoom");
     try {
-      const { status, data } = await api.setParams({ id }).query(url);
-
-      if (status !== 200) {
-        throw data?.message; 
-      }
+      const { data } = await api.setParams({ id }).query(url);
 
       dispatch(receiveCreateRoom(data));
     } catch (e) {

@@ -30,7 +30,7 @@ export default function chatReducer(
       const rooms = [...state.data];
       const roomIndex = rooms.findIndex(room => room.id === action.payload.currentRoom.id);
 
-      if(roomIndex != -1) {
+      if(roomIndex !== -1) {
         rooms[roomIndex].newMessagesCount = 0;
       }
 
@@ -118,7 +118,7 @@ export default function chatReducer(
       const rooms = [...state.data];
       const roomIndex = rooms.findIndex(room => room.id === action.payload.roomId);
 
-      if(roomIndex != -1) {
+      if(roomIndex !== -1) {
         rooms[roomIndex].newMessagesCount += action.payload.newMessagesCount;
       }
 

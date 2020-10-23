@@ -46,13 +46,9 @@ export function createMedia(api, media) {
         formData.append(file.name, file);
       });
 
-      const { status, data } = await api
+      const { data } = await api
         .setData(formData)
         .query(url);
-
-      if (status !== 201) {
-        throw data?.message;
-      }
 
       dispatch(receiveCreateMedia(data));
     } catch (e) {

@@ -54,14 +54,9 @@ export function createMessage(api, id, message) {
 
     const url = generateUrl("createMessage");
     try {
-      const { status, data } = await api.setData({ 
-        roomId: id, 
-        message
-      }).query(url);
+      //const { status, data } = await api.setData({roomId: id, message}).query(url);
+      await api.setData({roomId: id, message}).query(url);
 
-      if (status !== 200) {
-        throw data?.message; 
-      }
     } catch (e) {
       return dispatch(errorCreateMessage(e));
     }

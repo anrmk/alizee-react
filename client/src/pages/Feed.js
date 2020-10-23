@@ -3,33 +3,34 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import PostList from "../domain/PostsList";
+import CreatePostForm from '../domain/CreatePostForm';
 
 import * as actionSuggestion from "../store/actions/suggestion";
-
-import CreatePostForm from '../domain/CreatePostForm';
-import { SuggestionList } from "../components/Suggestion";
-
 import * as postActions from '../store/actions/post';
+
+import { SuggestionList } from "../components/Suggestion";
+import { AvatarItem } from "../components/Avatar";
+
 import ApiContext from "../context/ApiContext";
 import { POSTS_LENGTH } from "../constants/feed";
-
-import { AvatarItem } from "../components/Avatar";
 
 function Feed(props) {
   const apiClient = useContext(ApiContext);
   const { userInfo } = props;
   const { peopleSuggestions, getPeopleSuggestions, followPeopleSuggestions, unfollowPeopleSuggestions } = props;
 
-  const { isFetching, posts, offset } = props;
-  const { fetchPosts, createPost } = props;
+  const { posts, offset } = props;
+  const { fetchPosts, createPost, likePost } = props;
 
   useEffect(() => {
-    fetchPosts(apiClient, { offset: posts.offset, length: POSTS_LENGTH });
-    getPeopleSuggestions(apiClient, 6)
+    (async () => {
+      await fetchPosts(apiClient, { offset: posts.offset, length: POSTS_LENGTH });
+      await getPeopleSuggestions(apiClient, 6)
+    })()
   }, []);
 
-  const handleFetchMore = () => {
-    fetchPosts(apiClient, { offset: posts.offset, length: POSTS_LENGTH });
+  const handleFetchMore = async () => {
+    await fetchPosts(apiClient, { offset: posts.offset, length: POSTS_LENGTH });
   }
 
   const handleFormSubmit = async (formData, mediaData) => {
@@ -43,12 +44,16 @@ function Feed(props) {
     }
   }
 
+  const handleOnFavoriteClick = async (id, isLoading) => {
+    !isLoading && await likePost(apiClient, id);
+  }
+
   return (
     <div className="container p-4">
       <div className="row">
         <div className="col-lg-8 col-md-12">
           <CreatePostForm onSubmit={handleFormSubmit} user={userInfo} />
-          <PostList items={posts.data} hasMore={posts.hasMore} onFetchMore={handleFetchMore}/>
+          <PostList items={posts.data} hasMore={posts.hasMore} onFetchMore={handleFetchMore} onFavoriteClick={({ id }) => handleOnFavoriteClick(id, posts.isFetching)} />
         </div>
         <div className="col-lg-4 d-none d-lg-block d-xl-block">
           {/* TODO: Go to Profile page on click */}
@@ -95,7 +100,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchPosts: (api, opts) => dispatch(postActions.getPosts(api, opts)),
-    createPost: async (api, post, media) => dispatch(postActions.createPost(api, post, media)),
+    createPost: (api, post, media) => dispatch(postActions.createPost(api, post, media)),
+    likePost: (api, id) => dispatch(postActions.likePost(api, id)),
     getPeopleSuggestions: (api, count) => dispatch(actionSuggestion.getPeopleSuggestions(api, count)),
     followPeopleSuggestions: (api, id) => dispatch(actionSuggestion.followPeopleSuggestions(api, id)),
     unfollowPeopleSuggestions: (api, id) => dispatch(actionSuggestion.unfollowPeopleSuggestions(api, id))

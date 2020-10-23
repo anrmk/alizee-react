@@ -7,7 +7,6 @@ import LockOpenOutlinedIcon from '@material-ui/icons/LockOpenOutlined';
 import CommentOutlinedIcon from '@material-ui/icons/CommentOutlined';
 import CommentBlockOutlinedIcon from '@material-ui/icons/ModeCommentOutlined';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
-import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
 
 import './CreatePostForm.scss';
 
@@ -35,7 +34,7 @@ export default function CreatePostForm({ onSubmit, user }) {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    if(formData.description.trim().length == 0 && media.length == 0)
+    if(formData.description.trim().length === 0 && media.length === 0)
       return;
 
     onSubmit && onSubmit(formData, media);

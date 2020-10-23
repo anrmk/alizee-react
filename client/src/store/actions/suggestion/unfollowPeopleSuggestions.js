@@ -42,7 +42,7 @@ export function unfollowPeopleSuggestions(api, userId) {
 
     const url = generateUrl("followPeopleSuggestions");
     try {
-      const { status, data } = await api.setMethod("DELETE").setParams({ id: userId }).query(url);
+      const { data } = await api.setMethod("DELETE").setParams({ id: userId }).query(url);
 
       dispatch(receiveUnfollowPeopleSuggestions(Object.assign({}, data, {userId, isFollowing: false})));
     } catch (e) {
