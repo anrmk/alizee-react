@@ -8,6 +8,11 @@ $avatar-large-size: 56px;
     color: black;
     text-decoration: none;
   }
+
+  a, a:hover {
+    color: black;
+    cursor: pointer;
+  }
   
   .avatar {
     object-fit: cover;

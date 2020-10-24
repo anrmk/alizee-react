@@ -4,21 +4,20 @@ import Thumbnail from "../../components/Thumbnail";
 
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import LockOpenOutlinedIcon from '@material-ui/icons/LockOpenOutlined';
-import CommentOutlinedIcon from '@material-ui/icons/CommentOutlined';
-import CommentBlockOutlinedIcon from '@material-ui/icons/ModeCommentOutlined';
+import CommentOutlinedIcon from '@material-ui/icons/SpeakerNotesOutlined';
+import CommentBlockOutlinedIcon from '@material-ui/icons/SpeakerNotesOffOutlined';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 
 import './CreatePostForm.scss';
 
 const initialFormData = {
   description: "",
-  commentable: false,
+  commentable: true,
   private: false,
   amount: 0
 }
 
 export default function CreatePostForm({ onSubmit, user }) {
-  //const uploaderRef = useRef();
   const privateRef = useRef();
   const commentableRef = useRef();
   const mediasRef = useRef();
@@ -66,10 +65,10 @@ export default function CreatePostForm({ onSubmit, user }) {
             <div className="input-group">
               <div className="input-group-prepend">
                 <button className="btn btn-outline-secondary" type="button" onClick={(e) => handleFormDataChange(privateRef)} >
-                  {formData.private ? <LockOutlinedIcon fontSize="small" /> : <LockOpenOutlinedIcon fontSize="small" />}
+                  {formData.private ? <LockOutlinedIcon fontSize="small"  color="secondary" /> : <LockOpenOutlinedIcon fontSize="small" />}
                 </button>
                 <button className="btn btn-outline-secondary" type="button" onClick={(e) => handleFormDataChange(commentableRef)} >
-                  {formData.commentable ? <CommentOutlinedIcon fontSize="small" /> : <CommentBlockOutlinedIcon fontSize="small" />}
+                  {formData.commentable ? <CommentOutlinedIcon fontSize="small" /> : <CommentBlockOutlinedIcon fontSize="small" color="secondary" />}
                 </button>
               </div>
               <input className="form-control" type="text" 

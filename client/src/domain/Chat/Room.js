@@ -3,7 +3,7 @@ import React, {useRef, useEffect, useState } from "react";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined';
 
-import {Avatar}  from "../../components/Avatar";
+import {AvatarItem}  from "../../components/Avatar";
 import MessageSender from "./MessageSender";
 
 import "./Room.scss";
@@ -20,7 +20,7 @@ function Room(props) {
       <div className="chat__header navbar navbar-expand-lg navbar-light bg-light">
         <ArrowBackOutlinedIcon />
 
-        <Avatar size="medium" url={props.room.avatarUrl} /> <strong>{props.room.name}</strong> 
+        <AvatarItem size="small" url={props.room.avatarUrl} /> <strong>{props.room.name}</strong> 
 
         <ul className="navbar-nav ml-auto">
           {/* <li className="nav-item">

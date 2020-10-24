@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 
-import { generateUrl } from "../../../helpers/functions";
+import { generateUrl, generateFileUrl } from "../../../helpers/functions";
 
 export const GET_ROOMS_REQUEST = "GET_ROOMS_REQUEST";
 export const GET_ROOMS_SUCCESS = "GET_ROOMS_SUCCESS";
@@ -56,11 +56,10 @@ export function getRooms(api) {
 
     const url = generateUrl("getRooms");
     try {
-      const { status, data } = await api.setMethod("GET").query(url);
-
-      if (status !== 200) {
-        return dispatch(errorGetRooms(data?.message));
-      }
+      const { data } = await api.setMethod("GET").query(url);
+      data.forEach(item => {
+        item.avatarUrl = generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, item.avatarUrl)
+      });
 
       dispatch(receiveGetRooms(data));
     } catch {

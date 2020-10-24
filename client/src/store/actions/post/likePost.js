@@ -45,7 +45,6 @@ export function likePost(api, id) {
 
       dispatch(receiveLikePost(data));
     } catch (e) {
-      console.log(e);
       dispatch(errorLikePost("Error: something went wrong"));
     }
   };

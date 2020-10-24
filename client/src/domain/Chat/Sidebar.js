@@ -7,8 +7,6 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Search from "../../components/Search"
 import { AvatarItem} from "../../components/Avatar";
  
-import { generateFileUrl } from "../../helpers/functions";
-
 import "./Sidebar.scss";
 
 function Sidebar(props) {
@@ -49,7 +47,7 @@ function Sidebar(props) {
                     <ul className="list-group list-group-flush">
                       {props.followings.map((item) => (
                         <li className="list-group-item list-group-item-action" onClick={(e) => handleCreateRoom(item.userId)}  key={item.id}>
-                          <AvatarItem url={generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, item.userUrl)} title={item.userName} subtitle="" />
+                          <AvatarItem url={item.userUrl} title={item.userName} subtitle="" />
                         </li>
                       ))}
                     </ul>
@@ -73,7 +71,7 @@ function Sidebar(props) {
               const isActive = props.room?.id == room.id ? "active" : "";
               return (
               <li className={`list-group-item list-group-item-action d-flex justify-content-between align-items-center ${isActive}`} onClick={(e) => handleGetRoom(room.id)} key={room.id}>
-                <AvatarItem url={generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, room.avatarUrl)} title={room.name} subtitle={room.messages[room.messages.length - 1]?.message} />
+                <AvatarItem url={room.avatarUrl} title={room.name} subtitle={room.messages[room.messages.length - 1]?.message} />
                 {room.newMessagesCount > 0 ? <span className="badge badge-light badge-pill">{room.newMessagesCount}</span> : ""}
               </li>
             )})}

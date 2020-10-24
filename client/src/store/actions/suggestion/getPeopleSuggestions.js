@@ -1,4 +1,4 @@
-import { generateUrl } from "../../../helpers/functions";
+import { generateUrl, generateFileUrl } from "../../../helpers/functions";
 
 export const GET_PEOPLE_SUGGESTIONS_REQUEST = "GET_PEOPLE_SUGGESTIONS_REQUEST";
 export const GET_PEOPLE_SUGGESTIONS_SUCCESS = "GET_PEOPLE_SUGGESTIONS_SUCCESS";
@@ -41,11 +41,11 @@ export function getPeopleSuggestions(api, count) {
 
     const url = generateUrl("getPeopleSuggestions");
     try {
-      const { status, data } = await api.setMethod("GET").setParams({count}).query(url);
+      const { data } = await api.setMethod("GET").setParams({count}).query(url);
 
-      if (status !== 200) {
-        return dispatch(errorGetPeopleSuggestions(data?.message));
-      }
+      data.forEach(item => {
+        item.avatarUrl = generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, item.avatarUrl);
+      })
 
       dispatch(receiveGetPeopleSuggestions(data));
     } catch {

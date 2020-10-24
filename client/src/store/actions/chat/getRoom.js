@@ -1,4 +1,4 @@
-import { generateUrl } from "../../../helpers/functions";
+import { generateUrl, generateFileUrl } from "../../../helpers/functions";
 
 export const GET_ROOM_REQUEST = "GET_ROOM_REQUEST";
 export const GET_ROOM_SUCCESS = "GET_ROOM_SUCCESS";
@@ -45,6 +45,8 @@ export function getRoom(api, id) {
         .setMethod("GET")
         .setParams({ id })
         .query(url);
+      
+        data.avatarUrl = generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, data.avatarUrl)
 
       dispatch(receiveGetRoom(data));
     } catch (e) {

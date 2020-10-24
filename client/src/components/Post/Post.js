@@ -71,13 +71,12 @@ function Post({
     <div className="card mb-5" key={id}>
       {!hideHeader && (
         <div className="card-header d-flex align-items-center justify-content-between py-2">
-          <Link to={`/users/${userId}`}>
-            <AvatarItem
-              url={avatarUrl}
-              title={username}
-              subtitle={createdDate ?? ""}
-            />
-          </Link>
+            <AvatarItem url={avatarUrl} >
+              <Link to={`/users/${userId}`} >
+                {username} <br />
+              </Link>
+              <small className="text-muted">{createdDate ?? ""}</small>
+            </AvatarItem>
           <MoreHorizIcon />
         </div>
       )}

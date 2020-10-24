@@ -20,8 +20,6 @@ function Chat(props) {
   const [modalShow, setModalShow] = useState(false);
   
   useEffect(() => {
-    console.log(followings)
-
     if (modalShow) {
       getFollowings(apiClient);
     } else {

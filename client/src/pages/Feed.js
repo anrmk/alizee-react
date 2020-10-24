@@ -58,7 +58,12 @@ function Feed(props) {
         <div className="col-lg-4 d-none d-lg-block d-xl-block">
           {/* TODO: Go to Profile page on click */}
           <div className="mt-4 mb-4">
-            <AvatarItem size="large" title={userInfo.userName} subtitle={userInfo.fullName} url={userInfo.avatarUrl} />
+            <AvatarItem size="large" url={userInfo.avatarUrl} >
+              <Link to={`/users/${userInfo.userId}`} >
+                {userInfo.userName} <br />
+              </Link>
+              <small className="text-muted">{userInfo.fullName}</small>
+            </AvatarItem>
           </div>
           <div className="d-flex justify-content-between mb-2">
             <span className="text-muted">Suggestions For You</span>
@@ -74,6 +79,7 @@ function Feed(props) {
 function mapStateToProps(state) {
   return {
     userInfo: {
+      userId: state.signIn?.userInfo?.id,
       userName: state.signIn?.userInfo?.userName,
       avatarUrl: state.signIn?.userInfo?.avatarUrl,
       fullName: state.signIn?.userInfo?.name +" "+ state.signIn?.userInfo?.surname
