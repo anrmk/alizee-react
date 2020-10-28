@@ -170,7 +170,7 @@ const FileUploader = React.forwardRef(({
   );
 })
 
-FileUploader.protoTypes = {
+FileUploader.propTypes = {
   filters: PropTypes.array,
   mbSize: PropTypes.number,
   filesCount: PropTypes.number,

@@ -8,29 +8,56 @@ import CreatePostForm from '../domain/CreatePostForm';
 import * as actionSuggestion from "../store/actions/suggestion";
 import * as postActions from '../store/actions/post';
 
-import { SuggestionList } from "../components/Suggestion";
+import { RelationshipList } from "../components/RelationshipList";
 import { AvatarItem } from "../components/Avatar";
 
 import ApiContext from "../context/ApiContext";
 import { POSTS_LENGTH } from "../constants/feed";
+import { PROFILE_ROUTE } from "../constants/routes";
+import CustomLink from "../components/CustomLink";
 
 function Feed(props) {
   const apiClient = useContext(ApiContext);
-  const { userInfo } = props;
-  const { peopleSuggestions, getPeopleSuggestions, followPeopleSuggestions, unfollowPeopleSuggestions } = props;
 
-  const { posts, offset } = props;
-  const { fetchPosts, createPost, likePost } = props;
+  const { userInfo } = props;
+  const { posts } = props;
+
+  const {
+    peopleSuggestions,
+    getPeopleSuggestions,
+    followPeopleSuggestions,
+    unfollowPeopleSuggestions,
+  } = props;
+  const { 
+    resetPosts, 
+    fetchPosts, 
+    createPost,
+    likePost
+  } = props;
 
   useEffect(() => {
     (async () => {
-      await fetchPosts(apiClient, { offset: posts.offset, length: POSTS_LENGTH });
-      await getPeopleSuggestions(apiClient, 6)
-    })()
-  }, []);
+      if (posts.data.length <= 0) {
+        resetPosts();
+        await fetchPosts(apiClient, { userId: userInfo.id, length: POSTS_LENGTH });
+      }
+    })();
+  }, [])
 
-  const handleFetchMore = async () => {
-    await fetchPosts(apiClient, { offset: posts.offset, length: POSTS_LENGTH });
+  useEffect(() => {
+    if (userInfo.id) {
+      (async () => {
+        await getPeopleSuggestions(apiClient, 6)
+      })();
+    }
+  }, [userInfo.id])
+
+  const handleFetchMore = isLoading => {
+    if (!isLoading) {
+      (async () => {
+        await fetchPosts(apiClient, { id: userInfo.id, length: POSTS_LENGTH })
+      })();
+    }
   }
 
   const handleFormSubmit = async (formData, mediaData) => {
@@ -56,12 +83,11 @@ function Feed(props) {
           <PostList items={posts.data} hasMore={posts.hasMore} onFetchMore={handleFetchMore} onFavoriteClick={({ id }) => handleOnFavoriteClick(id, posts.isFetching)} />
         </div>
         <div className="col-lg-4 d-none d-lg-block d-xl-block">
-          {/* TODO: Go to Profile page on click */}
           <div className="mt-4 mb-4">
-            <AvatarItem size="large" url={userInfo.avatarUrl} >
-              <Link to={`/users/${userInfo.userId}`} >
+            <AvatarItem url={userInfo.avatarUrl} >
+              <CustomLink as="div" to={PROFILE_ROUTE(userInfo.userName)} >
                 {userInfo.userName} <br />
-              </Link>
+              </CustomLink>
               <small className="text-muted">{userInfo.fullName}</small>
             </AvatarItem>
           </div>
@@ -69,7 +95,7 @@ function Feed(props) {
             <span className="text-muted">Suggestions For You</span>
             <Link to="/people/suggested">See All</Link>
           </div>
-          <SuggestionList list={peopleSuggestions.data} followOnClick={handleFollowPeople} />
+          <RelationshipList items={peopleSuggestions.data} onFollowClick={handleFollowPeople} />
         </div>
       </div>
     </div>
@@ -79,14 +105,13 @@ function Feed(props) {
 function mapStateToProps(state) {
   return {
     userInfo: {
-      userId: state.signIn?.userInfo?.id,
+      id: state.signIn?.userInfo?.id,
       userName: state.signIn?.userInfo?.userName,
       avatarUrl: state.signIn?.userInfo?.avatarUrl,
-      fullName: state.signIn?.userInfo?.name +" "+ state.signIn?.userInfo?.surname
+      name: state.signIn?.userInfo?.name
     },
     posts: {
       isFetching: state.posts.isFetching,
-      offset: state.posts.offset,
       data: state.posts?.data,
       errorMessage: state.posts.errorMessage,
       hasMore: state.posts.hasMore,
@@ -105,10 +130,11 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    resetPosts: () => dispatch(postActions.resetPosts()),
     fetchPosts: (api, opts) => dispatch(postActions.getPosts(api, opts)),
     createPost: (api, post, media) => dispatch(postActions.createPost(api, post, media)),
-    likePost: (api, id) => dispatch(postActions.likePost(api, id)),
     getPeopleSuggestions: (api, count) => dispatch(actionSuggestion.getPeopleSuggestions(api, count)),
+    likePost: (api, id) => dispatch(postActions.likePost(api, id)),
     followPeopleSuggestions: (api, id) => dispatch(actionSuggestion.followPeopleSuggestions(api, id)),
     unfollowPeopleSuggestions: (api, id) => dispatch(actionSuggestion.unfollowPeopleSuggestions(api, id))
   }

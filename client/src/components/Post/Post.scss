@@ -1,79 +1,19 @@
 $card-content-wrapper-width: 100%;
 $card-content-wrapper-max-height: 700px;
 
-$react-player-controls-transition: .5s;
-$react-player-btn-play-size: 8rem;
-$react-player-btn-color: #e2dfdf;
-$react-player-btn-mute-size: 2rem;
-$react-player-btn-mute-margin: 10px;
-
-$react-carousel-slide-height: 100%;
-$react-carousel-max-height: 700px;
-
-$payable-content-width: 100%;
-$payable-content-height: 500px;
-$payable-content-bg-color: rgb(233, 233, 233);
-$payable-content-z-index: 1;
-$payable-content-icon-size: 6rem;
-$payable-content-color: rgb(207, 207, 207);
-
 $username-color: #d83cbe;
+
+$share-modal-max-width: 400px;
+
+$react-swipeable-view-max-height: 700px;
 
 .card-content-wrapper {
   position: relative;
   width: $card-content-wrapper-width;
   overflow: hidden;
-  .carousel-root .carousel .slider-wrapper .slider .slide {
-    div, div > img {
-      height: $react-carousel-slide-height;
-      max-height: $react-carousel-max-height;
-    }
-  }
-}
 
-.payable-content {
-  width: $payable-content-width;
-  height: $payable-content-height;
-  background-color: $payable-content-bg-color;
-  z-index: $payable-content-z-index;
-
-  & > svg {
-    font-size: $payable-content-icon-size;
-    color: $payable-content-color
-  }
-
-  & > h1 {
-    color: $payable-content-color
-  }
-}
-
-.react-player {
-  pointer-events: none;
-  video {
-    object-fit: cover;
-  }
-
-  &__controls {
-    position: absolute;
-    transition: opacity $react-player-controls-transition;
-    &-margin {
-      left: $react-player-btn-mute-margin;
-      bottom: $react-player-btn-mute-margin;
-    }
-  }
-
-  &-btn-play {
-    & > svg {
-      font-size: $react-player-btn-play-size;
-      color: $react-player-btn-color;
-    }
-  }
-
-  &-btn-mute {
-    & > svg {
-      font-size: $react-player-btn-mute-size;
-      color: $react-player-btn-color;
-    }
+  & > div {
+    max-height: $card-content-wrapper-max-height;
   }
 }
 
@@ -82,5 +22,13 @@ $username-color: #d83cbe;
 }
 
 .post-share-modal {
-  max-width: 400px !important;
+  max-width: $share-modal-max-width;
+}
+
+.react-swipeable-view-container {
+  max-height: $react-swipeable-view-max-height;
+
+  & img {
+    object-fit: cover;
+  }
 }

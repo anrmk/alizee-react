@@ -41,7 +41,10 @@ export function getPeopleSuggestions(api, count) {
 
     const url = generateUrl("getPeopleSuggestions");
     try {
-      const { data } = await api.setMethod("GET").setParams({count}).query(url);
+      const { data } = await api
+        .setMethod("GET")
+        .setParams({ count })
+        .query(url);
 
       data.forEach(item => {
         item.avatarUrl = generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, item.avatarUrl);

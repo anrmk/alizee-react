@@ -37,6 +37,25 @@ body {
   }
 }
 
+.mw-4 {
+  max-width: 40% !important;
+}
+
+.not-link {
+  color: inherit;
+  text-decoration: none !important;
+
+  &:hover {
+    color: inherit;
+  }
+
+  &:active {
+    & * {
+      color: rgb(219, 219, 219)
+    }
+  }
+}
+
 // AVATAR SIZE
 .avatar__small {
   width: 24px !important;

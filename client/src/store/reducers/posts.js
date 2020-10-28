@@ -11,6 +11,8 @@ import {
   CREATE_POST_SUCCESS,
   CREATE_POST_FAILURE,
 
+  RESET_POSTS,
+
   LIKE_POST_REQUEST,
   LIKE_POST_SUCCESS,
   LIKE_POST_FAILURE
@@ -74,7 +76,11 @@ export default function signIn(state = {
         ...state,
         ...action.payload
       }
-
+    case RESET_POSTS:
+      return { 
+        ...state,
+        ...action.payload
+      } 
     // Like/Unlike post
     case LIKE_POST_REQUEST:
       return { 

@@ -1,36 +1,36 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
-
-import ImagesContent from "./ImagesContent";
-import VideoContent from "./VideoContent";
-import PayableContent from "./PayableContent";
-import Tools from "./Tools";
-import { AvatarItem } from "../../components/Avatar";
-
-import { MEDIA_IMAGE, MEDIA_VIDEO } from "../../constants/media_types";
 
 import MoreHorizIcon from "@material-ui/icons/MoreHorizOutlined";
 
+import { AvatarItem } from "../../components/Avatar";
+import MediaContent from "../../components/MediaContent";
+import { PROFILE_ROUTE } from "../../constants/routes";
+import Tools from "./Tools";
+
 import "./Post.scss";
+import CustomLink from "../CustomLink";
 
 function Post({
   id,
   userId,
   avatarUrl,
   username,
-  createdDate,
-  altText,
-  likes,
-  iLike,
   mediaUrls,
   amount,
   description,
-  commentable = false,
-  hideToolbar = false,
-  hideHeader = false,
+  commentable,
+  likes,
+  iLike,
+  createdDate,
+  hideToolbar,
+  hideHeader,
+
   onFavoriteClick,
+  onCommentsClick,
   onBuyClick,
-  onShareClick,
+  onShareClick
 }) {
   const handleOnFavoriteClick = (e) => {
     e.preventDefault();
@@ -48,33 +48,14 @@ function Post({
     onShareClick && onShareClick(data);
   };
 
-  const renderContent = (items, altText, amount) => {
-    if (amount > 0) return <PayableContent amount={amount} />;
-
-    if (!items || !items.length) return <p></p>;
-
-    if (items.length === 1) {
-      switch (items[0].kind) {
-        case MEDIA_IMAGE:
-          return <ImagesContent items={items} altText={altText} />;
-        case MEDIA_VIDEO:
-          return <VideoContent url={items[0].url} />;
-        default:
-          return <></>;
-      }
-    }
-
-    return <ImagesContent items={items} />;
-  };
-
   return (
-    <div className="card mb-5" key={id}>
+    <div className="card mb-5">
       {!hideHeader && (
         <div className="card-header d-flex align-items-center justify-content-between py-2">
-            <AvatarItem url={avatarUrl} >
-              <Link to={`/users/${userId}`} >
-                {username} <br />
-              </Link>
+            <AvatarItem url={avatarUrl}>
+              <CustomLink as="div" to={PROFILE_ROUTE(username)} >
+                {username}
+              </CustomLink>
               <small className="text-muted">{createdDate ?? ""}</small>
             </AvatarItem>
           <MoreHorizIcon />
@@ -101,7 +82,7 @@ function Post({
       ) : (
         <>
           <div className="card-content-wrapper">
-            {renderContent(mediaUrls, altText, amount)}
+            <MediaContent items={mediaUrls} caption={description} amount={amount} />
           </div>
           {!hideToolbar && (
             <Tools
@@ -123,5 +104,47 @@ function Post({
     </div>
   );
 }
+
+Post.propTypes = {
+  id: PropTypes.string,
+  userId: PropTypes.string,
+  avatarUrl: PropTypes.string,
+  username: PropTypes.string,
+  mediaUrls: PropTypes.array,
+  amount: PropTypes.number,
+  description: PropTypes.string,
+  commentable: PropTypes.bool,
+  likes: PropTypes.number,
+  iLike: PropTypes.bool,
+  createdDate: PropTypes.string,
+  hideToolbar: PropTypes.bool,
+  hideHeader: PropTypes.bool,
+
+  onFavoriteClick: PropTypes.func,
+  onCommentsClick: PropTypes.func,
+  onBuyClick: PropTypes.func,
+  onShareClick: PropTypes.func
+};
+
+Post.defaultProps = {
+  id: "",
+  userId: "",
+  avatarUrl: "",
+  username: "",
+  mediaUrls: [],
+  amount: 0,
+  description: "",
+  commentable: false,
+  likes: 0,
+  iLike: false,
+  createdDate: "",
+  hideToolbar: false,
+  hideHeader: false,
+
+  onFavoriteClick: undefined,
+  onCommentsClick: undefined,
+  onBuyClick: undefined,
+  onShareClick: undefined
+};
 
 export default Post;

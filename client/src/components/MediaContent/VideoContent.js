@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+
 import ReactPlayer from 'react-player';
 import PlayArrow from '@material-ui/icons/PlayArrow';
 import Pause from '@material-ui/icons/Pause';
@@ -20,6 +22,13 @@ export default function VideoContent({ url }) {
     return 0;
   }
 
+  const handlePlayBtnClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    setPlaying(!playing);
+  }
+
   const handleMuteBtnClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -31,7 +40,10 @@ export default function VideoContent({ url }) {
     let styleOpacity = getControlsOpacity(show, stop);
 
     return (
-      <div className="react-player__controls react-player-btn-play" style={{ opacity: styleOpacity }}>
+      <div 
+        className="react-player__controls react-player-btn-play"
+        style={{ opacity: styleOpacity }}
+        onClick={handlePlayBtnClick}>
         {!stop ? <PlayArrow /> : <Pause />}
       </div>
     )
@@ -42,7 +54,7 @@ export default function VideoContent({ url }) {
 
     return (
       <div 
-        className="react-player__controls react-player__controls-margin react-player-btn-mute"
+        className="react-player__controls react-player__controls--margin react-player-btn-mute"
         style={{ opacity: styleOpacity }}
         onClick={handleMuteBtnClick}>
         {!mute ? <VolumeUp /> : <VolumeOff />}
@@ -52,10 +64,9 @@ export default function VideoContent({ url }) {
 
   return (
       <div 
-        className="d-flex justify-content-center align-items-center"
+        className="react-player-wrapper"
         onMouseEnter={() => setShowing(true)}
-        onMouseLeave={() => setShowing(false)}
-        onClick={() => setPlaying(!playing)}>
+        onMouseLeave={() => setShowing(false)}>
         {renderPlayBtn(showing, playing)}
         {renderMuteBtn(showing, muted, playing)}
         <ReactPlayer 
@@ -66,4 +77,12 @@ export default function VideoContent({ url }) {
           url={url} />
       </div>
   )
+}
+
+VideoContent.propTypes = {
+  url: PropTypes.string
+}
+
+VideoContent.defaultProps = {
+  url: ""
 }

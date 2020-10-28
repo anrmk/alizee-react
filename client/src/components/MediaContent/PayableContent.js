@@ -1,7 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import LockIcon from '@material-ui/icons/Lock';
 
-import './Post.scss';
+import './MediaContent.scss';
 
 export default function PayableContent({ amount }) {
   return (
@@ -10,4 +12,12 @@ export default function PayableContent({ amount }) {
       <p className="h1">{amount}$</p>
     </div>
   );
+}
+
+PayableContent.propTypes = {
+  amount: PropTypes.number
+}
+
+PayableContent.defaultProps = {
+  amount: 0
 }

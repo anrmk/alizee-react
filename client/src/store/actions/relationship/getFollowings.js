@@ -12,7 +12,7 @@ function requestGetFollowings() {
     type: GET_FOLLOWINGS_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: "",
+      errorMessage: ""
     },
   };
 }
@@ -24,6 +24,7 @@ function receiveGetFollowings(followingsData) {
       isFetching: false,
       errorMessage: "",
       followings: followingsData || [],
+      current: followingsData || []
     },
   };
 }
@@ -33,12 +34,12 @@ function errorGetFollowings(message) {
     type: GET_FOLLOWINGS_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message,
+      errorMessage: message
     },
   };
 }
 
-function _filterFollowings(query) {
+function filterQueryFollowings(query) {
   return {
     type: FILTER_FOLLOWINGS,
     payload: {
@@ -49,13 +50,17 @@ function _filterFollowings(query) {
   };
 }
 
-export function getFollowings(api) {
+export function getFollowings(api, userId) {
   return async (dispatch) => {
     dispatch(requestGetFollowings());
 
     const url = generateUrl("getFollowings");
     try {
-      const { data } = await api.setMethod("GET").query(url);
+      const { data } = await api
+        .setMethod("GET")
+        .setParams({ userId })
+        .query(url);
+
       dispatch(receiveGetFollowings(data));
     } catch {
       dispatch(errorGetFollowings("Error: GetFollowings"));
@@ -63,21 +68,23 @@ export function getFollowings(api) {
   };
 }
 
-// SELECTOR FILTER
+export function filterFollowings(query) {
+  return async (dispatch) => {
+    dispatch(filterQueryFollowings(query));
+  };
+}
+
+// Sellectors
 const querySelector = (state) => state.relationship.query;
 const dataSelector = (state) => state.relationship.followings;
 
 export const getFilteredFollowings = createSelector(
   [querySelector, dataSelector],
   (query, data) => {
+    if (!query) return data;
+
     return data.filter((item) =>
       item.userName?.toLowerCase().includes(query.toLowerCase())
     );
   }
 );
-
-export function filterFollowings(query) {
-  return async (dispatch) => {
-    dispatch(_filterFollowings(query));
-  };
-}

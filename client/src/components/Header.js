@@ -1,14 +1,15 @@
 import React from "react";
 import { Link, useRouteMatch } from "react-router-dom";
-import iconSrc from "../assets/img/logo.png";
 
 import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-
 import HomeIcon from "@material-ui/icons/HomeOutlined";
 import StorefrontOutlinedIcon from '@material-ui/icons/StorefrontOutlined';
 import SendOutlinedIcon from '@material-ui/icons/SendOutlined';
+
+import iconSrc from "../assets/img/logo.png";
 import {Avatar} from "../components/Avatar";
+import { HOME_ROUTE, PROFILE_ROUTE } from '../constants/routes';
 
 // import AppBar from '@material-ui/core/AppBar';
 // import Toolbar from '@material-ui/core/Toolbar';
@@ -17,11 +18,8 @@ import {Avatar} from "../components/Avatar";
 // import BottomNavigation from '@material-ui/core/BottomNavigation';
 // import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 
-function Header(props) {
+function Header({ username, avatarUrl, onSignOut }) {
   const match = useRouteMatch();
-
-  const { avatarUrl } = props;
-  const { onSignOut } = props;
 
   const handleSignOut = () => {
     onSignOut && onSignOut();
@@ -75,7 +73,7 @@ function Header(props) {
 
           <div className="navbar-nav ml-auto">
             <li className="nav-item text-center">
-              <Link className="nav-link" to={"/"}>
+              <Link className="nav-link" to={HOME_ROUTE}>
                 <HomeIcon />
                 <span className="d-block">Home</span>
               </Link>
@@ -102,7 +100,7 @@ function Header(props) {
               </Link>
             </li>
                 <li className="nav-item text-center">
-                  <Link className="nav-link" to={"/me"} >
+                  <Link className="nav-link" to={PROFILE_ROUTE(username)}>
                     <Avatar url={avatarUrl} />
                   </Link>
                 </li>

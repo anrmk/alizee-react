@@ -74,7 +74,7 @@ export function signInUser(creds, api) {
 
       const avatarUrl = data?.avatarUrl;
       if (avatarUrl) {
-        data.avatarUrl = generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, avatarUrl);
+        data.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, avatarUrl);
       }
 
       dispatch(receiveSignIn(data));

@@ -45,8 +45,8 @@ function PostPage(props) {
             renderLoader()
           ) : (
             <Post
-              hideToolbar="true"
-              hideHeader="true"
+              hideToolbar
+              hideHeader
               id={data?.id}
               userId={data?.user?.id}
               avatarUrl={data?.user?.avatarUrl}
@@ -62,7 +62,6 @@ function PostPage(props) {
         <div className="col-lg-4 d-none d-lg-block d-xl-block">
           <div className="p-2 mb-3 border-bottom">
             <AvatarItem
-              size="large"
               url={data?.user?.avatarUrl}
               title={data?.user?.userName}
               subtitle={data?.createdDate}

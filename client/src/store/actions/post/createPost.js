@@ -72,7 +72,7 @@ export function createPost(api, postData, mediaData=[]) {
         data.user.avatarUrl = avatarUrl;
       }
       data.media.forEach(item => {
-        item.url = generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, item.url);
+        item.url = generateFileUrl(process.env.REACT_APP_DOMAIN, item.url);
       });
 
       dispatch(receiveCreatePost(data));

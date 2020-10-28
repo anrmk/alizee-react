@@ -50,11 +50,11 @@ export function fetchPost(api, id) {
       const avatarUrl = data.user.avatarUrl;
       data.user = { 
         ...data.user, 
-        avatarUrl: generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, avatarUrl)
+        avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, avatarUrl)
       };
       data.media.forEach(item => {
-        item.url = generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, item.url);
-        item.thumbnailUrl = generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, item.thumbnailUrl);
+        item.url = generateFileUrl(process.env.REACT_APP_DOMAIN, item.url);
+        item.thumbnailUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, item.thumbnailUrl);
       });
 
       dispatch(receiveGetPost(data));

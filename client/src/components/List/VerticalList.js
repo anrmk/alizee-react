@@ -5,7 +5,7 @@ export default function VerticalList({ as, className, children }) {
   return React.createElement(as, { className: "list-group " + className }, children);
 }
 
-VerticalList.protoTypes = {
+VerticalList.propTypes = {
   as: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.array,

@@ -1,6 +1,6 @@
 $avatar-small-size: 24px;
-$avatar-medium-size: 40px;
-$avatar-large-size: 56px;
+$avatar-medium-size: 50px;
+$avatar-large-size: 180px;
 
 .avatar-item {
   .avatar-title, .avatar-title:hover {
@@ -8,29 +8,24 @@ $avatar-large-size: 56px;
     color: black;
     text-decoration: none;
   }
+}
 
-  a, a:hover {
-    color: black;
-    cursor: pointer;
+.avatar {
+  object-fit: cover;
+  object-position: center;
+
+  &--small {
+    width: $avatar-small-size;
+    height: $avatar-small-size;
   }
-  
-  .avatar {
-    object-fit: cover;
-    object-position: top;
-  
-    &--small {
-      width: $avatar-small-size;
-      height: $avatar-small-size;
-    }
-  
-    &--medium {
-      width: $avatar-medium-size;
-      height: $avatar-medium-size;
-    }
-  
-    &--large {
-      width: $avatar-large-size;
-      height: $avatar-large-size;
-    }
+
+  &--medium {
+    width: $avatar-medium-size;
+    height: $avatar-medium-size;
+  }
+
+  &--large {
+    width: $avatar-large-size;
+    height: $avatar-large-size;
   }
 }

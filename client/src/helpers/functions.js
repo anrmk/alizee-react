@@ -1,3 +1,5 @@
+import numeral from "numeral";
+
 import ENDPOINTS from '../constants/endpoints';
 import { MEDIA_IMAGE, MEDIA_VIDEO, MEDIA_STORY } from '../constants/media_types';
 import { USER_TOKEN } from "../constants/user";
@@ -26,6 +28,8 @@ export function generateUrl(endpoint, api = ENDPOINTS, postfix = null) {
  * @return {string}
  */
 export function generateFileUrl(address, endpoint, postfix = null) {
+  if (!endpoint) return null;
+
   const url = wrapHttps(`${address}${ENDPOINTS.urlFiles}${endpoint}`, true);
   return postfix ? `${url}/${postfix}` : url;
 }
@@ -135,4 +139,20 @@ export function getWithoutRepeats(list, property) {
       t[property] === item[property]
     ))
   )
+}
+
+/**
+ * Format number
+ * @param {number}
+ * @param {format}
+ * @return {string}
+ */
+export function formatNumber(number, format="0.0a") {
+  const formattedNumber = numeral(number).format(format);
+
+  if (formattedNumber) {
+    return formattedNumber.replace(".0", "");
+  }
+
+  return formattedNumber;
 }

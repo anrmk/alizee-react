@@ -5,14 +5,14 @@ export default function ItemList({ as, className, children }) {
   return React.createElement(as, { className: "list-group-item " + className }, children)
 }
 
-ItemList.protoTypes = {
+ItemList.propTypes = {
   as: PropTypes.string,
   className: PropTypes.string,
-  children: PropTypes.array,
+  children: PropTypes.any,
 }
 
 ItemList.defaultProps = {
   as: "li",
   className: "",
-  children: [],
+  children: null,
 }

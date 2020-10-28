@@ -1,9 +1,13 @@
+import { createSelector } from "reselect";
+
 import { generateUrl, generateFileUrl, getOffset } from '../../../helpers/functions';
 import { POSTS_OFFSET } from '../../../constants/feed';
 
 export const GET_POSTS_REQUEST = 'GET_POSTS_REQUEST';
 export const GET_POSTS_SUCCESS = 'GET_POSTS_SUCCESS';
 export const GET_POSTS_FAILURE = 'GET_POSTS_FAILURE';
+
+export const RESET_POSTS = 'RESET_POSTS';
 
 function requestGetPosts() {
   return {
@@ -39,16 +43,31 @@ function errorGetPosts(message) {
   }
 }
 
+export function resetPosts() {
+  return dispatch => dispatch({
+    type: RESET_POSTS,
+    payload: {
+      isFetching: false,
+      offset: 0,
+      hasMore: false,
+      errorMessage: '',
+      data: []
+    }
+  })
+}
+
 export function getPosts(api, opts) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     dispatch(requestGetPosts());
 
     const url = generateUrl('getPosts');
+    const currentOffset = getState().posts.offset;
     try {
       const { data } = await api
         .setMethod('GET')
         .setParams({
-          start: opts.offset,
+          userId: opts.userId,
+          start: currentOffset,
           length: opts.length
         })
         .query(url);
@@ -58,17 +77,33 @@ export function getPosts(api, opts) {
         const avatarUrl = item.user.avatarUrl;
         item.user = { 
           ...item.user, 
-          avatarUrl: generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, avatarUrl)
+          avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, avatarUrl)
         };
-        item.media.forEach(item => {
-          item.url = generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, item.url);
-          item.thumbnailUrl = generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, item.thumbnailUrl);
+        item.media.forEach(media => {
+          media.url = generateFileUrl(process.env.REACT_APP_DOMAIN, media.url);
+          media.thumbnailUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, media.thumbnailUrl);
         })
       });
 
-      dispatch(receiveGetPosts(data, opts.offset));
+      dispatch(receiveGetPosts(data, currentOffset));
     } catch (e) {
       dispatch(errorGetPosts("Error: something went wrong:", e));
     }
   }
 }
+
+// Selectors
+const gridGallerySelector = (state) => state.posts.data;
+
+export const getGridGalleryPosts = createSelector(
+  [gridGallerySelector],
+  data => data.reduce((acc, curr) => curr.media.length > 0 ? ([
+    ...acc,
+    {
+      id: curr.id,
+      caption: curr.description,
+      amount: curr.amount,
+      media: [curr.media[0]]
+    }
+  ]) : acc, [])
+);

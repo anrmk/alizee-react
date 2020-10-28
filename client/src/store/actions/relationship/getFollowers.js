@@ -1,11 +1,8 @@
-import { createSelector } from "reselect";
-
 import { generateUrl } from "../../../helpers/functions";
 
 export const GET_FOLLOWERS_REQUEST = "GET_FOLLOWERS_REQUEST";
 export const GET_FOLLOWERS_SUCCESS = "GET_FOLLOWERS_SUCCESS";
 export const GET_FOLLOWERS_FAILURE = "GET_FOLLOWERS_FAILURE";
-export const FILTER_FOLLOWERS = "FILTER_FOLLOWERS";
 
 function requestGetFollowers() {
   return {
@@ -24,6 +21,7 @@ function receiveGetFollowers(followersData) {
       isFetching: false,
       errorMessage: "",
       followers: followersData || [],
+      current: followersData || []
     },
   };
 }
@@ -38,51 +36,20 @@ function errorGetFollowers(message) {
   };
 }
 
-function _filterFollowers(query) {
-  return {
-    type: FILTER_FOLLOWERS,
-    payload: {
-      isFetching: false,
-      errorMessage: "",
-      query,
-    },
-  };
-}
-
-export function getFollowers(api) {
+export function getFollowers(api, userId, status) {
   return async (dispatch) => {
     dispatch(requestGetFollowers());
 
     const url = generateUrl("getFollowers");
     try {
-      const { status, data } = await api.setMethod("GET").query(url);
-
-      if (status !== 200) {
-        return dispatch(errorGetFollowers(data?.message));
-      }
+      const { data } = await api
+        .setParams({ userId, status })
+        .setMethod("GET")
+        .query(url);
 
       dispatch(receiveGetFollowers(data));
     } catch {
       dispatch(errorGetFollowers("Error: GetFollowers"));
     }
-  };
-}
-
-// SELECTOR FILTER
-const querySelector = (state) => state.follower.query;
-const dataSelector = (state) => state.follower.data;
-
-export const getFilteredFollowers = createSelector(
-  [querySelector, dataSelector],
-  (query, data) => {
-    return data.filter((item) =>
-      item.followerName?.toLowerCase().includes(query.toLowerCase())
-    );
-  }
-);
-
-export function filterFollowers(query) {
-  return async (dispatch) => {
-    dispatch(_filterFollowers(query));
   };
 }

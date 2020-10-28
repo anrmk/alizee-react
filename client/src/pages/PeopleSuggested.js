@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import ApiContext from "../context/ApiContext";
 
-import { SuggestionList } from "../components/Suggestion";
+import { RelationshipList } from "../components/RelationshipList";
 import * as actionSuggestion from "../store/actions/suggestion";
 
 function PeopleSuggested(props) {
@@ -25,7 +25,7 @@ function PeopleSuggested(props) {
     <div className="container p-4">
       <div className="">
       <h5 className="h5">Suggested</h5>
-      <SuggestionList list={peopleSuggestions.data} followOnClick={handleFollowPeople} />
+      <RelationshipList items={peopleSuggestions.data} onFollowClick={handleFollowPeople} />
       </div>
     </div>
   );

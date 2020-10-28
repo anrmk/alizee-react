@@ -1,26 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import * as signalR from "@microsoft/signalr";
-import { getToken, wrapHttps } from "../../helpers/functions";
 
+import { getToken, wrapHttps } from "../../helpers/functions";
 import * as actionAddMessage from "../../store/actions/chat";
+import API from "../../constants/endpoints";
 
 function NotificationHub(props) {
-  const { chat } = props;
+  const { chat, user } = props;
   const { addMessage, addMessageCount } = props;
   const [hubConnection, setHubConnection] = useState(null);
   const [msg, setMsg] = useState();
 
   useEffect(() => {
-    const newHubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(wrapHttps(`${process.env.REACT_APP_TESTING_DOMAIN}/hubs/chat`, true), {
-        accessTokenFactory: () => getToken(),
-      })
-      .withAutomaticReconnect()
-      .configureLogging(signalR.LogLevel.Information)
-      .build();
+    if (user.isAuthenticated) {
+      const newHubConnection = new signalR.HubConnectionBuilder()
+        .withUrl(wrapHttps(`${process.env.REACT_APP_DOMAIN}${API.endpoints.chat}`, true), {
+          accessTokenFactory: () => getToken(),
+        })
+        .withAutomaticReconnect()
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
 
-    setHubConnection(newHubConnection);
+      setHubConnection(newHubConnection);
+    }
   }, []);
 
   const handleReciveMessage = (data) => {
@@ -40,20 +43,22 @@ function NotificationHub(props) {
   }, [msg]);
 
   useEffect(() => {
-    if (hubConnection) {
-      hubConnection
-        .start({ withCredentials: false })
-        .then(() => {
-          console.log("hub connected!");
-          hubConnection.on("ReceiveMessage", (data) => setMsg(data));
-        })
-        .catch((err) =>
-          console.log("Error connection SignalR " + JSON.stringify(err))
-        );
+    if (user.isAuthenticated) {
+      if (hubConnection) {
+        hubConnection
+          .start({ withCredentials: false })
+          .then(() => {
+            console.log("hub connected!");
+            hubConnection.on("ReceiveMessage", (data) => setMsg(data));
+          })
+          .catch((err) =>
+            console.log("Error connection SignalR " + JSON.stringify(err))
+          );
+      }
     }
   }, [hubConnection]);
 
-  return <>{props.children}</>;
+  return props.children;
 }
 
 function mapStateToProps(state) {
@@ -62,6 +67,9 @@ function mapStateToProps(state) {
       data: state.chat.data,
       currentRoom: state.chat.currentRoom,
     },
+    user: {
+      isAuthenticated: state.signIn.isAuthenticated
+    }
   };
 }
 

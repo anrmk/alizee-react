@@ -21,7 +21,7 @@ function Chat(props) {
   
   useEffect(() => {
     if (modalShow) {
-      getFollowings(apiClient);
+      getFollowings(apiClient, user.id);
     } else {
       getRooms(apiClient);
     }
@@ -102,7 +102,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getFollowings: api => dispatch(actionRelationship.getFollowings(api)),
+    getFollowings: (api, userId) => dispatch(actionRelationship.getFollowings(api, userId)),
     filterFollowings: query => dispatch(actionRelationship.filterFollowings(query)),
 
     getRooms: api => dispatch(actionChat.getRooms(api)),

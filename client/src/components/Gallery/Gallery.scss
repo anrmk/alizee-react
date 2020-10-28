@@ -1,0 +1,77 @@
+$pagination-bottom: 0;
+$pagination-width: 100%;
+$pagination-margin-bottom: 10px;
+$pagination-ol-padding: 0;
+$pagination-li-width: 14px;
+$pagination-li-height: 14px;
+$pagination-li-font: 0px/0 a;
+$pagination-li-before-opacity: .8;
+$pagination-li-before-left: 4px;
+$pagination-li-before-top: 4px;
+$pagination-li-before-width: 12px;
+$pagination-li-before-height: 12px;
+$pagination-li-before-background-color: rgb(101, 99, 134);
+$pagination-li-before-border-radius: 50%;
+$pagination-li-before-box-shadow: 0px 0px 15px rgba(10, 1, 22, 0.5);
+$pagination-li-before-transition-time: .2s;
+$pagination-li-active-before-scale: 1.2;
+$pagination-li-active-background-color: rgb(228, 228, 228);
+$li-li-margin-left: 10px;
+
+.gallery {
+  position: relative;
+}
+
+.pagination {
+  position: absolute;
+  bottom: $pagination-bottom;
+  width: $pagination-width;
+  display: flex;
+  justify-content: center;
+  margin-bottom: $pagination-margin-bottom;
+
+  ol {
+    position: relative;
+    list-style-type: none;
+    padding: $pagination-ol-padding;
+  }
+
+  li {
+    float: left;
+    width: $pagination-li-width;
+    height: $pagination-li-height;
+    position: relative;
+    font: $pagination-li-font;
+    cursor: pointer;
+
+    &:before {
+      content: ".";
+      position: absolute;
+      opacity: $pagination-li-before-opacity;
+      left: $pagination-li-before-left;
+      top: $pagination-li-before-top;
+      width: $pagination-li-before-width;
+      height: $pagination-li-before-height;
+      background-color: $pagination-li-before-background-color;
+      border-radius: $pagination-li-before-border-radius;
+      box-shadow: $pagination-li-before-box-shadow;
+      transition: all $pagination-li-before-transition-time linear;
+    }
+
+    &:focus:before {
+      transform: scale($pagination-li-active-before-scale);
+      background: $pagination-li-active-background-color;
+    }
+  }
+
+  li + li {
+    margin-left: $li-li-margin-left;
+  }
+
+  .active {
+    &:before {
+      transform: scale($pagination-li-active-before-scale);
+      background: $pagination-li-active-background-color;
+    }
+  }
+}

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Modal from "react-bootstrap/Modal";
 
-import {Post} from "../../components/Post";
+import { Post } from "../../components/Post";
 import ShareList from "../SocialList";
 
 import Loader from "./Loader";
@@ -15,7 +15,7 @@ function PostsList({items, hasMore, onFetchMore, onFavoriteClick, onBuyClick, on
   const handleFetchMore = () => {
     onFetchMore && onFetchMore();
   }
-  
+
   const handleShareBtnClick = (data) => {
     setShareData(data);
     setShowModal(true);
@@ -36,26 +36,31 @@ function PostsList({items, hasMore, onFetchMore, onFavoriteClick, onBuyClick, on
           <ShareList {...shareData} />
         </Modal.Body>
       </Modal>
-      <InfiniteScroll scrollThreshold={1} dataLength={items.length} next={handleFetchMore} hasMore={hasMore} loader={<Loader />} endMessage={<EndMessage />} on>
+      <InfiniteScroll
+        scrollThreshold={1}
+        dataLength={items.length}
+        next={handleFetchMore}
+        hasMore={hasMore}
+        loader={<Loader />}
+        endMessage={<EndMessage />}>
           {items.length > 0 && items.map(item => (
-             <Post
-               key={item?.id}
-               id={item?.id}
-               userId={item?.user?.id}
-               username={item?.user?.userName}
-               avatarUrl={item?.user?.avatarUrl}
-               mediaUrls={item?.media}
-               altText={item?.altText}
-               description={item?.description}
-               createdDate={item?.createdDate}
-               amount={item?.amount}
-               likes={item?.likes}
-               iLike={item?.iLike}
-               commentable={item?.isCommentable}
-               onFavoriteClick={onFavoriteClick}
-               onBuyClick={onBuyClick}
-               onShareClick={handleShareBtnClick} />
-           ))}
+            <Post
+              key={item?.id}
+              id={item?.id}
+              userId={item?.user?.id}
+              avatarUrl={item?.user?.avatarUrl}
+              mediaUrls={item?.media}
+              description={item?.description}
+              username={item?.user?.userName}
+              createdDate={item?.createdDate}
+              amount={item?.amount}
+              commentable={item?.isCommentable}
+              likes={item?.likes}
+              iLike={item?.iLike}
+              onFavoriteClick={onFavoriteClick}
+              onBuyClick={onBuyClick}
+              onShareClick={handleShareBtnClick} />
+          ))}
       </InfiniteScroll>
     </>
   )
