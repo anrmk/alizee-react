@@ -22,19 +22,30 @@ function RelationshipItem({
 
   return (
     <ItemList className="d-flex justify-content-between align-items-center p-2">
-      <CustomLink as="div" to={PROFILE_ROUTE(username)} style={{ cursor: "pointer" }}>
-        <AvatarItem url={avatarUrl} title={username} subtitle="recommended" />
-      </CustomLink>
+      <AvatarItem url={avatarUrl}>
+        {avatarUrl}
+        <CustomLink
+          as="div"
+          to={PROFILE_ROUTE(username)}
+          style={{ cursor: "pointer" }}
+        >
+          {username}
+        </CustomLink>
+        <small className="text-muted">recommended</small>
+      </AvatarItem>
       {!me && (
-        <button 
-          className={`btn btn-sm ${isFollowing ? "btn-outline-primary" : "btn-primary"} ml-2`}
+        <button
+          className={`btn btn-sm ${
+            isFollowing ? "btn-outline-primary" : "btn-primary"
+          } ml-2`}
           type="button"
-          onClick={() => handleFollowClick(id, userId)}>
+          onClick={() => handleFollowClick(id, userId)}
+        >
           {isFollowing ? "Following" : "Follow"}
         </button>
       )}
     </ItemList>
-  )
+  );
 }
 
 RelationshipItem.propTypes = {

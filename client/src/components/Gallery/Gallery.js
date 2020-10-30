@@ -8,7 +8,6 @@ function Gallery({
   children, 
   currentIndex, 
   containerStyle,
-  
   onChangeIndex 
 }) {
   const [localIndex, setLocalIndex] = useState(currentIndex);

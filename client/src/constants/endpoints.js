@@ -13,6 +13,7 @@ export default {
     getPosts: 'post/getposts',
 
     // MEDIA
+    getFollowingPosts: "post/getfollowingposts",
     createPost: 'post/createpost',
     createMedia: 'media/createmedia',
 

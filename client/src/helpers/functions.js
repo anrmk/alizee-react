@@ -61,7 +61,7 @@ export function getToken() {
 export function getOffset(currentOffset, total, step = 1) {
   if (typeof currentOffset !== "number" || typeof total !== "number") return 0;
 
-  return currentOffset + step >= total ? total + step : currentOffset + step;
+  return currentOffset + step >= total ? total : currentOffset + step;
 }
 
 /**

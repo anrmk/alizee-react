@@ -16,11 +16,16 @@ function Tile({
   onClick
 }) {
   return (
-    <figure className="col-sm-4 tile" onClick={onClick}>
-      <CustomLink as="div" to={`${POST_ROUTE}/${id}`} style={{ cursor: "pointer" }}>
-        <MediaContent thumbnail items={media} caption={caption} amount={amount} lazyLoad />
+    <div className="col-4" onClick={onClick}>
+      <CustomLink as="figure" to={`${POST_ROUTE}/${id}`} className="figure tile" style={{ cursor: "pointer" }}>
+        {media.length > 0  
+        ?
+         <MediaContent thumbnail items={media} caption={caption} amount={amount} lazyLoad />
+        :
+        <div>{caption}</div>
+      }
       </CustomLink>
-    </figure>
+    </div>
   );
 }
 

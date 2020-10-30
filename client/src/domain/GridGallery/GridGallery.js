@@ -16,7 +16,7 @@ function GridGallery({
 }) {
   return (
     <InfiniteScroll
-      className="row profile-grid"
+      className="row no-gutters grid-gallery"
       scrollThreshold={1}
       dataLength={items.length}
       next={onFetchMore}
@@ -25,7 +25,7 @@ function GridGallery({
       {items 
         && items.length > 0 
         && items.map(item => (
-          <Tile 
+          <Tile  
             key={item?.id}
             id={item?.id}
             amount={item?.amount}

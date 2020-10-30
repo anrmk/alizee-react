@@ -10,6 +10,13 @@ export {
 } from './getPosts';
 
 export { 
+  GET_FOLLOWING_POSTS_REQUEST,
+  GET_FOLLOWING_POSTS_SUCCESS,
+  GET_FOLLOWING_POSTS_FAILURE,
+  getFollowingPosts
+} from './getFollowingPosts';
+
+export { 
   GET_POST_REQUEST,
   GET_POST_SUCCESS,
   GET_POST_FAILURE,

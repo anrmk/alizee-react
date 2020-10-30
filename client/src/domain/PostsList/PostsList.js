@@ -1,16 +1,20 @@
 import React, { useState } from "react";
+
 import InfiniteScroll from "react-infinite-scroll-component";
 import Modal from "react-bootstrap/Modal";
 
-import { Post } from "../../components/Post";
+import {Post, Options} from "../../components/Post";
 import ShareList from "../SocialList";
 
 import Loader from "./Loader";
 import EndMessage from "./EndMessage";
 
-function PostsList({items, hasMore, onFetchMore, onFavoriteClick, onBuyClick, onShareClick}) {
+function PostsList({items, hasMore, onFetchMore, onGoToClick, onFollowClick, onFavoriteClick, onBuyClick}) {
+  const [optionData, setOptionData] = useState({});
+  const [showOptionsModal, setOptionsShowModal] = useState(false);
+
   const [shareData, setShareData] = useState({});
-  const [showModal, setShowModal] = useState(false);
+  const [showShareModal, setShareShowModal] = useState(false);
 
   const handleFetchMore = () => {
     onFetchMore && onFetchMore();
@@ -18,17 +22,28 @@ function PostsList({items, hasMore, onFetchMore, onFavoriteClick, onBuyClick, on
 
   const handleShareBtnClick = (data) => {
     setShareData(data);
-    setShowModal(true);
-    onShareClick && onShareClick();
+    setShareShowModal(true);
+  }
+
+  const handleOptionBtnClick = (data) => {
+    setOptionData(data);
+    setOptionsShowModal(true);
   }
 
   const handleModalHide = () => {
-    setShowModal(false);
+    setShareShowModal(false);
+    setOptionsShowModal(false);
+  }
+
+  const handleShareClick = (data) => {
+    setShareData(data);
+    setOptionsShowModal(false);
+    setShareShowModal(true);
   }
 
   return (
     <>
-      <Modal dialogClassName="post-share-modal" show={showModal} aria-labelledby="contained-modal-title-vcenter" keyboard={false} backdrop="static" centered onHide={handleModalHide}>
+      <Modal dialogClassName="post-share-modal" show={showShareModal} aria-labelledby="contained-modal-title-vcenter" keyboard={false} backdrop="static" centered onHide={handleModalHide}>
         <Modal.Header closeButton>
           <Modal.Title className="h6 ml-auto pl-4">Share</Modal.Title>
         </Modal.Header>
@@ -36,6 +51,17 @@ function PostsList({items, hasMore, onFetchMore, onFavoriteClick, onBuyClick, on
           <ShareList {...shareData} />
         </Modal.Body>
       </Modal>
+
+      <Modal show={showOptionsModal} aria-labelledby="container-modal-title-vcenter" keyboard={false} backdrop="static" centered onHide={handleModalHide} >
+        <Modal.Header closeButton>
+          <Modal.Title className="h6 ml-auto pl-4">Options</Modal.Title>
+        </Modal.Header>
+        
+        <Modal.Body>
+          <Options {...optionData} onGoToClick={onGoToClick} onFollowClick={onFollowClick} onShareClick={handleShareClick} />
+        </Modal.Body>
+      </Modal>
+
       <InfiniteScroll
         scrollThreshold={1}
         dataLength={items.length}
@@ -57,9 +83,11 @@ function PostsList({items, hasMore, onFetchMore, onFavoriteClick, onBuyClick, on
               commentable={item?.isCommentable}
               likes={item?.likes}
               iLike={item?.iLike}
+              onGoToClick={onGoToClick}
               onFavoriteClick={onFavoriteClick}
               onBuyClick={onBuyClick}
-              onShareClick={handleShareBtnClick} />
+              onShareClick={handleShareBtnClick} 
+              onOptionsClick={handleOptionBtnClick} />
           ))}
       </InfiniteScroll>
     </>

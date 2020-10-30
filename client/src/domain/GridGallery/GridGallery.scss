@@ -15,9 +15,9 @@ $payable-content-p-font-size-tablet: 2rem;
 $payable-content-svg-font-size-mobile-l: 6rem;
 $payable-content-p-font-size-mobile-l: 2.5rem;
 
-.col-sm-4 {
-  padding-left: $col-sm-4-x-padding !important;
-  padding-right: $col-sm-4-x-padding !important;
+
+.grid-gallery {
+  overflow: hidden !important;
 }
 
 .tile {

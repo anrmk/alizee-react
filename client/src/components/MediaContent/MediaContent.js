@@ -16,18 +16,18 @@ function MediaContent({
 }) {
   if (!showPayable && amount > 0) return <PayableContent amount={amount} />;
 
-  if (!items || !items.length) return null;
+  console.log("Media", items)
+  if (!items || !items.length) return <div>fsaf</div>;
 
   if (items.length === 1) {
-    switch(items[0].kind) {
-      case MEDIA_IMAGE:
+    if (items[0].kind === MEDIA_IMAGE || thumbnail) {
         return <ImagesContent thumbnail={thumbnail} items={items} altText={caption} lazyLoad={lazyLoad} />;
-      case MEDIA_VIDEO:
+    } else if(items[0].kind === MEDIA_VIDEO) {
         return <VideoContent url={items[0].url} />;
-    }
+    } 
   }
 
-  return <ImagesContent items={items} />;
+  return <ImagesContent  items={items} />;
 }
 
 MediaContent.propTypes = {

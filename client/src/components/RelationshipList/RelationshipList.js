@@ -25,14 +25,12 @@ function RelationshipList({ items, currentUserId, onFollowClick }) {
 RelationshipList.propTypes = {
   items: PropTypes.array,
   currentUserId: PropTypes.string,
-
   onFollowClick: PropTypes.func
 }
 
 RelationshipList.defaultProps = {
   items: [],
   currentUserId: "",
-
   onFollowClick: undefined
 };
 

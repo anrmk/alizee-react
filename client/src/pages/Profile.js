@@ -63,6 +63,7 @@ function Profile(props) {
         onMessageClick={() => {}}
         onFollowClick={() => {}}
         onSettingsClick={() => {}} />
+        {console.log("DATA", post.data)}
       <ProfileContent 
         media={post.data} 
         hasMore={post.hasMore}

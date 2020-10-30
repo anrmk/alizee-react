@@ -1,35 +1,39 @@
 import { createSelector } from "reselect";
 
-import { generateUrl, generateFileUrl, getOffset } from '../../../helpers/functions';
-import { POSTS_OFFSET } from '../../../constants/feed';
+import {
+  generateUrl,
+  generateFileUrl,
+  getOffset,
+} from "../../../helpers/functions";
+import { POSTS_OFFSET } from "../../../constants/feed";
 
-export const GET_POSTS_REQUEST = 'GET_POSTS_REQUEST';
-export const GET_POSTS_SUCCESS = 'GET_POSTS_SUCCESS';
-export const GET_POSTS_FAILURE = 'GET_POSTS_FAILURE';
+export const GET_POSTS_REQUEST = "GET_POSTS_REQUEST";
+export const GET_POSTS_SUCCESS = "GET_POSTS_SUCCESS";
+export const GET_POSTS_FAILURE = "GET_POSTS_FAILURE";
 
-export const RESET_POSTS = 'RESET_POSTS';
+export const RESET_POSTS = "RESET_POSTS";
 
 function requestGetPosts() {
   return {
     type: GET_POSTS_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: '',
-    }
-  }
+      errorMessage: "",
+    },
+  };
 }
 
-function receiveGetPosts(posts, start) {
+function receiveGetPosts(posts, total, start, hasMore) {
   return {
     type: GET_POSTS_SUCCESS,
     payload: {
       isFetching: false,
-      errorMessage: '',
-      offset: getOffset(start, posts?.recordsTotal, POSTS_OFFSET),
-      hasMore: !!posts?.data.length,
-      data: posts?.data || []
-    }
-  }
+      errorMessage: "",
+      offset: getOffset(start, total, POSTS_OFFSET),
+      hasMore,
+      data: posts || [],
+    },
+  };
 }
 
 function errorGetPosts(message) {
@@ -38,58 +42,71 @@ function errorGetPosts(message) {
     payload: {
       isFetching: false,
       hasMore: false,
-      errorMessage: message
-    }
-  }
+      errorMessage: message,
+    },
+  };
 }
 
 export function resetPosts() {
-  return dispatch => dispatch({
-    type: RESET_POSTS,
-    payload: {
-      isFetching: false,
-      offset: 0,
-      hasMore: false,
-      errorMessage: '',
-      data: []
-    }
-  })
+  return (dispatch) =>
+    dispatch({
+      type: RESET_POSTS,
+      payload: {
+        isFetching: false,
+        offset: 0,
+        hasMore: false,
+        errorMessage: "",
+        data: [],
+      },
+    });
 }
 
 export function getPosts(api, opts) {
   return async (dispatch, getState) => {
     dispatch(requestGetPosts());
 
-    const url = generateUrl('getPosts');
+    const url = generateUrl("getPosts");
     const currentOffset = getState().posts.offset;
     try {
       const { data } = await api
-        .setMethod('GET')
+        .setMethod("GET")
         .setParams({
           userId: opts.userId,
           start: currentOffset,
-          length: opts.length
+          length: opts.length,
         })
         .query(url);
 
       // Extend relative path to absolute (to remote server)
-      data.data.forEach(item => {
+      data.data.forEach((item) => {
         const avatarUrl = item.user.avatarUrl;
-        item.user = { 
-          ...item.user, 
-          avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, avatarUrl)
+        item.user = {
+          ...item.user,
+          avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, avatarUrl),
         };
-        item.media.forEach(media => {
+        item.media.forEach((media) => {
           media.url = generateFileUrl(process.env.REACT_APP_DOMAIN, media.url);
-          media.thumbnailUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, media.thumbnailUrl);
-        })
+          media.thumbnailUrl = generateFileUrl(
+            process.env.REACT_APP_DOMAIN,
+            media.thumbnailUrl
+          );
+        });
       });
 
-      dispatch(receiveGetPosts(data, currentOffset));
+      console.log(" asdf asdf asdf");
+
+      dispatch(
+        receiveGetPosts(
+          [...getState().posts.data, ...data.data],
+          data.recordsTotal,
+          currentOffset,
+          !!data.data.length
+        )
+      );
     } catch (e) {
       dispatch(errorGetPosts("Error: something went wrong:", e));
     }
-  }
+  };
 }
 
 // Selectors
@@ -97,13 +114,21 @@ const gridGallerySelector = (state) => state.posts.data;
 
 export const getGridGalleryPosts = createSelector(
   [gridGallerySelector],
-  data => data.reduce((acc, curr) => curr.media.length > 0 ? ([
-    ...acc,
-    {
-      id: curr.id,
-      caption: curr.description,
-      amount: curr.amount,
-      media: [curr.media[0]]
-    }
-  ]) : acc, [])
+  (data) => {
+    console.log("GRID", data)
+    return data.reduce(
+      (acc, curr) =>
+        ([
+              ...acc,
+              {
+                id: curr.id,
+                caption: curr.description,
+                amount: curr.amount,
+                media: curr.media.length > 0 ? [curr.media[0]] : [],
+              },
+            ]),
+      []
+    )
+  }
+    
 );

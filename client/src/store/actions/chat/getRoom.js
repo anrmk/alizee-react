@@ -20,7 +20,7 @@ function receiveGetRoom(room) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      currentRoom: room
+      currentRoom: room,
     },
   };
 }
@@ -41,12 +41,12 @@ export function getRoom(api, id) {
 
     const url = generateUrl("getRoom");
     try {
-      const { data } = await api
-        .setMethod("GET")
-        .setParams({ id })
-        .query(url);
-      
-        data.avatarUrl = generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, data.avatarUrl)
+      const { data } = await api.setMethod("GET").setParams({ id }).query(url);
+
+      data.avatarUrl = generateFileUrl(
+        process.env.REACT_APP_DOMAIN,
+        data.avatarUrl
+      );
 
       dispatch(receiveGetRoom(data));
     } catch (e) {

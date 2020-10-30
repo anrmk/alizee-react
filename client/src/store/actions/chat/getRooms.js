@@ -58,7 +58,7 @@ export function getRooms(api) {
     try {
       const { data } = await api.setMethod("GET").query(url);
       data.forEach(item => {
-        item.avatarUrl = generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, item.avatarUrl)
+        item.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, item.avatarUrl)
       });
 
       dispatch(receiveGetRooms(data));

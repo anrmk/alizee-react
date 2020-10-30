@@ -13,11 +13,11 @@ function AvatarItem({
   return (
     <div className="avatar-item d-flex justify-content-start align-items-center text-truncate">
       <Avatar size={size} url={url} className={className} />
-      <div className="">
+      <div>
         {children ?? (
           <>
-            <p className="avatar-title mb-0">{title}</p>
-            <p><small className="text-muted">{subtitle}</small></p>
+            <div className="avatar-title mb-0">{title}</div>
+            <small className="text-muted">{subtitle}</small>
           </>
         )}
       </div>

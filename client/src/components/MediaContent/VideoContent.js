@@ -70,6 +70,7 @@ export default function VideoContent({ url }) {
         {renderPlayBtn(showing, playing)}
         {renderMuteBtn(showing, muted, playing)}
         <ReactPlayer 
+        
           className="react-player"
           width="100%"
           playing={playing}

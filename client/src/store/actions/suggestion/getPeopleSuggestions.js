@@ -47,7 +47,7 @@ export function getPeopleSuggestions(api, count) {
         .query(url);
 
       data.forEach(item => {
-        item.avatarUrl = generateFileUrl(process.env.REACT_APP_TESTING_DOMAIN, item.avatarUrl);
+        item.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, item.avatarUrl);
       })
 
       dispatch(receiveGetPeopleSuggestions(data));

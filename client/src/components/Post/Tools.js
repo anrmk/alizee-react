@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 import IconButton from "@material-ui/core/IconButton";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorderOutlined";
@@ -7,7 +6,6 @@ import FavoriteIcon from "@material-ui/icons/FavoriteRounded";
 import ChatBubbleOutlineOutlinedIcon from "@material-ui/icons/ChatBubbleOutlineRounded";
 import ShareOutlinedIcon from "@material-ui/icons/ShareRounded";
 import MonetizationOnOutlinedIcon from "@material-ui/icons/MonetizationOnRounded";
-import { POST_ROUTE } from "../../constants/routes";
 
 import "./Tools.scss";
 
@@ -16,6 +14,7 @@ function Tools({
   commentable,
   likes,
   iLike,
+  onGoToClick,
   onShareClick,
   onFavoriteClick,
   onBuyClick,
@@ -30,7 +29,7 @@ function Tools({
         }
         
         {commentable && (
-          <IconButton className="nav-link" component={Link} to={`${POST_ROUTE}/${id}`}>
+          <IconButton className="nav-link" onClick={onGoToClick} >
             <ChatBubbleOutlineOutlinedIcon />
           </IconButton>
         )}

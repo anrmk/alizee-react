@@ -11,8 +11,14 @@ $avatar-large-size: 180px;
 }
 
 .avatar {
-  object-fit: cover;
-  object-position: center;
+  width: $avatar-medium-size;
+  height: $avatar-medium-size;
+  border-radius: 50%;
+  background-image: url("/static/media/avatar_female.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.15);
+  overflow: hidden;
 
   &--small {
     width: $avatar-small-size;
@@ -27,5 +33,10 @@ $avatar-large-size: 180px;
   &--large {
     width: $avatar-large-size;
     height: $avatar-large-size;
+  }
+
+  img {
+     width: 100%;
+     height: 100%;
   }
 }

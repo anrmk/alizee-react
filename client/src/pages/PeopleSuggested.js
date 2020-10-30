@@ -14,10 +14,12 @@ function PeopleSuggested(props) {
     getPeopleSuggestions(apiClient);
   }, []);
 
-  const handleFollowPeople = (id) => {
-    var follower = peopleSuggestions.data.find(u=>u.id === id);
-    if(follower) {
-      follower.isFollowing ? unfollowPeopleSuggestions(apiClient, id) : followPeopleSuggestions(apiClient, id);
+  const handleFollowPeople = (id, userId, isLoading) => {
+    if(!isLoading) {
+      var follower = peopleSuggestions.data.find(u => u.id === id);
+      if(follower) {
+        follower.isFollowing ? unfollowPeopleSuggestions(apiClient, id) : followPeopleSuggestions(apiClient, id);
+      }
     }
   }
 
@@ -25,7 +27,7 @@ function PeopleSuggested(props) {
     <div className="container p-4">
       <div className="">
       <h5 className="h5">Suggested</h5>
-      <RelationshipList items={peopleSuggestions.data} onFollowClick={handleFollowPeople} />
+      <RelationshipList items={peopleSuggestions.data} onFollowClick={(id, userId) => handleFollowPeople(id, userId, peopleSuggestions.isFetching)} />
       </div>
     </div>
   );
@@ -34,9 +36,9 @@ function PeopleSuggested(props) {
 function mapStateToProps(state) {
   return {
     peopleSuggestions: {
-      isFetching: state.suggestion.people.isFetching,
+      isFetching: state.suggestion.isFetching,
       data: state.suggestion?.people,
-      errorMessage: state.suggestion.people.errorMessage,
+      errorMessage: state.suggestion.errorMessage,
     },
   };
 }

@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import { Link } from "react-router-dom";
 
 import MoreHorizIcon from "@material-ui/icons/MoreHorizOutlined";
 
@@ -30,35 +29,50 @@ function Post({
   onFavoriteClick,
   onCommentsClick,
   onBuyClick,
-  onShareClick
+  onShareClick,
+  onOptionsClick,
+  onGoToClick
 }) {
-  const handleOnFavoriteClick = (e) => {
+  const handleFavoriteClick = (e) => {
     e.preventDefault();
     onFavoriteClick && onFavoriteClick({ id, iLike });
   };
 
-  const handleOnBuyClick = (e) => {
+  const handleGoToClick = (e) => {
     e.preventDefault();
-    onBuyClick && onBuyClick();
+    onGoToClick && onGoToClick(id)
+  }
+
+  const handleBuyClick = (e) => {
+    e.preventDefault();
+    onBuyClick && onBuyClick(id);
   };
 
-  const handleOnShareClick = (e) => {
+  const handleShareClick = (e) => {
     e.preventDefault();
-    const data = { id, title: username, quote: description };
-    onShareClick && onShareClick(data);
+    onShareClick && onShareClick({ id, title: username, quote: description });
   };
+
+
+  const handleOptionsClick = (e) => {
+    e.preventDefault();
+    onOptionsClick && onOptionsClick({id, userId, username });
+  }
 
   return (
     <div className="card mb-5">
       {!hideHeader && (
         <div className="card-header d-flex align-items-center justify-content-between py-2">
+
             <AvatarItem url={avatarUrl}>
               <CustomLink as="div" to={PROFILE_ROUTE(username)} >
                 {username}
               </CustomLink>
-              <small className="text-muted">{createdDate ?? ""}</small>
+              {createdDate && <><small className="text-muted">{createdDate}</small></>}
             </AvatarItem>
-          <MoreHorizIcon />
+            <a onClick={handleOptionsClick}>
+              <MoreHorizIcon />
+            </a>
         </div>
       )}
       {mediaUrls?.length === 0 ? (
@@ -73,9 +87,10 @@ function Post({
               commentable={commentable}
               likes={likes}
               iLike={iLike}
-              onShareClick={handleOnShareClick}
-              onFavoriteClick={handleOnFavoriteClick}
-              onBuyClick={handleOnBuyClick}
+              onGoToClick={handleGoToClick}
+              onShareClick={handleShareClick}
+              onFavoriteClick={handleFavoriteClick}
+              onBuyClick={handleBuyClick}
             />
           )}
         </>
@@ -91,9 +106,10 @@ function Post({
               commentable={commentable}
               likes={likes}
               iLike={iLike}
-              onShareClick={handleOnShareClick}
-              onFavoriteClick={handleOnFavoriteClick}
-              onBuyClick={handleOnBuyClick}
+              onGoToClick={handleGoToClick}
+              onShareClick={handleShareClick}
+              onFavoriteClick={handleFavoriteClick}
+              onBuyClick={handleBuyClick}
             />
           )}
           <div className="card-body">

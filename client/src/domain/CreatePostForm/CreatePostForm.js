@@ -49,7 +49,8 @@ export default function CreatePostForm({ onSubmit, user }) {
   }
 
   const handleFormMediaChange = (e) => {
-    var mediaFiles =[...e.current.files]
+    var mediaFiles =[...e.current.files];
+    console.log("Media Files", mediaFiles);
     mediaFiles.forEach(file => file.previewURL = URL.createObjectURL(file))
     setMedia(mediaFiles)
   }
