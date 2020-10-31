@@ -23,7 +23,6 @@ function RelationshipItem({
   return (
     <ItemList className="d-flex justify-content-between align-items-center p-2">
       <AvatarItem url={avatarUrl}>
-        {avatarUrl}
         <CustomLink
           as="div"
           to={PROFILE_ROUTE(username)}

@@ -48,7 +48,7 @@ function Profile(props) {
   }
 
   return (
-    <div className="container pt-3">
+    <div className="container p-4">
       <ProfileHeader
         me={username === me.username}
         avatarUrl={user.avatarUrl}

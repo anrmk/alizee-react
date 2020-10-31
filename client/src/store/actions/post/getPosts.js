@@ -93,8 +93,6 @@ export function getPosts(api, opts) {
         });
       });
 
-      console.log(" asdf asdf asdf");
-
       dispatch(
         receiveGetPosts(
           [...getState().posts.data, ...data.data],

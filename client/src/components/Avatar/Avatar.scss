@@ -33,6 +33,8 @@ $avatar-large-size: 180px;
   &--large {
     width: $avatar-large-size;
     height: $avatar-large-size;
+    min-width: $avatar-large-size;
+    min-height: $avatar-large-size;
   }
 
   img {

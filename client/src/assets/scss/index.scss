@@ -1,13 +1,26 @@
- @import 'bootstrap/scss/bootstrap.scss';
+ // change the theme
+// $theme-colors: (
+//   "primary": #888888,
+//   "danger": #ff4136
+// );
+
+// $link-color: #6c757d;
+// $font-size-base: 0.9rem;
+
+// $body-bg: #000;
+
+@import 'sandstone/_variables';
+
+@import '~bootstrap/scss/bootstrap.scss';
+@import 'sandstone/_bootswatch';
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  // font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  //   "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  //   sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #fafafa;
 }
 
 .container {
@@ -16,27 +29,27 @@ body {
   }
 }
 
-.avatar {
-  align-items: center!important;
-  display: flex!important;
-  //font-weight: 700;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+// .avatar {
+//   align-items: center!important;
+//   display: flex!important;
+//   //font-weight: 700;
+//   white-space: nowrap;
+//   text-overflow: ellipsis;
+//   overflow: hidden;
 
-  .avatar__icon {
-    width: 36px;
-    height: 36px;
-    margin-right: .5rem;
-  }
-  .avatar__header {
-    white-space: nowrap;
-    display: inline-block;
-    box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    font-size: 13px;
-  }
-}
+//   .avatar__icon {
+//     width: 36px;
+//     height: 36px;
+//     margin-right: .5rem;
+//   }
+//   .avatar__header {
+//     white-space: nowrap;
+//     display: inline-block;
+//     box-sizing: border-box;
+//     -webkit-box-sizing: border-box;
+//     font-size: 13px;
+//   }
+// }
 
 .mw-4 {
   max-width: 40% !important;

@@ -75,33 +75,34 @@ function Header({ username, avatarUrl, onSignOut }) {
             <li className="nav-item text-center">
               <Link className="nav-link" to={HOME_ROUTE}>
                 <HomeIcon />
-                <span className="d-block">Home</span>
+                <span className="sr-only d-block">Home</span>
               </Link>
             </li>
 
             <li className="nav-item text-center">
               <Link className="nav-link" to={"/"}>
                 <StorefrontOutlinedIcon />
-                <span className="d-block">Shop</span>
+                <span className="sr-only d-block">Shop</span>
               </Link>
             </li>
 
             <li className="nav-item text-center">
               <Link className="nav-link" to={"/chat"}>
                 <SendOutlinedIcon />
-                <span className="d-block">Message</span>
+                <span className="sr-only d-block">Message</span>
               </Link>
             </li>
 
             <li className="nav-item text-center">
               <Link className="nav-link" to={"/"}>
                 <NotificationsActiveIcon />
-                <span className="d-block">Notification</span>
+                <span className="sr-only ">Notification</span>
               </Link>
             </li>
                 <li className="nav-item text-center">
                   <Link className="nav-link" to={PROFILE_ROUTE(username)}>
-                    <Avatar url={avatarUrl} />
+                    <Avatar size="small" url={avatarUrl} />
+                    <span className="sr-only d-block">{username}</span>
                   </Link>
                 </li>
 
@@ -109,7 +110,7 @@ function Header({ username, avatarUrl, onSignOut }) {
                   <Link className="nav-link" to="/signIn" >
                     <div onClick={() => handleSignOut()}>
                       <ExitToAppIcon />
-                      <span className="d-block">Logout</span>
+                      <span className="sr-only d-block">Logout</span>
                     </div>
                   </Link>
                 </li>
