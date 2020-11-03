@@ -76,7 +76,7 @@ export default function CreatePostForm({ onSubmit, user }) {
                 ref={messageRef} 
                 name="description"
                 autoFocus
-                maxLength="2048" 
+                maxLength="255" 
                 placeholder={`What's on your mind, ${user.fullName}?`} 
                 value={formData.description} 
                 onChange={(e) => handleFormTextChange(messageRef)} />
@@ -92,7 +92,7 @@ export default function CreatePostForm({ onSubmit, user }) {
                 </label>
               </div>
             </div>
-            <small className="form-text text-muted">Characters entered  {formData.description.length} out of 2048</small>
+            <small className="form-text text-muted">Characters entered  {formData.description.length} out of 255</small>
             
             {/* <div className="input-group mb-3">
               <div className="input-group-prepend">

@@ -16,7 +16,7 @@ function GridGallery({
 }) {
   return (
     <InfiniteScroll
-      className="row row-cols-3 no-gutters  grid-gallery"
+      className="row row-cols-md-3 no-gutters grid-gallery"
       scrollThreshold={1}
       dataLength={items.length}
       next={onFetchMore}

@@ -10,8 +10,9 @@
 // $body-bg: #000;
 
 @import 'sandstone/_variables';
-
 @import '~bootstrap/scss/bootstrap.scss';
+$enable-gradient: "true";
+
 @import 'sandstone/_bootswatch';
 
 body {

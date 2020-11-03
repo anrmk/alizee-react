@@ -1,145 +1,46 @@
-$media-container-margin: 5px;
-
-$block-breakpoint-height-def: 369px;
-$block-breakpoint-height-laptop: 309px;
-$block-breakpoint-height-tablet: 199px;
-$block-breakpoint-height-mobile-l: 383px;
-$block-breakpoint-height-mobile: 278px;
-
-$col-sm-4-x-padding: 5px;
-
-$tile-margin-bottom: 10px;
-
-$payable-content-svg-font-size-tablet: 4rem;
-$payable-content-p-font-size-tablet: 2rem;
-$payable-content-svg-font-size-mobile-l: 6rem;
-$payable-content-p-font-size-mobile-l: 2.5rem;
-
-
 .grid-gallery {
   overflow: hidden !important;
 }
 
 .tile {
-  margin-bottom: $tile-margin-bottom;
-  padding-bottom: 100%;
+  padding-bottom: 98%;
   position: relative;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   margin: 2px;
-  background-color: #efefef;
-  border: 0 solid #000;
+  border: none;
 
-  > div {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
+  &.tile-text {
+    color: black;
+    font-weight: bold;
 
-    .tile-icon {
-      position: absolute;
-      z-index: 100;
-      right: 5px;
-      top: 5px;
-      opacity: 0.8;
-      color: #ffffff;
+    > .tile-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15%;
     }
   }
 
+  .tile-icon {
+    position: absolute;
+    z-index: 100;
+    right: 5px;
+    top: 5px;
+    opacity: 0.8;
+    color: #ffffff;
+  }
 
-  // & .react-swipeable-view-container {
-  //   height: calc(#{$block-breakpoint-height-def} - #{$media-container-margin});
-  //   & > div {
-  //     overflow: hidden !important;
-  //   }
-  // }
+  > .tile-container {
+    background-color: #efefef;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center !important;
 
-  // & .react-player {
-  //   height: calc(#{$block-breakpoint-height-def} - #{$media-container-margin}) !important;
-  // }
-
-  // & .payable-content {
-  //   height: calc(#{$block-breakpoint-height-def} - #{$media-container-margin});
-  // }
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
 }
-
-// @media screen and (max-width: 1199px) {
-//   .tile {
-//     & .react-swipeable-view-container {
-//       height: calc(#{$block-breakpoint-height-laptop} - #{$media-container-margin});
-//     }
-
-//     & .react-player {
-//       height: calc(#{$block-breakpoint-height-laptop} - #{$media-container-margin}) !important;
-//     }
-
-//     & .payable-content {
-//       height: calc(#{$block-breakpoint-height-laptop} - #{$media-container-margin});
-//     }
-//   }
-// }
-
-// @media screen and (max-width: 991px) {
-//   .tile {
-//     & .react-swipeable-view-container {
-//       height: calc(#{$block-breakpoint-height-tablet} - #{$media-container-margin});
-//     }
-
-//     & .react-player {
-//       height: calc(#{$block-breakpoint-height-tablet} - #{$media-container-margin}) !important;
-//     }
-
-//     & .payable-content {
-//       height: calc(#{$block-breakpoint-height-tablet} - #{$media-container-margin});
-
-//       & svg {
-//         font-size: $payable-content-svg-font-size-tablet;
-//       }
-
-//       & p {
-//         font-size: $payable-content-p-font-size-tablet;
-//       }
-//     }
-//   }
-// }
-
-// @media screen and (max-width: 425px) {
-//   .tile {
-//     & .react-swipeable-view-container {
-//       height: calc(#{$block-breakpoint-height-mobile-l} - #{$media-container-margin});
-//     }
-
-//     & .react-player {
-//       height: calc(#{$block-breakpoint-height-mobile-l} - #{$media-container-margin}) !important;
-//     }
-
-//     & .payable-content {
-//       height: calc(#{$block-breakpoint-height-mobile-l} - #{$media-container-margin});
-
-//       & svg {
-//         font-size: $payable-content-svg-font-size-mobile-l;
-//       }
-
-//       & p {
-//         font-size: $payable-content-p-font-size-mobile-l;
-//       }
-//     }
-//   }
-// }
-
-// @media screen and (max-width: 320px) {
-//   .tile {
-//     & .react-swipeable-view-container {
-//       height: calc(#{$block-breakpoint-height-mobile} - #{$media-container-margin});
-//     }
-
-//     & .react-player {
-//       height: calc(#{$block-breakpoint-height-mobile} - #{$media-container-margin}) !important;
-//     }
-
-//     & .payable-content {
-//       height: calc(#{$block-breakpoint-height-mobile} - #{$media-container-margin});
-//     }
-//   }
-// }

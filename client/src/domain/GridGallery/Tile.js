@@ -20,28 +20,24 @@ function Tile({
   return (
     <div className="col-4" onClick={onClick}>
       <CustomLink
-        as="div"
+        as="a"
         to={`${POST_ROUTE}/${id}`}
-        className="tile"
-        style={{ cursor: "pointer" }}
+        className={`tile ${media.length > 0 ? "" : "tile-text"}`}
       >
-        <div>
-          <div className="tile-icon">
-            <VideoLibraryIcon />
-          </div>
-
+        <div className="tile-icon">
+          <VideoLibraryIcon />
+        </div>
+        <div className="tile-container">
           {media.length > 0 ? (
-            <>
-              <MediaContent
-                thumbnail
-                items={media}
-                caption={caption}
-                amount={amount}
-                lazyLoad
-              />
-            </>
+            <MediaContent
+              thumbnail
+              items={media}
+              caption={caption}
+              amount={amount}
+              lazyLoad
+            />
           ) : (
-            <div>{caption}</div>
+            <>{caption}</>
           )}
         </div>
       </CustomLink>
