@@ -13,7 +13,10 @@ function NotificationHub(props) {
   const [msg, setMsg] = useState();
 
   useEffect(() => {
-    if (user.isAuthenticated) {
+    if (!user.isAuthenticated) {
+      hubConnection && hubConnection.stop();
+      setHubConnection(null);
+    } else {
       const newHubConnection = new signalR.HubConnectionBuilder()
         .withUrl(wrapHttps(`${process.env.REACT_APP_DOMAIN}${API.endpoints.chat}`, true), {
           accessTokenFactory: () => getToken(),
@@ -24,7 +27,7 @@ function NotificationHub(props) {
 
       setHubConnection(newHubConnection);
     }
-  }, []);
+  }, [user.isAuthenticated])
 
   const handleReciveMessage = (data) => {
     if (chat.currentRoom && data.roomId === chat.currentRoom.id) {
