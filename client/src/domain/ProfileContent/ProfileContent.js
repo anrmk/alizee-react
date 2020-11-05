@@ -17,12 +17,12 @@ function ProfileContent({
 }) {
   return (
     <div className="profile-content">
-      <ul className="nav justify-content-center">
+      <ul className="nav justify-content-center border-top">
         <li className="nav-item">
-          <a className="nav-link" href="#"><PhotoLibraryIcon /> Posts</a>
+          <a className="nav-link" href="#">POSTS</a>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="#"><PhotoLibraryIcon /> Tags</a>
+          <a className="nav-link" href="#">TAGGED</a>
         </li>
       </ul>
 

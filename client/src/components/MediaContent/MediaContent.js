@@ -16,7 +16,6 @@ function MediaContent({
 }) {
   if (!showPayable && amount > 0) return <PayableContent amount={amount} />;
 
-  console.log("Media", items)
   if (!items || !items.length) return <div>fsaf</div>;
 
   if (items.length === 1) {

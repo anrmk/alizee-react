@@ -11,8 +11,8 @@ function AvatarItem({
   children
 }) {
   return (
-    <div className="avatar-item d-flex justify-content-start align-items-center text-truncate">
-      <Avatar size={size} url={url} className={className} />
+    <div className={`avatar-item d-flex justify-content-start align-items-center text-truncate ${className}`}>
+      <Avatar size={size} url={url} className="mr-2" />
       <div>
         {children ?? (
           <>
@@ -30,7 +30,7 @@ AvatarItem.defaultProps = {
   title: "",
   sublitile: "",
   size: "medium",
-  className: "mr-2", 
+  className: "", 
 };
 
 export default AvatarItem;

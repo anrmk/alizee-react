@@ -2,15 +2,16 @@ import React from "react";
 
 import "./Thumbnail.scss";
 
-function Thumbnail({ name, url }) {
+function Thumbnail({ name, url, className }) {
   return (
-    <div className="thumbnail" title={name} style={{backgroundImage: `url(${url})` }}></div>
+    <div className={`thumbnail ${className}`} title={name} style={{backgroundImage: `url(${url})` }}></div>
   );
 }
 
 Thumbnail.defaultProps = {
   name : "",
-  url: ""
+  url: "",
+  className: ""
 }
 
 export default Thumbnail;

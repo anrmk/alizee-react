@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from "react";
+import React, {useState, useContext, useEffect } from "react";
 import { connect } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 
-import PostList from "../domain/PostsList";
-import CreatePostForm from "../domain/CreatePostForm";
+import { PostsList, PostCreate } from "../domain/PostsList";
 
 import * as actionSuggestion from "../store/actions/suggestion";
 import * as postActions from "../store/actions/post";
@@ -35,6 +34,7 @@ function Feed(props) {
   } = props;
 
   const { resetPosts, fetchPosts, createPost, likePost } = props;
+  const [postType, setPostType] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -64,10 +64,6 @@ function Feed(props) {
     }
   };
 
-  const handleFormSubmit = async (formData, mediaData) => {
-    createPost(apiClient, formData, mediaData);
-  };
-
   const handleFavoriteClick = async (id, isLoading) => {
     !isLoading && (await likePost(apiClient, id));
   };
@@ -91,12 +87,19 @@ function Feed(props) {
     }
   };
 
+  const handleFormSubmit = async (formData, mediaData) => {
+    createPost(apiClient, formData, mediaData);
+  };
+
   return (
     <div className="container p-4">
       <div className="row">
         <div className="col-lg-8 col-md-12">
-          <CreatePostForm onSubmit={handleFormSubmit} user={userInfo} />
-          <PostList
+          <div className="mb-3">
+            <PostCreate user={userInfo} onSubmit={handleFormSubmit} />
+          </div>
+          {/* <CreatePostForm onSubmit={handleFormSubmit} user={userInfo} /> */}
+          <PostsList
             items={posts.data}
             hasMore={posts.hasMore}
             onFetchMore={handleFetchMore}

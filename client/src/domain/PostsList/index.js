@@ -1,3 +1,4 @@
-import PostsList from './PostsList';
+import PostsList from "./PostsList";
+import PostCreate from "./PostCreate";
 
-export default PostsList;
+export { PostsList , PostCreate};
