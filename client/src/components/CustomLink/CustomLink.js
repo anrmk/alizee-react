@@ -29,7 +29,7 @@ const CustomLink = (props) => {
 
 CustomLink.propTypes = {
   to: PropTypes.string.isRequired,
-  as: PropTypes.string,
+  as: PropTypes.any,
   className: PropTypes.string,
   children: PropTypes.node,
   history: PropTypes.shape({

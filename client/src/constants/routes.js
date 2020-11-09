@@ -13,6 +13,7 @@ export const EMAIL_VERIFY = "/email-verify";
 export const FOLLOWERS_ROUTE = username => `/${username}/followers`;
 export const FOLLOWINGS_ROUTE = username => `/${username}/followings`;
 export const PROFILE_ROUTE = username => `/${username}`;
+export const SEARCH_ROUTE = "/search";
 export const PROFILE_USERNAME_ROUTE = "/:username";
 export const PROFILE_FOLLOWERS_ROUTE = "/:username/followers";
 export const PROFILE_FOLLOWINGS_ROUTE = "/:username/followings";

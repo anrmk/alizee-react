@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { createBrowserHistory as history } from "history";
 import { connect } from "react-redux";
 
-import Header from "./components/Header";
+import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
 import HubComponent from "./domain/Hub/NotificationHub";
@@ -34,7 +34,7 @@ function App({ username, isAuthenticated, avatarUrl, signOut }) {
   return (
   <HubComponent>
     <Router history={history}>
-        {isAuthenticated && <Header username={username} avatarUrl={avatarUrl} onSignOut={signOut} />}
+        {isAuthenticated && <Navbar username={username} avatarUrl={avatarUrl} onSignOut={signOut} />}
           <Switch>
             <Route path={Routes.SIGN_UP_ROUTE} component={SignUp} />
             <Route path={Routes.SIGN_IN_ROUTE} component={SignIn} />
