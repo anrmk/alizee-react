@@ -1,0 +1,32 @@
+$c-tabs-menu-border-right: 1px solid #dee2e6;
+$c-tab-color: #7c7c7d;
+$c-tab-padding: 10px 20px;
+$c-tab-transition-time: .1s;
+$c-tab-hover-font-weight: 500;
+$c-tab-active-border-left: 2px solid #212529;
+$c-tab-active-font-weight: 500;
+
+.c-tabs-menu {
+  border-right: $c-tabs-menu-border-right;
+}
+
+.c-tabs-content {}
+
+.c-tab {
+  color: $c-tab-color;
+  padding: $c-tab-padding;
+  transition: all $c-tab-transition-time;
+
+  &:hover {
+    font-weight: $c-tab-hover-font-weight;
+  }
+
+  &:active {
+    border-left: $c-tab-active-border-left;
+  }
+
+  &--active {
+    font-weight: $c-tab-active-font-weight;
+    border-left: $c-tab-active-border-left;
+  }
+}

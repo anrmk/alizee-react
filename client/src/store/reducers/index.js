@@ -12,6 +12,8 @@ import suggestion from "./suggestion";
 import chat from "./chat";
 import user from "./user";
 
+import settings from "./settings";
+
 import { SIGNOUT_SUCCESS } from "../actions/signIn";
 
 const appReducer = combineReducers({
@@ -23,7 +25,8 @@ const appReducer = combineReducers({
   chat,
   posts,
   media,
-  user
+  user,
+  settings
 });
 
 export default function(state, action) {

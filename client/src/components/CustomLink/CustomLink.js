@@ -9,6 +9,7 @@ const CustomLink = (props) => {
     history,
     to,
     as: Tag,
+    defaultClass,
     className,
     staticContext,
     ...rest
@@ -18,7 +19,7 @@ const CustomLink = (props) => {
   return (
     <Tag
       {...rest}
-      className={`custom-link ${className}`}
+      className={defaultClass + " " + className}
       onClick={event => {
         onClick && onClick(event);
         history.push(to);
@@ -29,7 +30,8 @@ const CustomLink = (props) => {
 
 CustomLink.propTypes = {
   to: PropTypes.string.isRequired,
-  as: PropTypes.any,
+  as: PropTypes.string,
+  defaultClass: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.node,
   history: PropTypes.shape({
@@ -42,6 +44,7 @@ CustomLink.propTypes = {
 CustomLink.defaultProps = {
   to: "/",
   as: "a",
+  defaultClass: "custom-link",
   className: "",
   children: null,
   history: {},

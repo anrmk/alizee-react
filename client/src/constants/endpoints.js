@@ -40,6 +40,16 @@ export default {
     getPeopleSuggestions: "suggestion/people",
 
     // USER
-    getUser: "account/getaccountbyusername"
+    getUser: "account/getaccountbyusername",
+
+    // SETTINGS
+    updateAccount: "accountsetting/updateaccount",
+    updateUsername: "accountsetting/updateusername",
+    updatePrivacy: "accountsetting/privacysettings",
+    updateActivityStatus: "accountsetting/activitystatus",
+    updatePrivateStatus: "accountsetting/privatestatus",
+    updateOffensiveComments: "accountsetting/offensivecontentstatus",
+    getPrivacy: "accountsetting/privacysettings",
+    deleteAccount: "accountsetting/deleteaccount"
   },
 };

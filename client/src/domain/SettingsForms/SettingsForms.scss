@@ -1,0 +1,10 @@
+.c-form-control {
+  &--invalid {
+    border-color: #dc3545 !important;
+  }
+}
+
+.c-invalid-feedback {
+  font-size: 80%;
+  color: #dc3545;
+}

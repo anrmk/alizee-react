@@ -14,18 +14,16 @@ import EmailConfirmation from "./pages/EmailConfirmation";
 import EmailVerify from "./pages/EmailVerify";
 import PrivateRoute from "./pages/PrivateRoute";
 import Chat from "./pages/Chat";
-
 import Post from "./pages/Post";
 import Feed from "./pages/Feed";
-
 import PeopleSuggested from "./pages/PeopleSuggested";
-
 import CreateRoom from "./pages/CreateRoom";
 import Meeting from "./pages/Meeting";
 import Room from "./pages/Room";
 import Profile from "./pages/Profile";
 import Followers from "./pages/Followers";
 import Followings from "./pages/Followings";
+import { Settings } from "./pages/Settings";
 
 import { signOutUser } from './store/actions/signIn';
 import * as Routes from './constants/routes';
@@ -48,12 +46,13 @@ function App({ username, isAuthenticated, avatarUrl, signOut }) {
             <PrivateRoute path={Routes.ROOM_ROUTE} component={CreateRoom} />
             <PrivateRoute path={Routes.ROOM_ID_ROUTE} component={Room} />
             <PrivateRoute path={Routes.SUGESTED_PEOPLE} component={PeopleSuggested} />
+            <PrivateRoute path={Routes.SETTINGS_TYPE_ROUTE} component={Settings} />
             <PrivateRoute exact path={Routes.PROFILE_USERNAME_ROUTE} component={Profile} />
             <PrivateRoute exact path={Routes.PROFILE_FOLLOWERS_ROUTE} component={Followers} />
             <PrivateRoute exact path={Routes.PROFILE_FOLLOWINGS_ROUTE} component={Followings} />
           </Switch>
 
-        {isAuthenticated && <Footer />}
+          {isAuthenticated && <Footer />}
       </Router>
     </HubComponent>
   );

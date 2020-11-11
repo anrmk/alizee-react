@@ -43,15 +43,16 @@ export function createPost(api, postData, mediaData=[]) {
 
     const url = generateUrl('createPost');
     try {
-      let mediaFromState = [];
+      let media = [];
       if (mediaData.length > 0) {
         await dispatch(createMedia(api, mediaData));
 
-        mediaFromState = getState().media.data;
-
-        if (mediaFromState.errorMessage) {
-          throw mediaFromState.errorMessage;
+        const mediaErrorMessage = getState().media.errorMessage;
+        if (mediaErrorMessage) {
+          throw mediaErrorMessage;
         }
+
+        media = getState().media.data;
       }
 
       const { data } = await api
@@ -62,7 +63,7 @@ export function createPost(api, postData, mediaData=[]) {
           amount: Number(postData.amount),
           latitude: postData?.latitude,
           longitude: postData?.longitude,
-          media: mediaFromState
+          media: media
          })
         .query(url);
 

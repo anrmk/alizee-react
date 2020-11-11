@@ -29,6 +29,7 @@ export function generateUrl(endpoint, api = ENDPOINTS, postfix = null) {
  */
 export function generateFileUrl(address, endpoint, postfix = null) {
   if (!endpoint) return null;
+  if (endpoint.startsWith("http")) return endpoint;
 
   const url = wrapHttps(`${address}${ENDPOINTS.urlFiles}${endpoint}`, true);
   return postfix ? `${url}/${postfix}` : url;
@@ -155,4 +156,72 @@ export function formatNumber(number, format="0.0a") {
   }
 
   return formattedNumber;
+}
+
+/**
+ * If element is array return first child else return passed element
+ * @param {element}
+ * @return {node}
+ */
+export function getFirstElement(element) {
+  if (!Array.isArray(element)) return element;
+
+  if (element.length > 0) {
+    return element[0];
+  }
+
+  return null
+}
+
+/**
+ * Get date 00/00/0000
+ * @param {date}
+ * @return {string}
+ */
+export function getDate(date) {
+  if (date) {
+    const newDate = new Date(date);
+    const year = newDate.getUTCFullYear();
+    let month = newDate.getUTCMonth() > 9 ? newDate.getUTCMonth() : "0" + newDate.getUTCMonth();
+    if (month === "00") {
+      month = "01";
+    }
+    let day = newDate.getUTCDate() > 9 ? newDate.getUTCDate() : "0" + newDate.getUTCDate();
+    if (day === "00") {
+      day = "01";
+    }
+
+    return `${year}-${month}-${day}`;
+  }
+
+  return null;
+}
+
+/**
+ * Make a string from some value(deep data structures too)
+ * @param {date}
+ * @return {string}
+ */
+export function getSnapshot(data) {
+  if (!data) return null;
+
+  return JSON.stringify(data);
+}
+
+/**
+ * Get account snapshot
+ * @param {account}
+ * @return {string}
+ */
+export function getAccountSnapshot(account) {
+  if (!account) return null;
+
+  return getSnapshot({
+    name: account.name,
+    birthday: account.birthday,
+    phoneNumber: account.phoneNumber,
+    avatarUrl: account.avatarUrl,
+    bio: account.bio,
+    sites: account.sites
+  })
 }
