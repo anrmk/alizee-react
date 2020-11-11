@@ -44,7 +44,7 @@ function Profile(props) {
   }, [user.id])
 
   const handleFetchMore = async () => {
-    await fetchPosts(apiClient, { length: POSTS_LENGTH });
+    await fetchPosts(apiClient, { userId: user.id, length: POSTS_LENGTH });
   }
 
   return (
