@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from 'react-i18next';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ExitToAppIcon from "@material-ui/icons/ExitToAppOutlined";
@@ -16,7 +17,10 @@ export default function NavMenu({
 
   onCloseClick,
   onClose,
-  onLogout }) {
+  onLogout
+}) {
+  const { t } = useTranslation();
+
   const handleCloseClick = () => {
     onCloseClick && onCloseClick();
     onClose && onClose();
@@ -37,7 +41,7 @@ export default function NavMenu({
         color="inherit"
         onClick={handleCloseClick}>
         <AccountIcon fontSize="small" className="mr-2" />
-        Profile
+        {t("ProfileNavMenu")}
       </CustomLink>
       <CustomLink
         as={MenuItem}
@@ -45,11 +49,11 @@ export default function NavMenu({
         color="inherit"
         onClick={handleCloseClick}>
         <SearchIcon fontSize="small" className="mr-2" />
-        Search
+        {t("SearchNavMenu")}
       </CustomLink>
       <MenuItem onClick={onLogout}>
         <ExitToAppIcon fontSize="small" className="mr-2" />
-        Sign Out
+        {t("SignOutNavMenu")}
       </MenuItem>
     </Menu>
   );

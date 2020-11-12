@@ -7,6 +7,7 @@ import App from './App';
 import { store, persistor } from './store';
 import ApiClient from './services/api';
 import ApiContext from './context/ApiContext';
+import "./i18n";
 import './assets/scss/index.scss';
 
 const clientApi = new ApiClient();
@@ -15,7 +16,7 @@ ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <ApiContext.Provider value={clientApi}>
-        <App />
+          <App />
       </ApiContext.Provider>
     </PersistGate>
   </Provider>,

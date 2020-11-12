@@ -1,10 +1,11 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { createBrowserHistory as history } from "history";
 import { connect } from "react-redux";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import LinearDeterminate from "./components/LinearDeterminate";
 
 import HubComponent from "./domain/Hub/NotificationHub";
 
@@ -30,31 +31,34 @@ import * as Routes from './constants/routes';
 
 function App({ username, isAuthenticated, avatarUrl, signOut }) {
   return (
-  <HubComponent>
-    <Router history={history}>
-        {isAuthenticated && <Navbar username={username} avatarUrl={avatarUrl} onSignOut={signOut} />}
-          <Switch>
-            <Route path={Routes.SIGN_UP_ROUTE} component={SignUp} />
-            <Route path={Routes.SIGN_IN_ROUTE} component={SignIn} />
-            <Route path={Routes.EMAIL_CONFIRMATION} component={EmailConfirmation} />
-            <Route path={Routes.EMAIL_VERIFY} component={EmailVerify} />
-            <PrivateRoute exact path={Routes.DEFAULT_ROUTE} />
-            <PrivateRoute path={Routes.HOME_ROUTE} component={Feed} />
-            <PrivateRoute path={Routes.POST_ID_ROUTE} component={Post} />
-            <PrivateRoute path={Routes.MEET_ROUTE} component={Meeting} />
-            <PrivateRoute path={Routes.CHAT_ROUTE} component={Chat} />
-            <PrivateRoute path={Routes.ROOM_ROUTE} component={CreateRoom} />
-            <PrivateRoute path={Routes.ROOM_ID_ROUTE} component={Room} />
-            <PrivateRoute path={Routes.SUGESTED_PEOPLE} component={PeopleSuggested} />
-            <PrivateRoute path={Routes.SETTINGS_TYPE_ROUTE} component={Settings} />
-            <PrivateRoute exact path={Routes.PROFILE_USERNAME_ROUTE} component={Profile} />
-            <PrivateRoute exact path={Routes.PROFILE_FOLLOWERS_ROUTE} component={Followers} />
-            <PrivateRoute exact path={Routes.PROFILE_FOLLOWINGS_ROUTE} component={Followings} />
-          </Switch>
+    <Suspense fallback={<LinearDeterminate />}>
+      <HubComponent>
+        <Router history={history}>
+          {isAuthenticated && <Navbar username={username} avatarUrl={avatarUrl} onSignOut={signOut} />}
+          
+            <Switch>
+              <Route path={Routes.SIGN_UP_ROUTE} component={SignUp} />
+              <Route path={Routes.SIGN_IN_ROUTE} component={SignIn} />
+              <Route path={Routes.EMAIL_CONFIRMATION} component={EmailConfirmation} />
+              <Route path={Routes.EMAIL_VERIFY} component={EmailVerify} />
+              <PrivateRoute exact path={Routes.DEFAULT_ROUTE} />
+              <PrivateRoute path={Routes.HOME_ROUTE} component={Feed} />
+              <PrivateRoute path={Routes.POST_ID_ROUTE} component={Post} />
+              <PrivateRoute path={Routes.MEET_ROUTE} component={Meeting} />
+              <PrivateRoute path={Routes.CHAT_ROUTE} component={Chat} />
+              <PrivateRoute path={Routes.ROOM_ROUTE} component={CreateRoom} />
+              <PrivateRoute path={Routes.ROOM_ID_ROUTE} component={Room} />
+              <PrivateRoute path={Routes.SUGESTED_PEOPLE} component={PeopleSuggested} />
+              <PrivateRoute path={Routes.SETTINGS_TYPE_ROUTE} component={Settings} />
+              <PrivateRoute exact path={Routes.PROFILE_USERNAME_ROUTE} component={Profile} />
+              <PrivateRoute exact path={Routes.PROFILE_FOLLOWERS_ROUTE} component={Followers} />
+              <PrivateRoute exact path={Routes.PROFILE_FOLLOWINGS_ROUTE} component={Followings} />
+            </Switch>
 
           {isAuthenticated && <Footer />}
-      </Router>
-    </HubComponent>
+        </Router>
+      </HubComponent>
+    </Suspense>
   );
 }
 
