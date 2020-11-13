@@ -26,8 +26,8 @@ function PeopleSuggested(props) {
   return (
     <div className="container p-4 mw-4">
       <div className="">
-      <h5 className="h5">Suggested</h5>
-      <RelationshipList items={peopleSuggestions.data} onFollowClick={(id, userId) => handleFollowPeople(id, userId, peopleSuggestions.isFetching)} />
+        <h5 className="h5">Suggested</h5>
+        <RelationshipList items={peopleSuggestions.data} onFollowClick={(id, userId) => handleFollowPeople(id, userId, peopleSuggestions.isFetching)} />
       </div>
     </div>
   );

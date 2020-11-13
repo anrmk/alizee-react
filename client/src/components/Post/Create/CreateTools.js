@@ -11,7 +11,7 @@ function CreateTools({ isPrivate, isCommentable, onChange }) {
   const mediaRef = useRef();
 
   return (
-    <ul className="nav">
+    <div className="nav">
       <IconButton className="nav-link" onClick={onChange} name="private">
         {isPrivate ? (
           <LockOutlinedIcon fontSize="small" color="secondary" />
@@ -41,7 +41,7 @@ function CreateTools({ isPrivate, isCommentable, onChange }) {
         />
       </IconButton>
       
-      <li className="nav-item">
+      <div className="nav-item">
         <div className="input-group input-group-sm p-2">
           <div className="input-group-prepend">
             <span className="input-group-text">$</span>
@@ -57,8 +57,8 @@ function CreateTools({ isPrivate, isCommentable, onChange }) {
             onChange={onChange}
           />
         </div>
-      </li>
-    </ul>
+      </div>
+    </div>
   );
 }
 

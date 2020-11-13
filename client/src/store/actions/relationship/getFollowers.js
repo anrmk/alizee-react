@@ -1,4 +1,4 @@
-import { generateUrl } from "../../../helpers/functions";
+import { generateUrl, generateFileUrl } from "../../../helpers/functions";
 
 export const GET_FOLLOWERS_REQUEST = "GET_FOLLOWERS_REQUEST";
 export const GET_FOLLOWERS_SUCCESS = "GET_FOLLOWERS_SUCCESS";
@@ -46,6 +46,13 @@ export function getFollowers(api, userId, status) {
         .setParams({ userId, status })
         .setMethod("GET")
         .query(url);
+
+      data.forEach((item) => {
+        item.avatarUrl = generateFileUrl(
+          process.env.REACT_APP_DOMAIN,
+          item.avatarUrl
+        )
+      });
 
       dispatch(receiveGetFollowers(data));
     } catch {

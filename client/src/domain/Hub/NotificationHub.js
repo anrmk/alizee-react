@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import * as signalR from "@microsoft/signalr";
 
@@ -18,7 +18,7 @@ function NotificationHub(props) {
       setHubConnection(null);
     } else {
       const newHubConnection = new signalR.HubConnectionBuilder()
-        .withUrl(wrapHttps(`${process.env.REACT_APP_DOMAIN}${API.endpoints.chat}`, true), {
+        .withUrl(wrapHttps(`${process.env.REACT_APP_DOMAIN}${API.endpoints.chat}`, false), {
           accessTokenFactory: () => getToken(),
         })
         .withAutomaticReconnect()

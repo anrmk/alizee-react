@@ -4,7 +4,6 @@ import { createBrowserHistory as history } from "history";
 import { connect } from "react-redux";
 
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import LinearDeterminate from "./components/LinearDeterminate";
 
 import HubComponent from "./domain/Hub/NotificationHub";
@@ -26,36 +25,61 @@ import Followers from "./pages/Followers";
 import Followings from "./pages/Followings";
 import { Settings } from "./pages/Settings";
 
-import { signOutUser } from './store/actions/signIn';
-import * as Routes from './constants/routes';
+import { signOutUser } from "./store/actions/signIn";
+import * as Routes from "./constants/routes";
 
 function App({ username, isAuthenticated, avatarUrl, signOut }) {
   return (
     <Suspense fallback={<LinearDeterminate />}>
       <HubComponent>
         <Router history={history}>
-          {isAuthenticated && <Navbar username={username} avatarUrl={avatarUrl} onSignOut={signOut} />}
-          
-            <Switch>
-              <Route path={Routes.SIGN_UP_ROUTE} component={SignUp} />
-              <Route path={Routes.SIGN_IN_ROUTE} component={SignIn} />
-              <Route path={Routes.EMAIL_CONFIRMATION} component={EmailConfirmation} />
-              <Route path={Routes.EMAIL_VERIFY} component={EmailVerify} />
-              <PrivateRoute exact path={Routes.DEFAULT_ROUTE} />
-              <PrivateRoute path={Routes.HOME_ROUTE} component={Feed} />
-              <PrivateRoute path={Routes.POST_ID_ROUTE} component={Post} />
-              <PrivateRoute path={Routes.MEET_ROUTE} component={Meeting} />
-              <PrivateRoute path={Routes.CHAT_ROUTE} component={Chat} />
-              <PrivateRoute path={Routes.ROOM_ROUTE} component={CreateRoom} />
-              <PrivateRoute path={Routes.ROOM_ID_ROUTE} component={Room} />
-              <PrivateRoute path={Routes.SUGESTED_PEOPLE} component={PeopleSuggested} />
-              <PrivateRoute path={Routes.SETTINGS_TYPE_ROUTE} component={Settings} />
-              <PrivateRoute exact path={Routes.PROFILE_USERNAME_ROUTE} component={Profile} />
-              <PrivateRoute exact path={Routes.PROFILE_FOLLOWERS_ROUTE} component={Followers} />
-              <PrivateRoute exact path={Routes.PROFILE_FOLLOWINGS_ROUTE} component={Followings} />
-            </Switch>
+          {isAuthenticated && (
+            <Navbar
+              username={username}
+              avatarUrl={avatarUrl}
+              onSignOut={signOut}
+            />
+          )}
 
-          {isAuthenticated && <Footer />}
+          <Switch>
+            <Route path={Routes.SIGN_UP_ROUTE} component={SignUp} />
+            <Route path={Routes.SIGN_IN_ROUTE} component={SignIn} />
+            <Route
+              path={Routes.EMAIL_CONFIRMATION}
+              component={EmailConfirmation}
+            />
+            <Route path={Routes.EMAIL_VERIFY} component={EmailVerify} />
+            <PrivateRoute exact path={Routes.DEFAULT_ROUTE} />
+            <PrivateRoute path={Routes.HOME_ROUTE} component={Feed} />
+            <PrivateRoute path={Routes.POST_ID_ROUTE} component={Post} />
+            <PrivateRoute path={Routes.MEET_ROUTE} component={Meeting} />
+            <PrivateRoute path={Routes.CHAT_ROUTE} component={Chat} />
+            <PrivateRoute path={Routes.ROOM_ROUTE} component={CreateRoom} />
+            <PrivateRoute path={Routes.ROOM_ID_ROUTE} component={Room} />
+            <PrivateRoute
+              path={Routes.SUGESTED_PEOPLE}
+              component={PeopleSuggested}
+            />
+            <PrivateRoute
+              path={Routes.SETTINGS_TYPE_ROUTE}
+              component={Settings}
+            />
+            <PrivateRoute
+              exact
+              path={Routes.PROFILE_USERNAME_ROUTE}
+              component={Profile}
+            />
+            <PrivateRoute
+              exact
+              path={Routes.PROFILE_FOLLOWERS_ROUTE}
+              component={Followers}
+            />
+            <PrivateRoute
+              exact
+              path={Routes.PROFILE_FOLLOWINGS_ROUTE}
+              component={Followings}
+            />
+          </Switch>
         </Router>
       </HubComponent>
     </Suspense>

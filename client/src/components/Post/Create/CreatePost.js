@@ -4,6 +4,8 @@ import Thumbnail from "../../../components/Thumbnail";
 import { AvatarItem } from "../../../components/Avatar";
 import { CreateTools } from "../../../components/Post";
 
+import { POST_TYPE } from "../../../constants/feed";
+
 import "./CreatePost.scss";
 
 export default function CreatePost({ onSubmit, user }) {
@@ -12,6 +14,7 @@ export default function CreatePost({ onSubmit, user }) {
     commentable: true,
     private: false,
     amount: 0,
+    type: POST_TYPE.POST,
   };
 
   const [formData, setFormData] = useState(defaultFormData);
@@ -41,9 +44,7 @@ export default function CreatePost({ onSubmit, user }) {
         break;
       case "file":
         var mediaFiles = [...target.files];
-        mediaFiles.forEach(
-          (file) => (file.previewURL = URL.createObjectURL(file))
-        );
+        mediaFiles.forEach((file) => (file.previewURL = URL.createObjectURL(file)));
         setMedia(mediaFiles);
         break;
       default:
@@ -77,18 +78,11 @@ export default function CreatePost({ onSubmit, user }) {
           required
           onChange={handleFormDataChange}
         />
-        <small className="form-text text-muted">
-          Characters entered {formData.description.length} out of 255
-        </small>
+        <small className="form-text text-muted">Characters entered {formData.description.length} out of 255</small>
       </div>
       <div className="row row-cols-4 no-gutters mb-3">
         {media.map((item) => (
-          <Thumbnail
-            key={item.name}
-            name={item.name}
-            url={item.previewURL}
-            className="col"
-          />
+          <Thumbnail key={item.name} name={item.name} url={item.previewURL} className="col" />
         ))}
       </div>
 

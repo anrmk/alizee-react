@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React  from "react";
 
 import { VerticalList, ItemList } from "../List";
 
@@ -10,15 +10,11 @@ function Options({
   id,
   userId,
   username,
+  
   onFollowClick,
   onGoToClick,
   onShareClick,
 }) {
-
-  useEffect(() => {
-    console.log("Load", id, userId, username)
-  }, [])
-
   const handleUnfollow = (e) => {
     console.log("handleUnfollow")
     e.preventDefault();

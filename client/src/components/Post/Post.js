@@ -63,12 +63,10 @@ function Post({
     <div className="card mb-5">
       {!hideHeader && (
         <div className="card-header d-flex align-items-center justify-content-between py-2">
-
-            <AvatarItem url={avatarUrl}>
+            <AvatarItem url={avatarUrl} size="small">
               <CustomLink as="div" to={PROFILE_ROUTE(username)} >
                 {username}
               </CustomLink>
-              {createdDate && <><small className="text-muted">{createdDate}</small></>}
             </AvatarItem>
             <a onClick={handleOptionsClick}>
               <MoreHorizIcon />

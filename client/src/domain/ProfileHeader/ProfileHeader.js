@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 
 import { Avatar } from "../../components/Avatar";
+import {PostSprout} from "../../domain/PostsList";
 import { getHostFromUrl } from "../../helpers/functions";
 import Statistics from "./Statistics";
 import TopButtons from "./TopButtons";
@@ -24,14 +25,15 @@ function ProfileHeader({
   onSettingsClick
 }) {
   return (
-    <div className="row p-4">
-      <div className="col-lg-3 col-md-12 d-flex justify-content-center justify-content-lg-start">
+    <div className="row">
+      <div className="col-lg-3 col-md-12 d-flex justify-content-center">
         <Avatar size="large" url={avatarUrl} />
       </div>
       <div className="col-lg-9 col-md-12">
+        {/* <PostSprout user={{"avatar": {avatarUrl}}} onSubmit={handleFormSubmit}  /> */}
         <TopButtons 
           me={me}
-          username={username}
+          username={fullName}
           onEditClick={onEditClick}
           onMessageClick={onMessageClick}
           onFollowClick={onFollowClick}
@@ -41,10 +43,6 @@ function ProfileHeader({
           postsCount={postsCount} 
           followersCount={followersCount} 
           followingCount={followingCount} />
-        {/* Full name */}
-        <div className="d-flex mt-4 justify-content-center justify-content-lg-start">
-          <p className="m-0 h5 text-uppercase">{fullName}</p>
-        </div>
         {/* Bio */}
         <div className="d-flex mt-2 justify-content-center justify-content-lg-start">
           <p className="m-0">{bio}</p>

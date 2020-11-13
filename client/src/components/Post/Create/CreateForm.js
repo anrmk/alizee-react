@@ -12,7 +12,7 @@ function CreateForm({ formOnClick }) {
   };
 
   return (
-    <ul className="nav nav-pills nav-fill">
+    <ul className="nav nav-pills nav-fill mb-3">
       <li className="nav-item">
         <a
           className="nav-link"

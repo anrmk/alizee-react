@@ -20,9 +20,8 @@ function Tools({
   onBuyClick,
 }) {
   return (
-    <div className="mb-2">
-      <div className="nav nav-tools">
-       
+    <>
+      <div className="nav nav-tools mb-3">
         {iLike ? 
           (<IconButton className="nav-link" onClick={onFavoriteClick}><FavoriteIcon color="secondary" /></IconButton>) : 
           (<IconButton className="nav-link" onClick={onFavoriteClick}><FavoriteBorderIcon color="secondary" /></IconButton>)
@@ -33,15 +32,17 @@ function Tools({
             <ChatBubbleOutlineOutlinedIcon />
           </IconButton>
         )}
+
         <IconButton className="nav-link" onClick={onShareClick}>
           <ShareOutlinedIcon />
         </IconButton>
+
         <IconButton className="nav-link" onClick={onBuyClick}>
           <MonetizationOnOutlinedIcon />
         </IconButton>
       </div>
       {likes > 0 && <strong className="ml-3">{likes} loves</strong>}
-    </div>
+    </>
   );
 }
 export default Tools;

@@ -12,7 +12,7 @@ function Statistics({
   followingCount
 }) {
   return (
-    <div className="d-flex mt-4 justify-content-center justify-content-lg-start text-center">
+    <div className="d-flex mt-3 justify-content-center justify-content-lg-start text-center">
       <Link to={HOME_ROUTE} className="not-link">
         <p className="m-0"><strong>{formatNumber(postsCount)}</strong> posts</p>
       </Link>

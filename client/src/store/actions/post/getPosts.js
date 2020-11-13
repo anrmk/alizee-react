@@ -74,6 +74,7 @@ export function getPosts(api, opts) {
           userId: opts.userId,
           start: currentOffset,
           length: opts.length,
+          type: opts.type
         })
         .query(url);
 
@@ -113,7 +114,6 @@ const gridGallerySelector = (state) => state.posts.data;
 export const getGridGalleryPosts = createSelector(
   [gridGallerySelector],
   (data) => {
-    console.log("GRID", data)
     return data.reduce(
       (acc, curr) =>
         ([

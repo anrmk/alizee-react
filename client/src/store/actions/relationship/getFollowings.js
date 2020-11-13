@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 
-import { generateUrl } from "../../../helpers/functions";
+import { generateUrl, generateFileUrl } from "../../../helpers/functions";
 
 export const GET_FOLLOWINGS_REQUEST = "GET_FOLLOWINGS_REQUEST";
 export const GET_FOLLOWINGS_SUCCESS = "GET_FOLLOWINGS_SUCCESS";
@@ -61,6 +61,13 @@ export function getFollowings(api, userId) {
         .setParams({ userId })
         .query(url);
 
+      data.forEach((item) => {
+        item.avatarUrl = generateFileUrl(
+          process.env.REACT_APP_DOMAIN,
+          item.avatarUrl
+        )
+      });
+      
       dispatch(receiveGetFollowings(data));
     } catch {
       dispatch(errorGetFollowings("Error: GetFollowings"));

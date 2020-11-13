@@ -1,44 +1,26 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import { Tabs, Tab } from 'react-bootstrap';
+import PropTypes from "prop-types";
 
-import PhotoLibraryIcon from "@material-ui/icons/PhotoLibraryRounded";
-
+import PostTabs from "./PostTabs"
 import GridGallery from "../GridGallery";
 
-import "./ProfileContent.scss";
-
-function ProfileContent({ 
+function ProfileContent({
   media,
   hasMore,
 
   onFetchMore,
-  onTabSelect
+  onTabChange,
+  onItemClick,
 }) {
   return (
-    <div className="profile-content">
-      <ul className="nav justify-content-center border-top">
-        <li className="nav-item">
-          <a className="nav-link" href="#">POSTS</a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="#">TAGGED</a>
-        </li>
-      </ul>
-
-      <GridGallery items={media} hasMore={hasMore} onFetchMore={onFetchMore} />
-      {/* <Tabs 
-        className="justify-content-center"
-        defaultActiveKey="posts"
-        transition={false}
-        onSelect={onTabSelect}>
-        <Tab eventKey="posts" title="Posts">
-          
-        </Tab>
-        <Tab eventKey="tagged" title="Tagged">
-        </Tab>
-      </Tabs> */}
-    </div>
+    <PostTabs onTabChange={onTabChange} >
+      <GridGallery
+        items={media}
+        hasMore={hasMore}
+        onFetchMore={onFetchMore}
+        onItemClick={onItemClick}
+      />
+    </PostTabs>
   );
 }
 
@@ -47,15 +29,17 @@ ProfileContent.propTypes = {
   hasMore: PropTypes.bool,
 
   onFetchMore: PropTypes.func,
-  onTabSelect: PropTypes.func
-}
+  onTabChange: PropTypes.func,
+  onTabSelect: PropTypes.func,
+};
 
 ProfileContent.defaultProps = {
   media: [],
   hasMore: false,
 
   onFetchMore: undefined,
-  onTabSelect: undefined
+  onTabChange: undefined,
+  onTabSelect: undefined,
 };
 
 export default ProfileContent;

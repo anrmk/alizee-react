@@ -63,7 +63,8 @@ export function createPost(api, postData, mediaData=[]) {
           amount: Number(postData.amount),
           latitude: postData?.latitude,
           longitude: postData?.longitude,
-          media: media
+          media: media,
+          type: postData.type
          })
         .query(url);
 

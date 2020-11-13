@@ -1,8 +1,8 @@
-import React, {useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { connect } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 
-import { PostsList, PostCreate } from "../domain/PostsList";
+import { PostsList, PostSprout } from "../domain/PostsList";
 
 import * as actionSuggestion from "../store/actions/suggestion";
 import * as postActions from "../store/actions/post";
@@ -13,11 +13,7 @@ import CustomLink from "../components/CustomLink";
 
 import ApiContext from "../context/ApiContext";
 import { POSTS_LENGTH } from "../constants/feed";
-import {
-  PROFILE_ROUTE,
-  POST_ROUTE,
-  SUGESTED_PEOPLE,
-} from "../constants/routes";
+import { PROFILE_ROUTE, POST_ROUTE, SUGESTED_PEOPLE } from "../constants/routes";
 
 function Feed(props) {
   const history = useHistory();
@@ -26,12 +22,7 @@ function Feed(props) {
   const { userInfo } = props;
   const { posts } = props;
 
-  const {
-    peopleSuggestions,
-    getPeopleSuggestions,
-    followPeopleSuggestions,
-    unfollowPeopleSuggestions,
-  } = props;
+  const { peopleSuggestions, getPeopleSuggestions, followPeopleSuggestions, unfollowPeopleSuggestions } = props;
 
   const { resetPosts, fetchPosts, createPost, likePost } = props;
   const [postType, setPostType] = useState("");
@@ -80,9 +71,7 @@ function Feed(props) {
     if (!isLoading) {
       var follower = peopleSuggestions.data.find((u) => u.id === id);
       if (follower) {
-        follower.isFollowing
-          ? unfollowPeopleSuggestions(apiClient, id)
-          : followPeopleSuggestions(apiClient, id);
+        follower.isFollowing ? unfollowPeopleSuggestions(apiClient, id) : followPeopleSuggestions(apiClient, id);
       }
     }
   };
@@ -95,21 +84,14 @@ function Feed(props) {
     <div className="container p-4">
       <div className="row">
         <div className="col-lg-8 col-md-12">
-          <div className="mb-3">
-            <PostCreate user={userInfo} onSubmit={handleFormSubmit} />
-          </div>
-          {/* <CreatePostForm onSubmit={handleFormSubmit} user={userInfo} /> */}
+          <PostSprout user={userInfo} onSubmit={handleFormSubmit} />
           <PostsList
             items={posts.data}
             hasMore={posts.hasMore}
             onFetchMore={handleFetchMore}
             onGoToClick={handleGoToClick}
-            onFollowClick={(id) =>
-              handleFollowPeopleClick(id, peopleSuggestions.isFetching)
-            }
-            onFavoriteClick={({ id }) =>
-              handleFavoriteClick(id, posts.isFetching)
-            }
+            onFollowClick={(id) => handleFollowPeopleClick(id, peopleSuggestions.isFetching)}
+            onFavoriteClick={({ id }) => handleFavoriteClick(id, posts.isFetching)}
             onBuyClick={handleByClick}
           />
         </div>
@@ -127,10 +109,7 @@ function Feed(props) {
               <span className="text-muted">Suggestions For You</span>
               <Link to={`${SUGESTED_PEOPLE}`}>See All</Link>
             </div>
-            <RelationshipList
-              items={peopleSuggestions.data}
-              onFollowClick={handleFollowPeopleClick}
-            />
+            <RelationshipList items={peopleSuggestions.data} onFollowClick={handleFollowPeopleClick} />
           </div>
         </div>
       </div>
@@ -167,17 +146,12 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     resetPosts: () => dispatch(postActions.resetPosts()),
-    fetchPosts: (api, opts) =>
-      dispatch(postActions.getFollowingPosts(api, opts)),
-    createPost: (api, post, media) =>
-      dispatch(postActions.createPost(api, post, media)),
-    getPeopleSuggestions: (api, count) =>
-      dispatch(actionSuggestion.getPeopleSuggestions(api, count)),
+    fetchPosts: (api, opts) => dispatch(postActions.getFollowingPosts(api, opts)),
+    createPost: (api, post, media) => dispatch(postActions.createPost(api, post, media)),
+    getPeopleSuggestions: (api, count) => dispatch(actionSuggestion.getPeopleSuggestions(api, count)),
     likePost: (api, id) => dispatch(postActions.likePost(api, id)),
-    followPeopleSuggestions: (api, id) =>
-      dispatch(actionSuggestion.followPeopleSuggestions(api, id)),
-    unfollowPeopleSuggestions: (api, id) =>
-      dispatch(actionSuggestion.unfollowPeopleSuggestions(api, id)),
+    followPeopleSuggestions: (api, id) => dispatch(actionSuggestion.followPeopleSuggestions(api, id)),
+    unfollowPeopleSuggestions: (api, id) => dispatch(actionSuggestion.unfollowPeopleSuggestions(api, id)),
   };
 }
 

@@ -106,15 +106,15 @@ function SignIn(props) {
                   </div>
                 </form>
                 <hr />
-                <a className="btn btn-link btn-sm btn-block" href="#">
+                <Link to="#" className="btn btn-link btn-sm btn-block">
                   Forgot password?
-                </a>
+                </Link>
               </div>
             </div>
             <div className="card o-8">
               <div className="card-body text-center">
                 Don't have an account? &nbsp;
-                <Link to="signUp">Sign Up</Link>
+                <Link to="signUp" className="btn btn-link">Sign Up</Link>
               </div>
             </div>
         </div>

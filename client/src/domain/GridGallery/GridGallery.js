@@ -1,38 +1,64 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import PropTypes from "prop-types";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-import Spinner from '../../components/Spinner';
-import Tile from "./Tile";
+import { Typography, IconButton } from "@material-ui/core";
+import { GridList, GridListTile, GridListTileBar } from "@material-ui/core";
 
-import "./GridGallery.scss";
+import StarBorderIcon from "@material-ui/icons/StarBorderOutlined";
 
-function GridGallery({ 
+import useStyles from "./styles";
+
+function GridGallery({
   items,
   hasMore,
 
   onFetchMore,
-  onItemClick
+  onItemClick,
 }) {
+  const classes = useStyles();
+
   return (
     <InfiniteScroll
-      className="row row-cols-md-3 no-gutters grid-gallery"
+      className={classes.root}
       scrollThreshold={1}
       dataLength={items.length}
       next={onFetchMore}
       hasMore={hasMore}
-      loader={<Spinner />}>
-      {items 
-        && items.length > 0 
-        && items.map(item => (
-          <Tile  
-            key={item?.id}
-            id={item?.id}
-            amount={item?.amount}
-            caption={item?.caption}
-            media={item?.media}
-            onClick={onItemClick} />
-        ))}
+    >
+      <GridList
+        cellHeight="auto"
+        spacing={12}
+        cols={4}
+        className={classes.gridList}
+      >
+        {items &&
+          items.length > 0 &&
+          items.map((item, index) => (
+            <GridListTile key={item?.id} onClick={() => onItemClick(item?.id)} className={classes.gridListTile}>
+              {item.media.length > 0 ? (
+                <img src={item?.media[0]?.thumbnailUrl} alt={item.title} />
+              ) : (
+                <Typography className={classes.typography}>
+                  {item.caption}
+                </Typography>
+              )}
+              <GridListTileBar
+                titlePosition="top"
+                actionPosition="right"
+                className={classes.gridListTileBar}
+                actionIcon={
+                  <IconButton
+                    aria-label={`star ${item.caption}`}
+                    className={classes.icon}
+                  >
+                    <StarBorderIcon />{" "}
+                  </IconButton>
+                }
+              />
+            </GridListTile>
+          ))}
+      </GridList>
     </InfiniteScroll>
   );
 }
@@ -42,15 +68,15 @@ GridGallery.propTypes = {
   hasMore: PropTypes.bool,
 
   onFetchMore: PropTypes.func,
-  onItemClick: PropTypes.func
-}
+  onItemClick: PropTypes.func,
+};
 
 GridGallery.defaultProps = {
   items: [],
   hasMore: false,
 
   onFetchMore: undefined,
-  onItemClick: undefined
-}
+  onItemClick: undefined,
+};
 
 export default GridGallery;

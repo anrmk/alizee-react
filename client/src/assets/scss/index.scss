@@ -1,19 +1,12 @@
- // change the theme
-// $theme-colors: (
-//   "primary": #888888,
-//   "danger": #ff4136
-// );
+$font-size-base: 0.85rem !default;
 
-// $link-color: #6c757d;
-// $font-size-base: 0.9rem;
+$link-color:          #6c757d !default;
+$link-color:          theme-color("primary") !default;
+$link-hover-color:    darken($link-color, 30%) !default;
 
-// $body-bg: #000;
+$card-cap-bg:   white;
 
-@import 'sandstone/_variables';
 @import '~bootstrap/scss/bootstrap.scss';
-$enable-gradient: "true";
-
-@import 'sandstone/_bootswatch';
 
 body {
   margin: 0;
@@ -69,17 +62,6 @@ body {
       color: rgb(219, 219, 219)
     }
   }
-}
-
-// AVATAR SIZE
-.avatar__small {
-  width: 24px !important;
-  height: 24px !important;
-}
-
-.avatar__large {
-  width: 56px !important;
-  height: 56px !important;
 }
 
 .o-8 {

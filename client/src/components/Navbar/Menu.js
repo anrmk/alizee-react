@@ -1,15 +1,17 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+
 import ExitToAppIcon from "@material-ui/icons/ExitToAppOutlined";
 import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
 
-import CustomLink from "../CustomLink";
-import { PROFILE_ROUTE, SEARCH_ROUTE } from '../../constants/routes';
+import { PROFILE_ROUTE, SEARCH_ROUTE } from "../../constants/routes";
 
-export default function NavMenu({ 
+export default function NavMenu({
   id,
   username,
   open,
@@ -20,6 +22,7 @@ export default function NavMenu({
   onLogout
 }) {
   const { t } = useTranslation();
+  const history = useHistory();
 
   const handleCloseClick = () => {
     onCloseClick && onCloseClick();
@@ -29,32 +32,53 @@ export default function NavMenu({
   return (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={id}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={open}
-      onClose={onClose}>
-      <CustomLink 
-        as={MenuItem}
-        to={PROFILE_ROUTE(username)}
-        color="inherit"
-        onClick={handleCloseClick}>
-        <AccountIcon fontSize="small" className="mr-2" />
+      onClose={onClose}
+    >
+      <MenuItem onClick={() => history.push(PROFILE_ROUTE(username))}>
+        <AccountIcon fontSize="small" /> 
         {t("ProfileNavMenu")}
-      </CustomLink>
-      <CustomLink
-        as={MenuItem}
-        to={SEARCH_ROUTE}
-        color="inherit"
-        onClick={handleCloseClick}>
-        <SearchIcon fontSize="small" className="mr-2" />
-        {t("SearchNavMenu")}
-      </CustomLink>
-      <MenuItem onClick={onLogout}>
-        <ExitToAppIcon fontSize="small" className="mr-2" />
-        {t("SignOutNavMenu")}
       </MenuItem>
+
+      <MenuItem onClick={() => history.push(SEARCH_ROUTE)}>
+        <SearchIcon fontSize="small" /> 
+        {t("SearchNavMenu")}
+      </MenuItem>
+
+      <MenuItem onClick={onLogout}>
+        <ExitToAppIcon fontSize="small" /> 
+        {t("SignOutNavMenu")}
+      </MenuItem> 
     </Menu>
   );
 }
+
+
+{/* return (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      id={id}
+      keepMounted
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      open={open}
+      onClose={onClose}
+    >
+      <MenuItem onClick={() => history.push(PROFILE_ROUTE(username))}>
+        <AccountIcon fontSize="small" /> 
+        {t("ProfileNavMenu")}
+      </MenuItem>
+
+      <MenuItem onClick={() => history.push(SEARCH_ROUTE)}>
+        <SearchIcon fontSize="small" /> 
+        {t("SearchNavMenu")}
+      </MenuItem>
+
+      <MenuItem onClick={onLogout}>
+        <ExitToAppIcon fontSize="small" /> 
+        {t("SignOutNavMenu")}
+      </MenuItem> */}

@@ -4,7 +4,7 @@ import { CreateForm, CreatePost,  CreateFeeling, CreateStories} from "../../comp
 
 import Modal from "react-bootstrap/Modal";
 
-function PostCreate({user, onSubmit}) {
+function PostSprout({user, onSubmit}) {
   const [postType, setPostType] = useState("");
   const [showModal, setShowModal] = useState(false);
 
@@ -22,7 +22,7 @@ function PostCreate({user, onSubmit}) {
       case "POST":
         return <CreatePost user={user} onSubmit={handleFormSubmit} />
       case "STORY":
-        return <>aaa</>;
+        return <>in process</>;
       case "FEELING": 
         return <CreateFeeling user={user} onSubmit={handleFormSubmit} />;
       default: 
@@ -36,7 +36,7 @@ function PostCreate({user, onSubmit}) {
   }
 
   return (
-    <div>
+    <>
       <CreateForm formOnClick={handlePostFormClick} />
 
       <Modal
@@ -49,14 +49,14 @@ function PostCreate({user, onSubmit}) {
         onHide={handleModalHide}
       >
         <Modal.Header closeButton>
-          <Modal.Title className="h6 ml-auto pl-4">{postType}</Modal.Title>
+          <Modal.Title className="h6 ml-auto pl-4">Create {postType}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           { constRenderCreateForm(postType)}
         </Modal.Body>
       </Modal>
-    </div>
+    </>
   );
 }
 
-export default PostCreate;
+export default PostSprout;

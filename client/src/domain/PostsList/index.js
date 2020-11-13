@@ -1,4 +1,4 @@
 import PostsList from "./PostsList";
-import PostCreate from "./PostCreate";
+import PostSprout from "./PostSprout";
 
-export { PostsList , PostCreate};
+export { PostsList, PostSprout };

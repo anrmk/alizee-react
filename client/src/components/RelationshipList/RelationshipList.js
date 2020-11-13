@@ -8,11 +8,12 @@ function RelationshipList({ items, currentUserId, onFollowClick }) {
   return (
     <VerticalList className="list-group-flush">
       {items && items.map(item => (
+
         <RelationshipItem
           key={item?.id}
           id={item?.id}
           userId={item?.userId}
-          avatarUrl={item?.userUrl}
+          avatarUrl={item?.avatarUrl}
           username={item?.userName}
           isFollowing={item?.isFollowing}
           me={item?.userId === currentUserId}
