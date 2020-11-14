@@ -225,3 +225,14 @@ export function getAccountSnapshot(account) {
     sites: account.sites
   })
 }
+
+export function initTheme(theme) {
+  const currentTheme = localStorage.getItem("CURRENT_THEME");
+  if (currentTheme) {
+    return currentTheme;
+  }
+
+  localStorage.setItem("CURRENT_THEME", theme);
+
+  return theme;
+}

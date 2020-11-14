@@ -1,21 +1,25 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-import Menu from "./Menu";
 
-import Avatar from "@material-ui/core/Avatar";
+import useTheme from "@material-ui/core/styles/useTheme";
+import { Avatar, Container, AppBar, Toolbar, Typography, IconButton, InputBase, Badge } from "@material-ui/core";
+
 import NotificationsIcon from "@material-ui/icons/NotificationsActiveOutlined";
 import HomeIcon from "@material-ui/icons/HomeOutlined";
 import StorefrontIcon from "@material-ui/icons/StorefrontOutlined";
 import SendIcon from "@material-ui/icons/SendOutlined";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
+import BrightnessLightIcon from "@material-ui/icons/Brightness5Outlined";
+import BrightnessDarkIcon from "@material-ui/icons/Brightness4Outlined";
 
-import { Container, AppBar, Toolbar, Typography, IconButton, InputBase, Badge } from "@material-ui/core";
-
-import { CHAT_ROUTE, HOME_ROUTE, PROFILE_ROUTE, SEARCH_ROUTE } from "../../constants/routes";
+import { CHAT_ROUTE, HOME_ROUTE } from "../../constants/routes";
 
 import iconSrc from "../../assets/img/logo.png";
 import useStyles from "./styles";
+
+import Menu from "./Menu";
+import { useChangeTheme } from "../../domain/ThemeProvider";
 
 function Header({
   username,
@@ -28,6 +32,9 @@ function Header({
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const history = useHistory();
+
+  const theme = useTheme();
+  const changeTheme = useChangeTheme();
 
   const menuId = "account-menu";
   const isMenuOpen = Boolean(anchorEl);
@@ -46,7 +53,7 @@ function Header({
 
   return (
     <div className={classes.grow}>
-      <AppBar className={classes.container} position="static">
+      <AppBar  position="static">
         <Container>
           <Toolbar>
             <span>
@@ -89,6 +96,10 @@ function Header({
                 <Badge badgeContent={notificationsCount} color="secondary">
                   <NotificationsIcon className={classes.link} />
                 </Badge>
+              </IconButton>
+
+              <IconButton onClick={() => changeTheme()}>
+                {theme.palette.type === "light" ? <BrightnessDarkIcon /> : <BrightnessLightIcon />}
               </IconButton>
 
               <IconButton

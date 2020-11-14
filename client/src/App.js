@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { createBrowserHistory as history } from "history";
 import { connect } from "react-redux";
@@ -28,59 +28,38 @@ import { Settings } from "./pages/Settings";
 import { signOutUser } from "./store/actions/signIn";
 import * as Routes from "./constants/routes";
 
+import { CssBaseline } from "@material-ui/core";
+import ThemeProvider from "./domain/ThemeProvider";
+
 function App({ username, isAuthenticated, avatarUrl, signOut }) {
   return (
     <Suspense fallback={<LinearDeterminate />}>
       <HubComponent>
-        <Router history={history}>
-          {isAuthenticated && (
-            <Navbar
-              username={username}
-              avatarUrl={avatarUrl}
-              onSignOut={signOut}
-            />
-          )}
+        <ThemeProvider>
+          <CssBaseline />
+          <Router history={history}>
+            {isAuthenticated && <Navbar username={username} avatarUrl={avatarUrl} onSignOut={signOut} />}
 
-          <Switch>
-            <Route path={Routes.SIGN_UP_ROUTE} component={SignUp} />
-            <Route path={Routes.SIGN_IN_ROUTE} component={SignIn} />
-            <Route
-              path={Routes.EMAIL_CONFIRMATION}
-              component={EmailConfirmation}
-            />
-            <Route path={Routes.EMAIL_VERIFY} component={EmailVerify} />
-            <PrivateRoute exact path={Routes.DEFAULT_ROUTE} />
-            <PrivateRoute path={Routes.HOME_ROUTE} component={Feed} />
-            <PrivateRoute path={Routes.POST_ID_ROUTE} component={Post} />
-            <PrivateRoute path={Routes.MEET_ROUTE} component={Meeting} />
-            <PrivateRoute path={Routes.CHAT_ROUTE} component={Chat} />
-            <PrivateRoute path={Routes.ROOM_ROUTE} component={CreateRoom} />
-            <PrivateRoute path={Routes.ROOM_ID_ROUTE} component={Room} />
-            <PrivateRoute
-              path={Routes.SUGESTED_PEOPLE}
-              component={PeopleSuggested}
-            />
-            <PrivateRoute
-              path={Routes.SETTINGS_TYPE_ROUTE}
-              component={Settings}
-            />
-            <PrivateRoute
-              exact
-              path={Routes.PROFILE_USERNAME_ROUTE}
-              component={Profile}
-            />
-            <PrivateRoute
-              exact
-              path={Routes.PROFILE_FOLLOWERS_ROUTE}
-              component={Followers}
-            />
-            <PrivateRoute
-              exact
-              path={Routes.PROFILE_FOLLOWINGS_ROUTE}
-              component={Followings}
-            />
-          </Switch>
-        </Router>
+            <Switch>
+              <Route path={Routes.SIGN_UP_ROUTE} component={SignUp} />
+              <Route path={Routes.SIGN_IN_ROUTE} component={SignIn} />
+              <Route path={Routes.EMAIL_CONFIRMATION} component={EmailConfirmation} />
+              <Route path={Routes.EMAIL_VERIFY} component={EmailVerify} />
+              <PrivateRoute exact path={Routes.DEFAULT_ROUTE} />
+              <PrivateRoute path={Routes.HOME_ROUTE} component={Feed} />
+              <PrivateRoute path={Routes.POST_ID_ROUTE} component={Post} />
+              <PrivateRoute path={Routes.MEET_ROUTE} component={Meeting} />
+              <PrivateRoute path={Routes.CHAT_ROUTE} component={Chat} />
+              <PrivateRoute path={Routes.ROOM_ROUTE} component={CreateRoom} />
+              <PrivateRoute path={Routes.ROOM_ID_ROUTE} component={Room} />
+              <PrivateRoute path={Routes.SUGESTED_PEOPLE} component={PeopleSuggested} />
+              <PrivateRoute path={Routes.SETTINGS_TYPE_ROUTE} component={Settings} />
+              <PrivateRoute exact path={Routes.PROFILE_USERNAME_ROUTE} component={Profile} />
+              <PrivateRoute exact path={Routes.PROFILE_FOLLOWERS_ROUTE} component={Followers} />
+              <PrivateRoute exact path={Routes.PROFILE_FOLLOWINGS_ROUTE} component={Followings} />
+            </Switch>
+          </Router>
+        </ThemeProvider>
       </HubComponent>
     </Suspense>
   );

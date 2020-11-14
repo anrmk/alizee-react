@@ -1,17 +1,21 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import { Avatar } from "../../components/Avatar";
-import {PostSprout} from "../../domain/PostsList";
+import { Avatar, Grid } from "@material-ui/core";
+
+import { PostSprout } from "../../domain/PostsList";
+
 import { getHostFromUrl } from "../../helpers/functions";
 import Statistics from "./Statistics";
 import TopButtons from "./TopButtons";
 
-function ProfileHeader({ 
+import useStyles from "./styles";
+
+function ProfileHeader({
   me,
-  fullName, 
-  username, 
-  bio, 
+  fullName,
+  username,
+  bio,
   sites,
   avatarUrl,
 
@@ -22,38 +26,47 @@ function ProfileHeader({
   onEditClick,
   onMessageClick,
   onFollowClick,
-  onSettingsClick
+  onSettingsClick,
+  onPostCreate,
 }) {
+  const classes = useStyles();
   return (
-    <div className="row">
-      <div className="col-lg-3 col-md-12 d-flex justify-content-center">
-        <Avatar size="large" url={avatarUrl} />
-      </div>
-      <div className="col-lg-9 col-md-12">
-        {/* <PostSprout user={{"avatar": {avatarUrl}}} onSubmit={handleFormSubmit}  /> */}
-        <TopButtons 
-          me={me}
-          username={fullName}
-          onEditClick={onEditClick}
-          onMessageClick={onMessageClick}
-          onFollowClick={onFollowClick}
-          onSettingsClick={onSettingsClick} />
-        <Statistics 
-          username={username}
-          postsCount={postsCount} 
-          followersCount={followersCount} 
-          followingCount={followingCount} />
-        {/* Bio */}
-        <div className="d-flex mt-2 justify-content-center justify-content-lg-start">
-          <p className="m-0">{bio}</p>
-        </div>
-        {/* Sites */}
-        <div className="d-flex flex-column mt-2 justify-content-center justify-content-lg-start">
-          {sites.length > 0 && sites.map((url, i) => (
-            <a key={i} href={url} target="_blank" className="m-0">{getHostFromUrl(url)}</a>
-          ))}
-        </div>
-      </div>
+    <div className={classes.root}>
+      <Grid container spacing={2} direction="row" justify="space-around" alignItems="flex-start">
+        <Grid item xs={12} sm={4}>
+          <Avatar variant="circle" src={avatarUrl} className={classes.large} />
+          <PostSprout user={{ avatar: { avatarUrl } }} onSubmit={onPostCreate} />
+        </Grid>
+        <Grid item xs={12} sm={8}>
+          <TopButtons
+            me={me}
+            username={fullName}
+            onEditClick={onEditClick}
+            onMessageClick={onMessageClick}
+            onFollowClick={onFollowClick}
+            onSettingsClick={onSettingsClick}
+          />
+          <Statistics
+            username={username}
+            postsCount={postsCount}
+            followersCount={followersCount}
+            followingCount={followingCount}
+          />
+          {/* Bio */}
+          <div className="d-flex mt-2 justify-content-center justify-content-lg-start">
+            <p className="m-0">{bio}</p>
+          </div>
+          {/* Sites */}
+          <div className="d-flex flex-column mt-2 justify-content-center justify-content-lg-start">
+            {sites.length > 0 &&
+              sites.map((url, i) => (
+                <a key={i} href={url} target="_blank" className="m-0">
+                  {getHostFromUrl(url)}
+                </a>
+              ))}
+          </div>
+        </Grid>
+      </Grid>
     </div>
   );
 }
@@ -75,8 +88,8 @@ ProfileHeader.propTypes = {
   onMessageClick: PropTypes.func,
   onFollowClick: PropTypes.func,
   onEditClick: PropTypes.func,
-  onSettingsClick: PropTypes.func
-}
+  onSettingsClick: PropTypes.func,
+};
 
 ProfileHeader.defaultProps = {
   me: false,
@@ -95,7 +108,7 @@ ProfileHeader.defaultProps = {
   onMessageClick: undefined,
   onFollowClick: undefined,
   onEditClick: undefined,
-  onSettingsClick: undefined
+  onSettingsClick: undefined,
 };
 
 export default ProfileHeader;

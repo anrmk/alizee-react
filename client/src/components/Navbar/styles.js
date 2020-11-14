@@ -2,7 +2,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    backgroundColor: "#fff"
+    backgroundColor: "#fafafa"
   },
   small: {
     width: theme.spacing(3),

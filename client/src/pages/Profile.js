@@ -53,6 +53,11 @@ function Profile(props) {
   };
 
   const handleTabChange = (index) => {
+    if (index === 2) {
+      setTagged(true);
+    } else {
+      setTagged(false);
+    }
     setPostType(index);
   };
 
@@ -73,6 +78,7 @@ function Profile(props) {
           onMessageClick={() => {}}
           onFollowClick={createFollow}
           onSettingsClick={() => {}}
+          onPostCreate={() => {}}
         />
         <ProfileContent
           media={post.data}
