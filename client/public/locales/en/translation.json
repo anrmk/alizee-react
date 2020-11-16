@@ -1,5 +1,8 @@
 {
   "ProfileNavMenu": "Profile",
   "SearchNavMenu": "Search",
-  "SignOutNavMenu": "Sign Out"
+  "SignOutNavMenu": "Sign Out",
+  "SecondTextFollowerItem": "recommended",
+  "FollowerBtnTextFollowerItem": "Follow",
+  "FollowingBtnTextFollowerItem": "Following"
 }

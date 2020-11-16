@@ -1,4 +1,5 @@
 import { generateUrl, generateFileUrl } from '../../helpers/functions';
+import { socialAuth } from './socialAuth';
 import { USER_TOKEN } from '../../constants/user';
 
 export const SIGNIN_REQUEST = 'SIGNIN_REQUEST';
@@ -15,20 +16,23 @@ function requestSignIn(creds) {
     payload: {
       isFetching: true,
       isAuthenticated: false,
+      isVerified: false,
+      isSocial: false,
       errorMessage: '',
       signInRequestData: creds
     }
   }
 }
 
-function receiveSignIn(userInfo) {
+function receiveSignIn(userInfo, isSocial = false) {
   return {
     type: SIGNIN_SUCCESS,
     payload: {
       isFetching: false,
       isAuthenticated: true,
-      errorMessage: '',
       isVerified: true,
+      isSocial,
+      errorMessage: '',
       userInfo
     }
   }
@@ -41,6 +45,7 @@ function errorSignIn(message, status) {
       isFetching: false,
       isAuthenticated: false,
       isVerified: false,
+      isSocial: false,
       errorMessage: message,
       errorStatus: status
     }
@@ -66,7 +71,6 @@ export function signInUser(creds, api) {
         .setData({
           email: creds.email,
           password: creds.password,
-          rememberMe: creds?.rememberMe || false
         })
         .query(url);
 
@@ -79,6 +83,33 @@ export function signInUser(creds, api) {
 
       dispatch(receiveSignIn(data));
     } catch(e) {
+      dispatch(errorSignIn(e.message, e.response?.status || 500));
+    }
+  }
+}
+
+export function signInSocial(api, socialType, opts) {
+  return async (dispatch, getState) => {
+    dispatch(requestSignIn());
+
+    try {
+      await dispatch(socialAuth(api, socialType, opts));
+
+      const { data, errorMessage } = getState().socialAuth;
+
+      if (errorMessage) {
+        throw errorMessage;
+      }
+
+      localStorage.setItem(USER_TOKEN, data.token);
+
+      const avatarUrl = data?.avatarUrl;
+      if (avatarUrl) {
+        data.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, avatarUrl);
+      }
+
+      dispatch(receiveSignIn(data, true));
+    } catch (e) {
       dispatch(errorSignIn(e.message, e.response?.status || 500));
     }
   }

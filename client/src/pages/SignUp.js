@@ -1,40 +1,40 @@
 import React, { useState, useContext } from "react";
 import { Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
+import Box from "@material-ui/core/Box";
 
-import { GoogleLogin } from 'react-google-login';
-import { SOCIAL_GOOGLE } from '../constants/social_types';
-import { MOCK_SIGNUP_INFO } from '../mock/user';
-
-import {
-  signUpUser,
-  signUpSocial,
-  requestSignUpSocial,
-  errorSignUpSocial
-} from '../store/actions/signUp';
-import ApiContext from '../context/ApiContext';
-import { GOOGLE_CLIENT_ID } from '../constants/social_client_ids';
+import * as signUpActions from "../store/actions/signUp";
+import * as signInActions from "../store/actions/signIn";
+import * as socialAuthActions from "../store/actions/socialAuth";
+import ApiContext from "../context/ApiContext";
+import { GOOGLE_CLIENT_ID } from "../constants/social_client_ids";
+import SocialButtons from "../components/SocialButtons";
+import { HOME_ROUTE, EMAIL_CONFIRMATION } from "../constants/routes";
 
 function SignUp(props) {
   const apiClient = useContext(ApiContext);
 
-  const { isSignUp, errorMessage } = props;
+  const { isSignUp, isSocial, errorMessage } = props;
   const {
     signUp,
     signUpSocial,
-    reqSignUpSocial,
+    requestSignUpSocial,
     failSignUpSocial
   } = props;
 
   const [formData, setFormData] = useState({
-    name: '',
-    surname: '',
-    username: '',
-    email: ''
+    name: "",
+    surname: "",
+    username: "",
+    email: ""
   });
 
+  if (isSocial) {
+    return <Redirect to={HOME_ROUTE} />
+  }
+
   if (isSignUp) {
-    return <Redirect to="email-confirmation" />
+    return <Redirect to={EMAIL_CONFIRMATION} />
   }
 
   const handleFormChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -43,28 +43,31 @@ function SignUp(props) {
     e.preventDefault();
     if (!formData.username || !formData.email || !formData.name || !formData.surname) return;
 
-    // TODO: replace mock data
-    signUp({
-        name: formData.name,
-        surname: formData.surname,
-        birthday: formData.birthday,
-        username: formData.username,
-        email: formData.email,
-        phoneNumber: formData.phoneNumber,
-        avatarUrl: MOCK_SIGNUP_INFO.avatarUrl
-      },
-      apiClient);
+    (async () => {
+      await signUp(
+        apiClient,
+        {
+          name: formData.name,
+          surname: formData.surname,
+          birthday: formData.birthday,
+          username: formData.username,
+          email: formData.email,
+          phoneNumber: formData.phoneNumber
+        });
+    })();
   };
 
-  const handleGoogleRequest = () => {
-    reqSignUpSocial()
+  const handleSocialRequest = () => {
+    requestSignUpSocial()
   }
 
-  const handleGoogleSuccess = (response) => {
-    signUpSocial(SOCIAL_GOOGLE, response, apiClient);
+  const handleSocialSuccess = (response, socialType) => {
+    (async () => {
+      await signUpSocial(apiClient, socialType, response);
+    })();
   }
 
-  const handleGoogleFailure = (response) => {
+  const handleSocialFailure = (response) => {
     failSignUpSocial(response.error);
   }
 
@@ -140,19 +143,14 @@ function SignUp(props) {
           </div>
         </div>
         <br />
-        <div className="form-row">
+        <Box>
           <button type="submit" className="btn btn-primary form-group col-md-3">SignUp</button>
-        </div>
-        <div className="form-row">
-          <GoogleLogin
-            className="form-group col-md-3"
-            type="button"
-            clientId={GOOGLE_CLIENT_ID}
-            onRequest={handleGoogleRequest}
-            onSuccess={handleGoogleSuccess}
-            onFailure={handleGoogleFailure}
-          />
-        </div>
+          <SocialButtons
+            googleClientId={GOOGLE_CLIENT_ID}
+            onRequest={handleSocialRequest}
+            onSuccess={handleSocialSuccess}
+            onFailure={handleSocialFailure} />
+        </Box>
         <p>{errorMessage}</p>
       </form>
     </div>
@@ -162,16 +160,17 @@ function SignUp(props) {
 function mapStateToProps(state) {
   return {
     isSignUp: state.signUp.isSignUp,
+    isSocial: state.signIn.isSocial,
     errorMessage: state.signUp.errorMessage
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    signUp: (creds, api) => dispatch(signUpUser(creds, api)),
-    signUpSocial: (socialType, socialData, api) => dispatch(signUpSocial(socialType, socialData, api)),
-    reqSignUpSocial: () => dispatch(requestSignUpSocial()),
-    failSignUpSocial: (message) => dispatch(errorSignUpSocial(message))
+    signUp: (api, creds) => dispatch(signUpActions.signUpUser(api, creds)),
+    signUpSocial: (api, socialType, data) => dispatch(signInActions.signInSocial(api, socialType, data)),
+    requestSignUpSocial: () => dispatch(socialAuthActions.requestSocialAuth()),
+    failSignUpSocial: (message) => dispatch(socialAuthActions.errorSocialAuth(message))
   }
 }
 

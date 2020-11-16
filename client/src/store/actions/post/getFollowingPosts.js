@@ -61,7 +61,6 @@ export function getFollowingPosts(api, opts) {
           ...item.user,
           avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, avatarUrl),
         };
-        item.iLike = true;
         item.media.forEach((item) => {
           item.url = generateFileUrl(process.env.REACT_APP_DOMAIN, item.url);
           item.thumbnailUrl = generateFileUrl(

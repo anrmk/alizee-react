@@ -32,6 +32,7 @@ function receiveGetPosts(posts, total, start, hasMore) {
       offset: getOffset(start, total, POSTS_OFFSET),
       hasMore,
       data: posts || [],
+      count: total
     },
   };
 }

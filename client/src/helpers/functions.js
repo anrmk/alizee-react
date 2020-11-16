@@ -226,6 +226,13 @@ export function getAccountSnapshot(account) {
   })
 }
 
+export function getFullName(firstName, lastName) {
+  if (!lastName && firstName) return firstName;
+  if (!firstName && lastName) return lastName;
+
+  return firstName + " " + lastName;
+}
+
 export function initTheme(theme) {
   const currentTheme = localStorage.getItem("CURRENT_THEME");
   if (currentTheme) {

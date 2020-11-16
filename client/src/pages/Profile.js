@@ -106,7 +106,7 @@ function mapStateToProps(state) {
       sites: state.user.data?.sites,
     },
     post: {
-      count: state.posts.data.length,
+      count: state.posts.count,
       isFetching: state.posts.isFetching,
       data: postActions.getGridGalleryPosts(state),
       errorMessage: state.posts.errorMessage,

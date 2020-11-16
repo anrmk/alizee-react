@@ -5,6 +5,7 @@ export default {
     // AUTH
     signIn: "account/authenticate",
     signUp: "account/createaspnetuser",
+    googleAuth: "account/signingoogle",
     confirmEmail: 'account/confirmemail',
     resendEmailVerification: 'account/resendemailverification',
 

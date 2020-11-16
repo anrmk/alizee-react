@@ -18,6 +18,7 @@ export default function signIn(state = {
   isFetching: false,
   isAuthenticated: !!localStorage.getItem(USER_TOKEN),
   isVerified: false,
+  isSocial: false,
   userInfo: {}
 }, action) {
   switch (action.type) {

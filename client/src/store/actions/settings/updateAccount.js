@@ -78,11 +78,11 @@ export function updateAccount(api, opts) {
           .setMethod('PUT')
           .setData({
             name: opts.name,
-            birthday: opts.birthday,
-            phoneNumber: opts.phoneNumber,
-            avatarUrl: opts.avatarUrl,
-            bio: opts.bio,
-            sites: opts.sites || []
+            birthday: opts.birthday || undefined,
+            phoneNumber: opts.phoneNumber || undefined,
+            avatarUrl: opts.avatarUrl || undefined,
+            bio: opts.bio || undefined,
+            sites: opts.sites 
           })
           .query(url);
 

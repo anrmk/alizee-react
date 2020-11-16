@@ -1,19 +1,27 @@
 import React, { useState, useContext } from "react";
 import { Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
+import Box from "@material-ui/core/Box";
 
 import VideoBackground from "../components/VideoBackground";
+import SocialButtons from "../components/SocialButtons/SocialButtons";
 
-import { signInUser } from "../store/actions/signIn";
+import * as signInActions from '../store/actions/signIn';
+import * as socialAuthActions from '../store/actions/socialAuth';
+import { GOOGLE_CLIENT_ID } from '../constants/social_client_ids';
 import ApiContext from "../context/ApiContext";
-
 import login_video from "../../src/assets/img/login_video.webm";
 
 function SignIn(props) {
   const apiClient = useContext(ApiContext);
 
   const { isAuthenticated, errorMessage } = props;
-  const { signIn } = props;
+  const {
+    signIn,
+    signInSocial,
+    requestSignInSocial,
+    failSignInSocial
+  } = props;
   const { from } = props.location.state || { from: { pathname: "/" } };
 
   const [formData, setFormData] = useState({
@@ -24,6 +32,20 @@ function SignIn(props) {
 
   if (isAuthenticated) {
     return <Redirect to={from} />;
+  }
+
+  const handleSocialRequest = () => {
+    requestSignInSocial()
+  }
+
+  const handleSocialSuccess = (response, socialType) => {
+    (async () => {
+      await signInSocial(apiClient, socialType, response);
+    })();
+  }
+
+  const handleSocialFailure = (response) => {
+    failSignInSocial(response.error);
   }
 
   const handleFormChange = (event) => {
@@ -88,22 +110,25 @@ function SignIn(props) {
                         type="checkbox"
                         name="rememberMe"
                         placeholder="Remember me"
-                        onChange={() => {}}
-                        //checked={formData.rememberMe}
-                      />
+                        onChange={() => {}} />
                       <label className="form-check-label" htmlFor="rememberMe">
                         Remember me
                       </label>
                     </div>
                   </div>
-                  <div className="form-group">
+                  <Box>
                     <button
                       type="submit"
                       className="btn btn-primary btn-sm btn-block"
                     >
                       Sign In
                     </button>
-                  </div>
+                  <SocialButtons
+                    googleClientId={GOOGLE_CLIENT_ID}
+                    onRequest={handleSocialRequest}
+                    onSuccess={handleSocialSuccess}
+                    onFailure={handleSocialFailure} />
+                  </Box>
                 </form>
                 <hr />
                 <Link to="#" className="btn btn-link btn-sm btn-block">
@@ -133,7 +158,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    signIn: (creds, api) => dispatch(signInUser(creds, api)),
+    signIn: (creds, api) => dispatch(signInActions.signInUser(creds, api)),
+    signInSocial: (api, socialType, data) => dispatch(signInActions.signInSocial(api, socialType, data)),
+    requestSignInSocial: () => dispatch(socialAuthActions.requestSocialAuth()),
+    failSignInSocial: (message) => dispatch(socialAuthActions.errorSocialAuth(message))
   };
 }
 

@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import List from "@material-ui/core/List";
 
-import { VerticalList } from "../List";
 import RelationshipItem from "./RelationshipItem";
 
 function RelationshipList({ items, currentUserId, onFollowClick }) {
   return (
-    <VerticalList className="list-group-flush">
+    <List>
       {items && items.map(item => (
 
         <RelationshipItem
@@ -19,7 +19,7 @@ function RelationshipList({ items, currentUserId, onFollowClick }) {
           me={item?.userId === currentUserId}
           onFollowClick={onFollowClick} />
       ))}
-    </VerticalList>
+    </List>
   )
 }
 

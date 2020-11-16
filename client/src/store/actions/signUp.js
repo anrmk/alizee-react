@@ -1,5 +1,5 @@
-import { generateUrl } from '../../helpers/functions';
-import { SOCIAL_GOOGLE } from '../../constants/social_types';
+import { generateUrl, getFullName } from '../../helpers/functions';
+import { socialAuth } from './socialAuth';
 
 export const SIGNUP_REQUEST = 'SIGNUP_REQUEST';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
@@ -9,14 +9,13 @@ export const SIGNUP_SOCIAL_REQUEST = 'SIGNUP_SOCIAL_REQUEST';
 export const SIGNUP_SOCIAL_SUCCESS = 'SIGNUP_SOCIAL_SUCCESS';
 export const SIGNUP_SOCIAL_FAILURE = 'SIGNUP_SOCIAL_FAILURE';
 
-function requestSignUp(creds) {
+function requestSignUp() {
   return {
     type: SIGNUP_REQUEST,
     payload: {
       isFetching: true,
       isSignUp: false,
-      errorMessage: '',
-      signUpData: creds
+      errorMessage: ''
     }
   }
 }
@@ -44,40 +43,7 @@ function errorSignUp(message) {
   }
 }
 
-export function requestSignUpSocial() {
-  return async dispatch => dispatch({
-    type: SIGNUP_SOCIAL_REQUEST,
-    payload: {
-      isFetching: true,
-      isSignUpSocial: false,
-      errorMessage: ''
-    }
-  });
-}
-
-function receiveSignUpSocial() {
-  return {
-    type: SIGNUP_SOCIAL_SUCCESS,
-    payload: {
-      isFetching: false,
-      isSignUpSocial: true,
-      errorMessage: ''
-    }
-  }
-}
-
-export function errorSignUpSocial(message) {
-  return async dispatch => dispatch({
-    type: SIGNUP_SOCIAL_FAILURE,
-    payload: {
-      isFetching: false,
-      isSignUpSocial: false,
-      errorMessage: message
-    }
-  });
-}
-
-export function signUpUser(creds, api) {
+export function signUpUser(api, creds) {
   return async dispatch => {
     dispatch(requestSignUp(creds));
 
@@ -85,8 +51,7 @@ export function signUpUser(creds, api) {
     try {
       const { status, data } = await api
         .setData({
-          name: creds.name,
-          surname: creds.surname,
+          name: getFullName(creds.name, creds.surname),
           birthday: creds.birthday,
           userName: creds.username,
           email: creds.email,
@@ -101,32 +66,7 @@ export function signUpUser(creds, api) {
 
       dispatch(receiveSignUp(data));
     } catch (e) {
-      console.error(e);
-      dispatch(errorSignUp("Error: SignUp"));
+      dispatch(errorSignUp("Error: create account"));
     }
-  }
-}
-
-export function signUpSocial(socialType, socialData, api) {
-  return async dispatch => { 
-    dispatch(receiveSignUpSocial());
-
-    if (!socialData || !socialType) 
-      return dispatch(errorSignUpSocial("Error: Social media data is empty or Social media unknown"));
-
-    let creds = {}
-    if (socialType === SOCIAL_GOOGLE) {
-      creds = {
-        name: socialData?.profileObj?.givenName,
-        surname: socialData?.profileObj?.familyName,
-        birthday: socialData?.profileObj?.birthday,
-        username: socialData?.profileObj?.email,
-        email: socialData?.profileObj?.email,
-        phoneNumber: socialData?.profileObj?.phoneNumber,
-        imageUrl: socialData?.profileObj?.imageUrl
-      }
-    }
-
-    dispatch(signUpUser(creds, api));
   }
 }
