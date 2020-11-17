@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-around",
     overflow: "hidden !important",
     backgroundColor: theme.palette.background.paper,
+    padding: "12px"
     //maxHeight: "320px"
   },
 

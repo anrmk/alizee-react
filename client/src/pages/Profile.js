@@ -87,6 +87,7 @@ function Profile(props) {
           onItemClick={handleItemClick}
           onTabChange={handleTabChange}
         />
+  
       </Box>
     </Container>
   );

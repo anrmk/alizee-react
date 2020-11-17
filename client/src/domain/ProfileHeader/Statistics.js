@@ -3,26 +3,25 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 import { formatNumber } from "../../helpers/functions";
-import { HOME_ROUTE, FOLLOWERS_ROUTE, FOLLOWINGS_ROUTE } from "../../constants/routes";
+import { FOLLOWERS_ROUTE, FOLLOWINGS_ROUTE } from "../../constants/routes";
 
-function Statistics({
-  username,
-  postsCount,
-  followersCount,
-  followingCount
-}) {
+import { List, ListItem } from "@material-ui/core";
+
+import useStyle from "./styles";
+
+function Statistics({ username, postsCount, followersCount, followingCount }) {
+  const classes = useStyle();
+
   return (
-    <div className="d-flex mt-3 justify-content-center justify-content-lg-start text-center">
-      <Link to={HOME_ROUTE} className="not-link">
-        <p className="m-0"><strong>{formatNumber(postsCount)}</strong> posts</p>
-      </Link>
-      <Link to={FOLLOWERS_ROUTE(username)} className="not-link">
-        <p className="m-0 ml-4"><strong>{formatNumber(followersCount)}</strong> followers</p>
-      </Link>
-      <Link to={FOLLOWINGS_ROUTE(username)} className="not-link">
-        <p className="m-0 ml-4"><strong>{formatNumber(followingCount)}</strong> following</p>
-      </Link>
-    </div>
+    <List className={classes.statistics}>
+      <ListItem>{formatNumber(postsCount)} posts</ListItem>
+      <ListItem>
+        <Link to={FOLLOWERS_ROUTE(username)}>{formatNumber(followersCount)} followers</Link>
+      </ListItem>
+      <ListItem>
+        <Link to={FOLLOWINGS_ROUTE(username)}>{formatNumber(followingCount)} following</Link>
+      </ListItem>
+    </List>
   );
 }
 
@@ -30,14 +29,14 @@ Statistics.propTypes = {
   username: PropTypes.string,
   postsCount: PropTypes.number,
   followersCount: PropTypes.number,
-  followingCount: PropTypes.number
-}
+  followingCount: PropTypes.number,
+};
 
 Statistics.defaultProps = {
   username: "",
   postsCount: 0,
   followersCount: 0,
-  followingCount: 0
+  followingCount: 0,
 };
 
 export default Statistics;

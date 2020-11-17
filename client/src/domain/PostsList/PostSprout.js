@@ -1,62 +1,81 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
-import { CreateForm, CreatePost,  CreateFeeling, CreateStories} from "../../components/Post";
+import { CreateForm, CreatePost, CreateFeeling, CreateStories } from "../../components/Post";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Fab } from "@material-ui/core";
 
-import Modal from "react-bootstrap/Modal";
+import AddIcon from "@material-ui/icons/Add";
 
-function PostSprout({user, onSubmit}) {
+import useStyle from "./styles";
+
+function PostSprout({ user, onSubmit, variant }) {
+  const classes = useStyle();
+
   const [postType, setPostType] = useState("");
-  const [showModal, setShowModal] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
 
   const handlePostFormClick = (e, name) => {
     setPostType(name);
-    setShowModal(true);
+    setModalOpen(true);
   };
-
-  const handleModalHide = (e) => {
-    setShowModal(false);
-  };
-
-  const constRenderCreateForm = (name) => {
-    switch(name) {
-      case "POST":
-        return <CreatePost user={user} onSubmit={handleFormSubmit} />
-      case "STORY":
-        return <>in process</>;
-      case "FEELING": 
-        return <CreateFeeling user={user} onSubmit={handleFormSubmit} />;
-      default: 
-        return <CreateStories />;
-    }
-  }
 
   const handleFormSubmit = (formData, media) => {
     onSubmit && onSubmit(formData, media);
-    setShowModal(false);
-  }
+    setModalOpen(false);
+  };
+
+  const constRenderCreateForm = (name) => {
+    switch (name) {
+      case "POST":
+        return <CreatePost user={user} onSubmit={handleFormSubmit} />;
+      case "STORY":
+        return <>in process</>;
+      case "FEELING":
+        return <CreateFeeling user={user} onSubmit={handleFormSubmit} />;
+      default:
+        return <CreateStories />;
+    }
+  };
 
   return (
     <>
-      <CreateForm formOnClick={handlePostFormClick} />
+      {variant === "fab" ? (
+        <Fab aria-label="Add" color="primary" className={classes.fab} onClick={(e) => handlePostFormClick(e, "POST")}>
+          <AddIcon />
+        </Fab>
+      ) : (
+        <CreateForm formOnClick={handlePostFormClick} />
+      )}
 
-      <Modal
-        dialogClassName="post-share-modal"
-        show={showModal}
-        aria-labelledby="contained-modal-title-vcenter"
-        keyboard={false}
-        backdrop="static"
-        centered
-        onHide={handleModalHide}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title className="h6 ml-auto pl-4">Create {postType}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          { constRenderCreateForm(postType)}
-        </Modal.Body>
-      </Modal>
+      <Dialog open={modalOpen} onClose={handleModalClose} disableBackdropClick={true} maxWidth="sm" fullWidth={true}>
+        <DialogTitle>Create {postType}</DialogTitle>
+        <DialogContent>{constRenderCreateForm(postType)}</DialogContent>
+        <DialogActions>
+          <Button onClick={handleModalClose} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
+
+PostSprout.propTypes = {
+  user: PropTypes.object,
+  variant: PropTypes.string,
+
+  onSubmit: PropTypes.func,
+};
+
+PostSprout.defaultProps = {
+  user: {},
+  variant: "form" || "fab",
+
+  onSubmit: undefined,
+};
 
 export default PostSprout;

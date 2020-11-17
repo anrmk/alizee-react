@@ -26,39 +26,39 @@ function GridGallery({
       next={onFetchMore}
       hasMore={hasMore}
     >
+      {!items || items.length == 0 ? <div>Start capturing and sharing your moments.</div> : 
       <GridList
-        cellHeight="auto"
-        spacing={12}
-        cols={4}
-        className={classes.gridList}
-      >
-        {items &&
-          items.length > 0 &&
-          items.map((item, index) => (
-            <GridListTile key={item?.id} onClick={() => onItemClick(item?.id)} className={classes.gridListTile}>
-              {item.media.length > 0 ? (
-                <img src={item?.media[0]?.thumbnailUrl} alt={item.title} />
-              ) : (
-                <Typography className={classes.typography}>
-                  {item.caption}
-                </Typography>
-              )}
-              <GridListTileBar
-                titlePosition="top"
-                actionPosition="right"
-                className={classes.gridListTileBar}
-                actionIcon={
-                  <IconButton
-                    aria-label={`star ${item.caption}`}
-                    className={classes.icon}
-                  >
-                    <StarBorderIcon />{" "}
-                  </IconButton>
-                }
-              />
-            </GridListTile>
-          ))}
-      </GridList>
+      cellHeight="auto"
+      spacing={12}
+      cols={4}
+      className={classes.gridList}
+    >
+      {items && items.length > 0 && items.map((item, index) => (
+          <GridListTile key={item?.id} onClick={() => onItemClick(item?.id)} className={classes.gridListTile}>
+            {item.media.length > 0 ? (
+              <img src={item?.media[0]?.thumbnailUrl} alt={item.title} />
+            ) : (
+              <Typography className={classes.typography}>
+                {item.caption}
+              </Typography>
+            )}
+            <GridListTileBar
+              titlePosition="top"
+              actionPosition="right"
+              className={classes.gridListTileBar}
+              actionIcon={
+                <IconButton
+                  aria-label={`star ${item.caption}`}
+                  className={classes.icon}
+                >
+                  <StarBorderIcon />{" "}
+                </IconButton>
+              }
+            />
+          </GridListTile>
+        ))}
+    </GridList>}
+      
     </InfiniteScroll>
   );
 }

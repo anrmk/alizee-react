@@ -1,46 +1,28 @@
 import React from "react";
 
-import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary";
+import { BottomNavigation, BottomNavigationAction } from "@material-ui/core";
+
+import PhotoLibraryIcon from "@material-ui/icons/PhotoLibraryOutlined";
 import FeelingIcon from "@material-ui/icons/SentimentSatisfiedAltOutlined";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import LibraryBooksIcon from "@material-ui/icons/LibraryBooksOutlined";
+
+import useStyles from "./styles";
 
 function CreateForm({ formOnClick }) {
-  const handleOnClick = (e, name) => {
-    e.preventDefault();
+  const classes = useStyles();
+  const [value, setValue] = React.useState("POST");
 
-    formOnClick && formOnClick(e, name);
+  const handleBottomNavigationChange = (e, newValue) => {
+    setValue(newValue);
+    formOnClick && formOnClick(e, newValue);
   };
 
   return (
-    <ul className="nav nav-pills nav-fill mb-3">
-      <li className="nav-item">
-        <a
-          className="nav-link"
-          href="#"
-          onClick={(e) => handleOnClick(e, "POST")}
-        >
-          <PhotoLibraryIcon fontSize="small" /> PHOTO/VIDEO
-        </a>
-      </li>
-      <li className="nav-item">
-        <a
-          className="nav-link"
-          href="#"
-          onClick={(e) => handleOnClick(e, "FEELING")}
-        >
-          <FeelingIcon fontSize="small" /> FEELING
-        </a>
-      </li>
-      <li className="nav-item">
-        <a
-          className="nav-link"
-          href="#"
-          onClick={(e) => handleOnClick(e, "STORY")}
-        >
-          STORY
-        </a>
-      </li>
-    </ul>
+    <BottomNavigation showLabels className={classes.root} value={value} onChange={handleBottomNavigationChange}>
+      <BottomNavigationAction label="Photo/Video" value="POST" icon={<PhotoLibraryIcon />} />
+      <BottomNavigationAction label="Feeling" value="FEELING" icon={<FeelingIcon />} />
+      <BottomNavigationAction label="Story" value="STORY" icon={<LibraryBooksIcon />} />
+    </BottomNavigation>
   );
 }
 
