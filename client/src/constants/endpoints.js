@@ -51,6 +51,12 @@ export default {
     updatePrivateStatus: "accountsetting/privatestatus",
     updateOffensiveComments: "accountsetting/offensivecontentstatus",
     getPrivacy: "accountsetting/privacysettings",
-    deleteAccount: "accountsetting/deleteaccount"
+    deleteAccount: "accountsetting/deleteaccount",
+    getAccountPersonalized: "accountsetting/isaccountpersonalized",
+    getAccountInterests: "accountsetting/interests",
+    createInterests: "accountsetting/interests",
+
+    // INTERESTS
+    getInterests: "interest/getinterests"
   },
 };

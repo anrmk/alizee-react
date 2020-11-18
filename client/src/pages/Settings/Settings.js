@@ -11,6 +11,7 @@ import {
 import PrivateRoute from "../PrivateRoute";
 
 import EditProfileSettings from "./EditProfileSettings";
+import InterestsSettings from "./InterestsSettings";
 import PrivacySecuritySettings from "./PrivacySecuritySettings";
 import useStyles from "./styles";
 
@@ -77,6 +78,7 @@ function Settings() {
         </Tabs>
         <Box className={classes.content}>
           <PrivateRoute exact path={SETTINGS_EDIT_PROFILE_ROUTE} component={EditProfileSettings} />
+          <PrivateRoute exact path={SETTINGS_INTERESTS_ROUTE} component={InterestsSettings} />
           <PrivateRoute exact path={SETTINGS_PRIVACY_SECURITY_ROUTE} component={PrivacySecuritySettings} />
         </Box>
       </Card>

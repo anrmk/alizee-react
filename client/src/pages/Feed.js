@@ -1,18 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { connect } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-
-import { PostsList, PostSprout } from "../domain/PostsList";
-
-import * as actionSuggestion from "../store/actions/suggestion";
-import * as postActions from "../store/actions/post";
-
-import { RelationshipList } from "../components/RelationshipList";
-
-import ApiContext from "../context/ApiContext";
-import { POSTS_LENGTH } from "../constants/feed";
-import { POST_ROUTE, PROFILE_ROUTE, SUGESTED_PEOPLE } from "../constants/routes";
-
 import {
   Container,
   Box,
@@ -24,12 +12,29 @@ import {
   CardContent,
   CardHeader,
   CardActionArea,
-  makeStyles
+  makeStyles,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  Button
 } from "@material-ui/core";
+
+import { PostsList, PostSprout } from "../domain/PostsList";
+
+import * as actionSuggestion from "../store/actions/suggestion";
+import * as postActions from "../store/actions/post";
+import * as settingsActions from "../store/actions/settings";
+import * as interestsActions from "../store/actions/interests";
+
+import { RelationshipList } from "../components/RelationshipList";
+
+import ApiContext from "../context/ApiContext";
+import { POSTS_LENGTH } from "../constants/feed";
+import { POST_ROUTE, PROFILE_ROUTE, SUGESTED_PEOPLE } from "../constants/routes";
+import InterestList from "../components/InterestsList";
 
 const useStyles = makeStyles((theme) => ({
   suggestion: {
-    
   },
 
   suggestionHeader: {
@@ -43,14 +48,34 @@ function Feed(props) {
   const classes = useStyles();
 
   const apiClient = useContext(ApiContext);
+  const interestsEl = useRef();
+  const [interestsModalShow, setInterestsModalShow] = useState(false);
   const { userInfo } = props;
   const { posts } = props;
 
-  const { peopleSuggestions, getPeopleSuggestions, followPeopleSuggestions, unfollowPeopleSuggestions } = props;
-  const { resetPosts, fetchPosts, createPost, likePost } = props;
+  const { 
+    peopleSuggestions,
+    getPeopleSuggestions,
+    followPeopleSuggestions,
+    unfollowPeopleSuggestions,
+    getAccountPersonalized,
+    getInterests,
+  } = props;
+
+  const { 
+    resetPosts, 
+    fetchPosts, 
+    createPost, 
+    likePost, 
+    settings, 
+    interests,
+    createInterests
+  } = props;
 
   useEffect(() => {
     (async () => {
+      await getAccountPersonalized(apiClient);
+
       if (posts.data.length <= 0) {
         resetPosts();
         await fetchPosts(apiClient, {
@@ -60,6 +85,15 @@ function Feed(props) {
       }
     })();
   }, []);
+
+  useEffect(() => {
+    if (settings.isAccountPersonalized !== null && !settings.isAccountPersonalized) {
+      (async () => {
+        await getInterests(apiClient);
+        setInterestsModalShow(true);
+      })();
+    }
+  }, [settings.isAccountPersonalized])
 
   useEffect(() => {
     if (userInfo.id) {
@@ -99,8 +133,20 @@ function Feed(props) {
   };
 
   const handleFormSubmit = async (formData, mediaData) => {
-    createPost(apiClient, formData, mediaData);
+    await createPost(apiClient, formData, mediaData);
   };
+
+  const handleInterestSubmit = async () => {
+    const selectedInterests = interestsEl.current.getSelectedIds();
+    if (selectedInterests.length) {
+      await createInterests(apiClient, selectedInterests);
+      setInterestsModalShow(false);
+    }
+  }
+
+  const handleInterestsModalClose = () => {
+    setInterestsModalShow(false);
+  }
 
   return (
     <Container>
@@ -138,6 +184,18 @@ function Feed(props) {
             </Card>
           </Grid>
         </Grid>
+        <Dialog
+          open={interestsModalShow}
+          onClose={handleInterestsModalClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description">
+          <DialogTitle id="alert-dialog-title">Choose your interests</DialogTitle>
+          <InterestList ref={interestsEl} items={interests.data} />
+          <DialogActions>
+            <Button onClick={() => setInterestsModalShow(false)}>Skip</Button>
+            <Button onClick={handleInterestSubmit} color="primary">Save</Button>
+          </DialogActions>
+        </Dialog>
       </Box>
     </Container>
   );
@@ -167,6 +225,12 @@ function mapStateToProps(state) {
       data: state.suggestion?.people,
       errorMessage: state.suggestion.errorMessage,
     },
+    settings: {
+      isAccountPersonalized: state.settings.isAccountPersonalized,
+    },
+    interests: {
+      data: interestsActions.getSelectableInterests(state),
+    }
   };
 }
 
@@ -179,6 +243,9 @@ function mapDispatchToProps(dispatch) {
     likePost: (api, id) => dispatch(postActions.likePost(api, id)),
     followPeopleSuggestions: (api, id) => dispatch(actionSuggestion.followPeopleSuggestions(api, id)),
     unfollowPeopleSuggestions: (api, id) => dispatch(actionSuggestion.unfollowPeopleSuggestions(api, id)),
+    getAccountPersonalized: (api) => dispatch(settingsActions.getAccountPersonalized(api)),
+    getInterests: (api) => dispatch(interestsActions.getInterests(api)),
+    createInterests: (api, ids) => dispatch(interestsActions.createInterests(api, ids))
   };
 }
 

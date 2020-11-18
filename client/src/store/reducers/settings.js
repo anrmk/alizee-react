@@ -22,11 +22,21 @@ import {
   DELETE_ACCOUNT_REQUEST,
   DELETE_ACCOUNT_SUCCESS,
   DELETE_ACCOUNT_FAILURE,
+
+  GET_ACCOUNT_PERSONALIZED_REQUEST,
+  GET_ACCOUNT_PERSONALIZED_SUCCESS,
+  GET_ACCOUNT_PERSONALIZED_FAILURE,
+
+  GET_ACCOUNT_INTERESTS_REQUEST,
+  GET_ACCOUNT_INTERESTS_SUCCESS,
+  GET_ACCOUNT_INTERESTS_FAILURE
 } from '../actions/settings';
 
-export default function signIn(state = {
+export default function settings(state = {
   isFetching: false,
+  isAccountPersonalized: null,
   data: {},
+  interests: []
 }, action) {
   switch (action.type) {
     // Update privacy
@@ -121,6 +131,38 @@ export default function signIn(state = {
         ...action.payload
       }
     case DELETE_ACCOUNT_FAILURE:
+      return { 
+        ...state,
+        ...action.payload
+      }
+    // Get account personalized
+    case GET_ACCOUNT_PERSONALIZED_REQUEST:
+      return { 
+        ...state,
+        ...action.payload
+      }
+    case GET_ACCOUNT_PERSONALIZED_SUCCESS:
+      return { 
+        ...state,
+        ...action.payload
+      }
+    case GET_ACCOUNT_PERSONALIZED_FAILURE:
+      return { 
+        ...state,
+        ...action.payload
+      }
+    // Get account settings
+    case GET_ACCOUNT_INTERESTS_REQUEST:
+      return { 
+        ...state,
+        ...action.payload
+      }
+    case GET_ACCOUNT_INTERESTS_SUCCESS:
+      return { 
+        ...state,
+        ...action.payload
+      }
+    case GET_ACCOUNT_INTERESTS_FAILURE:
       return { 
         ...state,
         ...action.payload

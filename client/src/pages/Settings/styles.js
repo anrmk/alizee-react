@@ -26,12 +26,23 @@ const useStyles = makeStyles(theme => ({
     }
   },
   content: {
+    width: "100%",
     [theme.breakpoints.down('lg')]: {
       padding: `10px 5%`
     },
     [theme.breakpoints.up('md')]: {
       padding: `10px 15%`
     }
+  },
+  interestsMainContainer: {
+    display: "flex",
+    flexDirection: "column"
+  },
+  interestsContainer: {
+    margin: theme.spacing(2, 0)
+  },
+  interestsProgress: {
+    alignSelf: "center"
   }
 }));
 

@@ -15,6 +15,8 @@ import user from "./user";
 
 import settings from "./settings";
 
+import interests from "./interests";
+
 import { SIGNOUT_SUCCESS } from "../actions/signIn";
 
 const appReducer = combineReducers({
@@ -28,7 +30,8 @@ const appReducer = combineReducers({
   posts,
   media,
   user,
-  settings
+  settings,
+  interests
 });
 
 export default function(state, action) {

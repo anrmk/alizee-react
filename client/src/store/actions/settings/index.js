@@ -54,3 +54,19 @@ export {
 
   deleteAccount
 } from "./deleteAccount";
+export {
+  GET_ACCOUNT_PERSONALIZED_REQUEST,
+  GET_ACCOUNT_PERSONALIZED_SUCCESS,
+  GET_ACCOUNT_PERSONALIZED_FAILURE,
+
+  receiveGetAccountPersonalized,
+  getAccountPersonalized
+} from "./getAccountPersonalized";
+export {
+  GET_ACCOUNT_INTERESTS_REQUEST,
+  GET_ACCOUNT_INTERESTS_SUCCESS,
+  GET_ACCOUNT_INTERESTS_FAILURE,
+
+  getAccountInterests,
+  getMergedInterests
+} from "./getAccountInterests";
