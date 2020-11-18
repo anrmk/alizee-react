@@ -29,7 +29,7 @@ import * as interestsActions from "../store/actions/interests";
 import { RelationshipList } from "../components/RelationshipList";
 
 import ApiContext from "../context/ApiContext";
-import { POSTS_LENGTH } from "../constants/feed";
+import { INTERESTS_SKIP, POSTS_LENGTH } from "../constants/feed";
 import { POST_ROUTE, PROFILE_ROUTE, SUGESTED_PEOPLE } from "../constants/routes";
 import InterestList from "../components/InterestsList";
 
@@ -52,6 +52,7 @@ function Feed(props) {
   const [interestsModalShow, setInterestsModalShow] = useState(false);
   const { userInfo } = props;
   const { posts } = props;
+  const isInterestsSkip = localStorage.getItem(INTERESTS_SKIP);
 
   const { 
     peopleSuggestions,
@@ -148,6 +149,11 @@ function Feed(props) {
     setInterestsModalShow(false);
   }
 
+  const handleInterestsModalSkip = () => {
+    localStorage.setItem(INTERESTS_SKIP, true);
+    setInterestsModalShow(false);
+  }
+
   return (
     <Container>
       <Box my={4}>
@@ -185,14 +191,14 @@ function Feed(props) {
           </Grid>
         </Grid>
         <Dialog
-          open={interestsModalShow}
+          open={interestsModalShow && !isInterestsSkip && Object.keys(interests.data).length}
           onClose={handleInterestsModalClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description">
           <DialogTitle id="alert-dialog-title">Choose your interests</DialogTitle>
           <InterestList ref={interestsEl} items={interests.data} />
           <DialogActions>
-            <Button onClick={() => setInterestsModalShow(false)}>Skip</Button>
+            <Button onClick={handleInterestsModalSkip}>Skip</Button>
             <Button onClick={handleInterestSubmit} color="primary">Save</Button>
           </DialogActions>
         </Dialog>

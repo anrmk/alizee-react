@@ -10,3 +10,5 @@ export const POST_TYPE = {
   FEELING: 1,
   STORY: 2
 }
+
+export const INTERESTS_SKIP = "INTERESTS_SKIP";

@@ -40,6 +40,9 @@ function InterestsSettings({
         <CircularProgress className={classes.interestsProgress} />
       ) : (
         <>
+          <Typography className={classes.textMute} variant="caption">
+            Select your interests so that finding posts and people that are interesting and make viewing more enjoyable.
+          </Typography>
           <InterestsList className={classes.interestsContainer} ref={interestsEl} items={settings.data} />
           <Button color="primary" variant="contained" disabled={settings.isFetching} onClick={handleInterestSubmit}>Save</Button>
         </>

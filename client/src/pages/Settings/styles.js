@@ -43,6 +43,9 @@ const useStyles = makeStyles(theme => ({
   },
   interestsProgress: {
     alignSelf: "center"
+  },
+  textMute: {
+    color: theme.palette.grey["600"]
   }
 }));
 
