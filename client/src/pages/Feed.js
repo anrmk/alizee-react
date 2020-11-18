@@ -8,24 +8,46 @@ import * as actionSuggestion from "../store/actions/suggestion";
 import * as postActions from "../store/actions/post";
 
 import { RelationshipList } from "../components/RelationshipList";
-import { AvatarItem } from "../components/Avatar";
-import CustomLink from "../components/CustomLink";
 
 import ApiContext from "../context/ApiContext";
 import { POSTS_LENGTH } from "../constants/feed";
-import { PROFILE_ROUTE, POST_ROUTE, SUGESTED_PEOPLE } from "../constants/routes";
+import { POST_ROUTE, PROFILE_ROUTE, SUGESTED_PEOPLE } from "../constants/routes";
+
+import {
+  Container,
+  Box,
+  Grid,
+  Divider,
+  Typography,
+  Avatar,
+  Card,
+  CardContent,
+  CardHeader,
+  CardActionArea,
+  makeStyles
+} from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  suggestion: {
+    
+  },
+
+  suggestionHeader: {
+    display: "flex",
+    justifyContent: "space-between"
+  }
+}));
 
 function Feed(props) {
   const history = useHistory();
+  const classes = useStyles();
 
   const apiClient = useContext(ApiContext);
   const { userInfo } = props;
   const { posts } = props;
 
   const { peopleSuggestions, getPeopleSuggestions, followPeopleSuggestions, unfollowPeopleSuggestions } = props;
-
   const { resetPosts, fetchPosts, createPost, likePost } = props;
-  const [postType, setPostType] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -81,39 +103,43 @@ function Feed(props) {
   };
 
   return (
-    <div className="container p-4">
-      <div className="row">
-        <div className="col-lg-8 col-md-12">
-          <PostSprout user={userInfo} onSubmit={handleFormSubmit} />
-          <PostsList
-            items={posts.data}
-            hasMore={posts.hasMore}
-            onFetchMore={handleFetchMore}
-            onGoToClick={handleGoToClick}
-            onFollowClick={(id) => handleFollowPeopleClick(id, peopleSuggestions.isFetching)}
-            onFavoriteClick={({ id }) => handleFavoriteClick(id, posts.isFetching)}
-            onBuyClick={handleByClick}
-          />
-        </div>
-        <div className="col-lg-4 d-none d-lg-block d-xl-block">
-          <div className="sticky-top" style={{ top: "100px" }}>
-            <div className="mt-4 mb-4">
-              <AvatarItem url={userInfo.avatarUrl}>
-                <CustomLink as="div" to={PROFILE_ROUTE(userInfo.userName)}>
-                  {userInfo.userName}
-                </CustomLink>
-                <small className="text-muted">{userInfo.fullName}</small>
-              </AvatarItem>
-            </div>
-            <div className="d-flex justify-content-between mb-2">
-              <span className="text-muted">Suggestions For You</span>
-              <Link to={`${SUGESTED_PEOPLE}`}>See All</Link>
-            </div>
-            <RelationshipList items={peopleSuggestions.data} onFollowClick={handleFollowPeopleClick} />
-          </div>
-        </div>
-      </div>
-    </div>
+    <Container>
+      <Box my={4}>
+        <Grid container spacing={2} direction="row">
+          <Grid container item lg={8} md={12} direction="column">
+            <PostSprout user={userInfo} onSubmit={handleFormSubmit} />
+            <PostsList
+              items={posts.data}
+              hasMore={posts.hasMore}
+              onFetchMore={handleFetchMore}
+              onGoToClick={handleGoToClick}
+              onFollowClick={(id) => handleFollowPeopleClick(id, peopleSuggestions.isFetching)}
+              onFavoriteClick={({ id }) => handleFavoriteClick(id, posts.isFetching)}
+              onBuyClick={handleByClick}
+            />
+          </Grid>
+          <Grid item lg={4} md={12}>
+            <Card className={classes.suggestion}>
+              <CardActionArea onClick={() => history.push(PROFILE_ROUTE(userInfo.userName))}>
+                <CardHeader
+                  avatar={<Avatar src={userInfo.avatarUrl} />}
+                  title={userInfo.name}
+                  subheader={userInfo.bio}
+                />
+              </CardActionArea>
+              <Divider />
+              <CardContent>
+                <Typography component="div" className={classes.suggestionHeader} >
+                  <span>Suggestions For You</span>
+                  <Link to={`${SUGESTED_PEOPLE}`}>See All</Link>
+                </Typography>
+                <RelationshipList items={peopleSuggestions.data} onFollowClick={handleFollowPeopleClick} />
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+      </Box>
+    </Container>
   );
 }
 
@@ -124,6 +150,7 @@ function mapStateToProps(state) {
       userName: state.signIn?.userInfo?.userName,
       avatarUrl: state.signIn?.userInfo?.avatarUrl,
       name: state.signIn?.userInfo?.name,
+      bio: state.signIn?.userInfo.bio
     },
     posts: {
       isFetching: state.posts.isFetching,

@@ -43,7 +43,7 @@ export function getPeopleSuggestions(api, count) {
     try {
       const { data } = await api
         .setMethod("GET")
-        .setParams({ count })
+        .setParams({ length: count })
         .query(url);
 
       data.forEach(item => {

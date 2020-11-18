@@ -16,7 +16,7 @@ function MediaContent({
 }) {
   if (!showPayable && amount > 0) return <PayableContent amount={amount} />;
 
-  if (!items || !items.length) return <div>fsaf</div>;
+  if (!items || !items.length) return <></>;
 
   if (items.length === 1) {
     if (items[0].kind === MEDIA_IMAGE || thumbnail) {

@@ -1,15 +1,17 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import MoreHorizIcon from "@material-ui/icons/MoreHorizOutlined";
+import { Card, CardHeader, CardMedia, CardContent, CardActionArea, CardActions, Avatar, Typography } from "@material-ui/core";
+
+import IconButton from "@material-ui/core/IconButton";
+import MoreVertIcon from "@material-ui/icons/MoreVertOutlined";
 
 import { AvatarItem } from "../../components/Avatar";
+import { Tools } from "../../components/Post";
 import MediaContent from "../../components/MediaContent";
 import { PROFILE_ROUTE } from "../../constants/routes";
-import Tools from "./Tools";
 
-import "./Post.scss";
-import CustomLink from "../CustomLink";
+import useStyles from "./styles";
 
 function Post({
   id,
@@ -31,8 +33,10 @@ function Post({
   onBuyClick,
   onShareClick,
   onOptionsClick,
-  onGoToClick
+  onGoToClick,
 }) {
+  const classes = useStyles();
+
   const handleFavoriteClick = (e) => {
     e.preventDefault();
     onFavoriteClick && onFavoriteClick({ id, iLike });
@@ -40,8 +44,8 @@ function Post({
 
   const handleGoToClick = (e) => {
     e.preventDefault();
-    onGoToClick && onGoToClick(id)
-  }
+    onGoToClick && onGoToClick(id);
+  };
 
   const handleBuyClick = (e) => {
     e.preventDefault();
@@ -53,69 +57,106 @@ function Post({
     onShareClick && onShareClick({ id, title: username, quote: description });
   };
 
-
   const handleOptionsClick = (e) => {
     e.preventDefault();
-    onOptionsClick && onOptionsClick({id, userId, username });
-  }
+    onOptionsClick && onOptionsClick({ id, userId, username });
+  };
 
   return (
-    <div className="card mb-5">
-      {!hideHeader && (
-        <div className="card-header d-flex align-items-center justify-content-between py-2">
-            <AvatarItem url={avatarUrl} size="small">
-              <CustomLink as="div" to={PROFILE_ROUTE(username)} >
-                {username}
-              </CustomLink>
-            </AvatarItem>
-            <a onClick={handleOptionsClick}>
-              <MoreHorizIcon />
-            </a>
-        </div>
-      )}
-      {mediaUrls?.length === 0 ? (
-        <>
-          <div className="card-body">
-            <p>{description}</p>
-          </div>
-          {!hideToolbar && (
-            <Tools
-              userId={userId}
-              id={id}
-              commentable={commentable}
-              likes={likes}
-              iLike={iLike}
-              onGoToClick={handleGoToClick}
-              onShareClick={handleShareClick}
-              onFavoriteClick={handleFavoriteClick}
-              onBuyClick={handleBuyClick}
-            />
-          )}
-        </>
-      ) : (
-        <>
-          <div className="card-content-wrapper">
-            <MediaContent items={mediaUrls} caption={description} amount={amount} />
-          </div>
-          {!hideToolbar && (
-            <Tools
-              userId={userId}
-              id={id}
-              commentable={commentable}
-              likes={likes}
-              iLike={iLike}
-              onGoToClick={handleGoToClick}
-              onShareClick={handleShareClick}
-              onFavoriteClick={handleFavoriteClick}
-              onBuyClick={handleBuyClick}
-            />
-          )}
-          <div className="card-body">
-            <p>{description}</p>
-          </div>
-        </>
-      )}
-    </div>
+    <Card className={classes.root}>
+        <CardHeader
+          avatar={<Avatar src={avatarUrl} />}
+          action={
+            <IconButton aria-label="settings" onClick={handleOptionsClick}>
+              <MoreVertIcon />
+            </IconButton>
+          }
+          title={username}
+          subheader="September 14, 2016"
+        ></CardHeader>
+
+        <CardMedia>
+          <MediaContent items={mediaUrls} amount={amount} />
+        </CardMedia>
+
+        <CardContent>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {description}
+          </Typography>
+        </CardContent>
+      <CardActions disableSpacing>
+        {!hideToolbar && (
+          <Tools
+            userId={userId}
+            id={id}
+            commentable={commentable}
+            likes={likes}
+            iLike={iLike}
+            onGoToClick={handleGoToClick}
+            onShareClick={handleShareClick}
+            onFavoriteClick={handleFavoriteClick}
+            onBuyClick={handleBuyClick}
+          />
+        )}
+      </CardActions>
+    </Card>
+
+    // <div className="card mb-5">
+    //   {!hideHeader && (
+    //     <div className="card-header d-flex align-items-center justify-content-between py-2">
+    //       <AvatarItem url={avatarUrl} size="small">
+    //         <CustomLink as="div" to={PROFILE_ROUTE(username)}>
+    //           {username}
+    //         </CustomLink>
+    //       </AvatarItem>
+    //       <a onClick={handleOptionsClick}>
+    //         <MoreHorizIcon />
+    //       </a>
+    //     </div>
+    //   )}
+    //   {mediaUrls?.length === 0 ? (
+    //     <>
+    //       <div className="card-body">
+    //         <p>{description}</p>
+    //       </div>
+    //       {!hideToolbar && (
+    //         <Tools
+    //           userId={userId}
+    //           id={id}
+    //           commentable={commentable}
+    //           likes={likes}
+    //           iLike={iLike}
+    //           onGoToClick={handleGoToClick}
+    //           onShareClick={handleShareClick}
+    //           onFavoriteClick={handleFavoriteClick}
+    //           onBuyClick={handleBuyClick}
+    //         />
+    //       )}
+    //     </>
+    //   ) : (
+    //     <>
+    //       <div className="card-content-wrapper">
+    //         <MediaContent items={mediaUrls} caption={description} amount={amount} />
+    //       </div>
+    //       {!hideToolbar && (
+    //         <Tools
+    //           userId={userId}
+    //           id={id}
+    //           commentable={commentable}
+    //           likes={likes}
+    //           iLike={iLike}
+    //           onGoToClick={handleGoToClick}
+    //           onShareClick={handleShareClick}
+    //           onFavoriteClick={handleFavoriteClick}
+    //           onBuyClick={handleBuyClick}
+    //         />
+    //       )}
+    //       <div className="card-body">
+    //         <p>{description}</p>
+    //       </div>
+    //     </>
+    //   )}
+    // </div>
   );
 }
 
@@ -137,7 +178,7 @@ Post.propTypes = {
   onFavoriteClick: PropTypes.func,
   onCommentsClick: PropTypes.func,
   onBuyClick: PropTypes.func,
-  onShareClick: PropTypes.func
+  onShareClick: PropTypes.func,
 };
 
 Post.defaultProps = {
@@ -158,7 +199,7 @@ Post.defaultProps = {
   onFavoriteClick: undefined,
   onCommentsClick: undefined,
   onBuyClick: undefined,
-  onShareClick: undefined
+  onShareClick: undefined,
 };
 
 export default Post;

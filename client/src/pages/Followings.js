@@ -9,6 +9,8 @@ import { RelationshipList } from "../components/RelationshipList";
 import * as userActions from "../store/actions/user";
 import * as relationshipActions from "../store/actions/relationship";
 
+import { Container, Box, Typography, Divider } from "@material-ui/core";
+
 function Followings(props) {
   const { username } = useParams();
 
@@ -50,16 +52,17 @@ function Followings(props) {
   }
 
   return (
-    <div className="container p-4 mw-4">
-      <h5 className="h5">Followings</h5>
-      <RelationshipList 
-        items={follower.data}
-        currentUserId={me.id}
-        onFollowClick={
-          (id, userId) => 
-            handleFollowClick(id, userId, follower.data, follower.isFetching)
-        } />
-    </div>
+    <Container maxWidth="sm">
+      <Box my={4}>
+        <Typography variant="subtitle1">Followings</Typography>
+        <Divider />
+        <RelationshipList
+          items={follower.data}
+          currentUserId={me.id}
+          onFollowClick={(id, userId) => handleFollowClick(id, userId, follower.data, follower.isFetching)}
+        />
+      </Box>
+    </Container>
   );
 }
 

@@ -1,47 +1,41 @@
 import React from "react";
 
 import IconButton from "@material-ui/core/IconButton";
+
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import FavoriteIcon from "@material-ui/icons/FavoriteRounded";
 import ChatBubbleOutlineOutlinedIcon from "@material-ui/icons/ChatBubbleOutlineRounded";
-import ShareOutlinedIcon from "@material-ui/icons/ShareRounded";
 import MonetizationOnOutlinedIcon from "@material-ui/icons/MonetizationOnRounded";
+import ShareIcon from "@material-ui/icons/ShareOutlined";
 
-import "./Tools.scss";
+import useStyles from "./styles";
 
-function Tools({
-  id,
-  commentable,
-  likes,
-  iLike,
-  onGoToClick,
-  onShareClick,
-  onFavoriteClick,
-  onBuyClick,
-}) {
+function Tools({ id, commentable, likes, iLike, amount, onGoToClick, onShareClick, onFavoriteClick, onBuyClick }) {
+  const classes = useStyles();
+
   return (
     <>
-      <div className="nav nav-tools mb-3">
-        {iLike ? 
-          (<IconButton className="nav-link" onClick={onFavoriteClick}><FavoriteIcon color="secondary" /></IconButton>) : 
-          (<IconButton className="nav-link" onClick={onFavoriteClick}><FavoriteBorderIcon color="secondary" /></IconButton>)
-        }
-        
-        {commentable && (
-          <IconButton className="nav-link" onClick={onGoToClick} >
-            <ChatBubbleOutlineOutlinedIcon />
-          </IconButton>
-        )}
+      <IconButton className="nav-link" onClick={onFavoriteClick} aria-label="add to favorites">
+        {iLike ? <FavoriteIcon color="secondary" /> : <FavoriteBorderIcon color="secondary" />}
+      </IconButton>
 
-        <IconButton className="nav-link" onClick={onShareClick}>
-          <ShareOutlinedIcon />
+      {commentable && (
+        <IconButton className="nav-link" onClick={onGoToClick}>
+          <ChatBubbleOutlineOutlinedIcon />
         </IconButton>
+      )}
 
-        <IconButton className="nav-link" onClick={onBuyClick}>
+      <IconButton aria-label="share" onClick={onShareClick}>
+        <ShareIcon />
+      </IconButton>
+
+      {amount > 0 && (
+        <IconButton className={classes.payable} onClick={onBuyClick}>
           <MonetizationOnOutlinedIcon />
         </IconButton>
-      </div>
-      {likes > 0 && <strong className="ml-3">{likes} loves</strong>}
+      )}
+
+      {likes > 0 && <strong>{likes} loves</strong>}
     </>
   );
 }

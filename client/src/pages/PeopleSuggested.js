@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 
 import ApiContext from "../context/ApiContext";
 
+import {Container, Box, Typography, Divider} from "@material-ui/core";
+
 import { RelationshipList } from "../components/RelationshipList";
 import * as actionSuggestion from "../store/actions/suggestion";
 
@@ -24,12 +26,13 @@ function PeopleSuggested(props) {
   }
 
   return (
-    <div className="container p-4 mw-4">
-      <div className="">
-        <h5 className="h5">Suggested</h5>
+    <Container maxWidth="sm">
+      <Box my={4}>
+        <Typography variant="subtitle1" >Suggestions For You</Typography>
+        <Divider />
         <RelationshipList items={peopleSuggestions.data} onFollowClick={(id, userId) => handleFollowPeople(id, userId, peopleSuggestions.isFetching)} />
-      </div>
-    </div>
+      </Box>
+    </Container>
   );
 }
 

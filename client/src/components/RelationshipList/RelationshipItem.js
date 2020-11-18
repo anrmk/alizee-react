@@ -1,30 +1,12 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import {
-  ListItem,
-  ListItemText,
-  ListItemAvatar,
-  ListItemSecondaryAction,
-  Avatar,
-  Button,
-  makeStyles
-} from "@material-ui/core";
+import PropTypes from "prop-types";
+import { ListItem, ListItemText, ListItemAvatar, ListItemSecondaryAction, Avatar, Button } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 import { PROFILE_ROUTE } from "../../constants/routes";
 
-const useStyles = makeStyles((theme) => ({
-  item: {
-    borderRadius: theme.shape.borderRadius
-  },
-  itemSecondText: {
-    overflow: "hidden",
-    whiteSpace: "nowrap",
-    textOverflow: "ellipsis",
-    maxWidth: "58%"
-  }
-}));
+import useStyles from "./styles";
 
 function RelationshipItem({
   id,
@@ -34,7 +16,7 @@ function RelationshipItem({
   isFollowing,
   me,
 
-  onFollowClick
+  onFollowClick,
 }) {
   const history = useHistory();
   const { t } = useTranslation();
@@ -43,35 +25,31 @@ function RelationshipItem({
   const handleFollowClick = (e, id, uId) => {
     e.preventDefault();
     onFollowClick && onFollowClick(id, uId);
-  }
+  };
 
   return (
-    <Link to={PROFILE_ROUTE(username)} className="not-link">
-      <ListItem 
-        button
-        className={classes.item}>
-        <ListItemAvatar>
-          <Avatar src={avatarUrl} />
-        </ListItemAvatar>
-        <ListItemText
-          primary={username}
-          secondary={t("SecondTextFollowerItem")}
-          primaryTypographyProps={{ className: classes.itemSecondText }}
-          />
-        {!me && (
-          <ListItemSecondaryAction>
-            <Button
-              variant="contained"
-              size="small"
-              color="primary"
-              disableElevation
-              onClick={(e) => handleFollowClick(e, id, userId)}>
+    <ListItem
+      button
+      className={classes.item}
+      onClick={(e) => {
+        history.push(PROFILE_ROUTE(username));
+      }}
+    >
+      <ListItemAvatar>
+        <Avatar src={avatarUrl} />
+      </ListItemAvatar>
+      <ListItemText
+        primary={username}
+        secondary={t("SecondTextFollowerItem")}
+      />
+      {!me && (
+        <ListItemSecondaryAction>
+          <Button size="small" color="primary" disableElevation onClick={(e) => handleFollowClick(e, id, userId)}>
             {isFollowing ? t("FollowingBtnTextFollowerItem") : t("FollowerBtnTextFollowerItem")}
-            </Button>
-          </ListItemSecondaryAction>
-        )}
-      </ListItem>
-    </Link>
+          </Button>
+        </ListItemSecondaryAction>
+      )}
+    </ListItem>
   );
 }
 
@@ -83,8 +61,8 @@ RelationshipItem.propTypes = {
   isFollowing: PropTypes.bool,
   me: PropTypes.bool,
 
-  onFollowClick: PropTypes.func
-}
+  onFollowClick: PropTypes.func,
+};
 
 RelationshipItem.defaultProps = {
   id: "",
@@ -94,7 +72,7 @@ RelationshipItem.defaultProps = {
   isFollowing: false,
   me: false,
 
-  onFollowClick: undefined
+  onFollowClick: undefined,
 };
 
 export default RelationshipItem;
