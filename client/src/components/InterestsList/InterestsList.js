@@ -36,7 +36,7 @@ const InterestsList = forwardRef(({
   }))
 
   return (
-    <Box className={[classes.chipList, className]}>
+    <Box className={classes.chipList}>
       {selected && Object.values(selected).map(item => (
         <Chip 
           key={item.id}

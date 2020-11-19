@@ -5,7 +5,7 @@ export const POST_ID_ROUTE = "/posts/:id";
 export const MEET_ROUTE = "/meet";
 export const CHAT_ROUTE = "/chat";
 export const ROOM_ROUTE = "/room";
-export const ROOM_ID_ROUTE = "/room:ID";
+export const ROOM_ID_ROUTE = roomId => `/room/${roomId}`;
 export const SIGN_IN_ROUTE = "/signIn";
 export const SIGN_UP_ROUTE = "/signUp";
 export const EMAIL_CONFIRMATION = "/email-confirmation";

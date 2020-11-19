@@ -31,9 +31,6 @@ function RelationshipItem({
     <ListItem
       button
       className={classes.item}
-      onClick={(e) => {
-        history.push(PROFILE_ROUTE(username));
-      }}
     >
       <ListItemAvatar>
         <Avatar src={avatarUrl} />
@@ -41,6 +38,9 @@ function RelationshipItem({
       <ListItemText
         primary={username}
         secondary={t("SecondTextFollowerItem")}
+        onClick={(e) => {
+          history.push(PROFILE_ROUTE(username));
+        }}
       />
       {!me && (
         <ListItemSecondaryAction>

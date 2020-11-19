@@ -1,25 +1,30 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { connect } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
+import { palette } from '@material-ui/system';
 import {
   Container,
   Box,
   Grid,
   Divider,
   Typography,
+  Icon,
   Avatar,
   Card,
   CardContent,
   CardHeader,
   CardActionArea,
-  makeStyles,
   Dialog,
   DialogActions,
   DialogTitle,
-  Button
+  Button,
+  Hidden,
+  makeStyles
 } from "@material-ui/core";
 
+
 import { PostsList, PostSprout } from "../domain/PostsList";
+import {Tools as MeetTools} from "../components/Meet";
 
 import * as actionSuggestion from "../store/actions/suggestion";
 import * as postActions from "../store/actions/post";
@@ -35,11 +40,13 @@ import InterestList from "../components/InterestsList";
 
 const useStyles = makeStyles((theme) => ({
   suggestion: {
+    marginBottom: theme.spacing(3),
   },
 
   suggestionHeader: {
     display: "flex",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    marginBottom: "10px"
   }
 }));
 
@@ -91,7 +98,7 @@ function Feed(props) {
     if (settings.isAccountPersonalized !== null && !settings.isAccountPersonalized) {
       (async () => {
         await getInterests(apiClient);
-        setInterestsModalShow(true);
+        setInterestsModalShow(false);
       })();
     }
   }, [settings.isAccountPersonalized])
@@ -158,7 +165,7 @@ function Feed(props) {
     <Container>
       <Box my={4}>
         <Grid container spacing={2} direction="row">
-          <Grid container item lg={8} md={12} direction="column">
+          <Grid container item md={8} sm={12} direction="column">
             <PostSprout user={userInfo} onSubmit={handleFormSubmit} />
             <PostsList
               items={posts.data}
@@ -170,25 +177,29 @@ function Feed(props) {
               onBuyClick={handleByClick}
             />
           </Grid>
-          <Grid item lg={4} md={12}>
-            <Card className={classes.suggestion}>
-              <CardActionArea onClick={() => history.push(PROFILE_ROUTE(userInfo.userName))}>
-                <CardHeader
-                  avatar={<Avatar src={userInfo.avatarUrl} />}
-                  title={userInfo.name}
-                  subheader={userInfo.bio}
-                />
-              </CardActionArea>
-              <Divider />
-              <CardContent>
-                <Typography component="div" className={classes.suggestionHeader} >
-                  <span>Suggestions For You</span>
-                  <Link to={`${SUGESTED_PEOPLE}`}>See All</Link>
-                </Typography>
-                <RelationshipList items={peopleSuggestions.data} onFollowClick={handleFollowPeopleClick} />
-              </CardContent>
-            </Card>
-          </Grid>
+          <Hidden smDown>
+            <Grid item md={4} sm={true}>
+              <Card className={classes.suggestion}>
+                <CardActionArea onClick={() => history.push(PROFILE_ROUTE(userInfo.userName))}>
+                  <CardHeader
+                    avatar={<Avatar src={userInfo.avatarUrl} />}
+                    title={userInfo.name}
+                    subheader={userInfo.bio}
+                  />
+                </CardActionArea>
+                <Divider />
+                <CardContent>
+                  <Typography component="div" className={classes.suggestionHeader} >
+                    <span>Suggestions For You</span>
+                    <Link to={SUGESTED_PEOPLE}><small>See All</small></Link>
+                  </Typography>
+                  <RelationshipList items={peopleSuggestions.data} onFollowClick={handleFollowPeopleClick} />
+                </CardContent>
+              </Card>
+
+              <MeetTools />
+            </Grid>
+          </Hidden>
         </Grid>
         <Dialog
           open={interestsModalShow && !isInterestsSkip && Object.keys(interests.data).length}
