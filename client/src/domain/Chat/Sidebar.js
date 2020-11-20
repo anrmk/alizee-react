@@ -1,5 +1,5 @@
 import React from 'react';
-import Modal from 'react-bootstrap/Modal';
+
 
 import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
@@ -31,7 +31,7 @@ function Sidebar(props) {
             <a className="nav-link" onClick={handleModalToggle}>
               <ChatIcon />
             </a>
-            <Modal show={props.modalShow} backdrop="static" centered keyboard={false} onHide={handleModalToggle} aria-labelledby="contained-modal-title-vcenter">
+            {/* <Modal show={props.modalShow} backdrop="static" centered keyboard={false} onHide={handleModalToggle} aria-labelledby="contained-modal-title-vcenter">
               <Modal.Header closeButton>
                 <Modal.Title className="h6">New Message</Modal.Title>
               </Modal.Header>
@@ -54,7 +54,7 @@ function Sidebar(props) {
                   </div>
                 </form>        
               </Modal.Body>
-            </Modal>
+            </Modal> */}
           </li>
           <li className="nav-item">
             <a className="nav-link" href="#">

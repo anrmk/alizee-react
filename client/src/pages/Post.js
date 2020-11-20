@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 
 import { connect } from "react-redux";
-import { Spinner } from "react-bootstrap";
 
 import { Container, Box } from "@material-ui/core/";
 
@@ -35,7 +34,7 @@ function PostPage(props) {
 
   const renderLoader = () => (
     <div className="d-flex justify-content-center">
-      <Spinner animation="grow" />
+      {/* <Spinner animation="grow" /> */}
     </div>
   );
 

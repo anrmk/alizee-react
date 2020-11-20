@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 
-import { AvatarItem } from "../../../components/Avatar";
+import { Grid, FormControl, TextField } from "@material-ui/core";
 
 import { POST_TYPE } from "../../../constants/feed";
 
-function CreateFeeling({ onSubmit, user }) {
+import useStyles from "./styles";
+
+function CreateFeeling({ id, user, onSubmit }) {
+  const classes = useStyles();
   const defaultFormData = {
     description: "",
     commentable: true,
@@ -28,26 +31,24 @@ function CreateFeeling({ onSubmit, user }) {
   };
 
   return (
-    <form onSubmit={handleFormSubmit} autoComplete="off">
-      <AvatarItem url={user.avatarUrl} className="mb-3 justify-content-between"></AvatarItem>
-      <div className="form-group">
-        <textarea
-          className="form-control"
-          type="text"
-          name="description"
-          autoFocus
-          maxLength="255"
-          placeholder={`What's on your mind, ${user.name}?`}
-          value={formData.description}
-          required
-          onChange={handleFormDataChange}
-        />
-        <small className="form-text text-muted">Characters entered {formData.description.length} out of 255</small>
-      </div>
-
-      <button type="submit" className="btn btn-primary btn-sm btn-block" disabled={formData.description.length < 0}>
-        Post
-      </button>
+    <form id={id} className={classes.root} onSubmit={handleFormSubmit} autoComplete="off">
+      <Grid container direction="row" justify="space-between" alignItems="center">
+        <FormControl variant="filled" fullWidth>
+          <TextField
+            autoFocus
+            name="description"
+            variant="filled"
+            placeholder={`What's on your mind, ${user.name}?`}
+            multiline
+            rows={3}
+            required
+            onChange={handleFormDataChange}
+            value={formData.description}
+            helperText={`Characters entered ${formData.description.length} out of 128`}
+            inputProps={{ maxLength: 128 }}
+          />
+        </FormControl>
+      </Grid>
     </form>
   );
 }

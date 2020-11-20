@@ -7,12 +7,16 @@ import CommentOutlinedIcon from "@material-ui/icons/SpeakerNotesOutlined";
 import CommentBlockOutlinedIcon from "@material-ui/icons/SpeakerNotesOffOutlined";
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary";
 
-function CreateTools({ isPrivate, isCommentable, onChange }) {
+import { Input } from "@material-ui/core";
+
+function CreateTools({ isPrivate, isCommentable, className, onChange }) {
   const mediaRef = useRef();
 
   return (
-    <div className="nav">
-      <IconButton className="nav-link" onClick={onChange} name="private">
+    <div className={className}>
+      <Input id="input-amount" type="number" inputProps={{ min: 0, max: 100000 }} placeholder="Amount" />
+
+      <IconButton onClick={onChange} name="private">
         {isPrivate ? (
           <LockOutlinedIcon fontSize="small" color="secondary" />
         ) : (
@@ -20,7 +24,7 @@ function CreateTools({ isPrivate, isCommentable, onChange }) {
         )}
       </IconButton>
 
-      <IconButton className="nav-link" onClick={onChange} name="commentable">
+      <IconButton onClick={onChange} name="commentable">
         {isCommentable ? (
           <CommentOutlinedIcon fontSize="small" />
         ) : (
@@ -28,7 +32,7 @@ function CreateTools({ isPrivate, isCommentable, onChange }) {
         )}
       </IconButton>
 
-      <IconButton className="nav-link" onClick={(e) => mediaRef.current.click()} >
+      <IconButton onClick={(e) => mediaRef.current.click()}>
         <PhotoLibraryIcon fontSize="small" />
         <input
           type="file"
@@ -40,24 +44,6 @@ function CreateTools({ isPrivate, isCommentable, onChange }) {
           onChange={onChange}
         />
       </IconButton>
-      
-      <div className="nav-item">
-        <div className="input-group input-group-sm p-2">
-          <div className="input-group-prepend">
-            <span className="input-group-text">$</span>
-          </div>
-          <input
-            className="form-control"
-            name="amount"
-            type="number"
-            min="0"
-            aria-label="Amount (to the nearest dollar)"
-            placeholder="Amount"
-            style={{ width: "80px" }}
-            onChange={onChange}
-          />
-        </div>
-      </div>
     </div>
   );
 }

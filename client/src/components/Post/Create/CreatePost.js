@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 
-import Thumbnail from "../../../components/Thumbnail";
-import { AvatarItem } from "../../../components/Avatar";
 import { CreateTools } from "../../../components/Post";
-
 import { POST_TYPE } from "../../../constants/feed";
 
-import "./CreatePost.scss";
+import { Grid, GridList, GridListTile, FormControl, TextField } from "@material-ui/core";
 
-export default function CreatePost({ onSubmit, user }) {
+import useStyles from "./styles";
+
+export default function CreatePost({ id, user, onSubmit }) {
+  const classes = useStyles();
   const defaultFormData = {
     description: "",
     commentable: true,
@@ -54,45 +54,48 @@ export default function CreatePost({ onSubmit, user }) {
   };
 
   return (
-    <form onSubmit={handleFormSubmit} autoComplete="off">
-      <AvatarItem url={user.avatarUrl} className="mb-3 justify-content-between">
-        <CreateTools
-          onChange={handleFormDataChange}
-          isPrivate={formData.private}
-          isCommentable={formData.commentable}
-        />
-      </AvatarItem>
-
+    <form id={id} className={classes.root} onSubmit={handleFormSubmit} autoComplete="off">
       <input type="hidden" name="private" value={formData.private} />
       <input type="hidden" name="commentable" value={formData.commentable} />
-
-      <div className="form-group">
-        <textarea
-          className="form-control"
-          type="text"
-          name="description"
-          autoFocus
-          maxLength="255"
-          placeholder={`What's on your mind, ${user.name}?`}
-          value={formData.description}
-          required
-          onChange={handleFormDataChange}
-        />
-        <small className="form-text text-muted">Characters entered {formData.description.length} out of 255</small>
-      </div>
-      <div className="row row-cols-4 no-gutters mb-3">
-        {media.map((item) => (
-          <Thumbnail key={item.name} name={item.name} url={item.previewURL} className="col" />
-        ))}
-      </div>
-
-      <button
-        type="submit"
-        className="btn btn-primary btn-sm btn-block"
-        disabled={formData.description.length < 0 || media.length < 0}
-      >
-        Post
-      </button>
+      <Grid container direction="row" justify="space-between" alignItems="center" >
+        <Grid item></Grid>
+        <Grid item>
+          <CreateTools
+            className={classes.tools}
+            onChange={handleFormDataChange}
+            isPrivate={formData.private}
+            isCommentable={formData.commentable}
+          />
+        </Grid>
+      </Grid>
+      <Grid container direction="column" spacing={2}>
+        <Grid item>
+          <FormControl variant="filled" fullWidth>
+            <TextField
+              autoFocus
+              name="description"
+              variant="filled"
+              placeholder={`What's on your mind, ${user.name}?`}
+              multiline
+              rows={5}
+              required
+              onChange={handleFormDataChange}
+              value={formData.description}
+              helperText={`Characters entered ${formData.description.length} out of 255`}
+              inputProps={{ maxLength: 255 }}
+            />
+          </FormControl>
+        </Grid>
+        <Grid item>
+          <GridList cellHeight={120} cols={4} spacing={1} >
+            {media.map((item) => (
+              <GridListTile key={item.name} cols={1} rows={1}>
+                <img src={item.previewURL} alt={item.name} />
+              </GridListTile>
+            ))}
+          </GridList>
+        </Grid>
+      </Grid>
     </form>
   );
 }

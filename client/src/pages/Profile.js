@@ -16,7 +16,8 @@ import { POSTS_LENGTH } from "../constants/profile";
 import { POST_ROUTE, SETTINGS_EDIT_PROFILE_ROUTE } from "../constants/routes";
 
 function Profile(props) {
-  const { username } = useParams();
+  // const { username } = useParams();
+  const username = "test";
   const apiClient = useContext(ApiContext);
   const history = useHistory();
   const [postType, setPostType] = useState(0);

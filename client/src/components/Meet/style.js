@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
   },
 
   tools: {
-    padding: "2px 4px",
     display: "flex",
     alignItems: "center",
 

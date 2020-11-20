@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import InfiniteScroll from "react-infinite-scroll-component";
-import Modal from "react-bootstrap/Modal";
 
 import {Post, Options} from "../../components/Post";
 import ShareList from "../SocialList";
@@ -43,7 +42,7 @@ function PostsList({items, hasMore, onFetchMore, onGoToClick, onFollowClick, onF
 
   return (
     <>
-      <Modal dialogClassName="post-share-modal" show={showShareModal} aria-labelledby="contained-modal-title-vcenter" keyboard={false} backdrop="static" centered onHide={handleModalHide}>
+      {/* <Modal dialogClassName="post-share-modal" show={showShareModal} aria-labelledby="contained-modal-title-vcenter" keyboard={false} backdrop="static" centered onHide={handleModalHide}>
         <Modal.Header closeButton>
           <Modal.Title className="h6 ml-auto pl-4">Share</Modal.Title>
         </Modal.Header>
@@ -60,7 +59,7 @@ function PostsList({items, hasMore, onFetchMore, onGoToClick, onFollowClick, onF
         <Modal.Body>
           <Options {...optionData} onGoToClick={onGoToClick} onFollowClick={onFollowClick} onShareClick={handleShareClick} />
         </Modal.Body>
-      </Modal>
+      </Modal> */}
 
       <InfiniteScroll
         scrollThreshold={1}

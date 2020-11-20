@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import PropTypes from "prop-types";
 
 import { CreateForm, CreatePost, CreateFeeling, CreateStories } from "../../components/Post";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Fab } from "@material-ui/core";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Fab, Avatar, Box } from "@material-ui/core";
 
 import AddIcon from "@material-ui/icons/Add";
 
 import useStyle from "./styles";
 
 function PostSprout({ user, onSubmit, variant }) {
+  const FORM_ID = "test";
+
   const classes = useStyle();
 
   const [postType, setPostType] = useState("");
@@ -28,16 +30,16 @@ function PostSprout({ user, onSubmit, variant }) {
     setModalOpen(false);
   };
 
-  const constRenderCreateForm = (name) => {
+  const constRenderCreateForm = (id, name) => {
     switch (name) {
       case "POST":
-        return <CreatePost user={user} onSubmit={handleFormSubmit} />;
+        return <CreatePost id={id} user={user} onSubmit={handleFormSubmit} />;
       case "STORY":
         return <>in process</>;
       case "FEELING":
-        return <CreateFeeling user={user} onSubmit={handleFormSubmit} />;
+        return <CreateFeeling id={id} user={user} onSubmit={handleFormSubmit} />;
       default:
-        return <CreateStories />;
+        return <CreatePost id={id} user={user} onSubmit={handleFormSubmit} />;;
     }
   };
 
@@ -53,11 +55,12 @@ function PostSprout({ user, onSubmit, variant }) {
 
       <Dialog open={modalOpen} onClose={handleModalClose} disableBackdropClick={true} maxWidth="sm" fullWidth={true}>
         <DialogTitle>Create {postType}</DialogTitle>
-        <DialogContent>{constRenderCreateForm(postType)}</DialogContent>
+        <DialogContent>{constRenderCreateForm(FORM_ID, postType)}</DialogContent>
         <DialogActions>
-          <Button onClick={handleModalClose} color="primary">
-            Close
+          <Button form={FORM_ID} type="submit">
+            Save
           </Button>
+          <Button onClick={handleModalClose}>Close</Button>
         </DialogActions>
       </Dialog>
     </>
