@@ -8,6 +8,8 @@ import ShareList from "../SocialList";
 import Loader from "./Loader";
 import EndMessage from "./EndMessage";
 
+import {Dialog, DialogContent, DialogTitle, DialogActions, Button} from "@material-ui/core/";
+
 function PostsList({items, hasMore, onFetchMore, onGoToClick, onFollowClick, onFavoriteClick, onBuyClick}) {
   const [optionData, setOptionData] = useState({});
   const [showOptionsModal, setOptionsShowModal] = useState(false);
@@ -42,24 +44,33 @@ function PostsList({items, hasMore, onFetchMore, onGoToClick, onFollowClick, onF
 
   return (
     <>
-      {/* <Modal dialogClassName="post-share-modal" show={showShareModal} aria-labelledby="contained-modal-title-vcenter" keyboard={false} backdrop="static" centered onHide={handleModalHide}>
-        <Modal.Header closeButton>
-          <Modal.Title className="h6 ml-auto pl-4">Share</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+      <Dialog
+        open={showShareModal}
+        onClose={handleModalHide}
+        fullWidth
+        aria-labelledby="shared-dialog-title" >
+        <DialogTitle id="shared-dialog-title">Share</DialogTitle>
+        <DialogContent>
           <ShareList {...shareData} />
-        </Modal.Body>
-      </Modal>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleModalHide}>Close</Button>
+        </DialogActions>
+      </Dialog>
 
-      <Modal show={showOptionsModal} aria-labelledby="container-modal-title-vcenter" keyboard={false} backdrop="static" centered onHide={handleModalHide} >
-        <Modal.Header closeButton>
-          <Modal.Title className="h6 ml-auto pl-4">Options</Modal.Title>
-        </Modal.Header>
-        
-        <Modal.Body>
+      <Dialog
+        open={showOptionsModal}
+        onClose={handleModalHide}
+        fullWidth
+        aria-labelledby="option-dialog-title" >
+        <DialogTitle id="option-dialog-title">Share</DialogTitle>
+        <DialogContent>
           <Options {...optionData} onGoToClick={onGoToClick} onFollowClick={onFollowClick} onShareClick={handleShareClick} />
-        </Modal.Body>
-      </Modal> */}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleModalHide}>Close</Button>
+        </DialogActions>
+      </Dialog>
 
       <InfiniteScroll
         scrollThreshold={1}
