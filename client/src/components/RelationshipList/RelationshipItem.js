@@ -1,10 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ListItem, ListItemText, ListItemAvatar, ListItemSecondaryAction, Avatar, Button } from "@material-ui/core";
+
 import { Link, useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { PROFILE_ROUTE } from "../../constants/routes";
+
+import { ListItem, ListItemText, ListItemAvatar, ListItemSecondaryAction, Avatar, Button, IconButton } from "@material-ui/core";
+import CommentIcon from "@material-ui/icons/ToggleOnOutlined";
+import PowerOffIcon from '@material-ui/icons/ToggleOffOutlined';
 
 import useStyles from "./styles";
 
@@ -28,10 +32,7 @@ function RelationshipItem({
   };
 
   return (
-    <ListItem
-      button
-      className={classes.item}
-    >
+    <ListItem button className={classes.item}>
       <ListItemAvatar>
         <Avatar src={avatarUrl} />
       </ListItemAvatar>
@@ -44,14 +45,23 @@ function RelationshipItem({
       />
       {!me && (
         <ListItemSecondaryAction>
-          <Button size="small" color="primary" disableElevation onClick={(e) => handleFollowClick(e, id, userId)}>
-            {isFollowing ? t("FollowingBtnTextFollowerItem") : t("FollowerBtnTextFollowerItem")}
-          </Button>
+          <IconButton
+            edge="end"
+            color={isFollowing ? "primary" : "default"}
+            aria-label={isFollowing ? t("FollowingBtnTextFollowerItem") : t("FollowerBtnTextFollowerItem")}
+            onClick={(e) => handleFollowClick(e, id, userId)}
+          >
+            {isFollowing ? <CommentIcon /> : <PowerOffIcon />}
+          </IconButton>
         </ListItemSecondaryAction>
       )}
     </ListItem>
   );
 }
+
+{/* <Button edge="end" size="small" color="primary" >
+            {isFollowing ? t("FollowingBtnTextFollowerItem") : t("FollowerBtnTextFollowerItem")}
+          </Button> */}
 
 RelationshipItem.propTypes = {
   id: PropTypes.string,

@@ -44,7 +44,7 @@ function Tools() {
     <Card className={classes.root} bgcolor="info.main">
       <CardHeader
         avatar={<CameraOutlinedIcon style={{ fontSize: "72px" }} />}
-        titleTypographyProps={{ variant: "h6" }}
+        titleTypographyProps={{ variant: "body2" }}
         title="Wanna be on top? Start live streaming or join room with the hottest streamers"
       />
       <CardContent>

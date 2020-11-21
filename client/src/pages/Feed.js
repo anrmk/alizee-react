@@ -162,7 +162,7 @@ function Feed(props) {
   }
 
   return (
-    <Container>
+    <Container maxWidth="md">
       <Box my={4}>
         <Grid container spacing={2} direction="row">
           <Grid container item md={8} sm={12} direction="column">
@@ -196,7 +196,7 @@ function Feed(props) {
                   <RelationshipList items={peopleSuggestions.data} onFollowClick={handleFollowPeopleClick} />
                 </CardContent>
               </Card>
-
+              
               <MeetTools />
             </Grid>
           </Hidden>

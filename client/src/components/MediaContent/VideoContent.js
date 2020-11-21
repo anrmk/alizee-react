@@ -7,7 +7,11 @@ import Pause from '@material-ui/icons/Pause';
 import VolumeOff from '@material-ui/icons/VolumeOff';
 import VolumeUp from '@material-ui/icons/VolumeUp';
 
+import useStyles from "./styles";
+
 export default function VideoContent({ url }) {
+  const classes = useStyles();
+
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(false);
   const [showing, setShowing] = useState(true);
@@ -64,14 +68,15 @@ export default function VideoContent({ url }) {
 
   return (
       <div 
-        className="react-player-wrapper"
+        className={classes.video}
+      //  className="react-player-wrapper"
         onMouseEnter={() => setShowing(true)}
         onMouseLeave={() => setShowing(false)}>
         {renderPlayBtn(showing, playing)}
         {renderMuteBtn(showing, muted, playing)}
         <ReactPlayer 
-          className="react-player"
-          width="100%"
+          className={classes.player}
+
           playing={playing}
           muted={muted}
           url={url} />
