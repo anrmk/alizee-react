@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { 
   Button,
   Checkbox,
-  FormControl,
   FormGroup,
   FormControlLabel,
   Typography,
@@ -27,6 +27,7 @@ function PrivacyForm({
   onAccountPrivateUpdate,
   onActivityStatusUpdate,
   onOffensiveCommentsUpdate,
+  onPasswordReset,
   onAccountDelete
 }) {
   const classes = useStyles();
@@ -155,14 +156,27 @@ function PrivacyForm({
 
       <Divider />
 
-      <Button 
-       
-        variant="contained" 
-        color="secondary"
-        disabled={loading}
-        onClick={handleModalOpen}>
-        Delete Account
-      </Button>
+      <FormGroup>
+        <Button 
+          variant="contained" 
+          color="primary"
+          disableElevation
+          disabled={loading}
+          onClick={onPasswordReset}>
+          Reset Password
+        </Button>
+      </FormGroup>
+
+      <FormGroup>
+        <Button 
+          variant="contained" 
+          color="secondary"
+          disableElevation
+          disabled={loading}
+          onClick={handleModalOpen}>
+          Delete Account
+        </Button>
+      </FormGroup>
 
       <Dialog
         open={showDialog}

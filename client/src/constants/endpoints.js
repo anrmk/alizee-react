@@ -42,6 +42,9 @@ export default {
 
     // USER
     getUser: "account/getaccountbyusername",
+    getPasswordConfirm: "account/passwordresetconfirm",
+    updatePassword: "account/resetpassword",
+    getSettingsPasswordConfirm: "account/passwordchangeconfirm",
 
     // SETTINGS
     updateAccount: "accountsetting/updateaccount",

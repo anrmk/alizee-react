@@ -1,20 +1,33 @@
-import React, { useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { connect } from "react-redux";
 
 import ApiContext from '../../context/ApiContext';
 import * as settingsActions from '../../store/actions/settings';
+import * as userActions from '../../store/actions/user';
+import AlertContainer from "../../components/AlertContainer"
 import { PrivacyForm } from '../../domain/SettingsForms';
+
+const DEFAULT_ALERT_SUCCESS_TEXT = "Settings have been updated";
+const DEFAULT_ALERT_ERROR_TEXT = "Settings have not been updated";
+const RESET_PASSWORD_ALERT_SUCCESS_TEXT = "The reset link has been sent to the mail, please check your mail";
+const RESET_PASSWORD_ALERT_ERROR_TEXT = "Something went wrong try again please";
+const DELETE_ACCOUNT_ALERT_SUCCESS_TEXT = "The account has been deleted";
+const DELETE_ACCOUNT_ALERT_ERROR_TEXT = "The account has not been deleted";
 
 function PrivacySecuritySettings(props) {
   const apiClient = useContext(ApiContext);
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertSuccessText, setAlertSuccessText] = useState(DEFAULT_ALERT_SUCCESS_TEXT);
+  const [alertErrorText, setAlertErrorText] = useState(DEFAULT_ALERT_ERROR_TEXT);
 
-  const { settings } = props;
+  const { settings, user } = props;
   const {
     getPrivacy,
     updateActivityStatus,
     updatePrivateStatus,
     updateOffensiveComments,
-    deleteAccount 
+    deleteAccount,
+    getSettingsResetPasswordConfirm
   } = props;
 
   useEffect(() => {
@@ -27,6 +40,7 @@ function PrivacySecuritySettings(props) {
     if (!settings.isFetching) {
       (async () => {
         await updatePrivateStatus(apiClient, status);
+        setAlertTextToDefault();
       })();
     }
   }
@@ -35,6 +49,7 @@ function PrivacySecuritySettings(props) {
     if (!settings.isFetching) {
       (async () => {
         await updateActivityStatus(apiClient, status);
+        setAlertTextToDefault();
       })();
     }
   }
@@ -43,24 +58,55 @@ function PrivacySecuritySettings(props) {
     if (!settings.isFetching) {
       (async () => {
         await updateOffensiveComments(apiClient, status);
+        setAlertTextToDefault();
       })();
     }
   }
 
-  const handleAccountDeleteSubmit = () => {
+  const handlePasswordResetClick = () => {
     (async () => {
-      await deleteAccount(apiClient);
+      await getSettingsResetPasswordConfirm(apiClient);
+      setAlertSuccessText(RESET_PASSWORD_ALERT_SUCCESS_TEXT)
+      setAlertErrorText(RESET_PASSWORD_ALERT_ERROR_TEXT)
+      setAlertOpen(true);
     })();
   }
 
+  const handleAccountDeleteClick = () => {
+    (async () => {
+      await deleteAccount(apiClient);
+      setAlertSuccessText(DELETE_ACCOUNT_ALERT_SUCCESS_TEXT);
+      setAlertErrorText(DELETE_ACCOUNT_ALERT_ERROR_TEXT);
+      setAlertOpen(true);
+    })();
+  }
+
+  const handleAlertClose = () => {
+    setAlertOpen(false)
+  }
+
+  const setAlertTextToDefault = () => {
+    setAlertSuccessText(DEFAULT_ALERT_SUCCESS_TEXT)
+    setAlertErrorText(DEFAULT_ALERT_ERROR_TEXT);
+    setAlertOpen(true)
+  }
+
   return (
-    <PrivacyForm 
-      {...settings.privacy}
-      loading={settings.isFetching}
-      onAccountPrivateUpdate={handleAccountPrivateChange}
-      onActivityStatusUpdate={handleActivityStatusChange}
-      onOffensiveCommentsUpdate={handleOffensiveCommentsChange}
-      onAccountDelete={handleAccountDeleteSubmit} />
+    <AlertContainer 
+      successAlert={alertSuccessText || DEFAULT_ALERT_SUCCESS_TEXT}
+      errorAlert={alertErrorText || DEFAULT_ALERT_ERROR_TEXT}
+      alertOpen={alertOpen}
+      error={user.error}
+      onAlertClose={handleAlertClose}>
+      <PrivacyForm 
+        {...settings.privacy}
+        loading={settings.isFetching || user.isFetching}
+        onAccountPrivateUpdate={handleAccountPrivateChange}
+        onActivityStatusUpdate={handleActivityStatusChange}
+        onOffensiveCommentsUpdate={handleOffensiveCommentsChange}
+        onPasswordReset={handlePasswordResetClick}
+        onAccountDelete={handleAccountDeleteClick} />
+    </AlertContainer>
   )
 }
 
@@ -68,9 +114,14 @@ function mapStateToProps(state) {
   return {
     settings: {
       privacy: { 
-        ...state.settings.data
-      },
-      issFetching: state.settings.isFetching
+        ...state.settings.data,
+        email: state.signIn?.userInfo?.email,
+        token: state.signIn?.userInfo?.token
+      }
+    },
+    user: {
+      isFetching: state.user.isFetching,
+      error: state.user.errorMessage
     }
   }
 }
@@ -82,6 +133,7 @@ function mapDispatchToProps(dispatch) {
     updatePrivateStatus: (api, status) => dispatch(settingsActions.updatePrivateStatus(api, status)),
     updateOffensiveComments: (api, status) => dispatch(settingsActions.updateOffensiveComments(api, status)),
     deleteAccount: (api) => dispatch(settingsActions.deleteAccount(api)),
+    getSettingsResetPasswordConfirm: (api) => dispatch(userActions.getSettingsResetPasswordConfirm(api)),
   }
 }
 

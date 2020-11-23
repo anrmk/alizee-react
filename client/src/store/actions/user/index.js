@@ -5,3 +5,24 @@ export {
 
   getUser
 } from "./getUser";
+export {
+  RESET_PASSWORD_CONFIRM_REQUEST,
+  RESET_PASSWORD_CONFIRM_SUCCESS,
+  RESET_PASSWORD_CONFIRM_FAILURE,
+
+  getPasswordConfirm
+} from "./getPasswordConfirm";
+export {
+  GET_SETTINGS_RESET_PASSWORD_CONFIRM_REQUEST,
+  GET_SETTINGS_RESET_PASSWORD_CONFIRM_SUCCESS,
+  GET_SETTINGS_RESET_PASSWORD_CONFIRM_FAILURE,
+
+  getSettingsResetPasswordConfirm
+} from "./getSettingsResetPasswordConfirm";
+export {
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILURE,
+
+  resetPassword
+} from "./resetPassword";

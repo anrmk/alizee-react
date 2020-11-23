@@ -2,6 +2,7 @@ import numeral from "numeral";
 
 import ENDPOINTS from '../constants/endpoints';
 import { MEDIA_IMAGE, MEDIA_VIDEO, MEDIA_STORY } from '../constants/media_types';
+import { EMAIL_REGEX, NUMBER_REGEX } from "../constants/regexs";
 import { USER_TOKEN } from "../constants/user";
 
 /**
@@ -242,4 +243,46 @@ export function initTheme(theme) {
   localStorage.setItem("CURRENT_THEME", theme);
 
   return theme;
+}
+
+/**
+ * Get style depends on themes 'light' or 'dark'
+ * @param {theme}
+ * @param {light}
+ * @param {dark}
+ * @return {string}
+ */
+export function getStyleByTheme (theme, light, dark) {
+  return theme.palette.type === "light" ? light : dark;
+}
+
+export function getUniqueChars(str) {
+  if (!str) return false;
+
+  const uniqueStr = str
+    .split("")
+    .filter((item, i, ar) => ar.indexOf(item) === i)
+    .join("");
+  
+  return uniqueStr;
+}
+
+export function isCorrectEmail(email) {
+  return EMAIL_REGEX.test(String(email).toLowerCase());
+}
+
+export function hasNumbers(str) {
+  return NUMBER_REGEX.test(String(str));
+}
+
+export function getUrlParams() {
+  const query = window.location.search;
+  if (!query) return {};
+
+  const urlParams = new URLSearchParams(query);
+  const params = {};
+
+  urlParams.forEach((val, key) => params[key] = val);
+
+  return params;
 }

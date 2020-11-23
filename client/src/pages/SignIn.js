@@ -11,6 +11,7 @@ import * as socialAuthActions from '../store/actions/socialAuth';
 import { GOOGLE_CLIENT_ID } from '../constants/social_client_ids';
 import ApiContext from "../context/ApiContext";
 import login_video from "../../src/assets/img/login_video.webm";
+import { RESET_PASSWORD_ROUTE } from "../constants/routes";
 
 function SignIn(props) {
   const apiClient = useContext(ApiContext);
@@ -131,7 +132,7 @@ function SignIn(props) {
                   </Box>
                 </form>
                 <hr />
-                <Link to="#" className="btn btn-link btn-sm btn-block">
+                <Link to={RESET_PASSWORD_ROUTE} className="btn btn-link btn-sm btn-block">
                   Forgot password?
                 </Link>
               </div>

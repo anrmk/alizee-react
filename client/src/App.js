@@ -24,6 +24,7 @@ import Profile from "./pages/Profile";
 import Followers from "./pages/Followers";
 import Followings from "./pages/Followings";
 import { Settings } from "./pages/Settings";
+import { ResetPassword, ChangePassword } from "./pages/Password";
 
 import { signOutUser } from "./store/actions/signIn";
 import * as Routes from "./constants/routes";
@@ -45,6 +46,8 @@ function App({ username, isAuthenticated, avatarUrl, signOut }) {
               <Route path={Routes.SIGN_IN_ROUTE} component={SignIn} />
               <Route path={Routes.EMAIL_CONFIRMATION} component={EmailConfirmation} />
               <Route path={Routes.EMAIL_VERIFY} component={EmailVerify} />
+              <Route exact path={Routes.RESET_PASSWORD_ROUTE} component={ResetPassword} />
+              <Route exact path={Routes.PASSWORD_CHANGE_ROUTE} component={ChangePassword} />
               <PrivateRoute exact path={Routes.DEFAULT_ROUTE} />
               <PrivateRoute path={Routes.HOME_ROUTE} component={Feed} />
               <PrivateRoute path={Routes.POST_ID_ROUTE} component={Post} />

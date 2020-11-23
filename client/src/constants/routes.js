@@ -25,3 +25,5 @@ export const SETTINGS_INTERESTS_ROUTE = "/settings/interests";
 export const SETTINGS_NOTIFICATION_ROUTE = "/settings/notification";
 export const SETTINGS_PRIVACY_SECURITY_ROUTE = "/settings/privacy-security";
 export const SETTINGS_BLACK_LIST_ROUTE = "/settings/privacy-security/black-list";
+export const RESET_PASSWORD_ROUTE = "/reset-password";
+export const PASSWORD_CHANGE_ROUTE = "/password-change";
