@@ -30,7 +30,7 @@ export default function ApiClient() {
   function _getToken() {
     const token = localStorage.getItem(USER_TOKEN);
     if (token) {
-      return token;
+      return JSON.parse(token);
     }
     return null
   }
@@ -82,8 +82,9 @@ export default function ApiClient() {
 
     if ([TYPE_ARRAY, TYPE_OBJECT].includes(_type)) {
       const token = _getToken();
+      
       if (token) {
-        config.headers = { ...config.headers, 'Authorization': token }
+        config.headers = { ...config.headers, 'Authorization': token.access, "Refresh": token.refresh }
       }
     }
 

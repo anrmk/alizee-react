@@ -74,7 +74,10 @@ export function signInUser(creds, api) {
         })
         .query(url);
 
-      localStorage.setItem(USER_TOKEN, data.token);
+      localStorage.setItem(USER_TOKEN, JSON.stringify({ 
+        access: data.accessToken, 
+        refresh: data.refreshToken 
+      }));
 
       const avatarUrl = data?.avatarUrl;
       if (avatarUrl) {
@@ -101,7 +104,7 @@ export function signInSocial(api, socialType, opts) {
         throw errorMessage;
       }
 
-      localStorage.setItem(USER_TOKEN, data.token);
+      localStorage.setItem(USER_TOKEN, JSON.stringify({access: data.accessToken, refresh: data.refreshToken}) );
 
       const avatarUrl = data?.avatarUrl;
       if (avatarUrl) {
