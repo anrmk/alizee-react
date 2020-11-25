@@ -48,9 +48,9 @@ export function wrapHttps(url, https) {
 export function getToken() {
   const token = localStorage.getItem(USER_TOKEN);
   if (token) {
-    return token;
+    return JSON.parse(token);
   }
-  return null;
+  return undefined;
 }
 
 /**
@@ -285,4 +285,8 @@ export function getUrlParams() {
   urlParams.forEach((val, key) => params[key] = val);
 
   return params;
+}
+
+export function getYearFromCurrentDate(years) {
+  return new Date().getFullYear() - years;
 }

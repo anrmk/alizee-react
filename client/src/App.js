@@ -8,8 +8,7 @@ import LinearDeterminate from "./components/LinearDeterminate";
 
 import HubComponent from "./domain/Hub/NotificationHub";
 
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
+import { SignIn, SignUp } from "./pages/Auth";
 import EmailConfirmation from "./pages/EmailConfirmation";
 import EmailVerify from "./pages/EmailVerify";
 import PrivateRoute from "./pages/PrivateRoute";

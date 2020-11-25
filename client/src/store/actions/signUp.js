@@ -66,7 +66,7 @@ export function signUpUser(api, creds) {
 
       dispatch(receiveSignUp(data));
     } catch (e) {
-      dispatch(errorSignUp("Error: create account"));
+      dispatch(errorSignUp(e.message, e.response?.status || 500));
     }
   }
 }

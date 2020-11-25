@@ -18,8 +18,8 @@ function NotificationHub(props) {
       setHubConnection(null);
     } else {
       const newHubConnection = new signalR.HubConnectionBuilder()
-        .withUrl(wrapHttps(`${process.env.REACT_APP_DOMAIN}${API.endpoints.chat}`, false), {
-          accessTokenFactory: () => getToken(),
+        .withUrl(wrapHttps(`${process.env.REACT_APP_DOMAIN}${API.endpoints.chat}`, true), {
+          accessTokenFactory: () => getToken().access,
         })
         .withAutomaticReconnect()
         .configureLogging(signalR.LogLevel.Information)

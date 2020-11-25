@@ -2,6 +2,7 @@ import {
   SIGNIN_REQUEST,
   SIGNIN_SUCCESS,
   SIGNIN_FAILURE,
+  SIGN_IN_RESET
 } from '../actions/signIn';
 import {
   UPDATE_ACCOUNT_REQUEST,
@@ -64,6 +65,12 @@ export default function signIn(state = {
         ...action.payload
       }
     case UPDATE_USERNAME_FAILURE:
+      return { 
+        ...state,
+        ...action.payload
+      }
+    // Reset data
+    case SIGN_IN_RESET:
       return { 
         ...state,
         ...action.payload

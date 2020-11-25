@@ -3,12 +3,8 @@
   "version": "0.1.0",
   "dependencies": {
     "@aspnet/signalr": "^1.1.4",
-    "@fortawesome/fontawesome-svg-core": "^1.2.32",
-    "@fortawesome/free-brands-svg-icons": "^5.15.1",
-    "@fortawesome/free-regular-svg-icons": "^5.15.1",
-    "@fortawesome/free-solid-svg-icons": "^5.15.1",
-    "@fortawesome/react-fontawesome": "^0.1.13",
-    "@material-ui/core": "^4.11.1",
+    "@hookform/resolvers": "^1.0.1",
+    "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@microsoft/signalr": "^3.1.10",
@@ -50,7 +46,8 @@
     "reselect": "^4.0.0",
     "simple-peer": "^9.9.3",
     "socket.io-client": "^2.3.1",
-    "uuid": "^8.3.1"
+    "uuid": "^8.3.1",
+    "yup": "^0.31.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -28,7 +28,7 @@ export const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const CustomInput = withStyles((theme) => ({
+const StyledInput = withStyles((theme) => ({
   root: {
     padding: theme.spacing(1, 2),
     borderRadius: theme.shape.borderRadius,
@@ -51,4 +51,4 @@ const CustomInput = withStyles((theme) => ({
   }
 }))(Input);
 
-export default CustomInput;
+export default StyledInput;

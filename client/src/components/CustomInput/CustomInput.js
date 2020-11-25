@@ -2,9 +2,9 @@ import React from "react";
 import clsx from 'clsx';
 import { Typography, FormControl, InputLabel,  } from "@material-ui/core";
 
-import CustomInput, { useStyles } from "./styles";
+import StyledInput, { useStyles } from "./styles";
 
-export default function({
+export default function CustomInput({
   label,
   error,
   helperText,
@@ -17,7 +17,7 @@ export default function({
 
   const renderInput = (props, error, helperText) => (
     <>
-      <CustomInput {...props} className={clsx(error && classes.errorInput)} />
+      <StyledInput {...props} className={clsx(error && classes.errorInput)} />
       {error && helperText && (
         <Typography
           color="secondary"
@@ -32,13 +32,10 @@ export default function({
 
   return (
     <>
-      {label ? (
-        <FormControl className={wrapperClassName} variant={variant} >
-          <InputLabel className={clsx(classes.label, error && classes.errorLabel)} htmlFor={htmlFor}>{label}</InputLabel>
-          {renderInput(rest, error, helperText)}
-        </FormControl>
-        ) : renderInput(rest, error, helperText)
-      }
+      <FormControl className={wrapperClassName} variant={variant} >
+        {label && <InputLabel className={clsx(classes.label, error && classes.errorLabel)} htmlFor={htmlFor}>{label}</InputLabel>}
+        {renderInput(rest, error, helperText)}
+      </FormControl>
     </>
   );
 }

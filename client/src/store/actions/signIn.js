@@ -10,7 +10,9 @@ export const SIGNOUT_SUCCESS = 'SIGNOUT_SUCCESS';
 export const VERIFIED_SUCCESS = 'VERIFIED_SUCCESS';
 export const VERIFIED_FAILURE = 'VERIFIED_FAILURE';
 
-function requestSignIn(creds) {
+export const SIGN_IN_RESET = 'SIGN_IN_RESET';
+
+function requestSignIn() {
   return {
     type: SIGNIN_REQUEST,
     payload: {
@@ -18,8 +20,7 @@ function requestSignIn(creds) {
       isAuthenticated: false,
       isVerified: false,
       isSocial: false,
-      errorMessage: '',
-      signInRequestData: creds
+      errorMessage: ''
     }
   }
 }
@@ -61,9 +62,23 @@ function successSignOut() {
   }
 }
 
+export function resetSignIn() {
+  return dispatch => dispatch({
+    type: SIGN_IN_RESET,
+    payload: {
+      isFetching: false,
+      isAuthenticated: false,
+      isVerified: false,
+      isSocial: false,
+      errorMessage: "",
+      errorStatus: ""
+    }
+  })
+}
+
 export function signInUser(creds, api) {
   return async dispatch => {
-    dispatch(requestSignIn(creds));
+    dispatch(requestSignIn());
     const url = generateUrl("signIn");
     try {
       const { data } = await api
@@ -104,7 +119,10 @@ export function signInSocial(api, socialType, opts) {
         throw errorMessage;
       }
 
-      localStorage.setItem(USER_TOKEN, JSON.stringify({access: data.accessToken, refresh: data.refreshToken}) );
+      localStorage.setItem(USER_TOKEN, JSON.stringify({
+        access: data.accessToken, 
+        refresh: data.refreshToken
+      }));
 
       const avatarUrl = data?.avatarUrl;
       if (avatarUrl) {
