@@ -1,20 +1,76 @@
 import React, { useEffect, useRef } from 'react';
+import clsx from 'clsx';
 import { Controller, useForm } from 'react-hook-form';
-import MaskedInput from 'react-text-mask'
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+import InputMask from "react-input-mask";
+import { 
+  Box,
+  Button,
+  FormGroup,
+  Typography
+} from "@material-ui/core";
 
 import { Avatar } from "../../components/Avatar";
 import ChipsInput from "../../components/ChipsInput";
-import { SITE_REGEX, PHONE_REGEX } from "../../constants/regexs";
+import CustomInput from "../../components/CustomInput";
+import { SITE_REGEX, PHONE_REGEX, NUMBER_REGEX } from "../../constants/regexs";
+import { getYearFromCurrentDate } from "../../helpers/functions";
 import { getDate } from "../../helpers/functions";
+import useStyles from "./styles";
 
-import "./SettingsForms.scss";
+const FULL_NAME_ID = "fullName";
+const USERNAME_INPUT_ID = "username";
+const SITES_INPUT_ID = "sites";
+const BIO_INPUT_ID = "bio";
+const BIRTHDAY_INPUT_ID = "birthday";
+const PHONE_INPUT_ID = "phone";
+const GENDER_INPUT_ID = "gender";
+
+const EMPTY_VALUE_ERROR = "It is a required filed";
+const BIRTHDAY_LESS_200_ERROR = "Must be +18 years";
+const BIRTHDAY_GREATER_18_ERROR = "Guinness world record is 200 years";
+const VALUE_MIN_LENGTH = (min) => `Must be at least ${min} characters`;
+const VALUE_MAX_LENGTH = (max) => `Must be at most ${max} characters`;
+
+const schema = yup.object().shape({
+  [FULL_NAME_ID]: yup
+    .string()
+    .required(EMPTY_VALUE_ERROR)
+    .min(2, VALUE_MIN_LENGTH(2)).max(49, VALUE_MAX_LENGTH(49)),
+  [USERNAME_INPUT_ID]: yup
+    .string()
+    .required(EMPTY_VALUE_ERROR)
+    .min(3, VALUE_MIN_LENGTH(3)).max(32, VALUE_MAX_LENGTH(32)),
+  [SITES_INPUT_ID]: yup
+    .array()
+    .nullable()
+    .notRequired(),
+  [BIO_INPUT_ID]: yup
+    .string()
+    .nullable()
+    .notRequired(),
+  [BIRTHDAY_INPUT_ID]: yup
+    .date()
+    .nullable()
+    .notRequired()
+    .min(new Date(getYearFromCurrentDate(200), 0, 1), BIRTHDAY_GREATER_18_ERROR)
+    .max(new Date(getYearFromCurrentDate(18), 0, 1), BIRTHDAY_LESS_200_ERROR),
+  [PHONE_INPUT_ID]: yup
+    .string()
+    .nullable()
+    .notRequired(),
+  [GENDER_INPUT_ID]: yup
+    .string()
+    .notRequired()
+});
 
 function EditProfileForm({
   avatarUrl,
   name,
   username,
   bio,
-  phoneNumber,
+  phone,
   birthday,
   gender,
   sites,
@@ -22,20 +78,15 @@ function EditProfileForm({
 
   onSubmit
 }) {
-  const { 
-    register, 
-    handleSubmit, 
-    watch, 
-    setValue, 
-    errors, 
-    control 
-  } = useForm({
+  const classes = useStyles();
+  const { errors, register, setValue, watch, control, handleSubmit } = useForm({
+    resolver: yupResolver(schema),
     defaultValues: {
       avatarUrl,
-      name,
+      fullName: name,
       username,
       bio,
-      phoneNumber,
+      phone,
       birthday: getDate(birthday),
       gender,
       sites
@@ -83,137 +134,177 @@ function EditProfileForm({
   }
 
   return (
-    <div className="c-form">
-      <div className="row">
-        <div className="col-lg-3">
-          <Avatar url={watcherAvatarUrl} />
-        </div>
-        <div className="col-lg-9">
-          <p className="m-lg-0 m-md-0 h4 font-weight-light">{username}</p>
+    <Box>
+      <Box className={clsx(classes.header, classes.formGroup)}>
+        <Avatar className={classes.avatar} url={watcherAvatarUrl} />
+        <Box>
+          <Typography className={classes.username} variant="h4">{username}</Typography>
           <label>
-            <p className="c-link">Change Profile Photo</p>
+            <Typography className={classes.uploadTextBtn} variant="h6" component="p">
+              Change Profile Photo
+            </Typography>
             <input 
+              className={classes.uploadBtn} 
               type="file" 
-              ref={fileInputEl} 
               name="avatarUrl" 
-              className="d-none" 
+              ref={fileInputEl} 
               onChange={handleAvatarUrlChange} />
           </label>
-        </div>
-      </div>
+        </Box>
+      </Box>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="form-group row">
-          <label htmlFor="name" className="col-lg-3 col-form-label font-weight-bold">Name</label>
-          <div className="col-lg-9">
-            <input
-              type="text"
-              className="form-control"
-              name="name"
-              placeholder="Enter name"
-              ref={register({ required: true })} />
-            {errors.name && <div className="c-invalid-feedback">Please enter a name.</div>}
-            <small className="form-text text-muted" name="nameHelp">
-              Help people discover your account by using the name you're know by: 
-              either your full name, username or business name.
-            </small>
-          </div>
-        </div>
-
-        <div className="form-group row">
-          <label htmlFor="username" className="col-lg-3 col-form-label font-weight-bold">Username</label>
-          <div className="col-lg-9">
-            <input
-              type="text"
-              className={`form-control c-form-control ${errors.username && "c-form-control--invalid"}`}
-              name="username"
-              placeholder="Enter username"
-              ref={register({ required: true })} />
-            {errors.username && <div className="c-invalid-feedback">Please enter a username.</div>}
-          </div>
-        </div>
-
-        <div className="form-group row">
-          <label 
-            htmlFor="username" 
-            className="col-lg-3 col-form-label font-weight-bold d-flex align-items-center">
-            Sites
-          </label>
-          <div className="col-lg-9">
-            <ChipsInput 
-              className="form-control c-form-control" 
-              max={4}
-              items={sites}
-              filters={chipsInputFilters} 
-              onChange={handleSitesChange} />
-          </div>
-        </div>
-
-        <div className="form-group row">
-          <label htmlFor="bio" className="col-lg-3 col-form-label font-weight-bold">Bio</label>
-          <div className="col-lg-9">
-            <textarea
-              type="text"
-              className="form-control c-form-control"
-              name="bio"
-              maxLength="255"
-              ref={register({ maxLength: 255 })} />
-          </div>
-        </div>
-
-        <div className="form-group row">
-          <label htmlFor="birthday" className="col-lg-3 col-form-label font-weight-bold">Birthday</label>
-          <div className="col-lg-9">
-            <input
-              type="date"
-              className="form-control c-form-control"
-              name="birthday"
-              ref={register()} />
-          </div>
-        </div>
-
-        <div className="form-group row">
-          <label htmlFor="phoneNumber" className="col-lg-3 col-form-label font-weight-bold">Phone Number</label>
-          <div className="col-lg-9">
-            <Controller
-              name="phoneNumber"
-              control={control}
-              render={({ onChange, onBlur, value }) => (
-                <MaskedInput
-                  mask={PHONE_REGEX}
-                  className="form-control"
-                  placeholder="Enter a phone number"
-                  guide={true}
-                  id="my-input-id"
+        <FormGroup className={classes.formGroup}>
+          <Controller
+            name={FULL_NAME_ID}
+            control={control}
+            render={({ onChange, onBlur, value }) => (
+              <CustomInput
+                type="text"
+                disableUnderline
+                wrapperClassName={classes.formElement}
+                inputClassName={classes.input}
+                placeholder="Full Name"
+                id={FULL_NAME_ID}
+                value={value}
+                error={!!errors[FULL_NAME_ID]}
+                helperText={errors[FULL_NAME_ID]?.message}
+                onBlur={onBlur}
+                onChange={e => onChange(e.target.value)} />
+            )} />
+          <Typography className={classes.textMute} variant="caption">
+            When your account is private, only people you 
+            approve can see your photos and videos on Instagram.
+            Your existing followers won't affected.
+          </Typography>
+        </FormGroup>
+        <FormGroup className={classes.formGroup}>
+          <Controller
+            name={USERNAME_INPUT_ID}
+            control={control}
+            render={({ onChange, onBlur, value }) => (
+              <CustomInput
+                type="text"
+                disableUnderline
+                wrapperClassName={classes.formElement}
+                inputClassName={classes.input}
+                placeholder="Username"
+                id={USERNAME_INPUT_ID}
+                value={value}
+                error={!!errors[USERNAME_INPUT_ID]}
+                helperText={errors[USERNAME_INPUT_ID]?.message}
+                onBlur={onBlur}
+                onChange={e => onChange(e.target.value)}
+              />
+            )} />
+        </FormGroup>
+        <FormGroup className={classes.formGroup}>
+          <ChipsInput 
+            disableUnderline
+            wrapperClassName={classes.formElement}
+            inputClassName={classes.input}
+            placeholder="Sites"
+            id={SITES_INPUT_ID}
+            name={SITES_INPUT_ID}
+            max={4}
+            items={sites}
+            filters={chipsInputFilters} 
+            onChange={handleSitesChange} />
+        </FormGroup>
+        <FormGroup className={classes.formGroup}>
+          <Controller
+            name={BIO_INPUT_ID}
+            control={control}
+            render={({ onChange, onBlur, value }) => (
+              <CustomInput
+                type="text"
+                placeholder="Bio"
+                disableUnderline
+                wrapperClassName={classes.formElement}
+                inputClassName={classes.input}
+                multiline
+                id={BIO_INPUT_ID}
+                value={value}
+                error={!!errors[BIO_INPUT_ID]}
+                helperText={errors[BIO_INPUT_ID]?.message}
+                onBlur={onBlur}
+                onChange={e => onChange(e.target.value)}
+              />
+            )} />
+        </FormGroup>
+        <FormGroup className={classes.formGroup}>
+          <Controller
+            name={BIRTHDAY_INPUT_ID}
+            control={control}
+            render={({ onChange, onBlur, value }) => (
+              <CustomInput
+                type="date"
+                disableUnderline
+                wrapperClassName={classes.formElement}
+                id={BIRTHDAY_INPUT_ID}
+                value={value || undefined}
+                error={!!errors[BIRTHDAY_INPUT_ID]}
+                helperText={errors[BIRTHDAY_INPUT_ID]?.message}
+                onBlur={onBlur}
+                onChange={e => onChange(e.target.value)}
+              />
+            )} />
+        </FormGroup>
+        <FormGroup className={classes.formGroup}>
+          <Controller
+            name={PHONE_INPUT_ID}
+            control={control}
+            render={({ onChange, onBlur, value }) => (
+              <InputMask
+                mask={PHONE_REGEX}
+                disabled={false}
+                value={value}
+                onBlur={onBlur}
+                onChange={(e) => onChange(e.target.value.replace(/\D+/g, ''))}>
+                <CustomInput
+                  type="text"
+                  placeholder="Phone Number"
+                  disableUnderline
+                  wrapperClassName={classes.formElement}
                   value={value}
-                  onBlur={onBlur}
-                  onChange={e => onChange(e.target.value.replace(/\D+/g, ''))}
-                />
-              )} />
-          </div>
-        </div>
-
-        <div className="form-group row">
-          <label htmlFor="gender" className="col-lg-3 col-form-label font-weight-bold">Gender</label>
-          <div className="col-lg-9">
-            <input
-              type="text"
-              className="form-control c-form-control"
-              name="gender"
-              ref={register()} />
-          </div>
-        </div>
-
-        <button className="btn btn-primary" type="submit" disabled={loading}>
-          {loading ? (
-            <>
-              <span className="spinner-grow spinner-grow-sm mr-2 p-2" role="status" aria-hidden="true"></span>
-              Saving...
-            </>
-          ) : "Save"}
-        </button>
+                  id={PHONE_INPUT_ID}
+                  error={!!errors[PHONE_INPUT_ID]}
+                  helperText={errors[PHONE_INPUT_ID]?.message}/>
+              </InputMask>
+            )} />
+        </FormGroup>
+        <FormGroup className={classes.formGroup}>
+          <Controller
+            name={GENDER_INPUT_ID}
+            control={control}
+            render={({ onChange, onBlur, value }) => (
+              <CustomInput
+                type="text"
+                disableUnderline
+                wrapperClassName={classes.formElement}
+                inputClassName={classes.input}
+                placeholder="Gender"
+                id={GENDER_INPUT_ID}
+                value={value}
+                error={!!errors[GENDER_INPUT_ID]}
+                helperText={errors[GENDER_INPUT_ID]?.message}
+                onBlur={onBlur}
+                onChange={e => onChange(e.target.value)}
+              />
+            )} />
+        </FormGroup>
+        <FormGroup className={classes.formGroupBtn}>
+          <Button 
+            variant="contained" 
+            color="primary"
+            type="submit"
+            disableElevation
+            disabled={loading}>
+            Update
+          </Button>
+        </FormGroup>
       </form>
-    </div>
+    </Box>
   );
 }
 

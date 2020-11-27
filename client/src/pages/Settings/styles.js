@@ -46,7 +46,10 @@ const useStyles = makeStyles(theme => ({
   },
   textMute: {
     color: theme.palette.grey["600"]
-  }
+  },
+  formBtn: {
+    width: "fit-content"
+  },
 }));
 
 export default useStyles;

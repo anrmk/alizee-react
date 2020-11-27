@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from "react";
+import { Box, Typography, Chip } from '@material-ui/core';
 
-import "./ChipsInput.scss";
+import CustomInput from "../../components/CustomInput";
+import useStyles from "./styles";
 
 function ChipsInput({ 
   items = [],
   value = "",
   error = null,
-  name,
-  className,
-  placeholder,
   filters,
   max,
 
   onChange,
-  onError
+  onError,
+
+  ...rest
 }) {
+  const classes = useStyles();
   const [localItems, setLocalItems] = useState(items);
   const [localValue, setLocalValue] = useState(value);
   const [localError, setLocalError] = useState(error);
@@ -40,8 +42,8 @@ function ChipsInput({
     }
   };
 
-  const handleChange = evt => {
-    setLocalValue(evt.target.value);
+  const handleChange = e => {
+    setLocalValue(e.target.value);
     setLocalError(null)
   };
 
@@ -82,35 +84,24 @@ function ChipsInput({
   }
 
   return (
-    <>
-      {localItems.map(item => (
-        <div className="tag-item" key={item}>
-          {item}
-          <button
-            type="button"
-            className="button"
-            onClick={() => handleDelete(item)}
-          >
-            &times;
-          </button>
-        </div>
-      ))}
+    <Box className={classes.root}>
+      <Box>
+        {localItems.map(itemId => (
+          <Chip className={classes.chip} key={itemId} label={itemId} onDelete={() => handleDelete(itemId)} />
+        ))}
+      </Box>
 
-      <div className="d-flex flex-column">
-        <input
-          className={className + " " + (localError && " has-error")}
-          name={name}
+        <CustomInput
+          {...rest}
+          type="text"
           value={localValue}
-          placeholder={placeholder}
-          onKeyDown={handleKeyDown}
+          error={!!localError}
+          helperText={localError}
           onChange={handleChange}
-        />
+          onKeyDown={handleKeyDown} />
 
-        {max > 0 && <small className="text-muted align-self-end">{localItems.length}/{max}</small>}
-      </div>
-
-      {localError && <p className="error">{localError}</p>}
-    </>
+        {max > 0 && <Typography variant="caption">{localItems.length}/{max}</Typography>}
+    </Box>
   )
 }
 

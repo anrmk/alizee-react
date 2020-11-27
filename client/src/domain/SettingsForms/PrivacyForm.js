@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { 
   Button,
   Checkbox,
@@ -156,7 +155,7 @@ function PrivacyForm({
 
       <Divider />
 
-      <FormGroup>
+      <FormGroup className={classes.formGroupBtn}>
         <Button 
           variant="contained" 
           color="primary"
@@ -167,7 +166,7 @@ function PrivacyForm({
         </Button>
       </FormGroup>
 
-      <FormGroup>
+      <FormGroup className={classes.formGroupBtn}>
         <Button 
           variant="contained" 
           color="secondary"

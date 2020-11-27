@@ -33,7 +33,7 @@ function mapStateToProps(state) {
       bio: state.signIn?.userInfo?.bio,
       birthday: state.signIn?.userInfo?.birthday,
       email: state.signIn?.userInfo?.email,
-      phoneNumber: state.signIn?.userInfo?.phoneNumber,
+      phone: state.signIn?.userInfo?.phoneNumber,
       sites: state.signIn?.userInfo?.sites,
       isFetching: state.signIn.isFetching
     },

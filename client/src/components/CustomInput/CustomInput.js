@@ -9,6 +9,7 @@ export default function CustomInput({
   error,
   helperText,
   wrapperClassName,
+  inputClassName,
   htmlFor,
   variant = "outlined",
   ...rest
@@ -17,7 +18,7 @@ export default function CustomInput({
 
   const renderInput = (props, error, helperText) => (
     <>
-      <StyledInput {...props} className={clsx(error && classes.errorInput)} />
+      <StyledInput {...props} className={clsx(inputClassName && inputClassName, error && classes.errorInput)} />
       {error && helperText && (
         <Typography
           color="secondary"

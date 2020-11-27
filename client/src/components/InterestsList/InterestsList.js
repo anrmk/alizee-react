@@ -1,4 +1,5 @@
 import React, { useState, useEffect, forwardRef, useImperativeHandle } from "react";
+import clsx from 'clsx';
 import { Box, Chip } from "@material-ui/core";
 
 import useStyles from "./styles";
@@ -36,7 +37,7 @@ const InterestsList = forwardRef(({
   }))
 
   return (
-    <Box className={classes.chipList}>
+    <Box className={clsx(classes.chipList, className)}>
       {selected && Object.values(selected).map(item => (
         <Chip 
           key={item.id}

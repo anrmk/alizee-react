@@ -30,8 +30,42 @@ const useStyles = makeStyles(theme => ({
       marginBottom: 0
     }
   },
+  header: {
+    display: "flex",
+    alignItems: "center"
+  },
+  formGroup: {
+    marginBottom: 15
+  },
   textMute: {
     color: "#6c757d"
+  },
+  formGroupBtn: {
+    width: "fit-content"
+  },
+  uploadTextBtn: {
+    cursor: "pointer",
+    fontSize: theme.typography.body2.fontSize,
+    "&:hover": {
+      color: theme.palette.text.secondary
+    }
+  },
+  uploadBtn: {
+    display: "none"
+  },
+  username: {
+    fontSize: theme.typography.h4.fontSize,
+    fontWeight: theme.typography.fontWeightLight
+  },
+  avatar: {
+    marginRight: theme.spacing(1)
+  },
+  phoneInput: {
+    width: "100%",
+    padding: theme.spacing(1, 0),
+    fontSize: theme.typography.body1.fontSize,
+    border: "none",
+    outline: "none"
   }
 }));
 
