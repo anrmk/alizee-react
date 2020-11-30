@@ -14,7 +14,6 @@ const ThemeProvider = ({ children, theme }) => {
   const [themeOptions, dispatch] = React.useReducer((state, action) => {
     switch (action.type) {
       case "changeTheme":
-        console.log("change Theme");
         return {
           ...state,
           paletteType: action.payload,
@@ -25,8 +24,11 @@ const ThemeProvider = ({ children, theme }) => {
   }, themeInitialOptions);
 
   const memoizedTheme = React.useMemo(() => {
+    if (theme) {
+      return theme[themeOptions.paletteType];
+    }
+
     return createMuiTheme({
-      ...theme,
       palette: {
         type: themeOptions.paletteType,
       },
@@ -43,7 +45,6 @@ const ThemeProvider = ({ children, theme }) => {
 export default ThemeProvider;
 
 export const useChangeTheme = () => {
-  console.log("useChangeTheme");
   const dispatch = React.useContext(ThemeDispatchContext);
   const theme = useTheme();
   const currentTheme = theme.palette.type === "light" ? "dark" : "light";

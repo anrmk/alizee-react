@@ -2,11 +2,13 @@ import React, { Suspense, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { createBrowserHistory as history } from "history";
 import { connect } from "react-redux";
+import { CssBaseline } from "@material-ui/core";
 
 import Navbar from "./components/Navbar";
 import LinearDeterminate from "./components/LinearDeterminate";
 
 import HubComponent from "./domain/Hub/NotificationHub";
+import ThemeProvider from "./domain/ThemeProvider";
 
 import { SignIn, SignUp } from "./pages/Auth";
 import EmailConfirmation from "./pages/EmailConfirmation";
@@ -27,15 +29,13 @@ import { ResetPassword, ChangePassword } from "./pages/Password";
 
 import { signOutUser } from "./store/actions/signIn";
 import * as Routes from "./constants/routes";
-
-import { CssBaseline } from "@material-ui/core";
-import ThemeProvider from "./domain/ThemeProvider";
+import theme from "./constants/theme";
 
 function App({ username, isAuthenticated, avatarUrl, signOut }) {
   return (
     <Suspense fallback={<LinearDeterminate />}>
       <HubComponent>
-        <ThemeProvider>
+        <ThemeProvider theme={theme}>
           <CssBaseline />
           <Router history={history}>
             {isAuthenticated && <Navbar username={username} avatarUrl={avatarUrl} onSignOut={signOut} />}
