@@ -58,6 +58,8 @@ export default {
     getAccountPersonalized: "accountsetting/isaccountpersonalized",
     getAccountInterests: "accountsetting/interests",
     createInterests: "accountsetting/interests",
+    getBlackList: "accountsetting/blacklist",
+    deleteBlackList: "accountsetting/blacklist",
 
     // INTERESTS
     getInterests: "interest/getinterests"

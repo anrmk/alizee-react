@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { Container, Box, Card, Tabs, Tab } from "@material-ui/core";
 
 import { 
+  SETTINGS_BLACK_LIST_ROUTE,
   SETTINGS_EDIT_PROFILE_ROUTE,
   SETTINGS_INTERESTS_ROUTE,
   SETTINGS_NOTIFICATION_ROUTE,
@@ -10,6 +11,7 @@ import {
 } from "../../constants/routes";
 import PrivateRoute from "../PrivateRoute";
 
+import BlackList from "./BlackList";
 import EditProfileSettings from "./EditProfileSettings";
 import InterestsSettings from "./InterestsSettings";
 import PrivacySecuritySettings from "./PrivacySecuritySettings";
@@ -80,6 +82,7 @@ function Settings() {
           <PrivateRoute exact path={SETTINGS_EDIT_PROFILE_ROUTE} component={EditProfileSettings} />
           <PrivateRoute exact path={SETTINGS_INTERESTS_ROUTE} component={InterestsSettings} />
           <PrivateRoute exact path={SETTINGS_PRIVACY_SECURITY_ROUTE} component={PrivacySecuritySettings} />
+          <PrivateRoute exact path={SETTINGS_BLACK_LIST_ROUTE} component={BlackList} />
         </Box>
       </Card>
     </Container>

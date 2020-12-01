@@ -29,14 +29,23 @@ import {
 
   GET_ACCOUNT_INTERESTS_REQUEST,
   GET_ACCOUNT_INTERESTS_SUCCESS,
-  GET_ACCOUNT_INTERESTS_FAILURE
+  GET_ACCOUNT_INTERESTS_FAILURE,
+
+  GET_BLACK_LIST_REQUEST,
+  GET_BLACK_LIST_SUCCESS,
+  GET_BLACK_LIST_FAILURE,
+
+  DELETE_BLACK_LIST_REQUEST,
+  DELETE_BLACK_LIST_SUCCESS,
+  DELETE_BLACK_LIST_FAILURE
 } from '../actions/settings';
 
 export default function settings(state = {
   isFetching: false,
   isAccountPersonalized: null,
   data: {},
-  interests: []
+  interests: [],
+  blackList: []
 }, action) {
   switch (action.type) {
     // Update privacy
@@ -163,6 +172,38 @@ export default function settings(state = {
         ...action.payload
       }
     case GET_ACCOUNT_INTERESTS_FAILURE:
+      return { 
+        ...state,
+        ...action.payload
+      }
+      // Get black list
+    case GET_BLACK_LIST_REQUEST:
+      return { 
+        ...state,
+        ...action.payload
+      }
+    case GET_BLACK_LIST_SUCCESS:
+      return { 
+        ...state,
+        ...action.payload
+      }
+    case GET_BLACK_LIST_FAILURE:
+      return { 
+        ...state,
+        ...action.payload
+      }
+      // Delete black list user
+    case DELETE_BLACK_LIST_REQUEST:
+      return { 
+        ...state,
+        ...action.payload
+      }
+    case DELETE_BLACK_LIST_SUCCESS:
+      return { 
+        ...state,
+        ...action.payload
+      }
+    case DELETE_BLACK_LIST_FAILURE:
       return { 
         ...state,
         ...action.payload

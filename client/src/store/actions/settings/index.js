@@ -70,3 +70,19 @@ export {
   getAccountInterests,
   getMergedInterests
 } from "./getAccountInterests";
+
+export {
+  GET_BLACK_LIST_REQUEST,
+  GET_BLACK_LIST_SUCCESS,
+  GET_BLACK_LIST_FAILURE,
+
+  getBlackList
+} from "./getBlackList";
+
+export {
+  DELETE_BLACK_LIST_REQUEST,
+  DELETE_BLACK_LIST_SUCCESS,
+  DELETE_BLACK_LIST_FAILURE,
+
+  deleteBlackList
+} from "./deleteBlackList";

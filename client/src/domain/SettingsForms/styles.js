@@ -66,6 +66,13 @@ const useStyles = makeStyles(theme => ({
     fontSize: theme.typography.body1.fontSize,
     border: "none",
     outline: "none"
+  },
+  blackListRoot: {
+    flexDirection: "column",
+    display: "flex"
+  },
+  blackListTitle: {
+    textAlign: "center"
   }
 }));
 
