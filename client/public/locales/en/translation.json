@@ -1,5 +1,9 @@
 {
   "BlackListTitle": "Black List",
+  "MeetingHeader": "Premium video meetings. Now free for everyone",
+  "MeetingSubheader": "We re-engineered the service we built for secure business meetings, Google Meet, to make it free and available for all.",
+  "MeetingNewMeetingButton": "New meeting",
+  "MeetingPlaceholderLinkInput": "Enter a code or link",
   "ProfileNavMenu": "Profile",
   "SearchNavMenu": "Search",
   "SignOutNavMenu": "Sign Out",

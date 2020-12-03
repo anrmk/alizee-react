@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 import Peer from "simple-peer";
-import Video from "../components/Video";
+import Video from "../../components/Video";
 
 const Room = (props) => {
   const [peers, setPeers] = useState([]);
