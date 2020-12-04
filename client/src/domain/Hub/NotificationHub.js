@@ -8,7 +8,7 @@ import API from "../../constants/endpoints";
 
 function NotificationHub(props) {
   const { chat, user } = props;
-  const { addMessage, addMessageCount } = props;
+  const { addMessage, incrementNewMessageCount } = props;
   const [hubConnection, setHubConnection] = useState(null);
   const [msg, setMsg] = useState();
 
@@ -29,18 +29,18 @@ function NotificationHub(props) {
     }
   }, [user.isAuthenticated])
 
-  const handleReciveMessage = (data) => {
+  const handleReceiveMessage = (data) => {
     if (chat.currentRoom && data.roomId === chat.currentRoom.id) {
       addMessage(data);
     } else {
-      addMessageCount(data.roomId, 1);
+      incrementNewMessageCount(data.roomId);
     }
   };
 
   // TODO: refactor
   useEffect(() => {
     if (msg) {
-      handleReciveMessage(msg);
+      handleReceiveMessage(msg);
       setMsg(null);
     }
   }, [msg]);
@@ -79,7 +79,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     addMessage: (message) => dispatch(actionAddMessage.addMessage(message)),
-    addMessageCount: (roomId, count) => dispatch(actionAddMessage.addNewMessageCount(roomId, count))
+    incrementNewMessageCount: (roomId) => dispatch(actionAddMessage.incrementNewMessageCount(roomId))
   };
 }
 

@@ -290,3 +290,19 @@ export function getUrlParams() {
 export function getYearFromCurrentDate(years) {
   return new Date().getFullYear() - years;
 }
+
+export function copyFlatObjectWithIgnore(obj, ignores) {
+  if (!obj || !Object.keys(obj).length) return null;
+  if (!ignores || !ignores.length) return obj;
+
+  return Object.keys(obj).reduce((acc, curr) => {
+    if (!ignores.includes(curr)) {
+      return {
+        ...acc,
+        [curr]: obj[curr]
+      }
+    }
+
+    return acc;
+  }, {});
+}

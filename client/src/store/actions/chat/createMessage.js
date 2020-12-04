@@ -3,7 +3,7 @@ import { generateUrl } from "../../../helpers/functions";
 export const CREATE_MESSAGE_REQUEST = "CREATE_MESSAGE_REQUEST";
 export const CREATE_MESSAGE_SUCCESS = "CREATE_MESSAGE_SUCCESS";
 export const CREATE_MESSAGE_FAILURE = "CREATE_MESSAGE_FAILURE";
-export const CREATE_MESSAGE = "CREATE_MESSAGE";
+export const ADD_MESSAGE_TO_LOCAL = "ADD_MESSAGE_TO_LOCAL";
 
 function requestCreateMessage() {
   return {
@@ -20,8 +20,7 @@ function receiveCreateMessage() {
     type: CREATE_MESSAGE_SUCCESS,
     payload: {
       isFetching: false,
-      errorMessage: "",
-      status: 200
+      errorMessage: ""
     },
   };
 }
@@ -36,15 +35,26 @@ function errorCreateMessage(message) {
   };
 }
 
+function addMessageSuccess(room) {
+  return {
+    type: ADD_MESSAGE_TO_LOCAL,
+    payload: {
+      currentRoom: room
+    }
+  };
+}
+
 export function addMessage(message) {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch(receiveCreateMessage());
-    dispatch({
-      type: CREATE_MESSAGE,
-      payload: {
-        data: message
-      }
-    });
+
+    const currentRoom = getState().chat.currentRoom;
+    const updatedRoom = {
+      ...currentRoom,
+      messages: [...currentRoom.messages, message]
+    }
+
+    dispatch(addMessageSuccess(updatedRoom));
   }
 }
 
@@ -54,14 +64,12 @@ export function createMessage(api, id, message) {
 
     const url = generateUrl("createMessage");
     try {
-      const { data } = await api
-      .setData({ 
-        roomId: id, 
-        message
-      })
-      .query(url);
-
-      // dispatch(receiveCreateMessage(data));
+      await api
+        .setData({ 
+          roomId: id, 
+          message
+        })
+        .query(url);
     } catch (e) {
       return dispatch(errorCreateMessage(e));
     }

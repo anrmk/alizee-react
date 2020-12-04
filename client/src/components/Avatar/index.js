@@ -1,4 +1,4 @@
 import Avatar from "./Avatar";
-import AvatarItem from "./AvatarItem";
 
-export { Avatar, AvatarItem };
+export default Avatar;
+export { default as AvatarItem } from "./AvatarItem";

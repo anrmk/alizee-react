@@ -1,14 +1,32 @@
-import React from 'react';
-import SearchIcon from '@material-ui/icons/Search';
+import React from "react";
+import { InputAdornment } from "@material-ui/core/";
 
-function Search(props) {
+import SearchIcon from "@material-ui/icons/Search";
+
+import CustomInput from "../../components/CustomInput";
+import useStyles from "./styles";
+
+function Search({
+  value,
+  placeholder,
+
+  onChange
+}) {
+  const classes = useStyles();
+
   return (
-    <div className={`input-group ${props.className}`}>
-      <div className="input-group-prepend">
-        <span className="input-group-text border-0 bg-white"><SearchIcon /></span>
-      </div>
-      <input type="text" className="form-control border-0" placeholder={props.placeholder} onChange={props.onChange}/>
-    </div>
+    <CustomInput
+      disableUnderline
+      wrapperClassName={classes.searchInputWrapper}
+      className={classes.searchInput}
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      endAdornment={
+        <InputAdornment position="end">
+          <SearchIcon className={classes.searchIcon} />
+        </InputAdornment>
+      } />
   )
 }
 
@@ -17,6 +35,5 @@ Search.defaultProps = {
   placeholder: "Search ...",
   onChange: (e) => {}
 }
-
 
 export default Search;

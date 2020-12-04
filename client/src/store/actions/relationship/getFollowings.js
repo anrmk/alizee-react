@@ -61,14 +61,17 @@ export function getFollowings(api, userId) {
         .setParams({ userId })
         .query(url);
 
-      data.forEach((item) => {
-        item.avatarUrl = generateFileUrl(
-          process.env.REACT_APP_DOMAIN,
-          item.avatarUrl
-        )
-      });
+      const transformedData = data.map((item) => ({
+          id: item.id,
+          userId: item.userId,
+          username: item.userName,
+          avatarUrl: generateFileUrl(
+              process.env.REACT_APP_DOMAIN,
+              item.avatarUrl
+            )
+        }));
       
-      dispatch(receiveGetFollowings(data));
+      dispatch(receiveGetFollowings(transformedData));
     } catch {
       dispatch(errorGetFollowings("Error: GetFollowings"));
     }
@@ -91,7 +94,7 @@ export const getFilteredFollowings = createSelector(
     if (!query) return data;
 
     return data.filter((item) =>
-      item.userName?.toLowerCase().includes(query.toLowerCase())
+      item?.username?.toLowerCase().includes(query.toLowerCase())
     );
   }
 );

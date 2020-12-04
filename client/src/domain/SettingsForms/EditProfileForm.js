@@ -11,7 +11,7 @@ import {
   Typography
 } from "@material-ui/core";
 
-import { Avatar } from "../../components/Avatar";
+import Avatar from "../../components/Avatar";
 import ChipsInput from "../../components/ChipsInput";
 import CustomInput from "../../components/CustomInput";
 import { SITE_REGEX, PHONE_REGEX, NUMBER_REGEX } from "../../constants/regexs";

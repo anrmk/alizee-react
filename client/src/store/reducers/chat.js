@@ -2,18 +2,25 @@ import {
   GET_ROOM_REQUEST,
   GET_ROOM_SUCCESS,
   GET_ROOM_FAILURE,
+
   GET_ROOMS_REQUEST,
   GET_ROOMS_SUCCESS,
   GET_ROOMS_FAILURE,
+
   FILTER_ROOMS,
-  ADD_NEW_MESSAGE,
+
+  INCREMENT_NEW_MESSAGE_COUNT,
+
   CREATE_ROOM_REQUEST,
   CREATE_ROOM_SUCCESS,
   CREATE_ROOM_FAILURE,
+
   CREATE_MESSAGE_REQUEST,
   CREATE_MESSAGE_SUCCESS,
   CREATE_MESSAGE_FAILURE,
-  CREATE_MESSAGE,
+  ADD_MESSAGE_TO_LOCAL,
+
+  RESET_CURRENT_ROOM
 } from "../actions/chat";
 
 export default function chatReducer(
@@ -21,26 +28,25 @@ export default function chatReducer(
   action
 ) {
   switch (action.type) {
+    // Get a room
     case GET_ROOM_REQUEST:
       return {
         ...state,
         ...action.payload,
       };
     case GET_ROOM_SUCCESS: {
-      const rooms = [...state.data];
-      const roomIndex = rooms.findIndex(room => room.id === action.payload.currentRoom.id);
-
-      if(roomIndex !== -1) {
-        rooms[roomIndex].newMessagesCount = 0;
-      }
-
       return {
         ...state,
-        ...action.payload,
-        data: rooms
+        ...action.payload
       };
     }
     case GET_ROOM_FAILURE:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    // Reset current room
+    case RESET_CURRENT_ROOM:
       return {
         ...state,
         ...action.payload,
@@ -54,9 +60,9 @@ export default function chatReducer(
     case GET_ROOMS_SUCCESS:
       return {
         ...state,
-        ...action.payload,
-        data: action.payload.data.reduce((acc, curr) => ([...acc, { ...curr, newMessagesCount: 0 }]), [])
+        ...action.payload
       };
+    // Get rooms
     case GET_ROOMS_FAILURE:
       return {
         ...state,
@@ -67,20 +73,16 @@ export default function chatReducer(
         ...state,
         ...action.payload,
       };
-
+    // Create a room
     case CREATE_ROOM_REQUEST:
       return {
         ...state,
         ...action.payload,
       };
     case CREATE_ROOM_SUCCESS: {
-      const existedRoom = state.data.filter(room => room.id === action.payload.data.id);
-      
       return {
         ...state,
         ...action.payload,
-        data: existedRoom.length ? [...state.data] : [...state.data,  {...action.payload.data }],
-        currentRoom: { ...action.payload.data }
       };
     }
     case CREATE_ROOM_FAILURE:
@@ -88,7 +90,7 @@ export default function chatReducer(
         ...state,
         ...action.payload,
       };
-
+    // Create a message
     case CREATE_MESSAGE_REQUEST:
       return {
         ...state,
@@ -104,27 +106,16 @@ export default function chatReducer(
         ...state,
         ...action.payload,
       };
-    case CREATE_MESSAGE:
+    case ADD_MESSAGE_TO_LOCAL:
       return {
         ...state,
-        currentRoom: {
-          ...state.currentRoom,
-          ...{
-            messages: [...state.currentRoom.messages, action.payload.data],
-          },
-        },
+        ...action.payload
       };
-    case ADD_NEW_MESSAGE: {
-      const rooms = [...state.data];
-      const roomIndex = rooms.findIndex(room => room.id === action.payload.roomId);
-
-      if(roomIndex !== -1) {
-        rooms[roomIndex].newMessagesCount += action.payload.newMessagesCount;
-      }
-
+    // Increment message count
+    case INCREMENT_NEW_MESSAGE_COUNT: {
       return {
         ...state,
-        data: rooms
+        ...action.payload
       };
     }
     default:

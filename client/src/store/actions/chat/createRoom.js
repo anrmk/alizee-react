@@ -1,4 +1,4 @@
-import { generateUrl } from "../../../helpers/functions";
+import { generateUrl, generateFileUrl, copyFlatObjectWithIgnore } from "../../../helpers/functions";
 
 export const CREATE_ROOM_REQUEST = "CREATE_ROOM_REQUEST";
 export const CREATE_ROOM_SUCCESS = "CREATE_ROOM_SUCCESS";
@@ -14,13 +14,14 @@ function requestCreateRoom() {
   };
 }
 
-function receiveCreateRoom(room) {
+function receiveCreateRoom(data, currentRoom) {
   return {
     type: CREATE_ROOM_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
-      data: room,
+      data,
+      currentRoom
     },
   };
 }
@@ -36,14 +37,26 @@ function errorCreateRoom(message) {
 }
 
 export function createRoom(api, id) {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     dispatch(requestCreateRoom());
 
     const url = generateUrl("createRoom");
     try {
       const { data } = await api.setParams({ id }).query(url);
 
-      dispatch(receiveCreateRoom(data));
+      const transformedData = {
+        ...copyFlatObjectWithIgnore(data, ["userName"]),
+        avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, data.avatarUrl),
+        username: data.userName
+      };
+
+      const chatState = getState().chat;
+      const existedRoom = chatState.data.filter(room => room.id === transformedData.id);
+      const rooms = existedRoom.length ? 
+        [...chatState.data] : 
+        [...chatState.data,  { ...transformedData }];
+
+      dispatch(receiveCreateRoom(rooms, transformedData));
     } catch (e) {
       return dispatch(errorCreateRoom(e));
     }

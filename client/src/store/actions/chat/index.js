@@ -1,12 +1,9 @@
-export { getRoom } from "./getRoom";
-export { getRooms, getFilteredRooms, filter, addNewMessageCount } from "./getRooms";
-export { createRoom } from "./createRoom";
-export { createMessage, addMessage } from "./createMessage";
-
 export {
   GET_ROOM_REQUEST,
   GET_ROOM_SUCCESS,
   GET_ROOM_FAILURE,
+
+  getRoom
 } from "./getRoom";
 
 export {
@@ -14,18 +11,34 @@ export {
   GET_ROOMS_SUCCESS,
   GET_ROOMS_FAILURE,
   FILTER_ROOMS,
-  ADD_NEW_MESSAGE
+  INCREMENT_NEW_MESSAGE_COUNT,
+
+  getRooms,
+  getFilteredRooms,
+  filter,
+  incrementNewMessageCount
 } from "./getRooms";
 
 export {
   CREATE_ROOM_REQUEST,
   CREATE_ROOM_SUCCESS,
   CREATE_ROOM_FAILURE,
+
+  createRoom
 } from "./createRoom";
 
 export {
   CREATE_MESSAGE_REQUEST,
   CREATE_MESSAGE_SUCCESS,
   CREATE_MESSAGE_FAILURE,
-  CREATE_MESSAGE
+  ADD_MESSAGE_TO_LOCAL,
+  
+  createMessage,
+  addMessage
 } from "./createMessage";
+
+export {
+  RESET_CURRENT_ROOM,
+
+  resetCurrentRoom
+} from "./resetCurrentRoom";

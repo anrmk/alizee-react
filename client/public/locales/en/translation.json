@@ -9,5 +9,12 @@
   "SignOutNavMenu": "Sign Out",
   "SecondTextFollowerItem": "recommended",
   "FollowerBtnTextFollowerItem": "Follow",
-  "FollowingBtnTextFollowerItem": "Following"
+  "FollowingBtnTextFollowerItem": "Following",
+  "ChatSidebarSearchInputLabel": "Search a chat",
+  "ChatFollowingDialogTitle": "Start a new conversation",
+  "ChatFollowingDialogSearchInputLabel": "Search a following",
+  "ChatChatListEmptyTitle": "Your Chats",
+  "ChatChatListEmptySubtitle": "Please create a chat to start messaging",
+  "ChatChatRoomEmptyTitle": "Your Messages",
+  "ChatChatRoomEmptySubtitle": "Please select a chat to start messaging"
 }

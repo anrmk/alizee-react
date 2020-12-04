@@ -1,88 +1,117 @@
 import React, { useState, useEffect, useContext } from "react";
 import { connect } from "react-redux";
+import { Container, Grid } from "@material-ui/core/";
 
-import ApiContext from '../context/ApiContext';
+import EditIcon from "@material-ui/icons/EditOutlined";
 
-import Sidebar from "../domain/Chat/Sidebar";
-import { Room, Empty } from "../domain/Chat";
+import ApiContext from "../context/ApiContext";
 
-import * as actionRelationship from '../store/actions/relationship';
-import * as actionChat from '../store/actions/chat';
+import FabContainer from "../components/FabContainer";
+import { ChatRoom, Sidebar, FollowingDialog } from "../domain/MessageChat";
+
+import * as actionRelationship from "../store/actions/relationship";
+import * as actionChat from "../store/actions/chat";
+import { ESC_KEY_CODE } from "../constants/key_codes";
 
 function Chat(props) {
   const apiClient = useContext(ApiContext);
 
   const { user } = props;
   const { followings, getFollowings, filterFollowings } = props;
-  const { chat, getRoom, createRoom, getRooms, filterRooms } = props;
+  const { chat, getRoom, createRoom, getRooms, filterRooms, resetCurrentRoom } = props;
   const { createMessage } = props;
 
-  const [modalShow, setModalShow] = useState(false);
+  const [followersModalOpen, setFollowersModalOpen] = useState(false);
+
+  const handleModalCloseKeyPress = (e) => {
+    if (e.keyCode === ESC_KEY_CODE) {
+      setFollowersModalOpen(false);
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleModalCloseKeyPress, false);
+    return () => {
+      document.removeEventListener("keydown", handleModalCloseKeyPress, false);
+    }
+  }, [])
   
   useEffect(() => {
-    if (modalShow) {
-      getFollowings(apiClient, user.id);
-    } else {
-      getRooms(apiClient);
-    }
-  }, [modalShow]);
+    (async () => {
+      if (followersModalOpen) {
+        await getFollowings(apiClient, user.id);
+      } else {
+        await getRooms(apiClient);
+      }
+    })()
+  }, [followersModalOpen]);
 
   const handleFilterFollowings = (e) => {
     filterFollowings(e.target.value.toLowerCase());
   };
 
-  const handleModalToggle = (e) => {
-    setModalShow(!modalShow);
-  };
-
-  const handleFilterRooms = (e) => {
+  const handleFilterChats = (e) => {
     filterRooms(e.target.value.toLowerCase());
   }
 
-  const handleGetRoom = (roomId, name) => {
-    getRoom(apiClient, roomId);
+  const handleGetRoom = async (roomId) => {
+    if (chat.currentRoom?.id !== roomId){
+      await getRoom(apiClient, roomId);
+    }
   };
 
-  const handleCreateRoom = (followerId) => {
-    createRoom(apiClient, followerId);
-    setModalShow(false);
+  const handleCreateChat = async (followerId) => {
+    await createRoom(apiClient, followerId);
+    setFollowersModalOpen(false);
   };
 
-  const handleCreateMessage = async (message) => {
+  const handleMessageCreate = async (message) => {
     if(message && message.length > 0) {
-      createMessage(apiClient, chat.currentRoom.id, message);
+      await createMessage(apiClient, chat.currentRoom.id, message);
     }
   };
 
   return (
-    <div className="container full-container p-4">
-      <div className="row row-cols-2 no-gutters h-100 border">
-        <div className="col-4 border-right">
+    <FabContainer
+      component={Container}
+      fabHide={!!chat.currentRoom}
+      iconComponent={<EditIcon />}
+      onFabClick={() => setFollowersModalOpen(true)}>
+      <Grid container height="100vh" justify="center">
+        <Grid item xs={4}>
           <Sidebar
-            modalShow={modalShow}
-            rooms={chat.data}
-            room={chat.currentRoom}
-            onFilterRooms={handleFilterRooms}
-            onGetRoom={handleGetRoom}
-            onCreateRoom={handleCreateRoom}
-            onModalToggle={handleModalToggle}
-            followings={followings.data}
-            onFilterFollowers={handleFilterFollowings}
-          />
-        </div>
-        <div className="col-8">
-          {chat.currentRoom ? <Room room={chat.currentRoom} userId={user.id} onCreateMessage={handleCreateMessage} /> : <Empty />}
-        </div>
-      </div>
-    </div>
+            chatsLoading={chat.isFetching}
+            user={user}
+            currentRoom={chat.currentRoom}
+            chats={chat.data}
+            onSearchChange={handleFilterChats}
+            onChatClick={handleGetRoom} />
+        </Grid>
+        <Grid item xs={8}>
+          <ChatRoom
+            data={chat.currentRoom}
+            user={user}
+            onClose={resetCurrentRoom}
+            onMessageCreate={handleMessageCreate} />
+        </Grid>
+      </Grid>
+      <FollowingDialog
+        data={followings.data}
+        open={followersModalOpen}
+        onItemClick={handleCreateChat}
+        onSearchChange={handleFilterFollowings}
+        onClose={() => setFollowersModalOpen(false)} />
+    </FabContainer>
   );
 };
-
 
 function mapStateToProps(state) {
   return {
     user: {
       id: state.signIn?.userInfo?.id,
+      username: state.signIn?.userInfo?.userName,
+      name: state.signIn?.userInfo?.name,
+      avatarUrl: state.signIn?.userInfo?.avatarUrl
     },
     followings: {
       isFetching: state.relationship.isFetching,
@@ -110,7 +139,7 @@ function mapDispatchToProps(dispatch) {
 
     getRoom: (api, id) => dispatch(actionChat.getRoom(api, id)),
     createRoom: (api, id) => dispatch(actionChat.createRoom(api, id)),
-    deleteRoom: (api, id) => {},
+    resetCurrentRoom: () => dispatch(actionChat.resetCurrentRoom()),
     
     createMessage: (api, id, message) => dispatch(actionChat.createMessage(api, id, message)),
   }

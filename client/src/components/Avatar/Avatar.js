@@ -1,25 +1,48 @@
 import React from "react";
-
-import defaultAvatar from "../../assets/img/avatar_female.jpg"
+import clsx from "clsx";
+import { Avatar as MUIAvatar } from "@material-ui/core";
 
 import "./Avatar.scss";
+import { DEFAULT_VARIANT, BADGE_VARIANT } from "./constants";
+import useStyles, { StyledBadge } from "./styles";
 
-const avatartOnError = (e) => {
-  e.target.src = defaultAvatar;
-}
+function Avatar({
+  src,
+  size,
+  className,
+  badgeClassName,
+  borderWidth,
+  borderColor,
+  variant = DEFAULT_VARIANT,
+  online,
+  avatarBaseProps,
+  badgeProps,
+  children
+}) {
+  const classes = useStyles({
+    size,
+    borderWidth,
+    borderColor,
+    variant
+  });
 
-function Avatar({ url, size, className }) {
+  if (variant === BADGE_VARIANT) {
+    return (
+        <StyledBadge
+          {...badgeProps}
+          className={clsx(!online && classes.badgeOffline, badgeClassName)}>
+          <MUIAvatar {...avatarBaseProps} className={clsx(classes.avatar)} src={src}>
+            {children}
+          </MUIAvatar>
+        </StyledBadge>
+    )
+  }
+
   return (
-    <div className={`avatar avatar--${size} ${className}`} >
-      <img src={url} alt="" onError={avatartOnError} />
-    </div>
+    <MUIAvatar {...avatarBaseProps} className={clsx(classes.avatar, className)} src={src}>
+      {children}
+    </MUIAvatar>
   );
 }
-
-Avatar.defaultProps = {
-  url: "",
-  size: "medium",
-  className: ""
-};
 
 export default Avatar;

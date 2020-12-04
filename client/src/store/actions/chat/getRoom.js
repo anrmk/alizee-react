@@ -1,4 +1,4 @@
-import { generateUrl, generateFileUrl } from "../../../helpers/functions";
+import { generateUrl, generateFileUrl, copyFlatObjectWithIgnore } from "../../../helpers/functions";
 
 export const GET_ROOM_REQUEST = "GET_ROOM_REQUEST";
 export const GET_ROOM_SUCCESS = "GET_ROOM_SUCCESS";
@@ -9,19 +9,20 @@ function requestGetRoom() {
     type: GET_ROOM_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: "",
-    },
+      errorMessage: ""
+    }
   };
 }
 
-function receiveGetRoom(room) {
+function receiveGetRoom(data, currentRoom) {
   return {
     type: GET_ROOM_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
-      currentRoom: room,
-    },
+      data,
+      currentRoom
+    }
   };
 }
 
@@ -30,25 +31,34 @@ function errorGetRoom(message) {
     type: GET_ROOM_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message,
-    },
+      errorMessage: message
+    }
   };
 }
 
 export function getRoom(api, id) {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     dispatch(requestGetRoom());
 
     const url = generateUrl("getRoom");
     try {
       const { data } = await api.setMethod("GET").setParams({ id }).query(url);
 
-      data.avatarUrl = generateFileUrl(
-        process.env.REACT_APP_DOMAIN,
-        data.avatarUrl
-      );
+      const transformedData = {
+        ...copyFlatObjectWithIgnore(data, ["userName"]),
+        avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, data.avatarUrl),
+        username: data.userName
+      };
 
-      dispatch(receiveGetRoom(data));
+      const chatState = getState().chat;
+      const rooms = [...chatState.data];
+      const roomIndex = rooms.findIndex(room => room.id === data.id);
+
+      if(roomIndex !== -1) {
+        rooms[roomIndex].newMessagesCount = 0;
+      }
+
+      dispatch(receiveGetRoom(rooms, transformedData));
     } catch (e) {
       return dispatch(errorGetRoom(e));
     }

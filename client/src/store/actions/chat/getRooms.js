@@ -6,7 +6,7 @@ export const GET_ROOMS_REQUEST = "GET_ROOMS_REQUEST";
 export const GET_ROOMS_SUCCESS = "GET_ROOMS_SUCCESS";
 export const GET_ROOMS_FAILURE = "GET_ROOMS_FAILURE";
 export const FILTER_ROOMS = "FILTER_ROOMS";
-export const ADD_NEW_MESSAGE = "ADD_NEW_MESSAGE";
+export const INCREMENT_NEW_MESSAGE_COUNT = "INCREMENT_NEW_MESSAGE_COUNT";
 
 function requestGetRooms() {
   return {
@@ -50,6 +50,16 @@ function filterRooms(query) {
   };
 }
 
+function successIncrementNewMessageCount(rooms) {
+  return {
+    type: INCREMENT_NEW_MESSAGE_COUNT,
+    payload: {
+      data: rooms
+    }
+  };
+}
+
+
 export function getRooms(api) {
   return async (dispatch) => {
     dispatch(requestGetRooms());
@@ -57,11 +67,18 @@ export function getRooms(api) {
     const url = generateUrl("getRooms");
     try {
       const { data } = await api.setMethod("GET").query(url);
-      data.forEach(item => {
-        item.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, item.avatarUrl)
-      });
 
-      dispatch(receiveGetRooms(data));
+      const transformedData = data.map((item) => ({
+        id: item.id,
+        fullName: item.name,
+        avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, item.avatarUrl),
+        description: item.messages[item.messages.length - 1]?.message,
+        date: item.messages[item.messages.length - 1]?.createdDate,
+        isActive: data.currentRoom?.id === item.id,
+        newMessagesCount: item.newMessagesCount || 0
+      }))
+
+      dispatch(receiveGetRooms(transformedData));
     } catch {
       return dispatch(errorGetRooms("Error: GetRooms"));
     }
@@ -74,13 +91,14 @@ const dataSelector = (state) => state.chat.data;
 
 export const getFilteredRooms = createSelector(
   [querySelector, dataSelector],
-  (query, data) => {
-    const res = data
-      .filter((item) => item?.name.toLowerCase().includes(query))
-      .sort((a, b) => b.newMessagesCount - a.newMessagesCount);
-    return res;
-  }
-);
+  ((query, data) => { 
+    if (!query) return data;
+
+    return data
+      .filter((item) => item && item.fullName.toLowerCase().includes(query))
+      .sort((a, b) => b.newMessagesCount - a.newMessagesCount)
+    }
+));
 
 export function filter(query) {
   return async (dispatch) => {
@@ -88,12 +106,17 @@ export function filter(query) {
   };
 }
 
-export function addNewMessageCount(roomId, count) {
-  return dispatch => dispatch({
-    type: ADD_NEW_MESSAGE,
-    payload: {
-      roomId,
-      newMessagesCount: count
-    },
-  });
+export function incrementNewMessageCount(roomId, count) {
+  return (dispatch, getState) => {
+    const oldRooms = getState().chat.data;
+    const updatedRooms = [...oldRooms];
+    const roomIndex = updatedRooms.findIndex(room => room.id === roomId);
+
+    console.log("Here");
+    if (roomIndex !== -1) {
+      updatedRooms[roomIndex].newMessagesCount++;
+    }
+
+    dispatch(successIncrementNewMessageCount(updatedRooms));
+  }
 }
