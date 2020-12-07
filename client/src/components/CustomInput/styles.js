@@ -25,6 +25,10 @@ export const useStyles = makeStyles((theme) => ({
     "&.Mui-focused": {
       color: theme.palette.secondary.main,
     }
+  },
+  errorHelperText: {
+    marginLeft: theme.spacing(2),
+    color: theme.palette.secondary.main,
   }
 }))
 
@@ -43,6 +47,10 @@ const StyledInput = withStyles((theme) => ({
     "&.Mui-disabled": {
       borderColor: getStyleByTheme(theme, theme.palette.grey["400"], "transparent"),
       backgroundColor: getStyleByTheme(theme, theme.palette.grey["200"], "rgba(255, 255, 255, 0.12)")
+    },
+    //  Other components
+    "& > .MuiSelect-select:focus": {
+      backgroundColor: "transparent"
     },
     "& > textarea": {
       padding: theme.spacing(1, 0)

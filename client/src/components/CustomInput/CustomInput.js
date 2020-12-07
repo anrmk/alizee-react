@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from 'clsx';
-import { Typography, FormControl, InputLabel,  } from "@material-ui/core";
+import { Typography, FormControl, InputLabel, } from "@material-ui/core";
 
 import StyledInput, { useStyles } from "./styles";
 
@@ -21,6 +21,7 @@ export default function CustomInput({
       <StyledInput {...props} className={clsx(inputClassName && inputClassName, error && classes.errorInput)} />
       {error && helperText && (
         <Typography
+          className={classes.errorHelperText}
           color="secondary"
           variant="caption"
           component="span"

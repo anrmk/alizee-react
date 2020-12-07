@@ -9,6 +9,16 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(1, 0),
     textAlign: "left"
   },
+  createRoomContainer: {
+    height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
+    display: "flex",
+    [theme.breakpoints.up('md')]: {
+      alignItems: "center"
+    },
+    [theme.breakpoints.down('md')]: {
+      marginTop: theme.spacing(1)
+    }
+  },
   meetingContainer: {
     height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
     display: "flex",

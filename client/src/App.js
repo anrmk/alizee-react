@@ -19,7 +19,7 @@ import Chat from "./pages/Chat";
 import Post from "./pages/Post";
 import Feed from "./pages/Feed";
 import PeopleSuggested from "./pages/PeopleSuggested";
-import CreateRoom from "./pages/CreateRoom";
+import CreateRoom from "./pages/Meet/CreateRoom";
 import Meeting from "./pages/Meet/Meeting";
 import Room from "./pages/Meet/Room";
 import Profile from "./pages/Profile";

@@ -1,5 +1,11 @@
 {
   "BlackListTitle": "Black List",
+  "CreateRoomDescription": "Description",
+  "CreateRoomTitle": "Title",
+  "CreateRoomType": "Room",
+  "CreateRoomTicketPrice": "Ticket Price",
+  "CreateRoomJoinButton": "Join now",
+  "CreateRoomStreamingTitle": "Streaming ready...",
   "MeetingHeader": "Premium video meetings. Now free for everyone",
   "MeetingSubheader": "We re-engineered the service we built for secure business meetings, Google Meet, to make it free and available for all.",
   "MeetingNewMeetingButton": "New meeting",

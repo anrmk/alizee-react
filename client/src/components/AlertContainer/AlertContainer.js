@@ -12,6 +12,7 @@ function AlertContainer({
   successAlert,
   errorAlert,
   error,
+  component: Component = Box,
 
   onAlertClose
 }) {
@@ -24,7 +25,7 @@ function AlertContainer({
   }
 
   return (
-    <Box className={className}>
+    <Component className={className}>
       {children}
       <Snackbar open={alertOpen} autoHideDuration={autoHideDuration} onClose={handleAlertClose}>
         <Alert elevation={6} variant="filled" severity={error ? "error" : "success"}>
@@ -34,7 +35,7 @@ function AlertContainer({
           }
         </Alert>
       </Snackbar>
-    </Box>
+    </Component>
   )
 }
 
