@@ -6,7 +6,6 @@ import { Card, CardHeader, CardMedia, CardContent, CardActionArea, CardActions, 
 import IconButton from "@material-ui/core/IconButton";
 import MoreVertIcon from "@material-ui/icons/MoreVertOutlined";
 
-import { AvatarItem } from "../../components/Avatar";
 import { Tools } from "../../components/Post";
 import MediaContent from "../../components/MediaContent";
 import { PROFILE_ROUTE } from "../../constants/routes";
@@ -63,7 +62,7 @@ function Post({
   };
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} variant="elevation"  >
         <CardHeader
           avatar={<Avatar src={avatarUrl} />}
           action={
@@ -76,7 +75,7 @@ function Post({
         ></CardHeader>
 
         <CardMedia>
-          <MediaContent items={mediaUrls} amount={amount} />
+          <MediaContent className={classes.post} items={mediaUrls} amount={amount} />
         </CardMedia>
 
         <CardContent>
@@ -84,7 +83,7 @@ function Post({
             {description}
           </Typography>
         </CardContent>
-      <CardActions disableSpacing>
+      <CardActions className={classes.action} >
         {!hideToolbar && (
           <Tools
             userId={userId}
@@ -100,63 +99,6 @@ function Post({
         )}
       </CardActions>
     </Card>
-
-    // <div className="card mb-5">
-    //   {!hideHeader && (
-    //     <div className="card-header d-flex align-items-center justify-content-between py-2">
-    //       <AvatarItem url={avatarUrl} size="small">
-    //         <CustomLink as="div" to={PROFILE_ROUTE(username)}>
-    //           {username}
-    //         </CustomLink>
-    //       </AvatarItem>
-    //       <a onClick={handleOptionsClick}>
-    //         <MoreHorizIcon />
-    //       </a>
-    //     </div>
-    //   )}
-    //   {mediaUrls?.length === 0 ? (
-    //     <>
-    //       <div className="card-body">
-    //         <p>{description}</p>
-    //       </div>
-    //       {!hideToolbar && (
-    //         <Tools
-    //           userId={userId}
-    //           id={id}
-    //           commentable={commentable}
-    //           likes={likes}
-    //           iLike={iLike}
-    //           onGoToClick={handleGoToClick}
-    //           onShareClick={handleShareClick}
-    //           onFavoriteClick={handleFavoriteClick}
-    //           onBuyClick={handleBuyClick}
-    //         />
-    //       )}
-    //     </>
-    //   ) : (
-    //     <>
-    //       <div className="card-content-wrapper">
-    //         <MediaContent items={mediaUrls} caption={description} amount={amount} />
-    //       </div>
-    //       {!hideToolbar && (
-    //         <Tools
-    //           userId={userId}
-    //           id={id}
-    //           commentable={commentable}
-    //           likes={likes}
-    //           iLike={iLike}
-    //           onGoToClick={handleGoToClick}
-    //           onShareClick={handleShareClick}
-    //           onFavoriteClick={handleFavoriteClick}
-    //           onBuyClick={handleBuyClick}
-    //         />
-    //       )}
-    //       <div className="card-body">
-    //         <p>{description}</p>
-    //       </div>
-    //     </>
-    //   )}
-    // </div>
   );
 }
 

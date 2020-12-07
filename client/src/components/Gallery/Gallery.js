@@ -6,7 +6,12 @@ import Pagination from "./Pagination";
 
 import useStyles from "./styles";
 
-function Gallery({ children, currentIndex, containerStyle, onChangeIndex }) {
+function Gallery({
+  children, 
+  currentIndex, 
+  amount, 
+  
+  onChangeIndex }) {
   const classes = useStyles();
   const [localIndex, setLocalIndex] = useState(currentIndex);
 
@@ -17,6 +22,7 @@ function Gallery({ children, currentIndex, containerStyle, onChangeIndex }) {
 
   return (
     <div className={classes.root}>
+      
       <SwipeableViews enableMouseEvents index={localIndex} onChangeIndex={handleIndexChange}>
         {children}
       </SwipeableViews>
@@ -33,7 +39,7 @@ function Gallery({ children, currentIndex, containerStyle, onChangeIndex }) {
 Gallery.propTypes = {
   children: PropTypes.any,
   currentIndex: PropTypes.number,
-  containerStyle: PropTypes.any,
+  amount: PropTypes.number,
 
   onChangeIndex: PropTypes.func,
 };
@@ -41,7 +47,7 @@ Gallery.propTypes = {
 Gallery.defaultProps = {
   children: null,
   currentIndex: 0,
-  containerStyle: {},
+  amount: 0,
 
   onChangeIndex: undefined,
 };

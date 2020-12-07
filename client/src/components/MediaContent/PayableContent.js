@@ -1,23 +1,34 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import LockIcon from '@material-ui/icons/Lock';
+import {formatCurrency} from "../../helpers/functions";
 
-import './MediaContent.scss';
+import { Box, Chip, Avatar } from "@material-ui/core";
+import LockIcon from "@material-ui/icons/LockOutlined";
+import MoneyIcon from "@material-ui/icons/MonetizationOn";
 
-export default function PayableContent({ amount }) {
-  return (
-    <div className="payable-content d-flex justify-content-center align-items-center flex-column">
-      <LockIcon />
-      <p className="h1">{amount}$</p>
-    </div>
-  );
+import useStyles from "./styles";
+
+export default function PayableContent({ amount, items, children, onPayClick }) {
+  const classes = useStyles();
+
+  if(amount == 0) {
+    return <>{children}</>
+  } else {
+    return (
+      <Box className={classes.payable}>
+        <LockIcon className="lock" />
+        <Chip icon={<MoneyIcon style={{"color": "gold"}} />} label={`Price ${formatCurrency(amount)}`} onClick={onPayClick} />
+        {children ?? <></>}
+      </Box>
+    );
+  }
 }
 
 PayableContent.propTypes = {
-  amount: PropTypes.number
-}
+  amount: PropTypes.number,
+};
 
 PayableContent.defaultProps = {
-  amount: 0
-}
+  amount: 0,
+};

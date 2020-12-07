@@ -291,6 +291,14 @@ export function getYearFromCurrentDate(years) {
   return new Date().getFullYear() - years;
 }
 
+export function formatCurrency(amount, currency = "USD") {
+  var formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency
+  });
+  return formatter.format(amount);
+}
+
 export function copyFlatObjectWithIgnore(obj, ignores) {
   if (!obj || !Object.keys(obj).length) return null;
   if (!ignores || !ignores.length) return obj;

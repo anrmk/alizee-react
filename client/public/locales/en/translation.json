@@ -10,6 +10,14 @@
   "SecondTextFollowerItem": "recommended",
   "FollowerBtnTextFollowerItem": "Follow",
   "FollowingBtnTextFollowerItem": "Following",
+
+  "SidebarFeedText": "Feed",
+  "SidebarExploreText": "Explore",
+  "SidebarActivityText": "Activity",
+  "SidebarPopularTagsText": "Popular tags",
+  "SidebarWalletText" : "Wallet",
+  "SidebarHotTipsText": "Hot tips",
+
   "ChatSidebarSearchInputLabel": "Search a chat",
   "ChatFollowingDialogTitle": "Start a new conversation",
   "ChatFollowingDialogSearchInputLabel": "Search a following",
@@ -17,4 +25,5 @@
   "ChatChatListEmptySubtitle": "Please create a chat to start messaging",
   "ChatChatRoomEmptyTitle": "Your Messages",
   "ChatChatRoomEmptySubtitle": "Please select a chat to start messaging"
+
 }

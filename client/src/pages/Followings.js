@@ -49,7 +49,7 @@ function Followings(props) {
         deleteFollow(apiClient, userId, followId) :
         createFollow(apiClient, userId, followId);
     }
-  }
+  } 
 
   return (
     <Container maxWidth="sm">

@@ -162,7 +162,7 @@ function Feed(props) {
   }
 
   return (
-    <Container maxWidth="md">
+    <Container >
       <Box my={4}>
         <Grid container spacing={2} direction="row">
           <Grid container item md={8} sm={12} direction="column">

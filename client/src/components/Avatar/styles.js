@@ -19,7 +19,8 @@ const BORDER_COLORS = {
 
 const getBorder = (width, color) => {
   if (!color) return "none";
-  return `0px 0px 0px ${width ? width : "4px"} ${BORDER_COLORS[color] ? BORDER_COLORS[color] : BORDER_COLORS["blue"]}`;
+  return `rgb(0 0 0) 0px 0px 1px 2px, 
+          0px 0px 0px ${width ? width : "4px"} ${BORDER_COLORS[color] ? BORDER_COLORS[color] : BORDER_COLORS["blue"]}`;
 }
 
 const useStyles = makeStyles((theme) => ({

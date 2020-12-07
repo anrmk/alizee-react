@@ -6,45 +6,62 @@ import ImagesContent from "./ImagesContent";
 import VideoContent from "./VideoContent";
 import PayableContent from "./PayableContent";
 
-function MediaContent({ 
-  items,
-  thumbnail,
-  caption,
-  amount,
-  lazyLoad,
-  showPayable
-}) {
-  if (!showPayable && amount > 0) return <PayableContent amount={amount} />;
+import Gallery from "../Gallery";
 
+import { Grid } from "@material-ui/core";
+import LockIcon from "@material-ui/icons/LockOutlined";
+
+import useStyles from "./styles";
+
+const handleLockBtnClick = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+};
+
+const handlePayBtnClick = (e) => {
+  e.preventDefault();
+
+  console.log("pay click");
+};
+
+const renderContent = () => {};
+
+function MediaContent({ items, amount, showThumbnail, showPayable, className }) {
   if (!items || !items.length) return <></>;
 
-  if (items.length === 1) {
-    if (items[0].kind === MEDIA_IMAGE || thumbnail) {
-        return <ImagesContent thumbnail={thumbnail} items={items} altText={caption} lazyLoad={lazyLoad} />;
-    } else if(items[0].kind === MEDIA_VIDEO) {
-        return <VideoContent url={items[0].url} />;
-    } 
-  }
-
-  return <ImagesContent  items={items} />;
+  return (
+    <Gallery className={className} amount={amount} onPayClick={handlePayBtnClick}>
+      {items.length &&
+        items.map((item) => {
+          const url = showThumbnail ? item.thumbnailUrl : item.url;
+          if (item.kind === MEDIA_IMAGE || !amount) {
+            return <ImagesContent key={item.id} url={url} amount={amount} />;
+          } else if (item.kind === MEDIA_VIDEO) {
+            return <VideoContent key={item.id} url={url} />;
+          } else {
+            return <></>;
+          }
+        })}
+    </Gallery>
+  );
 }
 
 MediaContent.propTypes = {
   items: PropTypes.array,
-  thumbnail: PropTypes.bool,
   caption: PropTypes.string,
   amount: PropTypes.number,
-  lazyLoad: PropTypes.bool,
-  showPayable: PropTypes.bool
-}
+  //lazyLoad: PropTypes.bool,
+  showPayable: PropTypes.bool,
+  showThumbnail: PropTypes.bool,
+};
 
 MediaContent.defaultProps = {
   items: [],
-  thumbnail: false,
   caption: "",
   amount: 0,
-  lazyLoad: true,
-  showPayable: false
+  //lazyLoad: true,
+  showPayable: false,
+  showThumbnail: false,
 };
 
 export default MediaContent;

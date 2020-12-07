@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { CssBaseline } from "@material-ui/core";
 
 import Navbar from "./components/Navbar";
+import Sidebar from "./components/Sidebar";
 import LinearDeterminate from "./components/LinearDeterminate";
 
 import HubComponent from "./domain/Hub/NotificationHub";
@@ -31,35 +32,54 @@ import { signOutUser } from "./store/actions/signIn";
 import * as Routes from "./constants/routes";
 import theme from "./constants/theme";
 
-function App({ username, isAuthenticated, avatarUrl, signOut }) {
+function App({ userInfo, username, isAuthenticated, avatarUrl, signOut }) {
+  const [open, setOpen] = useState(true);
+
+  const handleDrawerToggle = () => {
+    setOpen(!open);
+  };
+
   return (
     <Suspense fallback={<LinearDeterminate />}>
       <HubComponent>
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Router history={history}>
-            {isAuthenticated && <Navbar username={username} avatarUrl={avatarUrl} onSignOut={signOut} />}
-
-            <Switch>
-              <Route path={Routes.SIGN_UP_ROUTE} component={SignUp} />
-              <Route path={Routes.SIGN_IN_ROUTE} component={SignIn} />
-              <Route path={Routes.EMAIL_CONFIRMATION} component={EmailConfirmation} />
-              <Route path={Routes.EMAIL_VERIFY} component={EmailVerify} />
-              <Route exact path={Routes.RESET_PASSWORD_ROUTE} component={ResetPassword} />
-              <Route exact path={Routes.PASSWORD_CHANGE_ROUTE} component={ChangePassword} />
-              <PrivateRoute exact path={Routes.DEFAULT_ROUTE} />
-              <PrivateRoute path={Routes.HOME_ROUTE} component={Feed} />
-              <PrivateRoute path={Routes.POST_ID_ROUTE} component={Post} />
-              <PrivateRoute path={Routes.MEET_ROUTE} component={Meeting} />
-              <PrivateRoute path={Routes.CHAT_ROUTE} component={Chat} />
-              <PrivateRoute path={Routes.ROOM_ROUTE} component={CreateRoom} />
-              <PrivateRoute path={Routes.ROOM_ID_DEFAULT_ROUTE} component={Room} />
-              <PrivateRoute path={Routes.SUGESTED_PEOPLE} component={PeopleSuggested} />
-              <PrivateRoute path={Routes.SETTINGS_TYPE_ROUTE} component={Settings} />
-              <PrivateRoute exact path={Routes.PROFILE_USERNAME_ROUTE} component={Profile} />
-              <PrivateRoute exact path={Routes.PROFILE_FOLLOWERS_ROUTE} component={Followers} />
-              <PrivateRoute exact path={Routes.PROFILE_FOLLOWINGS_ROUTE} component={Followings} />
-            </Switch>
+            <div style={{ display: "flex" }}>
+              {isAuthenticated && (
+                <>
+                  <Navbar
+                    username={userInfo.username}
+                    avatarUrl={userInfo.avatarUrl}
+                    onSignOut={signOut}
+                    open={open}
+                  />
+                  <Sidebar userInfo={userInfo} open={open} onDrawerToggle={handleDrawerToggle} />
+                </>
+              )}
+              <div style={{flexGrow: 1, paddingTop: 64}}>
+                <Switch>
+                  <Route path={Routes.SIGN_UP_ROUTE} component={SignUp} />
+                  <Route path={Routes.SIGN_IN_ROUTE} component={SignIn} />
+                  <Route path={Routes.EMAIL_CONFIRMATION} component={EmailConfirmation} />
+                  <Route path={Routes.EMAIL_VERIFY} component={EmailVerify} />
+                  <Route exact path={Routes.RESET_PASSWORD_ROUTE} component={ResetPassword} />
+                  <Route exact path={Routes.PASSWORD_CHANGE_ROUTE} component={ChangePassword} />
+                  <PrivateRoute exact path={Routes.DEFAULT_ROUTE} />
+                  <PrivateRoute path={Routes.HOME_ROUTE} component={Feed} />
+                  <PrivateRoute path={Routes.POST_ID_ROUTE} component={Post} />
+                  <PrivateRoute path={Routes.MEET_ROUTE} component={Meeting} />
+                  <PrivateRoute path={Routes.CHAT_ROUTE} component={Chat} />
+                  <PrivateRoute path={Routes.ROOM_ROUTE} component={CreateRoom} />
+                  <PrivateRoute path={Routes.ROOM_ID_DEFAULT_ROUTE} component={Room} />
+                  <PrivateRoute path={Routes.SUGESTED_PEOPLE} component={PeopleSuggested} />
+                  <PrivateRoute path={Routes.SETTINGS_TYPE_ROUTE} component={Settings} />
+                  <PrivateRoute exact path={Routes.PROFILE_USERNAME_ROUTE} component={Profile} />
+                  <PrivateRoute exact path={Routes.PROFILE_FOLLOWERS_ROUTE} component={Followers} />
+                  <PrivateRoute exact path={Routes.PROFILE_FOLLOWINGS_ROUTE} component={Followings} />
+                </Switch>
+              </div>
+            </div>
           </Router>
         </ThemeProvider>
       </HubComponent>
@@ -69,9 +89,10 @@ function App({ username, isAuthenticated, avatarUrl, signOut }) {
 
 function mapStateToProps(state) {
   return {
+    userInfo: state.signIn?.userInfo,
     username: state.signIn?.userInfo?.userName,
-    isAuthenticated: state.signIn.isAuthenticated,
     avatarUrl: state.signIn.userInfo?.avatarUrl,
+    isAuthenticated: state.signIn.isAuthenticated,
   };
 }
 
