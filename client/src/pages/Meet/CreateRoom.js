@@ -1,30 +1,37 @@
 import { Container } from "@material-ui/core";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { v1 as uuid } from "uuid";
 
 import AlertContainer from "../../components/AlertContainer";
 import useStyles from "./styles";
-import { CreateRoomForm } from '../../domain/Meet';
+import { CreateRoomForm } from "../../domain/Meet";
 
+const DEFAULT_ALERT_SUCCESS_TEXT = "Operation was successfully completed";
 const DEFAULT_ALERT_ERROR_TEXT = "Something wrong...";
 
 function CreateRoom() {
   const history = useHistory();
   const classes = useStyles();
+  const [stream, setStream] = useState();
 
-  const userVideo = useRef(null);
+  const [isAlertError, setIsAlertError] = useState(true);
+  const [alertSuccessText, setAlertSuccessText] = useState(DEFAULT_ALERT_SUCCESS_TEXT);
   const [alertErrorText, setAlertErrorText] = useState(DEFAULT_ALERT_ERROR_TEXT);
   const [alertOpen, setAlertOpen] = useState(false);
+
   const [roomId, setRoomId] = useState();
 
   useEffect(() => {
     setRoomId(uuid());
 
     navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
+      .getUserMedia({
+        video: true,
+        audio: true 
+      })
       .then((stream) => {
-        userVideo.current.srcObject = stream;
+        setStream(stream);
       })
       .catch((res) => {
         setAlertErrorText(res.message);
@@ -38,17 +45,25 @@ function CreateRoom() {
     history.push(`/room/${roomId}`);
   };
 
+  const handleCopyClickRoom = (message) => {
+    setAlertSuccessText(message);
+    setIsAlertError(false);
+    setAlertOpen(true);
+  };
+
   return (
     <AlertContainer
       className={classes.createRoomContainer}
       component={Container}
+      successAlert={alertSuccessText || DEFAULT_ALERT_SUCCESS_TEXT}
       errorAlert={alertErrorText || DEFAULT_ALERT_ERROR_TEXT}
       alertOpen={alertOpen}
-      error
+      error={isAlertError}
       onAlertClose={() => setAlertOpen(false)}>
       <CreateRoomForm
-        videoRef={userVideo}
+        stream={stream}
         roomId={roomId}
+        onCopyLinkRoom={handleCopyClickRoom}
         onSubmit={joiningLiveStream} />
     </AlertContainer>
   )

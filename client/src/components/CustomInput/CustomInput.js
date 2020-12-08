@@ -19,10 +19,9 @@ export default function CustomInput({
   const renderInput = (props, error, helperText) => (
     <>
       <StyledInput {...props} className={clsx(inputClassName && inputClassName, error && classes.errorInput)} />
-      {error && helperText && (
+      {helperText && (
         <Typography
-          className={classes.errorHelperText}
-          color="secondary"
+          className={clsx(error && classes.errorHelperText, !error && classes.helperText)}
           variant="caption"
           component="span"
           gutterBottom>

@@ -29,6 +29,10 @@ export const useStyles = makeStyles((theme) => ({
   errorHelperText: {
     marginLeft: theme.spacing(2),
     color: theme.palette.secondary.main,
+  },
+  helperText: {
+    marginLeft: theme.spacing(2),
+    color: theme.palette.text.secondary,
   }
 }))
 

@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Select, Button, FormControl, FormGroup, FormHelperText, Grid, MenuItem, Typography } from "@material-ui/core";
+import { Chip, Button, FormControl, FormGroup, FormHelperText, Grid, MenuItem, Select, Typography } from "@material-ui/core";
+
+import FileCopyOutlined from "@material-ui/icons/FileCopyOutlined";
 
 import CustomInput from "../../components/CustomInput";
 import useStyles from "./styles"
@@ -14,12 +16,17 @@ const ROOM_TYPE_ID = "roomType";
 const TICKET_PRICE_ID = "ticketPrice";
 
 const VALUE_MIN_LENGTH_TICKET_PRICE = 0;
-const VALUE_MAX_LENGTH_TITLE = 50;
-const VALUE_MAX_LENGTH_DESCRIPTION = 150;
+const VALUE_MAX_LENGTH_TITLE = 128;
+const VALUE_MAX_LENGTH_DESCRIPTION = 255;
 
 const EMPTY_VALUE_ERROR = "It is a required filed";
 const VALUE_MIN_LENGTH_ERROR = (min) => `Must be at least ${min} characters`;
 const VALUE_MAX_LENGTH_ERROR = (max) => `Must be at most ${max} characters`;
+
+const HELPER_TEXT_DESCRIPTION = (length) => `Characters entered ${length} out of ${VALUE_MAX_LENGTH_DESCRIPTION} characters`;
+
+const COPY_LINK_ROOM_ALERT_SUCCESS_TEXT = "Copying link room successfully";
+const COPY_LINK_ROOM_ALERT_ERROR_TEXT = "Copying link room failed";
 
 const schema = yup.object().shape({
   [TITLE_ID]: yup
@@ -28,7 +35,6 @@ const schema = yup.object().shape({
     .max(VALUE_MAX_LENGTH_TITLE, VALUE_MAX_LENGTH_ERROR(VALUE_MAX_LENGTH_TITLE)),
   [DESCRIPTION_ID]: yup
     .string()
-    .required(EMPTY_VALUE_ERROR)
     .max(VALUE_MAX_LENGTH_DESCRIPTION, VALUE_MAX_LENGTH_ERROR(VALUE_MAX_LENGTH_DESCRIPTION)),
   [ROOM_TYPE_ID]: yup
     .number()
@@ -41,12 +47,24 @@ const schema = yup.object().shape({
 
 function CreateRoomForm({
   roomId,
-  userVideo,
+  stream,
 
+  onCopyLinkRoom,
   onSubmit
 }) {
   const { t } = useTranslation();
   const classes = useStyles();
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    videoRef.current.srcObject = stream;
+  }, [stream]);
+
+  const handleCopyClick = (chip) => {
+    navigator.clipboard.writeText(chip)
+    .then(() => onCopyLinkRoom(COPY_LINK_ROOM_ALERT_SUCCESS_TEXT))
+    .catch(() => onCopyLinkRoom(COPY_LINK_ROOM_ALERT_ERROR_TEXT));
+  }
 
   const { errors, control, handleSubmit } = useForm({
     resolver: yupResolver(schema),
@@ -56,11 +74,11 @@ function CreateRoomForm({
   });
 
   return (
-    <Grid container direction="row" spacing={8}>
+    <Grid container direction="row" spacing={2}>
 
       <Grid item className={classes.createRoomItem} xs={12} md={8}>
         <video className={classes.createRoomItemVideo}
-          ref={userVideo}
+          ref={videoRef}
           muted
           autoPlay
           playsInline
@@ -73,9 +91,12 @@ function CreateRoomForm({
         <Typography variant="h4" className={classes.createRoomTitle}>
           {t("CreateRoomStreamingTitle")}
         </Typography>
-        <Typography variant="body1" className={classes.createRoomDescription}>
-          https://meet.com/{roomId}
-        </Typography>
+        <Chip
+          key={roomId}
+          className={classes.createRoomChip}
+          label={`https://meet.com/${roomId}`}
+          onDelete={() => handleCopyClick(roomId)}
+          deleteIcon={<FileCopyOutlined />} />
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormGroup className={classes.formGroup}>
@@ -98,7 +119,7 @@ function CreateRoomForm({
               )} />
           </FormGroup>
 
-          <FormGroup className={classes.formGroup}>
+          <FormGroup>
             <Controller
               name={DESCRIPTION_ID}
               control={control}
@@ -113,7 +134,10 @@ function CreateRoomForm({
                   rows={4}
                   value={value}
                   error={!!errors[DESCRIPTION_ID]}
-                  helperText={errors[DESCRIPTION_ID]?.message}
+                  helperText={
+                    errors[TITLE_ID]?.message ||
+                    HELPER_TEXT_DESCRIPTION(value?.length)
+                  }
                   onBlur={onBlur}
                   onChange={e => onChange(e.target.value.trim())}
                 />
