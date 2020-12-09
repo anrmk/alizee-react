@@ -1,14 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { PROFILE_ROUTE } from "../../constants/routes";
 
-import { ListItem, ListItemText, ListItemAvatar, ListItemSecondaryAction, Avatar, Button, IconButton } from "@material-ui/core";
+import { ListItem, ListItemText, ListItemAvatar, ListItemSecondaryAction, IconButton } from "@material-ui/core";
 import CommentIcon from "@material-ui/icons/ToggleOnOutlined";
-import PowerOffIcon from '@material-ui/icons/ToggleOffOutlined';
+import PowerOffIcon from "@material-ui/icons/ToggleOffOutlined";
+
+import Avatar from "../Avatar";
 
 import useStyles from "./styles";
 
@@ -18,6 +20,7 @@ function RelationshipItem({
   avatarUrl,
   username,
   isFollowing,
+  online,
   me,
 
   onFollowClick,
@@ -34,7 +37,10 @@ function RelationshipItem({
   return (
     <ListItem button className={classes.item}>
       <ListItemAvatar>
-        <Avatar src={avatarUrl} />
+        <Avatar
+          src={avatarUrl}
+          online={false}
+        />
       </ListItemAvatar>
       <ListItemText
         primary={username}
@@ -59,15 +65,12 @@ function RelationshipItem({
   );
 }
 
-{/* <Button edge="end" size="small" color="primary" >
-            {isFollowing ? t("FollowingBtnTextFollowerItem") : t("FollowerBtnTextFollowerItem")}
-          </Button> */}
-
 RelationshipItem.propTypes = {
   id: PropTypes.string,
   userId: PropTypes.string,
   avatarUrl: PropTypes.string,
   username: PropTypes.string,
+  online: PropTypes.bool,
   isFollowing: PropTypes.bool,
   me: PropTypes.bool,
 
@@ -79,6 +82,7 @@ RelationshipItem.defaultProps = {
   userId: "",
   avatarUrl: "",
   username: "",
+  online: false,
   isFollowing: false,
   me: false,
 

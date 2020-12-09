@@ -48,16 +48,11 @@ function App({ userInfo, username, isAuthenticated, avatarUrl, signOut }) {
             <div style={{ display: "flex" }}>
               {isAuthenticated && (
                 <>
-                  <Navbar
-                    username={userInfo.username}
-                    avatarUrl={userInfo.avatarUrl}
-                    onSignOut={signOut}
-                    open={open}
-                  />
+                  <Navbar username={userInfo.username} avatarUrl={userInfo.avatarUrl} onSignOut={signOut} open={open} />
                   <Sidebar userInfo={userInfo} open={open} onDrawerToggle={handleDrawerToggle} />
                 </>
               )}
-              <div style={{flexGrow: 1, paddingTop: 64}}>
+              <div style={{ flexGrow: 1, paddingTop: 64 }}>
                 <Switch>
                   <Route path={Routes.SIGN_UP_ROUTE} component={SignUp} />
                   <Route path={Routes.SIGN_IN_ROUTE} component={SignIn} />

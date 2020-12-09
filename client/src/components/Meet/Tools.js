@@ -41,7 +41,7 @@ function Tools() {
   };
 
   return (
-    <Card className={classes.root} bgcolor="info.main">
+    <Card className={classes.root} >
       <CardHeader
         avatar={<CameraOutlinedIcon style={{ fontSize: "72px" }} />}
         titleTypographyProps={{ variant: "body2" }}

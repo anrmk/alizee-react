@@ -1,10 +1,6 @@
 import { createSelector } from "reselect";
 
-import {
-  generateUrl,
-  generateFileUrl,
-  getOffset,
-} from "../../../helpers/functions";
+import { generateUrl, generateFileUrl, getOffset } from "../../../helpers/functions";
 import { POSTS_OFFSET } from "../../../constants/feed";
 
 export const GET_POSTS_REQUEST = "GET_POSTS_REQUEST";
@@ -32,7 +28,7 @@ function receiveGetPosts(posts, total, start, hasMore) {
       offset: getOffset(start, total, POSTS_OFFSET),
       hasMore,
       data: posts || [],
-      count: total
+      count: total,
     },
   };
 }
@@ -75,7 +71,7 @@ export function getPosts(api, opts) {
           userId: opts.userId,
           start: currentOffset,
           length: opts.length,
-          type: opts.type
+          type: opts.type,
         })
         .query(url);
 
@@ -88,20 +84,12 @@ export function getPosts(api, opts) {
         };
         item.media.forEach((media) => {
           media.url = generateFileUrl(process.env.REACT_APP_DOMAIN, media.url);
-          media.thumbnailUrl = generateFileUrl(
-            process.env.REACT_APP_DOMAIN,
-            media.thumbnailUrl
-          );
+          media.thumbnailUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, media.thumbnailUrl);
         });
       });
 
       dispatch(
-        receiveGetPosts(
-          [...getState().posts.data, ...data.data],
-          data.recordsTotal,
-          currentOffset,
-          !!data.data.length
-        )
+        receiveGetPosts([...getState().posts.data, ...data.data], data.recordsTotal, currentOffset, !!data.data.length)
       );
     } catch (e) {
       dispatch(errorGetPosts("Error: something went wrong:", e));
@@ -112,22 +100,17 @@ export function getPosts(api, opts) {
 // Selectors
 const gridGallerySelector = (state) => state.posts.data;
 
-export const getGridGalleryPosts = createSelector(
-  [gridGallerySelector],
-  (data) => {
-    return data.reduce(
-      (acc, curr) =>
-        ([
-              ...acc,
-              {
-                id: curr.id,
-                caption: curr.description,
-                amount: curr.amount,
-                media: curr.media.length > 0 ? [curr.media[0]] : [],
-              },
-            ]),
-      []
-    )
-  }
-    
-);
+export const getGridGalleryPosts = createSelector([gridGallerySelector], (data) => {
+  return data.reduce(
+    (acc, curr) => [
+      ...acc,
+      {
+        id: curr.id,
+        caption: curr.description,
+        amount: curr.amount,
+        media: curr.media.length > 0 ? [curr.media[0]] : [],
+      },
+    ],
+    []
+  );
+});

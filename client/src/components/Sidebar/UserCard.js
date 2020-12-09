@@ -19,28 +19,18 @@ function UserCard(props) {
 
   const classes = useStyles({ open });
 
+  const handleNavigationChange = (e, newValue) => {
+    e.preventDefault();
+
+    props.onNavigationChange && props.onNavigationChange(newValue);
+  };
+
   return (
-    <Box m={2} className={classes.card}>
-      <Avatar
-        src={avatarUrl}
-        borderColor="blue"
-        size="large"
-        variant="stream"
-        avatarBaseProps={{ variant: "circular" }}
-        badgeProps={{
-          overlap: "circle",
-          anchorOrigin: {
-            vertical: "bottom",
-            horizontal: "right",
-          },
-          variant: "dot",
-        }}
-        mb="2"
-        online
-      />
+    <Box m={3} className={classes.card}>
+      <Avatar src={avatarUrl} size="large" borderColor="blue" live />
       <br />
       <Typography variant="h6">{name}</Typography>
-      <Typography>{username}</Typography>
+      <Typography variant="subtitle1">{username}</Typography>
       <br />
       <Grid container alignItems="center" justify="space-evenly" direction="row" spacing={1}>
         <Grid item>
@@ -63,10 +53,10 @@ function UserCard(props) {
         </Grid>
       </Grid>
 
-      <BottomNavigation showLabels className={classes.navigation}>
-        <BottomNavigationAction className="success" label="Go live" icon={<LiveTvIcon />} color="primary" />
-        <BottomNavigationAction className="warning" label="Top posts" icon={<GradeIcon />} />
-        <BottomNavigationAction className="danger" label="Rewards" icon={<GrainIcon />} />
+      <BottomNavigation showLabels className={classes.navigation} onChange={handleNavigationChange}>
+        <BottomNavigationAction className="success" value="goLive" label="Go live" icon={<LiveTvIcon />} />
+        <BottomNavigationAction className="warning" value="top" label="Top posts" icon={<GradeIcon />} />
+        <BottomNavigationAction className="danger" value="rewards" label="Rewards" icon={<GrainIcon />} />
       </BottomNavigation>
     </Box>
   );

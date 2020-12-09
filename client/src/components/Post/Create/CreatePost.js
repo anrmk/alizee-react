@@ -35,6 +35,7 @@ export default function CreatePost({ id, user, onSubmit }) {
 
   const handleFormDataChange = (e) => {
     var target = e.currentTarget;
+    console.log("target", target)
     switch (target.type) {
       case "button":
         setFormData({
@@ -62,9 +63,9 @@ export default function CreatePost({ id, user, onSubmit }) {
         <Grid item>
           <CreateTools
             className={classes.tools}
-            onChange={handleFormDataChange}
             isPrivate={formData.private}
             isCommentable={formData.commentable}
+            onChange={handleFormDataChange}
           />
         </Grid>
       </Grid>

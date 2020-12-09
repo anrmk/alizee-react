@@ -39,11 +39,29 @@ export function likePost(api, id) {
   return async (dispatch, getState) => {
     dispatch(requestLikePost());
 
-    const url = generateUrl("likePost");
-    try {
-      const { data } = await api.setParams({ id }).query(url);
+    const postsState = getState().posts;
+    const posts = [...postsState.data];
+    const postIndex = posts.findIndex((post) => post.id === id);
 
-      dispatch(receiveLikePost(data));
+    console.log("postIndex", postIndex);
+
+    try {
+      if (postIndex === -1) {
+        throw "Item not found!";
+      }
+
+      const post = posts[postIndex];
+      const url = generateUrl("likePost");
+
+      await api
+        .setMethod(post.iLike ? "DELETE" : "POST")
+        .setParams({ id })
+        .query(url);
+
+      posts[postIndex].likes += post.iLike ? -1 : 1;
+      posts[postIndex].iLike = !post.iLike;
+
+      dispatch(receiveLikePost(posts));
     } catch (e) {
       dispatch(errorLikePost("Error: something went wrong"));
     }

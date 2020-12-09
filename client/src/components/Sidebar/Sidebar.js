@@ -20,7 +20,7 @@ import GrainIcon from "@material-ui/icons/GrainOutlined";
 import NightsStayIcon from "@material-ui/icons/NightsStayOutlined";
 import SunnyIcon from "@material-ui/icons/WbSunnyOutlined";
 
-import { HOME_ROUTE, EXPLORE_ROUTE, MEET_ROUTE, CHAT_ROUTE } from "../../constants/routes";
+import { HOME_ROUTE, EXPLORE_ROUTE, MEET_ROUTE } from "../../constants/routes";
 import { useChangeTheme } from "../../domain/ThemeProvider";
 import UserCard from "./UserCard";
 
@@ -34,14 +34,22 @@ function Sidebar({
 }) {
   const classes = useStyles({ open });
   const { t } = useTranslation();
-  const location  = useLocation();
+  const location = useLocation();
   const history = useHistory();
 
   const theme = useTheme();
   const changeTheme = useChangeTheme();
 
-  const handleUserCardClick = (e) => {
-    e.preventDefault();
+  const handleUserCardNavigationChange = (value) => {
+    switch (value) {
+      case "goLive":
+        history.push(MEET_ROUTE);
+        break;
+      case "top":
+        break;
+      case "rewards":
+        break;
+    }
   };
 
   return (
@@ -78,9 +86,13 @@ function Sidebar({
         </Grid>
       </Typography>
 
-      <Divider />
-
-      <UserCard username={userInfo.userName} name={userInfo.name} avatarUrl={userInfo.avatarUrl} open={open} onClick={handleUserCardClick} />
+      <UserCard
+        username={userInfo.userName}
+        name={userInfo.name}
+        avatarUrl={userInfo.avatarUrl}
+        open={open}
+        onNavigationChange={handleUserCardNavigationChange}
+      />
 
       <Divider />
 
@@ -95,7 +107,11 @@ function Sidebar({
         </Tooltip>
 
         <Tooltip title={t("SidebarExploreText")} placement="right">
-          <ListItem button selected={location.pathname.includes(EXPLORE_ROUTE)} onClick={() => history.push(EXPLORE_ROUTE)}>
+          <ListItem
+            button
+            selected={location.pathname.includes(EXPLORE_ROUTE)}
+            onClick={() => history.push(EXPLORE_ROUTE)}
+          >
             <ListItemIcon>
               <FavoriteBorderIcon />
             </ListItemIcon>
@@ -104,7 +120,7 @@ function Sidebar({
         </Tooltip>
 
         <Tooltip title={t("SidebarActivityText")} placement="right">
-          <ListItem button >
+          <ListItem button>
             <ListItemIcon>
               <ExploreIcon />
             </ListItemIcon>

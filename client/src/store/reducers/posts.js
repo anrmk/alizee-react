@@ -5,21 +5,20 @@ import {
   GET_POSTS_REQUEST,
   GET_POSTS_SUCCESS,
   GET_POSTS_FAILURE,
-
   GET_FOLLOWING_POSTS_REQUEST,
   GET_FOLLOWING_POSTS_SUCCESS,
   GET_FOLLOWING_POSTS_FAILURE,
-
   CREATE_POST_REQUEST,
   CREATE_POST_SUCCESS,
   CREATE_POST_FAILURE,
-
   RESET_POSTS,
-
   LIKE_POST_REQUEST,
   LIKE_POST_SUCCESS,
   LIKE_POST_FAILURE,
-} from "../actions/post"; 
+  FAVORITE_POST_REQUEST,
+  FAVORITE_POST_SUCCESS,
+  FAVORITE_POST_FAILURE,
+} from "../actions/post";
 import { POSTS_DEFAULT_OFFSET } from "../../constants/feed";
 
 export default function signIn(
@@ -42,7 +41,7 @@ export default function signIn(
     case GET_POSTS_SUCCESS:
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
     case GET_POSTS_FAILURE:
       return {
@@ -110,29 +109,33 @@ export default function signIn(
         ...state,
         ...action.payload,
       };
-    case LIKE_POST_SUCCESS: {
-      const posts = [...state.data];
-      const postIndex = posts.findIndex(
-        (post) => post.id === action.payload.data.postId
-      );
-
-      if (postIndex !== -1) {
-        posts[postIndex].likes += action.payload.data.inactive ? -1 : 1;
-        posts[postIndex].iLike = !action.payload.data.inactive;
-      }
-
-      const currentPost = state.currentPost;
-      currentPost.likes += action.payload.data.inactive ? -1 : 1;
-      currentPost.iLike = !action.payload.data.inactive;
-
+      
+    case LIKE_POST_SUCCESS:
       return {
         ...state,
         ...action.payload,
-        data: posts,
-        currentPost,
       };
-    }
+
     case LIKE_POST_FAILURE:
+      return {
+        ...state,
+        ...action.payload,
+      };
+
+    // Favorite/Unfavorite
+    case FAVORITE_POST_REQUEST:
+      return {
+        ...state,
+        ...action.payload,
+      };
+
+    case FAVORITE_POST_SUCCESS:
+      return {
+        ...state,
+        ...action.payload,
+      };
+
+    case FAVORITE_POST_FAILURE:
       return {
         ...state,
         ...action.payload,

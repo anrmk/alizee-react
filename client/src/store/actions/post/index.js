@@ -38,3 +38,11 @@ export {
   LIKE_POST_FAILURE,
   likePost
 } from './likePost';
+
+export { 
+  FAVORITE_POST_REQUEST,
+  FAVORITE_POST_SUCCESS,
+  FAVORITE_POST_FAILURE,
+  favoritePost
+} from './favoritePost';
+

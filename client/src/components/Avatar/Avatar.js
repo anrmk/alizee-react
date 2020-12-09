@@ -1,9 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import clsx from "clsx";
 import { Avatar as MUIAvatar } from "@material-ui/core";
 
 import "./Avatar.scss";
-import { DEFAULT_VARIANT, BADGE_VARIANT } from "./constants";
+import { DEFAULT_VARIANT } from "./constants";
 import useStyles, { StyledBadge } from "./styles";
 
 function Avatar({
@@ -15,27 +17,28 @@ function Avatar({
   borderColor,
   variant = DEFAULT_VARIANT,
   online,
+  live,
   avatarBaseProps,
   badgeProps,
-  children
+  children,
 }) {
   const classes = useStyles({
     size,
     borderWidth,
     borderColor,
-    variant
+    variant,
+    online,
+    live,
   });
 
-  if (variant === BADGE_VARIANT) {
+  if (online !== undefined) {
     return (
-        <StyledBadge
-          {...badgeProps}
-          className={clsx(!online && classes.badgeOffline, badgeClassName)}>
-          <MUIAvatar {...avatarBaseProps} className={clsx(classes.avatar)} src={src}>
-            {children}
-          </MUIAvatar>
-        </StyledBadge>
-    )
+      <StyledBadge {...badgeProps} className={clsx(classes.badge, badgeClassName)}>
+        <MUIAvatar {...avatarBaseProps} className={clsx(classes.avatar)} src={src}>
+          {children}
+        </MUIAvatar>
+      </StyledBadge>
+    );
   }
 
   return (
@@ -44,5 +47,24 @@ function Avatar({
     </MUIAvatar>
   );
 }
+
+Avatar.propTypes = {
+  live: PropTypes.bool,
+  online: PropTypes.bool,
+  badgeProps: PropTypes.object,
+};
+
+Avatar.defaultProps = {
+  live: undefined,
+  online: undefined,
+  badgeProps: {
+    overlap: "circle",
+    anchorOrigin: {
+      vertical: "bottom",
+      horizontal: "right",
+    },
+    variant: "dot",
+  },
+};
 
 export default Avatar;

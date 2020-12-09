@@ -18,9 +18,16 @@ const useStyles = makeStyles((theme) => ({
   action: {
     borderTopWidth: "1px",
     borderTopStyle: "solid",
-    borderTopColor: theme.palette.divider
+    borderTopColor: theme.palette.divider,
+
+    "& > .MuiIconButton-root, & > .MuiButton-root": {
+      marginRight: theme.spacing(1),
+    },
   },
 
+  grow: {
+    flexGrow: 1,
+  },
 }));
 
 export default useStyles;

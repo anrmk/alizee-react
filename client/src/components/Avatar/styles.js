@@ -2,39 +2,42 @@ import { Badge, makeStyles, withStyles } from "@material-ui/core";
 import yellow from "@material-ui/core/colors/yellow";
 import blue from "@material-ui/core/colors/blue";
 import blueGrey from "@material-ui/core/colors/blueGrey";
+import grey from "@material-ui/core/colors/grey";
 import { STREAM_VARIANT } from "./constants";
 
 const SIZES = {
-  "small": "25px",
-  "medium": "40px",
-  "upperMedium": "50px",
-  "large": "65px"
-}
+  small: "25px",
+  medium: "40px",
+  upperMedium: "50px",
+  large: "65px",
+};
 
 const BORDER_COLORS = {
-  "gold": yellow["A700"],
-  "silver": blueGrey["100"],
-  "blue": blue["600"]
-}
+  gold: yellow["A700"],
+  silver: blueGrey["100"],
+  blue: blue["600"],
+  black: grey["900"],
+};
 
 const getBorder = (width, color) => {
   if (!color) return "none";
-  return `rgb(0 0 0) 0px 0px 1px 2px, 
+  return `rgb(0, 0, 0, .8) 0px 0px 1px 2px, 
           0px 0px 0px ${width ? width : "4px"} ${BORDER_COLORS[color] ? BORDER_COLORS[color] : BORDER_COLORS["blue"]}`;
-}
+};
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
-    width: ({ size }) => SIZES[size] ? SIZES[size] : SIZES["medium"],
-    height: ({ size }) => SIZES[size] ? SIZES[size] : SIZES["medium"],
+    width: ({ size }) => (SIZES[size] ? SIZES[size] : SIZES["medium"]),
+    height: ({ size }) => (SIZES[size] ? SIZES[size] : SIZES["medium"]),
     boxShadow: ({ borderWidth, borderColor }) => getBorder(borderWidth, borderColor),
     overflow: "visible",
     "& > img.MuiAvatar-img": {
-      borderRadius: "50%"
+      borderRadius: "50%",
     },
     "&::after": {
       position: "absolute",
-      display: ({ variant }) => variant === STREAM_VARIANT ? "block" : "none",
+      display: ({ live }) => (live ? "block" : "none"),
+      animationPlayState: ({ live, borderColor }) => (live && borderColor ? "running" : "paused"),
       top: 0,
       left: 0,
       width: "100%",
@@ -42,16 +45,25 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: "50%",
       boxShadow: ({ borderWidth, borderColor }) => getBorder(borderWidth, borderColor),
       animation: "$streamRipple 1.2s infinite ease-in-out",
-      content: '""'
+      content: '""',
     },
   },
+  badge: ({ online }) => ({
+    "& .MuiBadge-badge": {
+      backgroundColor: online ? theme.palette.success : theme.palette.grey["400"],
+      "&::after": {
+        animationPlayState: online ? "running" : "paused",
+        border: online ? theme.palette.success : theme.palette.grey["400"],
+      },
+    },
+  }),
   "@keyframes streamRipple": {
     "0%": {
-      opacity: 1
+      opacity: 1,
     },
     "100%": {
       transform: "scale(1.2)",
-      opacity: 0
+      opacity: 0,
     },
   },
 }));
@@ -71,15 +83,6 @@ export const StyledBadge = withStyles((theme) => ({
       animation: "$statusRipple 1.2s infinite ease-in-out",
       border: "1px solid currentColor",
       content: '""',
-    },
-    badgeOffline: {
-      "& .MuiBadge-badge": {
-        backgroundColor: theme.palette.grey["400"],
-        "&::after": {
-          animationPlayState: "paused",
-          border: theme.palette.grey["400"],
-        },
-      }
     },
   },
   "@keyframes statusRipple": {

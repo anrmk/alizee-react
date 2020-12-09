@@ -59,7 +59,7 @@ function ProfileHeader({
   return (
     <Grid container spacing={2} direction="row">
       <Grid container item xs={12} sm={4} direction="column" justify="space-between" alignItems="center">
-        <Avatar variant="circle" src={avatarUrl} className={classes.large} />
+        <Avatar variant="circular" src={avatarUrl} className={classes.large} />
       </Grid>
       <Grid item xs={12} sm={8}>
         <TopButtons

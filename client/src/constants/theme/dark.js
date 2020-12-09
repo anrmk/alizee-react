@@ -1,30 +1,26 @@
-import {makeStyles,  createMuiTheme } from "@material-ui/core";
-import { red } from "@material-ui/core/colors";
-import blueGrey from "@material-ui/core/colors/blueGrey";
-import pink from "@material-ui/core/colors/pink";
-import ThemeProvider from "../../domain/ThemeProvider";
+import { createMuiTheme } from "@material-ui/core";
 
 export default createMuiTheme({
   palette: {
     type: "dark",
     primary: {
-      main: "#845DD7"
+      main: "#845DD7",
     },
 
     secondary: {
-      main: "#8A2260"
+      main: "#8A2260",
     },
 
     success: {
-      main: "#3CFDB7"
+      main: "#3CFDB7",
     },
 
     warning: {
-      main: "#FEDB5F"
+      main: "#FEDB5F",
     },
 
     danger: {
-      main: "#FE5F5F"
+      main: "#FE5F5F",
     },
 
     background: {
@@ -37,55 +33,86 @@ export default createMuiTheme({
     MuiAppBar: {
       colorPrimary: {
         backgroundColor: "#1F2128",
-
-      }
+      },
     },
 
     MuiDrawer: {
       paper: {
-        backgroundColor: "#1F2128"
-      }
+        backgroundColor: "#1F2128",
+      },
+      paperAnchorDockedLeft: {
+        borderRight: "1px solid rgba(255, 255, 255, 0.08)",
+      },
     },
 
     MuiCard: {
       root: {
-        backgroundColor: "#242731" //"#2E2E3D"
-      }
+        backgroundColor: "#242731", //"#2E2E3D"
+      },
     },
 
     MuiButton: {
-      text: {
-        
-      },
-      // contained: {
-      //   background: "linear-gradient(89.86deg, rgba(119, 48, 108) -2.12%, rgba(43, 48, 177) 201.58%)",
-      //   color: "white",
-      //   opacity: ".8",
-      //   borderRadius: "10px",
-      //   "&:hover": {
-      //     opacity: "1"
-      //   }
-      // },
-      outlined: {
+      root: {},
 
-      }
+      text: {},
+
+      outlined: {},
+
+      contained: {
+        "&.primary": {
+          background: "linear-gradient(89.86deg, #77306C -2.12%, #2B30B1 201.58%)",
+          backgroundColor: "#77306C",
+          color: "white",
+          opacity: ".8",
+          "&:hover": {
+            opacity: "1",
+          },
+        },
+
+        "&.gold": {
+          background: "linear-gradient(89.86deg, #FEDB5F -2.12%, #2B30B1 201.58%)",
+          backgroundColor: "#FEDB5F",
+          color: "white",
+          opacity: ".8",
+          "&:hover": {
+            opacity: "1",
+          },
+        },
+      },
+    },
+
+    MuiIconButton: {
+      root: {
+        "&.success": {
+          color: "#3CFDB7",
+        },
+        "&.warning": {
+          color: "#FEDB5F",
+        },
+        "&.danger": {
+          color: "#FE5F5F",
+        },
+      },
     },
 
     MuiBottomNavigationAction: {
       root: {
         "&.success": {
-          color: "#3CFDB7"
+          color: "#3CFDB7",
         },
         "&.warning": {
-          color: "#FEDB5F"
+          color: "#FEDB5F",
         },
         "&.danger": {
-          color: "#FE5F5F"
+          color: "#FE5F5F",
         },
-      }
+      },
     },
 
-    
-    
+    MuiTypography: {
+      caption: {
+        opacity: "0.6",
+      },
+    },
   },
 });
