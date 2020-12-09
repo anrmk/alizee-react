@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import clsx from 'clsx';
 import { Box, Typography, Chip } from '@material-ui/core';
 
 import CustomInput from "../../components/CustomInput";
@@ -8,8 +9,9 @@ function ChipsInput({
   items = [],
   value = "",
   error = null,
-  filters,
+  filters = [],
   max,
+  classChipName,
 
   onChange,
   onError,
@@ -87,7 +89,7 @@ function ChipsInput({
     <Box className={classes.root}>
       <Box>
         {localItems.map(itemId => (
-          <Chip className={classes.chip} key={itemId} label={itemId} onDelete={() => handleDelete(itemId)} />
+          <Chip className={clsx(classes.chip, classChipName)} key={itemId} label={itemId} onDelete={() => handleDelete(itemId)} />
         ))}
       </Box>
 

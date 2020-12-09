@@ -7,11 +7,13 @@ import { Chip, Button, FormControl, FormGroup, FormHelperText, Grid, MenuItem, S
 
 import FileCopyOutlined from "@material-ui/icons/FileCopyOutlined";
 
+import ChipsInput from "../../components/ChipsInput";
 import CustomInput from "../../components/CustomInput";
 import useStyles from "./styles"
 
 const TITLE_ID = "title";
 const DESCRIPTION_ID = "description";
+const TAGS_ID = "tags";
 const ROOM_TYPE_ID = "roomType";
 const TICKET_PRICE_ID = "ticketPrice";
 
@@ -35,7 +37,12 @@ const schema = yup.object().shape({
     .max(VALUE_MAX_LENGTH_TITLE, VALUE_MAX_LENGTH_ERROR(VALUE_MAX_LENGTH_TITLE)),
   [DESCRIPTION_ID]: yup
     .string()
+    .notRequired()
     .max(VALUE_MAX_LENGTH_DESCRIPTION, VALUE_MAX_LENGTH_ERROR(VALUE_MAX_LENGTH_DESCRIPTION)),
+  [TAGS_ID]: yup
+    .array()
+    .nullable()
+    .notRequired(),
   [ROOM_TYPE_ID]: yup
     .number()
     .required(EMPTY_VALUE_ERROR),
@@ -66,12 +73,20 @@ function CreateRoomForm({
     .catch(() => onCopyLinkRoom(COPY_LINK_ROOM_ALERT_ERROR_TEXT));
   }
 
-  const { errors, control, handleSubmit } = useForm({
+  const { control, errors, handleSubmit, register, setValue } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       ticketPrice: 0
     }
   });
+
+  useEffect(() => {
+    register({ name: TAGS_ID });
+  }, [])
+
+  const handleTagsChange = (data) => {
+    setValue(TAGS_ID, data);
+  }
 
   return (
     <Grid container direction="row" spacing={2}>
@@ -142,6 +157,17 @@ function CreateRoomForm({
                   onChange={e => onChange(e.target.value.trim())}
                 />
               )} />
+          </FormGroup>
+
+          <FormGroup>
+            <ChipsInput
+              disableUnderline
+              classChipName={classes.createRoomChip}
+              label={t("CreateRoomTags")}
+              id={TAGS_ID}
+              name={TAGS_ID}
+              max={4}
+              onChange={handleTagsChange} />
           </FormGroup>
 
           <FormGroup className={classes.formGroup}>

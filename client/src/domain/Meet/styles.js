@@ -1,4 +1,4 @@
-import { makeStyles, Select, withStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   formGroup: {
@@ -8,12 +8,8 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(1, 0),
     textAlign: "center"
   },
-  createRoomDescription: {
-    margin: theme.spacing(1, 0),
-  },
   createRoomChip: {
-    borderRadius: theme.shape.borderRadius,
-    marginBottom: theme.spacing(1)
+    borderRadius: theme.shape.borderRadius
   },
   createRoomItem: {
     display: "flex",
