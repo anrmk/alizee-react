@@ -11,9 +11,7 @@
   "MeetingSubheader": "We re-engineered the service we built for secure business meetings, Google Meet, to make it free and available for all.",
   "MeetingNewMeetingButton": "New meeting",
   "MeetingPlaceholderLinkInput": "Enter a code or link",
-  "ProfileNavMenu": "Profile",
-  "SearchNavMenu": "Search",
-  "SignOutNavMenu": "Sign Out",
+
   "SecondTextFollowerItem": "recommended",
   "FollowerBtnTextFollowerItem": "Follow",
   "FollowingBtnTextFollowerItem": "Following",
@@ -31,6 +29,10 @@
   "ChatChatListEmptyTitle": "Your Chats",
   "ChatChatListEmptySubtitle": "Please create a chat to start messaging",
   "ChatChatRoomEmptyTitle": "Your Messages",
-  "ChatChatRoomEmptySubtitle": "Please select a chat to start messaging"
+  "ChatChatRoomEmptySubtitle": "Please select a chat to start messaging",
 
+  "NavbarMenuItemProfileText": "Profile",
+  "NavbarMenuItemPostSavedText": "Saved",
+  "NavbarMenuItemSettingsText": "Settings",
+  "NavbarMenuItemSignOutText": "Sign Out"
 }

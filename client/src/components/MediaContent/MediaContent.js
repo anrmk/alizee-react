@@ -4,40 +4,29 @@ import PropTypes from "prop-types";
 import { MEDIA_IMAGE, MEDIA_VIDEO } from "../../constants/media_types";
 import ImagesContent from "./ImagesContent";
 import VideoContent from "./VideoContent";
-import PayableContent from "./PayableContent";
 
 import Gallery from "../Gallery";
 
-import { Grid } from "@material-ui/core";
-import LockIcon from "@material-ui/icons/LockOutlined";
+function MediaContent({
+  items,
+  amount,
+  isPurchased,
+  showThumbnail,
 
-import useStyles from "./styles";
-
-const handleLockBtnClick = (e) => {
-  e.preventDefault();
-  e.stopPropagation();
-};
-
-const handlePayBtnClick = (e) => {
-  e.preventDefault();
-
-  console.log("pay click");
-};
-
-const renderContent = () => {};
-
-function MediaContent({ items, amount, showThumbnail, showPayable, className }) {
+  onPayClick,
+}) {
   if (!items || !items.length) return <></>;
 
   return (
-    <Gallery className={className} amount={amount} onPayClick={handlePayBtnClick}>
+    <Gallery amount={amount} isPurchased={isPurchased} onPayClick={onPayClick} >
       {items.length &&
         items.map((item) => {
           const url = showThumbnail ? item.thumbnailUrl : item.url;
-          if (item.kind === MEDIA_IMAGE || !amount) {
+
+          if (item.kind === MEDIA_IMAGE) {
             return <ImagesContent key={item.id} url={url} amount={amount} />;
           } else if (item.kind === MEDIA_VIDEO) {
-            return <VideoContent key={item.id} url={url} />;
+            return <VideoContent key={item.id} url={url} showControls={amount === 0} />;
           } else {
             return <></>;
           }
@@ -50,18 +39,24 @@ MediaContent.propTypes = {
   items: PropTypes.array,
   caption: PropTypes.string,
   amount: PropTypes.number,
-  //lazyLoad: PropTypes.bool,
+  isPurchased: PropTypes.bool,
+ 
   showPayable: PropTypes.bool,
   showThumbnail: PropTypes.bool,
+
+  onPayClick: PropTypes.func
 };
 
 MediaContent.defaultProps = {
   items: [],
   caption: "",
   amount: 0,
-  //lazyLoad: true,
+  isPurchased: false,
+
   showPayable: false,
   showThumbnail: false,
+
+  onPayClick: undefined
 };
 
 export default MediaContent;

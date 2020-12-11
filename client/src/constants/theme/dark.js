@@ -95,24 +95,32 @@ export default createMuiTheme({
       },
     },
 
-    MuiBottomNavigationAction: {
-      root: {
-        "&.success": {
-          color: "#3CFDB7",
-        },
-        "&.warning": {
-          color: "#FEDB5F",
-        },
-        "&.danger": {
-          color: "#FE5F5F",
-        },
+    MuiSvgIcon: {
+      root: {},
+
+      fontSizeLarge: {
+        fontSize: "8rem",
       },
     },
+  },
 
-    MuiTypography: {
-      caption: {
-        opacity: "0.6",
+  MuiBottomNavigationAction: {
+    root: {
+      "&.success": {
+        color: "#3CFDB7",
       },
+      "&.warning": {
+        color: "#FEDB5F",
+      },
+      "&.danger": {
+        color: "#FE5F5F",
+      },
+    },
+  },
+
+  MuiTypography: {
+    caption: {
+      opacity: "0.6",
     },
   },
 });

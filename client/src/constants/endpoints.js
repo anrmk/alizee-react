@@ -21,6 +21,7 @@ export default {
     // LIKES
     likePost: "post/like",
     favoritePost: "post/favorite",
+    buyPost: "post/buy",
     
     // CHAT
     getRoom: "chat/getRoom",

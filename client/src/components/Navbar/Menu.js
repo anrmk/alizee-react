@@ -1,15 +1,15 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
+import { Menu, MenuItem, ListItemIcon, ListItemText, Divider } from "@material-ui/core";
 
 import ExitToAppIcon from "@material-ui/icons/ExitToAppOutlined";
 import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
-import SearchIcon from "@material-ui/icons/SearchOutlined";
+import SettingsIcon from "@material-ui/icons/Settings";
+import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorderOutlined";
 
-import { PROFILE_ROUTE, SEARCH_ROUTE } from "../../constants/routes";
+import { PROFILE_ROUTE, SEARCH_ROUTE, SETTINGS_EDIT_PROFILE_ROUTE } from "../../constants/routes";
 
 export default function NavMenu({
   id,
@@ -19,7 +19,7 @@ export default function NavMenu({
 
   onCloseClick,
   onClose,
-  onLogout
+  onLogout,
 }) {
   const { t } = useTranslation();
   const history = useHistory();
@@ -31,54 +31,44 @@ export default function NavMenu({
 
   return (
     <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={id}
       keepMounted
+      anchorEl={anchorEl}
+      
+      anchorOrigin={{ vertical: "top", horizontal: "left" }}
       transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={open}
       onClose={onClose}
     >
       <MenuItem onClick={() => history.push(PROFILE_ROUTE(username))}>
-        <AccountIcon fontSize="small" /> 
-        {t("ProfileNavMenu")}
+        <ListItemIcon>
+          <AccountIcon />
+        </ListItemIcon>
+        <ListItemText primary={t("NavbarMenuItemProfileText")} />
       </MenuItem>
 
       <MenuItem onClick={() => history.push(SEARCH_ROUTE)}>
-        <SearchIcon fontSize="small" /> 
-        {t("SearchNavMenu")}
+        <ListItemIcon>
+          <BookmarkBorderIcon />
+        </ListItemIcon>
+        <ListItemText primary={t("NavbarMenuItemPostSavedText")} />
       </MenuItem>
 
+      <MenuItem onClick={() => history.push(SETTINGS_EDIT_PROFILE_ROUTE)}>
+        <ListItemIcon>
+          <SettingsIcon />
+        </ListItemIcon>
+        <ListItemText primary={t("NavbarMenuItemSettingsText")} />
+      </MenuItem>
+
+      <Divider />
+
       <MenuItem onClick={onLogout}>
-        <ExitToAppIcon fontSize="small" /> 
-        {t("SignOutNavMenu")}
-      </MenuItem> 
+        <ListItemIcon>
+          <ExitToAppIcon />
+        </ListItemIcon>
+        <ListItemText primary={t("NavbarMenuItemSignOutText")} />
+      </MenuItem>
     </Menu>
   );
 }
-
-
-{/* return (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={id}
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={open}
-      onClose={onClose}
-    >
-      <MenuItem onClick={() => history.push(PROFILE_ROUTE(username))}>
-        <AccountIcon fontSize="small" /> 
-        {t("ProfileNavMenu")}
-      </MenuItem>
-
-      <MenuItem onClick={() => history.push(SEARCH_ROUTE)}>
-        <SearchIcon fontSize="small" /> 
-        {t("SearchNavMenu")}
-      </MenuItem>
-
-      <MenuItem onClick={onLogout}>
-        <ExitToAppIcon fontSize="small" /> 
-        {t("SignOutNavMenu")}
-      </MenuItem> */}

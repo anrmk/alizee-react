@@ -1,11 +1,11 @@
 import { fade, makeStyles } from "@material-ui/core/styles";
 
-const drawerWidth = 280;
+const drawerWidth = 260;
 
 const useStyles = (open) => makeStyles((theme) => ({
     root: {
       boxShadow: "none",
-      width: `calc(100% - ${theme.spacing(8)}px)`,
+      width: `calc(100% - ${theme.spacing(7)}px)`,
 
       marginLeft: drawerWidth,
       transition: theme.transitions.create(["width", "margin"], {
@@ -13,7 +13,7 @@ const useStyles = (open) => makeStyles((theme) => ({
         duration: theme.transitions.duration.enteringScreen,
       }),
       [theme.breakpoints.up("sm")]: {
-        width: open ? `calc(100% - ${drawerWidth}px)` : `calc(100% - ${theme.spacing(8)}px)`,
+        width: open ? `calc(100% - ${drawerWidth}px)` : `calc(100% - ${theme.spacing(7)}px)`,
       },
     },
 

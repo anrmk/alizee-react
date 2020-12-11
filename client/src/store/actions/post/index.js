@@ -46,3 +46,9 @@ export {
   favoritePost
 } from './favoritePost';
 
+export { 
+  BUY_POST_REQUEST,
+  BUY_POST_SUCCESS,
+  BUY_POST_FAILURE,
+  buyPost
+} from './buyPost';

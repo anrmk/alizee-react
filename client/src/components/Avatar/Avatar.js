@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import clsx from "clsx";
 import { Avatar as MUIAvatar } from "@material-ui/core";
 
-import "./Avatar.scss";
 import { DEFAULT_VARIANT } from "./constants";
 import useStyles, { StyledBadge } from "./styles";
 

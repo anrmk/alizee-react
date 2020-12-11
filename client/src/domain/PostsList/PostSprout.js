@@ -1,8 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import { CreateForm, CreatePost, CreateFeeling, CreateStories } from "../../components/Post";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Fab, Avatar, Box } from "@material-ui/core";
+import { CreateForm, CreatePost, CreateFeeling } from "../../components/Post";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Fab } from "@material-ui/core";
 
 import AddIcon from "@material-ui/icons/Add";
 
@@ -39,7 +39,7 @@ function PostSprout({ user, onSubmit, variant }) {
       case "FEELING":
         return <CreateFeeling id={id} user={user} onSubmit={handleFormSubmit} />;
       default:
-        return <CreatePost id={id} user={user} onSubmit={handleFormSubmit} />;;
+        return <CreatePost id={id} user={user} onSubmit={handleFormSubmit} />;
     }
   };
 

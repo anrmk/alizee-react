@@ -48,7 +48,7 @@ function App({ userInfo, username, isAuthenticated, avatarUrl, signOut }) {
             <div style={{ display: "flex" }}>
               {isAuthenticated && (
                 <>
-                  <Navbar username={userInfo.username} avatarUrl={userInfo.avatarUrl} onSignOut={signOut} open={open} />
+                  <Navbar username={userInfo.userName} avatarUrl={userInfo.avatarUrl} onSignOut={signOut} open={open} />
                   <Sidebar userInfo={userInfo} open={open} onDrawerToggle={handleDrawerToggle} />
                 </>
               )}

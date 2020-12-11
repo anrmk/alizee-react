@@ -11,6 +11,16 @@ const useStyles = makeStyles((theme) => ({
     }
   },
 
+  title: {
+    position: "absolute",
+    height: "100%",
+    width: "100%",
+    textAlign: "center",
+    zIndex: 1,
+    backgroundColor: "rgba(0,0,0,0.8)",
+    padding: "40% 0" 
+  },
+
   pagination: {
     position: "absolute",
     bottom: theme.spacing(6),

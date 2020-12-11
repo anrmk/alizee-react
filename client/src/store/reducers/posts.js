@@ -18,6 +18,11 @@ import {
   FAVORITE_POST_REQUEST,
   FAVORITE_POST_SUCCESS,
   FAVORITE_POST_FAILURE,
+
+  BUY_POST_REQUEST,
+  BUY_POST_SUCCESS,
+  BUY_POST_FAILURE,
+
 } from "../actions/post";
 import { POSTS_DEFAULT_OFFSET } from "../../constants/feed";
 
@@ -136,6 +141,25 @@ export default function signIn(
       };
 
     case FAVORITE_POST_FAILURE:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    
+    // Favorite/Unfavorite
+    case BUY_POST_REQUEST:
+      return {
+        ...state,
+        ...action.payload,
+      };
+
+    case BUY_POST_SUCCESS:
+      return {
+        ...state,
+        ...action.payload,
+      };
+
+    case BUY_POST_FAILURE:
       return {
         ...state,
         ...action.payload,

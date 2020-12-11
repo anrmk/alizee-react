@@ -62,7 +62,7 @@ function Feed(props) {
     getInterests,
   } = props;
 
-  const { resetPosts, fetchPosts, createPost, likePost, favoritePost, settings, interests, createInterests } = props;
+  const { resetPosts, fetchPosts, createPost, likePost, favoritePost, buyPost, settings, interests, createInterests } = props;
 
   useEffect(() => {
     (async () => {
@@ -104,7 +104,6 @@ function Feed(props) {
   };
 
   const handleLikeClick = async (id, isLoading) => {
-    console.log("handleLikeClick", id)
     !isLoading && (await likePost(apiClient, id));
   };
 
@@ -116,10 +115,6 @@ function Feed(props) {
     history.push(`${POST_ROUTE}/${id}`);
   };
 
-  const handleByClick = ({ id }) => {
-    console.log("handleByClick");
-  };
-
   const handleFollowPeopleClick = (id, isLoading) => {
     if (!isLoading) {
       var follower = peopleSuggestions.data.find((u) => u.id === id);
@@ -129,8 +124,11 @@ function Feed(props) {
     }
   };
 
+  const handleBuyClick = async ({id, amount}, isLoading) => {
+    !isLoading && (await buyPost(apiClient, id));
+  }
+
   const handleFormSubmit = async (formData, mediaData) => {
-    console.log(formData)
     await createPost(apiClient, formData, mediaData);
   };
 
@@ -165,7 +163,7 @@ function Feed(props) {
               onLikeClick={(id) => handleLikeClick(id, posts.isFetching)}
               onFavoriteClick={(id) => handleFavoriteClick(id, posts.isFetching)}
               onFollowClick={(id) => handleFollowPeopleClick(id, peopleSuggestions.isFetching)}
-              onBuyClick={handleByClick}
+              onPayClick={(data) => handleBuyClick(data, posts.isFetching)}
             />
           </Grid>
           <Hidden smDown>
@@ -178,11 +176,14 @@ function Feed(props) {
               </Typography>
               <RelationshipList items={peopleSuggestions.data} onFollowClick={handleFollowPeopleClick} />
               <br />
-              <Typography component="h4" gutterBottom>Rooms</Typography>
+              <Typography component="h4" gutterBottom>
+                Rooms
+              </Typography>
               <MeetTools />
             </Grid>
           </Hidden>
         </Grid>
+
         <Dialog
           open={interestsModalShow && !isInterestsSkip && Object.keys(interests.data).length}
           onClose={handleInterestsModalClose}
@@ -241,6 +242,7 @@ function mapDispatchToProps(dispatch) {
     resetPosts: () => dispatch(postActions.resetPosts()),
     fetchPosts: (api, opts) => dispatch(postActions.getFollowingPosts(api, opts)),
     createPost: (api, post, media) => dispatch(postActions.createPost(api, post, media)),
+    buyPost: (api, id) => dispatch(postActions.buyPost(api, id)),
     getPeopleSuggestions: (api, count) => dispatch(actionSuggestion.getPeopleSuggestions(api, count)),
     likePost: (api, id) => dispatch(postActions.likePost(api, id)),
     favoritePost: (api, id) => dispatch(postActions.favoritePost(api, id)),

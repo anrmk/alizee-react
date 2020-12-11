@@ -43,8 +43,6 @@ export function likePost(api, id) {
     const posts = [...postsState.data];
     const postIndex = posts.findIndex((post) => post.id === id);
 
-    console.log("postIndex", postIndex);
-
     try {
       if (postIndex === -1) {
         throw "Item not found!";

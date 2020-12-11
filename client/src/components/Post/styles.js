@@ -5,7 +5,8 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(3),
   },
 
-  post: {
+  //obsolete
+  media: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     borderTopColor: theme.palette.divider,
 
     "& > .MuiIconButton-root, & > .MuiButton-root": {
-      marginRight: theme.spacing(1),
+      marginLeft: theme.spacing(1),
     },
   },
 

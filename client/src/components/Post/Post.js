@@ -1,9 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Card, CardHeader, CardMedia, CardContent, CardActions, Avatar, Typography } from "@material-ui/core";
+import {formatDate} from "../../helpers/functions";
 
-import IconButton from "@material-ui/core/IconButton";
+import {
+  Card,
+  CardHeader,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Avatar,
+  Typography,
+  IconButton
+} from "@material-ui/core";
+
 import MoreVertIcon from "@material-ui/icons/MoreVertOutlined";
 
 import { Tools } from "../../components/Post";
@@ -11,31 +21,36 @@ import MediaContent from "../../components/MediaContent";
 
 import useStyles from "./styles";
 
-function Post({
-  id,
-  userId,
-  avatarUrl,
-  username,
-  mediaUrls,
-  amount,
-  description,
-  commentable,
-  likes,
-  iLike,
-  isFavorite,
-  createdDate,
-  hideToolbar,
-  hideHeader,
-
-  onLikeClick,
-  onFavoriteClick,
-  onCommentsClick,
-  onBuyClick,
-  onShareClick,
-  onOptionsClick,
-  onGoToClick,
-}) {
+function Post(props) {
   const classes = useStyles();
+
+  const {
+    id,
+    userId,
+    avatarUrl,
+    name,
+    username,
+    mediaUrls,
+    amount,
+    description,
+    commentable,
+    likes,
+    iLike,
+    isFavorite,
+    isPurchased,
+    createdDate,
+    hideToolbar,
+    hideHeader,
+  } = props;
+
+  const {
+    onLikeClick,
+    onFavoriteClick,
+    onShareClick,
+    onGoToClick,
+    onPayClick,
+    onReceiptClick
+  } = props;
 
   const handleLikeClick = (e) => {
     e.preventDefault();
@@ -52,9 +67,14 @@ function Post({
     onGoToClick && onGoToClick(id);
   };
 
-  const handleBuyClick = (e) => {
+  const handlePayClick = (e) => {
     e.preventDefault();
-    onBuyClick && onBuyClick(id);
+    onPayClick && onPayClick({ id, amount });
+  };
+
+  const handleReceiptClick = (e) => {
+    e.preventDefault();
+    onReceiptClick && onReceiptClick(id);
   };
 
   const handleShareClick = (e) => {
@@ -62,26 +82,26 @@ function Post({
     onShareClick && onShareClick({ id, title: username, quote: description });
   };
 
-  const handleOptionsClick = (e) => {
-    e.preventDefault();
-    onOptionsClick && onOptionsClick({ id, userId, username });
-  };
-
   return (
     <Card className={classes.root} variant="elevation">
       <CardHeader
         avatar={<Avatar src={avatarUrl} />}
+        title={name}
+        subheader={username}
         action={
-          <IconButton aria-label="settings" onClick={handleOptionsClick}>
+          <>
+          <Typography display="inline" variant="caption">
+            {createdDate && formatDate(new Date(createdDate))}
+          </Typography>
+          <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>
+          </>
         }
-        title={username}
-        subheader="September 14, 2016"
       ></CardHeader>
 
       <CardMedia>
-        <MediaContent className={classes.post} items={mediaUrls} amount={amount} />
+        <MediaContent className={classes.post} items={mediaUrls} amount={amount} isPurchased={isPurchased} />
       </CardMedia>
 
       <CardContent>
@@ -89,6 +109,7 @@ function Post({
           {description}
         </Typography>
       </CardContent>
+      
       <CardActions className={classes.action} disableSpacing>
         {!hideToolbar && (
           <Tools
@@ -99,11 +120,14 @@ function Post({
             iLike={iLike}
             isFavorite={isFavorite}
             amount={amount}
+            isPurchased={isPurchased}
+
             onLikeClick={handleLikeClick}
             onGoToClick={handleGoToClick}
             onShareClick={handleShareClick}
             onFavoriteClick={handleFavoriteClick}
-            onBuyClick={handleBuyClick}
+            onPayClick={handlePayClick}
+            onReceiptClick={handleReceiptClick}
           />
         )}
       </CardActions>
@@ -129,8 +153,9 @@ Post.propTypes = {
 
   onFavoriteClick: PropTypes.func,
   onCommentsClick: PropTypes.func,
-  onBuyClick: PropTypes.func,
   onShareClick: PropTypes.func,
+  onPayClick: PropTypes.func,
+  onReceiptClick: PropTypes.func,
 };
 
 Post.defaultProps = {
@@ -151,8 +176,9 @@ Post.defaultProps = {
 
   onFavoriteClick: undefined,
   onCommentsClick: undefined,
-  onBuyClick: undefined,
   onShareClick: undefined,
+  onPayClick: undefined,
+  onReceiptClick: undefined,
 };
 
 export default Post;

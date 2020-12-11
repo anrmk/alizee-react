@@ -299,6 +299,16 @@ export function formatCurrency(amount, currency = "USD") {
   return formatter.format(amount);
 }
 
+export function formatDate(value) {
+  var options = { 
+    year: "numeric", month: "long", day: "numeric", 
+    hour: 'numeric', minute: 'numeric', 
+    hour12: true
+  };
+  var formatter = new Intl.DateTimeFormat("en-US", options);
+  return formatter.format(value);
+}
+
 export function copyFlatObjectWithIgnore(obj, ignores) {
   if (!obj || !Object.keys(obj).length) return null;
   if (!ignores || !ignores.length) return obj;

@@ -11,7 +11,7 @@ import VolumeUp from "@material-ui/icons/VolumeUp";
 
 import useStyles from "./styles";
 
-export default function VideoContent({ id, url, lock }) {
+export default function VideoContent({ id, url, showControls }) {
   const classes = useStyles();
 
   const [playing, setPlaying] = useState(false);
@@ -70,8 +70,8 @@ export default function VideoContent({ id, url, lock }) {
 
   return (
     <Box id={id} className={classes.videoContent} onMouseEnter={() => setShowing(true)} onMouseLeave={() => setShowing(false)}>
-      {renderPlayBtn(showing, playing)}
-      {renderMuteBtn(showing, muted, playing)}
+      {showControls && renderPlayBtn(showing, playing)}
+      {showControls && renderMuteBtn(showing, muted, playing)}
      
       <ReactPlayer className={classes.player} width="100%" height="100%" playing={playing} muted={muted} url={url} />
     </Box>
@@ -80,10 +80,10 @@ export default function VideoContent({ id, url, lock }) {
 
 VideoContent.propTypes = {
   url: PropTypes.string,
-  lock: PropTypes.bool
+  showControls: PropTypes.bool
 };
 
 VideoContent.defaultProps = {
   url: "",
-  lock: true
+  showControls: true
 };
