@@ -4,11 +4,12 @@ import { InputAdornment, IconButton } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/SendOutlined";
 import ImageIcon from "@material-ui/icons/ImageOutlined";
 
-import CustomInput from "../../components/CustomInput";
+import CustomInput from "../CustomInput";
 import useStyles from "./styles";
 
-function MessageSender({
+function MessageSenderInput({
   placeholder = "Type a message...",
+
   onSendMessageClick
 }) {
   const classes = useStyles();
@@ -30,7 +31,7 @@ function MessageSender({
   }
 
   return (
-    <CustomInput 
+    <CustomInput
       placeholder={placeholder}
       disableUnderline
       wrapperClassName={classes.messageSenderInputWrapper}
@@ -55,4 +56,4 @@ function MessageSender({
   )
 }
 
-export default MessageSender;
+export default MessageSenderInput;

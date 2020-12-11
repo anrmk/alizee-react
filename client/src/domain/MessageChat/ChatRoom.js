@@ -6,8 +6,7 @@ import SendOutlinedIcon from '@material-ui/icons/SendOutlined';
 
 import { ESC_KEY_CODE } from "../../constants/key_codes";
 import ChatRoomToolbar from "./ChatRoomToolbar";
-import MessagesList from "./MessagesList";
-import MessageSender from "./MessageSender";
+import { MessageSenderInput, MessagesList } from "../../components/Chat";
 import Empty from "./Empty";
 import useStyles from "./styles";
 
@@ -46,7 +45,7 @@ function ChatRoom({
             lastOnlineDate={data.offlineDate}
             onCloseClick={onClose} />
           <MessagesList userId={user.id} items={data.messages} />
-          <MessageSender onSendMessageClick={onMessageCreate} />
+          <MessageSenderInput onSendMessageClick={onMessageCreate} />
         </>
       ) : (
         <Empty
