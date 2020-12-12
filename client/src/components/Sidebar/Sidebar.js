@@ -78,7 +78,7 @@ function Sidebar({
             <NightsStayIcon />
           </Grid>
           <Grid item>
-            <Switch name="gilad" checked={theme.palette.type === "light"} onChange={() => changeTheme()} />
+            <Switch name="gilad" checked={theme.palette.type === "light"} color="primary" onChange={() => changeTheme()} />
           </Grid>
           <Grid item>
             <SunnyIcon />

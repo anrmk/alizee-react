@@ -76,7 +76,7 @@ function Navbar({
           <div className={classes.grow} />
 
           <div className={classes.controls}>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
+            <IconButton aria-label="show 17 new notifications">
               <Badge badgeContent={notificationsCount}>
                 <NotificationsIcon />
               </Badge>

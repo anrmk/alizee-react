@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 
   item: {
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: "rgba(161, 225, 230, 0.08)",
+    backgroundColor: theme.palette.background.paper,
     marginBottom: theme.spacing(1)
   },
 

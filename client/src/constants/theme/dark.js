@@ -25,8 +25,10 @@ export default createMuiTheme({
 
     background: {
       default: "#1F2128",
-      paper: "#242731",
+      paper: "#242731"
     },
+
+    divider:  "rgba(255, 255, 255, 0.08)"
   },
 
   overrides: {
@@ -40,9 +42,7 @@ export default createMuiTheme({
       paper: {
         backgroundColor: "#1F2128",
       },
-      paperAnchorDockedLeft: {
-        borderRight: "1px solid rgba(255, 255, 255, 0.08)",
-      },
+
     },
 
     MuiCard: {
@@ -108,6 +108,7 @@ export default createMuiTheme({
     root: {
       "&.success": {
         color: "#3CFDB7",
+        backgroundColor: "red"
       },
       "&.warning": {
         color: "#FEDB5F",
@@ -116,6 +117,9 @@ export default createMuiTheme({
         color: "#FE5F5F",
       },
     },
+    "& .success": {
+      color: "#3CFDB7",
+    },
   },
 
   MuiTypography: {
@@ -123,4 +127,5 @@ export default createMuiTheme({
       opacity: "0.6",
     },
   },
+
 });

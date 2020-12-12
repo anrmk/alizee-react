@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     textAlign: "center",
     zIndex: 1,
-    backgroundColor: "rgba(0,0,0,0.8)",
+    backgroundColor: theme.palette.type === "dark" ? "rgba(0,0,0,0.7)" : "rgba(255,255,255,0.7)",
     padding: "40% 0" 
   },
 
