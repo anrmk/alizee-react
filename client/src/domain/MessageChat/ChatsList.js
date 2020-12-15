@@ -6,7 +6,7 @@ import ChatIcon from '@material-ui/icons/ChatOutlined';
 
 import ChatListItem from "./ChatListItem";
 import useStyles from "./styles";
-import Empty from './Empty';
+import Empty from "../../components/Chat/Empty";
 
 function ChatsList({
   loading,

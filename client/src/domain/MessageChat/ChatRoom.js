@@ -7,7 +7,7 @@ import SendOutlinedIcon from '@material-ui/icons/SendOutlined';
 import { ESC_KEY_CODE } from "../../constants/key_codes";
 import ChatRoomToolbar from "./ChatRoomToolbar";
 import { MessageSenderInput, MessagesList } from "../../components/Chat";
-import Empty from "./Empty";
+import Empty from "../../components/Chat/Empty";
 import useStyles from "./styles";
 
 function ChatRoom({

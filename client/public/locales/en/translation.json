@@ -11,6 +11,9 @@
   "MeetingSubheader": "We re-engineered the service we built for secure business meetings, Google Meet, to make it free and available for all.",
   "MeetingNewMeetingButton": "New meeting",
   "MeetingPlaceholderLinkInput": "Enter a code or link",
+  "RoomTabChatTitle": "Chat",
+  "RoomTabPeoplesTitle": "Peoples",
+  "RoomTabMenuTitle": "Menu",
 
   "SecondTextFollowerItem": "recommended",
   "FollowerBtnTextFollowerItem": "Follow",

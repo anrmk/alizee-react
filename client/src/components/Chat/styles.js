@@ -4,6 +4,12 @@ import lime from '@material-ui/core/colors/lime';
 import { getStyleByTheme } from "../../helpers/functions";
 
 const useStyles = makeStyles((theme) => ({
+    emptyMessageContainer: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      alignSelf: "center"
+    },
     messenger: {
       width: "100%",
       height: `calc(100vh - ${(theme.mixins.toolbar.minHeight * 2) + (theme.spacing(2) * 3) + theme.spacing(1) * 3}px - 48px)`,
@@ -11,11 +17,9 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: theme.spacing(1),
       display: "flex",
       flexDirection: "column",
-      boxShadow: theme.shadows[1],
       borderRadius: theme.shape.borderRadius,
       overflowY: "auto",
       position: "relative",
-      backgroundImage: "url('https://mir-s3-cdn-cf.behance.net/project_modules/disp/2d9dd173426833.5c08f5634ff45.png')",
       backgroundRepeat: "repeat",
       "&::-webkit-scrollbar": {
         display: "none"

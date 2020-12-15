@@ -1,15 +1,22 @@
 import React, { useEffect, useRef } from "react";
 
-function Video(props) {
-  const ref = useRef();
+function Video({
+  classVideoName,
+  stream
+}) {
+  const videoRef = useRef(null);
 
   useEffect(() => {
-    props.peer.on("stream", (stream) => {
-      ref.current.srcObject = stream;
-    });
-  }, []);
+    videoRef.current.srcObject = stream;
+  }, [stream]);
 
-  return <video playsInline autoPlay ref={ref} />;
+  return <video
+    className={classVideoName}
+    ref={videoRef}
+    autoPlay
+    playsInline
+    allowFullScreen
+    controls />;
 }
 
 export default Video;

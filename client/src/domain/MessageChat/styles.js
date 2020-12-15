@@ -127,12 +127,6 @@ const useStyles = makeStyles((theme) => {
     lastOnlineDateRoomToolbar: {
       color: theme.palette.text.primary
     },
-    emptyMessageContainer: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      alignSelf: "center"
-    },
     progress: {
       alignSelf: "center"
     },
