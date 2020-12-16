@@ -18,20 +18,19 @@ import {
   FAVORITE_POST_REQUEST,
   FAVORITE_POST_SUCCESS,
   FAVORITE_POST_FAILURE,
-
   BUY_POST_REQUEST,
   BUY_POST_SUCCESS,
-  BUY_POST_FAILURE,
-
+  BUY_POST_FAILURE
 } from "../actions/post";
 import { POSTS_DEFAULT_OFFSET } from "../../constants/feed";
 
-export default function signIn(
+export default function post(
   state = {
     isFetching: false,
     hasMore: false,
     data: [],
     currentPost: {},
+    currentCommnets: [],
     offset: POSTS_DEFAULT_OFFSET,
   },
   action
@@ -114,7 +113,7 @@ export default function signIn(
         ...state,
         ...action.payload,
       };
-      
+
     case LIKE_POST_SUCCESS:
       return {
         ...state,
@@ -145,7 +144,7 @@ export default function signIn(
         ...state,
         ...action.payload,
       };
-    
+
     // Favorite/Unfavorite
     case BUY_POST_REQUEST:
       return {

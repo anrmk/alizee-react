@@ -300,13 +300,29 @@ export function formatCurrency(amount, currency = "USD") {
 }
 
 export function formatDate(value) {
-  var options = { 
-    year: "numeric", month: "long", day: "numeric", 
-    hour: 'numeric', minute: 'numeric', 
-    hour12: true
-  };
+  const currentDate = new Date();
+  const delta = currentDate - new Date(value);
+
+  console.log("Delta", delta);
+
+  let options = {};
+
+  if(delta > 1000*60*60*12) {
+    options = { 
+      year: "numeric", month: "short", day: "numeric", 
+      hour: 'numeric', minute: 'numeric', 
+      hour12: true
+    };
+  } else {
+    options = {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    };
+  }
+  
   var formatter = new Intl.DateTimeFormat("en-US", options);
-  return formatter.format(value);
+  return formatter.format(new Date(value));
 }
 
 export function copyFlatObjectWithIgnore(obj, ignores) {

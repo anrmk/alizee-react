@@ -61,7 +61,7 @@ export function createPost(api, postData, mediaData=[]) {
           description: postData.description,
           isCommentable: postData.commentable,
           kind: postData.private ? POST_PRIVATE : POST_PUBLIC,
-          amount: Number(postData.amount),
+          //amount: Number(postData.amount),
           latitude: postData?.latitude,
           longitude: postData?.longitude,
           media: media,

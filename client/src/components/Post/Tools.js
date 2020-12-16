@@ -23,6 +23,11 @@ function Tools({
   amount,
   isPurchased,
 
+  hideCommentable,
+  hideLike,
+  hideFavorite,
+  hideWatch,
+
   onGoToClick,
   onShareClick,
   onLikeClick,
@@ -65,7 +70,7 @@ function Tools({
       </IconButton>
       <Hidden mdDown>{likes > 0 && <strong>{likes}</strong>}</Hidden>
 
-      {commentable && (
+      {commentable && !hideCommentable && (
         <IconButton className="warning" onClick={onGoToClick}>
           <ChatIcon />
         </IconButton>
@@ -83,9 +88,11 @@ function Tools({
 
       {renderPurchase(amount, isPurchased)}
 
-      <Button variant="contained" size="small" className="primary" onClick={onGoToClick}>
-        Watch
-      </Button>
+      {!hideWatch && (
+        <Button variant="contained" size="small" className="primary" onClick={onGoToClick}>
+          Watch
+        </Button>
+      )}
     </>
   );
 }
@@ -97,6 +104,11 @@ Tools.propTypes = {
   iLike: Props.bool,
   isFavorite: Props.bool,
   amount: Props.number,
+
+  hideCommentable: Props.bool,
+  hideLike: Props.bool,
+  hideFavorite: Props.bool,
+  hideWatch: Props.bool,
 
   onGoToClick: Props.func,
   onShareClick: Props.func,
@@ -112,6 +124,11 @@ Tools.defaultProps = {
   iLike: false,
   isFavorite: false,
   amount: 0,
+
+  hideCommentable: false,
+  hideLike: false,
+  hideFavorite: false,
+  hideWatch: false,
 
   onGoToClick: undefined,
   onShareClick: undefined,

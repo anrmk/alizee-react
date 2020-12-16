@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     },
     messenger: {
       width: "100%",
-      height: `calc(100vh - ${(theme.mixins.toolbar.minHeight * 2) + (theme.spacing(2) * 3) + theme.spacing(1) * 3}px - 48px)`,
+      height: `40vh`, // - ${(theme.mixins.toolbar.minHeight * 5) + (theme.spacing(5) * 7) }px bugfix
       padding: theme.spacing(2),
       marginBottom: theme.spacing(1),
       display: "flex",

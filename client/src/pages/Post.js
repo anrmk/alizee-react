@@ -1,21 +1,20 @@
 import React, { useContext, useEffect } from "react";
 import { Redirect } from "react-router-dom";
-
 import { connect } from "react-redux";
 
-import { Container, Box } from "@material-ui/core/";
-
-import { Post, Tools } from "../components/Post";
-import { AvatarItem } from "../components/Avatar";
-
-import * as postActions from '../store/actions/post';
 import ApiContext from "../context/ApiContext";
+import { Post, Tools, Comments } from "../components/Post";
+import { COMMENTS_POST_LENGTH } from "../constants/feed";
+import * as postActions from "../store/actions/post";
+import * as commentActions from "../store/actions/comment";
+
+import { Container, Box, Grid } from "@material-ui/core/";
 
 function PostPage(props) {
   const apiClient = useContext(ApiContext);
 
-  const { isFetching, data } = props;
-  const { getPost, likePost } = props;
+  const { post, comment } = props;
+  const { getPost, likePost, getComments, createComment } = props;
   const postId = props.match.params.id;
 
   useEffect(() => {
@@ -25,62 +24,75 @@ function PostPage(props) {
 
     (async () => {
       await getPost(apiClient, postId);
+      await getComments(apiClient, { postId, length: COMMENTS_POST_LENGTH });
     })();
   }, []);
 
+  const handleCommentMore = (isLoading) => {
+    if (!isLoading) {
+      (async () => {
+        await getComments(apiClient, { postId, length: COMMENTS_POST_LENGTH });
+      })();
+    }
+  };
+
   const handleOnFavoriteClick = (id, isLoading) => {
     !isLoading && likePost(apiClient, id);
-  }
+  };
 
-  const renderLoader = () => (
-    <div className="d-flex justify-content-center">
-      {/* <Spinner animation="grow" /> */}
-    </div>
-  );
+  const handleSendMessageClick = (text) => {
+    createComment(apiClient, { postId, text });
+  };
+
+  const renderLoader = () => <div className="d-flex justify-content-center">{/* <Spinner animation="grow" /> */}</div>;
 
   return (
     <Container>
       <Box my={4}>
-        <div className="row">
-          <div className="col-lg-8 col-md-12">
-            {isFetching ? (
+        <Grid container spacing={2} direction="row">
+          <Grid item md={8}>
+            {post.isFetching ? (
               renderLoader()
             ) : (
               <Post
-                hideToolbar
                 hideHeader
-                id={data?.id}
-                userId={data?.user?.id}
-                avatarUrl={data?.user?.avatarUrl}
-                mediaUrls={data?.media}
-                altText={data?.altText}
-                description={data?.description}
-                username={data?.user?.userName}
-                amount={data?.amount}
-                commentable={data?.isCommentable}
+                hideToolbar
+                hideContent
+                id={post.data?.id}
+                mediaUrls={post.data?.media}
+                amount={post.data?.amount}
               />
             )}
-          </div>
-          <div className="col-lg-4 d-none d-lg-block d-xl-block">
-            <div className="p-2 mb-3 border-bottom">
-              <AvatarItem
-                url={data?.user?.avatarUrl}
-                title={data?.user?.userName}
-                subtitle={data?.createdDate}
-              />
-            </div>
-            <Tools
-              userId={data?.user?.id}
-              id={data?.id}
-              commentable={data?.isCommentable}
-              likes={data?.likes}
-              iLike={data?.iLike}
-              onFavoriteClick={(id) =>
-                handleOnFavoriteClick(data.id, isFetching)
-              }
-            />
-          </div>
-        </div>
+          </Grid>
+          <Grid item md={4}>
+            {
+              <Comments
+                userId={post.data?.user?.id}
+                avatarUrl={post.data?.user?.avatarUrl}
+                title={post.data?.user?.name}
+                subheader={post.data?.user?.userName}
+                description={post.data?.description}
+                items={comment.data}
+                hasMore={comment.hasMore}
+                onFetchMore={() => handleCommentMore(comment.isFetching)}
+                onSendMessageClick={handleSendMessageClick}
+              >
+                <Tools
+                  userId={post.data?.user?.id}
+                  id={post.data?.id}
+                  amount={post.data.amount}
+                  isPurchased={post.data.isPurchased}
+                  commentable={post.data?.isCommentable}
+                  likes={post.data?.likes}
+                  iLike={post.data?.iLike}
+                  hideCommentable={true}
+                  hideWatch={true}
+                  onFavoriteClick={(id) => handleOnFavoriteClick(post.data.id, post.isFetching)}
+                />
+              </Comments>
+            }
+          </Grid>
+        </Grid>
       </Box>
     </Container>
   );
@@ -88,9 +100,15 @@ function PostPage(props) {
 
 function mapStateToProps(state) {
   return {
-    isFetching: state.posts.isFetching,
-    data: state.posts.currentPost,
-    //errorMessage: state.posts.errorMessage,
+    post: {
+      isFetching: state.posts.isFetching,
+      data: state.posts.currentPost,
+    },
+    comment: {
+      isFetching: state.comment.isFetching,
+      data: state.comment.data,
+      hasMore: state.comment.hasMore,
+    },
   };
 }
 
@@ -98,6 +116,8 @@ function mapDispatchToProps(dispatch) {
   return {
     getPost: (api, id) => dispatch(postActions.fetchPost(api, id)),
     likePost: (api, id) => dispatch(postActions.likePost(api, id)),
+    getComments: (api, opts) => dispatch(commentActions.getCommentsPost(api, opts)),
+    createComment: (api, opts) => dispatch(commentActions.createCommentPost(api, opts)),
   };
 }
 

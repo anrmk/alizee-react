@@ -13,6 +13,11 @@ export default {
     getPost: 'post/getpost',
     getPosts: 'post/getposts',
 
+    // POST COMMENTS
+    getCommentsPost: "comment/comments",
+    createCommentPost: "comment/comment",
+    deleteCommentPost: "comment/comment",
+
     // MEDIA
     getFollowingPosts: "post/getfollowingposts",
     createPost: 'post/createpost',

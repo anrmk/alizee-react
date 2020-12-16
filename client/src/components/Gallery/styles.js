@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     zIndex: 1,
     backgroundColor: theme.palette.type === "dark" ? "rgba(0,0,0,0.7)" : "rgba(255,255,255,0.7)",
-    padding: "40% 0" 
+    padding: "30% 0" 
   },
 
   pagination: {

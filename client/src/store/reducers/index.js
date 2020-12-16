@@ -6,6 +6,7 @@ import socialAuth from "./socialAuth";
 import confirmEmail from './confirmEmail';
 import posts from "./posts";
 import media from './media';
+import comment from "./comment";
 
 import relationship from "./relationship";
 import suggestion from "./suggestion";
@@ -31,7 +32,8 @@ const appReducer = combineReducers({
   media,
   user,
   settings,
-  interests
+  interests,
+  comment
 });
 
 export default function(state, action) {

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import {formatDate} from "../../helpers/functions";
+import { formatDate } from "../../helpers/functions";
 
 import {
   Card,
@@ -11,7 +11,7 @@ import {
   CardActions,
   Avatar,
   Typography,
-  IconButton
+  IconButton,
 } from "@material-ui/core";
 
 import MoreVertIcon from "@material-ui/icons/MoreVertOutlined";
@@ -41,16 +41,10 @@ function Post(props) {
     createdDate,
     hideToolbar,
     hideHeader,
+    hideContent
   } = props;
 
-  const {
-    onLikeClick,
-    onFavoriteClick,
-    onShareClick,
-    onGoToClick,
-    onPayClick,
-    onReceiptClick
-  } = props;
+  const { onLikeClick, onFavoriteClick, onShareClick, onGoToClick, onPayClick, onReceiptClick } = props;
 
   const handleLikeClick = (e) => {
     e.preventDefault();
@@ -84,34 +78,38 @@ function Post(props) {
 
   return (
     <Card className={classes.root} variant="elevation">
-      <CardHeader
-        avatar={<Avatar src={avatarUrl} />}
-        title={name}
-        subheader={username}
-        action={
-          <>
-          <Typography display="inline" variant="caption">
-            {createdDate && formatDate(new Date(createdDate))}
-          </Typography>
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-          </>
-        }
-      ></CardHeader>
+      {!hideHeader && (
+        <CardHeader
+          avatar={<Avatar src={avatarUrl} />}
+          title={name}
+          subheader={username}
+          action={
+            <>
+              <Typography display="inline" variant="caption">
+                {createdDate && formatDate(createdDate)}
+              </Typography>
+              <IconButton aria-label="settings">
+                <MoreVertIcon />
+              </IconButton>
+            </>
+          }
+        ></CardHeader>
+      )}
 
       <CardMedia>
         <MediaContent className={classes.post} items={mediaUrls} amount={amount} isPurchased={isPurchased} />
       </CardMedia>
 
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {description}
-        </Typography>
-      </CardContent>
-      
-      <CardActions className={classes.action} disableSpacing>
-        {!hideToolbar && (
+      {!hideContent && (
+        <CardContent>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {description}
+          </Typography>
+        </CardContent>
+      )}
+
+      {!hideToolbar && (
+        <CardActions className={classes.action} disableSpacing>
           <Tools
             userId={userId}
             id={id}
@@ -121,7 +119,6 @@ function Post(props) {
             isFavorite={isFavorite}
             amount={amount}
             isPurchased={isPurchased}
-
             onLikeClick={handleLikeClick}
             onGoToClick={handleGoToClick}
             onShareClick={handleShareClick}
@@ -129,8 +126,8 @@ function Post(props) {
             onPayClick={handlePayClick}
             onReceiptClick={handleReceiptClick}
           />
-        )}
-      </CardActions>
+        </CardActions>
+      )}
     </Card>
   );
 }
@@ -150,6 +147,7 @@ Post.propTypes = {
   createdDate: PropTypes.string,
   hideToolbar: PropTypes.bool,
   hideHeader: PropTypes.bool,
+  hideContent: PropTypes.bool,
 
   onFavoriteClick: PropTypes.func,
   onCommentsClick: PropTypes.func,
@@ -173,6 +171,7 @@ Post.defaultProps = {
   createdDate: "",
   hideToolbar: false,
   hideHeader: false,
+  hideContent: false,
 
   onFavoriteClick: undefined,
   onCommentsClick: undefined,
