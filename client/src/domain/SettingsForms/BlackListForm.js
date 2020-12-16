@@ -19,7 +19,7 @@ function BlackListForm({
   return (
     <Box className={classes.blackListRoot}>
       <Typography variant="h6" className={classes.blackListTitle}>
-      {t("BlackListTitle")}
+      {t("SettingFormsBlackListFormTitle")}
       </Typography>
       <List dense={true}>
         {items &&

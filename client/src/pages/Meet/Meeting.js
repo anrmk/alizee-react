@@ -46,10 +46,10 @@ function Meeting() {
 
         <Grid item className={clsx(classes.meetingItem, classes.meetingLinkItem)} xs={10} md={6}>
           <Typography variant="h4" className={classes.title}>
-            {t("MeetingHeader")}
+            {t("MeetMeetingTitle")}
           </Typography>
           <Typography variant="body2" className={classes.subtitle}>
-            {t("MeetingSubheader")}
+            {t("MeetMeetingSubtitle")}
           </Typography>
 
           <Grid container className={classes.meetingLinkBox} spacing={4}>
@@ -58,7 +58,7 @@ function Meeting() {
                 variant="contained"
                 onClick={() => handleCreate()}>
                 <VideocamOutlinedIcon />
-                {t("MeetingNewMeetingButton")}
+                {t("MeetMeetingNewMeetingButtonLabel")}
               </Button>
             </Grid>
             <Grid item>
@@ -70,7 +70,7 @@ function Meeting() {
                     <CustomInput
                       type="text"
                       disableUnderline
-                      placeholder={t("MeetingPlaceholderLinkInput")}
+                      placeholder={t("MeetMeetingLinkInputPlaceholder")}
                       id={LINK_CODE_ID}
                       value={value}
                       error={!!errors[LINK_CODE_ID]}

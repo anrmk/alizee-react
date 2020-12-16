@@ -11,7 +11,7 @@ function MessagesList({
   hasMore,
 
   userId,
-  items,
+  items = [],
   liveChat = false,
   className,
   messageClassName,

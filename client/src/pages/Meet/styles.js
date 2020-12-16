@@ -1,32 +1,4 @@
-import { Button, Drawer, Tab, Tabs, withStyles, makeStyles } from "@material-ui/core";
-
-export const StyledTab = withStyles((theme) => ({
-  root: {
-    minWidth: 60,
-    backgroundColor: theme.palette.background.paper,
-    borderRadius: theme.shape.borderRadius,
-  },
-  selected: {
-    backgroundColor: theme.palette.secondary.main,
-  }
-}))(Tab);
-
-export const StyledTabs = withStyles((_theme) => ({
-  indicator: {
-    display: "none"
-  }
-}))(Tabs);
-
-export const StyledButton = withStyles((_theme) => ({
-  endIcon: {
-    marginLeft: 0,
-    marginRight: 0
-  },
-  startIcon: {
-    marginLeft: 0,
-    marginRight: 0
-  }
-}))(Button);
+import { Drawer, withStyles, makeStyles } from "@material-ui/core";
 
 export const StyledDrawer = withStyles((theme) => ({
   paper: {
@@ -54,6 +26,14 @@ const useStyles = makeStyles(theme => ({
       marginTop: theme.spacing(1)
     }
   },
+  roomTitle: {
+    textAlign: "left",
+    marginBottom: theme.spacing(1)
+  },
+  roomDescription: {
+    textAlign: "left",
+    marginTop: theme.spacing(1)
+  },
   roomBox: {
     display: "flex",
     marginTop: theme.spacing(1),
@@ -61,6 +41,7 @@ const useStyles = makeStyles(theme => ({
   },
   roomBoxVideo: {
     display: "flex",
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
@@ -77,33 +58,6 @@ const useStyles = makeStyles(theme => ({
     height: "auto",
     width: "100%",
     borderRadius: theme.shape.borderRadius
-  },
-  roomBoxVideoButtons: {
-    position: "absolute",
-    bottom: 0,
-    display: "flex",
-    alignItems: "center",
-    flexWrap: "nowrap",
-    margin: theme.spacing(1, 0),
-  },
-  roomBoxVideoButton: {
-    margin: theme.spacing(0, 1),
-    whiteSpace: "nowrap"
-  },
-  roomMiddleTab: {
-    margin: theme.spacing(0, 1)
-  },
-  roomBoxTabChat: {
-    display: "flex",
-    paddingTop: theme.spacing(1),
-    flexDirection: "column",
-    justifyContent: "center"
-  },
-  roomBoxTabChatMessageList: {
-    height: `calc(100vh - ${(theme.mixins.toolbar.minHeight * 2) + (theme.spacing(2) * 3) + theme.spacing(1) * 3}px - 18px)`,
-  },
-  roomBoxDrawerTabChatMessageList: {
-    height: `calc(100vh - ${(theme.mixins.toolbar.minHeight * 2) + (theme.spacing(2) * 3) + theme.spacing(1) * 3}px - 10px)`,
   },
   roomBoxDrawerCloseButton: {
     alignSelf: "flex-end"

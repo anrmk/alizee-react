@@ -104,7 +104,7 @@ function CreateRoomForm({
 
       <Grid item className={classes.createRoomItem} xs={12} md={4}>
         <Typography variant="h4" className={classes.createRoomTitle}>
-          {t("CreateRoomStreamingTitle")}
+          {t("MeetCreateRoomFormTitle")}
         </Typography>
         <Chip
           key={roomId}
@@ -122,7 +122,7 @@ function CreateRoomForm({
                 <CustomInput
                   inputProps={{ maxLength: VALUE_MAX_LENGTH_TITLE }}
                   id={TITLE_ID}
-                  label={t("CreateRoomTitle")}
+                  label={t("MeetCreateRoomFormTitleInputLabel")}
                   type="text"
                   disableUnderline
                   value={value}
@@ -142,7 +142,7 @@ function CreateRoomForm({
                 <CustomInput
                   inputProps={{ maxLength: VALUE_MAX_LENGTH_DESCRIPTION }}
                   id={DESCRIPTION_ID}
-                  label={t("CreateRoomDescription")}
+                  label={t("MeetCreateRoomFormDescriptionInputLabel")}
                   type="text"
                   disableUnderline
                   multiline
@@ -163,7 +163,7 @@ function CreateRoomForm({
             <ChipsInput
               disableUnderline
               classChipName={classes.createRoomChip}
-              label={t("CreateRoomTags")}
+              label={t("MeetCreateRoomFormTagsInputLabel")}
               id={TAGS_ID}
               name={TAGS_ID}
               max={4}
@@ -180,7 +180,7 @@ function CreateRoomForm({
                     id={ROOM_TYPE_ID}
                     value={value}
                     error={!!errors[ROOM_TYPE_ID]}
-                    input={<CustomInput disableUnderline label={t("CreateRoomType")} />}
+                    input={<CustomInput disableUnderline label={t("MeetCreateRoomFormTypeInputLabel")} />}
                     onBlur={onBlur}
                     onChange={e => onChange(e.target.value)}
                   >
@@ -205,7 +205,7 @@ function CreateRoomForm({
                 <CustomInput
                   inputProps={{ min: VALUE_MIN_LENGTH_TICKET_PRICE }}
                   id={TICKET_PRICE_ID}
-                  label={t("CreateRoomTicketPrice")}
+                  label={t("MeetCreateRoomFormTicketPriceInputLabel")}
                   type="number"
                   disableUnderline
                   value={value}
@@ -221,7 +221,7 @@ function CreateRoomForm({
             <Button size="medium"
               variant="contained"
               type="submit">
-              {t("CreateRoomJoinButton")}
+              {t("MeetCreateRoomFormJoinButtonLabel")}
             </Button>
           </FormGroup>
         </form>
