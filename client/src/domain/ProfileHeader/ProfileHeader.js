@@ -15,7 +15,6 @@ import { PostSprout } from "../../domain/PostsList";
 
 import { getHostFromUrl } from "../../helpers/functions";
 import Statistics from "./Statistics";
-import TopButtons from "./TopButtons";
 
 import useStyles from "./styles";
 
@@ -62,14 +61,6 @@ function ProfileHeader({
         <Avatar variant="circular" src={avatarUrl} className={classes.large} />
       </Grid>
       <Grid item xs={12} sm={8}>
-        <TopButtons
-          me={me}
-          username={fullName}
-          onEditClick={onEditClick}
-          onMessageClick={onMessageClick}
-          onFollowClick={onFollowClick}
-          onSettingsClick={onSettingsClick}
-        />
         <Statistics
           username={username}
           postsCount={postsCount}
