@@ -74,11 +74,11 @@ function Profile(props) {
           postsCount={post.count}
           followersCount={follower.followersCount}
           followingCount={follower.followingsCount}
-          onEditClick={() => history.push(SETTINGS_EDIT_PROFILE_ROUTE)}
+          //TODO ADD onMessageClick and onFollowClick to another component
           onMessageClick={() => {}}
           onFollowClick={createFollow}
-          onSettingsClick={() => {}}
           onPostCreate={() => {}}
+          onEditCover={() => {console.log("onEditCover")}}
         />
         <ProfileContent
           media={post.data}

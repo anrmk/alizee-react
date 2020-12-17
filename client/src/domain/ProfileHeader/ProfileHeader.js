@@ -14,6 +14,7 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import { PostSprout } from "../../domain/PostsList";
 
 import { getHostFromUrl } from "../../helpers/functions";
+import Cover from "./Cover"
 import Statistics from "./Statistics";
 
 import useStyles from "./styles";
@@ -30,11 +31,8 @@ function ProfileHeader({
   followersCount,
   followingCount,
 
-  onEditClick,
-  onMessageClick,
-  onFollowClick,
-  onSettingsClick,
   onPostCreate,
+  onEditCover,
 }) {
   const classes = useStyles();
   const history = useHistory();
@@ -57,8 +55,13 @@ function ProfileHeader({
 
   return (
     <Grid container spacing={2} direction="row">
-      <Grid container item xs={12} sm={4} direction="column" justify="space-between" alignItems="center">
-        <Avatar variant="circular" src={avatarUrl} className={classes.large} />
+      <Grid item xs={12}>
+        {/* TODO Add props IsOwner and Image URL */}
+        <Cover
+          fullName={fullName}
+          username={username}
+          avatarUrl={avatarUrl}
+          onEditCover={onEditCover} />
       </Grid>
       <Grid item xs={12} sm={8}>
         <Statistics
@@ -87,7 +90,7 @@ function ProfileHeader({
             ))}
         </div>
 
-        <PostSprout user={{ avatar: { avatarUrl } }} onSubmit={onPostCreate} variant="fab"/>
+        <PostSprout user={{ avatar: { avatarUrl } }} onSubmit={onPostCreate} variant="fab" />
       </Grid>
     </Grid>
   );
