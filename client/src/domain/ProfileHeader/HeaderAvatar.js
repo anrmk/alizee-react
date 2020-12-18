@@ -18,7 +18,7 @@ function HeaderAvatar({
     <Box className={classes.headerAvatarBox}>
       <Avatar
         src={avatarUrl}
-        size="large" />
+        size="extraLarge" />
       <Box className={classes.headerAvatarDescription}>
         <Box className={classes.headerAvatarFullNameBox}>
           <Typography variant="subtitle2" className={classes.headerAvatarFullName}>

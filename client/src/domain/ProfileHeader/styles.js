@@ -15,7 +15,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "flex-end",
     justifyContent: "flex-end",
     height: "200px",
-    backgroundImage: ({ imageUrl }) => `url("${imageUrl}")`
+    backgroundImage: ({ imageUrl }) => `url("${imageUrl}")`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center"
   },
   coverEditButton: {
     display: "none"
@@ -23,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   headerAvatarBox: {
     display: "flex",
     position: "absolute",
-    bottom: "-32px",
+    bottom: "-44px",
     left: theme.spacing(4)
   },
   headerAvatarDescription: {
@@ -47,7 +50,10 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: "100%",
     color: theme.palette.secondary.main
   },
-  
+  feeling: {
+    marginTop: theme.spacing(-2),
+  },
+
   bio: {
     marginBottom: theme.spacing(1),
   },

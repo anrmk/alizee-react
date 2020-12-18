@@ -1,8 +1,7 @@
 import React from "react";
-import { useHistory, Link, Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
-
-import { Avatar, Grid, Paper, Typography, Chip } from "@material-ui/core";
+import { Grid, Typography, Chip } from "@material-ui/core";
 
 import LinkIcon from "@material-ui/icons/Link";
 import InstagramIcon from "@material-ui/icons/Instagram";
@@ -14,7 +13,7 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import { PostSprout } from "../../domain/PostsList";
 
 import { getHostFromUrl } from "../../helpers/functions";
-import Cover from "./Cover"
+import Cover from "./Cover";
 import Statistics from "./Statistics";
 
 import useStyles from "./styles";
@@ -26,6 +25,8 @@ function ProfileHeader({
   bio,
   sites,
   avatarUrl,
+
+  feeling,
 
   postsCount,
   followersCount,
@@ -62,6 +63,14 @@ function ProfileHeader({
           username={username}
           avatarUrl={avatarUrl}
           onEditCover={onEditCover} />
+      </Grid>
+      <Grid container item className={classes.feeling} xs={12}>
+        <Grid item xs={5} ></Grid>
+        <Grid item xs={7} >
+        <Typography noWrap variant="subtitle2">
+          {feeling}
+        </Typography>
+        </Grid>
       </Grid>
       <Grid item xs={12} sm={8}>
         <Statistics
@@ -103,6 +112,8 @@ ProfileHeader.propTypes = {
   followed: PropTypes.bool,
   avatarUrl: PropTypes.string,
 
+  feeling: PropTypes.string,
+
   bio: PropTypes.string,
   sites: PropTypes.array,
 
@@ -122,6 +133,8 @@ ProfileHeader.defaultProps = {
   username: "",
   followed: false,
   avatarUrl: "",
+
+  feeling: "",
 
   bio: "",
   sites: [],

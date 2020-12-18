@@ -52,3 +52,13 @@ export {
   BUY_POST_FAILURE,
   buyPost
 } from './buyPost';
+
+export { 
+  GET_FEELING_REQUEST,
+  GET_FEELING_SUCCESS,
+  GET_FEELING_FAILURE,
+  RESET_FEELING,
+
+  getFeeling,
+  resetFeeling,
+} from './getFeeling';

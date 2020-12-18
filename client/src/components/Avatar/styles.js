@@ -8,8 +8,8 @@ import { STREAM_VARIANT } from "./constants";
 const SIZES = {
   small: "25px",
   medium: "40px",
-  upperMedium: "50px",
   large: "65px",
+  extraLarge: "98px"
 };
 
 const BORDER_COLORS = {

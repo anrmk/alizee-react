@@ -13,7 +13,7 @@ import * as relationshipActions from "../store/actions/relationship";
 import * as userActions from "../store/actions/user";
 
 import { POSTS_LENGTH } from "../constants/profile";
-import { POST_ROUTE, SETTINGS_EDIT_PROFILE_ROUTE } from "../constants/routes";
+import { POST_ROUTE } from "../constants/routes";
 
 function Profile(props) {
   const { username } = useParams();
@@ -22,8 +22,16 @@ function Profile(props) {
   const [postType, setPostType] = useState(0);
   const [tagged, setTagged] = useState(false);
 
-  const { user, me, post, follower } = props;
-  const { resetPosts, fetchUser, fetchPosts, fetchFollowers, fetchFollowings, createFollow } = props;
+  const { user, me, post, follower, feeling } = props;
+  const {
+    resetPosts,
+    fetchUser,
+    fetchPosts,
+    fetchFollowers,
+    fetchFollowings,
+    createFollow,
+    getFeeling
+  } = props;
 
   useEffect(() => {
     if (username) {
@@ -37,6 +45,7 @@ function Profile(props) {
     if (user.username === username && user.id) {
       resetPosts();
       (async () => {
+        await getFeeling(apiClient, { userId: user.id });
         await fetchPosts(apiClient, { userId: user.id, length: POSTS_LENGTH, type: postType, tagged });
         await fetchFollowers(apiClient, user.id);
         await fetchFollowings(apiClient, user.id);
@@ -69,6 +78,7 @@ function Profile(props) {
           avatarUrl={user.avatarUrl}
           username={user.username}
           fullName={user.name}
+          feeling={feeling.data}
           bio={user.bio}
           sites={user.sites}
           postsCount={post.count}
@@ -87,7 +97,7 @@ function Profile(props) {
           onItemClick={handleItemClick}
           onTabChange={handleTabChange}
         />
-  
+
       </Box>
     </Container>
   );
@@ -117,11 +127,15 @@ function mapStateToProps(state) {
       followersCount: state.relationship.followers.length,
       followingsCount: state.relationship.followings.length,
     },
+    feeling: {
+      data: state.posts?.currentFeeling
+    }
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    getFeeling: (api, opts) => dispatch(postActions.getFeeling(api, opts)),
     fetchPosts: (api, opts) => dispatch(postActions.getPosts(api, opts)),
     resetPosts: () => dispatch(postActions.resetPosts()),
     fetchFollowers: (api, userId) => dispatch(relationshipActions.getFollowers(api, userId)),
