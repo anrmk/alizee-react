@@ -15,7 +15,7 @@ function Chat(props) {
 
   const { user } = props;
   const { followings, getFollowings, filterFollowings } = props;
-  const { chat, getRoom, createRoom, getRooms, deleteRoom, filterRooms, resetCurrentRoom } = props;
+  const { chat, getRoom, createRoom, getRooms, deleteRoom, deleteRoomHistory, filterRooms, resetCurrentRoom } = props;
   const { createMessage } = props;
 
   const [followingsModalOpen, setFollowingsModalOpen] = useState(false);
@@ -72,8 +72,8 @@ function Chat(props) {
     }
   };
 
-  const handleMessageClear = (id) => {
-    console.log("handleMessageClear", id);
+  const handleMessageClear = async (id) => {
+    await deleteRoomHistory(apiClient, id);
   };
 
   return (
@@ -150,7 +150,8 @@ function mapDispatchToProps(dispatch) {
 
     getRoom: (api, id) => dispatch(actionChat.getRoom(api, id)),
     createRoom: (api, id) => dispatch(actionChat.createRoom(api, id)),
-    deleteRoom: (api, id) => { console.log("handleRoomDelete", id); }, //dispatch(actionChat.deleteRoom(api, id)),
+    deleteRoom: (api, id) => dispatch(actionChat.deleteRoom(api, id)),
+    deleteRoomHistory: (api, id) => dispatch(actionChat.deleteRoomHistory(api, id)),
     resetCurrentRoom: () => dispatch(actionChat.resetCurrentRoom()),
 
     createMessage: (api, id, message) => dispatch(actionChat.createMessage(api, id, message)),

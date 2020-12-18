@@ -50,11 +50,13 @@ function Room({
 
   const handleMessageClear = (e) => {
     e.preventDefault();
+    handleMenuClose();
     onMessageClear && onMessageClear(data.id);
   };
 
   const handleRoomDelete = (e) => {
     e.preventDefault();
+    handleMenuClose();
     onRoomDelete && onRoomDelete(data.id);
   };
 
