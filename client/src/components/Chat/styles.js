@@ -1,61 +1,80 @@
 import { makeStyles } from "@material-ui/core";
-import lime from '@material-ui/core/colors/lime';
+import grey from "@material-ui/core/colors/grey";
+import purple from "@material-ui/core/colors/deepPurple";
 
 import { getStyleByTheme } from "../../helpers/functions";
 
 const useStyles = makeStyles((theme) => ({
-    emptyMessageContainer: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      alignSelf: "center"
+  emptyMessageContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    alignSelf: "center",
+    height: "100%",
+    justifyContent: "center",
+  },
+
+  messenger: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    overflowY: "auto",
+    left: 0,
+    top: 0,
+    padding: theme.spacing(2),
+    "&::-webkit-scrollbar": {
+      display: "none",
     },
-    messenger: {
-      width: "100%",
-      height: `40vh`, // - ${(theme.mixins.toolbar.minHeight * 5) + (theme.spacing(5) * 7) }px bugfix
-      padding: theme.spacing(2),
-      marginBottom: theme.spacing(1),
-      display: "flex",
-      flexDirection: "column",
-      borderRadius: theme.shape.borderRadius,
-      overflowY: "auto",
-      position: "relative",
-      backgroundRepeat: "repeat",
-      "&::-webkit-scrollbar": {
-        display: "none"
-      }
-    },
-    messengerMessage: {
-      width: "fit-content",
-      maxWidth: "100%",
-      minWidth: "100px",
-      margin: theme.spacing(1, 0),
-      padding: theme.spacing(1),
-      display: "flex",
-      flexDirection: "column",
-      alignSelf: "flex-start",
-      overflowWrap: "break-word",
-      backgroundColor: getStyleByTheme(theme, theme.palette.primary.white, theme.palette.grey["800"])
-    },
-    messengerMyMessage: {
-      alignSelf: "flex-end",
-      backgroundColor: getStyleByTheme(theme, lime["50"], "#353b61")
-    },
-    messengerMessageDate: {
-      width: "fit-content",
-      alignSelf: "flex-end",
-      color: theme.palette.text.secondary
-    },
-    messageSenderWrapper: {
-    },
-    messageSenderInputWrapper: {
-      width: "100%",
-      borderRadius: theme.shape.borderRadius,
-      backgroundColor: getStyleByTheme(theme, theme.palette.common.white, theme.palette.grey["800"]),
-    },
-    messageSenderInput: {
-      padding: theme.spacing(1, 0),
-    }
+  },
+
+  messengerMessage: {
+    width: "fit-content",
+    maxWidth: "80%",
+    minWidth: "100px",
+    margin: theme.spacing(1, 0),
+    padding: theme.spacing(1),
+    display: "flex",
+    flexFlow: "nowrap",
+    flexDirection: "row",
+    alignSelf: "flex-start",
+    overflowWrap: "break-word",
+    backgroundColor: theme.palette.primary.main,
+    color: grey["50"],
+  },
+
+  messengerMyMessage: {
+    alignSelf: "flex-end",
+    backgroundColor: theme.palette.success.dark,
+    justifyContent: "flex-end",
+    //backgroundColor: getStyleByTheme(theme, purple["100"], lime["100"]),
+  },
+  
+  messengerMessageDate: {
+    width: "fit-content",
+    alignSelf: "flex-end",
+    color: theme.palette.text.secondary,
+    whiteSpace: "nowrap",
+    padding: theme.spacing(0, 0,0, 1),
+  },
+
+  messageSenderWrapper: {},
+
+  messageSenderInputWrapper: {
+    width: "100%",
+    borderRadius: theme.shape.borderRadius,
+    border: "none"
+   // backgroundColor: getStyleByTheme(theme, theme.palette.common.white, theme.palette.grey["800"]),
+  },
+
+  messageSenderInput: {
+    padding: theme.spacing(1, 0),
+  },
+
+  infinite: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column"
+  }
 }));
 
 export default useStyles;

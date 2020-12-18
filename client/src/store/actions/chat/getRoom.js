@@ -55,7 +55,7 @@ export function getRoom(api, id) {
       const roomIndex = rooms.findIndex(room => room.id === data.id);
 
       if(roomIndex !== -1) {
-        rooms[roomIndex].newMessagesCount = 0;
+        rooms[roomIndex].unreadMessageCount = 0;
       }
 
       dispatch(receiveGetRoom(rooms, transformedData));

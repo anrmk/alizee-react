@@ -1,20 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Message, MessageSenderInput, MessagesList } from "../Chat";
+import { MessageSenderInput, MessagesList } from "../Chat";
 
 import { Avatar, Card, CardHeader, CardContent, CardActions, IconButton, Divider } from "@material-ui/core";
-
 import MoreVertIcon from "@material-ui/icons/MoreVertOutlined";
 
+import useStyles from "./styles";
+
 function Comments(props) {
+  const classes = useStyles();
   const { children } = props;
   const { hasMore } = props;
-  const { userId, avatarUrl, title, subheader, description, items } = props;
+  const { userId, avatarUrl, title, subheader, description, items, isCommentable } = props;
   const { onFetchMore, onSendMessageClick } = props;
 
   return (
-    <Card>
+    <Card className={classes.card}>
       <CardHeader
         avatar={<Avatar src={avatarUrl} />}
         title={title}
@@ -31,13 +33,15 @@ function Comments(props) {
 
       <Divider />
 
-      <CardContent>
-        <MessagesList userId={userId} items={items} onFetchMore={onFetchMore} hasMore={hasMore} />
+      <CardContent className={classes.cardContent}>
+        {<MessagesList userId={userId} items={items} onFetchMore={onFetchMore} hasMore={hasMore} />}
       </CardContent>
 
-      <CardContent>
-        <MessageSenderInput onSendMessageClick={onSendMessageClick} />
-      </CardContent>
+      {isCommentable && (
+        <CardActions className={classes.cardFooter}>
+          <MessageSenderInput onSendMessageClick={onSendMessageClick} />
+        </CardActions>
+      )}
     </Card>
   );
 }
@@ -48,6 +52,7 @@ Comments.propTypes = {
   userId: PropTypes.string,
   userName: PropTypes.string,
   items: PropTypes.array,
+  isCommentable: PropTypes.bool,
 
   children: PropTypes.any,
 
@@ -61,6 +66,7 @@ Comments.defaultProps = {
   userId: "",
   userName: "",
   items: [],
+  isCommentable: false,
 
   children: null,
 

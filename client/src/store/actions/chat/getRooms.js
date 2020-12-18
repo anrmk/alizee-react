@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 
-import { generateUrl, generateFileUrl } from "../../../helpers/functions";
+import { generateUrl, generateFileUrl, copyFlatObjectWithIgnore } from "../../../helpers/functions";
 
 export const GET_ROOMS_REQUEST = "GET_ROOMS_REQUEST";
 export const GET_ROOMS_SUCCESS = "GET_ROOMS_SUCCESS";
@@ -54,11 +54,10 @@ function successIncrementNewMessageCount(rooms) {
   return {
     type: INCREMENT_NEW_MESSAGE_COUNT,
     payload: {
-      data: rooms
-    }
+      data: rooms,
+    },
   };
 }
-
 
 export function getRooms(api) {
   return async (dispatch) => {
@@ -68,15 +67,20 @@ export function getRooms(api) {
     try {
       const { data } = await api.setMethod("GET").query(url);
 
+      // const transformedData = data.map((item) => ({
+      //   id: item.id,
+      //   fullName: item.name,
+      //   avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, item.avatarUrl),
+      //   description: item.messages[item.messages.length - 1]?.message,
+      //   date: item.messages[item.messages.length - 1]?.createdDate,
+      //   isActive: data.currentRoom?.id === item.id, //???
+      //   newMessagesCount: item.newMessagesCount || 0
+      // }))
+
       const transformedData = data.map((item) => ({
-        id: item.id,
-        fullName: item.name,
+        ...item,
         avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, item.avatarUrl),
-        description: item.messages[item.messages.length - 1]?.message,
-        date: item.messages[item.messages.length - 1]?.createdDate,
-        isActive: data.currentRoom?.id === item.id,
-        newMessagesCount: item.newMessagesCount || 0
-      }))
+      }));
 
       dispatch(receiveGetRooms(transformedData));
     } catch {
@@ -89,16 +93,13 @@ export function getRooms(api) {
 const querySelector = (state) => state.chat.query;
 const dataSelector = (state) => state.chat.data;
 
-export const getFilteredRooms = createSelector(
-  [querySelector, dataSelector],
-  ((query, data) => { 
-    if (!query) return data;
+export const getFilteredRooms = createSelector([querySelector, dataSelector], (query, data) => {
+  if (!query) return data;
 
-    return data
-      .filter((item) => item && item.fullName.toLowerCase().includes(query))
-      .sort((a, b) => b.newMessagesCount - a.newMessagesCount)
-    }
-));
+  return data
+    .filter((item) => item && item.name.toLowerCase().includes(query))
+    .sort((a, b) => b.unreadMessageCount - a.unreadMessageCount);
+});
 
 export function filter(query) {
   return async (dispatch) => {
@@ -110,13 +111,13 @@ export function incrementNewMessageCount(roomId, count) {
   return (dispatch, getState) => {
     const oldRooms = getState().chat.data;
     const updatedRooms = [...oldRooms];
-    const roomIndex = updatedRooms.findIndex(room => room.id === roomId);
+    const roomIndex = updatedRooms.findIndex((room) => room.id === roomId);
 
     console.log("Here");
     if (roomIndex !== -1) {
-      updatedRooms[roomIndex].newMessagesCount++;
+      updatedRooms[roomIndex].unreadMessageCount++;
     }
 
     dispatch(successIncrementNewMessageCount(updatedRooms));
-  }
+  };
 }

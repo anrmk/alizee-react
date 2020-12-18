@@ -2,7 +2,9 @@ export {
   GET_COMMENTS_POST_REQUEST,
   GET_COMMENTS_POST_SUCCESS,
   GET_COMMENTS_POST_FAILURE,
-  getCommentsPost
+  RESET_COMMENTS_POST_SUCCESS,
+  getCommentsPost,
+  resetCommentsPost,
 } from './getCommentsPost';
 
 export { 

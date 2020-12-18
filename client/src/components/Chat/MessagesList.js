@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import PropTypes from "prop-types";
 import clsx from "clsx";
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -31,14 +32,15 @@ function MessagesList({
   }, [items])
 
   return (
-    <Box id="messageContainer" className={clsx(classes.messenger, className)} ref={messagesContainer}>
+    <Box id="messagerContainer" className={clsx(classes.messenger, className)} ref={messagesContainer}>
      <InfiniteScroll
-        scrollableTarget="messageContainer"
+        scrollableTarget="messagerContainer"
         scrollThreshold={-0.8}
         dataLength={items.length}
         next={onFetchMore}
         hasMore={hasMore}
         inverse={true}
+        className={classes.infinite}
       >
       {items && items.map((message) => (
         <Message
@@ -51,6 +53,32 @@ function MessagesList({
       </InfiniteScroll>
     </Box>
   )
+}
+
+MessagesList.propTypes = {
+  hasMore: PropTypes.bool,
+
+  userId: PropTypes.string,
+  items: PropTypes.array,
+  liveChat: PropTypes.bool,
+
+  className:  PropTypes.any,
+  messageClassName: PropTypes.any,
+
+  onFetchMore: PropTypes.func
+}
+
+MessagesList.defaultProps = { 
+  hasMore: false,
+
+  userId: "",
+  items: [],
+  liveChat: false,
+
+  className: "",
+  messageClassName: "",
+
+  onFetchMore: undefined
 }
 
 export default MessagesList;

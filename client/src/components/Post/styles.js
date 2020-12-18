@@ -1,8 +1,32 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     marginBottom: theme.spacing(3),
+  },
+
+  card: {
+    position: "relative",
+    height: `calc(100vh - ${(theme.mixins.toolbar.minHeight*2 + theme.spacing(2))}px)`,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between"
+  },
+
+  cardContent: {
+    position: "relative",
+    zIndex: "1",
+    flex: "1 1 0",
+    order: 2
+  },
+
+  cardFooter: {
+    position: "relative",
+    zIndex: 1,
+    flex: "none",
+    order: 3,
+    boxSizing: "border-box",
+    width: "100%"
   },
 
   //obsolete
@@ -32,3 +56,4 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default useStyles;
+

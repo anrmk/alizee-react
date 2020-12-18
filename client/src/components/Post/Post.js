@@ -33,7 +33,7 @@ function Post(props) {
     mediaUrls,
     amount,
     description,
-    commentable,
+    isCommentable,
     likes,
     iLike,
     isFavorite,
@@ -113,7 +113,7 @@ function Post(props) {
           <Tools
             userId={userId}
             id={id}
-            commentable={commentable}
+            isCommentable={isCommentable}
             likes={likes}
             iLike={iLike}
             isFavorite={isFavorite}
@@ -140,7 +140,7 @@ Post.propTypes = {
   mediaUrls: PropTypes.array,
   amount: PropTypes.number,
   description: PropTypes.string,
-  commentable: PropTypes.bool,
+  isCommentable: PropTypes.bool,
   likes: PropTypes.number,
   iLike: PropTypes.bool,
   isFavorite: PropTypes.bool,
@@ -164,7 +164,7 @@ Post.defaultProps = {
   mediaUrls: [],
   amount: 0,
   description: "",
-  commentable: false,
+  isCommentable: false,
   likes: 0,
   iLike: false,
   isFavorite: false,

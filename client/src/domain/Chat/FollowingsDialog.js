@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import {
   Dialog,
   DialogTitle,
+  DialogContent,
   List,
   ListItem,
   ListItemText,
@@ -27,12 +28,14 @@ function FollowingDialog({
 
   return (
     <Dialog
+      maxWidth="lg"
       aria-labelledby="follower-dialog-title"
       onClose={onClose}
       open={open}>
       <DialogTitle id="follower-dialog-title">{t("ChatFollowingDialogTitle")}</DialogTitle>
+      <DialogContent>
       <Search placeholder={t("ChatFollowingDialogSearchInputLabel")} onChange={onSearchChange} />
-      <List className={classes.followersDialogList}>
+      <List >
         {data && data.length ? data.map((follower) => (
           <ListItem button key={follower.id} onClick={() => onItemClick(follower.userId)}>
             <ListItemAvatar>
@@ -49,6 +52,7 @@ function FollowingDialog({
           </Typography>
         )}
       </List>
+      </DialogContent>
     </Dialog>
   )
 }

@@ -5,7 +5,6 @@ import { Paper, Typography } from "@material-ui/core/";
 
 import {formatDate} from "../../helpers/functions";
 
-
 import useStyles from "./styles";
 
 function Message({
@@ -17,12 +16,11 @@ function Message({
   const classes = useStyles();
 
   return (
-    <Paper
-      className={clsx(classes.messengerMessage, className, !liveChat && isOwner && classes.messengerMyMessage)}>
-      <Typography variant="body2" gutterBottom>
+    <Paper className={clsx(classes.messengerMessage, className, isOwner && classes.messengerMyMessage)}>
+      <Typography variant="body2" >
         {message.message}
       </Typography>
-      <Typography className={classes.messengerMessageDate} variant="caption">
+      <Typography className={classes.messengerMessageDate} variant="caption" component="small">
         {formatDate(message.createdDate)}
       </Typography>
     </Paper>

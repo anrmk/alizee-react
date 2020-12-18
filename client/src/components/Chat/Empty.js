@@ -1,13 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import { Box, Typography } from "@material-ui/core";
 
 import useStyles from "./styles";
 
-function Empty({
-  title,
-  subTitle,
-  iconComponent
-}) {
+function Empty({ title, subTitle, iconComponent }) {
   const classes = useStyles();
 
   return (
@@ -18,5 +16,17 @@ function Empty({
     </Box>
   );
 }
+
+Empty.propTypes = {
+  title: PropTypes.string,
+  subTitle: PropTypes.string,
+  iconComponent: PropTypes.any,
+};
+
+Empty.defaultProps = {
+  title: "",
+  subTitle: "",
+  iconComponent: undefined,
+};
 
 export default Empty;

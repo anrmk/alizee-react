@@ -303,10 +303,11 @@ export function formatDate(value) {
   const currentDate = new Date();
   const delta = currentDate - new Date(value);
 
-  console.log("Delta", delta);
+  //console.log("Delta", delta);
 
   let options = {};
 
+  //more that 12
   if(delta > 1000*60*60*12) {
     options = { 
       year: "numeric", month: "short", day: "numeric", 

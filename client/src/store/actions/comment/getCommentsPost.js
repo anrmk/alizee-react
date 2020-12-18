@@ -1,9 +1,10 @@
 import { generateUrl, getOffset, copyFlatObjectWithIgnore } from "../../../helpers/functions";
-import { COMMENTS_POST_OFFSET } from "../../../constants/feed";
+import { COMMENTS_POST_OFFSET, POSTS_DEFAULT_OFFSET } from "../../../constants/feed";
 
 export const GET_COMMENTS_POST_REQUEST = "GET_COMMENTS_POST_REQUEST";
 export const GET_COMMENTS_POST_SUCCESS = "GET_COMMENTS_POST_SUCCESS";
 export const GET_COMMENTS_POST_FAILURE = "GET_COMMENTS_POST_FAILURE";
+export const RESET_COMMENTS_POST_SUCCESS = "RESET_COMMENTS_POST_SUCCESS";
 
 function requestCommentsPost() {
   return {
@@ -35,6 +36,20 @@ function errorCommentsPost(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+    },
+  };
+}
+
+function successResetComments() {
+  return {
+    type: RESET_COMMENTS_POST_SUCCESS,
+    payload: {
+      isFetching: false,
+      errorMessage: "",
+      hasMore: false,
+      offset: POSTS_DEFAULT_OFFSET,
+      count: 0,
+      data: []
     },
   };
 }
@@ -80,3 +95,6 @@ export function getCommentsPost(api, opts) {
   };
 }
 
+export function resetCommentsPost() {
+  return dispatch => dispatch(successResetComments());
+}

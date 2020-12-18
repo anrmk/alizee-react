@@ -13,9 +13,10 @@ import { Container, Box, Grid } from "@material-ui/core/";
 function PostPage(props) {
   const apiClient = useContext(ApiContext);
 
-  const { post, comment } = props;
-  const { getPost, likePost, getComments, createComment } = props;
   const postId = props.match.params.id;
+
+  const { post, comment } = props;
+  const { getPost, likePost, getComments, resetComments, createComment } = props;
 
   useEffect(() => {
     if (!postId) {
@@ -26,6 +27,9 @@ function PostPage(props) {
       await getPost(apiClient, postId);
       await getComments(apiClient, { postId, length: COMMENTS_POST_LENGTH });
     })();
+    return () => {
+      resetComments();
+    };
   }, []);
 
   const handleCommentMore = (isLoading) => {
@@ -36,7 +40,11 @@ function PostPage(props) {
     }
   };
 
-  const handleOnFavoriteClick = (id, isLoading) => {
+  const handleLikeClick = async (id, isLoading) => {
+    !isLoading && (await likePost(apiClient, id));
+  };
+
+  const handleFavoriteClick = (id, isLoading) => {
     !isLoading && likePost(apiClient, id);
   };
 
@@ -44,53 +52,44 @@ function PostPage(props) {
     createComment(apiClient, { postId, text });
   };
 
-  const renderLoader = () => <div className="d-flex justify-content-center">{/* <Spinner animation="grow" /> */}</div>;
-
   return (
     <Container>
       <Box my={4}>
         <Grid container spacing={2} direction="row">
           <Grid item md={8}>
-            {post.isFetching ? (
-              renderLoader()
-            ) : (
-              <Post
-                hideHeader
-                hideToolbar
-                hideContent
-                id={post.data?.id}
-                mediaUrls={post.data?.media}
-                amount={post.data?.amount}
-              />
+            {!post.isFetching && (
+              <Post hideHeader hideToolbar hideContent id={post.id} mediaUrls={post.media} amount={post.amount} isPurchased={post.isPurchased} />
             )}
           </Grid>
           <Grid item md={4}>
-            {
+            {!post.isFetching && (
               <Comments
-                userId={post.data?.user?.id}
-                avatarUrl={post.data?.user?.avatarUrl}
-                title={post.data?.user?.name}
-                subheader={post.data?.user?.userName}
-                description={post.data?.description}
+                userId={post.user?.id}
+                avatarUrl={post.user?.avatarUrl}
+                title={post.user?.name}
+                subheader={post.user?.userName}
+                description={post.description}
                 items={comment.data}
                 hasMore={comment.hasMore}
+                isCommentable={post.isCommentable}
                 onFetchMore={() => handleCommentMore(comment.isFetching)}
                 onSendMessageClick={handleSendMessageClick}
               >
                 <Tools
-                  userId={post.data?.user?.id}
-                  id={post.data?.id}
-                  amount={post.data.amount}
-                  isPurchased={post.data.isPurchased}
-                  commentable={post.data?.isCommentable}
-                  likes={post.data?.likes}
-                  iLike={post.data?.iLike}
+                  userId={post.user?.id}
+                  id={post.id}
+                  amount={post.amount}
+                  isPurchased={post.isPurchased}
+                  isCommentable={post.isCommentable}
+                  likes={post.likes}
+                  iLike={post.iLike}
                   hideCommentable={true}
                   hideWatch={true}
-                  onFavoriteClick={(id) => handleOnFavoriteClick(post.data.id, post.isFetching)}
+                  onLikeClick={(id) => handleLikeClick(post.id, post.isFetching)}
+                  onFavoriteClick={(id) => handleFavoriteClick(post.id, post.isFetching)}
                 />
               </Comments>
-            }
+            )}
           </Grid>
         </Grid>
       </Box>
@@ -102,7 +101,7 @@ function mapStateToProps(state) {
   return {
     post: {
       isFetching: state.posts.isFetching,
-      data: state.posts.currentPost,
+      ...state.posts.currentPost,
     },
     comment: {
       isFetching: state.comment.isFetching,
@@ -116,7 +115,9 @@ function mapDispatchToProps(dispatch) {
   return {
     getPost: (api, id) => dispatch(postActions.fetchPost(api, id)),
     likePost: (api, id) => dispatch(postActions.likePost(api, id)),
+
     getComments: (api, opts) => dispatch(commentActions.getCommentsPost(api, opts)),
+    resetComments: () => dispatch(commentActions.resetCommentsPost()),
     createComment: (api, opts) => dispatch(commentActions.createCommentPost(api, opts)),
   };
 }

@@ -88,7 +88,7 @@ function PostsList({
               username={item?.user?.userName}
               createdDate={item?.createdDate}
               amount={item?.amount}
-              commentable={item?.isCommentable}
+              isCommentable={item?.isCommentable}
               likes={item?.likes}
               iLike={item?.iLike}
               isFavorite={item?.isFavorite}

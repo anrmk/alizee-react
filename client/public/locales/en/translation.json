@@ -39,6 +39,11 @@
   "ChatChatRoomEmptyTitle": "Your Messages",
   "ChatChatRoomEmptySubtitle": "Please select a chat to start messaging",
 
+  "ChatRoomMenuItemContactText": "Contact info",
+  "ChatRoomMenuItemDeleteText": "Delete chat",
+  "ChatRoomMenuItemBlockContactText": "Block",
+  "ChatRoomMenuItemClearText": "Clear history",
+
   "NavbarMenuItemProfileText": "Profile",
   "NavbarMenuItemPostSavedText": "Saved",
   "NavbarMenuItemSettingsText": "Settings",

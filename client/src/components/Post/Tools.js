@@ -16,7 +16,7 @@ import useStyles from "./styles";
 
 function Tools({
   id,
-  commentable,
+  isCommentable,
   likes,
   iLike,
   isFavorite,
@@ -70,7 +70,7 @@ function Tools({
       </IconButton>
       <Hidden mdDown>{likes > 0 && <strong>{likes}</strong>}</Hidden>
 
-      {commentable && !hideCommentable && (
+      {isCommentable && !hideCommentable && (
         <IconButton className="warning" onClick={onGoToClick}>
           <ChatIcon />
         </IconButton>
@@ -99,7 +99,7 @@ function Tools({
 
 Tools.propTypes = {
   id: Props.string,
-  commentable: Props.bool,
+  isCommentable: Props.bool,
   likes: Props.number,
   iLike: Props.bool,
   isFavorite: Props.bool,
@@ -119,7 +119,7 @@ Tools.propTypes = {
 
 Tools.defaultProps = {
   id: undefined,
-  commentable: false,
+  isCommentable: false,
   likes: 0,
   iLike: false,
   isFavorite: false,

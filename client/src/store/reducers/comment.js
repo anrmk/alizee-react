@@ -2,6 +2,7 @@ import {
   GET_COMMENTS_POST_REQUEST,
   GET_COMMENTS_POST_SUCCESS,
   GET_COMMENTS_POST_FAILURE,
+  RESET_COMMENTS_POST_SUCCESS,
 
   CREATE_COMMENT_POST_REQUEST,
   CREATE_COMMENT_POST_SUCCESS,
@@ -30,6 +31,11 @@ export default function comment(
         ...action.payload,
       };
     case GET_COMMENTS_POST_FAILURE:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case RESET_COMMENTS_POST_SUCCESS:
       return {
         ...state,
         ...action.payload,
