@@ -67,16 +67,6 @@ export function getRooms(api) {
     try {
       const { data } = await api.setMethod("GET").query(url);
 
-      // const transformedData = data.map((item) => ({
-      //   id: item.id,
-      //   fullName: item.name,
-      //   avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, item.avatarUrl),
-      //   description: item.messages[item.messages.length - 1]?.message,
-      //   date: item.messages[item.messages.length - 1]?.createdDate,
-      //   isActive: data.currentRoom?.id === item.id, //???
-      //   newMessagesCount: item.newMessagesCount || 0
-      // }))
-
       const transformedData = data.map((item) => ({
         ...item,
         avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, item.avatarUrl),
@@ -113,11 +103,20 @@ export function incrementNewMessageCount(roomId, count) {
     const updatedRooms = [...oldRooms];
     const roomIndex = updatedRooms.findIndex((room) => room.id === roomId);
 
-    console.log("Here");
     if (roomIndex !== -1) {
       updatedRooms[roomIndex].unreadMessageCount++;
     }
 
     dispatch(successIncrementNewMessageCount(updatedRooms));
   };
+}
+
+export function removeRoom(roomId) {
+  return (dispatch, getState) => {
+    console.log("remove room ", roomId)
+    const oldRooms = getState().chat.data;
+    const updatedRooms = oldRooms.filter((room) => room.id !== roomId);
+
+    dispatch(receiveGetRooms(updatedRooms));
+  }
 }

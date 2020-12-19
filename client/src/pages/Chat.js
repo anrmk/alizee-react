@@ -8,6 +8,7 @@ import { Room, Sidebar, FollowingDialog } from "../domain/Chat";
 
 import * as actionRelationship from "../store/actions/relationship";
 import * as actionChat from "../store/actions/chat";
+import * as settings from "../store/actions/settings";
 import { ESC_KEY_CODE } from "../constants/key_codes";
 
 function Chat(props) {
@@ -15,7 +16,7 @@ function Chat(props) {
 
   const { user } = props;
   const { followings, getFollowings, filterFollowings } = props;
-  const { chat, getRoom, createRoom, getRooms, deleteRoom, deleteRoomHistory, filterRooms, resetCurrentRoom } = props;
+  const { chat, getRoom, createRoom, getRooms, removeRoom, deleteRoom, deleteRoomHistory, filterRooms, createBlackList, resetCurrentRoom } = props;
   const { createMessage } = props;
 
   const [followingsModalOpen, setFollowingsModalOpen] = useState(false);
@@ -57,12 +58,16 @@ function Chat(props) {
     }
   };
 
-  const handleRoomCreate = async (followerId) => {
-    await createRoom(apiClient, followerId);
+  const handleRoomCreate = async (userId) => {
+    await createRoom(apiClient, userId);
     setFollowingsModalOpen(false);
   };
 
   const handleRoomDelete = async (id) => {
+    if (!window.confirm("Are you sure? This can not be undone!")) {
+      return;
+    }
+    
     await deleteRoom(apiClient, id);
   };
 
@@ -73,8 +78,21 @@ function Chat(props) {
   };
 
   const handleMessageClear = async (id) => {
+    if (!window.confirm("Are you sure? This can not be undone!")) {
+      return;
+    }
     await deleteRoomHistory(apiClient, id);
   };
+
+  const handleAccountBlock = async (id, userId) => {
+    if (!window.confirm("Are you sure to block this user?")) {
+      return;
+    }
+
+    await createBlackList(apiClient, userId);
+    await removeRoom(id);
+    resetCurrentRoom();
+  }
 
   return (
     <Container>
@@ -100,6 +118,7 @@ function Chat(props) {
               onMessageCreate={handleMessageCreate}
               onMessageClear={handleMessageClear}
               onRoomDelete={handleRoomDelete}
+              onAccountBlock={handleAccountBlock}
             />
           </Grid>
         </Grid>
@@ -149,10 +168,13 @@ function mapDispatchToProps(dispatch) {
     filterRooms: (query) => dispatch(actionChat.filter(query)),
 
     getRoom: (api, id) => dispatch(actionChat.getRoom(api, id)),
+    removeRoom: (id) => dispatch(actionChat.removeRoom(id)),
     createRoom: (api, id) => dispatch(actionChat.createRoom(api, id)),
     deleteRoom: (api, id) => dispatch(actionChat.deleteRoom(api, id)),
     deleteRoomHistory: (api, id) => dispatch(actionChat.deleteRoomHistory(api, id)),
     resetCurrentRoom: () => dispatch(actionChat.resetCurrentRoom()),
+
+    createBlackList: (api, id) => dispatch(settings.createBlackList(api, id)),
 
     createMessage: (api, id, message) => dispatch(actionChat.createMessage(api, id, message)),
   };

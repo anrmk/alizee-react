@@ -21,14 +21,14 @@ function SidebarListItem({
   fullName,
   avatarUrl,
   description,
-  date,
+  showActivity,
+  offlineDate,
   newMessages,
   selected,
 
   onItemClick,
-  onActionClick
+  onActionClick,
 }) {
-
   const handleItemClick = (e) => {
     e.preventDefault();
     onItemClick && onItemClick(id);
@@ -47,14 +47,14 @@ function SidebarListItem({
         </Badge>
       </IconButton>
     ) : (
-      <Typography variant="caption">{formatDate(date)}</Typography>
+      <Typography variant="caption">{showActivity && offlineDate && formatDate(offlineDate)}</Typography>
     );
   };
 
   return (
     <ListItem button key={id} selected={selected} onClick={handleItemClick}>
       <ListItemAvatar>
-        <Avatar src={avatarUrl} />
+        <Avatar src={avatarUrl} online={showActivity && !offlineDate} />
       </ListItemAvatar>
 
       <ListItemText primary={fullName} secondary={description}></ListItemText>
@@ -68,12 +68,13 @@ SidebarListItem.propTypes = {
   fullName: PropTypes.string,
   avatarUrl: PropTypes.string,
   description: PropTypes.string,
-  date: PropTypes.string,
+  showActivity: PropTypes.bool,
+  offlineDate: PropTypes.string,
   newMessages: PropTypes.number,
   selected: PropTypes.bool,
 
   onItemClick: PropTypes.func,
-  onActionClick: PropTypes.func
+  onActionClick: PropTypes.func,
 };
 
 SidebarListItem.defaultProps = {
@@ -81,13 +82,14 @@ SidebarListItem.defaultProps = {
   fullName: "",
   avatarUrl: "",
   description: "",
-  date: undefined,
+  showActivity: false,
+  offlineDate: null,
 
   newMessages: 0,
   selected: false,
 
   onItemClick: undefined,
-  onActionClick: undefined
+  onActionClick: undefined,
 };
 
 export default SidebarListItem;

@@ -7,7 +7,6 @@ import { useTranslation } from "react-i18next";
 import Search from "../../components/Search";
 import Avatar from "../../components/Avatar";
 
-import MoreVertIcon from "@material-ui/icons/MoreVertOutlined";
 import ChatIcon from "@material-ui/icons/ChatOutlined";
 
 import SidebarList from "./SidebarList";

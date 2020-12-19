@@ -23,6 +23,7 @@ function RoomMenu({
   onClose,
   onMessageClear,
   onRoomDelete,
+  onAccountBlock
 }) {
   const { t } = useTranslation();
   const history = useHistory();
@@ -45,11 +46,11 @@ function RoomMenu({
         <ListItemText primary={t("ChatRoomMenuItemContactText")} />
       </MenuItem>
 
-      <MenuItem>
+      <MenuItem onClick={onAccountBlock}>
         <ListItemIcon>
           <BlockIcon />
         </ListItemIcon>
-        <ListItemText primary={t("ChatRoomMenuItemBlockContactText")} />
+        <ListItemText primary={t("ChatRoomMenuItemAddAccountToBlackListText")} />
       </MenuItem>
 
       <Divider />
@@ -61,11 +62,11 @@ function RoomMenu({
         <ListItemText primary={t("ChatRoomMenuItemClearText")} />
       </MenuItem>
 
-      <MenuItem onClick={onRoomDelete}>
-        <ListItemIcon>
+      <MenuItem onClick={onRoomDelete} >
+        <ListItemIcon >
           <DeleteIcon />
         </ListItemIcon>
-        <ListItemText primary={t("ChatRoomMenuItemDeleteText")} />
+        <ListItemText primary={t("ChatRoomMenuItemDeleteText")} color="secondary" />
       </MenuItem>
     </Menu>
   );
@@ -80,7 +81,8 @@ RoomMenu.propTypes = {
 
   onClose: PropTypes.func,
   onMessageClear: PropTypes.func,
-  onRoomDelete: PropTypes.func
+  onRoomDelete: PropTypes.func,
+  onAccountBlock: PropTypes.func
 }
 
 RoomMenu.defaultProps = { 
@@ -93,6 +95,7 @@ RoomMenu.defaultProps = {
   onClose: undefined,
   onMessageClear: undefined,
   onRoomDelete: undefined,
+  onAccountBlock: undefined
 }
 
 

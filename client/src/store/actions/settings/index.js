@@ -80,6 +80,14 @@ export {
 } from "./getBlackList";
 
 export {
+  CREATE_BLACK_LIST_REQUEST,
+  CREATE_BLACK_LIST_SUCCESS,
+  CREATE_BLACK_LIST_FAILURE,
+
+  createBlackList
+} from "./createBlackList";
+
+export {
   DELETE_BLACK_LIST_REQUEST,
   DELETE_BLACK_LIST_SUCCESS,
   DELETE_BLACK_LIST_FAILURE,

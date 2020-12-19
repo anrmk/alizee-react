@@ -27,6 +27,7 @@ function Room({
   onMessageCreate,
   onMessageClear,
   onRoomDelete,
+  onAccountBlock
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -60,6 +61,12 @@ function Room({
     onRoomDelete && onRoomDelete(data.id);
   };
 
+  const handleAccountBlock = (e) => {
+    e.preventDefault();
+    handleMenuClose();
+    onAccountBlock && onAccountBlock(data.id, data.followerId)
+  }
+
   useEffect(() => {
     document.addEventListener("keydown", handleRoomCloseKeyPress, false);
     return () => {
@@ -74,7 +81,7 @@ function Room({
           <CardHeader
             avatar={<Avatar src={data.avatarUrl} />}
             title={data.name}
-            subheader={data.offlineDate && formatDate(data.offlineDate)}
+            subheader={data.showActivity && data.offlineDate && formatDate(data.offlineDate)}
             action={
               <IconButton
                 aria-label="settings"
@@ -96,6 +103,7 @@ function Room({
             onClose={handleMenuClose}
             onMessageClear={handleMessageClear}
             onRoomDelete={handleRoomDelete}
+            onAccountBlock={handleAccountBlock}
           ></RoomMenu>
 
           <Divider />
@@ -126,6 +134,7 @@ Room.propTypes = {
   onMessageCreate: PropTypes.func,
   onMessageClear: PropTypes.func,
   onRoomDelete: PropTypes.func,
+  onAccountBlock: PropTypes.func
 };
 
 Room.defaultProps = {
@@ -135,6 +144,7 @@ Room.defaultProps = {
   onMessageCreate: undefined,
   onMessageClear: undefined,
   onRoomDelete: undefined,
+  onAccountBlock: undefined
 };
 
 export default Room;

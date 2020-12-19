@@ -31,7 +31,8 @@ function SidebarList({
             fullName={item.name}
             avatarUrl={item.avatarUrl}
             description={item.lastMessage}
-            date={item.offlineDate}
+            showActivity={item.showActivity}
+            offlineDate={item.offlineDate}
             newMessages={item.unreadMessageCount}
             selected={selectedItemId === item.id}
             onItemClick={onItemClick}

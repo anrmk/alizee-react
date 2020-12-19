@@ -69,6 +69,7 @@ export default {
     createInterests: "accountsetting/interests",
     getBlackList: "accountsetting/blacklist",
     deleteBlackList: "accountsetting/blacklist",
+    createBlackList: "accountsetting/blacklist",
 
     // INTERESTS
     getInterests: "interest/getinterests"

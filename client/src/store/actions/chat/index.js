@@ -7,6 +7,7 @@ export {
   FILTER_ROOMS,
   INCREMENT_NEW_MESSAGE_COUNT,
   getRooms,
+  removeRoom,
   getFilteredRooms,
   filter,
   incrementNewMessageCount,
