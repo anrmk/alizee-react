@@ -1,4 +1,8 @@
 {
+  "ComponentsProfileGeneralStatisticsPostsLabel": "Posts",
+  "ComponentsProfileGeneralStatisticsFollowersLabel": "Followers",
+  "ComponentsProfileGeneralStatisticsFollowingLabel": "Following",
+
   "SettingFormsBlackListFormTitle": "Black List",
 
   "MeetCreateRoomFormDescriptionInputLabel": "Description",
@@ -19,6 +23,10 @@
   "MeetRoomTabChatLabel": "Chat",
   "MeetRoomTabPeoplesLabel": "Peoples",
   "MeetRoomTabMenuLabel": "Menu",
+
+  "ProfileProfileDetailsHourlyRateLabel": "Hourly Rate",
+  "ProfileProfileDetailsFollowButtonLabel": "Follow",
+  "ProfileProfileDetailsSendMessageButtonLabel": "Send Message",
 
   "SecondTextFollowerItem": "recommended",
   "FollowerBtnTextFollowerItem": "Follow",

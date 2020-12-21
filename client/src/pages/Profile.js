@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Container, Box } from "@material-ui/core/";
 
 import ApiContext from "../context/ApiContext";
+import ProfileDetails from "../domain/ProfileDetails";
 import ProfileHeader from "../domain/ProfileHeader";
 import ProfileContent from "../domain/ProfileContent";
 
@@ -79,17 +80,21 @@ function Profile(props) {
           username={user.username}
           fullName={user.name}
           feeling={feeling.data}
+          onPostCreate={() => { }}
+          onEditCover={() => { console.log("onEditCover") }}
+        />
+        <ProfileDetails
+          //TODO Add location and hourly rate props when it will implement on the server side
+          offlineDate={user.offlineDate}
           bio={user.bio}
           sites={user.sites}
+          username={user.username}
           postsCount={post.count}
           followersCount={follower.followersCount}
           followingCount={follower.followingsCount}
-          //TODO ADD onMessageClick and onFollowClick to another component
-          onMessageClick={() => {}}
+          onMessageClick={() => console.log("onMessageClick")}
           onFollowClick={createFollow}
-          onPostCreate={() => {}}
-          onEditCover={() => {console.log("onEditCover")}}
-        />
+          onSendGiftClick={() => console.log("handleSendGift")} />
         <ProfileContent
           media={post.data}
           hasMore={post.hasMore}
@@ -97,7 +102,6 @@ function Profile(props) {
           onItemClick={handleItemClick}
           onTabChange={handleTabChange}
         />
-
       </Box>
     </Container>
   );
@@ -115,6 +119,7 @@ function mapStateToProps(state) {
       avatarUrl: state.user.data?.avatarUrl,
       bio: state.user.data?.bio,
       sites: state.user.data?.sites,
+      offlineDate: state.user.data?.offlineDate
     },
     post: {
       count: state.posts.count,

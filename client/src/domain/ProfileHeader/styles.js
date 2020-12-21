@@ -53,28 +53,6 @@ const useStyles = makeStyles((theme) => ({
   feeling: {
     marginTop: theme.spacing(-2),
   },
-
-  bio: {
-    marginBottom: theme.spacing(1),
-  },
-
-  sites: {
-    marginBottom: theme.spacing(1),
-    display: "flex",
-    justifyContent: "left",
-    flexWrap: "wrap",
-    "& > *": {
-      margin: theme.spacing(0.5),
-    },
-  },
-
-  statistics: {
-    display: "inline-flex",
-    "& > li": {
-      display: "inline-block",
-      whiteSpace: "nowrap"
-    },
-  }
 }));
 
 export default useStyles;

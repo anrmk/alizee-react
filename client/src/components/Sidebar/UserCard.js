@@ -1,15 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { FOLLOWERS_ROUTE, FOLLOWINGS_ROUTE } from "../../constants/routes";
-
-import { Box, Link, Grid, Divider, Typography, BottomNavigation, BottomNavigationAction } from "@material-ui/core";
+import { Box, Typography, BottomNavigation, BottomNavigationAction } from "@material-ui/core";
 
 import LiveTvIcon from "@material-ui/icons/LiveTvOutlined";
 import GradeIcon from "@material-ui/icons/GradeOutlined";
 import GrainIcon from "@material-ui/icons/GrainOutlined";
 
 import Avatar from "../Avatar";
+import ProfileGeneralStatistics from "../ProfileGeneralStatistics"
 import useStyles from "./styles";
 
 function UserCard(props) {
@@ -32,26 +31,11 @@ function UserCard(props) {
       <Typography variant="h6">{name}</Typography>
       <Typography variant="subtitle1">{username}</Typography>
       <br />
-      <Grid container alignItems="center" justify="space-evenly" direction="row" spacing={1}>
-        <Grid item>
-          <Typography variant="caption">Posts</Typography>
-          <Typography>{postsCount}</Typography>
-        </Grid>
-        <Divider orientation="vertical" flexItem />
-        <Grid item>
-          <Link href={FOLLOWERS_ROUTE(username)} variant="caption">
-            Followers
-          </Link>
-          <Typography>{followersCount}</Typography>
-        </Grid>
-        <Divider orientation="vertical" flexItem />
-        <Grid item>
-          <Link href={FOLLOWINGS_ROUTE(username)} variant="caption">
-            Following
-          </Link>
-          <Typography>{followingCount}</Typography>
-        </Grid>
-      </Grid>
+      <ProfileGeneralStatistics 
+      username={username} 
+      postsCount={postsCount} 
+      followersCount={followersCount} 
+      followingCount={followingCount}/>
 
       <BottomNavigation showLabels className={classes.navigation} onChange={handleNavigationChange}>
         <BottomNavigationAction className="success" value="goLive" label="Go live" icon={<LiveTvIcon />} />
