@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { TYPE_OBJECT, TYPE_ARRAY, TYPE_JSON } from '../constants/request_types';
+import { USER_TOKEN } from '../constants/user';
 import { getToken, wrapHttps } from '../helpers/functions';
 
 export default function ApiClient() {
@@ -94,7 +95,16 @@ export default function ApiClient() {
       axios(config)
         .then(response => {
           response.success = true;
-          resolve(response)
+
+          if (response.headers["authorization"]) {
+            const refreshToken = getToken()?.refresh;
+            refreshToken && localStorage.setItem(USER_TOKEN, JSON.stringify({ 
+              access: response.headers["authorization"],
+              refresh: refreshToken
+            }));
+          }
+
+          resolve(response);
         })
         .catch(error => {
           reject(error)
@@ -105,19 +115,3 @@ export default function ApiClient() {
     })
   }
 }
-
-// Example
-// const url = generateUrl("getPosts")
-// const { success, data } = await api
-//   .setWithCredentials() not use
-//   .setMethod("GET")
-//   .setData({
-//     token: "...",
-//     userId: "...",
-//     // ...
-//   })
-//   .query(url)
-
-// if (success) {
-//   // ... logic
-// }

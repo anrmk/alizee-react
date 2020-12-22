@@ -17,15 +17,7 @@ function NotificationHub(props) {
       hubConnection && hubConnection.stop();
       setHubConnection(null);
     } else {
-      const newHubConnection = new signalR.HubConnectionBuilder()
-        .withUrl(wrapHttps(`${process.env.REACT_APP_DOMAIN}${API.endpoints.chat}`, true), {
-          accessTokenFactory: () => getToken().access,
-        })
-        .withAutomaticReconnect()
-        .configureLogging(signalR.LogLevel.Information)
-        .build();
-
-      setHubConnection(newHubConnection);
+      connectToHub();
     }
   }, [user.isAuthenticated])
 
@@ -36,6 +28,18 @@ function NotificationHub(props) {
       incrementNewMessageCount(data.roomId);
     }
   };
+
+  const connectToHub = () => {
+    const newHubConnection = new signalR.HubConnectionBuilder()
+      .withUrl(wrapHttps(`${process.env.REACT_APP_DOMAIN}${API.endpoints.chat}`, true), {
+        accessTokenFactory: () => getToken().access,
+      })
+      .withAutomaticReconnect()
+      .configureLogging(signalR.LogLevel.Information)
+      .build();
+
+    setHubConnection(newHubConnection);
+  }
 
   // TODO: refactor
   useEffect(() => {
@@ -54,9 +58,12 @@ function NotificationHub(props) {
             console.log("hub connected!");
             hubConnection.on("ReceiveMessage", (data) => setMsg(data));
           })
-          .catch((err) =>
-            console.log("Error connection SignalR " + JSON.stringify(err))
-          );
+          .catch((err) => {
+            setTimeout(() => {
+              connectToHub();
+            }, 5000);
+            console.log("Error connection SignalR " + JSON.stringify(err));
+          });
       }
     }
   }, [hubConnection]);
