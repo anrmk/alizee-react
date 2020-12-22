@@ -40,7 +40,7 @@ function Main({ userInfo, isAuthenticated, signOut }) {
       {isAuthenticated && !isNavigationHide && (
         <>
           <Navbar
-            username={userInfo.username}
+            username={userInfo.userName}
             avatarUrl={userInfo.avatarUrl}
             onSignOut={signOut}
             open={open}
