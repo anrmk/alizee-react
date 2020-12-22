@@ -18,6 +18,12 @@ export default {
     createCommentPost: "comment/comment",
     deleteCommentPost: "comment/comment",
 
+    // STORIES
+    createStorySlide: "story/slide",
+    getStory: "story/story",
+    getStorySlide: "story/slide",
+    getFollowingStories: "story/followingstories",
+
     // MEDIA
     getFollowingPosts: "post/getfollowingposts",
     createPost: 'post/createpost',

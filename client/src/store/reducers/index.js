@@ -18,6 +18,8 @@ import settings from "./settings";
 
 import interests from "./interests";
 
+import story from "./story";
+
 import { SIGNOUT_SUCCESS } from "../actions/signIn";
 
 const appReducer = combineReducers({
@@ -33,7 +35,8 @@ const appReducer = combineReducers({
   user,
   settings,
   interests,
-  comment
+  comment,
+  story
 });
 
 export default function(state, action) {

@@ -15,3 +15,7 @@ export const POST_TYPE = {
 }
 
 export const INTERESTS_SKIP = "INTERESTS_SKIP";
+
+export const STORIES_LENGTH = 10;
+export const STORIES_DEFAULT_OFFSET = 0;
+export const STORIES_OFFSET = 10;

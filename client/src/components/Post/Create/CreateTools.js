@@ -8,39 +8,42 @@ import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary";
 
 import { Box, Input, IconButton, Tooltip } from "@material-ui/core";
 
-function CreateTools({ className, isPrivate, isCommentable, onChange }) {
+function CreateTools({ className, onlyMedia, isPrivate, isCommentable, onChange }) {
   const mediaRef = useRef();
 
   return (
     <Box className={className}>
-      <Input
-        name="amount"
-        onChange={onChange}
-        type="number"
-        inputProps={{ min: 0, max: 10000 }}
-        placeholder="Amount"
-      />
+      {!onlyMedia && (
+        <>
+          <Input
+            name="amount"
+            onChange={onChange}
+            type="number"
+            inputProps={{ min: 0, max: 10000 }}
+            placeholder="Amount"
+          />
 
-      <Tooltip title="Set Post to Private">
-        <IconButton onClick={onChange} name="private">
-          {isPrivate ? (
-            <LockOutlinedIcon fontSize="small" color="secondary" />
-          ) : (
-            <LockOpenOutlinedIcon fontSize="small" />
-          )}
-        </IconButton>
-      </Tooltip>
+          <Tooltip title="Set Post to Private">
+            <IconButton onClick={onChange} name="private">
+              {isPrivate ? (
+                <LockOutlinedIcon fontSize="small" color="secondary" />
+              ) : (
+                <LockOpenOutlinedIcon fontSize="small" />
+              )}
+            </IconButton>
+          </Tooltip>
 
-      <Tooltip title="Turn off Commenting">
-        <IconButton onClick={onChange} name="commentable">
-          {isCommentable ? (
-            <CommentOutlinedIcon fontSize="small" />
-          ) : (
-            <CommentBlockOutlinedIcon fontSize="small" color="secondary" />
-          )}
-        </IconButton>
-      </Tooltip>
-
+          <Tooltip title="Turn off Commenting">
+            <IconButton onClick={onChange} name="commentable">
+              {isCommentable ? (
+                <CommentOutlinedIcon fontSize="small" />
+              ) : (
+                <CommentBlockOutlinedIcon fontSize="small" color="secondary" />
+              )}
+            </IconButton>
+          </Tooltip>
+        </>
+      )}
       <Tooltip title="Share up to 10 photos and videos in one Post">
         <IconButton onClick={(e) => mediaRef.current.click()}>
           <PhotoLibraryIcon fontSize="small" />
@@ -50,7 +53,6 @@ function CreateTools({ className, isPrivate, isCommentable, onChange }) {
             name="medias"
             ref={mediaRef}
             style={{ display: "none" }}
-            multiple
             onChange={onChange}
           />
         </IconButton>

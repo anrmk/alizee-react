@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   Container,
   Box,
-  Link,
   Grid,
   Typography,
   Dialog,
@@ -22,12 +21,14 @@ import * as actionSuggestion from "../store/actions/suggestion";
 import * as postActions from "../store/actions/post";
 import * as settingsActions from "../store/actions/settings";
 import * as interestsActions from "../store/actions/interests";
+import * as storyActions from "../store/actions/story";
 
 import { RelationshipList } from "../components/RelationshipList";
+import { PreviewStoriesList } from "../domain/StoriesLists";
 
 import ApiContext from "../context/ApiContext";
-import { INTERESTS_SKIP, POSTS_LENGTH } from "../constants/feed";
-import { POST_ROUTE, PROFILE_ROUTE, SUGESTED_PEOPLE } from "../constants/routes";
+import { INTERESTS_SKIP, POSTS_LENGTH, STORIES_LENGTH, POST_TYPE } from "../constants/feed";
+import { POST_ROUTE, SUGESTED_PEOPLE } from "../constants/routes";
 import InterestList from "../components/InterestsList";
 
 const useStyles = makeStyles((theme) => ({
@@ -60,22 +61,43 @@ function Feed(props) {
     unfollowPeopleSuggestions,
     getAccountPersonalized,
     getInterests,
+    createInterests,
+    favoritePost,
+    buyPost,
+    getStory,
+    getFollowingStories,
+    createStorySlide,
+    resetFollowingStories
   } = props;
 
-  const { resetPosts, fetchPosts, createPost, likePost, favoritePost, buyPost, settings, interests, createInterests } = props;
+  const {
+    resetPosts,
+    fetchPosts,
+    createPost,
+    likePost,
+    settings,
+    interests,
+    story
+  } = props;
 
   useEffect(() => {
     (async () => {
       await getAccountPersonalized(apiClient);
 
       if (posts.data.length <= 0) {
-        resetPosts();
         await fetchPosts(apiClient, {
           userId: userInfo.id,
           length: POSTS_LENGTH,
         });
+        await getFollowingStories(apiClient, { length: 10 });
+        await getStory(apiClient, { userId: userInfo.id, length: STORIES_LENGTH });
       }
     })();
+
+    return () => {
+      resetPosts();
+      resetFollowingStories();
+    }
   }, []);
 
   useEffect(() => {
@@ -129,7 +151,11 @@ function Feed(props) {
   }
 
   const handleFormSubmit = async (formData, mediaData) => {
-    await createPost(apiClient, formData, mediaData);
+    if (formData.type === POST_TYPE.STORY) {
+      await createStorySlide(apiClient, formData, mediaData);
+    } else {
+      await createPost(apiClient, formData, mediaData);
+    }
   };
 
   const handleInterestSubmit = async () => {
@@ -147,13 +173,17 @@ function Feed(props) {
   const handleInterestsModalSkip = () => {
     localStorage.setItem(INTERESTS_SKIP, true);
     setInterestsModalShow(false);
-  };
+  }
 
   return (
     <Container>
       <Box my={4}>
         <Grid container spacing={2} direction="row">
-          <Grid item md={8} sm={12} >
+          <Grid container item md={8} sm={12} direction="column">
+            <Typography variant="h6">
+              Top stories
+            </Typography>
+            <PreviewStoriesList userStory={story.data.mStories} items={story.data.fStories} />
             <PostSprout user={userInfo} onSubmit={handleFormSubmit} />
             <PostsList
               items={posts.data}
@@ -170,7 +200,7 @@ function Feed(props) {
             <Grid item md={4} sm={false} >
               <Typography component="h4" className={classes.suggestionHeader}>
                 <span>Suggestions For You</span>
-                <Link href={SUGESTED_PEOPLE}>
+                <Link to={SUGESTED_PEOPLE}>
                   <small>See All</small>
                 </Link>
               </Typography>
@@ -234,6 +264,12 @@ function mapStateToProps(state) {
     interests: {
       data: interestsActions.getSelectableInterests(state),
     },
+    story: {
+      isFetching: state.story.isFetching,
+      data: storyActions.getFollowingsStoriesWithMyself(state),
+      errorMessage: state.story.errorMessage,
+      hasMore: state.story.hasMore
+    },
   };
 }
 
@@ -251,6 +287,10 @@ function mapDispatchToProps(dispatch) {
     getAccountPersonalized: (api) => dispatch(settingsActions.getAccountPersonalized(api)),
     getInterests: (api) => dispatch(interestsActions.getInterests(api)),
     createInterests: (api, ids) => dispatch(interestsActions.createInterests(api, ids)),
+    getStory: (api, opts) => dispatch(storyActions.getStory(api, opts)),
+    getFollowingStories: (api, opts) => dispatch(storyActions.getFollowingStories(api, opts)),
+    createStorySlide: (api, story, media) => dispatch(storyActions.createStorySlide(api, story, media)),
+    resetFollowingStories: () => dispatch(storyActions.resetFollowingStories())
   };
 }
 

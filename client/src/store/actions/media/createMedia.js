@@ -41,7 +41,6 @@ export function createMedia(api, media) {
 
     const url = generateUrl('createMedia');
     try {
-      console.log(url)
       const formData = new FormData();
       media.forEach(file => {
         formData.append(file.name, file);
@@ -53,7 +52,6 @@ export function createMedia(api, media) {
 
       dispatch(receiveCreateMedia(data));
     } catch (e) {
-      console.error(e);
       dispatch(errorCreateMedia("Error: something went wrong"));
     }
   }

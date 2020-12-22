@@ -303,8 +303,6 @@ export function formatDate(value) {
   const currentDate = new Date();
   const delta = currentDate - new Date(value);
 
-  //console.log("Delta", delta);
-
   let options = {};
 
   //more that 12
@@ -340,4 +338,8 @@ export function copyFlatObjectWithIgnore(obj, ignores) {
 
     return acc;
   }, {});
+}
+
+export function setUrlWithoutReload(url, title, data) {
+  window.history.replaceState(data, title, url);
 }

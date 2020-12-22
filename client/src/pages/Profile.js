@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { Redirect, useHistory, useParams, useRouteMatch } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { Container, Box } from "@material-ui/core/";
@@ -14,10 +14,11 @@ import * as relationshipActions from "../store/actions/relationship";
 import * as userActions from "../store/actions/user";
 
 import { POSTS_LENGTH } from "../constants/profile";
-import { POST_ROUTE } from "../constants/routes";
+import { HOME_ROUTE, SETTINGS_ROUTE, POST_ROUTE, SETTINGS_EDIT_PROFILE_ROUTE } from "../constants/routes";
 
 function Profile(props) {
   const { username } = useParams();
+  const { url } = useRouteMatch();
   const apiClient = useContext(ApiContext);
   const history = useHistory();
   const [postType, setPostType] = useState(0);
@@ -40,11 +41,13 @@ function Profile(props) {
         await fetchUser(apiClient, username);
       })();
     }
+
+    return () => resetPosts();
   }, [username]);
 
   useEffect(() => {
     if (user.username === username && user.id) {
-      resetPosts();
+      
       (async () => {
         await getFeeling(apiClient, { userId: user.id });
         await fetchPosts(apiClient, { userId: user.id, length: POSTS_LENGTH, type: postType, tagged });
@@ -53,6 +56,14 @@ function Profile(props) {
       })();
     }
   }, [user.id, postType, tagged]);
+
+  if (url.includes(SETTINGS_ROUTE)) {
+    return <Redirect to={SETTINGS_EDIT_PROFILE_ROUTE} />
+  }
+
+  if (user.errorMessage) {
+    return <Redirect exact to={HOME_ROUTE} />
+  }
 
   const handleFetchMore = async () => {
     await fetchPosts(apiClient, { userId: user.id, length: POSTS_LENGTH, type: postType, tagged });
@@ -119,6 +130,7 @@ function mapStateToProps(state) {
       avatarUrl: state.user.data?.avatarUrl,
       bio: state.user.data?.bio,
       sites: state.user.data?.sites,
+      errorMessage: state.user.errorMessage,
       offlineDate: state.user.data?.offlineDate
     },
     post: {

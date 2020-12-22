@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import clsx from "clsx";
 import ReactPlayer from "react-player";
 
 import { Box } from "@material-ui/core";
@@ -11,7 +12,14 @@ import VolumeUp from "@material-ui/icons/VolumeUp";
 
 import useStyles from "./styles";
 
-export default function VideoContent({ id, url, showControls }) {
+export default function VideoContent({
+  id,
+  url,
+  showControls,
+  wrapperClassName,
+  videoClassName,
+  videoPlayerProps
+}) {
   const classes = useStyles();
 
   const [playing, setPlaying] = useState(false);
@@ -69,11 +77,11 @@ export default function VideoContent({ id, url, showControls }) {
 
 
   return (
-    <Box id={id} className={classes.videoContent} onMouseEnter={() => setShowing(true)} onMouseLeave={() => setShowing(false)}>
+    <Box id={id} className={clsx(classes.videoContent, wrapperClassName)} onMouseEnter={() => setShowing(true)} onMouseLeave={() => setShowing(false)}>
       {showControls && renderPlayBtn(showing, playing)}
       {showControls && renderMuteBtn(showing, muted, playing)}
      
-      <ReactPlayer className={classes.player} width="100%" height="100%" playing={playing} muted={muted} url={url} />
+      <ReactPlayer className={clsx(classes.player, videoClassName)} width="100%" height="100%" playing={playing} muted={muted} url={url} {...videoPlayerProps} />
     </Box>
   );
 }

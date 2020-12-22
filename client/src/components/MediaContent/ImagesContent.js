@@ -4,8 +4,15 @@ import PropTypes from "prop-types";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
-function ImagesContent({ id, url, altText, lazyLoad }) {
-  return <LazyLoadImage id={id} effect="blur" src={url} alt={altText} visibleByDefault={!lazyLoad} />;
+function ImagesContent({ id, url, altText, lazyLoad, className, wrapperClassName }) {
+  return <LazyLoadImage 
+    className={className}
+    wrapperClassName={wrapperClassName}
+    id={id}
+    effect="blur"
+    src={url}
+    alt={altText}
+    visibleByDefault={!lazyLoad} />;
 }
 
 ImagesContent.propTypes = {
