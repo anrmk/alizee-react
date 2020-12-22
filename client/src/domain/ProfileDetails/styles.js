@@ -36,15 +36,15 @@ const useStyles = makeStyles((theme) => ({
   profileDetailsSites: {
     marginBottom: theme.spacing(1),
     display: "flex",
-    justifyContent: "left",
-    flexWrap: "wrap",
-    "& > *": {
-      margin: theme.spacing(0.5),
-    },
+    flexDirection: "row",
+    justifyContent: "flex-end"
   },
   profileDetailsActionButtons: {
     margin: theme.spacing(2, 0)
   },
+  profileDetailsActionButton: {
+    maxWidth: "100%"
+  }
 }));
 
 export default useStyles;

@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
-import { BottomNavigation, BottomNavigationAction, Chip, Grid, Typography } from "@material-ui/core";
+import { BottomNavigation, BottomNavigationAction, Grid, IconButton, Tooltip, Typography } from "@material-ui/core";
 
 import LinkIcon from "@material-ui/icons/Link";
 import InstagramIcon from "@material-ui/icons/Instagram";
@@ -69,25 +69,30 @@ function ProfileDetails({
           followingCount={followingCount}
         />
         <BottomNavigation showLabels className={classes.profileDetailsActionButtons}>
-          <BottomNavigationAction label={t("ProfileProfileDetailsFollowButtonLabel")} onClick={onFollowClick} icon={<ToggleOnIcon />} />
-          <BottomNavigationAction label={t("ProfileProfileDetailsSendMessageButtonLabel")} onClick={onMessageClick} icon={<SendIcon />} />
+          <BottomNavigationAction
+            className={classes.profileDetailsActionButton}
+            label={t("ProfileProfileDetailsFollowButtonLabel")}
+            onClick={onFollowClick}
+            icon={<ToggleOnIcon />} />
+          <BottomNavigationAction
+            className={classes.profileDetailsActionButton}
+            label={t("ProfileProfileDetailsSendMessageButtonLabel")}
+            onClick={onMessageClick}
+            icon={<SendIcon />} />
         </BottomNavigation>
       </Grid>
       <Grid item xs={8}>
         <Typography variant="body2" className={classes.profileDetailsBio}>
-          {bio}
+          {bio} 
         </Typography>
         <div className={classes.profileDetailsSites}>
           {sites.length > 0 &&
             sites.map((url, i) => (
-              <Chip
-                key={i}
-                color="primary"
-                size="small"
-                icon={generateSiteIcon(url)}
-                label={getHostFromUrl(url)}
-                onClick={(e) => window.open(url)}
-              ></Chip>
+              <Tooltip key={i} title={getHostFromUrl(url)} placement="top">
+                <IconButton key={i} onClick={(e) => window.open(url)}>
+                  {generateSiteIcon(url)}
+                </IconButton>
+              </Tooltip>
             ))}
         </div>
       </Grid>
