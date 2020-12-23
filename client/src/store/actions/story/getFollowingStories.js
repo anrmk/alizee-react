@@ -113,7 +113,14 @@ export function resetFollowingStories() {
 // Selectors
 const followingsStoriesSelector = (state) => state.story.data;
 const currentStorySelector = (state) => state.story.currentStory;
+const signInSelector = (state) => state.signIn?.userInfo;
 
 export const getFollowingsStoriesWithMyself = createSelector(
-  [followingsStoriesSelector, currentStorySelector], 
-  (fStories, mStories) => ({ mStories: mStories[0], fStories }));
+  [followingsStoriesSelector, currentStorySelector, signInSelector], 
+  (fStories, mStories, userInfo) => ({
+    mStories: {
+      ...mStories[0],
+      user: userInfo
+    },
+    fStories
+  }));

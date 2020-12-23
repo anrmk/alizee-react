@@ -159,7 +159,7 @@ function Feed(props) {
         <Grid container spacing={2} direction="row">
           <Grid container item md={8} sm={12} direction="column">
             <Typography variant="h6">Top stories</Typography>
-            <PreviewStoriesList userStory={story.data.mStories} items={story.data.fStories} />
+            <PreviewStoriesList loading={story.isFetching} userStory={story.data.mStories} items={story.data.fStories} />
             <PostSprout user={userInfo} onSubmit={handleFormSubmit} />
             <PostsList
               items={posts.data}

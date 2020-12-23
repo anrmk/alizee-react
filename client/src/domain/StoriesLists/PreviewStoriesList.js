@@ -1,5 +1,5 @@
 import React from "react";
-import { List } from "@material-ui/core";
+import { List, CircularProgress } from "@material-ui/core";
 import ScrollContainer from "react-indiana-drag-scroll";
 
 import PreviewStoriesListItem from "./PreviewStoriesListItem";
@@ -8,10 +8,11 @@ import useStyles from "./styles";
 export default function PreviewStoryList({
   items,
   userStory,
+  loading = false,
 
   onItemClick
 }) {
-  const classes = useStyles();
+  const classes = useStyles({ loading });
 
   const handleItemClick = (id, stories) => {
     onItemClick && onItemClick(id, stories);
@@ -26,8 +27,9 @@ export default function PreviewStoryList({
         name={userStory?.user.name}
         previewUrl={userStory?.media?.url}
         avatarUrl={userStory?.user?.avatarUrl}
-        onClick={(id) => handleItemClick(id, userStory.story)} />
-      {items && items.map(item => (
+        onClick={(id) => handleItemClick(id, userStory)} />
+      {loading ? <CircularProgress className={classes.previewStoryListProgress} />
+       : items && items.map(item => (
         <PreviewStoriesListItem
           key={item?.id}
           id={item?.id}

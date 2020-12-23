@@ -40,6 +40,10 @@ const useStyles = makeStyles(theme => ({
       display: "none"
     }
   },
+  previewStoryListProgress: {
+    alignSelf: "center",
+    marginLeft: theme.spacing(3)
+  },
   previewStoryListWrapper: {
     width: "100%",
     display: "flex",
@@ -68,6 +72,9 @@ const useStyles = makeStyles(theme => ({
     "& + &": {
       marginLeft: theme.spacing(3)
     }
+  },
+  previewStoryListItemName: {
+    color: theme.palette.common.white
   },
   previewStoryListItemAvatar: {
     marginRight: theme.spacing(1)

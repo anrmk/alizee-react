@@ -27,11 +27,11 @@ export default function PreviewStoryListItem({
     <ListItem
       button
       className={classes.previewStoryListItem}
-      to={STORIES_ROUTE(userId)}
+      to={previewUrl ? STORIES_ROUTE(userId) : "#"}
       component={Link}
       onClick={() => handleItemClick(id)}>
       <Avatar className={classes.previewStoryListItemAvatar} size="small" src={avatarUrl} />
-      <Typography variant="caption" noWrap>{name}</Typography>
+      <Typography className={classes.previewStoryListItemName} variant="caption" noWrap>{name}</Typography>
     </ListItem>
   )
 };
