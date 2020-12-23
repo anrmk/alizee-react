@@ -58,7 +58,6 @@ function Main({ userInfo, isAuthenticated, signOut }) {
           <Route path={Routes.EMAIL_VERIFY} component={EmailVerify} />
           <Route exact path={Routes.RESET_PASSWORD_ROUTE} component={ResetPassword} />
           <Route exact path={Routes.PASSWORD_CHANGE_ROUTE} component={ChangePassword} />
-          <PrivateRoute exact path={Routes.DEFAULT_ROUTE} />
           <PrivateRoute path={Routes.HOME_ROUTE} component={Feed} />
           <PrivateRoute path={Routes.EXPLORE_ROUTE} component={Explore} />
           <PrivateRoute path={Routes.POST_ID_ROUTE} component={Post} />

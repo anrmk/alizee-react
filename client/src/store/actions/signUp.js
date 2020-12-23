@@ -1,5 +1,4 @@
 import { generateUrl, getFullName } from '../../helpers/functions';
-import { socialAuth } from './socialAuth';
 
 export const SIGNUP_REQUEST = 'SIGNUP_REQUEST';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
@@ -58,7 +57,7 @@ export function signUpUser(api, creds) {
           phoneNumber: creds.phoneNumber,
           avatarUrl: creds.imageUrl
         })
-        .query(url);
+        .query(url, { "g-recaptcha-response": creds.token });
 
       if (status !== 201) {
         return dispatch(errorSignUp(data.message));

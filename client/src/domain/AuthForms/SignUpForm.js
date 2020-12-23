@@ -3,6 +3,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { 
   Typography, 
   Card,
@@ -13,6 +14,7 @@ import {
 import CustomInput from "../../components/CustomInput";
 import { SIGN_IN_ROUTE } from "../../constants/routes";
 import { getYearFromCurrentDate } from "../../helpers/functions";
+import CONTROLLERS from "../../constants/endpoints";
 import AuthBaseForm from "./AuthBaseForm";
 import useStyles from "./styles";
 
@@ -64,15 +66,28 @@ function SignInForm({
 }) {
   const history = useHistory();
   const classes = useStyles();
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const { errors, control, handleSubmit } = useForm({
     resolver: yupResolver(schema)
   });
 
+  const handleFormSubmit = async (data) => {
+    if (!executeRecaptcha) {
+      return;
+    }
+
+    const token = await executeRecaptcha(CONTROLLERS.endpoints.signUp);
+
+    if (!token) return;
+
+    onSubmit && onSubmit({ ...data, token });
+  }
+
   return (
     <AuthBaseForm
       error={error}
-      onFormSubmit={handleSubmit(onSubmit)}
+      onFormSubmit={handleSubmit(handleFormSubmit)}
       onSocialRequest={onSocialRequest}
       onSocialSuccess={onSocialSuccess}
       onSocialFailure={onSocialFailure}

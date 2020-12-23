@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { Container } from "@material-ui/core";
 
 import { SignUpForm } from "../../domain/AuthForms";
@@ -32,19 +33,8 @@ function SignUp(props) {
     return <Redirect to={EMAIL_CONFIRMATION} />
   }
 
-  const handleFormSubmit = (formData) => {
-    (async () => {
-      await signUp(
-        apiClient,
-        {
-          name: formData.name,
-          surname: formData.surname,
-          birthday: formData.birthday,
-          username: formData.username,
-          email: formData.email,
-          phoneNumber: formData.phoneNumber
-        });
-    })();
+  const handleFormSubmit = async (formData) => {
+    await signUp(apiClient, formData);
   };
 
   const handleSocialRequest = () => {
@@ -63,12 +53,17 @@ function SignUp(props) {
 
   return (
     <Container className={classes.container}>
-      <SignUpForm
-        error={errorMessage}
-        onSubmit={handleFormSubmit}
-        onSocialRequest={handleSocialRequest}
-        onSocialSuccess={handleSocialSuccess}
-        onSocialFailure={handleSocialFailure} />
+      <GoogleReCaptchaProvider
+        useRecaptchaNet
+        reCaptchaKey={process.env.REACT_APP_RECAPTCHA_KEY}
+        scriptProps={{ async: true, defer: true, appendTo: "body" }}>
+        <SignUpForm
+          error={errorMessage}
+          onSubmit={handleFormSubmit}
+          onSocialRequest={handleSocialRequest}
+          onSocialSuccess={handleSocialSuccess}
+          onSocialFailure={handleSocialFailure} />
+      </GoogleReCaptchaProvider>
     </Container>
   );
 }
