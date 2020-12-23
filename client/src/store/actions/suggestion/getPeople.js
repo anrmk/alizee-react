@@ -4,7 +4,7 @@ export const GET_PEOPLE_SUGGESTIONS_REQUEST = "GET_PEOPLE_SUGGESTIONS_REQUEST";
 export const GET_PEOPLE_SUGGESTIONS_SUCCESS = "GET_PEOPLE_SUGGESTIONS_SUCCESS";
 export const GET_PEOPLE_SUGGESTIONS_FAILURE = "GET_PEOPLE_SUGGESTIONS_FAILURE";
 
-function requestGetPeopleSuggestions() {
+function requestGetPeople() {
   return {
     type: GET_PEOPLE_SUGGESTIONS_REQUEST,
     payload: {
@@ -14,18 +14,20 @@ function requestGetPeopleSuggestions() {
   };
 }
 
-function receiveGetPeopleSuggestions(peopleData) {
+function receiveGetPeople(data) {
   return {
     type: GET_PEOPLE_SUGGESTIONS_SUCCESS,
     payload: {
-      isFetching: false,
-      errorMessage: "",
-      people: peopleData || [],
+      people: {
+        data,
+        isFetching: false,
+        errorMessage: "",
+      }
     },
   };
 }
 
-function errorGetPeopleSuggestions(message) {
+function errorGetPeople(message) {
   return {
     type: GET_PEOPLE_SUGGESTIONS_FAILURE,
     payload: {
@@ -35,12 +37,13 @@ function errorGetPeopleSuggestions(message) {
   };
 }
 
-export function getPeopleSuggestions(api, count) {
+export function getPeople(api, count) {
   return async (dispatch) => {
-    dispatch(requestGetPeopleSuggestions());
+    dispatch(requestGetPeople());
 
-    const url = generateUrl("getPeopleSuggestions");
     try {
+      const url = generateUrl("getPeopleSuggestions");
+
       const { data } = await api
         .setMethod("GET")
         .setParams({ length: count })
@@ -50,9 +53,9 @@ export function getPeopleSuggestions(api, count) {
         item.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, item.avatarUrl);
       })
 
-      dispatch(receiveGetPeopleSuggestions(data));
-    } catch {
-      dispatch(errorGetPeopleSuggestions("Error: GetSuggestions"));
+      dispatch(receiveGetPeople(data));
+    } catch (e) {
+      dispatch(errorGetPeople("Error: something went wrong:", e));
     }
   };
 }

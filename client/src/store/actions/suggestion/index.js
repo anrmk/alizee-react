@@ -1,21 +1,28 @@
-export { getPeopleSuggestions } from "./getPeopleSuggestions";
-export { followPeopleSuggestions } from "./followPeopleSuggestions";
-export { unfollowPeopleSuggestions } from "./unfollowPeopleSuggestions";
-
 export {
   GET_PEOPLE_SUGGESTIONS_REQUEST,
   GET_PEOPLE_SUGGESTIONS_SUCCESS,
-  GET_PEOPLE_SUGGESTIONS_FAILURE
-} from "./getPeopleSuggestions";
+  GET_PEOPLE_SUGGESTIONS_FAILURE,
+  getPeople
+} from "./getPeople";
+
+export {
+  GET_POST_SUGGESTIONS_REQUEST,
+  GET_POST_SUGGESTIONS_SUCCESS,
+  GET_POST_SUGGESTIONS_FAILURE,
+  getPosts,
+  resetPosts
+} from "./getPosts";
 
 export {
   FOLLOW_PEOPLE_SUGGESTIONS_REQUEST,
   FOLLOW_PEOPLE_SUGGESTIONS_SUCCESS,
-  FOLLOW_PEOPLE_SUGGESTIONS_FAILURE
+  FOLLOW_PEOPLE_SUGGESTIONS_FAILURE,
+  followPeopleSuggestions
 } from "./followPeopleSuggestions";
 
 export {
   UNFOLLOW_PEOPLE_SUGGESTIONS_REQUEST,
   UNFOLLOW_PEOPLE_SUGGESTIONS_SUCCESS,
-  UNFOLLOW_PEOPLE_SUGGESTIONS_FAILURE
+  UNFOLLOW_PEOPLE_SUGGESTIONS_FAILURE,
+  unfollowPeopleSuggestions
 } from "./unfollowPeopleSuggestions";

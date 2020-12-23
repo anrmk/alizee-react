@@ -55,8 +55,8 @@ function Feed(props) {
   const isInterestsSkip = localStorage.getItem(INTERESTS_SKIP);
 
   const {
-    peopleSuggestions,
-    getPeopleSuggestions,
+    people,
+    getPeople,
     followPeopleSuggestions,
     unfollowPeopleSuggestions,
     getAccountPersonalized,
@@ -112,7 +112,7 @@ function Feed(props) {
   useEffect(() => {
     if (userInfo.id) {
       (async () => {
-        await getPeopleSuggestions(apiClient, 6);
+        await getPeople(apiClient, 6);
       })();
     }
   }, [userInfo.id]);
@@ -139,7 +139,7 @@ function Feed(props) {
 
   const handleFollowPeopleClick = (id, isLoading) => {
     if (!isLoading) {
-      var follower = peopleSuggestions.data.find((u) => u.id === id);
+      var follower = people.data.find((u) => u.id === id);
       if (follower) {
         follower.isFollowing ? unfollowPeopleSuggestions(apiClient, id) : followPeopleSuggestions(apiClient, id);
       }
@@ -192,7 +192,7 @@ function Feed(props) {
               onGoToClick={handleGoToClick}
               onLikeClick={(id) => handleLikeClick(id, posts.isFetching)}
               onFavoriteClick={(id) => handleFavoriteClick(id, posts.isFetching)}
-              onFollowClick={(id) => handleFollowPeopleClick(id, peopleSuggestions.isFetching)}
+              onFollowClick={(id) => handleFollowPeopleClick(id, people.isFetching)}
               onPayClick={(data) => handleBuyClick(data, posts.isFetching)}
             />
           </Grid>
@@ -204,7 +204,7 @@ function Feed(props) {
                   <small>See All</small>
                 </Link>
               </Typography>
-              <RelationshipList items={peopleSuggestions.data} onFollowClick={handleFollowPeopleClick} />
+              <RelationshipList items={people.data} onFollowClick={handleFollowPeopleClick} />
               <br />
               <Typography component="h4" gutterBottom>
                 Rooms
@@ -253,10 +253,10 @@ function mapStateToProps(state) {
       isFetching: state.media.isFetching,
       data: state.media.data,
     },
-    peopleSuggestions: {
-      isFetching: state.suggestion.isFetching,
-      data: state.suggestion?.people,
-      errorMessage: state.suggestion.errorMessage,
+    people: {
+      isFetching: state.suggestion.people.isFetching,
+      data: state.suggestion.people.data,
+      errorMessage: state.suggestion.people.errorMessage,
     },
     settings: {
       isAccountPersonalized: state.settings.isAccountPersonalized,
@@ -279,7 +279,7 @@ function mapDispatchToProps(dispatch) {
     fetchPosts: (api, opts) => dispatch(postActions.getFollowingPosts(api, opts)),
     createPost: (api, post, media) => dispatch(postActions.createPost(api, post, media)),
     buyPost: (api, id) => dispatch(postActions.buyPost(api, id)),
-    getPeopleSuggestions: (api, count) => dispatch(actionSuggestion.getPeopleSuggestions(api, count)),
+    getPeople: (api, count) => dispatch(actionSuggestion.getPeople(api, count)),
     likePost: (api, id) => dispatch(postActions.likePost(api, id)),
     favoritePost: (api, id) => dispatch(postActions.favoritePost(api, id)),
     followPeopleSuggestions: (api, id) => dispatch(actionSuggestion.followPeopleSuggestions(api, id)),

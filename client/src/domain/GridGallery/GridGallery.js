@@ -1,22 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
-import { Typography, IconButton } from "@material-ui/core";
-import { GridList, GridListTile, GridListTileBar } from "@material-ui/core";
+import { GridList, GridListTile, GridListTileBar, Hidden, Typography, IconButton, withWidth } from "@material-ui/core";
 
-import StarBorderIcon from "@material-ui/icons/StarBorderOutlined";
+import PlayArrowIcon from "@material-ui/icons/PlayArrowOutlined";
+import PhotoLibraryIcon from "@material-ui/icons/PhotoLibraryOutlined";
 
-import useStyles from "./styles";
+import useStyle from "./styles";
 
 function GridGallery({
   items,
   hasMore,
+  width,
 
   onFetchMore,
   onItemClick,
 }) {
-  const classes = useStyles();
+  const classes = useStyle();
+  const [isLoading, setLoading] = useState(true);
 
   return (
     <InfiniteScroll
@@ -26,39 +29,44 @@ function GridGallery({
       next={onFetchMore}
       hasMore={hasMore}
     >
-      {!items || items.length == 0 ? <div>Start capturing and sharing your moments.</div> : 
-      <GridList
-      cellHeight="auto"
-      spacing={12}
-      cols={4}
-      className={classes.gridList}
-    >
-      {items && items.length > 0 && items.map((item, index) => (
-          <GridListTile key={item?.id} onClick={() => onItemClick(item?.id)} className={classes.gridListTile}>
-            {item.media.length > 0 ? (
-              <img src={item?.media[0]?.thumbnailUrl} alt={item.title} />
-            ) : (
-              <Typography className={classes.typography}>
-                {item.caption}
-              </Typography>
+      {!items || items.length == 0 ? (
+        <Typography>Start capturing and sharing your moments.</Typography>
+      ) : (
+        <GridList spacing={12} cols={["lg", "xl"].includes(width) ? 4 : 3} className={classes.gridList}>
+          {items &&
+            items.map(
+              (item, index) =>
+                item.media.length > 0 && (
+                  <GridListTile
+                    key={item.id + index}
+                    onClick={() => onItemClick(item.id)}
+                    className={classes.gridListTile}
+                  >
+                    <LazyLoadImage
+                      effect="blur"
+                      src={item.media[0].kind === 1 ? item.media[0].thumbnailUrl : item.media[0].url}
+                      alt={item.title}
+                      className={classes.gridListTileImage}
+                      afterLoad={() => setLoading(false)}
+                    />
+
+                    {!isLoading && (<Hidden smDown>
+                        <GridListTileBar
+                          titlePosition="top"
+                          actionPosition="right"
+                          className={classes.gridListTileBar}
+                          actionIcon={
+                            <IconButton aria-label={`star ${item.caption}`} className={classes.icon}>
+                              {item.media[0].kind === 1 ? <PlayArrowIcon /> : <PhotoLibraryIcon />}
+                            </IconButton>
+                          }
+                        />
+                      </Hidden> )}
+                  </GridListTile>
+                )
             )}
-            <GridListTileBar
-              titlePosition="top"
-              actionPosition="right"
-              className={classes.gridListTileBar}
-              actionIcon={
-                <IconButton
-                  aria-label={`star ${item.caption}`}
-                  className={classes.icon}
-                >
-                  <StarBorderIcon />{" "}
-                </IconButton>
-              }
-            />
-          </GridListTile>
-        ))}
-    </GridList>}
-      
+        </GridList>
+      )}
     </InfiniteScroll>
   );
 }
@@ -66,6 +74,7 @@ function GridGallery({
 GridGallery.propTypes = {
   items: PropTypes.array,
   hasMore: PropTypes.bool,
+  width: PropTypes.string,
 
   onFetchMore: PropTypes.func,
   onItemClick: PropTypes.func,
@@ -74,9 +83,10 @@ GridGallery.propTypes = {
 GridGallery.defaultProps = {
   items: [],
   hasMore: false,
+  width: "",
 
   onFetchMore: undefined,
   onItemClick: undefined,
 };
 
-export default GridGallery;
+export default withWidth()(GridGallery);

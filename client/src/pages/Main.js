@@ -12,6 +12,7 @@ import PrivateRoute from "./PrivateRoute";
 import Chat from "./Chat";
 import Post from "./Post";
 import Feed from "./Feed";
+import Explore from "./Explore";
 import PeopleSuggested from "./PeopleSuggested";
 import CreateRoom from "./Meet/CreateRoom";
 import Meeting from "./Meet/Meeting";
@@ -59,6 +60,7 @@ function Main({ userInfo, isAuthenticated, signOut }) {
           <Route exact path={Routes.PASSWORD_CHANGE_ROUTE} component={ChangePassword} />
           <PrivateRoute exact path={Routes.DEFAULT_ROUTE} />
           <PrivateRoute path={Routes.HOME_ROUTE} component={Feed} />
+          <PrivateRoute path={Routes.EXPLORE_ROUTE} component={Explore} />
           <PrivateRoute path={Routes.POST_ID_ROUTE} component={Post} />
           <PrivateRoute path={Routes.MEET_ROUTE} component={Meeting} />
           <PrivateRoute path={Routes.CHAT_ROUTE} component={Chat} />

@@ -77,7 +77,7 @@ function Post(props) {
   };
 
   return (
-    <Card className={classes.root} variant="elevation">
+    <Card className={classes.root} variant="outlined">
       {!hideHeader && (
         <CardHeader
           avatar={<Avatar src={avatarUrl} />}

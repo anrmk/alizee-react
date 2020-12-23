@@ -6,8 +6,7 @@ import { Container, AppBar, Toolbar, IconButton, InputBase, Badge } from "@mater
 import NotificationsIcon from "@material-ui/icons/NotificationsActiveOutlined";
 import HomeIcon from "@material-ui/icons/HomeOutlined";
 import AddIcon from "@material-ui/icons/Add";
-
-import MailOutlineIcon from "@material-ui/icons/MailOutline";
+import MailIcon from "@material-ui/icons/MailOutline";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
 
 import { CHAT_ROUTE, HOME_ROUTE } from "../../constants/routes";
@@ -30,7 +29,7 @@ function Navbar({
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
 
-  const menuId = "account-menu";
+  const menuId = "navbar-menu";
   const isMenuOpen = Boolean(anchorEl);
 
   const handleMenuOpen = (event) => {
@@ -84,7 +83,7 @@ function Navbar({
 
             <IconButton onClick={() => history.push(CHAT_ROUTE)}>
               <Badge badgeContent={messagesCount} color="primary">
-                <MailOutlineIcon />
+                <MailIcon />
               </Badge>
             </IconButton>
 

@@ -113,7 +113,7 @@ function Sidebar({
             onClick={() => history.push(EXPLORE_ROUTE)}
           >
             <ListItemIcon>
-              <FavoriteBorderIcon />
+              <ExploreIcon/>
             </ListItemIcon>
             <ListItemText primary={t("SidebarExploreText")} />
           </ListItem>
@@ -122,7 +122,7 @@ function Sidebar({
         <Tooltip title={t("SidebarActivityText")} placement="right">
           <ListItem button>
             <ListItemIcon>
-              <ExploreIcon />
+              <FavoriteBorderIcon  />
             </ListItemIcon>
             <ListItemText primary={t("SidebarActivityText")} />
           </ListItem>

@@ -54,6 +54,7 @@ export default {
 
     // SUGGESTIONS
     getPeopleSuggestions: "suggestion/people",
+    getPostsSuggestions: "suggestion/posts",
 
     // USER
     getUser: "account/getaccountbyusername",
