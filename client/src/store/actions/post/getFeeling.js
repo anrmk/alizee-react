@@ -71,8 +71,6 @@ export function getFeeling(api, opts) {
         feeling = lastFeeling?.description;
       }
 
-      console.log("getFeeling", feeling);
-
       dispatch(
         receiveGetPosts(feeling)
       );

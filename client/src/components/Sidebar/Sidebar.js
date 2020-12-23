@@ -30,6 +30,8 @@ function Sidebar({
   userInfo,
   open,
 
+  userStatistics,
+
   onDrawerToggle,
 }) {
   const classes = useStyles({ open });
@@ -91,6 +93,9 @@ function Sidebar({
         name={userInfo.name}
         avatarUrl={userInfo.avatarUrl}
         open={open}
+        postCount={userStatistics?.postCount} 
+        followerCount={userStatistics?.followerCount} 
+        followingCount={userStatistics?.followingCount}
         onNavigationChange={handleUserCardNavigationChange}
       />
 

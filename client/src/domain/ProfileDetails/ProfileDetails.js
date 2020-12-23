@@ -23,8 +23,8 @@ function ProfileDetails({
   hourlyRate,
 
   username,
-  postsCount,
-  followersCount,
+  postCount,
+  followerCount,
   followingCount,
 
   bio,
@@ -64,8 +64,8 @@ function ProfileDetails({
         <ProfileGeneralStatistics
           className={classes.profileGeneralStatistics}
           username={username}
-          postsCount={postsCount}
-          followersCount={followersCount}
+          postCount={postCount}
+          followerCount={followerCount}
           followingCount={followingCount}
         />
         <BottomNavigation showLabels className={classes.profileDetailsActionButtons}>
@@ -106,8 +106,8 @@ ProfileDetails.propTypes = {
   hourlyRate: PropTypes.number,
 
   username: PropTypes.string,
-  postsCount: PropTypes.number,
-  followersCount: PropTypes.number,
+  postCount: PropTypes.number,
+  followerCount: PropTypes.number,
   followingCount: PropTypes.number,
 
   bio: PropTypes.string,
@@ -124,8 +124,8 @@ ProfileDetails.defaultProps = {
   hourlyRate: 0,
 
   username: "",
-  postsCount: 0,
-  followersCount: 0,
+  postCount: 0,
+  followerCount: 0,
   followingCount: 0,
 
   bio: "",

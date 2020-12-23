@@ -13,11 +13,19 @@ import {
 
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
-  RESET_PASSWORD_FAILURE
+  RESET_PASSWORD_FAILURE,
+
+  GET_USER_STATISTICS_REQUEST,
+  GET_USER_STATISTICS_SUCCESS,
+  GET_USER_STATISTICS_FAILURE,
 } from "../actions/user";
 
 export default function user(
-  state = { isFetching: false, data: {} },
+  state = { 
+    isFetching: false, 
+    data: {},
+    statistics: {}
+  },
   action
 ) {
   switch (action.type) {
@@ -81,6 +89,22 @@ export default function user(
         ...action.payload,
       };
     case RESET_PASSWORD_FAILURE:
+      return {
+        ...state,
+        ...action.payload,
+      };
+      // Get user statistics
+    case GET_USER_STATISTICS_REQUEST:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case GET_USER_STATISTICS_SUCCESS:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case GET_USER_STATISTICS_FAILURE:
       return {
         ...state,
         ...action.payload,

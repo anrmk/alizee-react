@@ -14,7 +14,7 @@ import useStyles from "./styles";
 function UserCard(props) {
   const { open } = props;
   const { name, username, avatarUrl } = props;
-  const { postsCount, followersCount, followingCount } = props;
+  const { postCount, followerCount, followingCount } = props;
 
   const classes = useStyles({ open });
 
@@ -33,8 +33,8 @@ function UserCard(props) {
       <br />
       <ProfileGeneralStatistics 
       username={username} 
-      postsCount={postsCount} 
-      followersCount={followersCount} 
+      postCount={postCount} 
+      followerCount={followerCount} 
       followingCount={followingCount}/>
 
       <BottomNavigation showLabels className={classes.navigation} onChange={handleNavigationChange}>
@@ -51,8 +51,8 @@ UserCard.propTypes = {
   username: PropTypes.string,
   avatarUrl: PropTypes.string,
   open: PropTypes.bool,
-  postsCount: PropTypes.number,
-  followersCount: PropTypes.number,
+  postCount: PropTypes.number,
+  followerCount: PropTypes.number,
   followingCount: PropTypes.number,
 };
 
@@ -61,8 +61,8 @@ UserCard.defaultProps = {
   username: "",
   avatarUrl: "",
   open: true,
-  postsCount: 0,
-  followersCount: 0,
+  postCount: 0,
+  followerCount: 0,
   followingCount: 0,
 };
 

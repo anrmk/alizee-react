@@ -61,6 +61,7 @@ export default {
     getPasswordConfirm: "account/passwordresetconfirm",
     updatePassword: "account/resetpassword",
     getSettingsPasswordConfirm: "account/passwordchangeconfirm",
+    getUserStatistics: "account/statistics",
 
     // SETTINGS
     updateAccount: "accountsetting/updateaccount",

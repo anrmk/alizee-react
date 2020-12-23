@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
+import ApiContext from "../context/ApiContext";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 
@@ -24,17 +25,36 @@ import { Settings } from "./Settings";
 import { ResetPassword, ChangePassword } from "./Password";
 import Story from "./Story";
 
+import * as userActions from "../store/actions/user";
 import { signOutUser } from "../store/actions/signIn";
 import * as Routes from "../constants/routes";
 import useHideNavigation from "../hooks/useHideNavigation";
 
-function Main({ userInfo, isAuthenticated, signOut }) {
+function Main({ 
+  userInfo, 
+  isAuthenticated, 
+
+  userStatistics, 
+
+  signOut,
+  getUserStatistics 
+}) {
+  const apiClient = useContext(ApiContext);
   const [open, setOpen] = useState(true);
   const isNavigationHide = useHideNavigation(Routes.STORIES_DEFAULT_ROUTE);
 
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
+
+  useEffect(() => {
+    if (userInfo.id) {
+      
+      (async () => {
+        await getUserStatistics(apiClient, userInfo.id);
+      })();
+    }
+  }, [userInfo.id]);
 
   return (
     <div style={!isNavigationHide ? ({ display: "flex" }) : null}>
@@ -46,7 +66,7 @@ function Main({ userInfo, isAuthenticated, signOut }) {
             onSignOut={signOut}
             open={open}
           />
-          <Sidebar userInfo={userInfo} open={open} onDrawerToggle={handleDrawerToggle} />
+          <Sidebar userInfo={userInfo} open={open} userStatistics={userStatistics} onDrawerToggle={handleDrawerToggle} />
         </>
       )}
       <div style={!isNavigationHide ? ({flexGrow: 1, paddingTop: 64}) : null}>
@@ -81,12 +101,15 @@ function mapStateToProps(state) {
   return {
     userInfo: state.signIn?.userInfo,
     isAuthenticated: state.signIn.isAuthenticated,
+
+    userStatistics:  state.user.statistics,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     signOut: (api) => dispatch(signOutUser(api)),
+    getUserStatistics: (api, userId) => dispatch(userActions.getUserStatistics(api, userId)),
   };
 }
 

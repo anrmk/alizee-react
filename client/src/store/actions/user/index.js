@@ -26,3 +26,10 @@ export {
 
   resetPassword
 } from "./resetPassword";
+export {
+  GET_USER_STATISTICS_REQUEST,
+  GET_USER_STATISTICS_SUCCESS,
+  GET_USER_STATISTICS_FAILURE,
+
+  getUserStatistics
+} from "./getUserStatistics";

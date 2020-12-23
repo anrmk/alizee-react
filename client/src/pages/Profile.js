@@ -100,9 +100,9 @@ function Profile(props) {
           bio={user.bio}
           sites={user.sites}
           username={user.username}
-          postsCount={post.count}
-          followersCount={follower.followersCount}
-          followingCount={follower.followingsCount}
+          postCount={post.count}
+          followerCount={follower.followerCount}
+          followingCount={follower.followingCount}
           onMessageClick={() => console.log("onMessageClick")}
           onFollowClick={createFollow}
           onSendGiftClick={() => console.log("handleSendGift")} />
@@ -141,8 +141,8 @@ function mapStateToProps(state) {
       hasMore: state.posts.hasMore,
     },
     follower: {
-      followersCount: state.relationship.followers.length,
-      followingsCount: state.relationship.followings.length,
+      followerCount: state.relationship.followers.length,
+      followingCount: state.relationship.followings.length,
     },
     feeling: {
       data: state.posts?.currentFeeling

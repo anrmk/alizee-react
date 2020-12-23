@@ -8,8 +8,8 @@ import { Link, Grid, Divider, Typography } from "@material-ui/core";
 
 function ProfileGeneralStatistics({
   username,
-  postsCount, 
-  followersCount, 
+  postCount, 
+  followerCount, 
   followingCount,
   className
 }) {
@@ -19,14 +19,14 @@ function ProfileGeneralStatistics({
     <Grid container alignItems="center" justify="space-evenly" direction="row" className={className} spacing={1}>
       <Grid item>
         <Typography variant="caption">{t("ComponentsProfileGeneralStatisticsPostsLabel")}</Typography>
-        <Typography>{postsCount}</Typography>
+        <Typography>{postCount}</Typography>
       </Grid>
       <Divider orientation="vertical" flexItem />
       <Grid item>
         <Link href={FOLLOWERS_ROUTE(username)} variant="caption">
         {t("ComponentsProfileGeneralStatisticsFollowersLabel")}
           </Link>
-        <Typography>{followersCount}</Typography>
+        <Typography>{followerCount}</Typography>
       </Grid>
       <Divider orientation="vertical" flexItem />
       <Grid item>
@@ -41,16 +41,16 @@ function ProfileGeneralStatistics({
 
 ProfileGeneralStatistics.propTypes = {
   username: PropTypes.string,
-  postsCount: PropTypes.number,
-  followersCount: PropTypes.number,
+  postCount: PropTypes.number,
+  followerCount: PropTypes.number,
   followingCount: PropTypes.number,
   className: PropTypes.string
 };
 
 ProfileGeneralStatistics.defaultProps = {
   username: "",
-  postsCount: 0,
-  followersCount: 0,
+  postCount: 0,
+  followerCount: 0,
   followingCount: 0,
   className: null
 };
