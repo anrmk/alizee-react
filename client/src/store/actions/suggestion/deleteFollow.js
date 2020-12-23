@@ -4,7 +4,7 @@ export const UNFOLLOW_PEOPLE_SUGGESTIONS_REQUEST = "UNFOLLOW_PEOPLE_SUGGESTIONS_
 export const UNFOLLOW_PEOPLE_SUGGESTIONS_SUCCESS = "UNFOLLOW_PEOPLE_SUGGESTIONS_SUCCESS";
 export const UNFOLLOW_PEOPLE_SUGGESTIONS_FAILURE = "UNFOLLOW_PEOPLE_SUGGESTIONS_FAILURE";
 
-function requestUnfollowPeopleSuggestions() {
+function requestDeleteFollow() {
   return {
     type: UNFOLLOW_PEOPLE_SUGGESTIONS_REQUEST,
     payload: {
@@ -12,21 +12,22 @@ function requestUnfollowPeopleSuggestions() {
       errorMessage: "",
     },
   };
-} 
+}
 
-function receiveUnfollowPeopleSuggestions(data) {
+function receiveDeleteFollow(data) {
   return {
     type: UNFOLLOW_PEOPLE_SUGGESTIONS_SUCCESS,
     payload: {
-      isFetching: false,
-      errorMessage: "",
-      status: 200,
-      data
+      people: {
+        isFetching: false,
+        errorMessage: "",
+        data
+      },
     },
   };
 }
 
-function errorUnfollowPeopleSuggestions(message) {
+function errorDeleteFollow(message) {
   return {
     type: UNFOLLOW_PEOPLE_SUGGESTIONS_FAILURE,
     payload: {
@@ -36,17 +37,22 @@ function errorUnfollowPeopleSuggestions(message) {
   };
 }
 
-export function unfollowPeopleSuggestions(api, userId) {
-  return async (dispatch) => {
-    dispatch(requestUnfollowPeopleSuggestions());
+export function deleteFollow(api, userId) {
+  return async (dispatch, getState) => {
+    dispatch(requestDeleteFollow());
 
-    const url = generateUrl("followPeopleSuggestions");
     try {
-      const { data } = await api.setMethod("DELETE").setParams({ id: userId }).query(url);
+      const url = generateUrl("deleteFollow");
 
-      dispatch(receiveUnfollowPeopleSuggestions(Object.assign({}, data, {userId, isFollowing: false})));
+      await api.setMethod("DELETE").setParams({ id: userId }).query(url);
+
+      const people = [...getState().suggestion.people.data];
+      const personIndex = people.findIndex(item => item.id === userId);
+      people[personIndex]["isFollowing"] = false;
+
+      dispatch(receiveDeleteFollow(people));
     } catch (e) {
-      return dispatch(errorUnfollowPeopleSuggestions(e));
+      return dispatch(errorDeleteFollow(e));
     }
   };
 }

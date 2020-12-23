@@ -11,7 +11,7 @@ import * as actionSuggestion from "../store/actions/suggestion";
 function PeopleSuggested(props) {
   const apiClient = useContext(ApiContext);
 
-  const { people, isFetching, getPeople, followPeopleSuggestions, unfollowPeopleSuggestions } = props;
+  const { people, isFetching, getPeople, createFollow, deleteFollow } = props;
 
   useEffect(() => {
     (async () =>  await getPeople(apiClient))();
@@ -21,7 +21,7 @@ function PeopleSuggested(props) {
     if (!isLoading) {
       var follower = people.find((u) => u.id === id);
       if (follower) {
-        follower.isFollowing ? unfollowPeopleSuggestions(apiClient, id) : followPeopleSuggestions(apiClient, id);
+        follower.isFollowing ? deleteFollow(apiClient, id) : createFollow(apiClient, id);
       }
     }
   };
@@ -48,8 +48,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getPeople: (api) => dispatch(actionSuggestion.getPeople(api)),
-    followPeopleSuggestions: (api, id) => dispatch(actionSuggestion.followPeopleSuggestions(api, id)),
-    unfollowPeopleSuggestions: (api, id) => dispatch(actionSuggestion.unfollowPeopleSuggestions(api, id)),
+    createFollow: (api, id) => dispatch(actionSuggestion.createFollow(api, id)),
+    deleteFollow: (api, id) => dispatch(actionSuggestion.deleteFollow(api, id)),
   };
 }
 

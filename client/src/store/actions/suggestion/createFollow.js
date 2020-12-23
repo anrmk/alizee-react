@@ -4,7 +4,7 @@ export const FOLLOW_PEOPLE_SUGGESTIONS_REQUEST = "FOLLOW_PEOPLE_SUGGESTIONS_REQU
 export const FOLLOW_PEOPLE_SUGGESTIONS_SUCCESS = "FOLLOW_PEOPLE_SUGGESTIONS_SUCCESS";
 export const FOLLOW_PEOPLE_SUGGESTIONS_FAILURE = "FOLLOW_PEOPLE_SUGGESTIONS_FAILURE";
 
-function requestFollowPeopleSuggestions() {
+function requestCreateFollow() {
   return {
     type: FOLLOW_PEOPLE_SUGGESTIONS_REQUEST,
     payload: {
@@ -14,19 +14,20 @@ function requestFollowPeopleSuggestions() {
   };
 }
 
-function receiveFollowPeopleSuggestions(data) {
+function receiveCreateFollow(data) {
   return {
     type: FOLLOW_PEOPLE_SUGGESTIONS_SUCCESS,
     payload: {
-      isFetching: false,
-      errorMessage: "",
-      status: 200,
-      data
-    },
+      people: {
+        isFetching: false,
+        errorMessage: "",
+        data
+      }
+    }
   };
 }
 
-function errorFollowPeopleSuggestions(message) {
+function errorCreateFollow(message) {
   return {
     type: FOLLOW_PEOPLE_SUGGESTIONS_FAILURE,
     payload: {
@@ -36,17 +37,21 @@ function errorFollowPeopleSuggestions(message) {
   };
 }
 
-export function followPeopleSuggestions(api, userId) {
-  return async (dispatch) => {
-    dispatch(requestFollowPeopleSuggestions());
+export function createFollow(api, userId) {
+  return async (dispatch, getState) => {
+    dispatch(requestCreateFollow());
 
-    const url = generateUrl("followPeopleSuggestions");
     try {
-      const {data} = await api.setParams({ id: userId }).query(url);
+      const url = generateUrl("createFollow");
+      await api.setParams({ id: userId }).query(url);
 
-      dispatch(receiveFollowPeopleSuggestions(Object.assign({}, data, {userId, isFollowing: true})))
+      const people = [...getState().suggestion.people.data];
+      const personIndex = people.findIndex(item => item.id === userId);
+      people[personIndex]["isFollowing"] = true;
+
+      dispatch(receiveCreateFollow(people));
     } catch (e) {
-      return dispatch(errorFollowPeopleSuggestions(e));
+      return dispatch(errorCreateFollow(e));
     }
   };
 }

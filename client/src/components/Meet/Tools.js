@@ -48,10 +48,10 @@ function Tools() {
         title="Wanna be on top? Start live streaming or join room with the hottest streamers"
       />
       <CardContent>
-        <Button variant="contained" size="large" href={MEET_ROUTE}>
+        <Button variant="contained" className="primary" href={MEET_ROUTE}>
           Create
         </Button>
-        <Button variant="contained" size="large" onClick={() => setOpen(true)}>
+        <Button variant="contained" className="primary" onClick={() => setOpen(true)}>
           Join
         </Button>
       </CardContent>

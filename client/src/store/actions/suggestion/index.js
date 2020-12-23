@@ -17,12 +17,12 @@ export {
   FOLLOW_PEOPLE_SUGGESTIONS_REQUEST,
   FOLLOW_PEOPLE_SUGGESTIONS_SUCCESS,
   FOLLOW_PEOPLE_SUGGESTIONS_FAILURE,
-  followPeopleSuggestions
-} from "./followPeopleSuggestions";
+  createFollow
+} from "./createFollow";
 
 export {
   UNFOLLOW_PEOPLE_SUGGESTIONS_REQUEST,
   UNFOLLOW_PEOPLE_SUGGESTIONS_SUCCESS,
   UNFOLLOW_PEOPLE_SUGGESTIONS_FAILURE,
-  unfollowPeopleSuggestions
-} from "./unfollowPeopleSuggestions";
+  deleteFollow
+} from "./deleteFollow";

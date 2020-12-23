@@ -44,6 +44,7 @@ export function createFollow(api, userId, followId) {
       await api.setParams({ id: userId }).query(url);
 
       const current = [...getState().relationship.current];
+      console.log("Create Follow", current)
 
       current.forEach(item => {
         if (item.id === followId) {

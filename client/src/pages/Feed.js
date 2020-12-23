@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { connect } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
   Container,
   Box,
@@ -11,6 +11,7 @@ import {
   DialogTitle,
   Button,
   Hidden,
+  Link,
   makeStyles,
 } from "@material-ui/core";
 
@@ -32,14 +33,11 @@ import { POST_ROUTE, SUGESTED_PEOPLE } from "../constants/routes";
 import InterestList from "../components/InterestsList";
 
 const useStyles = makeStyles((theme) => ({
-  suggestion: {
-    marginBottom: theme.spacing(3),
-  },
-
   suggestionHeader: {
     display: "flex",
     justifyContent: "space-between",
     marginBottom: "10px",
+    alignItems: "center"
   },
 }));
 
@@ -51,41 +49,21 @@ function Feed(props) {
   const interestsEl = useRef();
   const [interestsModalShow, setInterestsModalShow] = useState(false);
   const { userInfo } = props;
-  const { posts } = props;
   const isInterestsSkip = localStorage.getItem(INTERESTS_SKIP);
 
-  const {
-    people,
-    getPeople,
-    followPeopleSuggestions,
-    unfollowPeopleSuggestions,
-    getAccountPersonalized,
-    getInterests,
-    createInterests,
-    favoritePost,
-    buyPost,
-    getStory,
-    getFollowingStories,
-    createStorySlide,
-    resetFollowingStories
-  } = props;
+  const { getAccountPersonalized, settings } = props;
 
-  const {
-    resetPosts,
-    fetchPosts,
-    createPost,
-    likePost,
-    settings,
-    interests,
-    story
-  } = props;
+  const { people, getPeople, createFollow, deleteFollow } = props;
+  const { posts, getPosts, createPost, buyPost, likePost, resetPosts, favoritePost } = props;
+  const { interests, getInterests, createInterests } = props;
+  const { story, getStory, getFollowingStories, createStorySlide, resetFollowingStories } = props;
 
   useEffect(() => {
     (async () => {
       await getAccountPersonalized(apiClient);
 
       if (posts.data.length <= 0) {
-        await fetchPosts(apiClient, {
+        await getPosts(apiClient, {
           userId: userInfo.id,
           length: POSTS_LENGTH,
         });
@@ -97,7 +75,7 @@ function Feed(props) {
     return () => {
       resetPosts();
       resetFollowingStories();
-    }
+    };
   }, []);
 
   useEffect(() => {
@@ -120,7 +98,7 @@ function Feed(props) {
   const handleFetchMore = (isLoading) => {
     if (!isLoading) {
       (async () => {
-        await fetchPosts(apiClient, { id: userInfo.id, length: POSTS_LENGTH });
+        await getPosts(apiClient, { id: userInfo.id, length: POSTS_LENGTH });
       })();
     }
   };
@@ -141,14 +119,14 @@ function Feed(props) {
     if (!isLoading) {
       var follower = people.data.find((u) => u.id === id);
       if (follower) {
-        follower.isFollowing ? unfollowPeopleSuggestions(apiClient, id) : followPeopleSuggestions(apiClient, id);
+        follower.isFollowing ? deleteFollow(apiClient, id) : createFollow(apiClient, id);
       }
     }
   };
 
-  const handleBuyClick = async ({id, amount}, isLoading) => {
+  const handleBuyClick = async ({ id, amount }, isLoading) => {
     !isLoading && (await buyPost(apiClient, id));
-  }
+  };
 
   const handleFormSubmit = async (formData, mediaData) => {
     if (formData.type === POST_TYPE.STORY) {
@@ -173,16 +151,14 @@ function Feed(props) {
   const handleInterestsModalSkip = () => {
     localStorage.setItem(INTERESTS_SKIP, true);
     setInterestsModalShow(false);
-  }
+  };
 
   return (
     <Container>
       <Box my={4}>
         <Grid container spacing={2} direction="row">
           <Grid container item md={8} sm={12} direction="column">
-            <Typography variant="h6">
-              Top stories
-            </Typography>
+            <Typography variant="h6">Top stories</Typography>
             <PreviewStoriesList userStory={story.data.mStories} items={story.data.fStories} />
             <PostSprout user={userInfo} onSubmit={handleFormSubmit} />
             <PostsList
@@ -197,19 +173,25 @@ function Feed(props) {
             />
           </Grid>
           <Hidden smDown>
-            <Grid item md={4} sm={false} >
-              <Typography component="h4" className={classes.suggestionHeader}>
-                <span>Suggestions For You</span>
-                <Link to={SUGESTED_PEOPLE}>
-                  <small>See All</small>
-                </Link>
-              </Typography>
-              <RelationshipList items={people.data} onFollowClick={handleFollowPeopleClick} />
-              <br />
-              <Typography component="h4" gutterBottom>
-                Rooms
-              </Typography>
-              <MeetTools />
+            <Grid item md={4} sm={false} lg={false}>
+              <Grid container direction="column" alignItems="stretch" spacing={3}>
+                {people.data && people.data.length > 0 && (<Grid item>
+                  <Typography variant="h6" className={classes.suggestionHeader}>
+                    Suggestions For You
+                    <Link href={SUGESTED_PEOPLE} variant="caption">
+                      See All
+                    </Link>
+                  </Typography>
+                  <RelationshipList items={people.data} onFollowClick={handleFollowPeopleClick} />
+                </Grid>)}
+                
+                <Grid item>
+                  <Typography variant="h6" gutterBottom>
+                    Rooms
+                  </Typography>
+                  <MeetTools />
+                </Grid>
+              </Grid>
             </Grid>
           </Hidden>
         </Grid>
@@ -268,29 +250,33 @@ function mapStateToProps(state) {
       isFetching: state.story.isFetching,
       data: storyActions.getFollowingsStoriesWithMyself(state),
       errorMessage: state.story.errorMessage,
-      hasMore: state.story.hasMore
+      hasMore: state.story.hasMore,
     },
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    resetPosts: () => dispatch(postActions.resetPosts()),
-    fetchPosts: (api, opts) => dispatch(postActions.getFollowingPosts(api, opts)),
+    getPosts: (api, opts) => dispatch(postActions.getFollowingPosts(api, opts)),
     createPost: (api, post, media) => dispatch(postActions.createPost(api, post, media)),
     buyPost: (api, id) => dispatch(postActions.buyPost(api, id)),
-    getPeople: (api, count) => dispatch(actionSuggestion.getPeople(api, count)),
     likePost: (api, id) => dispatch(postActions.likePost(api, id)),
     favoritePost: (api, id) => dispatch(postActions.favoritePost(api, id)),
-    followPeopleSuggestions: (api, id) => dispatch(actionSuggestion.followPeopleSuggestions(api, id)),
-    unfollowPeopleSuggestions: (api, id) => dispatch(actionSuggestion.unfollowPeopleSuggestions(api, id)),
+    resetPosts: () => dispatch(postActions.resetPosts()),
+
+    getPeople: (api, count) => dispatch(actionSuggestion.getPeople(api, count)),
+    createFollow: (api, id) => dispatch(actionSuggestion.createFollow(api, id)),
+    deleteFollow: (api, id) => dispatch(actionSuggestion.deleteFollow(api, id)),
+
     getAccountPersonalized: (api) => dispatch(settingsActions.getAccountPersonalized(api)),
+
     getInterests: (api) => dispatch(interestsActions.getInterests(api)),
     createInterests: (api, ids) => dispatch(interestsActions.createInterests(api, ids)),
+
     getStory: (api, opts) => dispatch(storyActions.getStory(api, opts)),
-    getFollowingStories: (api, opts) => dispatch(storyActions.getFollowingStories(api, opts)),
     createStorySlide: (api, story, media) => dispatch(storyActions.createStorySlide(api, story, media)),
-    resetFollowingStories: () => dispatch(storyActions.resetFollowingStories())
+    resetFollowingStories: () => dispatch(storyActions.resetFollowingStories()),
+    getFollowingStories: (api, opts) => dispatch(storyActions.getFollowingStories(api, opts)),
   };
 }
 

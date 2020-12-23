@@ -31,7 +31,7 @@ export default function PreviewStoryListItem({
       component={Link}
       onClick={() => handleItemClick(id)}>
       <Avatar className={classes.previewStoryListItemAvatar} size="small" src={avatarUrl} />
-      <Typography color="white" variant="caption" noWrap>{name}</Typography>
+      <Typography variant="caption" noWrap>{name}</Typography>
     </ListItem>
   )
 };

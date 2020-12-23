@@ -11,15 +11,16 @@ import EndMessage from "./EndMessage";
 import { Dialog, DialogContent, DialogTitle, DialogActions, Button } from "@material-ui/core";
 
 function PostsList({
-  items, 
-  hasMore, 
-  
-  onFetchMore, 
-  onGoToClick, 
+  items,
+  hasMore,
+
+  onFetchMore,
+  onGoToClick,
   onFollowClick,
-  onLikeClick, 
-  onFavoriteClick, 
-  onPayClick}) {
+  onLikeClick,
+  onFavoriteClick,
+  onPayClick,
+}) {
   const [modalData, setModalData] = useState({});
   const [showModal, setShowModal] = useState(false);
 
@@ -93,7 +94,6 @@ function PostsList({
               iLike={item?.iLike}
               isFavorite={item?.isFavorite}
               isPurchased={item?.isPurchased}
-              
               onGoToClick={onGoToClick}
               onLikeClick={onLikeClick}
               onFavoriteClick={onFavoriteClick}

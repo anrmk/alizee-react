@@ -65,15 +65,9 @@ export default function suggestionReducer(
     }
 
     case FOLLOW_PEOPLE_SUGGESTIONS_SUCCESS: {
-      const { userId, isFollowing } = action.payload.data;
-      const personIndex = state.people.findIndex((item) => item.id === userId);
-      const people = [...state.people];
-      people[personIndex].isFollowing = isFollowing;
-
       return {
         ...state,
-        ...action.payload,
-        people,
+        ...action.payload
       };
     }
 
