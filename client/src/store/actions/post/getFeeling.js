@@ -16,7 +16,7 @@ function requestGetFeeling() {
   };
 }
 
-function receiveGetPosts(feeling) {
+function receiveGetFeeling(feeling) {
   return {
     type: GET_FEELING_SUCCESS,
     payload: {
@@ -72,7 +72,7 @@ export function getFeeling(api, opts) {
       }
 
       dispatch(
-        receiveGetPosts(feeling)
+        receiveGetFeeling(feeling)
       );
     } catch (e) {
       dispatch(errorGetFeeling("Error: something went wrong:", e));

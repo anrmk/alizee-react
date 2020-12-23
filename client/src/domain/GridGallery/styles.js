@@ -1,8 +1,12 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((_theme) => ({
   root: {
-     overflow: "hidden !important",
+    overflow: "hidden !important",
+  },
+
+  defaultLabel: {
+    textAlign: "center"
   },
 
   gridList: {

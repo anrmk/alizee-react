@@ -1,17 +1,20 @@
 export default {
-  url: '/api',
-  urlFiles: '/files',
+  url: "/api",
+  urlFiles: "/files",
   endpoints: {
     // AUTH
     signIn: "account/authenticate",
     signUp: "account/createaspnetuser",
     googleAuth: "account/signingoogle",
-    confirmEmail: 'account/confirmemail',
-    resendEmailVerification: 'account/resendemailverification',
+    confirmEmail: "account/confirmemail",
+    resendEmailVerification: "account/resendemailverification",
 
     // POSTS
-    getPost: 'post/getpost',
-    getPosts: 'post/getposts',
+    getPost: "post/getpost",
+    getPosts: "post/getposts",
+
+    // FAVORITE POSTS
+    getFavoritePosts: "post/getfavouriteposts",
 
     // POST COMMENTS
     getCommentsPost: "comment/comments",
@@ -26,8 +29,8 @@ export default {
 
     // MEDIA
     getFollowingPosts: "post/getfollowingposts",
-    createPost: 'post/createpost',
-    createMedia: 'media/createmedia',
+    createPost: "post/createpost",
+    createMedia: "media/createmedia",
 
     // LIKES
     likePost: "post/like",

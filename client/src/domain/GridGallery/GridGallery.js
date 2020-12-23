@@ -30,7 +30,7 @@ function GridGallery({
       hasMore={hasMore}
     >
       {!items || items.length == 0 ? (
-        <Typography>Start capturing and sharing your moments.</Typography>
+        <Typography className={classes.defaultLabel}>Start capturing and sharing your moments.</Typography>
       ) : (
         <GridList spacing={12} cols={["lg", "xl"].includes(width) ? 4 : 3} className={classes.gridList}>
           {items &&

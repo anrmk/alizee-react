@@ -16,13 +16,23 @@ import * as userActions from "../store/actions/user";
 import { POSTS_LENGTH } from "../constants/profile";
 import { HOME_ROUTE, SETTINGS_ROUTE, POST_ROUTE, SETTINGS_EDIT_PROFILE_ROUTE } from "../constants/routes";
 
+const POSTS_TAB_INDEX = 0;
+const FAVORITES_TAB_INDEX = 1;
+const TAGGED_TAB_INDEX = 2;
+
+const POST_TYPE_POSTS = 0;
+const POST_TYPE_FAVORITES = 1;
+
 function Profile(props) {
   const { username } = useParams();
   const { url } = useRouteMatch();
   const apiClient = useContext(ApiContext);
   const history = useHistory();
-  const [postType, setPostType] = useState(0);
-  const [tagged, setTagged] = useState(false);
+  const [postSettings, setPostSettings] = useState({
+    index: POSTS_TAB_INDEX,
+    postType: POST_TYPE_POSTS,
+    tagged: false
+  });
 
   const { user, me, post, follower, feeling } = props;
   const {
@@ -32,7 +42,8 @@ function Profile(props) {
     fetchFollowers,
     fetchFollowings,
     createFollow,
-    getFeeling
+    getFeeling,
+    getFavoritePosts
   } = props;
 
   useEffect(() => {
@@ -47,15 +58,26 @@ function Profile(props) {
 
   useEffect(() => {
     if (user.username === username && user.id) {
-      
       (async () => {
         await getFeeling(apiClient, { userId: user.id });
-        await fetchPosts(apiClient, { userId: user.id, length: POSTS_LENGTH, type: postType, tagged });
         await fetchFollowers(apiClient, user.id);
         await fetchFollowings(apiClient, user.id);
       })();
     }
-  }, [user.id, postType, tagged]);
+  }, [user.id]);
+
+  useEffect(() => {
+    if (user.username === username && user.id) {
+      resetPosts();
+      (async () => {
+        if (postSettings.postType === POST_TYPE_POSTS) {
+          await fetchPosts(apiClient, { userId: user.id, length: POSTS_LENGTH, type: postSettings.postType, tagged: postSettings.tagged });
+        } else if (postSettings.postType === POST_TYPE_FAVORITES) {
+          await getFavoritePosts(apiClient, { length: POSTS_LENGTH });
+        }
+      })();
+    }
+  }, [postSettings]);
 
   if (url.includes(SETTINGS_ROUTE)) {
     return <Redirect to={SETTINGS_EDIT_PROFILE_ROUTE} />
@@ -66,7 +88,7 @@ function Profile(props) {
   }
 
   const handleFetchMore = async () => {
-    await fetchPosts(apiClient, { userId: user.id, length: POSTS_LENGTH, type: postType, tagged });
+    await fetchPosts(apiClient, { userId: user.id, length: POSTS_LENGTH, type: postSettings.postType, tagged: postSettings.tagged });
   };
 
   const handleItemClick = (id) => {
@@ -74,12 +96,25 @@ function Profile(props) {
   };
 
   const handleTabChange = (index) => {
-    if (index === 2) {
-      setTagged(true);
-    } else {
-      setTagged(false);
+    if (index === POSTS_TAB_INDEX) {
+      setPostSettings({
+        index: POSTS_TAB_INDEX,
+        postType: POST_TYPE_POSTS,
+        tagged: false
+      });
+    } else if (index === FAVORITES_TAB_INDEX) {
+      setPostSettings({
+        index: FAVORITES_TAB_INDEX,
+        postType: POST_TYPE_FAVORITES,
+        tagged: false
+      });
+    } else if (index === TAGGED_TAB_INDEX) {
+      setPostSettings({
+        index: TAGGED_TAB_INDEX,
+        postType: POST_TYPE_POSTS,
+        tagged: true
+      });
     }
-    setPostType(index);
   };
 
   return (
@@ -107,6 +142,7 @@ function Profile(props) {
           onFollowClick={createFollow}
           onSendGiftClick={() => console.log("handleSendGift")} />
         <ProfileContent
+          tabIndex={postSettings.index}
           media={post.data}
           hasMore={post.hasMore}
           onFetchMore={handleFetchMore}
@@ -153,6 +189,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getFeeling: (api, opts) => dispatch(postActions.getFeeling(api, opts)),
+    getFavoritePosts: (api, opts) => dispatch(postActions.getFavoritePosts(api, opts)),
     fetchPosts: (api, opts) => dispatch(postActions.getPosts(api, opts)),
     resetPosts: () => dispatch(postActions.resetPosts()),
     fetchFollowers: (api, userId) => dispatch(relationshipActions.getFollowers(api, userId)),

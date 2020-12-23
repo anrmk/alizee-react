@@ -7,14 +7,23 @@ export {
   getPosts,
   resetPosts,
   getGridGalleryPosts
-} from './getPosts';
+} from "./getPosts";
+
+export { 
+  GET_FAVORITE_POSTS_REQUEST,
+  GET_FAVORITE_POSTS_SUCCESS,
+  GET_FAVORITE_POSTS_FAILURE,
+  RESET_FAVORITE_POSTS,
+
+  getFavoritePosts,
+} from "./getFavoritePosts";
 
 export { 
   GET_FOLLOWING_POSTS_REQUEST,
   GET_FOLLOWING_POSTS_SUCCESS,
   GET_FOLLOWING_POSTS_FAILURE,
   getFollowingPosts
-} from './getFollowingPosts';
+} from "./getFollowingPosts";
 
 export { 
   GET_POST_REQUEST,
@@ -22,7 +31,7 @@ export {
   GET_POST_FAILURE,
 
   fetchPost
-} from './getPost';
+} from "./getPost";
 
 export { 
   CREATE_POST_REQUEST,
@@ -30,28 +39,28 @@ export {
   CREATE_POST_FAILURE,
 
   createPost
-} from './createPost';
+} from "./createPost";
 
 export { 
   LIKE_POST_REQUEST,
   LIKE_POST_SUCCESS,
   LIKE_POST_FAILURE,
   likePost
-} from './likePost';
+} from "./likePost";
 
 export { 
   FAVORITE_POST_REQUEST,
   FAVORITE_POST_SUCCESS,
   FAVORITE_POST_FAILURE,
   favoritePost
-} from './favoritePost';
+} from "./favoritePost";
 
 export { 
   BUY_POST_REQUEST,
   BUY_POST_SUCCESS,
   BUY_POST_FAILURE,
   buyPost
-} from './buyPost';
+} from "./buyPost";
 
 export { 
   GET_FEELING_REQUEST,
@@ -61,4 +70,4 @@ export {
 
   getFeeling,
   resetFeeling,
-} from './getFeeling';
+} from "./getFeeling";

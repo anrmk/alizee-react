@@ -7,13 +7,14 @@ import GridGallery from "../GridGallery";
 function ProfileContent({
   media,
   hasMore,
+  tabIndex,
 
   onFetchMore,
   onTabChange,
   onItemClick,
 }) {
   return (
-    <PostTabs onTabChange={onTabChange} >
+    <PostTabs index={tabIndex} onTabChange={onTabChange} >
       <GridGallery
         items={media}
         hasMore={hasMore}

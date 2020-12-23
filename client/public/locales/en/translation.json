@@ -27,6 +27,9 @@
   "ProfileProfileDetailsHourlyRateLabel": "Hourly Rate",
   "ProfileProfileDetailsFollowButtonLabel": "Follow",
   "ProfileProfileDetailsSendMessageButtonLabel": "Send Message",
+  "ProfileProfileContentFavoritesTabLabel": "Favorites",
+  "ProfileProfileContentPostsTabLabel": "Posts",
+  "ProfileProfileContentTaggedTabLabel": "Tagged",
 
   "SecondTextFollowerItem": "recommended",
   "FollowerBtnTextFollowerItem": "Follow",

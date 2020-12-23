@@ -5,6 +5,9 @@ import {
   GET_POSTS_REQUEST,
   GET_POSTS_SUCCESS,
   GET_POSTS_FAILURE,
+  GET_FAVORITE_POSTS_REQUEST,
+  GET_FAVORITE_POSTS_SUCCESS,
+  GET_FAVORITE_POSTS_FAILURE,
   GET_FOLLOWING_POSTS_REQUEST,
   GET_FOLLOWING_POSTS_SUCCESS,
   GET_FOLLOWING_POSTS_FAILURE,
@@ -51,6 +54,22 @@ export default function post(
         ...action.payload,
       };
     case GET_POSTS_FAILURE:
+      return {
+        ...state,
+        ...action.payload,
+      };
+      // All Favorite posts
+    case GET_FAVORITE_POSTS_REQUEST:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case GET_FAVORITE_POSTS_SUCCESS:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case GET_FAVORITE_POSTS_FAILURE:
       return {
         ...state,
         ...action.payload,
