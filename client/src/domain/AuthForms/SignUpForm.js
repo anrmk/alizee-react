@@ -1,5 +1,6 @@
 import React from "react";
 import { Controller, useForm } from 'react-hook-form';
+import clsx from "clsx";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
@@ -95,7 +96,7 @@ function SignInForm({
         <>
           <Card>
             <CardContent>
-              <Typography className={classes.helpText}>
+              <Typography align="center">
                 Already have an account? &nbsp;
                 <Link
                   className={classes.link}
@@ -117,7 +118,7 @@ function SignInForm({
               label="Name"
               type="text"
               disableUnderline
-              wrapperClassName={classes.formElement}
+              wrapperClassName={clsx(classes.formElement, classes.formElementIndent)}
               id={NAME_INPUT_ID}
               htmlFor={NAME_INPUT_ID}
               value={value}
@@ -135,7 +136,7 @@ function SignInForm({
               label="Surname"
               type="text"
               disableUnderline
-              wrapperClassName={classes.formElement}
+              wrapperClassName={clsx(classes.formElement, classes.formElementIndent)}
               id={SURNAME_INPUT_ID}
               htmlFor={SURNAME_INPUT_ID}
               value={value}
@@ -153,7 +154,7 @@ function SignInForm({
               label="Username"
               type="text"
               disableUnderline
-              wrapperClassName={classes.formElement}
+              wrapperClassName={clsx(classes.formElement, classes.formElementIndent)}
               id={USERNAME_INPUT_ID}
               htmlFor={USERNAME_INPUT_ID}
               value={value}
@@ -171,7 +172,7 @@ function SignInForm({
               label="Email"
               type="text"
               disableUnderline
-              wrapperClassName={classes.formElement}
+              wrapperClassName={clsx(classes.formElement, classes.formElementIndent)}
               id={EMAIL_INPUT_ID}
               htmlFor={EMAIL_INPUT_ID}
               value={value}
@@ -188,7 +189,7 @@ function SignInForm({
             <CustomInput
               type="date"
               disableUnderline
-              wrapperClassName={classes.formElement}
+              wrapperClassName={clsx(classes.formElement, classes.formElementIndent)}
               id={BIRTHDAY_INPUT_ID}
               htmlFor={BIRTHDAY_INPUT_ID}
               value={value}

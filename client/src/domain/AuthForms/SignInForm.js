@@ -1,17 +1,18 @@
 import React from "react";
 import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from "react-i18next";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
-import { 
-  Typography, 
+import {
+  TextField,
+  Typography,
   Card,
   CardContent,
   Divider,
   Link
 } from "@material-ui/core";
 
-import CustomInput from "../../components/CustomInput";
 import { RESET_PASSWORD_ROUTE, SIGN_UP_ROUTE } from "../../constants/routes";
 import AuthBaseForm from "./AuthBaseForm";
 import useStyles from "./styles";
@@ -42,9 +43,14 @@ function SignInForm({
 }) {
   const history = useHistory();
   const classes = useStyles();
+  const { t } = useTranslation();
 
   const { errors, control, handleSubmit } = useForm({
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema),
+    defaultValues: {
+      [EMAIL_INPUT_ID]: "",
+      [PASSWORD_INPUT_ID]: "",
+    }
   });
 
   return (
@@ -60,14 +66,14 @@ function SignInForm({
             name={EMAIL_INPUT_ID}
             control={control}
             render={({ onChange, onBlur, value }) => (
-              <CustomInput
+              <TextField
+                variant="outlined"
+                fullWidth
+                className={classes.formElementIndent}
                 id={EMAIL_INPUT_ID}
-                htmlFor={EMAIL_INPUT_ID}
                 name={EMAIL_INPUT_ID}
-                disableUnderline
-                label="Email"
+                label={t("AuthFormsSingInFormEmailTextFieldLabel")}
                 type="text"
-                wrapperClassName={classes.formElement}
                 value={value}
                 error={!!errors[EMAIL_INPUT_ID]}
                 helperText={errors[EMAIL_INPUT_ID]?.message}
@@ -78,14 +84,14 @@ function SignInForm({
             name={PASSWORD_INPUT_ID}
             control={control}
             render={({ onChange, onBlur, value }) => (
-              <CustomInput
+              <TextField
+                variant="outlined"
+                fullWidth
+                className={classes.formElementIndent}
                 id={PASSWORD_INPUT_ID}
-                htmlFor={PASSWORD_INPUT_ID}
                 name={PASSWORD_INPUT_ID}
-                disableUnderline
-                label="Password"
+                label={t("AuthFormsSingInFormPasswordTextFieldLabel")}
                 type="password"
-                wrapperClassName={classes.formElement}
                 value={value}
                 error={!!errors[PASSWORD_INPUT_ID]}
                 helperText={errors[PASSWORD_INPUT_ID]?.message}
@@ -96,8 +102,8 @@ function SignInForm({
       )}
       helpComponent={(
         <>
-          <Divider className={classes.formElement} />
-          <Typography className={classes.helpText}>
+          <Divider className={classes.formElementIndent} />
+          <Typography align="center">
             <Link
               className={classes.link}
               color="primary"
@@ -112,7 +118,7 @@ function SignInForm({
         <>
           <Card>
             <CardContent>
-              <Typography className={classes.helpText}>
+              <Typography align="center">
                 Don't have an account? &nbsp;
                 <Link
                   className={classes.link}

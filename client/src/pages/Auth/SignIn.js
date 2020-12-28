@@ -67,7 +67,7 @@ function SignIn(props) {
         onSocialRequest={handleSocialRequest}
         onSocialSuccess={handleSocialSuccess}
         onSocialFailure={handleSocialFailure} />
-    {/* <VideoBackground src={login_video} /> */}
+      <VideoBackground src={login_video} />
     </Container>
   );
 }

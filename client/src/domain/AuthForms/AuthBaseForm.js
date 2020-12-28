@@ -1,4 +1,5 @@
 import React from "react";
+import clsx from "clsx";
 import {
   Box,
   Grid,
@@ -10,7 +11,7 @@ import {
 
 import SocialButtons from "../../components/SocialButtons/SocialButtons";
 
-import { GOOGLE_CLIENT_ID } from '../../constants/social_client_ids';
+import { GOOGLE_CLIENT_ID } from "../../constants/social_client_ids";
 import useStyles from "./styles";
 
 function AuthBaseForm({
@@ -31,21 +32,22 @@ function AuthBaseForm({
   return (
     <Grid container>
       <Grid item xs={12} sm={5} md={3} lg={3} xl={3}>
-        <Card className={classes.card}>
+        <Card className={classes.formElementIndent}>
           <CardContent>
-            <Typography className={classes.title} variant="h5" component="h1">
+            <Typography align="center" className={classes.formElementIndent} variant="h5" component="h1">
               Alizee
             </Typography>
             <form onSubmit={onFormSubmit}>
               {formComponent || children}
               {error && (
-                <Typography className={classes.formElement} color="secondary" variant="caption" component="span">
+                <Typography className={clsx(classes.formElement, classes.formElementIndent)} color="secondary" variant="caption" component="span">
                   {error}
                 </Typography>
               )}
               <Box>
-                <Button 
-                  className={classes.formElement}
+                <Button
+                  fullWidth
+                  className={classes.formElementIndent}
                   disableElevation
                   type="submit"
                   variant="contained"
@@ -53,7 +55,7 @@ function AuthBaseForm({
                   Sign In
                 </Button>
                 <SocialButtons
-                  className={helpComponent ? classes.formElement : classes.formDefElement}
+                  className={clsx(classes.formElement, helpComponent && classes.formElementIndent)}
                   googleClientId={GOOGLE_CLIENT_ID}
                   onRequest={onSocialRequest}
                   onSuccess={onSocialSuccess}

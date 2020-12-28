@@ -9,18 +9,10 @@ const useStyles = makeStyles((theme) => {
       display: "flex",
       alignItems: "center"
     },
-    title: {
-      textAlign: "center",
-      marginBottom: theme.spacing(2)
-    },
-    card: {
-      marginBottom: theme.spacing(2)
-    },
-    formDefElement: {
-      width: "100%",
-    },
     formElement: {
       width: "100%",
+    },
+    formElementIndent: {
       marginBottom: theme.spacing(2)
     },
     link: {
@@ -29,9 +21,6 @@ const useStyles = makeStyles((theme) => {
       textDecoration: "none",
       color: getStyleByTheme(theme, theme.palette.primary.main, theme.palette.primary.light)
     },
-    helpText: {
-      textAlign: "center"
-    }
   })
 });
 

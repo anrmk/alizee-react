@@ -1,4 +1,7 @@
 {
+  "AuthFormsSingInFormEmailTextFieldLabel": "Email",
+  "AuthFormsSingInFormPasswordTextFieldLabel": "Password",
+
   "ComponentsProfileGeneralStatisticsPostsLabel": "Posts",
   "ComponentsProfileGeneralStatisticsFollowersLabel": "Followers",
   "ComponentsProfileGeneralStatisticsFollowingLabel": "Following",
