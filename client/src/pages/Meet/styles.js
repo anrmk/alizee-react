@@ -8,16 +8,8 @@ export const StyledDrawer = withStyles((theme) => ({
 }))(Drawer);
 
 const useStyles = makeStyles(theme => ({
-  title: {
-    margin: theme.spacing(1, 0),
-    textAlign: "left"
-  },
-  subtitle: {
-    margin: theme.spacing(1, 0),
-    textAlign: "left"
-  },
   createRoomContainer: {
-    height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
+    height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px - 16px)`,
     display: "flex",
     [theme.breakpoints.up('md')]: {
       alignItems: "center"
@@ -68,11 +60,6 @@ const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     justifyContent: "center",
   },
-  meetingItem: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center"
-  },
   meetingLinkItem: {
     [theme.breakpoints.down('sm')]: {
       order: 2
@@ -80,9 +67,6 @@ const useStyles = makeStyles(theme => ({
   },
   meetingLinkBox: {
     marginTop: theme.spacing(2),
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
 
     [theme.breakpoints.down("sm")]: {
       flexDirection: "column",

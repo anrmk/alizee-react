@@ -3,12 +3,11 @@ import { useTranslation } from "react-i18next";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Chip, Button, FormControl, FormGroup, FormHelperText, Grid, MenuItem, Select, Typography } from "@material-ui/core";
+import { Chip, Button, FormGroup, Grid, MenuItem, TextField, Typography } from "@material-ui/core";
 
 import FileCopyOutlined from "@material-ui/icons/FileCopyOutlined";
 
 import ChipsInput from "../../components/ChipsInput";
-import CustomInput from "../../components/CustomInput";
 import useStyles from "./styles"
 
 const TITLE_ID = "title";
@@ -25,7 +24,7 @@ const EMPTY_VALUE_ERROR = "It is a required filed";
 const VALUE_MIN_LENGTH_ERROR = (min) => `Must be at least ${min} characters`;
 const VALUE_MAX_LENGTH_ERROR = (max) => `Must be at most ${max} characters`;
 
-const HELPER_TEXT_DESCRIPTION = (length) => `Characters entered ${length} out of ${VALUE_MAX_LENGTH_DESCRIPTION} characters`;
+const HELPER_TEXT_DESCRIPTION = (length) => `Characters entered ${length ? length : 0} out of ${VALUE_MAX_LENGTH_DESCRIPTION} characters`;
 
 const COPY_LINK_ROOM_ALERT_SUCCESS_TEXT = "Copying link room successfully";
 const COPY_LINK_ROOM_ALERT_ERROR_TEXT = "Copying link room failed";
@@ -69,8 +68,8 @@ function CreateRoomForm({
 
   const handleCopyClick = (chip) => {
     navigator.clipboard.writeText(chip)
-    .then(() => onCopyLinkRoom(COPY_LINK_ROOM_ALERT_SUCCESS_TEXT))
-    .catch(() => onCopyLinkRoom(COPY_LINK_ROOM_ALERT_ERROR_TEXT));
+      .then(() => onCopyLinkRoom(COPY_LINK_ROOM_ALERT_SUCCESS_TEXT))
+      .catch(() => onCopyLinkRoom(COPY_LINK_ROOM_ALERT_ERROR_TEXT));
   }
 
   const { control, errors, handleSubmit, register, setValue } = useForm({
@@ -103,7 +102,7 @@ function CreateRoomForm({
       </Grid>
 
       <Grid item className={classes.createRoomItem} xs={12} md={4}>
-        <Typography variant="h4" className={classes.createRoomTitle}>
+        <Typography variant="h4" gutterBottom align="center">
           {t("MeetCreateRoomFormTitle")}
         </Typography>
         <Chip
@@ -114,23 +113,23 @@ function CreateRoomForm({
           deleteIcon={<FileCopyOutlined />} />
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <FormGroup className={classes.formGroup}>
+          <FormGroup className={classes.formElementIndent}>
             <Controller
               name={TITLE_ID}
               control={control}
               render={({ onChange, onBlur, value }) => (
-                <CustomInput
+                <TextField
                   inputProps={{ maxLength: VALUE_MAX_LENGTH_TITLE }}
+                  variant="outlined"
+                  fullWidth
                   id={TITLE_ID}
                   label={t("MeetCreateRoomFormTitleInputLabel")}
                   type="text"
-                  disableUnderline
                   value={value}
                   error={!!errors[TITLE_ID]}
                   helperText={errors[TITLE_ID]?.message}
                   onBlur={onBlur}
-                  onChange={e => onChange(e.target.value.trim())}
-                />
+                  onChange={e => onChange(e.target.value.trim())} />
               )} />
           </FormGroup>
 
@@ -139,29 +138,28 @@ function CreateRoomForm({
               name={DESCRIPTION_ID}
               control={control}
               render={({ onChange, onBlur, value }) => (
-                <CustomInput
+                <TextField
                   inputProps={{ maxLength: VALUE_MAX_LENGTH_DESCRIPTION }}
+                  variant="outlined"
+                  fullWidth
                   id={DESCRIPTION_ID}
                   label={t("MeetCreateRoomFormDescriptionInputLabel")}
                   type="text"
-                  disableUnderline
                   multiline
                   rows={4}
                   value={value}
                   error={!!errors[DESCRIPTION_ID]}
                   helperText={
-                    errors[TITLE_ID]?.message ||
+                    errors[DESCRIPTION_ID]?.message ||
                     HELPER_TEXT_DESCRIPTION(value?.length)
                   }
                   onBlur={onBlur}
-                  onChange={e => onChange(e.target.value.trim())}
-                />
+                  onChange={e => onChange(e.target.value.trim())} />
               )} />
           </FormGroup>
 
           <FormGroup>
             <ChipsInput
-              disableUnderline
               classChipName={classes.createRoomChip}
               label={t("MeetCreateRoomFormTagsInputLabel")}
               id={TAGS_ID}
@@ -170,54 +168,50 @@ function CreateRoomForm({
               onChange={handleTagsChange} />
           </FormGroup>
 
-          <FormGroup className={classes.formGroup}>
+          <FormGroup className={classes.formElementIndent}>
             <Controller
               name={ROOM_TYPE_ID}
               control={control}
               render={({ onChange, onBlur, value }) => (
-                <FormControl variant="outlined">
-                  <Select
-                    id={ROOM_TYPE_ID}
-                    value={value}
-                    error={!!errors[ROOM_TYPE_ID]}
-                    input={<CustomInput disableUnderline label={t("MeetCreateRoomFormTypeInputLabel")} />}
-                    onBlur={onBlur}
-                    onChange={e => onChange(e.target.value)}
-                  >
-                    <MenuItem value={0}>Private</MenuItem>
-                    <MenuItem value={1}>Public</MenuItem>
-                    <MenuItem value={2}>Cam2Cam</MenuItem>
-                  </Select>
-                  {!!errors[ROOM_TYPE_ID] &&
-                    <FormHelperText
-                      className={classes.selectErrorHelperMessage}>
-                      {errors[DESCRIPTION_ID]?.message}
-                    </FormHelperText>}
-                </FormControl>
+                <TextField
+                  variant="outlined"
+                  fullWidth
+                  select
+                  id={ROOM_TYPE_ID}
+                  label={t("MeetCreateRoomFormTypeInputLabel")}
+                  value={value}
+                  error={!!errors[ROOM_TYPE_ID]}
+                  helperText={errors[ROOM_TYPE_ID]?.message}
+                  onBlur={onBlur}
+                  onChange={e => onChange(e.target.value)}>
+                  <MenuItem value={0}>Private</MenuItem>
+                  <MenuItem value={1}>Public</MenuItem>
+                  <MenuItem value={2}>Cam2Cam</MenuItem>
+                </TextField>
               )} />
           </FormGroup>
 
-          <FormGroup className={classes.formGroup}>
+          <FormGroup className={classes.formElementIndent}>
             <Controller
               name={TICKET_PRICE_ID}
               control={control}
               render={({ onChange, onBlur, value }) => (
-                <CustomInput
+                <TextField
                   inputProps={{ min: VALUE_MIN_LENGTH_TICKET_PRICE }}
+                  variant="outlined"
+                  fullWidth
                   id={TICKET_PRICE_ID}
                   label={t("MeetCreateRoomFormTicketPriceInputLabel")}
                   type="number"
-                  disableUnderline
                   value={value}
                   error={!!errors[TICKET_PRICE_ID]}
                   helperText={errors[TICKET_PRICE_ID]?.message}
                   onBlur={onBlur}
-                  onChange={e => onChange(e.target.value.trim())}
-                />
+                  onChange={e => onChange(e.target.value.trim())} />
               )} />
           </FormGroup>
 
-          <FormGroup className={classes.formGroup}>
+          <FormGroup className={classes.formElementIndent}>
             <Button size="medium"
               variant="contained"
               type="submit">

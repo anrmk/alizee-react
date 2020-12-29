@@ -1,9 +1,8 @@
 import React from "react";
-import { InputAdornment } from "@material-ui/core/";
+import { InputAdornment, TextField } from "@material-ui/core/";
 
 import SearchIcon from "@material-ui/icons/Search";
 
-import CustomInput from "../../components/CustomInput";
 import useStyles from "./styles";
 
 function Search({
@@ -15,25 +14,26 @@ function Search({
   const classes = useStyles();
 
   return (
-    <CustomInput
-      disableUnderline
-      wrapperClassName={classes.searchInputWrapper}
-      className={classes.searchInput}
+    <TextField
+      variant="outlined"
+      fullWidth
       placeholder={placeholder}
+      type="text"
       value={value}
-      onChange={onChange}
-      endAdornment={
-        <InputAdornment position="end">
-          <SearchIcon className={classes.searchIcon} />
-        </InputAdornment>
-      } />
+      InputProps={{
+        endAdornment:
+          <InputAdornment position="end">
+            <SearchIcon className={classes.searchIcon} />
+          </InputAdornment>
+      }}
+      onChange={onChange} />
   )
 }
 
 Search.defaultProps = {
-  className : "",
+  className: "",
   placeholder: "Search ...",
-  onChange: (e) => {}
+  onChange: (e) => { }
 }
 
 export default Search;

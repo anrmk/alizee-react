@@ -1,18 +1,17 @@
 import React from "react";
 import { Controller, useForm } from 'react-hook-form';
-import clsx from "clsx";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { 
-  Typography, 
   Card,
   CardContent,
-  Link
+  Link,
+  TextField,
+  Typography
 } from "@material-ui/core";
 
-import CustomInput from "../../components/CustomInput";
 import { SIGN_IN_ROUTE } from "../../constants/routes";
 import { getYearFromCurrentDate } from "../../helpers/functions";
 import CONTROLLERS from "../../constants/endpoints";
@@ -70,7 +69,14 @@ function SignInForm({
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   const { errors, control, handleSubmit } = useForm({
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema),
+    defaultValues: {
+      [NAME_INPUT_ID]: "",
+      [SURNAME_INPUT_ID]: "",
+      [BIRTHDAY_INPUT_ID]: undefined,
+      [USERNAME_INPUT_ID]: "",
+      [EMAIL_INPUT_ID]: ""
+    }
   });
 
   const handleFormSubmit = async (data) => {
@@ -114,90 +120,85 @@ function SignInForm({
           name={NAME_INPUT_ID}
           control={control}
           render={({ onChange, onBlur, value }) => (
-            <CustomInput
-              label="Name"
-              type="text"
-              disableUnderline
-              wrapperClassName={clsx(classes.formElement, classes.formElementIndent)}
-              id={NAME_INPUT_ID}
-              htmlFor={NAME_INPUT_ID}
-              value={value}
-              error={!!errors[NAME_INPUT_ID]}
-              helperText={errors[NAME_INPUT_ID]?.message}
-              onBlur={onBlur}
-              onChange={e => onChange(e.target.value)}
-            />
+            <TextField
+                  variant="outlined"
+                  fullWidth
+                  className={classes.formElementIndent}
+                  id={NAME_INPUT_ID}
+                  label="Name"
+                  type="text"
+                  value={value}
+                  error={!!errors[NAME_INPUT_ID]}
+                  helperText={errors[NAME_INPUT_ID]?.message}
+                  onBlur={onBlur}
+                  onChange={e => onChange(e.target.value)} />
           )} />
         <Controller
           name={SURNAME_INPUT_ID}
           control={control}
           render={({ onChange, onBlur, value }) => (
-            <CustomInput
-              label="Surname"
-              type="text"
-              disableUnderline
-              wrapperClassName={clsx(classes.formElement, classes.formElementIndent)}
-              id={SURNAME_INPUT_ID}
-              htmlFor={SURNAME_INPUT_ID}
-              value={value}
-              error={!!errors[SURNAME_INPUT_ID]}
-              helperText={errors[SURNAME_INPUT_ID]?.message}
-              onBlur={onBlur}
-              onChange={e => onChange(e.target.value)}
-            />
+            <TextField
+                  variant="outlined"
+                  fullWidth
+                  className={classes.formElementIndent}
+                  id={SURNAME_INPUT_ID}
+                  label="Surname"
+                  type="text"
+                  value={value}
+                  error={!!errors[SURNAME_INPUT_ID]}
+                  helperText={errors[SURNAME_INPUT_ID]?.message}
+                  onBlur={onBlur}
+                  onChange={e => onChange(e.target.value)} />
           )} />
         <Controller
           name={USERNAME_INPUT_ID}
           control={control}
           render={({ onChange, onBlur, value }) => (
-            <CustomInput
-              label="Username"
-              type="text"
-              disableUnderline
-              wrapperClassName={clsx(classes.formElement, classes.formElementIndent)}
-              id={USERNAME_INPUT_ID}
-              htmlFor={USERNAME_INPUT_ID}
-              value={value}
-              error={!!errors[USERNAME_INPUT_ID]}
-              helperText={errors[USERNAME_INPUT_ID]?.message}
-              onBlur={onBlur}
-              onChange={e => onChange(e.target.value)}
-            />
+            <TextField
+                  variant="outlined"
+                  fullWidth
+                  className={classes.formElementIndent}
+                  id={USERNAME_INPUT_ID}
+                  label="Username"
+                  type="text"
+                  value={value}
+                  error={!!errors[USERNAME_INPUT_ID]}
+                  helperText={errors[USERNAME_INPUT_ID]?.message}
+                  onBlur={onBlur}
+                  onChange={e => onChange(e.target.value)} />
           )} />
         <Controller
           name={EMAIL_INPUT_ID}
           control={control}
           render={({ onChange, onBlur, value }) => (
-            <CustomInput
-              label="Email"
-              type="text"
-              disableUnderline
-              wrapperClassName={clsx(classes.formElement, classes.formElementIndent)}
-              id={EMAIL_INPUT_ID}
-              htmlFor={EMAIL_INPUT_ID}
-              value={value}
-              error={!!errors[EMAIL_INPUT_ID]}
-              helperText={errors[EMAIL_INPUT_ID]?.message}
-              onBlur={onBlur}
-              onChange={e => onChange(e.target.value)}
-            />
+            <TextField
+                  variant="outlined"
+                  fullWidth
+                  className={classes.formElementIndent}
+                  id={EMAIL_INPUT_ID}
+                  label="Email"
+                  type="text"
+                  value={value}
+                  error={!!errors[EMAIL_INPUT_ID]}
+                  helperText={errors[EMAIL_INPUT_ID]?.message}
+                  onBlur={onBlur}
+                  onChange={e => onChange(e.target.value)} />
           )} />
         <Controller
           name={BIRTHDAY_INPUT_ID}
           control={control}
           render={({ onChange, onBlur, value }) => (
-            <CustomInput
-              type="date"
-              disableUnderline
-              wrapperClassName={clsx(classes.formElement, classes.formElementIndent)}
-              id={BIRTHDAY_INPUT_ID}
-              htmlFor={BIRTHDAY_INPUT_ID}
-              value={value}
-              error={!!errors[BIRTHDAY_INPUT_ID]}
-              helperText={errors[BIRTHDAY_INPUT_ID]?.message}
-              onBlur={onBlur}
-              onChange={e => onChange(e.target.value)}
-            />
+            <TextField
+                  variant="outlined"
+                  fullWidth
+                  className={classes.formElementIndent}
+                  id={BIRTHDAY_INPUT_ID}
+                  type="date"
+                  value={value}
+                  error={!!errors[BIRTHDAY_INPUT_ID]}
+                  helperText={errors[BIRTHDAY_INPUT_ID]?.message}
+                  onBlur={onBlur}
+                  onChange={e => onChange(e.target.value)} />
           )} />
       </AuthBaseForm>
   );

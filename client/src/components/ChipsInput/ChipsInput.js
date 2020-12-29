@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import clsx from 'clsx';
-import { Box, Typography, Chip } from '@material-ui/core';
+import clsx from "clsx";
+import { Box, Chip, Grid, TextField, Typography } from "@material-ui/core";
 
-import CustomInput from "../../components/CustomInput";
 import useStyles from "./styles";
 
-function ChipsInput({ 
+function ChipsInput({
   items = [],
   value = "",
   error = null,
@@ -86,24 +85,27 @@ function ChipsInput({
   }
 
   return (
-    <Box className={classes.root}>
+    <Grid container direction="column">
       <Box>
         {localItems.map(itemId => (
           <Chip className={clsx(classes.chip, classChipName)} key={itemId} label={itemId} onDelete={() => handleDelete(itemId)} />
         ))}
       </Box>
 
-        <CustomInput
-          {...rest}
-          type="text"
-          value={localValue}
-          error={!!localError}
-          helperText={localError}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown} />
+      <TextField
+        {...rest}
+        variant="outlined"
+        fullWidth
+        className={classes.input}
+        type="text"
+        value={localValue}
+        error={!!localError}
+        helperText={localError}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown} />
 
-        {max > 0 && <Typography variant="caption">{localItems.length}/{max}</Typography>}
-    </Box>
+      {max > 0 && <Typography variant="caption" gutterBottom>{localItems.length}/{max}</Typography>}
+    </Grid>
   )
 }
 

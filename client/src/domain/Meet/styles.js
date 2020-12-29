@@ -18,15 +18,12 @@ export const StyledTabs = withStyles((_theme) => ({
 }))(Tabs);
 
 const useStyles = makeStyles(theme => ({
-  formGroup: {
+  formElementIndent: {
     marginBottom: theme.spacing(2),
   },
-  createRoomTitle: {
-    margin: theme.spacing(1, 0),
-    textAlign: "center"
-  },
   createRoomChip: {
-    borderRadius: theme.shape.borderRadius
+    borderRadius: theme.shape.borderRadius,
+    marginBottom: theme.spacing(2),
   },
   createRoomItem: {
     display: "flex",
@@ -37,11 +34,6 @@ const useStyles = makeStyles(theme => ({
     height: "auto",
     width: "100%",
     borderRadius: theme.shape.borderRadius,
-  },
-  // Need to customize SelectInput
-  selectErrorHelperMessage: {
-    margin: theme.spacing(0, 0, 0, 2),
-    color: theme.palette.secondary.main,
   },
   roomMiddleTab: {
     margin: theme.spacing(0, 1)

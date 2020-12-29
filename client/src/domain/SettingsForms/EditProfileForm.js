@@ -4,17 +4,17 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import InputMask from "react-input-mask";
-import { 
+import {
   Box,
   Button,
   FormGroup,
+  TextField,
   Typography
 } from "@material-ui/core";
 
 import Avatar from "../../components/Avatar";
 import ChipsInput from "../../components/ChipsInput";
-import CustomInput from "../../components/CustomInput";
-import { SITE_REGEX, PHONE_REGEX, NUMBER_REGEX } from "../../constants/regexs";
+import { SITE_REGEX, PHONE_REGEX } from "../../constants/regexs";
 import { getYearFromCurrentDate } from "../../helpers/functions";
 import { getDate } from "../../helpers/functions";
 import useStyles from "./styles";
@@ -72,7 +72,7 @@ function EditProfileForm({
   bio,
   phone,
   birthday,
-  gender,
+  gender = "",
   sites,
   loading,
 
@@ -103,8 +103,8 @@ function EditProfileForm({
   const fileInputEl = useRef(null);
   const chipsInputFilters = [
     val => {
-      return !(SITE_REGEX.test(val)) ? 
-        `${val} is not a valid address.` : 
+      return !(SITE_REGEX.test(val)) ?
+        `${val} is not a valid address.` :
         false;
     },
   ]
@@ -135,7 +135,7 @@ function EditProfileForm({
 
   return (
     <Box>
-      <Box className={clsx(classes.header, classes.formGroup)}>
+      <Box className={clsx(classes.header, classes.formElementIndent)}>
         <Avatar className={classes.avatar} url={watcherAvatarUrl} />
         <Box>
           <Typography className={classes.username} variant="h4">{username}</Typography>
@@ -143,29 +143,28 @@ function EditProfileForm({
             <Typography className={classes.uploadTextBtn} variant="h6" component="p">
               Change Profile Photo
             </Typography>
-            <input 
-              className={classes.uploadBtn} 
-              type="file" 
-              name="avatarUrl" 
-              ref={fileInputEl} 
+            <input
+              className={classes.uploadBtn}
+              type="file"
+              name="avatarUrl"
+              ref={fileInputEl}
               onChange={handleAvatarUrlChange} />
           </label>
         </Box>
       </Box>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormGroup className={classes.formGroup}>
+        <FormGroup className={classes.formElementIndent}>
           <Controller
             name={FULL_NAME_ID}
             control={control}
             render={({ onChange, onBlur, value }) => (
-              <CustomInput
-                type="text"
-                disableUnderline
-                wrapperClassName={classes.formElement}
-                inputClassName={classes.input}
-                placeholder="Full Name"
+              <TextField
+                variant="outlined"
+                fullWidth
                 id={FULL_NAME_ID}
+                placeholder="Full Name"
+                type="text"
                 value={value}
                 error={!!errors[FULL_NAME_ID]}
                 helperText={errors[FULL_NAME_ID]?.message}
@@ -173,84 +172,77 @@ function EditProfileForm({
                 onChange={e => onChange(e.target.value)} />
             )} />
           <Typography className={classes.textMute} variant="caption">
-            When your account is private, only people you 
+            When your account is private, only people you
             approve can see your photos and videos on Instagram.
             Your existing followers won't affected.
           </Typography>
         </FormGroup>
-        <FormGroup className={classes.formGroup}>
+        <FormGroup className={classes.formElementIndent}>
           <Controller
             name={USERNAME_INPUT_ID}
             control={control}
             render={({ onChange, onBlur, value }) => (
-              <CustomInput
-                type="text"
-                disableUnderline
-                wrapperClassName={classes.formElement}
-                inputClassName={classes.input}
-                placeholder="Username"
+              <TextField
+                variant="outlined"
+                fullWidth
                 id={USERNAME_INPUT_ID}
+                placeholder="Username"
+                type="text"
                 value={value}
                 error={!!errors[USERNAME_INPUT_ID]}
                 helperText={errors[USERNAME_INPUT_ID]?.message}
                 onBlur={onBlur}
-                onChange={e => onChange(e.target.value)}
-              />
+                onChange={e => onChange(e.target.value)} />
             )} />
         </FormGroup>
-        <FormGroup className={classes.formGroup}>
-          <ChipsInput 
-            disableUnderline
-            wrapperClassName={classes.formElement}
-            inputClassName={classes.input}
+        <FormGroup>
+          <ChipsInput
             placeholder="Sites"
             id={SITES_INPUT_ID}
             name={SITES_INPUT_ID}
             max={4}
             items={sites}
-            filters={chipsInputFilters} 
+            filters={chipsInputFilters}
             onChange={handleSitesChange} />
         </FormGroup>
-        <FormGroup className={classes.formGroup}>
+        <FormGroup className={classes.formElementIndent}>
           <Controller
             name={BIO_INPUT_ID}
             control={control}
             render={({ onChange, onBlur, value }) => (
-              <CustomInput
-                type="text"
-                placeholder="Bio"
-                disableUnderline
-                wrapperClassName={classes.formElement}
-                inputClassName={classes.input}
-                multiline
+              <TextField
+                variant="outlined"
+                fullWidth
                 id={BIO_INPUT_ID}
+                placeholder="Bio"
+                type="text"
                 value={value}
+                multiline
+                rows={4}
                 error={!!errors[BIO_INPUT_ID]}
                 helperText={errors[BIO_INPUT_ID]?.message}
                 onBlur={onBlur}
-                onChange={e => onChange(e.target.value)}
-              />
+                onChange={e => onChange(e.target.value)} />
             )} />
         </FormGroup>
-        <FormGroup className={classes.formGroup}>
+        <FormGroup className={classes.formElementIndent}>
           <Controller
             name={BIRTHDAY_INPUT_ID}
             control={control}
             render={({ onChange, onBlur, value }) => (
-              <CustomInput
-                type="date"
-                disableUnderline
-                wrapperClassName={classes.formElement}
+              <TextField
+                variant="outlined"
+                fullWidth
                 id={BIRTHDAY_INPUT_ID}
+                type="date"
                 value={value || undefined}
                 error={!!errors[BIRTHDAY_INPUT_ID]}
                 helperText={errors[BIRTHDAY_INPUT_ID]?.message}
                 onBlur={onBlur}
-                onChange={e => onChange(e.target.value)}
-              />
+                onChange={e => onChange(e.target.value)} />
             )} />
         </FormGroup>
-        <FormGroup className={classes.formGroup}>
+        <FormGroup className={classes.formElementIndent}>
           <Controller
             name={PHONE_INPUT_ID}
             control={control}
@@ -261,41 +253,40 @@ function EditProfileForm({
                 value={value}
                 onBlur={onBlur}
                 onChange={(e) => onChange(e.target.value.replace(/\D+/g, ''))}>
-                <CustomInput
-                  type="text"
-                  placeholder="Phone Number"
-                  disableUnderline
-                  wrapperClassName={classes.formElement}
-                  value={value}
+                <TextField
+                  variant="outlined"
+                  fullWidth
                   id={PHONE_INPUT_ID}
+                  placeholder="Phone Number"
+                  type="text"
+                  value={value}
                   error={!!errors[PHONE_INPUT_ID]}
-                  helperText={errors[PHONE_INPUT_ID]?.message}/>
+                  helperText={errors[PHONE_INPUT_ID]?.message} />
+
               </InputMask>
             )} />
         </FormGroup>
-        <FormGroup className={classes.formGroup}>
+        <FormGroup className={classes.formElementIndent}>
           <Controller
             name={GENDER_INPUT_ID}
             control={control}
             render={({ onChange, onBlur, value }) => (
-              <CustomInput
-                type="text"
-                disableUnderline
-                wrapperClassName={classes.formElement}
-                inputClassName={classes.input}
-                placeholder="Gender"
+              <TextField
+                variant="outlined"
+                fullWidth
                 id={GENDER_INPUT_ID}
+                placeholder="Gender"
+                type="text"
                 value={value}
                 error={!!errors[GENDER_INPUT_ID]}
                 helperText={errors[GENDER_INPUT_ID]?.message}
                 onBlur={onBlur}
-                onChange={e => onChange(e.target.value)}
-              />
+                onChange={e => onChange(e.target.value)} />
             )} />
         </FormGroup>
         <FormGroup className={classes.formGroupBtn}>
-          <Button 
-            variant="contained" 
+          <Button
+            variant="contained"
             color="primary"
             type="submit"
             disableElevation

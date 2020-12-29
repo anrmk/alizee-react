@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import {Box, Divider, List, ListItem, ListItemAvatar ,ListItemSecondaryAction, ListItemText } from "@material-ui/core";
+
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
@@ -18,7 +19,7 @@ function BlackListForm({
 
   return (
     <Box className={classes.blackListRoot}>
-      <Typography variant="h6" className={classes.blackListTitle}>
+      <Typography variant="h6" align="center">
       {t("SettingFormsBlackListFormTitle")}
       </Typography>
       <List dense={true}>

@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import {
-  Button,
   InputAdornment,
-  IconButton
+  IconButton,
+  TextField
 } from "@material-ui/core";
 import LockIcon from '@material-ui/icons/LockOutlined';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
-import CustomInput from "../../components/CustomInput";
 import BaseForm from "./BaseForm";
 import useStyles from "./styles";
 import { getUniqueChars, hasNumbers } from "../../helpers/functions";
@@ -89,7 +88,7 @@ function ChangePasswordForm({
   }
 
   const handleShowPasswordClick = () => {
-    setFormData({ ...formData, showPassword: !formData.showPassword});
+    setFormData({ ...formData, showPassword: !formData.showPassword });
   }
 
   return (
@@ -101,38 +100,40 @@ function ChangePasswordForm({
       btnDisabled={btnDisabled}
       onSubmit={handleSubmit}
       icon={<LockIcon className={classes.icon} />}>
-      <CustomInput
+      <TextField
+        variant="outlined"
+        fullWidth
+        className={classes.formElementIndent}
         id={PASSWORD_INPUT_ID}
-        htmlFor={PASSWORD_INPUT_ID}
         name={PASSWORD_INPUT_ID}
-        disableUnderline
         label="Password"
-        wrapperClassName={classes.controlForm}
         type={formData.showPassword ? "text" : "password"}
         error={!!formData.passwordError}
         helperText={formData.passwordError}
         value={formData.password}
-        endAdornment={
-          <InputAdornment position="end">
-            <IconButton
-              aria-label="toggle password visibility"
-              onClick={handleShowPasswordClick}
-              onMouseDown={(e) => e.preventDefault()}
-              edge="end">
-              {formData.showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
-            </IconButton>
-          </InputAdornment>
-        }
+        InputProps={{
+          endAdornment:
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleShowPasswordClick}
+                onMouseDown={(e) => e.preventDefault()}
+                edge="end">
+                {formData.showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+              </IconButton>
+            </InputAdornment>
+        }}
         onChange={handleInputChange} />
-      <CustomInput
+
+      <TextField
+        variant="outlined"
+        fullWidth
+        className={classes.formElementIndent}
         id={CONFIRM_PASSWORD_INPUT_ID}
-        htmlFor={CONFIRM_PASSWORD_INPUT_ID}
         name={CONFIRM_PASSWORD_INPUT_ID}
         disabled={!!formData.passwordError || !formData.password.length}
-        disableUnderline
         label="Confirm Password"
         type="password"
-        wrapperClassName={classes.controlForm}
         error={!!formData.confirmPasswordError}
         helperText={formData.confirmPasswordError}
         value={formData.confirmPassword}

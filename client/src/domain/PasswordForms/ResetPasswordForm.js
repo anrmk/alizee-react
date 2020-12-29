@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Button, Divider } from "@material-ui/core";
+import { Button, Divider, TextField } from "@material-ui/core";
 import LockIcon from '@material-ui/icons/VerifiedUserOutlined';
 
-import CustomInput from "../../components/CustomInput";
 import { isCorrectEmail } from "../../helpers/functions";
 import { SIGN_UP_ROUTE, SIGN_IN_ROUTE } from "../../constants/routes";
 import BaseForm from "./BaseForm";
@@ -60,9 +59,10 @@ function ResetPasswordForm({
       icon={<LockIcon className={classes.icon} />}
       footerComponent={(
         <>
-          <Divider className={classes.divider} variant="middle" />
+          <Divider className={classes.divider} />
           <Button
-            className={classes.formElement}
+            fullWidth
+            className={classes.formElementIndent}
             variant="text"
             onClick={() => history.push(SIGN_UP_ROUTE)}>
             Create New Account
@@ -76,17 +76,19 @@ function ResetPasswordForm({
           </Button>
         </>
       )}>
-        <CustomInput
-          id={EMAIL_INPUT_ID}
-          htmlFor={EMAIL_INPUT_ID}
-          disableUnderline
-          placeholder="test@domain.com"
-          label="Email"
-          wrapperClassName={classes.controlForm}
-          error={!!error}
-          helperText={error}
-          value={email}
-          onChange={handleEmailChange} />
+
+      <TextField
+        className={classes.formElementIndent}
+        variant="outlined"
+        fullWidth
+        id={EMAIL_INPUT_ID}
+        placeholder="test@domain.com"
+        label="Email"
+        type="text"
+        value={email}
+        error={!!error}
+        helperText={error}
+        onChange={handleEmailChange} />
     </BaseForm>
   );
 }

@@ -1,8 +1,5 @@
 import { makeStyles } from "@material-ui/core";
 import grey from "@material-ui/core/colors/grey";
-import purple from "@material-ui/core/colors/deepPurple";
-
-import { getStyleByTheme } from "../../helpers/functions";
 
 const useStyles = makeStyles((theme) => ({
   emptyMessageContainer: {
@@ -57,23 +54,13 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 0,0, 1),
   },
 
-  messageSenderWrapper: {},
-
-  messageSenderInputWrapper: {
-    width: "100%",
-    borderRadius: theme.shape.borderRadius,
-    border: "none"
-   // backgroundColor: getStyleByTheme(theme, theme.palette.common.white, theme.palette.grey["800"]),
-  },
-
-  messageSenderInput: {
-    padding: theme.spacing(1, 0),
-  },
-
   infinite: {
     width: "100%",
     display: "flex",
     flexDirection: "column"
+  },
+  icon: {
+    color: theme.palette.grey["400"]
   }
 }));
 

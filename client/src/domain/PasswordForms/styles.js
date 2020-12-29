@@ -42,15 +42,15 @@ const useStyles = makeStyles((theme) => {
       ...baseFormElement,
       textAlign: "left"
     },
-    formElement: {
-      ...baseFormElement,
+    formElementIndent: {
+      marginBottom: theme.spacing(2),
     },
     btnBackSignIn: {
       ...baseFormElement,
       marginTop: theme.spacing(4),
       marginBottom: 0,
       backgroundColor: theme.palette.grey["200"]
-    }
+    },
   })
 });
 

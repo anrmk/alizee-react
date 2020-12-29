@@ -44,7 +44,8 @@ function BaseForm({
         <form onSubmit={onSubmit}>
           {children}
           <Button
-            className={classes.formElement}
+            fullWidth
+            className={classes.formElementIndent}
             disableElevation
             type="submit"
             size="large"

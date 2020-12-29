@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { InputAdornment, IconButton } from "@material-ui/core";
+import { InputAdornment, IconButton, TextField } from "@material-ui/core";
 
 import SendIcon from "@material-ui/icons/SendOutlined";
 import ImageIcon from "@material-ui/icons/ImageOutlined";
 
-import CustomInput from "../CustomInput";
 import useStyles from "./styles";
 
 function MessageSenderInput({
@@ -31,26 +30,26 @@ function MessageSenderInput({
   }
 
   return (
-    <CustomInput
+    <TextField
+      variant="outlined"
+      fullWidth
       placeholder={placeholder}
-      disableUnderline
-      wrapperClassName={classes.messageSenderInputWrapper}
-      inputClassName={classes.messageSenderInput}
+      type="text"
       value={value}
-      startAdornment={
-        <InputAdornment position="end">
-          <IconButton>
-            <ImageIcon className={classes.searchIcon} />
-          </IconButton>
-        </InputAdornment>
-      }
-      endAdornment={
-        <InputAdornment position="end">
-          <IconButton onClick={handleMessageSendClick}>
-            <SendIcon className={classes.searchIcon} />
-          </IconButton>
-        </InputAdornment>
-      }
+      InputProps={{
+        startAdornment:
+          <InputAdornment position="start">
+            <IconButton>
+              <ImageIcon className={classes.icon} />
+            </IconButton>
+          </InputAdornment>,
+        endAdornment:
+          <InputAdornment position="end">
+            <IconButton onClick={handleMessageSendClick}>
+              <SendIcon className={classes.icon} />
+            </IconButton>
+          </InputAdornment>
+      }}
       onChange={(e) => setValue(e.target.value)}
       onKeyDown={handleEnterKeyDown} />
   )

@@ -2,16 +2,14 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Controller, useForm } from 'react-hook-form';
-import clsx from 'clsx';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { Button, Container, Grid, Paper, Typography } from "@material-ui/core";
+import { Button, Container, Grid, Paper, TextField, Typography } from "@material-ui/core";
 
-import VideocamOutlinedIcon from '@material-ui/icons/VideocamOutlined';
+import VideocamOutlinedIcon from "@material-ui/icons/VideocamOutlined";
 
 import meetImage from "../../../src/assets/img/meet_image.jpg";
 import useStyles from "./styles"
-import CustomInput from "../../components/CustomInput";
 
 const LINK_CODE_ID = "linkCode"
 
@@ -28,31 +26,34 @@ function Meeting() {
   const { t } = useTranslation();
   const classes = useStyles();
 
-  const { errors, control, getValues, handleSubmit } = useForm({
+  const { errors, control, handleSubmit } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {
+      [LINK_CODE_ID]: ""
+    }
   });
 
   const handleCreate = () => {
     history.push(`/room`);
   }
 
-  const handleJoinInputSubmit = (_data) => {
-    history.push(`/room`);
+  const handleJoinInputSubmit = (data) => {
+    history.push(`/room/${data[LINK_CODE_ID]}`);
   };
 
   return (
     <Container className={classes.meetingContainer} >
       <Grid container direction="row" justify="center" spacing={8}>
 
-        <Grid item className={clsx(classes.meetingItem, classes.meetingLinkItem)} xs={10} md={6}>
-          <Typography variant="h4" className={classes.title}>
+        <Grid item container direction="column" justify="center" xs={10} md={6} className={classes.meetingLinkItem}>
+          <Typography variant="h4" align="left" paragraph>
             {t("MeetMeetingTitle")}
           </Typography>
-          <Typography variant="body2" className={classes.subtitle}>
+          <Typography variant="body2" align="left" paragraph>
             {t("MeetMeetingSubtitle")}
           </Typography>
 
-          <Grid container className={classes.meetingLinkBox} spacing={4}>
+          <Grid item container direction="row" alignItems="center" className={classes.meetingLinkBox} spacing={4}>
             <Grid item>
               <Button size="large"
                 variant="contained"
@@ -67,23 +68,24 @@ function Meeting() {
                   name={LINK_CODE_ID}
                   control={control}
                   render={({ onChange, onBlur, value }) => (
-                    <CustomInput
-                      type="text"
-                      disableUnderline
+                    <TextField
+                      variant="outlined"
+                      fullWidth
                       placeholder={t("MeetMeetingLinkInputPlaceholder")}
+                      type="text"
                       id={LINK_CODE_ID}
                       value={value}
                       error={!!errors[LINK_CODE_ID]}
+                      helperText={errors[LINK_CODE_ID]?.message}
                       onBlur={onBlur}
-                      onChange={e => onChange(e.target.value.trim())}
-                    />
+                      onChange={e => onChange(e.target.value.trim())} />
                   )} />
               </form>
             </Grid>
           </Grid>
         </Grid>
 
-        <Grid item className={clsx(classes.meetingItem, classes.meetingImageItem)} xs={8} md={6}>
+        <Grid item container direction="column" justify="center" xs={8} md={6} className={classes.meetingImageItem} >
           <Paper className={classes.meetingImagePaper}>
             <img className={classes.meetingImage} src={meetImage} alt="" />
           </Paper>
