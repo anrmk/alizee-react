@@ -37,7 +37,7 @@ function AuthBaseForm({
             <Typography align="center" className={classes.formElementIndent} variant="h5" component="h1">
               Alizee
             </Typography>
-            <form onSubmit={onFormSubmit}>
+            <form onSubmit={onFormSubmit} autoComplete="off">
               {formComponent || children}
               {error && (
                 <Typography className={clsx(classes.formElement, classes.formElementIndent)} color="secondary" variant="caption" component="span">
