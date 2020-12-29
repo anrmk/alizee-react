@@ -4,7 +4,10 @@ export const EXPLORE_ROUTE = "/explore";
 export const POST_ROUTE = "/posts";
 export const POST_ID_ROUTE = "/posts/:id";
 export const MEET_ROUTE = "/meet";
-export const CHAT_ROUTE = "/chat";
+//export const CHAT_ROUTE = "/chat";
+export const CHAT_ROUTE = username => `/chat/${username}`;
+export const CHAT_USERNAME_ROUTE = '/chat/:username';
+
 export const ROOM_ROUTE = "/room";
 export const ROOM_ID_DEFAULT_ROUTE = "/room/:roomId";
 export const ROOM_ID_ROUTE = roomId => `/room/${roomId}`;

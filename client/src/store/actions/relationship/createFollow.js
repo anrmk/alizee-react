@@ -14,13 +14,13 @@ function requestCreateFollow() {
   };
 }
 
-function receiveCreateFollow(current) {
+function receiveCreateFollow(followers) {
   return {
     type: CREATE_FOLLOW_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
-      current: current || [],
+      followers: followers || [],
     },
   };
 }
@@ -35,24 +35,19 @@ function errorCreateFollow(message) {
   };
 }
 
-export function createFollow(api, userId, followId) {
+export function createFollow(api, userId) {
   return async (dispatch, getState) => {
     dispatch(requestCreateFollow());
 
-    const url = generateUrl("createFollow");
     try {
+      const url = generateUrl("createFollow");
       await api.setParams({ id: userId }).query(url);
 
-      const current = [...getState().relationship.current];
-      console.log("Create Follow", current)
+      const people = [...getState().relationship.followers];
+      const personIndex = people.findIndex(item => item.userId === userId);
+      people[personIndex]["isFollowing"] = true;
 
-      current.forEach(item => {
-        if (item.id === followId) {
-          item.isFollowing = true
-        }
-      })
-
-      dispatch(receiveCreateFollow(current));
+      dispatch(receiveCreateFollow(people));
     } catch {
       return dispatch(errorCreateFollow("When follow was creating then something went wrong"));
     }

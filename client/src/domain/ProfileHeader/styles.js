@@ -1,58 +1,36 @@
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  coverBox: {
-    position: "relative",
-    marginBottom: theme.spacing(3)
-  },
   cover: {
     borderRadius: theme.shape.borderRadius,
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
     alignItems: "flex-end",
-    justifyContent: "flex-end",
-    height: "200px",
+    justifyContent: "space-between",
+    height: "220px",
     backgroundImage: ({ imageUrl }) => `url("${imageUrl}")`,
+    backgroundColor: theme.palette.background.paper,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
-    backgroundPosition: "center"
+    backgroundPosition: "center",
+    padding: theme.spacing(1, 1, 1, 20)
   },
-  coverEditButton: {
-    display: "none"
-  },
-  headerAvatarBox: {
+
+  coverBox: {
     display: "flex",
     position: "absolute",
-    bottom: "-44px",
-    left: theme.spacing(4)
+    bottom: theme.spacing(-8),
+    padding: theme.spacing(1),
+    width: "100%"
   },
-  headerAvatarDescription: {
-    alignSelf: "flex-end",
-    marginLeft: theme.spacing(2),
-    lineHeight: "100%",
-  },
-  headerAvatarFullName: {
-    fontWeight: "700",
-    lineHeight: "100%",
-  },
-  headerAvatarFullNameIcon: {
-    fontSize: "16px",
-    marginLeft: theme.spacing(0.5)
-  },
-  headerAvatarFullNameBox: {
-    display: "flex",
-    flexDirection: "row"
-  },
-  headerAvatarUsername: {
-    lineHeight: "100%",
-    color: theme.palette.secondary.main
-  },
-  feeling: {
-    marginTop: theme.spacing(-2),
-  },
+
+  avatar: {
+    margin: theme.spacing(0, 3),
+
+    [theme.breakpoints.down("sm")] : {
+      margin: theme.spacing(0, 1)
+    }
+  }
 }));
 
 export default useStyles;

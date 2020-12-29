@@ -1,80 +1,110 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Grid, Typography } from "@material-ui/core";
+import { Box, Typography, IconButton } from "@material-ui/core";
 
-import { PostSprout } from "../../domain/PostsList";
-import Cover from "./Cover";
+import EditIcon from "@material-ui/icons/Edit";
+import Avatar from "../../components/Avatar";
+
+import Controls from "./Controls";
 
 import useStyles from "./styles";
 
-function ProfileHeader({
-  me,
-  fullName,
-  username,
-  avatarUrl,
+function Cover(props) {
+  const {
+    isOwner,
+    isOnline,
+    isLive,
+    isFollowing,
+    imageUrl,
+    fullName,
+    username,
+    avatarUrl,
+    membership,
+    feeling,
+  } = props;
 
-  feeling,
+  const { onMessageClick, onFollowClick, onSendGiftClick, onEditCover } = props;
 
-  onPostCreate,
-  onEditCover,
-}) {
-  const classes = useStyles();
-  const history = useHistory();
+  const classes = useStyles({ imageUrl });
 
   return (
-    <Grid container spacing={2} direction="row">
-      <Grid item xs={12}>
-        {/* TODO Add props IsOwner and Image URL */}
-        <Cover
-          fullName={fullName}
-          username={username}
-          avatarUrl={avatarUrl}
-          onEditCover={onEditCover} />
-      </Grid>
-      <Grid container item className={classes.feeling} xs={12}>
-        <Grid item xs={5} ></Grid>
-        <Grid item xs={7} >
-          <Typography noWrap variant="subtitle2">
-            {feeling}
-          </Typography>
-        </Grid>
-      </Grid>
-      <Grid item xs={12} sm={8}>
-        <PostSprout user={{ avatar: { avatarUrl } }} onSubmit={onPostCreate} variant="fab" />
-      </Grid>
-    </Grid>
+    <Box  marginBottom={9} position="relative">
+      <Box className={classes.cover}>
+        <Typography variant="body2" >{feeling}</Typography>
+
+        {isOwner && (
+          <IconButton onClick={onEditCover} style={{ zIndex: 1000 }}>
+            <EditIcon />
+          </IconButton>
+        )}
+      </Box>
+
+      <Box className={classes.coverBox}>
+        <Box display="flex" flexWrap="wrap" alignItems="flex-end" flexGrow={1}>
+          <Avatar
+            src={avatarUrl}
+            size="extraLarge"
+            bordermembership={membership}
+            online={isOnline}
+            live={isLive}
+            borderColor="gold"
+            className={classes.avatar}
+          />
+          <Box>
+            <Typography variant="h6">{fullName}</Typography>
+            <Typography variant="caption">{username}</Typography>
+          </Box>
+        </Box>
+
+        <Box display="flex" flexWrap="noWrap" alignItems="flex-end">
+          <Controls
+            isOwner={isOwner}
+            isFollowing={isFollowing}
+
+            onMessageClick={onMessageClick}
+            onFollowClick={onFollowClick}
+            onSendGiftClick={onSendGiftClick}
+          />
+        </Box>
+      </Box>
+    </Box>
   );
 }
 
-ProfileHeader.propTypes = {
-  me: PropTypes.bool,
+Cover.propTypes = {
+  isOwner: PropTypes.bool,
+  isOnline: PropTypes.bool,
+  isLive: PropTypes.bool,
+  isFollowing: PropTypes.bool,
+
+  imageUrl: PropTypes.string,
   fullName: PropTypes.string,
   username: PropTypes.string,
-  followed: PropTypes.bool,
   avatarUrl: PropTypes.string,
+  membership: PropTypes.number,
 
-  feeling: PropTypes.string,
-
+  onEditCover: PropTypes.func,
   onMessageClick: PropTypes.func,
   onFollowClick: PropTypes.func,
-  onEditClick: PropTypes.func,
-  onSettingsClick: PropTypes.func,
+  onSendGiftClick: PropTypes.func,
 };
 
-ProfileHeader.defaultProps = {
-  me: false,
+Cover.defaultProps = {
+  isOwner: false,
+  isOnline: false,
+  isLive: false,
+  isFollowing: false,
+
+  imageUrl: "",
   fullName: "",
   username: "",
-  followed: false,
   avatarUrl: "",
+  membership: 0,
 
-  feeling: "",
-
+  onEditCover: undefined,
   onMessageClick: undefined,
   onFollowClick: undefined,
-  onEditClick: undefined,
-  onSettingsClick: undefined,
+  onSendGiftClick: undefined,
 };
 
-export default ProfileHeader;
+export default Cover;

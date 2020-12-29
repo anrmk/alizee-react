@@ -5,7 +5,8 @@ import PostTabs from "./PostTabs"
 import GridGallery from "../GridGallery";
 
 function ProfileContent({
-  media,
+  isOwner,
+  items,
   hasMore,
   tabIndex,
 
@@ -14,9 +15,9 @@ function ProfileContent({
   onItemClick,
 }) {
   return (
-    <PostTabs index={tabIndex} onTabChange={onTabChange} >
+    <PostTabs isOwner={isOwner} index={tabIndex} onTabChange={onTabChange} >
       <GridGallery
-        items={media}
+        items={items}
         hasMore={hasMore}
         onFetchMore={onFetchMore}
         onItemClick={onItemClick}
@@ -26,7 +27,8 @@ function ProfileContent({
 }
 
 ProfileContent.propTypes = {
-  media: PropTypes.array,
+  isOwner: PropTypes.bool,
+  items: PropTypes.array,
   hasMore: PropTypes.bool,
 
   onFetchMore: PropTypes.func,
@@ -35,7 +37,8 @@ ProfileContent.propTypes = {
 };
 
 ProfileContent.defaultProps = {
-  media: [],
+  isOwner: false,
+  items: [],
   hasMore: false,
 
   onFetchMore: undefined,

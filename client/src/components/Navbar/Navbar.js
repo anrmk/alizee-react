@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import { Container, AppBar, Toolbar, IconButton, InputBase, Badge } from "@material-ui/core";
+import { Container, Box, AppBar, Toolbar, IconButton, InputBase, Badge } from "@material-ui/core";
 
 import NotificationsIcon from "@material-ui/icons/NotificationsActiveOutlined";
 import HomeIcon from "@material-ui/icons/HomeOutlined";
@@ -74,7 +74,7 @@ function Navbar({
 
           <div className={classes.grow} />
 
-          <div className={classes.controls}>
+          <Box className={classes.controls}>
             <IconButton aria-label="show 17 new notifications">
               <Badge badgeContent={notificationsCount}>
                 <NotificationsIcon />
@@ -107,7 +107,7 @@ function Navbar({
               onClose={handleMenuClose}
               onLogout={handleSignOut}
             />
-          </div>
+          </Box>
         </Toolbar>
       </Container>
     </AppBar>

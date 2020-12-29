@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 
 import { generateUrl, generateFileUrl, getOffset } from "../../../helpers/functions";
-import { POSTS_OFFSET } from "../../../constants/feed";
+import { POSTS_OFFSET, POST_LENGTH } from "../../../constants/feed";
 
 export const GET_POSTS_REQUEST = "GET_POSTS_REQUEST";
 export const GET_POSTS_SUCCESS = "GET_POSTS_SUCCESS";
@@ -70,8 +70,7 @@ export function getPosts(api, opts) {
         .setParams({
           userId: opts.userId,
           start: currentOffset,
-          length: opts.length,
-          type: opts.type,
+          length: opts.length
         })
         .query(url);
 

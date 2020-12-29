@@ -89,7 +89,7 @@ export default function CreateStories({ id, onSubmit }) {
                   onBlur={onBlur}
                   onChange={onChange}
                   value={value}
-                  error={errors[LINK_ID] || errors[MEDIA_ID]}
+                  error={!!errors[LINK_ID] || !!errors[MEDIA_ID]}
                   helperText={errors[LINK_ID]?.message || errors[MEDIA_ID]?.message}
                   inputProps={{ maxLength: 2048 }}
                 />

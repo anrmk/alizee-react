@@ -48,7 +48,8 @@ export function getUser(api, username) {
 
       const dataExtendedUrl = { 
         ...data, 
-        avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, data.avatarUrl)
+        avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, data.avatarUrl),
+        coverUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, data.coverUrl)
       };
 
       dispatch(receiveGetUser(dataExtendedUrl));

@@ -32,7 +32,7 @@ function Avatar({
 
   if (online !== undefined) {
     return (
-      <StyledBadge {...badgeProps} className={clsx(classes.badge, badgeClassName)}>
+      <StyledBadge {...badgeProps} className={clsx(classes.badge, badgeClassName, className)}>
         <MUIAvatar {...avatarBaseProps} className={clsx(classes.avatar)} src={src}>
           {children}
         </MUIAvatar>

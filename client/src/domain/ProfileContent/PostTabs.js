@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 
-import {Tabs, Tab} from "@material-ui/core";
+import { Tabs, Tab } from "@material-ui/core";
 
 import GridIcon from "@material-ui/icons/GridOnOutlined";
 import StarIcon from "@material-ui/icons/Star";
@@ -10,11 +10,7 @@ import TaggedIcon from "@material-ui/icons/LabelOutlined";
 
 import useStyles from "./styles";
 
-function PostTabs({
-  index,
-  children,
-  onTabChange
-}) {
+function PostTabs({ isOwner, index, children, onTabChange }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -33,7 +29,7 @@ function PostTabs({
         textColor="secondary"
       >
         <Tab icon={<GridIcon />} label={t("ProfileProfileContentPostsTabLabel")} />
-        <Tab icon={<StarIcon />} label={t("ProfileProfileContentFavoritesTabLabel")} />
+        {isOwner && <Tab icon={<StarIcon />} label={t("ProfileProfileContentFavoritesTabLabel")} />}
         <Tab icon={<TaggedIcon />} label={t("ProfileProfileContentTaggedTabLabel")} />
       </Tabs>
       {children}
@@ -42,6 +38,7 @@ function PostTabs({
 }
 
 PostTabs.propTypes = {
+  isOwner: PropTypes.bool,
   media: PropTypes.array,
   hasMore: PropTypes.bool,
 
@@ -49,6 +46,7 @@ PostTabs.propTypes = {
 };
 
 PostTabs.defaultProps = {
+  isOwner: false,
   media: [],
   hasMore: false,
 

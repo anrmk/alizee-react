@@ -37,6 +37,12 @@ export default function StorySlideProgress({
       });
     }, 100);
     setCurrentInterval(intervalId);
+
+    return () => {
+      if (currentInterval) {
+        clearInterval(currentInterval);
+      }
+    }
   }, [currentIndex])
 
   return (

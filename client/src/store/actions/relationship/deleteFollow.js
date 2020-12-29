@@ -14,13 +14,13 @@ function requestDeleteFollow() {
   };
 } 
 
-function receiveDeleteFollow(current) {
+function receiveDeleteFollow(followers) {
   return {
     type: DELETE_FOLLOW_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
-      current: current || [],
+      followers: followers || [],
     },
   };
 }
@@ -35,23 +35,21 @@ function errorDeleteFollow(message) {
   };
 }
 
-export function deleteFollow(api, userId, followId) {
+export function deleteFollow(api, userId) {
   return async (dispatch, getState) => {
     dispatch(requestDeleteFollow());
 
-    const url = generateUrl("deleteFollow");
     try {
+      const url = generateUrl("deleteFollow");
       await api.setMethod("DELETE").setParams({ id: userId }).query(url);
 
-      const current = [...getState().relationship.current];
+      console.log("deleteFollow", userId)
 
-      current.forEach(item => {
-        if (item.id === followId) {
-          item.isFollowing = false
-        }
-      })
+      const people = [...getState().relationship.followers];
+      const personIndex = people.findIndex(item => item.userId === userId);
+      people[personIndex]["isFollowing"] = false;
 
-      dispatch(receiveDeleteFollow(current));
+      dispatch(receiveDeleteFollow(people));
     } catch (e) {
       return dispatch(errorDeleteFollow("When follow was deleting then something went wrong"));
     }

@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
+import {useParams} from "react-router-dom";
+
 import { connect } from "react-redux";
 import { Container, Grid, Box } from "@material-ui/core/";
 
@@ -13,6 +15,8 @@ import { ESC_KEY_CODE } from "../constants/key_codes";
 
 function Chat(props) {
   const apiClient = useContext(ApiContext);
+
+  const { username } = useParams(); //Здесь сделать функцию создания и получения данных чата по имени пользователя
 
   const { user } = props;
   const { followings, getFollowings, filterFollowings } = props;
