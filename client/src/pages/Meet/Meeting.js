@@ -43,7 +43,7 @@ function Meeting() {
 
   return (
     <Container className={classes.meetingContainer} >
-      <Grid container direction="row" justify="center" spacing={8}>
+      <Grid container direction="row" justify="center" spacing={2}>
 
         <Grid item container direction="column" justify="center" xs={10} md={6} className={classes.meetingLinkItem}>
           <Typography variant="h4" align="left" paragraph>
@@ -55,8 +55,10 @@ function Meeting() {
 
           <Grid item container direction="row" alignItems="center" className={classes.meetingLinkBox} spacing={4}>
             <Grid item>
-              <Button size="large"
+              <Button
+                size="large"
                 variant="contained"
+                className="primary"
                 onClick={() => handleCreate()}>
                 <VideocamOutlinedIcon />
                 {t("MeetMeetingNewMeetingButtonLabel")}

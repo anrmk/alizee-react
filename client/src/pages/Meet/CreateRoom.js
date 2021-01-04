@@ -27,7 +27,14 @@ function CreateRoom() {
 
     navigator.mediaDevices
       .getUserMedia({
-        video: true,
+        video: {
+          mandatory: {
+            minWidth: 208,
+            minHeight: 117,
+            maxWidth: 208,
+            maxHeight: 117
+          }
+        },
         audio: true 
       })
       .then((stream) => {

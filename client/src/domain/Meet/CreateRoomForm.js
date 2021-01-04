@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Controller, useForm } from "react-hook-form";
+import clsx from "clsx";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Chip, Button, FormGroup, Grid, MenuItem, TextField, Typography } from "@material-ui/core";
+import { Chip, Button, FormGroup, Grid, Hidden, MenuItem, TextField, Typography } from "@material-ui/core";
 
 import FileCopyOutlined from "@material-ui/icons/FileCopyOutlined";
 
@@ -15,16 +16,22 @@ const DESCRIPTION_ID = "description";
 const TAGS_ID = "tags";
 const ROOM_TYPE_ID = "roomType";
 const TICKET_PRICE_ID = "ticketPrice";
+const STREAMING_DATE_ID = "streamingDate";
 
-const VALUE_MIN_LENGTH_TICKET_PRICE = 0;
+const FORM_ID = "createRoom";
+
+const VALUE_MIN_TICKET_PRICE = 0;
 const VALUE_MAX_LENGTH_TITLE = 128;
 const VALUE_MAX_LENGTH_DESCRIPTION = 255;
 
 const EMPTY_VALUE_ERROR = "It is a required filed";
+const VALUE_TICKET_PRICE_ERROR = "Must be 0 or greater than 0";
 const VALUE_MIN_LENGTH_ERROR = (min) => `Must be at least ${min} characters`;
 const VALUE_MAX_LENGTH_ERROR = (max) => `Must be at most ${max} characters`;
+const STREAMING_DATA_ERROR = "The date must be at least the current date";
 
-const HELPER_TEXT_DESCRIPTION = (length) => `Characters entered ${length ? length : 0} out of ${VALUE_MAX_LENGTH_DESCRIPTION} characters`;
+const HELPER_TEXT_DESCRIPTION = (length) =>
+  `Characters entered ${length ? length : 0} out of ${VALUE_MAX_LENGTH_DESCRIPTION} characters`;
 
 const COPY_LINK_ROOM_ALERT_SUCCESS_TEXT = "Copying link room successfully";
 const COPY_LINK_ROOM_ALERT_ERROR_TEXT = "Copying link room failed";
@@ -47,8 +54,15 @@ const schema = yup.object().shape({
     .required(EMPTY_VALUE_ERROR),
   [TICKET_PRICE_ID]: yup
     .number()
-    .min(VALUE_MIN_LENGTH_TICKET_PRICE, VALUE_MIN_LENGTH_ERROR(VALUE_MIN_LENGTH_TICKET_PRICE))
+    .positive()
+    .typeError(VALUE_TICKET_PRICE_ERROR)
+    .min(VALUE_MIN_TICKET_PRICE, VALUE_TICKET_PRICE_ERROR)
     .required(EMPTY_VALUE_ERROR),
+  [STREAMING_DATE_ID]: yup
+    .date()
+    .nullable()
+    .notRequired()
+    .min(new Date(), STREAMING_DATA_ERROR),
 });
 
 function CreateRoomForm({
@@ -75,8 +89,12 @@ function CreateRoomForm({
   const { control, errors, handleSubmit, register, setValue } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      ticketPrice: 0
-    }
+      [TITLE_ID]: "",
+      [DESCRIPTION_ID]: "",
+      [ROOM_TYPE_ID]: 0,
+      [TICKET_PRICE_ID]: 0,
+      [STREAMING_DATE_ID]: undefined
+    },
   });
 
   useEffect(() => {
@@ -87,10 +105,21 @@ function CreateRoomForm({
     setValue(TAGS_ID, data);
   }
 
+  const renderButton = () => (
+    <Button
+      size="large"
+      variant="contained"
+      className="primary"
+      form={FORM_ID}
+      type="submit">
+      {t("MeetCreateRoomFormJoinButtonLabel")}
+    </Button>
+  )
+
   return (
     <Grid container direction="row" spacing={2}>
 
-      <Grid item className={classes.createRoomItem} xs={12} md={8}>
+      <Grid item container direction="column" justify="center" xs={12} md={8}>
         <video className={classes.createRoomItemVideo}
           ref={videoRef}
           muted
@@ -99,20 +128,23 @@ function CreateRoomForm({
           allowFullScreen
           controls
         />
+        <Hidden smDown>
+          {renderButton()}
+        </Hidden>
       </Grid>
 
-      <Grid item className={classes.createRoomItem} xs={12} md={4}>
+      <Grid item container direction="column" justify="center" wrap="nowrap" xs={12} md={4}>
         <Typography variant="h4" gutterBottom align="center">
           {t("MeetCreateRoomFormTitle")}
         </Typography>
         <Chip
           key={roomId}
-          className={classes.createRoomChip}
+          className={clsx(classes.createRoomChip, classes.formElementIndent)}
           label={`https://meet.com/${roomId}`}
           onDelete={() => handleCopyClick(roomId)}
           deleteIcon={<FileCopyOutlined />} />
 
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form id={FORM_ID} onSubmit={handleSubmit(onSubmit)} autoComplete="off">
           <FormGroup className={classes.formElementIndent}>
             <Controller
               name={TITLE_ID}
@@ -178,14 +210,13 @@ function CreateRoomForm({
                   fullWidth
                   select
                   id={ROOM_TYPE_ID}
-                  label={t("MeetCreateRoomFormTypeInputLabel")}
                   value={value}
                   error={!!errors[ROOM_TYPE_ID]}
                   helperText={errors[ROOM_TYPE_ID]?.message}
                   onBlur={onBlur}
                   onChange={e => onChange(e.target.value)}>
-                  <MenuItem value={0}>Private</MenuItem>
-                  <MenuItem value={1}>Public</MenuItem>
+                  <MenuItem value={0}>Public</MenuItem>
+                  <MenuItem value={1}>Private</MenuItem>
                   <MenuItem value={2}>Cam2Cam</MenuItem>
                 </TextField>
               )} />
@@ -197,7 +228,7 @@ function CreateRoomForm({
               control={control}
               render={({ onChange, onBlur, value }) => (
                 <TextField
-                  inputProps={{ min: VALUE_MIN_LENGTH_TICKET_PRICE }}
+                  inputProps={{ min: VALUE_MIN_TICKET_PRICE }}
                   variant="outlined"
                   fullWidth
                   id={TICKET_PRICE_ID}
@@ -212,12 +243,28 @@ function CreateRoomForm({
           </FormGroup>
 
           <FormGroup className={classes.formElementIndent}>
-            <Button size="medium"
-              variant="contained"
-              type="submit">
-              {t("MeetCreateRoomFormJoinButtonLabel")}
-            </Button>
+            <Controller
+              name={STREAMING_DATE_ID}
+              control={control}
+              render={({ onChange, onBlur, value }) => (
+                <TextField
+                  variant="outlined"
+                  fullWidth
+                  id={STREAMING_DATE_ID}
+                  type="datetime-local"
+                  value={value}
+                  error={!!errors[STREAMING_DATE_ID]}
+                  helperText={errors[STREAMING_DATE_ID]?.message}
+                  onBlur={onBlur}
+                  onChange={e => onChange(e.target.value)} />
+              )} />
           </FormGroup>
+
+          <Hidden mdUp>
+            <FormGroup className={classes.formElementIndent}>
+              {renderButton()}
+            </FormGroup>
+          </Hidden>
         </form>
       </Grid>
 
@@ -226,3 +273,5 @@ function CreateRoomForm({
 }
 
 export default CreateRoomForm;
+
+

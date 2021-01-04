@@ -23,17 +23,14 @@ const useStyles = makeStyles(theme => ({
   },
   createRoomChip: {
     borderRadius: theme.shape.borderRadius,
-    marginBottom: theme.spacing(2),
-  },
-  createRoomItem: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
   },
   createRoomItemVideo: {
     height: "auto",
     width: "100%",
     borderRadius: theme.shape.borderRadius,
+    [theme.breakpoints.up("md")]: {
+      marginBottom: theme.spacing(1),
+    }
   },
   roomMiddleTab: {
     margin: theme.spacing(0, 1)

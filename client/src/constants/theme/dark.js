@@ -2,7 +2,7 @@ import { createMuiTheme } from "@material-ui/core";
 import defaultTheme from "./default";
 
 export default createMuiTheme({
-  ...defaultTheme, 
+  ...defaultTheme,
   palette: {
     type: "dark",
     primary: {
@@ -30,7 +30,7 @@ export default createMuiTheme({
       paper: "#242731"
     },
 
-    divider:  "rgba(255, 255, 255, 0.08)"
+    divider: "rgba(255, 255, 255, 0.08)"
   },
 
   overrides: {
@@ -55,6 +55,9 @@ export default createMuiTheme({
 
     MuiOutlinedInput: {
       input: {
+        "&::-webkit-calendar-picker-indicator": {
+          filter: "invert(1)"
+        },
         "&:-webkit-autofill": {
           WebkitBoxShadow: "0 0 0 1000px #343846 inset",
           WebkitTextFillColor: "#FFF"

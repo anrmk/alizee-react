@@ -83,7 +83,7 @@ function Main({
           <PrivateRoute path={Routes.POST_ID_ROUTE} component={Post} />
           <PrivateRoute path={Routes.MEET_ROUTE} component={Meeting} />
           <PrivateRoute path={Routes.CHAT_USERNAME_ROUTE} component={Chat} />
-          <PrivateRoute path={Routes.ROOM_ROUTE} component={CreateRoom} />
+          <PrivateRoute exact path={Routes.ROOM_ROUTE} component={CreateRoom} />
           <PrivateRoute path={Routes.ROOM_ID_DEFAULT_ROUTE} component={Room} />
           <PrivateRoute path={Routes.SUGESTED_PEOPLE} component={PeopleSuggested} />
           <PrivateRoute path={Routes.SETTINGS_TYPE_ROUTE} component={Settings} />

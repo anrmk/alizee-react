@@ -55,7 +55,7 @@ const useStyles = makeStyles(theme => ({
     alignSelf: "flex-end"
   },
   meetingContainer: {
-    height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
+    height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px - 32px)`,
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -74,7 +74,8 @@ const useStyles = makeStyles(theme => ({
   },
   meetingImageItem: {
     [theme.breakpoints.down('sm')]: {
-      order: 1
+      order: 1,
+      marginBottom: theme.spacing(2)
     }
   },
   meetingImagePaper: {
