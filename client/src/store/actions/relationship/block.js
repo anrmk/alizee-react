@@ -47,7 +47,7 @@ export function blockUser(api, userId, followId) {
 
       current.forEach(item => {
         if (item.id === followId) {
-          item.isFollowing = true
+          item.isFollow = true
         }
       })
 

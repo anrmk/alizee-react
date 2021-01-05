@@ -45,8 +45,7 @@ export default function suggestionReducer(
     case GET_PEOPLE_SUGGESTIONS_SUCCESS:{
       return {
         ...state,
-        ...action.payload,
-     //   people: action.payload.people.reduce((acc, curr) => [...acc, { ...curr, isFollowing: false }], []),
+        ...action.payload
       };
     }
     case GET_PEOPLE_SUGGESTIONS_FAILURE:{
@@ -87,10 +86,10 @@ export default function suggestionReducer(
     }
 
     case UNFOLLOW_PEOPLE_SUGGESTIONS_SUCCESS: {
-      const { userId, isFollowing } = action.payload.data;
+      const { userId, isFollow } = action.payload.data;
       const personIndex = state.people.findIndex((item) => item.id === userId);
       const people = [...state.people];
-      people[personIndex].isFollowing = isFollowing;
+      people[personIndex].isFollow = isFollow;
 
       return {
         ...state,

@@ -27,14 +27,7 @@ function CreateRoom() {
 
     navigator.mediaDevices
       .getUserMedia({
-        video: {
-          mandatory: {
-            minWidth: 208,
-            minHeight: 117,
-            maxWidth: 208,
-            maxHeight: 117
-          }
-        },
+        video: true,
         audio: true 
       })
       .then((stream) => {
@@ -47,7 +40,6 @@ function CreateRoom() {
   }, []);
 
   const joiningLiveStream = (data) => {
-
     console.log("joiningLiveStream", data);
     history.push(`/room/${roomId}`);
   };

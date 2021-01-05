@@ -14,7 +14,7 @@ function Cover(props) {
     isOwner,
     isOnline,
     isLive,
-    isFollowing,
+    isFollow,
     imageUrl,
     fullName,
     username,
@@ -59,7 +59,7 @@ function Cover(props) {
         <Box display="flex" flexWrap="noWrap" alignItems="flex-end">
           <Controls
             isOwner={isOwner}
-            isFollowing={isFollowing}
+            isFollow={isFollow}
 
             onMessageClick={onMessageClick}
             onFollowClick={onFollowClick}
@@ -75,7 +75,7 @@ Cover.propTypes = {
   isOwner: PropTypes.bool,
   isOnline: PropTypes.bool,
   isLive: PropTypes.bool,
-  isFollowing: PropTypes.bool,
+  isFollow: PropTypes.bool,
 
   imageUrl: PropTypes.string,
   fullName: PropTypes.string,
@@ -93,7 +93,7 @@ Cover.defaultProps = {
   isOwner: false,
   isOnline: false,
   isLive: false,
-  isFollowing: false,
+  isFollow: false,
 
   imageUrl: "",
   fullName: "",

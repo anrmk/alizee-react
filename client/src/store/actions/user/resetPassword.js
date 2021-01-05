@@ -1,5 +1,5 @@
 import { generateUrl } from "../../../helpers/functions";
-import { USER_TOKEN } from '../../../constants/user';
+import { USER_TOKEN } from "../../../constants/user";
 
 export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";
 export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
@@ -10,9 +10,9 @@ function requestResetPassword() {
     type: RESET_PASSWORD_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: ""
-    }
-  }
+      errorMessage: "",
+    },
+  };
 }
 
 function receiveResetPassword() {
@@ -21,9 +21,9 @@ function receiveResetPassword() {
     payload: {
       isFetching: false,
       passwordUpdated: true,
-      errorMessage: ""
-    }
-  }
+      errorMessage: "",
+    },
+  };
 }
 
 function errorResetPassword(message) {
@@ -31,23 +31,23 @@ function errorResetPassword(message) {
     type: RESET_PASSWORD_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message
-    }
-  }
+      errorMessage: message,
+    },
+  };
 }
 
 export function resetPassword(api, opts) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(requestResetPassword());
 
     const url = generateUrl("updatePassword");
     try {
       const { data } = await api
         .setMethod("POST")
-        .setParams({ 
+        .setParams({
           token: opts?.token,
           email: opts?.email,
-          newPassword: opts?.password
+          newPassword: opts?.password,
         })
         .query(url);
 
@@ -56,9 +56,8 @@ export function resetPassword(api, opts) {
       }
 
       dispatch(receiveResetPassword());
-    } catch(e) {
-      console.log("HERE ERROR", e.message)
+    } catch (e) {
       dispatch(errorResetPassword(e.message));
     }
-  }
+  };
 }

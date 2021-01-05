@@ -43,12 +43,11 @@ export function deleteFollow(api, userId) {
 
     try {
       const url = generateUrl("deleteFollow");
-
       await api.setMethod("DELETE").setParams({ id: userId }).query(url);
 
       const people = [...getState().suggestion.people.data];
       const personIndex = people.findIndex(item => item.id === userId);
-      people[personIndex]["isFollowing"] = false;
+      people[personIndex]["isFollow"] = false;
 
       dispatch(receiveDeleteFollow(people));
     } catch (e) {

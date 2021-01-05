@@ -29,6 +29,11 @@ export default function NavMenu({
     onClose && onClose();
   };
 
+  const handleMenuItemClick = (url) => {
+    history.push(url);
+    onClose && onClose();
+  }
+
   return (
     <Menu
       id={id}
@@ -40,21 +45,21 @@ export default function NavMenu({
       open={open}
       onClose={onClose}
     >
-      <MenuItem onClick={() => history.push(PROFILE_ROUTE(username))}>
+      <MenuItem onClick={() => handleMenuItemClick(PROFILE_ROUTE(username))}>
         <ListItemIcon>
           <AccountIcon />
         </ListItemIcon>
         <ListItemText primary={t("NavbarMenuItemProfileText")} />
       </MenuItem>
 
-      <MenuItem onClick={() => history.push(SEARCH_ROUTE)}>
+      <MenuItem onClick={() => handleMenuItemClick(SEARCH_ROUTE)}>
         <ListItemIcon>
           <BookmarkBorderIcon />
         </ListItemIcon>
         <ListItemText primary={t("NavbarMenuItemPostSavedText")} />
       </MenuItem>
 
-      <MenuItem onClick={() => history.push(SETTINGS_EDIT_PROFILE_ROUTE)}>
+      <MenuItem onClick={() => handleMenuItemClick(SETTINGS_EDIT_PROFILE_ROUTE)}>
         <ListItemIcon>
           <SettingsIcon />
         </ListItemIcon>

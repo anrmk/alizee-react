@@ -47,7 +47,7 @@ export function createFollow(api, userId) {
 
       const people = [...getState().suggestion.people.data];
       const personIndex = people.findIndex(item => item.id === userId);
-      people[personIndex]["isFollowing"] = true;
+      people[personIndex]["isFollow"] = true;
 
       dispatch(receiveCreateFollow(people));
     } catch (e) {

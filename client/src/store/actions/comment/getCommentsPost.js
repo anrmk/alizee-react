@@ -25,7 +25,7 @@ function receiveCommentsPost(comments, total, start, hasMore) {
       hasMore,
       offset: getOffset(start, total, COMMENTS_POST_OFFSET),
       count: total,
-      data: comments || []
+      data: comments || [],
     },
   };
 }
@@ -49,7 +49,7 @@ function successResetComments() {
       hasMore: false,
       offset: POSTS_DEFAULT_OFFSET,
       count: 0,
-      data: []
+      data: [],
     },
   };
 }
@@ -62,8 +62,6 @@ export function getCommentsPost(api, opts) {
       const url = generateUrl("getCommentsPost");
       const currentOffset = getState().comment.offset;
 
-      console.log("GEt comments post", opts)
-
       const { data } = await api
         .setMethod("GET")
         .setParams({
@@ -74,21 +72,23 @@ export function getCommentsPost(api, opts) {
           type: opts.type,
         })
         .query(url);
-      
+
       const transformedComments = [];
-      data.data.forEach(item => {
+      data.data.forEach((item) => {
         transformedComments.push({
           ...copyFlatObjectWithIgnore(item, ["text"]),
-          message: item.text
-        })
-      })
+          message: item.text,
+        });
+      });
 
-      dispatch(receiveCommentsPost(
-          [...transformedComments.reverse(), ...getState().comment.data], 
-          data.recordsTotal, 
-          currentOffset, 
+      dispatch(
+        receiveCommentsPost(
+          [...transformedComments.reverse(), ...getState().comment.data],
+          data.recordsTotal,
+          currentOffset,
           !!transformedComments.length
-        ));
+        )
+      );
     } catch (e) {
       dispatch(errorCommentsPost("Error: something went wrong"));
     }
@@ -96,5 +96,5 @@ export function getCommentsPost(api, opts) {
 }
 
 export function resetCommentsPost() {
-  return dispatch => dispatch(successResetComments());
+  return (dispatch) => dispatch(successResetComments());
 }

@@ -20,9 +20,8 @@ function receiveGetFollowers(followersData) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      followers: followersData || [],
-      current: followersData || []
-    },
+      followers: followersData || []
+        },
   };
 }
 
@@ -48,10 +47,7 @@ export function getFollowers(api, userId, status) {
         .query(url);
 
       data.forEach((item) => {
-        item.avatarUrl = generateFileUrl(
-          process.env.REACT_APP_DOMAIN,
-          item.avatarUrl
-        )
+        item.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, item.avatarUrl);
       });
 
       dispatch(receiveGetFollowers(data));

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from "react";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -35,24 +34,24 @@ function Followers(props) {
     }
   }, [user.id]);
 
-  const handleFollowClick = (followId, userId, followers, loading) => {
-    if (loading) return;
+  const handleFollowClick = (item, isLoading) => {
+    if (isLoading) return;
 
-    const follower = followers.find((item) => item.id === followId);
-    if (follower) {
-      follower.isFollowing ? deleteFollow(apiClient, userId, followId) : createFollow(apiClient, userId, followId);
-    }
+    item.isFollow ? deleteFollow(apiClient, item.followId) : createFollow(apiClient, item.followId);
   };
 
   return (
     <Container maxWidth="sm">
       <Box my={4}>
-        <Typography variant="subtitle1">Followers</Typography>
+        <Box display="flex" flexWrap="noWrap" justifyContent="space-between">
+          <Typography variant="subtitle1">Followers</Typography>
+          <Typography>[{follower?.data.length}]</Typography>
+        </Box>
         <Divider />
         <RelationshipList
-          items={follower.data}
-          currentUserId={me.id}
-          onFollowClick={(id, userId) => handleFollowClick(id, userId, follower.data, follower.isFetching)}
+          items={follower?.data}
+          currentUserName={me.userName}
+          onFollowClick={(item) => handleFollowClick(item, follower.isFetching)}
         />
       </Box>
     </Container>
@@ -62,14 +61,14 @@ function Followers(props) {
 function mapStateToProps(state) {
   return {
     me: {
-      id: state.signIn?.userInfo?.id,
+      userName: state.signIn?.userInfo?.userName,
     },
     user: {
       id: state.user.data?.id,
     },
     follower: {
       isFetching: state.relationship.isFetching,
-      data: state.relationship?.current,
+      data: state.relationship?.followers,
       errorMessage: state.relationship.errorMessage,
     },
   };
@@ -79,31 +78,9 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchUser: (api, username) => dispatch(userActions.getUser(api, username)),
     fetchFollowers: (api, userId) => dispatch(relationshipActions.getFollowers(api, userId)),
-    createFollow: (api, userId, followId) => dispatch(relationshipActions.createFollow(api, userId, followId)),
-    deleteFollow: (api, userId, followId) => dispatch(relationshipActions.deleteFollow(api, userId, followId)),
+    createFollow: (api, userId) => dispatch(relationshipActions.createFollow(api, userId)),
+    deleteFollow: (api, userId) => dispatch(relationshipActions.deleteFollow(api, userId)),
   };
 }
-
-Followers.propTypes = {
-  me: PropTypes.any,
-  user: PropTypes.any,
-  follower: PropTypes.any,
-
-  fetchUser: PropTypes.func,
-  fetchFollowers: PropTypes.func,
-  createFollow: PropTypes.func,
-  deleteFollow: PropTypes.func,
-};
-
-Followers.defaultProps = {
-  me: {},
-  user: {},
-  follower: {},
-
-  fetchUser: () => {},
-  fetchFollowers: () => {},
-  createFollow: () => {},
-  deleteFollow: () => {},
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Followers);

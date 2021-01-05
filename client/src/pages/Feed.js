@@ -115,13 +115,11 @@ function Feed(props) {
     history.push(`${POST_ROUTE}/${id}`);
   };
 
-  const handleFollowPeopleClick = (id, isLoading) => {
-    if (!isLoading) {
-      var follower = people.data.find((u) => u.id === id);
-      if (follower) {
-        follower.isFollowing ? deleteFollow(apiClient, id) : createFollow(apiClient, id);
-      }
+  const handleFollowPeopleClick = (item, isLoading) => {
+    if (isLoading) {
+      return;
     }
+    item.isFollow ? deleteFollow(apiClient, item.id) : createFollow(apiClient, item.id);
   };
 
   const handleBuyClick = async ({ id, amount }, isLoading) => {
@@ -182,7 +180,7 @@ function Feed(props) {
                       See All
                     </Link>
                   </Typography>
-                  <RelationshipList items={people.data} onFollowClick={handleFollowPeopleClick} />
+                  <RelationshipList items={people.data} onFollowClick={(item) => handleFollowPeopleClick(item, people.isFetching)} />
                 </Grid>)}
                 
                 <Grid item>

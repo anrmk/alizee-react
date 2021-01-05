@@ -35,7 +35,6 @@ export default function CreatePost({ id, user, onSubmit }) {
 
   const handleFormDataChange = (e) => {
     var target = e.currentTarget;
-    console.log("target", target)
     switch (target.type) {
       case "button":
         setFormData({

@@ -1,3 +1,4 @@
+
 export {
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
@@ -33,3 +34,13 @@ export {
 
   getUserStatistics
 } from "./getUserStatistics";
+
+export {
+  ADD_FOLLOWER_SUCCESS, 
+  addFollower,
+} from "./addFollower";
+
+export {
+  REMOVE_FOLLOWER_SUCCESS,
+  removeFollower,
+} from "./removeFollower";

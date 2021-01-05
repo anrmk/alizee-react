@@ -17,13 +17,12 @@ function PeopleSuggested(props) {
     (async () =>  await getPeople(apiClient))();
   }, []);
 
-  const handleFollowPeople = (id, userId, isLoading) => {
-    if (!isLoading) {
-      var follower = people.find((u) => u.id === id);
-      if (follower) {
-        follower.isFollowing ? deleteFollow(apiClient, id) : createFollow(apiClient, id);
-      }
+  const handleFollowPeople = (item, isLoading) => {
+    if(isLoading) {
+      return;
     }
+
+    item.isFollow ? deleteFollow(apiClient, item.id) : createFollow(apiClient, item.id);
   };
 
   return (
@@ -31,7 +30,8 @@ function PeopleSuggested(props) {
       <Box my={4}>
         <Typography variant="subtitle1">Suggestions For You</Typography>
         <Divider />
-        <RelationshipList items={people} onFollowClick={(id, userId) => handleFollowPeople(id, userId, isFetching)} />
+        <RelationshipList items={people} 
+          onFollowClick={(item) => handleFollowPeople(item, isFetching)} />
       </Box>
     </Container>
   );
@@ -48,8 +48,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getPeople: (api) => dispatch(actionSuggestion.getPeople(api)),
-    createFollow: (api, id) => dispatch(actionSuggestion.createFollow(api, id)),
-    deleteFollow: (api, id) => dispatch(actionSuggestion.deleteFollow(api, id)),
+    createFollow: (api, userId) => dispatch(actionSuggestion.createFollow(api, userId)),
+    deleteFollow: (api, userId) => dispatch(actionSuggestion.deleteFollow(api, userId)),
   };
 }
 

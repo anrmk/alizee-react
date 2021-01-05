@@ -1,4 +1,5 @@
 import { generateUrl } from "../../../helpers/functions";
+import { addFollower } from "../user";
 
 export const CREATE_FOLLOW_REQUEST = "CREATE_FOLLOW_REQUEST";
 export const CREATE_FOLLOW_SUCCESS = "CREATE_FOLLOW_SUCCESS";
@@ -14,13 +15,14 @@ function requestCreateFollow() {
   };
 }
 
-function receiveCreateFollow(followers) {
+function receiveCreateFollow(followersData, followingsData) {
   return {
     type: CREATE_FOLLOW_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
-      followers: followers || [],
+      followers: followersData || [],
+      followings: followingsData || [],
     },
   };
 }
@@ -41,16 +43,30 @@ export function createFollow(api, userId) {
 
     try {
       const url = generateUrl("createFollow");
-      await api.setParams({ id: userId }).query(url);
+      var { data } = await api.setParams({ id: userId }).query(url);
 
-      const people = [...getState().relationship.followers];
-      const personIndex = people.findIndex(item => item.userId === userId);
-      people[personIndex]["isFollowing"] = true;
+      const peopleFollowers = [...getState().relationship.followers];
+      const personIndex = peopleFollowers.findIndex((item) => item.followId === userId);
 
-      dispatch(receiveCreateFollow(people));
+      if (personIndex !== -1) {
+        peopleFollowers[personIndex]["isFollow"] = true;
+      } else {
+        peopleFollowers.push(data);
+      }
+
+      const peopleFollowings = [...getState().relationship.followings];
+      const followingIndex = peopleFollowings.findIndex((item) => item.userId === userId);
+      if (followingIndex !== -1) {
+        peopleFollowings[followingIndex]["isFollow"] = true;
+      } else {
+        peopleFollowings.push(data);
+      }
+
+      dispatch(addFollower());
+
+      dispatch(receiveCreateFollow(peopleFollowers, peopleFollowings));
     } catch {
       return dispatch(errorCreateFollow("When follow was creating then something went wrong"));
     }
   };
 }
-

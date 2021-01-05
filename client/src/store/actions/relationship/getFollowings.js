@@ -24,7 +24,6 @@ function receiveGetFollowings(followingsData) {
       isFetching: false,
       errorMessage: "",
       followings: followingsData || [],
-      current: followingsData || []
     },
   };
 }
@@ -61,17 +60,11 @@ export function getFollowings(api, userId) {
         .setParams({ userId })
         .query(url);
 
-      const transformedData = data.map((item) => ({
-          id: item.id,
-          userId: item.userId,
-          username: item.userName,
-          avatarUrl: generateFileUrl(
-              process.env.REACT_APP_DOMAIN,
-              item.avatarUrl
-            )
-        }));
+        data.map((item) => {
+          item.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, item.avatarUrl);
+        });
       
-      dispatch(receiveGetFollowings(transformedData));
+      dispatch(receiveGetFollowings(data));
     } catch {
       dispatch(errorGetFollowings("Error: GetFollowings"));
     }

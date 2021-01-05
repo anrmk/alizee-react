@@ -15,13 +15,11 @@ import Avatar from "../Avatar";
 import useStyles from "./styles";
 
 function RelationshipItem({
-  id,
-  userId,
   avatarUrl,
-  username,
-  isFollowing,
-  online,
-  me,
+  title,
+  subtitle,
+  isFollow,
+  isMe,
 
   onFollowClick,
 }) {
@@ -29,35 +27,28 @@ function RelationshipItem({
   const { t } = useTranslation();
   const classes = useStyles();
 
-  const handleFollowClick = (e, id, uId) => {
-    e.preventDefault();
-    onFollowClick && onFollowClick(id, uId);
-  };
-
   return (
     <ListItem button className={classes.item}>
       <ListItemAvatar>
-        <Avatar
-          src={avatarUrl}
-          online={false}
-        />
+        <Avatar src={avatarUrl} />
       </ListItemAvatar>
       <ListItemText
-        primary={username}
-        secondary={t("SecondTextFollowerItem")}
+        primary={title}
+        secondary={subtitle}
         onClick={(e) => {
-          history.push(PROFILE_ROUTE(username));
+          history.push(PROFILE_ROUTE(subtitle));
         }}
       />
-      {!me && (
+
+      {!isMe && (
         <ListItemSecondaryAction>
           <IconButton
             edge="end"
-            color={isFollowing ? "primary" : "default"}
-            aria-label={isFollowing ? t("FollowingBtnTextFollowerItem") : t("FollowerBtnTextFollowerItem")}
-            onClick={(e) => handleFollowClick(e, id, userId)}
+            color={isFollow ? "primary" : "default"}
+            aria-label={isFollow ? t("FollowingBtnTextFollowerItem") : t("FollowerBtnTextFollowerItem")}
+            onClick={onFollowClick}
           >
-            {isFollowing ? <CommentIcon /> : <PowerOffIcon />}
+            {isFollow ? <CommentIcon /> : <PowerOffIcon />}
           </IconButton>
         </ListItemSecondaryAction>
       )}
@@ -66,25 +57,21 @@ function RelationshipItem({
 }
 
 RelationshipItem.propTypes = {
-  id: PropTypes.string,
-  userId: PropTypes.string,
   avatarUrl: PropTypes.string,
-  username: PropTypes.string,
-  online: PropTypes.bool,
-  isFollowing: PropTypes.bool,
-  me: PropTypes.bool,
+  title: PropTypes.string,
+  subtitle: PropTypes.string,
+  isFollow: PropTypes.bool,
+  isMe: PropTypes.bool,
 
   onFollowClick: PropTypes.func,
 };
 
 RelationshipItem.defaultProps = {
-  id: "",
-  userId: "",
   avatarUrl: "",
-  username: "",
-  online: false,
-  isFollowing: false,
-  me: false,
+  title: "",
+  subtitle: "",
+  isFollow: false,
+  isMe: false,
 
   onFollowClick: undefined,
 };

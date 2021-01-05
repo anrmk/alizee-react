@@ -56,7 +56,6 @@ export function buyPost(api, id) {
       await api.setParams({ id }).query(url);
 
       await dispatch(fetchPost(api, id));
-      console.log("buyPost", id);
 
       const currentPostState = getState().posts.currentPost;
       //currentPostState.isPurchased = currentPostState.amount > 0 && currentPost

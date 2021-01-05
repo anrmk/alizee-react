@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from "react";
-import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -16,13 +15,8 @@ function Followings(props) {
 
   const apiClient = useContext(ApiContext);
 
-  const { user, me, follower } = props;
-  const { 
-    fetchUser, 
-    fetchFollowings,
-    createFollow,
-    deleteFollow
-  } = props;
+  const { user, me, following } = props;
+  const { fetchUser, fetchFollowings, createFollow, deleteFollow } = props;
 
   useEffect(() => {
     if (username) {
@@ -30,7 +24,7 @@ function Followings(props) {
         await fetchUser(apiClient, username);
       })();
     }
-  }, [username])
+  }, [username]);
 
   useEffect(() => {
     if (user.id) {
@@ -38,28 +32,26 @@ function Followings(props) {
         await fetchFollowings(apiClient, user.id);
       })();
     }
-  }, [user.id])
+  }, [user.id]);
 
-  const handleFollowClick = (followId, userId, followers, loading) => {
-    if (loading) return;
+  const handleFollowClick = (item, isLoading) => {
+    if (isLoading) return;
 
-    const follower = followers.find(item => item.id === followId);
-    if (follower) {
-      follower.isFollowing ? 
-        deleteFollow(apiClient, userId, followId) :
-        createFollow(apiClient, userId, followId);
-    }
-  } 
+    item.isFollow ? deleteFollow(apiClient, item.userId, item.followId) : createFollow(apiClient, item.userId, item.followId);
+  };
 
   return (
     <Container maxWidth="sm">
       <Box my={4}>
-        <Typography variant="subtitle1">Followings</Typography>
+        <Box display="flex" flexWrap="noWrap" justifyContent="space-between">
+          <Typography variant="subtitle1">Following</Typography>
+          <Typography variant="subtitle1">[{following?.data.length}]</Typography>
+        </Box>
         <Divider />
         <RelationshipList
-          items={follower.data}
-          currentUserId={me.id}
-          onFollowClick={(id, userId) => handleFollowClick(id, userId, follower.data, follower.isFetching)}
+          items={following?.data}
+          currentUserName={me.userName}
+          onFollowClick={(item) => handleFollowClick(item, following.isFetching)}
         />
       </Box>
     </Container>
@@ -69,16 +61,16 @@ function Followings(props) {
 function mapStateToProps(state) {
   return {
     me: {
-      id: state.signIn?.userInfo?.id
+      userName: state.signIn?.userInfo.userName
     },
     user: {
-      id: state.user.data?.id
+      id: state.user.data?.id,
     },
-    follower: {
+    following: {
       isFetching: state.relationship.isFetching,
       data: state.relationship?.followings,
-      errorMessage: state.relationship.errorMessage
-    }
+      errorMessage: state.relationship.errorMessage,
+    },
   };
 }
 
@@ -87,30 +79,8 @@ function mapDispatchToProps(dispatch) {
     fetchUser: (api, username) => dispatch(userActions.getUser(api, username)),
     fetchFollowings: (api, userId) => dispatch(relationshipActions.getFollowings(api, userId)),
     createFollow: (api, userId, followId) => dispatch(relationshipActions.createFollow(api, userId, followId)),
-    deleteFollow: (api, userId, followId) => dispatch(relationshipActions.deleteFollow(api, userId, followId))
+    deleteFollow: (api, userId, followId) => dispatch(relationshipActions.deleteFollow(api, userId, followId)),
   };
 }
-
-Followings.propTypes = {
-  me: PropTypes.any,
-  user: PropTypes.any,
-  follower: PropTypes.any,
-
-  fetchUser: PropTypes.func,
-  fetchFollowings:  PropTypes.func,
-  createFollow: PropTypes.func,
-  deleteFollow: PropTypes.func
-}
-
-Followings.defaultProps = {
-  me: {},
-  user: {},
-  follower: {},
-
-  fetchUser: () => {},
-  fetchFollowings:  () => {},
-  createFollow: () => {},
-  deleteFollow: () => {}
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Followings);

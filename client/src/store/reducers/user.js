@@ -18,6 +18,9 @@ import {
   GET_USER_STATISTICS_REQUEST,
   GET_USER_STATISTICS_SUCCESS,
   GET_USER_STATISTICS_FAILURE,
+
+  ADD_FOLLOWER_SUCCESS,
+  REMOVE_FOLLOWER_SUCCESS
 } from "../actions/user";
 
 export default function user(
@@ -105,6 +108,17 @@ export default function user(
         ...action.payload,
       };
     case GET_USER_STATISTICS_FAILURE:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case ADD_FOLLOWER_SUCCESS:
+      return {
+        ...state,
+        ...action.payload,
+      };
+
+    case REMOVE_FOLLOWER_SUCCESS:
       return {
         ...state,
         ...action.payload,

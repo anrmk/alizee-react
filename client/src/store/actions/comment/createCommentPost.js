@@ -55,7 +55,6 @@ export function createCommentPost(api, opts) {
       };
 
       const comments = [...getState().comment.data, transformedComment];
-      console.log("COMMENTS", comments)
 
       dispatch(receiveCreateCommentPost(comments));
     } catch (e) {

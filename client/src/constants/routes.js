@@ -6,7 +6,7 @@ export const POST_ID_ROUTE = "/posts/:id";
 export const MEET_ROUTE = "/meet";
 //export const CHAT_ROUTE = "/chat";
 export const CHAT_ROUTE = username => `/chat/${username}`;
-export const CHAT_USERNAME_ROUTE = '/chat/:username';
+export const CHAT_USERNAME_ROUTE = '/chat/:username?';
 
 export const ROOM_ROUTE = "/room";
 export const ROOM_ID_DEFAULT_ROUTE = "/room/:roomId";

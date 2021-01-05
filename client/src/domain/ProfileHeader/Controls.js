@@ -9,7 +9,7 @@ import FollowIcon from "@material-ui/icons/PersonAddOutlined";
 import UnfollowIcon from "@material-ui/icons/PersonAddDisabledOutlined";
 
 function Controls(props) {
-  const { isOwner, isFollowing } = props;
+  const { isOwner, isFollow } = props;
   const { onMessageClick, onFollowClick, onSendGiftClick } = props;
 
   return (
@@ -25,8 +25,8 @@ function Controls(props) {
         </IconButton>
       </Tooltip>
       {!isOwner && (
-        <Tooltip title={isFollowing ? "Unfollow" : "Follow"}>
-          <IconButton onClick={onFollowClick}>{isFollowing ? <UnfollowIcon /> : <FollowIcon />}</IconButton>
+        <Tooltip title={isFollow ? "Unfollow" : "Follow"}>
+          <IconButton color={isFollow ? "primary": "default"} onClick={onFollowClick}>{isFollow ? <UnfollowIcon /> : <FollowIcon />}</IconButton>
         </Tooltip>
       )}
     </>
@@ -35,7 +35,7 @@ function Controls(props) {
 
 Controls.propTypes = {
   isOwner: PropTypes.bool,
-  isFollowing: PropTypes.bool,
+  isFollow: PropTypes.bool,
 
   onSendGiftClick: PropTypes.func,
   onMessageClick: PropTypes.func,
@@ -44,7 +44,7 @@ Controls.propTypes = {
 
 Controls.defaultProps = {
   isOwner: false,
-  isFollowing: false,
+  isFollow: false,
 
   onSendGiftClick: undefined,
   onMessageClick: undefined,
