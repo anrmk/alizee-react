@@ -9,7 +9,7 @@ const SIZES = {
   small: "25px",
   medium: "40px",
   large: "65px",
-  extraLarge: "98px"
+  extraLarge: "150px"
 };
 
 const BORDER_COLORS = {
@@ -21,8 +21,8 @@ const BORDER_COLORS = {
 
 const getBorder = (width, color) => {
   if (!color) return "none";
-  return `rgb(0, 0, 0, .8) 0px 0px 1px 2px, 
-          0px 0px 0px ${width ? width : "4px"} ${BORDER_COLORS[color] ? BORDER_COLORS[color] : BORDER_COLORS["blue"]}`;
+  return `
+          0px 0px 0px ${width ? width : "2px"} ${BORDER_COLORS[color] ? BORDER_COLORS[color] : BORDER_COLORS["blue"]}`;
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -30,6 +30,8 @@ const useStyles = makeStyles((theme) => ({
     width: ({ size }) => (SIZES[size] ? SIZES[size] : SIZES["medium"]),
     height: ({ size }) => (SIZES[size] ? SIZES[size] : SIZES["medium"]),
     boxShadow: ({ borderWidth, borderColor }) => getBorder(borderWidth, borderColor),
+    backgroundColor:  theme.palette.background.default,
+    padding: theme.spacing(0.5),
     overflow: "visible",
     "& > img.MuiAvatar-img": {
       borderRadius: "50%",
