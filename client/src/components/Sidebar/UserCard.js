@@ -38,7 +38,7 @@ function UserCard(props) {
       followingCount={followingCount}/>
 
       <BottomNavigation showLabels className={classes.navigation} onChange={handleNavigationChange}>
-        <BottomNavigationAction className="success" value="goLive" label="Go live" icon={<LiveTvIcon />} />
+        <BottomNavigationAction color="success" value="goLive" label="Go live" icon={<LiveTvIcon />} />
         <BottomNavigationAction className="warning" value="top" label="Top posts" icon={<GradeIcon />} />
         <BottomNavigationAction className="danger" value="rewards" label="Rewards" icon={<GrainIcon />} />
       </BottomNavigation>

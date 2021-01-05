@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 
 import { generateUrl, generateFileUrl, getOffset } from "../../../helpers/functions";
-import { POSTS_OFFSET, POST_LENGTH } from "../../../constants/feed";
+import { POSTS_OFFSET, POSTS_LENGTH } from "../../../constants/feed";
 
 export const GET_POSTS_REQUEST = "GET_POSTS_REQUEST";
 export const GET_POSTS_SUCCESS = "GET_POSTS_SUCCESS";
@@ -70,7 +70,8 @@ export function getPosts(api, opts) {
         .setParams({
           userId: opts.userId,
           start: currentOffset,
-          length: opts.length
+          length: POSTS_LENGTH,
+          tagged: opts.tagged || false,
         })
         .query(url);
 
@@ -86,9 +87,13 @@ export function getPosts(api, opts) {
           media.thumbnailUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, media.thumbnailUrl);
         });
       });
-
       dispatch(
-        receiveGetPosts([...getState().posts.data, ...data.data], data.recordsTotal, currentOffset, !!data.data.length)
+        receiveGetPosts(
+          [...getState().posts.data, ...data.data],
+          data.recordsTotal,
+          currentOffset,
+          currentOffset + data.data.length < data.recordsTotal
+        )
       );
     } catch (e) {
       dispatch(errorGetPosts("Error: something went wrong:", e));

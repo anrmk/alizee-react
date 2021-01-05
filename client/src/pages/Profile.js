@@ -12,7 +12,6 @@ import * as postActions from "../store/actions/post";
 import * as relationshipActions from "../store/actions/relationship";
 import * as userActions from "../store/actions/user";
 
-import { POSTS_LENGTH, POST_TYPE } from "../constants/profile";
 import {
   HOME_ROUTE,
   SETTINGS_ROUTE,
@@ -22,12 +21,6 @@ import {
   FOLLOWERS_ROUTE,
   FOLLOWINGS_ROUTE,
 } from "../constants/routes";
-
-const POST_TABS = {
-  POSTS: 0,
-  FAVORITES: 1,
-  TAGGED: 2,
-};
 
 const useStyles = makeStyles((theme) => ({
   statistics: {
@@ -45,12 +38,11 @@ function Profile(props) {
   const apiClient = useContext(ApiContext);
   const history = useHistory();
   const [postSettings, setPostSettings] = useState({
-    index: POST_TABS.POSTS,
-    postType: POST_TYPE.DEFAULT,
+    index: 0,
     tagged: false,
   });
 
-  const { me, user, post, feeling } = props;
+  const { me, user, post } = props;
   const { resetPosts, fetchUser, fetchPosts, getFavoritePosts } = props;
 
   const { createFollow, deleteFollow } = props;
@@ -63,21 +55,12 @@ function Profile(props) {
   }, [username]);
 
   useEffect(() => {
-    resetPosts();
     if (user.id) {
-      (async () => {
-        if (postSettings.postType === POST_TYPE.DEFAULT) {
-          await fetchPosts(apiClient, {
-            userId: user.id,
-            length: POSTS_LENGTH,
-            tagged: postSettings.tagged,
-          });
-        } else if (postSettings.postType === POST_TYPE.FAVORITES) {
-          await getFavoritePosts(apiClient, { length: POSTS_LENGTH });
-        }
-      })();
+      resetPosts();
+
+      handleFetchPosts();
     }
-  }, [postSettings, user?.id]);
+  }, [user, postSettings]);
 
   if (url.includes(SETTINGS_ROUTE)) {
     return <Redirect to={SETTINGS_EDIT_PROFILE_ROUTE} />;
@@ -87,13 +70,19 @@ function Profile(props) {
     return <Redirect exact to={HOME_ROUTE} />;
   }
 
-  const handleFetchMore = async () => {
-    await fetchPosts(apiClient, {
-      userId: user.id,
-      length: POSTS_LENGTH,
-      type: postSettings.postType,
-      tagged: postSettings.tagged,
-    });
+  const handleFetchPosts = async () => {
+    if (post.isFetching) {
+      return;
+    }
+
+    if (postSettings.index === 2) {
+      await getFavoritePosts(apiClient);
+    } else {
+      await fetchPosts(apiClient, {
+        userId: user.id,
+        tagged: postSettings.tagged,
+      });
+    }
   };
 
   const handleItemClick = (id) => {
@@ -101,33 +90,10 @@ function Profile(props) {
   };
 
   const handleTabChange = (index) => {
-    switch (index) {
-      case POST_TABS.POSTS: {
-        setPostSettings({
-          index: POST_TABS.POSTS,
-          postType: POST_TYPE.DEFAULT,
-          tagged: false,
-        });
-        break;
-      }
-      case POST_TABS.FAVORITES: {
-        setPostSettings({
-          index: POST_TABS.FAVORITES,
-          postType: POST_TYPE.FAVORITES,
-          tagged: false,
-        });
-        break;
-      }
-      case POST_TABS.TAGGED: {
-        setPostSettings({
-          index: POST_TABS.TAGGED,
-          postType: POST_TYPE.DEFAULT,
-          tagged: true,
-        });
-      }
-      default:
-        return;
-    }
+    setPostSettings({
+      index,
+      tagged: index === 1 || false,
+    });
   };
 
   const handleCoverEdit = (id) => {
@@ -164,7 +130,7 @@ function Profile(props) {
           username={user.username}
           fullName={user.name}
           membership={user.membership}
-          feeling={feeling.data}
+          feeling={user.feeling}
           onPostCreate={() => {}}
           onFollowClick={() => handlePeopleFollow(user.id)}
           onEditCover={handleCoverEdit}
@@ -175,8 +141,14 @@ function Profile(props) {
         <Typography variant="body2">{user.bio}</Typography>
 
         <Box className={classes.statistics}>
-          <Button disabled={!user.followings} onClick={() => handleFollowingClick(user.username)}>{`${user.followings} following`}</Button>
-          <Button disabled={!user.followers} onClick={() => handleFollowersClick(user.username)}>{`${user.followers} followers`}</Button>
+          <Button
+            disabled={!user.followingsCount}
+            onClick={() => handleFollowingClick(user.username)}
+          >{`${user.followingsCount} following`}</Button>
+          <Button
+            disabled={!user.followersCount}
+            onClick={() => handleFollowersClick(user.username)}
+          >{`${user.followersCount} followers`}</Button>
         </Box>
 
         <Divider />
@@ -186,7 +158,8 @@ function Profile(props) {
           tabIndex={postSettings.index}
           items={post.data}
           hasMore={post.hasMore}
-          onFetchMore={handleFetchMore}
+          disabled={post.isFetching}
+          onFetchMore={handleFetchPosts}
           onItemClick={handleItemClick}
           onTabChange={handleTabChange}
         />
@@ -201,30 +174,13 @@ function mapStateToProps(state) {
       id: state.signIn?.userInfo?.id,
       username: state.signIn?.userInfo?.userName,
     },
-    user: {
-      id: state.user.data?.id,
-      username: state.user.data?.userName,
-      name: state.user.data?.name,
-      avatarUrl: state.user.data?.avatarUrl,
-      coverUrl: state.user.data?.coverUrl,
-      bio: state.user.data?.bio,
-      sites: state.user.data?.sites,
-      errorMessage: state.user.errorMessage,
-      offlineDate: state.user.data?.offlineDate,
-      membership: state.user.data?.membership,
-      followers: state.user.data?.followersCount,
-      followings: state.user.data?.followingsCount,
-      isFollow: state.user.data?.isFollow,
-    },
+    user: state.user.data,
     post: {
       count: state.posts.count,
       isFetching: state.posts.isFetching,
       data: postActions.getGridGalleryPosts(state),
       errorMessage: state.posts.errorMessage,
       hasMore: state.posts.hasMore,
-    },
-    feeling: {
-      data: state.posts?.currentFeeling,
     },
   };
 }

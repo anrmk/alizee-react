@@ -1,5 +1,5 @@
 import { generateUrl, generateFileUrl, getOffset } from "../../../helpers/functions";
-import { POSTS_OFFSET } from "../../../constants/feed";
+import { POSTS_OFFSET, POSTS_LENGTH } from "../../../constants/feed";
 
 export const GET_FAVORITE_POSTS_REQUEST = "GET_FAVORITE_POSTS_REQUEST";
 export const GET_FAVORITE_POSTS_SUCCESS = "GET_FAVORITE_POSTS_SUCCESS";
@@ -53,7 +53,7 @@ export function getFavoritePosts(api, opts) {
         .setMethod("GET")
         .setParams({
           start: currentOffset,
-          length: opts.length,
+          length: POSTS_LENGTH,
         })
         .query(url);
 
@@ -71,7 +71,7 @@ export function getFavoritePosts(api, opts) {
       });
 
       dispatch(
-        receiveGetFavoritePosts([...getState().posts.data, ...data.data], data.recordsTotal, currentOffset, !!data.data.length)
+        receiveGetFavoritePosts([...getState().posts.data, ...data.data], data.recordsTotal, currentOffset, currentOffset + data.data.length < data.recordsTotal)
       );
     } catch (e) {
       dispatch(errorGetFavoritePosts("Error: something went wrong:", e));

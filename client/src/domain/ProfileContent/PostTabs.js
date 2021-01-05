@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 
@@ -10,9 +10,12 @@ import TaggedIcon from "@material-ui/icons/LabelOutlined";
 
 import useStyles from "./styles";
 
-function PostTabs({ isOwner, index, children, onTabChange }) {
+function PostTabs(props) {
   const classes = useStyles();
   const { t } = useTranslation();
+
+  const { isOwner, index, children, disabled } = props;
+  const {onTabChange} = props;
 
   const handleChange = (e, newValue) => {
     onTabChange && onTabChange(newValue);
@@ -20,17 +23,10 @@ function PostTabs({ isOwner, index, children, onTabChange }) {
 
   return (
     <>
-      <Tabs
-        className={classes.tabs}
-        centered
-        value={index}
-        onChange={handleChange}
-        indicatorColor="secondary"
-        textColor="secondary"
-      >
-        <Tab icon={<GridIcon />} label={t("ProfileProfileContentPostsTabLabel")} />
-        {isOwner && <Tab icon={<StarIcon />} label={t("ProfileProfileContentFavoritesTabLabel")} />}
-        <Tab icon={<TaggedIcon />} label={t("ProfileProfileContentTaggedTabLabel")} />
+      <Tabs className={classes.tabs} centered value={index} onChange={handleChange} >
+        <Tab icon={<GridIcon />} label={t("ProfileProfileContentPostsTabLabel")} disabled={disabled} />
+        <Tab icon={<TaggedIcon />} label={t("ProfileProfileContentTaggedTabLabel")} disabled={disabled} />
+        {isOwner && <Tab icon={<StarIcon />} label={t("ProfileProfileContentFavoritesTabLabel")} disabled={disabled} />}
       </Tabs>
       {children}
     </>
@@ -41,6 +37,7 @@ PostTabs.propTypes = {
   isOwner: PropTypes.bool,
   media: PropTypes.array,
   hasMore: PropTypes.bool,
+  disable: PropTypes.bool,
 
   onTabChange: PropTypes.func,
 };
@@ -49,6 +46,7 @@ PostTabs.defaultProps = {
   isOwner: false,
   media: [],
   hasMore: false,
+  disable: true,
 
   onTabChange: undefined,
 };

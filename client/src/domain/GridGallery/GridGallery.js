@@ -10,24 +10,21 @@ import PhotoLibraryIcon from "@material-ui/icons/PhotoLibraryOutlined";
 
 import useStyle from "./styles";
 
-function GridGallery({
-  items,
-  hasMore,
-  width,
+function GridGallery(props) {
+  const { items, hasMore, width } = props;
+  const { onFetchMore, onItemClick } = props;
 
-  onFetchMore,
-  onItemClick,
-}) {
   const classes = useStyle();
   const [isLoading, setLoading] = useState(true);
 
   return (
     <InfiniteScroll
       className={classes.root}
-      scrollThreshold={1}
       dataLength={items.length}
       next={onFetchMore}
       hasMore={hasMore}
+      endMessage="The end!"
+      loader="Loading..."
     >
       {!items || items.length == 0 ? (
         <Typography className={classes.defaultLabel}>Start capturing and sharing your moments.</Typography>

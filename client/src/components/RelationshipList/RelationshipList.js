@@ -4,14 +4,13 @@ import PropTypes from "prop-types";
 import { List } from "@material-ui/core";
 
 import RelationshipItem from "./RelationshipItem";
-import { PROFILE_ROUTE, POST_ROUTE, SUGESTED_PEOPLE } from "../../constants/routes";
 
 import useStyles from "./styles";
 
 function RelationshipList(props) {
   const { items, currentUserName, onFollowClick } = props;
   const classes = useStyles();
-  
+
   const handleFollowClick = (e, item) => {
     e.preventDefault();
     onFollowClick && onFollowClick(item);
@@ -27,7 +26,7 @@ function RelationshipList(props) {
             title={item.fullName}
             subtitle={item.userName}
             isFollow={item.isFollow}
-            isMe={item.userName === currentUserName} 
+            isMe={item.userName === currentUserName}
             onFollowClick={(e) => handleFollowClick(e, item)}
           />
         ))}
