@@ -4,7 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import clsx from "clsx";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Chip, Button, FormGroup, Grid, Hidden, MenuItem, TextField, Typography } from "@material-ui/core";
+import { Button, FormGroup, Grid, Hidden, Paper, IconButton, MenuItem, TextField, Typography } from "@material-ui/core";
 
 import FileCopyOutlined from "@material-ui/icons/FileCopyOutlined";
 
@@ -26,7 +26,6 @@ const VALUE_MAX_LENGTH_DESCRIPTION = 255;
 
 const EMPTY_VALUE_ERROR = "It is a required filed";
 const VALUE_TICKET_PRICE_ERROR = "Must be 0 or greater than 0";
-const VALUE_MIN_LENGTH_ERROR = (min) => `Must be at least ${min} characters`;
 const VALUE_MAX_LENGTH_ERROR = (max) => `Must be at most ${max} characters`;
 const STREAMING_DATA_ERROR = "The date must be at least the current date";
 
@@ -137,12 +136,14 @@ function CreateRoomForm({
         <Typography variant="h4" gutterBottom align="center">
           {t("MeetCreateRoomFormTitle")}
         </Typography>
-        <Chip
-          key={roomId}
-          className={clsx(classes.createRoomChip, classes.formElementIndent)}
-          label={`https://meet.com/${roomId}`}
-          onDelete={() => handleCopyClick(roomId)}
-          deleteIcon={<FileCopyOutlined />} />
+        <Paper elevation={1} className={clsx(classes.createRoomLinkId, classes.formElementIndent)}>
+          <Typography variant="body2" align="center" noWrap className={classes.createRoomLinkLabel}>
+            {`https://meet.com/${roomId}`}
+          </Typography>
+          <IconButton onClick={() => handleCopyClick(roomId)}>
+            <FileCopyOutlined />
+          </IconButton>
+        </Paper>
 
         <form id={FORM_ID} onSubmit={handleSubmit(onSubmit)} autoComplete="off">
           <FormGroup className={classes.formElementIndent}>

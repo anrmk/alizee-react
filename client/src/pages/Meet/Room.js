@@ -71,7 +71,7 @@ function Room(props) {
       <Grid className={classes.roomBox}>
 
         <Grid item className={classes.roomBoxVideo}>
-          <Typography variant="h5" className={classes.roomTitle}>
+          <Typography variant="h5" gutterBottom align="center">
             {t("MeetRoomTitle")}
           </Typography>
 

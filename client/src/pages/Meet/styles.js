@@ -18,12 +18,7 @@ const useStyles = makeStyles(theme => ({
       marginTop: theme.spacing(1)
     }
   },
-  roomTitle: {
-    textAlign: "left",
-    marginBottom: theme.spacing(1)
-  },
   roomDescription: {
-    textAlign: "left",
     marginTop: theme.spacing(1)
   },
   roomBox: {
@@ -32,10 +27,7 @@ const useStyles = makeStyles(theme => ({
     height: `calc(100vh - ${(theme.mixins.toolbar.minHeight * 2) + (theme.spacing(2) * 3) + theme.spacing(1) * 3}px)`,
   },
   roomBoxVideo: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
+    minWidth: "300px",
     flex: 1,
     marginLeft: theme.spacing(1),
     [theme.breakpoints.down('md')]: {
