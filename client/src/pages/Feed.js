@@ -56,7 +56,7 @@ function Feed(props) {
   const { people, getPeople, createFollow, deleteFollow } = props;
   const { posts, getPosts, createPost, buyPost, likePost, resetPosts, favoritePost } = props;
   const { interests, getInterests, createInterests } = props;
-  const { story, getStory, getFollowingStories, createStorySlide, resetFollowingStories } = props;
+  const { story, getStory, getFollowingStories, createStorySlide, resetFollowingStories, resetStory } = props;
 
   useEffect(() => {
     (async () => {
@@ -67,13 +67,14 @@ function Feed(props) {
           userId: userInfo.id,
           length: POSTS_LENGTH,
         });
-        await getFollowingStories(apiClient, { length: 10 });
-        await getStory(apiClient, { userId: userInfo.id, length: STORIES_LENGTH });
+        await getFollowingStories(apiClient, { length: STORIES_LENGTH });
+        await getStory(apiClient, { username: userInfo.userName, length: STORIES_LENGTH });
       }
     })();
 
     return () => {
       resetPosts();
+      resetStory();
       resetFollowingStories();
     };
   }, []);
@@ -272,6 +273,7 @@ function mapDispatchToProps(dispatch) {
     createInterests: (api, ids) => dispatch(interestsActions.createInterests(api, ids)),
 
     getStory: (api, opts) => dispatch(storyActions.getStory(api, opts)),
+    resetStory: (api, opts) => dispatch(storyActions.resetStory(api, opts)),
     createStorySlide: (api, story, media) => dispatch(storyActions.createStorySlide(api, story, media)),
     resetFollowingStories: () => dispatch(storyActions.resetFollowingStories()),
     getFollowingStories: (api, opts) => dispatch(storyActions.getFollowingStories(api, opts)),

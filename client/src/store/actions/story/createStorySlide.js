@@ -57,20 +57,17 @@ export function createStorySlide(api, storyData, mediaData=[]) {
 
       const { data } = await api
         .setData({ 
-          externalLink: storyData?.link,
+          externalLink: storyData?.link || null,
           mediaId: media[0].id
          })
         .query(url);
 
-      data.user.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, data.user.avatarUrl);
       data.media.url = generateFileUrl(process.env.REACT_APP_DOMAIN, data.media.url);
       data.media.thumbnailUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, data.media.thumbnailUrl);
 
-      const currentStoryState = getState().story.currentStory;
-      const updatedCurrentStoryState = [
-        data,
-        ...currentStoryState
-      ];
+      const updatedCurrentStoryState = { ...getState().story.currentStory };
+      updatedCurrentStoryState.slides = [data, ...updatedCurrentStoryState.slides]
+      updatedCurrentStoryState.thumbnailUrl = data.media.thumbnailUrl;
 
       dispatch(receiveCreateStory(updatedCurrentStoryState));
     } catch(e) {

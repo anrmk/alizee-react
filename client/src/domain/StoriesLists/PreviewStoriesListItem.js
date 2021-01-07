@@ -8,7 +8,7 @@ import useStyles from "./styles";
 
 export default function PreviewStoryListItem({
   id,
-  userId,
+  username,
   name,
   previewUrl,
   avatarUrl,
@@ -19,17 +19,17 @@ export default function PreviewStoryListItem({
     previewUrl
   });
   
-  const handleItemClick = (_id) => {
-    onClick && onClick(_id);
+  const handleItemClick = () => {
+    onClick && onClick(id);
   }
 
   return (
     <ListItem
       button
       className={classes.previewStoryListItem}
-      to={previewUrl ? STORIES_ROUTE(userId) : "#"}
+      to={previewUrl ? STORIES_ROUTE(username) : "#"}
       component={Link}
-      onClick={() => handleItemClick(id)}>
+      onClick={handleItemClick}>
       <Avatar className={classes.previewStoryListItemAvatar} size="small" src={avatarUrl} />
       <Typography className={classes.previewStoryListItemName} variant="caption" noWrap>{name}</Typography>
     </ListItem>
