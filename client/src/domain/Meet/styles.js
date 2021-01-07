@@ -37,6 +37,7 @@ const useStyles = makeStyles(theme => ({
     height: "auto",
     width: "100%",
     borderRadius: theme.shape.borderRadius,
+    backgroundColor: theme.palette.background.paper,
     [theme.breakpoints.up("md")]: {
       marginBottom: theme.spacing(1),
     }

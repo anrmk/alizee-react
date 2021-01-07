@@ -63,6 +63,7 @@ function Post(props) {
 
   const handlePayClick = (e) => {
     e.preventDefault();
+    console.log("HErE")
     onPayClick && onPayClick({ id, amount });
   };
 

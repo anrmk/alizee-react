@@ -124,8 +124,6 @@ function CreateRoomForm({
           muted
           autoPlay
           playsInline
-          allowFullScreen
-          controls
         />
         <Hidden smDown>
           {renderButton()}

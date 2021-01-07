@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
     "&::-webkit-scrollbar": {
       display: "none",
     },
+    "& .infinite-scroll-component__outerdiv div": {
+      overflowX: "hidden !important"
+    }
   },
 
   messengerMessage: {

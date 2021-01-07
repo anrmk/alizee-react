@@ -57,11 +57,10 @@ export function createPost(api, postData, mediaData=[]) {
 
       const { data } = await api
         .setData({ 
-          amount: postData.amount,
+          amount: postData.amount && Number(postData.amount) || 0,
           description: postData.description,
           isCommentable: postData.commentable,
           kind: postData.private ? POST_PRIVATE : POST_PUBLIC,
-          //amount: Number(postData.amount),
           latitude: postData?.latitude,
           longitude: postData?.longitude,
           media: media,

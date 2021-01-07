@@ -123,7 +123,7 @@ function Feed(props) {
     item.isFollow ? deleteFollow(apiClient, item.id) : createFollow(apiClient, item.id);
   };
 
-  const handleBuyClick = async ({ id, amount }, isLoading) => {
+  const handleBuyClick = async ({ id }, isLoading) => {
     !isLoading && (await buyPost(apiClient, id));
   };
 

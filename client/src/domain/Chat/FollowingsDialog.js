@@ -41,7 +41,7 @@ function FollowingDialog({
             <ListItemAvatar>
               <Avatar src={follower.avatarUrl} />
             </ListItemAvatar>
-            <ListItemText primary={follower.username} />
+            <ListItemText primary={follower.fullName} />
           </ListItem>
         )) : (
           <Typography

@@ -34,6 +34,7 @@ function MessagesList({
   return (
     <Box id="messagerContainer" className={clsx(classes.messenger, className)} ref={messagesContainer}>
      <InfiniteScroll
+        className={classes.messagesList}
         scrollableTarget="messagerContainer"
         scrollThreshold={-0.8}
         dataLength={items.length}

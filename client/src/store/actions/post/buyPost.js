@@ -45,6 +45,8 @@ export function buyPost(api, id) {
     const posts = [...postsState.data];
     const postIndex = posts.findIndex((post) => post.id === id);
 
+    debugger
+
     try {
       if (postIndex === -1) {
         throw "Item not found!";

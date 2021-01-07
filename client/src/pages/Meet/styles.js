@@ -41,6 +41,7 @@ const useStyles = makeStyles(theme => ({
   roomVideo: {
     height: "auto",
     width: "100%",
+    backgroundColor: theme.palette.background.paper,
     borderRadius: theme.shape.borderRadius
   },
   roomBoxDrawerCloseButton: {

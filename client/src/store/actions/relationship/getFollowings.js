@@ -87,7 +87,7 @@ export const getFilteredFollowings = createSelector(
     if (!query) return data;
 
     return data.filter((item) =>
-      item?.username?.toLowerCase().includes(query.toLowerCase())
+      item?.fullName?.toLowerCase().includes(query.toLowerCase())
     );
   }
 );

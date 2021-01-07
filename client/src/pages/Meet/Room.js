@@ -79,6 +79,7 @@ function Room(props) {
             classVideoName={classes.roomVideo}
             key={roomId}
             stream={stream}
+            controls={false}
             onOpenDrawer={toggleDrawer}
           />
 

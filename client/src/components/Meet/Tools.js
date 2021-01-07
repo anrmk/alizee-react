@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
-import { MEET_ROUTE, ROOM_ID_ROUTE } from "../../constants/routes";
+import { ROOM_ROUTE, ROOM_ID_ROUTE } from "../../constants/routes";
 
 import {
   Card,
@@ -48,7 +48,7 @@ function Tools() {
         title="Wanna be on top? Start live streaming or join room with the hottest streamers"
       />
       <CardContent>
-        <Button variant="contained" className="primary" href={MEET_ROUTE}>
+        <Button variant="contained" className="primary" to={ROOM_ROUTE} component={Link}>
           Create
         </Button>
         <Button variant="contained" className="primary" onClick={() => setOpen(true)}>

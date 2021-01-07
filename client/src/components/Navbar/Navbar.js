@@ -62,7 +62,7 @@ function Navbar({
             />
           </div>
 
-          <div className={classes.controls}>
+          {/* <div className={classes.controls}>
             <IconButton onClick={() => history.push(HOME_ROUTE)}>
               <HomeIcon />
             </IconButton>
@@ -70,7 +70,7 @@ function Navbar({
             <IconButton onClick={() => history.push(HOME_ROUTE)}>
               <AddIcon />
             </IconButton>
-          </div>
+          </div> */}
 
           <div className={classes.grow} />
 
