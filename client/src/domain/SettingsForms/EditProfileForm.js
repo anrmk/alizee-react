@@ -136,7 +136,7 @@ function EditProfileForm({
   return (
     <Box>
       <Box className={clsx(classes.header, classes.formElementIndent)}>
-        <Avatar className={classes.avatar} url={watcherAvatarUrl} />
+        <Avatar className={classes.avatar} src={watcherAvatarUrl} />
         <Box>
           <Typography className={classes.username} variant="h4">{username}</Typography>
           <label>

@@ -51,7 +51,7 @@ function Main({
     if (userInfo.id) {
       
       (async () => {
-        //await getUserStatistics(apiClient, userInfo.id);
+        await getUserStatistics(apiClient, userInfo.id);
       })();
     }
   }, [userInfo.id]);

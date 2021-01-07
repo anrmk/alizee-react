@@ -81,7 +81,9 @@ function Navbar({
               </Badge>
             </IconButton>
 
-            <IconButton onClick={() => history.push(CHAT_ROUTE)}>
+            <IconButton onClick={() => {
+              history.push(CHAT_ROUTE(username))
+              }}>
               <Badge badgeContent={messagesCount} color="primary">
                 <MailIcon />
               </Badge>
