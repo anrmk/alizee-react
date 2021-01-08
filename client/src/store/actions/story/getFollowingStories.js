@@ -71,25 +71,22 @@ export function getFollowingStories(api, opts) {
         })
         .query(url);
 
-      data.data.forEach((storiesItem) => {
-        const stories = storiesItem.stories.length && storiesItem.stories;
-        const user = stories[0]?.user;
-        const previewUrl = stories[0]?.media?.thumbnailUrl;
-        storiesItem.id = stories[0]?.id;
-        storiesItem.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, user.avatarUrl);
-        storiesItem.previewUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, previewUrl);
-        storiesItem.name = user.name;
-        storiesItem.stories.forEach((story) => {
-          story.media = {
-            ...story.media,
-            thumbnailUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, story.media.thumbnailUrl),
-            url: generateFileUrl(process.env.REACT_APP_DOMAIN, story.media.url)
+      data.data.forEach((story) => {
+        story.slides.forEach((slide) => {
+          if (!slide.media) return;
+
+          slide.media = {
+            ...slide.media,
+            thumbnailUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, slide.media.thumbnailUrl),
+            url: generateFileUrl(process.env.REACT_APP_DOMAIN, slide.media.url)
           }
-          story.user = {
-            ...story.user,
-            avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, story.user.avatarUrl)
-          };
         })
+        story.thumbnailUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, story.thumbnailUrl);
+
+        story.user = {
+          ...story.user,
+          avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, story.user.avatarUrl)
+        };
       });
 
       dispatch(
@@ -113,14 +110,10 @@ export function resetFollowingStories() {
 // Selectors
 const followingsStoriesSelector = (state) => state.story.data;
 const currentStorySelector = (state) => state.story.currentStory;
-const signInSelector = (state) => state.signIn?.userInfo;
 
 export const getFollowingsStoriesWithMyself = createSelector(
-  [followingsStoriesSelector, currentStorySelector, signInSelector], 
-  (fStories, mStories, userInfo) => ({
-    mStories: {
-      ...mStories[0],
-      user: userInfo
-    },
+  [followingsStoriesSelector, currentStorySelector], 
+  (fStories, mStories) => ({
+    mStories,
     fStories
   }));

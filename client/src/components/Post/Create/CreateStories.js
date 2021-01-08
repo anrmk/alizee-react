@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { Controller, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { Controller, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import { Grid, GridList, GridListTile, FormControl, TextField } from "@material-ui/core";
@@ -17,6 +17,7 @@ const schema = yup.object().shape({
   [LINK_ID]: yup
     .string()
     .url()
+    .nullable()
     .notRequired(),
   [MEDIA_ID]: yup
     .array()
@@ -83,7 +84,6 @@ export default function CreateStories({ id, onSubmit }) {
               render={({ onChange, onBlur, value }) => (
                 <TextField
                   autoFocus
-                  required
                   variant="standard"
                   placeholder="External link"
                   onBlur={onBlur}

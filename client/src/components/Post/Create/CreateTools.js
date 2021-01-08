@@ -49,6 +49,7 @@ function CreateTools({ className, onlyMedia, isPrivate, isCommentable, onChange 
           <PhotoLibraryIcon fontSize="small" />
           <input
             type="file"
+            multiple
             id="medias"
             name="medias"
             ref={mediaRef}

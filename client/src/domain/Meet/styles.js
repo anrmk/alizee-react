@@ -21,13 +21,23 @@ const useStyles = makeStyles(theme => ({
   formElementIndent: {
     marginBottom: theme.spacing(2),
   },
-  createRoomChip: {
-    borderRadius: theme.shape.borderRadius,
+  createRoomLinkId: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  createRoomLinkLabel: {
+    marginLeft: theme.spacing(2),
+    [theme.breakpoints.down("sm")]: {
+      whiteSpace: "break-spaces",
+    }
   },
   createRoomItemVideo: {
     height: "auto",
     width: "100%",
     borderRadius: theme.shape.borderRadius,
+    backgroundColor: theme.palette.background.paper,
     [theme.breakpoints.up("md")]: {
       marginBottom: theme.spacing(1),
     }
@@ -43,6 +53,7 @@ const useStyles = makeStyles(theme => ({
   },
   roomBoxTabChatMessageList: {
     height: `calc(100vh - ${(theme.mixins.toolbar.minHeight * 2) + (theme.spacing(2) * 3) + theme.spacing(1) * 3}px - 18px)`,
+    position: "relative"
   },
   roomBoxDrawerTabChatMessageList: {
     height: `calc(100vh - ${(theme.mixins.toolbar.minHeight * 2) + (theme.spacing(2) * 3) + theme.spacing(1) * 3}px - 10px)`,

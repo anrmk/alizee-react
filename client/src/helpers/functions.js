@@ -339,7 +339,3 @@ export function copyFlatObjectWithIgnore(obj, ignores) {
     return acc;
   }, {});
 }
-
-export function setUrlWithoutReload(url, title, data) {
-  window.history.replaceState(data, title, url);
-}

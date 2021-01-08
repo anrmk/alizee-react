@@ -1,5 +1,4 @@
-import { generateUrl, generateFileUrl, getOffset } from "../../../helpers/functions";
-import { STORIES_OFFSET } from "../../../constants/feed";
+import { generateUrl, generateFileUrl } from "../../../helpers/functions";
 
 export const GET_STORY_REQUEST = "GET_STORY_REQUEST";
 export const GET_STORY_SUCCESS = "GET_STORY_SUCCESS";
@@ -16,15 +15,13 @@ function requestGetStory() {
   }
 }
 
-function receiveGetStory(story, total, start, hasMore) {
+function receiveGetStory(story) {
   return {
     type: GET_STORY_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
-      offset: getOffset(start, total, STORIES_OFFSET),
-      hasMore,
-      currentStory: story || []
+      currentStory: story || {}
     }
   }
 }
@@ -46,15 +43,13 @@ function successResetStory() {
     payload: {
       isFetching: false,
       errorMessage: "",
-      offset: 0,
-      hasMore: false,
-      currentStory: []
+      currentStory: {}
     }
   }
 }
 
 export function getStory(api, opts) {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     dispatch(requestGetStory());
 
     const url = generateUrl("getStory");
@@ -62,52 +57,24 @@ export function getStory(api, opts) {
       const { data } = await api
         .setMethod("GET")
         .setParams({
-          userId: opts.userId,
-          start: 0,
-          length: opts.length
+          userName: opts.username,
         })
         .query(url);
 
-      data.data.forEach((storiesItem) => {
-        storiesItem.stories.forEach((story) => {
-          story.media = {
-            ...story.media,
-            thumbnailUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, story.media.thumbnailUrl),
-            url: generateFileUrl(process.env.REACT_APP_DOMAIN, story.media.url)
-          }
-          story.user = {
-            ...story.user,
-            avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, story.user.avatarUrl)
-          };
-        })
+      data.slides.forEach((slide) => {
+        slide.media = {
+          ...slide.media,
+          thumbnailUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, slide.media.thumbnailUrl),
+          url: generateFileUrl(process.env.REACT_APP_DOMAIN, slide.media.url)
+        }
       });
+      data.thumbnailUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, data.thumbnailUrl);
+      data.user = {
+        ...data.user,
+        avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, data.user.avatarUrl)
+      };
 
-      const transformedData = [];
-      if (data.data.length && data.data[0]?.stories) {
-        data.data[0].stories.forEach(item => {
-          transformedData.push({
-              ...item,
-              media: {
-                ...item.media,
-                thumbnailUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, item.media.thumbnailUrl),
-                url: generateFileUrl(process.env.REACT_APP_DOMAIN, item.media.url)
-              },
-              user: {
-                ...item.user,
-                avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, item.user.avatarUrl)
-              }
-           });
-        })
-      }
-
-      dispatch(
-        receiveGetStory(
-          [...getState().story.currentStory, ...transformedData],
-          data.recordsTotal,
-          0,
-          !!data.data.length
-        )
-      );
+      dispatch(receiveGetStory(data));
     } catch (e) {
       dispatch(errorGetStory("Error: something went wrong:", e));
     }

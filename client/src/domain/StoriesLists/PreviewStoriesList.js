@@ -14,31 +14,31 @@ export default function PreviewStoryList({
 }) {
   const classes = useStyles({ loading });
 
-  const handleItemClick = (id, stories) => {
-    onItemClick && onItemClick(id, stories);
-  }
-
   return (
     <List className={classes.previewStoryList} component={ScrollContainer}>
-      <PreviewStoriesListItem
-        key={userStory?.id}
-        id={userStory?.id}
-        userId={userStory?.user.id}
-        name={userStory?.user.name}
-        previewUrl={userStory?.media?.url}
-        avatarUrl={userStory?.user?.avatarUrl}
-        onClick={(id) => handleItemClick(id, userStory)} />
-      {loading ? <CircularProgress className={classes.previewStoryListProgress} />
-       : items && items.map(item => (
-        <PreviewStoriesListItem
-          key={item?.id}
-          id={item?.id}
-          userId={item?.userId}
-          name={item?.name}
-          previewUrl={item?.previewUrl}
-          avatarUrl={item?.avatarUrl}
-          onClick={(id) => handleItemClick(id, item)} />
-      ))}
+      {loading || !Object.keys(userStory).length ? <CircularProgress className={classes.previewStoryListProgress} />
+       : (
+         <>
+          <PreviewStoriesListItem
+            key={userStory?.userId}
+            id={userStory?.userId}
+            username={userStory?.user?.userName}
+            name={userStory?.user?.name}
+            previewUrl={userStory?.thumbnailUrl}
+            avatarUrl={userStory?.user?.avatarUrl}
+            onClick={onItemClick} />
+          {items && items.map(item => (
+            <PreviewStoriesListItem
+              key={item?.userId}
+              id={item?.userId}
+              username={item?.user?.userName}
+              name={item?.user?.name}
+              previewUrl={item?.thumbnailUrl}
+              avatarUrl={item?.user?.avatarUrl}
+              onClick={onItemClick} />
+          ))}
+         </>
+      )}
     </List>
   )
 };

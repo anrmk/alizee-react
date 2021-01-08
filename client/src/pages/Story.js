@@ -1,17 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
 import { connect } from "react-redux";
-import { useParams, Redirect, useRouteMatch, generatePath } from "react-router-dom";
+import { useHistory, useParams, Redirect, useRouteMatch, generatePath } from "react-router-dom";
 import { Box } from "@material-ui/core";
 
 import ApiContext from "../context/ApiContext";
 
-import { StorySlidesList } from "../domain/StoriesLists";
+import Stories from "../components/Stories";
 import * as storyActions from "../store/actions/story";
 import { HOME_ROUTE } from "../constants/routes";
-import { setUrlWithoutReload } from "../helpers/functions";
 
-function Stories(props) {
-  const { userId, storyId } = useParams();
+function Story(props) {
+  const history = useHistory();
+  const { username, storyId } = useParams();
   const { path } = useRouteMatch();
   const apiClient = useContext(ApiContext);
   const [storyIndex, setStoryIndex] = useState(0);
@@ -20,42 +20,47 @@ function Stories(props) {
   const { getStory, resetStory } = props;
 
   useEffect(() => {
-    if (userId) {
+    if (username) {
       (async () => {
-        await getStory(apiClient, { userId, length: 10 });
+        await getStory(apiClient, { username, length: 10 });
       })();
     }
 
     return () => {
       resetStory();
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-    if (story.data.length && storyId) {
-      const index = story.data.findIndex(item => item.id === storyId);
+    if (story.data.slides?.length && storyId) {
+      const index = story.data.slides.findIndex(item => item.id === storyId);
       if (index !== -1) {
         setStoryIndex(index);
       }
     }
-  }, [story.data])
+  }, [story.data.slides]);
 
-  if (!userId || story.errorMessage) {
+  if (!username || story.errorMessage) {
     return <Redirect to={HOME_ROUTE} />;
   }
 
-  const handleSlideChange = (_, slideData) => {
-    if (slideData) {
-      setUrlWithoutReload(window.location.origin + generatePath(path, { userId, storyId: slideData.id }));
+  const handleSlideChange = (slide) => {
+    if (slide) {
+      history.replace({ pathname: generatePath(path, { username, storyId: slide.id }) })
     }
   }
 
   return (
     <Box display="flex" justifyContent="center" height="100vh">
-      <StorySlidesList
-        items={story.data}
-        startIndex={storyIndex}
-        onSlideChange={handleSlideChange} />
+      {/* {JSON.stringify(story.data.slides)} */}
+      <Stories
+        defaultInterval={4000}
+        currentIndex={storyIndex}
+        user={story.data.user}
+        avatarUrl={story.data.user?.avatarUrl}
+        fullName={story.data.user?.name}
+        stories={story.data.slides}
+        onChange={handleSlideChange} />
     </Box>
   );
 }
@@ -67,7 +72,7 @@ function mapStateToProps(state) {
       data: state.story.currentStory,
       errorMessage: state.story.errorMessage,
       hasMore: state.story.hasMore
-    },
+    }
   };
 }
 
@@ -78,4 +83,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Stories);
+export default connect(mapStateToProps, mapDispatchToProps)(Story);

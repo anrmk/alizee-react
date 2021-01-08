@@ -6,6 +6,7 @@ import useStyles from "./styles";
 
 function Video({
   classVideoName,
+  controls = true,
   stream,
 
   onOpenDrawer
@@ -26,7 +27,7 @@ function Video({
         autoPlay
         playsInline
         allowFullScreen
-        controls>
+        controls={controls}>
       </video>
       <VideoControlButtons onOpenDrawer={onOpenDrawer} />
     </Box>

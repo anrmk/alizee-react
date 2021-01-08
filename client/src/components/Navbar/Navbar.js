@@ -62,7 +62,7 @@ function Navbar({
             />
           </div>
 
-          <div className={classes.controls}>
+          {/* <div className={classes.controls}>
             <IconButton onClick={() => history.push(HOME_ROUTE)}>
               <HomeIcon />
             </IconButton>
@@ -70,7 +70,7 @@ function Navbar({
             <IconButton onClick={() => history.push(HOME_ROUTE)}>
               <AddIcon />
             </IconButton>
-          </div>
+          </div> */}
 
           <div className={classes.grow} />
 
@@ -81,7 +81,9 @@ function Navbar({
               </Badge>
             </IconButton>
 
-            <IconButton onClick={() => history.push(CHAT_ROUTE)}>
+            <IconButton onClick={() => {
+              history.push(CHAT_ROUTE(username))
+              }}>
               <Badge badgeContent={messagesCount} color="primary">
                 <MailIcon />
               </Badge>
