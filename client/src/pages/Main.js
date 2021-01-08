@@ -69,7 +69,7 @@ function Main({
           <Sidebar userInfo={userInfo} open={open} userStatistics={userStatistics} onDrawerToggle={handleDrawerToggle} />
         </>
       )}
-      <div style={!isNavigationHide ? ({flexGrow: 1, paddingTop: 64}) : null}>
+      <div style={isAuthenticated && !isNavigationHide ? ({flexGrow: 1, paddingTop: 64}) : null}>
         <Switch>
           <Route exact path={Routes.DEFAULT_ROUTE} render={() => (<Redirect to={Routes.HOME_ROUTE} />)} />
           <Route path={Routes.SIGN_UP_ROUTE} component={SignUp} />

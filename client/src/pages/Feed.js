@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useRef, useEffect, useContext, useCallback } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
@@ -44,31 +44,31 @@ const useStyles = makeStyles((theme) => ({
 function Feed(props) {
   const history = useHistory();
   const classes = useStyles();
-
   const apiClient = useContext(ApiContext);
   const interestsEl = useRef();
+
   const [interestsModalShow, setInterestsModalShow] = useState(false);
+  
   const { userInfo } = props;
-  const isInterestsSkip = localStorage.getItem(INTERESTS_SKIP);
-
-  const { getAccountPersonalized, settings } = props;
-
+  const { settings, getAccountPersonalized } = props;
   const { people, getPeople, createFollow, deleteFollow } = props;
   const { posts, getPosts, createPost, buyPost, likePost, resetPosts, favoritePost } = props;
   const { interests, getInterests, createInterests } = props;
   const { story, getStory, getFollowingStories, createStorySlide, resetFollowingStories, resetStory } = props;
+
+  const isInterestsSkip = localStorage.getItem(INTERESTS_SKIP);
 
   useEffect(() => {
     (async () => {
       await getAccountPersonalized(apiClient);
 
       if (posts.data.length <= 0) {
-        await getPosts(apiClient, {
+        getPosts(apiClient, {
           userId: userInfo.id,
           length: POSTS_LENGTH,
         });
-        await getFollowingStories(apiClient, { length: STORIES_LENGTH });
-        await getStory(apiClient, { username: userInfo.userName, length: STORIES_LENGTH });
+        getFollowingStories(apiClient, { length: STORIES_LENGTH });
+        getStory(apiClient, { username: userInfo.userName, length: STORIES_LENGTH });
       }
     })();
 
@@ -96,52 +96,53 @@ function Feed(props) {
     }
   }, [userInfo.id]);
 
-  const handleFetchMore = (isLoading) => {
-    if (!isLoading) {
-      (async () => {
-        await getPosts(apiClient, { id: userInfo.id, length: POSTS_LENGTH });
-      })();
-    }
+  const handleFetchMore = useCallback(async (isLoading) => {
+    !isLoading && await getPosts(apiClient, { id: userInfo.id, length: POSTS_LENGTH });
+  }, []);
+
+  const handleLikeClick = useCallback(async (id) => {
+    !posts.isFetching && (await likePost(apiClient, id));
+  }, []);
+
+  const handleFavoriteClick = useCallback(async (id) => {
+    !posts.isFetching && (await favoritePost(apiClient, id));
+  }, []);
+
+  const handleFollowPeopleClick = useCallback(async ({ id, isFollow }) => {
+    await handleFollowClick(id, isFollow);
+  }, []);
+
+  const handleFollowPostClick = useCallback(async ({ id, isFollow }) => {
+    await handleFollowClick(id, isFollow);
+  }, []);
+
+  const handleFollowClick = async (id, isFollow) => {
+    !people.isFetching && isFollow ? await deleteFollow(apiClient, id) : await createFollow(apiClient, id);
   };
 
-  const handleLikeClick = async (id, isLoading) => {
-    !isLoading && (await likePost(apiClient, id));
-  };
+  const handleBuyClick = useCallback(async ({ id }) => {
+    !posts.isFetching && await buyPost(apiClient, id);
+  }, []);
 
-  const handleFavoriteClick = async (id, isLoading) => {
-    !isLoading && (await favoritePost(apiClient, id));
-  };
-
-  const handleGoToClick = (id) => {
-    history.push(`${POST_ROUTE}/${id}`);
-  };
-
-  const handleFollowPeopleClick = (item, isLoading) => {
-    if (isLoading) {
-      return;
-    }
-    item.isFollow ? deleteFollow(apiClient, item.id) : createFollow(apiClient, item.id);
-  };
-
-  const handleBuyClick = async ({ id }, isLoading) => {
-    !isLoading && (await buyPost(apiClient, id));
-  };
-
-  const handleFormSubmit = async (formData, mediaData) => {
+  const handleFormSubmit = useCallback(async (formData, mediaData) => {
     if (formData.type === POST_TYPE.STORY) {
       await createStorySlide(apiClient, formData, mediaData);
     } else {
       await createPost(apiClient, formData, mediaData);
     }
-  };
+  }, []);
 
-  const handleInterestSubmit = async () => {
+  const handleInterestSubmit = useCallback(async () => {
     const selectedInterests = interestsEl.current.getSelectedIds();
     if (selectedInterests.length) {
       await createInterests(apiClient, selectedInterests);
       setInterestsModalShow(false);
     }
-  };
+  }, []);
+
+  const handleGoToClick = useCallback((id) => {
+    history.push(`${POST_ROUTE}/${id}`);
+  }, []);
 
   const handleInterestsModalClose = () => {
     setInterestsModalShow(false);
@@ -165,24 +166,26 @@ function Feed(props) {
               hasMore={posts.hasMore}
               onFetchMore={handleFetchMore}
               onGoToClick={handleGoToClick}
-              onLikeClick={(id) => handleLikeClick(id, posts.isFetching)}
-              onFavoriteClick={(id) => handleFavoriteClick(id, posts.isFetching)}
-              onFollowClick={(id) => handleFollowPeopleClick(id, people.isFetching)}
-              onPayClick={(data) => handleBuyClick(data, posts.isFetching)}
+              onLikeClick={handleLikeClick}
+              onFavoriteClick={handleFavoriteClick}
+              onFollowClick={handleFollowPostClick}
+              onPayClick={handleBuyClick}
             />
           </Grid>
           <Hidden smDown>
             <Grid item md={4} sm={false} lg={false}>
               <Grid container direction="column" alignItems="stretch" spacing={3}>
-                {people.data && people.data.length > 0 && (<Grid item>
-                  <Typography variant="h6" className={classes.suggestionHeader}>
-                    Suggestions For You
-                    <Link href={SUGESTED_PEOPLE} variant="caption">
-                      See All
-                    </Link>
-                  </Typography>
-                  <RelationshipList items={people.data} onFollowClick={(item) => handleFollowPeopleClick(item, people.isFetching)} />
-                </Grid>)}
+                {people.data && people.data.length > 0 && (
+                  <Grid item>
+                    <Typography variant="h6" className={classes.suggestionHeader}>
+                      Suggestions For You
+                      <Link href={SUGESTED_PEOPLE} variant="caption">
+                        See All
+                      </Link>
+                    </Typography>
+                    <RelationshipList items={people.data} onFollowClick={handleFollowPeopleClick} />
+                  </Grid>
+                )}
                 
                 <Grid item>
                   <Typography variant="h6" gutterBottom>

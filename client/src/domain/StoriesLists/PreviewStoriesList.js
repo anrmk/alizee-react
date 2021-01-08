@@ -6,13 +6,13 @@ import PreviewStoriesListItem from "./PreviewStoriesListItem";
 import useStyles from "./styles";
 import { isEmptyObject } from "../../helpers/functions";
 
-export default function PreviewStoryList({
+const PreviewStoriesList = React.memo(({
   items,
   userStory,
   loading = false,
 
   onItemClick
-}) {
+}) => {
   const classes = useStyles({ loading });
 
   return (
@@ -44,4 +44,6 @@ export default function PreviewStoryList({
       )}
     </List>
   )
-};
+});
+
+export default PreviewStoriesList;
