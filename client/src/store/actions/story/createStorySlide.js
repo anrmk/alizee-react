@@ -1,4 +1,4 @@
-import { generateUrl, generateFileUrl } from "../../../helpers/functions";
+import { generateUrl, generateFileUrl, isEmptyObject } from "../../../helpers/functions";
 import { createMedia } from "../media";
 
 export const CREATE_STORY_SLIDE_REQUEST = "CREATE_STORY_SLIDE_REQUEST";
@@ -21,7 +21,7 @@ function receiveCreateStory(currentStory) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      currentStory: currentStory || []
+      currentStory: currentStory || {}
     }
   }
 }
@@ -65,8 +65,20 @@ export function createStorySlide(api, storyData, mediaData=[]) {
       data.media.url = generateFileUrl(process.env.REACT_APP_DOMAIN, data.media.url);
       data.media.thumbnailUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, data.media.thumbnailUrl);
 
-      const updatedCurrentStoryState = { ...getState().story.currentStory };
-      updatedCurrentStoryState.slides = [data, ...updatedCurrentStoryState.slides]
+      const currentStoryState = getState().story.currentStory;
+      const updatedCurrentStoryState = { ...currentStoryState };
+
+      if (isEmptyObject(currentStoryState)) {
+        const signInState = getState().signIn.userInfo;
+        updatedCurrentStoryState.user = {
+          userName: signInState.userName,
+          name: signInState.name,
+          avatarUrl: signInState.avatarUrl
+        }
+        updatedCurrentStoryState.userId = signInState.id;
+      }
+
+      updatedCurrentStoryState.slides = [data, ...(updatedCurrentStoryState?.slides || [])];
       updatedCurrentStoryState.thumbnailUrl = data.media.thumbnailUrl;
 
       dispatch(receiveCreateStory(updatedCurrentStoryState));

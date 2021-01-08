@@ -4,6 +4,7 @@ import ScrollContainer from "react-indiana-drag-scroll";
 
 import PreviewStoriesListItem from "./PreviewStoriesListItem";
 import useStyles from "./styles";
+import { isEmptyObject } from "../../helpers/functions";
 
 export default function PreviewStoryList({
   items,
@@ -16,17 +17,19 @@ export default function PreviewStoryList({
 
   return (
     <List className={classes.previewStoryList} component={ScrollContainer}>
-      {loading || !Object.keys(userStory).length ? <CircularProgress className={classes.previewStoryListProgress} />
+      {loading ? <CircularProgress className={classes.previewStoryListProgress} />
        : (
          <>
-          <PreviewStoriesListItem
-            key={userStory?.userId}
-            id={userStory?.userId}
-            username={userStory?.user?.userName}
-            name={userStory?.user?.name}
-            previewUrl={userStory?.thumbnailUrl}
-            avatarUrl={userStory?.user?.avatarUrl}
-            onClick={onItemClick} />
+          {!isEmptyObject(userStory) && (
+            <PreviewStoriesListItem
+              key={userStory?.userId}
+              id={userStory?.userId}
+              username={userStory?.user?.userName}
+              name={userStory?.user?.name}
+              previewUrl={userStory?.thumbnailUrl}
+              avatarUrl={userStory?.user?.avatarUrl}
+              onClick={onItemClick} />
+          )}
           {items && items.map(item => (
             <PreviewStoriesListItem
               key={item?.userId}
