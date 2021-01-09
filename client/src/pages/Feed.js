@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useRef, useEffect, useContext, useCallback } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
@@ -28,7 +28,7 @@ import { RelationshipList } from "../components/RelationshipList";
 import { PreviewStoriesList } from "../domain/StoriesLists";
 
 import ApiContext from "../context/ApiContext";
-import { INTERESTS_SKIP, POSTS_LENGTH, STORIES_LENGTH, POST_TYPE } from "../constants/feed";
+import { INTERESTS_SKIP, STORIES_LENGTH, POST_TYPE } from "../constants/feed";
 import { POST_ROUTE, SUGESTED_PEOPLE } from "../constants/routes";
 import InterestList from "../components/InterestsList";
 
@@ -37,42 +37,40 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     marginBottom: "10px",
-    alignItems: "center"
+    alignItems: "center",
   },
 }));
 
 function Feed(props) {
   const history = useHistory();
   const classes = useStyles();
-
   const apiClient = useContext(ApiContext);
   const interestsEl = useRef();
+
   const [interestsModalShow, setInterestsModalShow] = useState(false);
+
   const { userInfo } = props;
-  const isInterestsSkip = localStorage.getItem(INTERESTS_SKIP);
-
-  const { getAccountPersonalized, settings } = props;
-
+  const { settings, getAccountPersonalized } = props;
   const { people, getPeople, createFollow, deleteFollow } = props;
   const { posts, getPosts, createPost, buyPost, likePost, resetPosts, favoritePost } = props;
   const { interests, getInterests, createInterests } = props;
   const { story, getStory, getFollowingStories, createStorySlide, resetFollowingStories, resetStory } = props;
 
+  const isInterestsSkip = localStorage.getItem(INTERESTS_SKIP);
+
   useEffect(() => {
     (async () => {
       await getAccountPersonalized(apiClient);
 
-      if (posts.data.length <= 0) {
-        await getPosts(apiClient, {
-          userId: userInfo.id,
-          length: POSTS_LENGTH,
-        });
-        await getFollowingStories(apiClient, { length: STORIES_LENGTH });
-        await getStory(apiClient, { username: userInfo.userName, length: STORIES_LENGTH });
-      }
+      await getPosts(apiClient, {
+        userId: userInfo.id,
+      });
+      await getFollowingStories(apiClient, { length: STORIES_LENGTH });
+      await getStory(apiClient, { username: userInfo.userName, length: STORIES_LENGTH });
     })();
 
     return () => {
+      console.log("Unmount feed");
       resetPosts();
       resetStory();
       resetFollowingStories();
@@ -99,49 +97,54 @@ function Feed(props) {
   const handleFetchMore = (isLoading) => {
     if (!isLoading) {
       (async () => {
-        await getPosts(apiClient, { id: userInfo.id, length: POSTS_LENGTH });
+        await getPosts(apiClient, { id: userInfo.id });
       })();
     }
   };
 
-  const handleLikeClick = async (id, isLoading) => {
-    !isLoading && (await likePost(apiClient, id));
+  const handleLikeClick = useCallback(async (id) => {
+    !posts.isFetching && (await likePost(apiClient, id));
+  }, []);
+
+  const handleFavoriteClick = useCallback(async (id) => {
+    !posts.isFetching && (await favoritePost(apiClient, id));
+  }, []);
+
+  const handleFollowPeopleClick = useCallback(async ({ id, isFollow }) => {
+    await handleFollowClick(id, isFollow);
+  }, []);
+
+  const handleFollowPostClick = useCallback(async ({ id, isFollow }) => {
+    await handleFollowClick(id, isFollow);
+  }, []);
+
+  const handleFollowClick = async (id, isFollow) => {
+    !people.isFetching && isFollow ? await deleteFollow(apiClient, id) : await createFollow(apiClient, id);
   };
 
-  const handleFavoriteClick = async (id, isLoading) => {
-    !isLoading && (await favoritePost(apiClient, id));
-  };
+  const handleBuyClick = useCallback(async ({ id }) => {
+    !posts.isFetching && (await buyPost(apiClient, id));
+  }, []);
 
-  const handleGoToClick = (id) => {
-    history.push(`${POST_ROUTE}/${id}`);
-  };
-
-  const handleFollowPeopleClick = (item, isLoading) => {
-    if (isLoading) {
-      return;
-    }
-    item.isFollow ? deleteFollow(apiClient, item.id) : createFollow(apiClient, item.id);
-  };
-
-  const handleBuyClick = async ({ id }, isLoading) => {
-    !isLoading && (await buyPost(apiClient, id));
-  };
-
-  const handleFormSubmit = async (formData, mediaData) => {
+  const handleFormSubmit = useCallback(async (formData, mediaData) => {
     if (formData.type === POST_TYPE.STORY) {
       await createStorySlide(apiClient, formData, mediaData);
     } else {
       await createPost(apiClient, formData, mediaData);
     }
-  };
+  }, []);
 
-  const handleInterestSubmit = async () => {
+  const handleInterestSubmit = useCallback(async () => {
     const selectedInterests = interestsEl.current.getSelectedIds();
     if (selectedInterests.length) {
       await createInterests(apiClient, selectedInterests);
       setInterestsModalShow(false);
     }
-  };
+  }, []);
+
+  const handleGoToClick = useCallback((id) => {
+    history.push(`${POST_ROUTE}/${id}`);
+  }, []);
 
   const handleInterestsModalClose = () => {
     setInterestsModalShow(false);
@@ -158,32 +161,38 @@ function Feed(props) {
         <Grid container spacing={2} direction="row">
           <Grid container item md={8} sm={12} direction="column">
             <Typography variant="h6">Top stories</Typography>
-            <PreviewStoriesList loading={story.isFetching} userStory={story.data.mStories} items={story.data.fStories} />
+            <PreviewStoriesList
+              loading={story.isFetching}
+              userStory={story.data.mStories}
+              items={story.data.fStories}
+            />
             <PostSprout user={userInfo} onSubmit={handleFormSubmit} />
             <PostsList
               items={posts.data}
               hasMore={posts.hasMore}
               onFetchMore={handleFetchMore}
               onGoToClick={handleGoToClick}
-              onLikeClick={(id) => handleLikeClick(id, posts.isFetching)}
-              onFavoriteClick={(id) => handleFavoriteClick(id, posts.isFetching)}
-              onFollowClick={(id) => handleFollowPeopleClick(id, people.isFetching)}
-              onPayClick={(data) => handleBuyClick(data, posts.isFetching)}
+              onLikeClick={handleLikeClick}
+              onFavoriteClick={handleFavoriteClick}
+              onFollowClick={handleFollowPostClick}
+              onPayClick={handleBuyClick}
             />
           </Grid>
           <Hidden smDown>
             <Grid item md={4} sm={false} lg={false}>
               <Grid container direction="column" alignItems="stretch" spacing={3}>
-                {people.data && people.data.length > 0 && (<Grid item>
-                  <Typography variant="h6" className={classes.suggestionHeader}>
-                    Suggestions For You
-                    <Link href={SUGESTED_PEOPLE} variant="caption">
-                      See All
-                    </Link>
-                  </Typography>
-                  <RelationshipList items={people.data} onFollowClick={(item) => handleFollowPeopleClick(item, people.isFetching)} />
-                </Grid>)}
-                
+                {people.data && people.data.length > 0 && (
+                  <Grid item>
+                    <Typography variant="h6" className={classes.suggestionHeader}>
+                      Suggestions For You
+                      <Link href={SUGESTED_PEOPLE} variant="caption">
+                        See All
+                      </Link>
+                    </Typography>
+                    <RelationshipList items={people.data} onFollowClick={handleFollowPeopleClick} />
+                  </Grid>
+                )}
+
                 <Grid item>
                   <Typography variant="h6" gutterBottom>
                     Rooms

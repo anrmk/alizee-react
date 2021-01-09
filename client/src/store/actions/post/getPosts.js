@@ -68,7 +68,7 @@ export function getPosts(api, opts) {
       const { data } = await api
         .setMethod("GET")
         .setParams({
-          userId: opts.userId,
+          userName: opts.userName,
           start: currentOffset,
           length: POSTS_LENGTH,
           tagged: opts.tagged || false,

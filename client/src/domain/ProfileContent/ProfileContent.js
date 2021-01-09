@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import PostTabs from "./PostTabs"
+import PostTabs from "./PostTabs";
 import GridGallery from "../GridGallery";
 
 function ProfileContent(props) {
@@ -10,12 +10,7 @@ function ProfileContent(props) {
 
   return (
     <PostTabs isOwner={isOwner} index={tabIndex} onTabChange={onTabChange} disabled={disabled}>
-      <GridGallery
-        items={items}
-        hasMore={hasMore}
-        onFetchMore={onFetchMore}
-        onItemClick={onItemClick}
-      />
+      <GridGallery items={items} hasMore={hasMore} onFetchMore={onFetchMore} onItemClick={onItemClick} />
     </PostTabs>
   );
 }

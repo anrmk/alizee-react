@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { IconButton, Tooltip } from "@material-ui/core";
+import { Box, IconButton, Tooltip } from "@material-ui/core";
 
 import MailIcon from "@material-ui/icons/MailOutlineOutlined";
 import GiftIcon from "@material-ui/icons/RedeemOutlined";
@@ -13,7 +13,7 @@ function Controls(props) {
   const { onMessageClick, onFollowClick, onSendGiftClick } = props;
 
   return (
-    <>
+    <Box>
       <Tooltip title="Send gift">
         <IconButton onClick={onSendGiftClick} color="primary">
           <GiftIcon />
@@ -29,7 +29,7 @@ function Controls(props) {
           <IconButton color={isFollow ? "primary": "default"} onClick={onFollowClick}>{isFollow ? <UnfollowIcon /> : <FollowIcon />}</IconButton>
         </Tooltip>
       )}
-    </>
+    </Box>
   );
 }
 

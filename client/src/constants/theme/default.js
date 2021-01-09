@@ -1,5 +1,5 @@
 export default {
-  shape: {
-    borderRadius: "8px"
-  }
+  // shape: {
+  //   borderRadius: "8px"
+  // }
 }

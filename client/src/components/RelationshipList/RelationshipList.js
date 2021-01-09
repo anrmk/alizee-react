@@ -7,14 +7,8 @@ import RelationshipItem from "./RelationshipItem";
 
 import useStyles from "./styles";
 
-function RelationshipList(props) {
-  const { items, currentUserName, onFollowClick } = props;
+const RelationshipList = React.memo(({ items, currentUserName, onFollowClick }) => {
   const classes = useStyles();
-
-  const handleFollowClick = (e, item) => {
-    e.preventDefault();
-    onFollowClick && onFollowClick(item);
-  };
 
   return (
     <List dense={true} className={classes.root}>
@@ -22,17 +16,18 @@ function RelationshipList(props) {
         items.map((item) => (
           <RelationshipItem
             key={item.id}
+            id={item.id}
             avatarUrl={item.avatarUrl}
             title={item.fullName}
             subtitle={item.userName}
             isFollow={item.isFollow}
             isMe={item.userName === currentUserName}
-            onFollowClick={(e) => handleFollowClick(e, item)}
+            onFollowClick={onFollowClick}
           />
         ))}
     </List>
   );
-}
+});
 
 RelationshipList.propTypes = {
   items: PropTypes.array,

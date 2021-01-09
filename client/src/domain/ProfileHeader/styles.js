@@ -13,24 +13,24 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center",
-    padding: theme.spacing(1, 1, 1, 20)
   },
 
   coverBox: {
     display: "flex",
     position: "absolute",
-    bottom: theme.spacing(-8),
-    padding: theme.spacing(1),
-    width: "100%"
+    bottom: theme.spacing(-7),
+    width: "100%",
+    justifyContent: "space-between",
+    alignItems: "flex-end",
   },
 
   avatar: {
-    margin: theme.spacing(0, 3),
+    margin: theme.spacing(0, 2),
 
-    [theme.breakpoints.down("sm")] : {
-      margin: theme.spacing(0, 1)
-    }
-  }
+    [theme.breakpoints.down("sm")]: {
+      margin: theme.spacing(0, 1),
+    },
+  },
 }));
 
 export default useStyles;

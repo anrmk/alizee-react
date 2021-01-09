@@ -10,7 +10,7 @@ import EndMessage from "./EndMessage";
 
 import { Dialog, DialogContent, DialogTitle, DialogActions, Button } from "@material-ui/core";
 
-function PostsList({
+const PostsList = React.memo(({
   items,
   hasMore,
 
@@ -20,7 +20,7 @@ function PostsList({
   onLikeClick,
   onFavoriteClick,
   onPayClick,
-}) {
+}) => {
   const [modalData, setModalData] = useState({});
   const [showModal, setShowModal] = useState(false);
 
@@ -74,8 +74,7 @@ function PostsList({
         next={handleFetchMore}
         hasMore={hasMore}
         loader={<Loader />}
-        endMessage={<EndMessage />}
-      >
+        endMessage={<EndMessage />}>
         {items.length > 0 &&
           items.map((item) => (
             <Post
@@ -99,12 +98,11 @@ function PostsList({
               onFavoriteClick={onFavoriteClick}
               onPayClick={handlePaymentClick}
               onReceiptClick={handleReceiptClick}
-              onShareClick={handleShareClick}
-            />
+              onShareClick={handleShareClick} />
           ))}
       </InfiniteScroll>
     </>
   );
-}
+})
 
 export default PostsList;

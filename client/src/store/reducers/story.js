@@ -24,7 +24,7 @@ export default function signIn(
     isFetching: false,
     hasMore: false,
     data: [],
-    currentStory: [],
+    currentStory: {},
     offset: STORIES_DEFAULT_OFFSET
   },
   action

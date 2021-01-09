@@ -50,8 +50,7 @@ function successResetFollowingStories() {
       errorMessage: "",
       offset: 0,
       hasMore: false,
-      data: [],
-      currentStory: []
+      data: []
     }
   }
 }

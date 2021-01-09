@@ -339,3 +339,7 @@ export function copyFlatObjectWithIgnore(obj, ignores) {
     return acc;
   }, {});
 }
+
+export function isEmptyObject(obj) {
+  return JSON.stringify(obj) === JSON.stringify({});
+}

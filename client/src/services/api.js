@@ -92,7 +92,10 @@ export default function ApiClient() {
     }
 
     return new Promise((resolve, reject) => {
-      axios(config)
+      const temConf = { ...config };
+      _reset();
+
+      axios(temConf)
         .then(response => {
           response.success = true;
 
@@ -108,10 +111,7 @@ export default function ApiClient() {
         })
         .catch(error => {
           reject(error)
-        })
-        .finally(() => {
-          _reset()
-        })
+        });
     })
   }
 }

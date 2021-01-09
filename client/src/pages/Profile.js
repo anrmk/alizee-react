@@ -2,9 +2,22 @@ import React, { useContext, useEffect, useState } from "react";
 import { Redirect, useHistory, useParams, useRouteMatch } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { Container, Box, Typography, Button, Divider, makeStyles } from "@material-ui/core/";
+import {
+  Container,
+  Grid,
+  Box,
+  Card,
+  Typography,
+  ButtonGroup,
+  Button,
+  Divider,
+  CardContent,
+  CardHeader,
+  CardActions,
+} from "@material-ui/core/";
 
 import ApiContext from "../context/ApiContext";
+import { SocialControl } from "../components/Social";
 import ProfileHeader from "../domain/ProfileHeader";
 import ProfileContent from "../domain/ProfileContent";
 
@@ -22,45 +35,47 @@ import {
   FOLLOWINGS_ROUTE,
 } from "../constants/routes";
 
-const useStyles = makeStyles((theme) => ({
-  statistics: {
-    margin: theme.spacing(2, 0),
-    "& > *:not(:first-child)": {
-      margin: theme.spacing(0, 0.5),
-    },
-  },
-}));
-
 function Profile(props) {
+  const initPostsSettings = {
+    index: 0,
+    tagged: false,
+  };
+
   const { username } = useParams();
-  const classes = useStyles();
   const { url } = useRouteMatch();
   const apiClient = useContext(ApiContext);
   const history = useHistory();
-  const [postSettings, setPostSettings] = useState({
-    index: 0,
-    tagged: false,
-  });
+  const [postSettings, setPostSettings] = useState(initPostsSettings);
 
   const { me, user, post } = props;
-  const { resetPosts, fetchUser, fetchPosts, getFavoritePosts } = props;
+  const { fetchUser, resetUser } = props;
+  const { fetchPosts, resetPosts, getFavoritePosts } = props;
 
   const { createFollow, deleteFollow } = props;
 
   useEffect(() => {
-    (async () => {
-      await fetchUser(apiClient, username);
-    })();
-    return () => resetPosts();
+    return () => {
+      resetUser();
+      resetPosts();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (username) {
+      fetchUser(apiClient, username);
+      setPostSettings(initPostsSettings);
+    }
+    return () => {
+      resetUser();
+    };
   }, [username]);
 
   useEffect(() => {
-    if (user.id) {
+    if (username) {
       resetPosts();
-
       handleFetchPosts();
     }
-  }, [user, postSettings]);
+  }, [postSettings]);
 
   if (url.includes(SETTINGS_ROUTE)) {
     return <Redirect to={SETTINGS_EDIT_PROFILE_ROUTE} />;
@@ -79,7 +94,7 @@ function Profile(props) {
       await getFavoritePosts(apiClient);
     } else {
       await fetchPosts(apiClient, {
-        userId: user.id,
+        userName: username,
         tagged: postSettings.tagged,
       });
     }
@@ -91,7 +106,7 @@ function Profile(props) {
 
   const handleTabChange = (index) => {
     setPostSettings({
-      index,
+      index: index,
       tagged: index === 1 || false,
     });
   };
@@ -120,17 +135,17 @@ function Profile(props) {
 
   return (
     <Container>
-      <Box my={4}>
+      <Box>
         <ProfileHeader
           isOwner={username === me.username}
           isOnline={!user.offlineDate}
           isFollow={user.isFollow}
           avatarUrl={user.avatarUrl}
           imageUrl={user.coverUrl}
-          username={user.username}
+          userName={user.userName}
           fullName={user.name}
           membership={user.membership}
-          feeling={user.feeling}
+          mood={user.mood}
           onPostCreate={() => {}}
           onFollowClick={() => handlePeopleFollow(user.id)}
           onEditCover={handleCoverEdit}
@@ -138,31 +153,46 @@ function Profile(props) {
           onSendGiftClick={() => handleGiftSend(user.username)}
         />
 
-        <Typography variant="body2">{user.bio}</Typography>
-
-        <Box className={classes.statistics}>
-          <Button
-            disabled={!user.followingsCount}
-            onClick={() => handleFollowingClick(user.username)}
-          >{`${user.followingsCount} following`}</Button>
-          <Button
-            disabled={!user.followersCount}
-            onClick={() => handleFollowersClick(user.username)}
-          >{`${user.followersCount} followers`}</Button>
-        </Box>
-
-        <Divider />
-
-        <ProfileContent
-          isOwner={username === me.username}
-          tabIndex={postSettings.index}
-          items={post.data}
-          hasMore={post.hasMore}
-          disabled={post.isFetching}
-          onFetchMore={handleFetchPosts}
-          onItemClick={handleItemClick}
-          onTabChange={handleTabChange}
-        />
+        <Grid container spacing={3}>
+          <Grid item sm={12} md={3}>
+            <Card>
+              <CardActions>
+                <ButtonGroup disableElevation variant="text" fullWidth>
+                  <Button
+                    disabled={!user.followingsCount}
+                    onClick={() => handleFollowingClick(user.username)}
+                  >{`${user.followingsCount} following`}</Button>
+                  <Button
+                    disabled={!user.followersCount}
+                    onClick={() => handleFollowersClick(user.username)}
+                  >{`${user.followersCount} followers`}</Button>
+                </ButtonGroup>
+              </CardActions>
+              <Divider />
+              <CardContent>
+                <Typography variant="h6">Bio</Typography>
+                <Typography variant="body2">{user.bio}</Typography>
+              </CardContent>
+              {user.sites && (
+                <CardActions>
+                  <SocialControl urls={user.sites} />
+                </CardActions>
+              )}
+            </Card>
+          </Grid>
+          <Grid item sm={12} md={9}>
+            <ProfileContent
+              isOwner={username === me.username}
+              tabIndex={postSettings.index}
+              items={post.data}
+              hasMore={post.hasMore}
+              disabled={post.isFetching}
+              onFetchMore={handleFetchPosts}
+              onItemClick={handleItemClick}
+              onTabChange={handleTabChange}
+            />
+          </Grid>
+        </Grid>
       </Box>
     </Container>
   );
@@ -174,10 +204,10 @@ function mapStateToProps(state) {
       id: state.signIn?.userInfo?.id,
       username: state.signIn?.userInfo?.userName,
     },
-    user: state.user.data,
+    user: state.user?.data,
     post: {
       count: state.posts.count,
-      isFetching: state.posts.isFetching,
+      isFetching: state.posts.isFetching || false,
       data: postActions.getGridGalleryPosts(state),
       errorMessage: state.posts.errorMessage,
       hasMore: state.posts.hasMore,
@@ -188,6 +218,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchUser: (api, username) => dispatch(userActions.getUser(api, username)),
+    resetUser: () => dispatch(userActions.resetUser()),
 
     fetchPosts: (api, opts) => dispatch(postActions.getPosts(api, opts)),
     resetPosts: () => dispatch(postActions.resetPosts()),

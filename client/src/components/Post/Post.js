@@ -21,7 +21,8 @@ import MediaContent from "../../components/MediaContent";
 
 import useStyles from "./styles";
 
-function Post(props) {
+// TODO: add optimization (list item doesn't optimized)
+const Post = React.memo((props) => {
   const classes = useStyles();
 
   const {
@@ -45,37 +46,6 @@ function Post(props) {
   } = props;
 
   const { onLikeClick, onFavoriteClick, onShareClick, onGoToClick, onPayClick, onReceiptClick } = props;
-
-  const handleLikeClick = (e) => {
-    e.preventDefault();
-    onLikeClick && onLikeClick(id);
-  };
-
-  const handleFavoriteClick = (e) => {
-    e.preventDefault();
-    onFavoriteClick && onFavoriteClick(id);
-  };
-
-  const handleGoToClick = (e) => {
-    e.preventDefault();
-    onGoToClick && onGoToClick(id);
-  };
-
-  const handlePayClick = (e) => {
-    e.preventDefault();
-    console.log("HErE")
-    onPayClick && onPayClick({ id, amount });
-  };
-
-  const handleReceiptClick = (e) => {
-    e.preventDefault();
-    onReceiptClick && onReceiptClick(id);
-  };
-
-  const handleShareClick = (e) => {
-    e.preventDefault();
-    onShareClick && onShareClick({ id, title: username, quote: description });
-  };
 
   return (
     <Card className={classes.root} variant="outlined">
@@ -119,19 +89,20 @@ function Post(props) {
             iLike={iLike}
             isFavorite={isFavorite}
             amount={amount}
+            username={username}
+            description={description}
             isPurchased={isPurchased}
-            onLikeClick={handleLikeClick}
-            onGoToClick={handleGoToClick}
-            onShareClick={handleShareClick}
-            onFavoriteClick={handleFavoriteClick}
-            onPayClick={handlePayClick}
-            onReceiptClick={handleReceiptClick}
-          />
+            onLikeClick={onLikeClick}
+            onGoToClick={onGoToClick}
+            onShareClick={onShareClick}
+            onFavoriteClick={onFavoriteClick}
+            onPayClick={onPayClick}
+            onReceiptClick={onReceiptClick} />
         </CardActions>
       )}
     </Card>
   );
-}
+});
 
 Post.propTypes = {
   id: PropTypes.string,

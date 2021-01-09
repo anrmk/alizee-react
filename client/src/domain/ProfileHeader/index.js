@@ -1,3 +1,3 @@
-import ProfileHeader from "./ProfileHeader";
+import Cover from "./Cover";
 
-export default ProfileHeader;
+export default Cover;

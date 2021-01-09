@@ -27,10 +27,10 @@ export default createMuiTheme({
 
     background: {
       default: "#1F2128",
-      paper: "#242731"
+      paper: "#242731",
     },
 
-    divider: "rgba(255, 255, 255, 0.08)"
+    divider: "rgba(255, 255, 255, 0.08)",
   },
 
   overrides: {
@@ -44,7 +44,6 @@ export default createMuiTheme({
       paper: {
         backgroundColor: "#1F2128",
       },
-
     },
 
     MuiCard: {
@@ -56,12 +55,12 @@ export default createMuiTheme({
     MuiOutlinedInput: {
       input: {
         "&::-webkit-calendar-picker-indicator": {
-          filter: "invert(1)"
+          filter: "invert(1)",
         },
         "&:-webkit-autofill": {
           WebkitBoxShadow: "0 0 0 1000px #343846 inset",
-          WebkitTextFillColor: "#FFF"
-        }
+          WebkitTextFillColor: "#FFF",
+        },
       },
     },
 
@@ -122,7 +121,7 @@ export default createMuiTheme({
     root: {
       "&.success": {
         color: "#3CFDB7",
-        backgroundColor: "red"
+        backgroundColor: "red",
       },
       "&.warning": {
         color: "#FEDB5F",
@@ -141,5 +140,4 @@ export default createMuiTheme({
       opacity: "0.6",
     },
   },
-
 });

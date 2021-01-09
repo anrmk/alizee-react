@@ -14,7 +14,8 @@ import Avatar from "../Avatar";
 
 import useStyles from "./styles";
 
-function RelationshipItem({
+const RelationshipItem = React.memo(({
+  id,
   avatarUrl,
   title,
   subtitle,
@@ -22,10 +23,14 @@ function RelationshipItem({
   isMe,
 
   onFollowClick,
-}) {
+}) => {
   const history = useHistory();
   const { t } = useTranslation();
   const classes = useStyles();
+
+  const handleFollowClick = () => {
+    onFollowClick && onFollowClick({ id, isFollow });
+  };
 
   return (
     <ListItem button className={classes.item}>
@@ -35,10 +40,7 @@ function RelationshipItem({
       <ListItemText
         primary={title}
         secondary={subtitle}
-        onClick={(e) => {
-          history.push(PROFILE_ROUTE(subtitle));
-        }}
-      />
+        onClick={() => history.push(PROFILE_ROUTE(subtitle))} />
 
       {!isMe && (
         <ListItemSecondaryAction>
@@ -46,15 +48,14 @@ function RelationshipItem({
             edge="end"
             color={isFollow ? "primary" : "default"}
             aria-label={isFollow ? t("FollowingBtnTextFollowerItem") : t("FollowerBtnTextFollowerItem")}
-            onClick={onFollowClick}
-          >
+            onClick={handleFollowClick}>
             {isFollow ? <CommentIcon /> : <PowerOffIcon />}
           </IconButton>
         </ListItemSecondaryAction>
       )}
     </ListItem>
   );
-}
+});
 
 RelationshipItem.propTypes = {
   avatarUrl: PropTypes.string,

@@ -3,8 +3,10 @@ export {
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
   GET_USER_FAILURE,
+  RESET_USER,
 
-  getUser
+  getUser,
+  resetUser
 } from "./getUser";
 export {
   RESET_PASSWORD_CONFIRM_REQUEST,

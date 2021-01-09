@@ -1,18 +1,18 @@
-import { generateUrl, generateFileUrl, getOffset } from '../../../helpers/functions';
-import { POSTS_OFFSET } from '../../../constants/feed';
+import { generateUrl, generateFileUrl, getOffset } from "../../../helpers/functions";
+import { POSTS_OFFSET, POSTS_LENGTH } from "../../../constants/feed";
 
-export const GET_FOLLOWING_POSTS_REQUEST = 'GET_FOLLOWING_POSTS_REQUEST';
-export const GET_FOLLOWING_POSTS_SUCCESS = 'GET_FOLLOWING_POSTS_SUCCESS';
-export const GET_FOLLOWING_POSTS_FAILURE = 'GET_FOLLOWING_POSTS_FAILURE';
+export const GET_FOLLOWING_POSTS_REQUEST = "GET_FOLLOWING_POSTS_REQUEST";
+export const GET_FOLLOWING_POSTS_SUCCESS = "GET_FOLLOWING_POSTS_SUCCESS";
+export const GET_FOLLOWING_POSTS_FAILURE = "GET_FOLLOWING_POSTS_FAILURE";
 
 function requestGetFollowingPosts() {
   return {
     type: GET_FOLLOWING_POSTS_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: '',
-    }
-  }
+      errorMessage: "",
+    },
+  };
 }
 
 function receiveGetFollowingPosts(posts, total, start, hasMore) {
@@ -20,12 +20,12 @@ function receiveGetFollowingPosts(posts, total, start, hasMore) {
     type: GET_FOLLOWING_POSTS_SUCCESS,
     payload: {
       isFetching: false,
-      errorMessage: '',
+      errorMessage: "",
       offset: getOffset(start, total, POSTS_OFFSET),
       hasMore,
-      data: posts || []
-    }
-  }
+      data: posts || [],
+    },
+  };
 }
 
 function errorGetFollowingPosts(message) {
@@ -34,23 +34,23 @@ function errorGetFollowingPosts(message) {
     payload: {
       isFetching: false,
       hasMore: false,
-      errorMessage: message
-    }
-  }
+      errorMessage: message,
+    },
+  };
 }
 
 export function getFollowingPosts(api, opts) {
   return async (dispatch, getState) => {
     dispatch(requestGetFollowingPosts());
 
-    const url = generateUrl('getFollowingPosts');
+    const url = generateUrl("getFollowingPosts");
     const currentOffset = getState().posts.offset;
     try {
       const { data } = await api
         .setMethod("GET")
         .setParams({
           start: currentOffset,
-          length: opts.length,
+          length: POSTS_LENGTH,
         })
         .query(url);
 
@@ -63,10 +63,7 @@ export function getFollowingPosts(api, opts) {
         };
         item.media.forEach((item) => {
           item.url = generateFileUrl(process.env.REACT_APP_DOMAIN, item.url);
-          item.thumbnailUrl = generateFileUrl(
-            process.env.REACT_APP_DOMAIN,
-            item.thumbnailUrl
-          );
+          item.thumbnailUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, item.thumbnailUrl);
         });
       });
 
@@ -81,5 +78,5 @@ export function getFollowingPosts(api, opts) {
     } catch (e) {
       dispatch(errorGetFollowingPosts("Error: something went wrong:", e));
     }
-  }
+  };
 }

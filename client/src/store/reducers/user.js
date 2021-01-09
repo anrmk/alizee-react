@@ -2,6 +2,7 @@ import {
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
   GET_USER_FAILURE,
+  RESET_USER,
 
   RESET_PASSWORD_CONFIRM_REQUEST,
   RESET_PASSWORD_CONFIRM_SUCCESS,
@@ -44,6 +45,11 @@ export default function user(
         ...action.payload,
       };
     case GET_USER_FAILURE:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case RESET_USER:
       return {
         ...state,
         ...action.payload,

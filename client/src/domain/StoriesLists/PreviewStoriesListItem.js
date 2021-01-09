@@ -6,7 +6,8 @@ import Avatar from "../../components/Avatar";
 import { STORIES_ROUTE } from "../../constants/routes";
 import useStyles from "./styles";
 
-export default function PreviewStoryListItem({
+// Not optimized
+const PreviewStoryListItem = React.memo(({
   id,
   username,
   name,
@@ -14,7 +15,7 @@ export default function PreviewStoryListItem({
   avatarUrl,
 
   onClick
-}) {
+}) => {
   const classes = useStyles({
     previewUrl
   });
@@ -34,4 +35,6 @@ export default function PreviewStoryListItem({
       <Typography className={classes.previewStoryListItemName} variant="caption" noWrap>{name}</Typography>
     </ListItem>
   )
-};
+});
+
+export default PreviewStoryListItem;

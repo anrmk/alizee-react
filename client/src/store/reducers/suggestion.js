@@ -86,15 +86,9 @@ export default function suggestionReducer(
     }
 
     case UNFOLLOW_PEOPLE_SUGGESTIONS_SUCCESS: {
-      const { userId, isFollow } = action.payload.data;
-      const personIndex = state.people.findIndex((item) => item.id === userId);
-      const people = [...state.people];
-      people[personIndex].isFollow = isFollow;
-
       return {
         ...state,
-        ...action.payload,
-        people,
+        ...action.payload
       };
     }
 
