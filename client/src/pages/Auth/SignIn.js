@@ -3,13 +3,11 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { Container } from "@material-ui/core";
 
-import VideoBackground from "../../components/VideoBackground";
 import { SignInForm } from "../../domain/AuthForms";
 
 import * as signInActions from '../../store/actions/signIn';
 import * as socialAuthActions from '../../store/actions/socialAuth';
 import ApiContext from "../../context/ApiContext";
-import login_video from "../../../src/assets/img/login_video.webm";
 import useStyles from "./styles";
 
 function SignIn(props) {
@@ -67,7 +65,6 @@ function SignIn(props) {
         onSocialRequest={handleSocialRequest}
         onSocialSuccess={handleSocialSuccess}
         onSocialFailure={handleSocialFailure} />
-      <VideoBackground src={login_video} />
     </Container>
   );
 }
