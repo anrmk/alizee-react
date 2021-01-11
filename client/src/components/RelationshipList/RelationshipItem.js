@@ -16,6 +16,8 @@ import useStyles from "./styles";
 
 const RelationshipItem = React.memo(({
   id,
+  followId,
+  userId,
   avatarUrl,
   title,
   subtitle,
@@ -29,7 +31,7 @@ const RelationshipItem = React.memo(({
   const classes = useStyles();
 
   const handleFollowClick = () => {
-    onFollowClick && onFollowClick({ id, isFollow });
+    onFollowClick && onFollowClick({ id, followId, userId, isFollow });
   };
 
   return (

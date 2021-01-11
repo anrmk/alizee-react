@@ -8,7 +8,14 @@ import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary";
 
 import { Box, Input, IconButton, Tooltip } from "@material-ui/core";
 
-function CreateTools({ className, onlyMedia, isPrivate, isCommentable, onChange }) {
+function CreateTools({
+  className,
+  multiple = true,
+  onlyMedia,
+  isPrivate,
+  isCommentable,
+  onChange
+}) {
   const mediaRef = useRef();
 
   return (
@@ -49,7 +56,7 @@ function CreateTools({ className, onlyMedia, isPrivate, isCommentable, onChange 
           <PhotoLibraryIcon fontSize="small" />
           <input
             type="file"
-            multiple
+            multiple={multiple}
             id="medias"
             name="medias"
             ref={mediaRef}

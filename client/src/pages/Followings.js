@@ -34,10 +34,8 @@ function Followings(props) {
     }
   }, [user.id]);
 
-  const handleFollowClick = (item, isLoading) => {
-    if (isLoading) return;
-
-    item.isFollow ? deleteFollow(apiClient, item.userId, item.followId) : createFollow(apiClient, item.userId, item.followId);
+  const handleFollowClick = ({ userId, isFollow }) => {
+    !following.isLoading && isFollow ? deleteFollow(apiClient, userId) : createFollow(apiClient, userId);
   };
 
   return (

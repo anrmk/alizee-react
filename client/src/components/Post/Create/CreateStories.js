@@ -71,6 +71,7 @@ export default function CreateStories({ id, onSubmit }) {
           <CreateTools
             className={classes.tools}
             onlyMedia
+            multiple={false}
             onChange={handleMediaChange}
           />
         </Grid>
