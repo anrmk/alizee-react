@@ -1,7 +1,9 @@
 import lightTheme from "./light";
 import darkTheme from "./dark";
 
+import { responsiveFontSizes } from "@material-ui/core";
+
 export default {
-  "light": lightTheme,
-  "dark": darkTheme
+  light: responsiveFontSizes(lightTheme),
+  dark: responsiveFontSizes(darkTheme),
 };

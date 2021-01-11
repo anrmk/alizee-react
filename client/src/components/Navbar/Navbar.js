@@ -4,12 +4,10 @@ import { useHistory } from "react-router-dom";
 import { Container, Box, AppBar, Toolbar, IconButton, InputBase, Badge } from "@material-ui/core";
 
 import NotificationsIcon from "@material-ui/icons/NotificationsActiveOutlined";
-import HomeIcon from "@material-ui/icons/HomeOutlined";
-import AddIcon from "@material-ui/icons/Add";
 import MailIcon from "@material-ui/icons/MailOutline";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
 
-import { CHAT_ROUTE, HOME_ROUTE } from "../../constants/routes";
+import { CHAT_ROUTE } from "../../constants/routes";
 import Avatar from "../Avatar";
 
 import useStyles from "./styles";
@@ -62,16 +60,6 @@ function Navbar({
             />
           </div>
 
-          {/* <div className={classes.controls}>
-            <IconButton onClick={() => history.push(HOME_ROUTE)}>
-              <HomeIcon />
-            </IconButton>
-
-            <IconButton onClick={() => history.push(HOME_ROUTE)}>
-              <AddIcon />
-            </IconButton>
-          </div> */}
-
           <div className={classes.grow} />
 
           <Box className={classes.controls}>
@@ -81,9 +69,11 @@ function Navbar({
               </Badge>
             </IconButton>
 
-            <IconButton onClick={() => {
-              history.push(CHAT_ROUTE(username))
-              }}>
+            <IconButton
+              onClick={() => {
+                history.push(CHAT_ROUTE(username));
+              }}
+            >
               <Badge badgeContent={messagesCount} color="primary">
                 <MailIcon />
               </Badge>
@@ -97,7 +87,7 @@ function Navbar({
               aria-haspopup="true"
               onClick={handleMenuOpen}
             >
-              <Avatar src={avatarUrl} size="small" borderColor="blue" />
+              <Avatar src={avatarUrl} size="small" />
             </IconButton>
 
             <Menu

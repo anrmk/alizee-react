@@ -23,6 +23,7 @@ import SunnyIcon from "@material-ui/icons/WbSunnyOutlined";
 import { HOME_ROUTE, EXPLORE_ROUTE, MEET_ROUTE } from "../../constants/routes";
 import { useChangeTheme } from "../../domain/ThemeProvider";
 import UserCard from "./UserCard";
+import Footer  from "../Footer"
 
 import useStyles from "./styles";
 
@@ -80,7 +81,12 @@ function Sidebar({
             <NightsStayIcon />
           </Grid>
           <Grid item>
-            <Switch name="gilad" checked={theme.palette.type === "light"} color="primary" onChange={() => changeTheme()} />
+            <Switch
+              name="gilad"
+              checked={theme.palette.type === "light"}
+              color="primary"
+              onChange={() => changeTheme()}
+            />
           </Grid>
           <Grid item>
             <SunnyIcon />
@@ -93,8 +99,8 @@ function Sidebar({
         name={userInfo.name}
         avatarUrl={userInfo.avatarUrl}
         open={open}
-        postCount={userStatistics?.postCount} 
-        followerCount={userStatistics?.followerCount} 
+        postCount={userStatistics?.postCount}
+        followerCount={userStatistics?.followerCount}
         followingCount={userStatistics?.followingCount}
         onNavigationChange={handleUserCardNavigationChange}
       />
@@ -118,7 +124,7 @@ function Sidebar({
             onClick={() => history.push(EXPLORE_ROUTE)}
           >
             <ListItemIcon>
-              <ExploreIcon/>
+              <ExploreIcon />
             </ListItemIcon>
             <ListItemText primary={t("SidebarExploreText")} />
           </ListItem>
@@ -127,7 +133,7 @@ function Sidebar({
         <Tooltip title={t("SidebarActivityText")} placement="right">
           <ListItem button>
             <ListItemIcon>
-              <FavoriteBorderIcon  />
+              <FavoriteBorderIcon />
             </ListItemIcon>
             <ListItemText primary={t("SidebarActivityText")} />
           </ListItem>
@@ -160,6 +166,9 @@ function Sidebar({
           </ListItem>
         </Tooltip>
       </List>
+
+      <Divider />
+      <Footer open={open}/>
     </Drawer>
   );
 }

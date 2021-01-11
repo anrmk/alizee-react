@@ -24,18 +24,18 @@ const useStyles = makeStyles((theme) => ({
   header: (props) => ({
     display: "flex",
     padding: theme.spacing(1),
-    alignItems: props.open ? "space-between": "center",
-    flexDirection: props.open ? "row": "column",
-    justifyContent:  "center",
-   
+    alignItems: props.open ? "space-between" : "center",
+    flexDirection: props.open ? "row" : "column",
+    justifyContent: "center",
+
     "& label": {
-     width: "auto",
-     flexWrap: "nowrap",
+      width: "auto",
+      flexWrap: "nowrap",
     },
 
     [theme.breakpoints.up("sm")]: {
-      justifyContent:  "space-between",
-    }
+      justifyContent: "space-between",
+    },
   }),
 
   drawerHeader: (props) => ({
@@ -46,9 +46,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }),
 
-  themeToggle: (props) => ({
-
-  }),
+  themeToggle: (props) => ({}),
 
   drawerOpen: {
     transition: theme.transitions.create("width", {
@@ -70,16 +68,16 @@ const useStyles = makeStyles((theme) => ({
 
   card: (props) => ({
     flexDirection: "column",
-    alignItems:"center",
+    alignItems: "center",
     textAlign: "center",
     display: !props.open ? "none" : "flex",
     [theme.breakpoints.down("sm")]: {
       display: "none !important",
-    }
+    },
   }),
 
   navigation: {
-    margin: theme.spacing(2, 0)
+    margin: theme.spacing(2, 0),
   },
 }));
 

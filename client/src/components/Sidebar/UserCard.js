@@ -25,7 +25,7 @@ function UserCard(props) {
   };
 
   return (
-    <Box m={3} className={classes.card}>
+    <Box m={2} className={classes.card}>
       <Avatar src={avatarUrl} size="large" borderColor="blue" live />
       <br />
       <Typography variant="h6">{name}</Typography>

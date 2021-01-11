@@ -154,18 +154,18 @@ function Profile(props) {
         />
 
         <Grid container spacing={3}>
-          <Grid item sm={12} md={3}>
+          <Grid item xs={12} sm={12} md={3}>
             <Card>
               <CardActions>
                 <ButtonGroup disableElevation variant="text" fullWidth>
                   <Button
                     disabled={!user.followingsCount}
                     onClick={() => handleFollowingClick(user.username)}
-                  >{`${user.followingsCount} following`}</Button>
+                  >{user.followingsCount} following</Button>
                   <Button
                     disabled={!user.followersCount}
                     onClick={() => handleFollowersClick(user.username)}
-                  >{`${user.followersCount} followers`}</Button>
+                  >{user.followersCount} followers</Button>
                 </ButtonGroup>
               </CardActions>
               <Divider />
@@ -180,7 +180,7 @@ function Profile(props) {
               )}
             </Card>
           </Grid>
-          <Grid item sm={12} md={9}>
+          <Grid item xs={12} sm={12} md={9}>
             <ProfileContent
               isOwner={username === me.username}
               tabIndex={postSettings.index}

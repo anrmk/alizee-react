@@ -1,5 +1,8 @@
 export const DEFAULT_ROUTE = "/";
 export const HOME_ROUTE = "/feed";
+export const ABOUT_ROUTE = "";
+export const HELP_ROUTE = "help";
+export const PRIVACY_ROUTE = "";
 export const EXPLORE_ROUTE = "/explore";
 export const POST_ROUTE = "/posts";
 export const POST_ID_ROUTE = "/posts/:id";
