@@ -22,9 +22,6 @@ const useStyles = makeStyles((theme) => ({
     "&::-webkit-scrollbar": {
       display: "none",
     },
-    "& .infinite-scroll-component__outerdiv div": {
-      overflowX: "hidden !important"
-    }
   },
 
   messengerMessage: {
@@ -37,24 +34,23 @@ const useStyles = makeStyles((theme) => ({
     flexFlow: "nowrap",
     flexDirection: "row",
     alignSelf: "flex-start",
-    overflowWrap: "break-word",
+    wordBreak: "break-word",
     backgroundColor: theme.palette.primary.main,
-    color: grey["50"],
+    color: theme.palette.common.white
   },
 
   messengerMyMessage: {
     alignSelf: "flex-end",
     backgroundColor: theme.palette.success.dark,
     justifyContent: "flex-end",
-    //backgroundColor: getStyleByTheme(theme, purple["100"], lime["100"]),
   },
   
   messengerMessageDate: {
     width: "fit-content",
     alignSelf: "flex-end",
-    color: theme.palette.text.secondary,
     whiteSpace: "nowrap",
     padding: theme.spacing(0, 0,0, 1),
+    color: grey["400"],
   },
 
   infinite: {

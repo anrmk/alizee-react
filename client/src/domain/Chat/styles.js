@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => {
   return {
     card: {
       position: "relative",
-      height: `calc(100vh - ${(theme.mixins.toolbar.minHeight*2 + theme.spacing(2))}px)`,
+      height: `calc(100vh - ${(theme.mixins.toolbar.minHeight * 2 + theme.spacing(2))}px)`,
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between"
@@ -42,6 +42,13 @@ const useStyles = makeStyles((theme) => {
       display: "flex",
       flexDirection: "column",
       ...hideScroll
+    },
+    sidebarListItemText: {
+      width: "100%"
+    },
+    sidebarListItemOfflineDate: {
+      flex: "1 1 70%",
+      textAlign: "end"
     },
   }
 });

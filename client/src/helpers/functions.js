@@ -299,14 +299,16 @@ export function formatCurrency(amount, currency = "USD") {
   return formatter.format(amount);
 }
 
-export function formatDate(value) {
+const ONE_HOUR_MILLISECONDS = 1000*60*60;
+
+export function formatDate(value, opts = { timeOffset: 12 }) {
   const currentDate = new Date();
   const delta = currentDate - new Date(value);
 
   let options = {};
 
-  //more that 12
-  if(delta > 1000*60*60*12) {
+ 
+  if(delta > ONE_HOUR_MILLISECONDS * opts.timeOffset) {
     options = { 
       year: "numeric", month: "short", day: "numeric", 
       hour: 'numeric', minute: 'numeric', 

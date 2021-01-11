@@ -1,4 +1,5 @@
 import { createMuiTheme } from "@material-ui/core";
+
 import defaultTheme from "./default";
 
 export default createMuiTheme({
@@ -14,7 +15,7 @@ export default createMuiTheme({
     },
 
     success: {
-      main: "#3CFDB7",
+      main:  "#18AA7E"
     },
 
     warning: {
