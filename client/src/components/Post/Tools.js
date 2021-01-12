@@ -93,13 +93,15 @@ const Tools = React.memo(({
       <IconButton className="danger" onClick={handleLikeClick} aria-label="add to favorites">
         {iLike ? <FavoriteIcon /> : <FavoriteBorderIcon />}
       </IconButton>
-      <Hidden mdDown>{likes > 0 && <strong>{likes}</strong>}</Hidden>
+      
+      <Hidden mdDown>
+        {likes > 0 && <strong>{likes}</strong>}
+      </Hidden>
 
-      {isCommentable && !hideCommentable && (
-        <IconButton className="warning" onClick={handleGoToClick}>
-          <ChatIcon />
-        </IconButton>
-      )}
+      <IconButton className="warning" onClick={handleGoToClick}>
+        <ChatIcon />
+        {/* {isCommentable && !hideCommentable && ( */}
+      </IconButton>
 
       <IconButton aria-label="share" onClick={handleShareClick}>
         <ShareIcon />
@@ -107,17 +109,11 @@ const Tools = React.memo(({
 
       <div className={classes.grow}></div>
 
+      {/* {renderPurchase(amount, isPurchased)} */}
+
       <IconButton className="success" aria-label="share" onClick={handleFavoriteClick}>
         {isFavorite ? <BookmarkIcon /> : <BookmarkBorderIcon />}
       </IconButton>
-
-      {renderPurchase(amount, isPurchased)}
-
-      {!hideWatch && (
-        <Button variant="contained" size="small" className="primary" onClick={handleGoToClick}>
-          Watch
-        </Button>
-      )}
     </>
   );
 });

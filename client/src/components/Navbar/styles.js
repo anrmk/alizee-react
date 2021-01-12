@@ -5,37 +5,56 @@ const drawerWidth = 260;
 const useStyles = (open) => makeStyles((theme) => ({
     root: {
       boxShadow: "none",
-      width: `calc(100% - ${theme.spacing(7)}px)`,
-
+      width: "100%",
+      
       marginLeft: drawerWidth,
       transition: theme.transitions.create(["width", "margin"], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
       }),
-      [theme.breakpoints.up("sm")]: {
-        width: open ? `calc(100% - ${drawerWidth}px)` : `calc(100% - ${theme.spacing(7)}px)`,
+
+      "&.bottom": {
+        top: "auto",
+        bottom: 0,
+        borderTopWidth: "1px",
+        borderTopColor: theme.palette.divider,
+        borderTopStyle: "solid",
       },
+
+      [theme.breakpoints.up("md")]: {
+        width: open ? `calc(100% - ${drawerWidth}px)` : `calc(100% - ${theme.spacing(7)}px)`,
+      }
     },
 
-    menuButton: {
-      marginRight: theme.spacing(2),
+    logo: {
+      background: "url('/logo1.png') no-repeat",
+      backgroundSize: "cover",
+      backgroundPositionY: theme.palette.type === "dark" ? "-29px" : "0",
+      height: "29px",
+      minWidth: "103px",
+      marginRight: theme.spacing(1)
     },
+
+    // menuButton: {
+    //   marginRight: theme.spacing(2),
+    // },
 
     toolbar: {
       padding: theme.spacing(0),
+      justifyContent: "space-between",
     },
 
     grow: {
       flexGrow: 1,
     },
 
-    title: {
-      display: "none",
-      color: fade(theme.palette.common.black, 0.5),
-      [theme.breakpoints.up("sm")]: {
-        display: "block",
-      },
-    },
+    // title: {
+    //   display: "none",
+    //   color: fade(theme.palette.common.black, 0.5),
+    //   [theme.breakpoints.up("sm")]: {
+    //     display: "block",
+    //   },
+    // },
 
     search: {
       position: "relative",
@@ -49,12 +68,12 @@ const useStyles = (open) => makeStyles((theme) => ({
       },
       marginRight: theme.spacing(2),
       marginLeft: 0,
-      width: "100%",
-      display: "none",
-      [theme.breakpoints.up("md")]: {
-        display: "flex",
-        width: "auto",
-      },
+      width: "auto",
+      //display: "none",
+      // [theme.breakpoints.up("sm")]: {
+      //   display: "flex",
+      //   width: "auto",
+      // },
     },
 
     searchIcon: {
@@ -81,6 +100,7 @@ const useStyles = (open) => makeStyles((theme) => ({
     hide: {
       display: "none",
     },
+
   }));
 
 export default useStyles;

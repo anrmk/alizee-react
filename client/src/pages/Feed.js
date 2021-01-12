@@ -157,7 +157,7 @@ function Feed(props) {
 
   return (
     <Container>
-      <Box my={4}>
+      <Box marginBottom={7}>
         <Grid container spacing={2} direction="row">
           <Grid container item md={8} sm={12} direction="column">
             <Typography variant="h6">Top stories</Typography>
@@ -183,7 +183,7 @@ function Feed(props) {
               <Grid container direction="column" alignItems="stretch" spacing={3}>
                 {people.data && people.data.length > 0 && (
                   <Grid item>
-                    <Typography variant="h6" className={classes.suggestionHeader}>
+                    <Typography variant="h6" className={classes.suggestionHeader} >
                       Suggestions For You
                       <Link href={SUGESTED_PEOPLE} variant="caption">
                         See All

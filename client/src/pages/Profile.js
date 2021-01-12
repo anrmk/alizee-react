@@ -135,7 +135,7 @@ function Profile(props) {
 
   return (
     <Container>
-      <Box>
+      <Box mb={8}>
         <ProfileHeader
           isOwner={username === me.username}
           isOnline={!user.offlineDate}
@@ -154,7 +154,7 @@ function Profile(props) {
         />
 
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={12} md={3}>
+          <Grid item sm={12} md={4} >
             <Card>
               <CardActions>
                 <ButtonGroup disableElevation variant="text" fullWidth>
@@ -180,7 +180,7 @@ function Profile(props) {
               )}
             </Card>
           </Grid>
-          <Grid item xs={12} sm={12} md={9}>
+          <Grid item sm={12} md={8}>
             <ProfileContent
               isOwner={username === me.username}
               tabIndex={postSettings.index}

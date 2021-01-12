@@ -44,6 +44,9 @@
   "SidebarPopularTagsText": "Popular tags",
   "SidebarWalletText" : "Wallet",
   "SidebarHotTipsText": "Hot tips",
+  "SidebarSearchText": "Search",
+  "SidebarNotificationText": "Norification",
+  "SidebarChatText": "Chat",
 
   "ChatSidebarSearchInputLabel": "Search a chat",
   "ChatFollowingDialogTitle": "Start a new conversation",

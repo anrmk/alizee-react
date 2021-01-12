@@ -3,7 +3,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 import ApiContext from "../context/ApiContext";
-import Navbar from "../components/Navbar";
+import { Navbar, BottomBar } from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 
 import { SignIn, SignUp } from "./Auth";
@@ -13,6 +13,7 @@ import PrivateRoute from "./PrivateRoute";
 import Chat from "./Chat";
 import Post from "./Post";
 import Feed from "./Feed";
+import Activity from "./Activity";
 import Explore from "./Explore";
 import PeopleSuggested from "./PeopleSuggested";
 import CreateRoom from "./Meet/CreateRoom";
@@ -30,14 +31,17 @@ import { signOutUser } from "../store/actions/signIn";
 import * as Routes from "../constants/routes";
 import useHideNavigation from "../hooks/useHideNavigation";
 
+import { Box, Hidden } from "@material-ui/core";
+
 function Main({ 
   userInfo, 
   isAuthenticated, 
 
   userStatistics, 
+  getUserStatistics,
 
   signOut,
-  getUserStatistics 
+  postOnClick   
 }) {
   const apiClient = useContext(ApiContext);
   const [open, setOpen] = useState(true);
@@ -57,21 +61,23 @@ function Main({
   }, [userInfo.id]);
 
   return (
-    <div style={!isNavigationHide ? ({ display: "flex" }) : null}>
+    <Box style={!isNavigationHide ? { display: "flex" } : null}>
       {isAuthenticated && !isNavigationHide && (
         <>
-          <Navbar
-            username={userInfo.userName}
-            avatarUrl={userInfo.avatarUrl}
-            onSignOut={signOut}
-            open={open}
-          />
-          <Sidebar userInfo={userInfo} open={open} userStatistics={userStatistics} onDrawerToggle={handleDrawerToggle} />
+          <Navbar username={userInfo.userName} avatarUrl={userInfo.avatarUrl} open={open} onSignOut={signOut} />
+          <Hidden smDown>
+            <Sidebar
+              userInfo={userInfo}
+              open={open}
+              userStatistics={userStatistics}
+              onDrawerToggle={handleDrawerToggle}
+            />
+          </Hidden>
         </>
       )}
-      <div style={isAuthenticated && !isNavigationHide ? ({flexGrow: 1, paddingTop: 64}) : null}>
+      <Box style={isAuthenticated && !isNavigationHide ? { flexGrow: 1, paddingTop: 64 } : null}>
         <Switch>
-          <Route exact path={Routes.DEFAULT_ROUTE} render={() => (<Redirect to={Routes.HOME_ROUTE} />)} />
+          <Route exact path={Routes.DEFAULT_ROUTE} render={() => <Redirect to={Routes.HOME_ROUTE} />} />
           <Route path={Routes.SIGN_UP_ROUTE} component={SignUp} />
           <Route path={Routes.SIGN_IN_ROUTE} component={SignIn} />
           <Route path={Routes.EMAIL_CONFIRMATION} component={EmailConfirmation} />
@@ -81,6 +87,7 @@ function Main({
           <PrivateRoute path={Routes.HOME_ROUTE} component={Feed} />
           <PrivateRoute path={Routes.EXPLORE_ROUTE} component={Explore} />
           <PrivateRoute path={Routes.POST_ID_ROUTE} component={Post} />
+          <PrivateRoute path={Routes.ACTIVITY_ROUTE} component={Activity} />
           <PrivateRoute path={Routes.MEET_ROUTE} component={Meeting} />
           <PrivateRoute path={Routes.CHAT_USERNAME_ROUTE} component={Chat} />
           <PrivateRoute exact path={Routes.ROOM_ROUTE} component={CreateRoom} />
@@ -92,8 +99,13 @@ function Main({
           <PrivateRoute exact path={Routes.PROFILE_FOLLOWINGS_ROUTE} component={Followings} />
           <PrivateRoute exact path={Routes.STORIES_ID_ROUTE} component={Story} />
         </Switch>
-      </div>
-    </div>
+      </Box>
+      {isAuthenticated && !isNavigationHide && (
+        <Hidden mdUp>
+          <BottomBar userName={userInfo.userName} avatarUrl={userInfo.avatarUrl} onClick={postOnClick}  />
+        </Hidden>
+      )}
+    </Box>
   );
 }
 

@@ -20,10 +20,10 @@ import GrainIcon from "@material-ui/icons/GrainOutlined";
 import NightsStayIcon from "@material-ui/icons/NightsStayOutlined";
 import SunnyIcon from "@material-ui/icons/WbSunnyOutlined";
 
-import { HOME_ROUTE, EXPLORE_ROUTE, MEET_ROUTE } from "../../constants/routes";
+import { HOME_ROUTE, EXPLORE_ROUTE, MEET_ROUTE, ACTIVITY_ROUTE } from "../../constants/routes";
 import { useChangeTheme } from "../../domain/ThemeProvider";
 import UserCard from "./UserCard";
-import Footer  from "../Footer"
+import Footer from "../Footer";
 
 import useStyles from "./styles";
 
@@ -131,7 +131,11 @@ function Sidebar({
         </Tooltip>
 
         <Tooltip title={t("SidebarActivityText")} placement="right">
-          <ListItem button>
+          <ListItem
+            button
+            selected={location.pathname.includes(ACTIVITY_ROUTE)}
+            onClick={() => history.push(ACTIVITY_ROUTE)}
+          >
             <ListItemIcon>
               <FavoriteBorderIcon />
             </ListItemIcon>
@@ -168,7 +172,7 @@ function Sidebar({
       </List>
 
       <Divider />
-      <Footer open={open}/>
+      <Footer open={open} />
     </Drawer>
   );
 }
