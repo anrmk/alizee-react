@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import ReactPlayer from "react-player";
+import VisibilitySensor from 'react-visibility-sensor';
 
 import { Box } from "@material-ui/core";
 
@@ -25,6 +26,17 @@ export default function VideoContent({
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(false);
   const [showing, setShowing] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    if (isVisible) {
+      setPlaying(true);
+    } else {
+      if (playing) {
+        setPlaying(false);
+      }
+    }
+  }, [isVisible]);
 
   const getControlsOpacity = (show, stop) => {
     if (stop && show) {
@@ -74,14 +86,13 @@ export default function VideoContent({
     );
   };
 
-
-
   return (
     <Box id={id} className={clsx(classes.videoContent, wrapperClassName)} onMouseEnter={() => setShowing(true)} onMouseLeave={() => setShowing(false)}>
       {showControls && renderPlayBtn(showing, playing)}
       {showControls && renderMuteBtn(showing, muted, playing)}
-     
-      <ReactPlayer className={clsx(classes.player, videoClassName)} width="100%" height="100%" playing={playing} muted={muted} url={url} {...videoPlayerProps} />
+      <VisibilitySensor onChange={(isVisible) => setIsVisible(isVisible)}>
+        <ReactPlayer className={clsx(classes.player, videoClassName)} width="100%" height="100%" playing={playing} muted={muted} url={url} {...videoPlayerProps} />
+      </VisibilitySensor>
     </Box>
   );
 }
