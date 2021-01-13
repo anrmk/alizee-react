@@ -2,7 +2,8 @@ import React, { useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
-import { Container } from "@material-ui/core";
+
+import { Box, Container, Grid, Hidden } from "@material-ui/core";
 
 import { SignUpForm } from "../../domain/AuthForms";
 
@@ -11,6 +12,7 @@ import * as signInActions from "../../store/actions/signIn";
 import * as socialAuthActions from "../../store/actions/socialAuth";
 import { HOME_ROUTE, EMAIL_CONFIRMATION } from "../../constants/routes";
 import ApiContext from "../../context/ApiContext";
+
 import useStyles from "./styles";
 
 function SignUp(props) {
@@ -18,19 +20,14 @@ function SignUp(props) {
   const classes = useStyles();
 
   const { isSignUp, isSocial, errorMessage } = props;
-  const {
-    signUp,
-    signUpSocial,
-    requestSignUpSocial,
-    failSignUpSocial
-  } = props;
+  const { signUp, signUpSocial, requestSignUpSocial, failSignUpSocial } = props;
 
   if (isSocial) {
-    return <Redirect to={HOME_ROUTE} />
+    return <Redirect to={HOME_ROUTE} />;
   }
 
   if (isSignUp) {
-    return <Redirect to={EMAIL_CONFIRMATION} />
+    return <Redirect to={EMAIL_CONFIRMATION} />;
   }
 
   const handleFormSubmit = async (formData) => {
@@ -38,31 +35,42 @@ function SignUp(props) {
   };
 
   const handleSocialRequest = () => {
-    requestSignUpSocial()
-  }
+    requestSignUpSocial();
+  };
 
   const handleSocialSuccess = (response, socialType) => {
     (async () => {
       await signUpSocial(apiClient, socialType, response);
     })();
-  }
+  };
 
   const handleSocialFailure = (response) => {
     failSignUpSocial(response.error);
-  }
+  };
 
   return (
     <Container className={classes.container}>
       <GoogleReCaptchaProvider
         useRecaptchaNet
         reCaptchaKey={process.env.REACT_APP_RECAPTCHA_KEY}
-        scriptProps={{ async: true, defer: true, appendTo: "body" }}>
-        <SignUpForm
-          error={errorMessage}
-          onSubmit={handleFormSubmit}
-          onSocialRequest={handleSocialRequest}
-          onSocialSuccess={handleSocialSuccess}
-          onSocialFailure={handleSocialFailure} />
+        scriptProps={{ async: true, defer: true, appendTo: "body" }}
+      >
+        <Grid container justify="center" alignItems="center" direction="row" className={classes.container}>
+          <Hidden smDown>
+            <Grid item sm={6}>
+              <Box className={classes.authImage} />
+            </Grid>
+          </Hidden>
+          <Grid item md={4} sm={6} xs={12}>
+            <SignUpForm
+              error={errorMessage}
+              onSubmit={handleFormSubmit}
+              onSocialRequest={handleSocialRequest}
+              onSocialSuccess={handleSocialSuccess}
+              onSocialFailure={handleSocialFailure}
+            />
+          </Grid>
+        </Grid>
       </GoogleReCaptchaProvider>
     </Container>
   );
@@ -72,8 +80,8 @@ function mapStateToProps(state) {
   return {
     isSignUp: state.signUp.isSignUp,
     isSocial: state.signIn.isSocial,
-    errorMessage: state.signUp.errorMessage
-  }
+    errorMessage: state.signUp.errorMessage,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -81,8 +89,8 @@ function mapDispatchToProps(dispatch) {
     signUp: (api, creds) => dispatch(signUpActions.signUpUser(api, creds)),
     signUpSocial: (api, socialType, data) => dispatch(signInActions.signInSocial(api, socialType, data)),
     requestSignUpSocial: () => dispatch(socialAuthActions.requestSocialAuth()),
-    failSignUpSocial: (message) => dispatch(socialAuthActions.errorSocialAuth(message))
-  }
+    failSignUpSocial: (message) => dispatch(socialAuthActions.errorSocialAuth(message)),
+  };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp)
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

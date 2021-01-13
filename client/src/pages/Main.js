@@ -61,7 +61,7 @@ function Main({
   }, [userInfo.id]);
 
   return (
-    <Box style={!isNavigationHide ? { display: "flex" } : null}>
+    <Box style={isAuthenticated && !isNavigationHide ? { display: "flex" } : null}>
       {isAuthenticated && !isNavigationHide && (
         <>
           <Navbar username={userInfo.userName} avatarUrl={userInfo.avatarUrl} open={open} onSignOut={signOut} />

@@ -1,17 +1,11 @@
 import React from "react";
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { yupResolver } from '@hookform/resolvers/yup';
+import PropTypes from "prop-types";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
-import {
-  TextField,
-  Typography,
-  Card,
-  CardContent,
-  Divider,
-  Link
-} from "@material-ui/core";
+import { TextField, Typography, Card, CardContent, Divider, Link } from "@material-ui/core";
 
 import { RESET_PASSWORD_ROUTE, SIGN_UP_ROUTE } from "../../constants/routes";
 import AuthBaseForm from "./AuthBaseForm";
@@ -24,13 +18,8 @@ const INVALID_EMAIL_ERROR = "Must be a valid email";
 const EMPTY_VALUE_ERROR = "It is a required filed";
 
 const schema = yup.object().shape({
-  [EMAIL_INPUT_ID]: yup
-    .string()
-    .required(EMPTY_VALUE_ERROR)
-    .email(INVALID_EMAIL_ERROR),
-  [PASSWORD_INPUT_ID]: yup
-    .string()
-    .required(EMPTY_VALUE_ERROR)
+  [EMAIL_INPUT_ID]: yup.string().required(EMPTY_VALUE_ERROR).email(INVALID_EMAIL_ERROR),
+  [PASSWORD_INPUT_ID]: yup.string().required(EMPTY_VALUE_ERROR),
 });
 
 function SignInForm({
@@ -39,7 +28,7 @@ function SignInForm({
   onSubmit,
   onSocialRequest,
   onSocialSuccess,
-  onSocialFailure
+  onSocialFailure,
 }) {
   const history = useHistory();
   const classes = useStyles();
@@ -50,17 +39,18 @@ function SignInForm({
     defaultValues: {
       [EMAIL_INPUT_ID]: "",
       [PASSWORD_INPUT_ID]: "",
-    }
+    },
   });
 
   return (
     <AuthBaseForm
+      isSingInForm={true}
       error={error}
       onFormSubmit={handleSubmit(onSubmit)}
       onSocialRequest={onSocialRequest}
       onSocialSuccess={onSocialSuccess}
       onSocialFailure={onSocialFailure}
-      formComponent={(
+      formComponent={
         <>
           <Controller
             name={EMAIL_INPUT_ID}
@@ -78,8 +68,10 @@ function SignInForm({
                 error={!!errors[EMAIL_INPUT_ID]}
                 helperText={errors[EMAIL_INPUT_ID]?.message}
                 onBlur={onBlur}
-                onChange={e => onChange(e.target.value)} />
-            )} />
+                onChange={(e) => onChange(e.target.value)}
+              />
+            )}
+          />
           <Controller
             name={PASSWORD_INPUT_ID}
             control={control}
@@ -96,11 +88,13 @@ function SignInForm({
                 error={!!errors[PASSWORD_INPUT_ID]}
                 helperText={errors[PASSWORD_INPUT_ID]?.message}
                 onBlur={onBlur}
-                onChange={e => onChange(e.target.value)} />
-            )} />
+                onChange={(e) => onChange(e.target.value)}
+              />
+            )}
+          />
         </>
-      )}
-      helpComponent={(
+      }
+      helpComponent={
         <>
           <Divider className={classes.formElementIndent} />
           <Typography align="center">
@@ -108,13 +102,14 @@ function SignInForm({
               className={classes.link}
               color="primary"
               variant="body1"
-              onClick={() => history.push(RESET_PASSWORD_ROUTE)}>
+              onClick={() => history.push(RESET_PASSWORD_ROUTE)}
+            >
               Forgot password?
             </Link>
           </Typography>
         </>
-      )}
-      endComponent={(
+      }
+      endComponent={
         <>
           <Card>
             <CardContent>
@@ -124,15 +119,35 @@ function SignInForm({
                   className={classes.link}
                   color="primary"
                   variant="body1"
-                  onClick={() => history.push(SIGN_UP_ROUTE)}>
+                  onClick={() => history.push(SIGN_UP_ROUTE)}
+                >
                   Sign Up
                 </Link>
               </Typography>
             </CardContent>
           </Card>
         </>
-      )} />
+      }
+    />
   );
 }
+
+SignInForm.propTypes = {
+  error: PropTypes.string,
+
+  onSubmit: PropTypes.func,
+  onSocialRequest: PropTypes.func,
+  onSocialSuccess: PropTypes.func,
+  onSocialFailure: PropTypes.func,
+};
+
+SignInForm.defaultProps = {
+  error: "",
+
+  onSubmit: undefined,
+  onSocialRequest: undefined,
+  onSocialSuccess: undefined,
+  onSocialFailure: undefined,
+};
 
 export default SignInForm;

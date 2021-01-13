@@ -21,6 +21,19 @@ const useStyles = makeStyles((theme) => {
       textDecoration: "none",
       color: getStyleByTheme(theme, theme.palette.primary.main, theme.palette.primary.light)
     },
+    logoBox: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    },
+    logoImage: {
+      display: "flex",
+      background: "url('/logo1.png') no-repeat",
+      backgroundSize: "cover",
+      backgroundPositionY: theme.palette.type === "dark" ? "-32px" : "0",
+      height: "32px",
+      minWidth: "115px"
+    },
   })
 });
 
