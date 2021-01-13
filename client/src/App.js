@@ -7,6 +7,7 @@ import LinearDeterminate from "./components/LinearDeterminate";
 import HubComponent from "./domain/Hub/NotificationHub";
 import ThemeProvider from "./domain/ThemeProvider";
 import ViewportProvider from "./domain/ViewportProvider/ViewportProvider";
+import DialogProvider from "./domain/DialogProvider";
 
 import Main from "./pages/Main";
 
@@ -18,10 +19,12 @@ function App() {
       <HubComponent>
         <ViewportProvider>
           <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Router history={history}>
-              <Route path="/" component={Main} />
-            </Router>
+            <DialogProvider>
+              <CssBaseline />
+              <Router history={history}>
+                <Route path="/" component={Main} />
+              </Router>
+            </DialogProvider>
           </ThemeProvider>
         </ViewportProvider>
       </HubComponent>
