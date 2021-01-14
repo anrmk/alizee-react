@@ -25,7 +25,11 @@ const schema = yup.object().shape({
     .required()
 });
 
-export default function CreateStories({ id, onSubmit }) {
+export default function CreateStories({ 
+  id, 
+  
+  onSubmit 
+}) {
   const classes = useStyles();
   const { errors, register, setValue, watch, control, handleSubmit } = useForm({
     resolver: yupResolver(schema),
@@ -65,18 +69,7 @@ export default function CreateStories({ id, onSubmit }) {
 
   return (
     <form id={id} className={classes.root} onSubmit={handleSubmit(handleFormSubmit)} autoComplete="off">
-      <Grid container direction="row" justify="space-between" alignItems="center">
-        <Grid item></Grid>
-        <Grid item>
-          <CreateTools
-            className={classes.tools}
-            onlyMedia
-            multiple={false}
-            onChange={handleMediaChange}
-          />
-        </Grid>
-      </Grid>
-      <Grid container direction="column" spacing={2}>
+      <Grid container direction="column" >
         <Grid item>
           <FormControl fullWidth>
             <Controller
@@ -98,6 +91,13 @@ export default function CreateStories({ id, onSubmit }) {
           </FormControl>
         </Grid>
         <Grid item>
+          <CreateTools
+            onlyMedia
+            multiple={false}
+            onChange={handleMediaChange}
+          />
+        </Grid>
+        {mediaWatcher.length > 0 && (<Grid item>
           <GridList cellHeight={120} cols={4} spacing={1}>
             {mediaWatcher.map((item) => (
               <GridListTile key={item.name} cols={1} rows={1}>
@@ -105,7 +105,7 @@ export default function CreateStories({ id, onSubmit }) {
               </GridListTile>
             ))}
           </GridList>
-        </Grid>
+        </Grid>)}
       </Grid>
     </form>
   );

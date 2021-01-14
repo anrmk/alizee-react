@@ -10,7 +10,7 @@ import SearchIcon from "@material-ui/icons/SearchOutlined";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorderOutlined";
 
 import { ACTIVITY_ROUTE, CHAT_ROUTE } from "../../constants/routes";
-import Avatar from "../Avatar";
+import Avatar from "../../components/Avatar";
 
 import useStyles from "./styles";
 

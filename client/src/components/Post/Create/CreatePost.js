@@ -7,7 +7,12 @@ import { Grid, GridList, GridListTile, FormControl, TextField } from "@material-
 
 import useStyles from "./styles";
 
-export default function CreatePost({ id, user, onSubmit }) {
+export default function CreatePost({
+  id,
+  user,
+
+  onSubmit
+}) {
   const classes = useStyles();
   const defaultFormData = {
     description: "",
@@ -57,25 +62,15 @@ export default function CreatePost({ id, user, onSubmit }) {
     <form id={id} className={classes.root} onSubmit={handleFormSubmit} autoComplete="off">
       <input type="hidden" name="private" value={formData.private} />
       <input type="hidden" name="commentable" value={formData.commentable} />
-      <Grid container direction="row" justify="space-between" alignItems="center" >
-        <Grid item></Grid>
-        <Grid item>
-          <CreateTools
-            className={classes.tools}
-            isPrivate={formData.private}
-            isCommentable={formData.commentable}
-            onChange={handleFormDataChange}
-          />
-        </Grid>
-      </Grid>
-      <Grid container direction="column" spacing={2}>
+
+      <Grid container direction="column">
         <Grid item>
           <FormControl variant="filled" fullWidth>
             <TextField
               autoFocus
               name="description"
               variant="filled"
-              placeholder={`What's on your mind, ${user.name}?`}
+              placeholder="Write a caption..."
               multiline
               rows={5}
               required
@@ -87,14 +82,22 @@ export default function CreatePost({ id, user, onSubmit }) {
           </FormControl>
         </Grid>
         <Grid item>
-          <GridList cellHeight={120} cols={4} spacing={1} >
+          <CreateTools
+            isPrivate={formData.private}
+            isCommentable={formData.commentable}
+            onChange={handleFormDataChange}
+          />
+        </Grid>
+        {media.length > 0 && (<Grid item>
+          <GridList cellHeight={120} cols={4} spacing={1}>
             {media.map((item) => (
               <GridListTile key={item.name} cols={1} rows={1}>
                 <img src={item.previewURL} alt={item.name} />
               </GridListTile>
             ))}
           </GridList>
-        </Grid>
+        </Grid>)}
+        
       </Grid>
     </form>
   );

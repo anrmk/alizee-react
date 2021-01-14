@@ -24,9 +24,6 @@ import {
   BUY_POST_REQUEST,
   BUY_POST_SUCCESS,
   BUY_POST_FAILURE,
-  GET_FEELING_REQUEST,
-  GET_FEELING_SUCCESS,
-  GET_FEELING_FAILURE,
 } from "../actions/post";
 import { POSTS_DEFAULT_OFFSET } from "../../constants/feed";
 
@@ -181,22 +178,6 @@ export default function post(
       };
 
     case BUY_POST_FAILURE:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    // Feeling
-    case GET_FEELING_REQUEST:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case GET_FEELING_SUCCESS:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case GET_FEELING_FAILURE:
       return {
         ...state,
         ...action.payload,

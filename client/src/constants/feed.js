@@ -9,9 +9,9 @@ export const COMMENTS_POST_LENGTH = 10;
 export const COMMENTS_POST_OFFSET = 10;
 
 export const POST_TYPE = {
-  POST: 0,
-  FEELING: 1,
-  STORY: 2
+  POST: "Post",
+  MOOD: "Mood",
+  STORY: "Story"
 }
 
 export const INTERESTS_SKIP = "INTERESTS_SKIP";

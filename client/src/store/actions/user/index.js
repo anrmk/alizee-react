@@ -46,3 +46,8 @@ export {
   REMOVE_FOLLOWER_SUCCESS,
   removeFollower,
 } from "./removeFollower";
+
+export {
+  UPDATE_MOOD_SUCCESS,
+  updateMood
+} from "./updateMood";

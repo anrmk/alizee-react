@@ -71,7 +71,7 @@ const Post = React.memo((props) => {
         <MediaContent className={classes.post} items={mediaUrls} amount={amount} isPurchased={isPurchased} />
       </CardMedia>
 
-      {!hideContent && (
+      {!hideContent && description?.trim().length !== 0 && (
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
             {description}

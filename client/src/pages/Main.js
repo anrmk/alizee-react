@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 import ApiContext from "../context/ApiContext";
-import { Navbar, BottomBar } from "../components/Navbar";
+import { Navbar, BottomBar } from "../domain/Navbar";
 import Sidebar from "../components/Sidebar";
 
 import { SignIn, SignUp } from "./Auth";
@@ -31,21 +31,22 @@ import { signOutUser } from "../store/actions/signIn";
 import * as Routes from "../constants/routes";
 import useHideNavigation from "../hooks/useHideNavigation";
 
+import * as postActions from "../store/actions/post";
+import * as storyActions from "../store/actions/story";
+import * as moodAction from "../store/actions/mood";
+
+import useSprout from "../hooks/useSprout";
+
 import { Box, Hidden } from "@material-ui/core";
 
-function Main({ 
-  userInfo, 
-  isAuthenticated, 
+function Main(props) {
+  const { userInfo,  isAuthenticated, userStatistics, getUserStatistics } = props;
+  const { signOut, createPost, createStory, createMood } = props;
 
-  userStatistics, 
-  getUserStatistics,
-
-  signOut,
-  postOnClick   
-}) {
   const apiClient = useContext(ApiContext);
   const [open, setOpen] = useState(true);
   const isNavigationHide = useHideNavigation(Routes.STORIES_DEFAULT_ROUTE);
+  const { onSproutSubmit } = useSprout({ createStory, createPost, createMood });
 
   const handleDrawerToggle = () => {
     setOpen(!open);
@@ -75,7 +76,7 @@ function Main({
           </Hidden>
         </>
       )}
-      <Box style={isAuthenticated && !isNavigationHide ? { flexGrow: 1, paddingTop: 64 } : null}>
+      <Box style={isAuthenticated && !isNavigationHide ? { flexGrow: 1, paddingTop: 64, paddingBottom: 64 } : null}>
         <Switch>
           <Route exact path={Routes.DEFAULT_ROUTE} render={() => <Redirect to={Routes.HOME_ROUTE} />} />
           <Route path={Routes.SIGN_UP_ROUTE} component={SignUp} />
@@ -102,7 +103,7 @@ function Main({
       </Box>
       {isAuthenticated && !isNavigationHide && (
         <Hidden mdUp>
-          <BottomBar userName={userInfo.userName} avatarUrl={userInfo.avatarUrl} onClick={postOnClick}  />
+          <BottomBar user={userInfo} onSproutSubmit={onSproutSubmit}  />
         </Hidden>
       )}
     </Box>
@@ -114,6 +115,9 @@ function mapStateToProps(state) {
     userInfo: state.signIn?.userInfo,
     isAuthenticated: state.signIn.isAuthenticated,
 
+    isFetchingPost: state.posts.isFetching,
+    isFetchingStory: state.story.isFetching,
+
     userStatistics:  state.user.statistics,
   };
 }
@@ -122,6 +126,10 @@ function mapDispatchToProps(dispatch) {
   return {
     signOut: (api) => dispatch(signOutUser(api)),
     getUserStatistics: (api, userId) => dispatch(userActions.getUserStatistics(api, userId)),
+
+    createPost: (api, data, media) => dispatch(postActions.createPost(api, data, media)),
+    createStory: (api, data, media) => dispatch(storyActions.createStorySlide(api, data, media)),
+    createMood: (api, data) => dispatch(moodAction.createMood(api, data))
   };
 }
 

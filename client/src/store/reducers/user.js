@@ -21,7 +21,9 @@ import {
   GET_USER_STATISTICS_FAILURE,
 
   ADD_FOLLOWER_SUCCESS,
-  REMOVE_FOLLOWER_SUCCESS
+  REMOVE_FOLLOWER_SUCCESS,
+
+  UPDATE_MOOD_SUCCESS
 } from "../actions/user";
 
 export default function user(
@@ -129,6 +131,13 @@ export default function user(
         ...state,
         ...action.payload,
       };
+
+    case UPDATE_MOOD_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload
+      }
+    }  
     default:
       return state;
   }

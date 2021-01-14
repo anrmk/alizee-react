@@ -13,6 +13,13 @@ import {
   UPDATE_USERNAME_SUCCESS,
   UPDATE_USERNAME_FAILURE,
 } from '../actions/settings';
+
+import { 
+  CREATE_MOOD_REQUEST, 
+  CREATE_MOOD_SUCCESS, 
+  CREATE_MOOD_FAILURE 
+} from "../actions/mood";
+
 import { USER_TOKEN } from '../../constants/user';
 
 export default function signIn(state = {
@@ -75,6 +82,28 @@ export default function signIn(state = {
         ...state,
         ...action.payload
       }
+
+    case CREATE_MOOD_REQUEST: {
+      return {
+        ...state,
+        ...action.payload
+      }
+    }
+
+    case CREATE_MOOD_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload
+      }
+    }
+
+    case CREATE_MOOD_FAILURE: {
+      return {
+        ...state,
+        ...action.payload
+      }
+    }
+
     default:
       return state;
   }

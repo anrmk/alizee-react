@@ -27,6 +27,8 @@ export default {
     getStorySlide: "story/slide",
     getFollowingStories: "story/followingstories",
 
+    createMood: "mood/createmood",
+
     // MEDIA
     getFollowingPosts: "post/getfollowingposts",
     createPost: "post/createpost",

@@ -11,7 +11,6 @@ import useStyles from "./styles";
 
 function Cover(props) {
   const { isOwner, isOnline, isLive, isFollow, imageUrl, fullName, userName, avatarUrl, membership, mood } = props;
-
   const { onMessageClick, onFollowClick, onSendGiftClick, onEditCover } = props;
 
   const classes = useStyles({ imageUrl });
@@ -20,7 +19,7 @@ function Cover(props) {
     <Box marginBottom={10} position="relative">
       <Box className={classes.cover}>
         <Box p={3}>
-          <Typography variant="body2">{mood}</Typography>
+          <Typography variant="caption" >{mood}</Typography>
         </Box>
         {isOwner && (
           <IconButton onClick={onEditCover} style={{ zIndex: 1000 }}>

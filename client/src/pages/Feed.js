@@ -23,6 +23,7 @@ import * as postActions from "../store/actions/post";
 import * as settingsActions from "../store/actions/settings";
 import * as interestsActions from "../store/actions/interests";
 import * as storyActions from "../store/actions/story";
+import * as moodAction from "../store/actions/mood";
 
 import { RelationshipList } from "../components/RelationshipList";
 import { PreviewStoriesList } from "../domain/StoriesLists";
@@ -31,6 +32,7 @@ import ApiContext from "../context/ApiContext";
 import { INTERESTS_SKIP, STORIES_LENGTH, POST_TYPE } from "../constants/feed";
 import { POST_ROUTE, SUGESTED_PEOPLE } from "../constants/routes";
 import InterestList from "../components/InterestsList";
+import useSprout from "../hooks/useSprout";
 
 const useStyles = makeStyles((theme) => ({
   suggestionHeader: {
@@ -52,11 +54,13 @@ function Feed(props) {
   const { userInfo } = props;
   const { settings, getAccountPersonalized } = props;
   const { people, getPeople, createFollow, deleteFollow } = props;
-  const { posts, getPosts, createPost, buyPost, likePost, resetPosts, favoritePost } = props;
+  const { posts, getPosts, createPost, buyPost, likePost, resetPosts, favoritePost, createMood } = props;
   const { interests, getInterests, createInterests } = props;
-  const { story, getStory, getFollowingStories, createStorySlide, resetFollowingStories, resetStory } = props;
+  const { story, getStory, getFollowingStories, createStory, resetFollowingStories, resetStory } = props;
 
   const isInterestsSkip = localStorage.getItem(INTERESTS_SKIP);
+
+  const { onSproutSubmit } = useSprout({ createStory, createPost, createMood });
 
   useEffect(() => {
     (async () => {
@@ -128,7 +132,7 @@ function Feed(props) {
 
   const handleFormSubmit = useCallback(async (formData, mediaData) => {
     if (formData.type === POST_TYPE.STORY) {
-      await createStorySlide(apiClient, formData, mediaData);
+      await createStory(apiClient, formData, mediaData);
     } else {
       await createPost(apiClient, formData, mediaData);
     }
@@ -157,82 +161,75 @@ function Feed(props) {
 
   return (
     <Container>
-      <Box marginBottom={7}>
-        <Grid container spacing={2} direction="row">
-          <Grid container item md={8} sm={12} direction="column">
-            <Typography variant="h6">Top stories</Typography>
-            <PreviewStoriesList
-              loading={story.isFetching}
-              userStory={story.data.mStories}
-              items={story.data.fStories}
-            />
-            <PostSprout user={userInfo} onSubmit={handleFormSubmit} />
-            <PostsList
-              items={posts.data}
-              hasMore={posts.hasMore}
-              onFetchMore={handleFetchMore}
-              onGoToClick={handleGoToClick}
-              onLikeClick={handleLikeClick}
-              onFavoriteClick={handleFavoriteClick}
-              onFollowClick={handleFollowPostClick}
-              onPayClick={handleBuyClick}
-            />
-          </Grid>
-          <Hidden smDown>
-            <Grid item md={4} sm={false} lg={false}>
-              <Grid container direction="column" alignItems="stretch" spacing={3}>
-                {people.data && people.data.length > 0 && (
-                  <Grid item>
-                    <Typography variant="h6" className={classes.suggestionHeader} >
-                      Suggestions For You
-                      <Link href={SUGESTED_PEOPLE} variant="caption">
-                        See All
-                      </Link>
-                    </Typography>
-                    <RelationshipList items={people.data} onFollowClick={handleFollowPeopleClick} />
-                  </Grid>
-                )}
+      <Grid container spacing={2} direction="row">
+        <Grid container item md={8} sm={12} direction="column">
+          
+          <PreviewStoriesList loading={story.isFetching} userStory={story.data.mStories} items={story.data.fStories} />
 
+          <Hidden smDown>
+            <PostSprout user={userInfo} onSubmit={onSproutSubmit} />
+          </Hidden>
+
+          <PostsList
+            items={posts.data}
+            hasMore={posts.hasMore}
+            onFetchMore={handleFetchMore}
+            onGoToClick={handleGoToClick}
+            onLikeClick={handleLikeClick}
+            onFavoriteClick={handleFavoriteClick}
+            onFollowClick={handleFollowPostClick}
+            onPayClick={handleBuyClick}
+          />
+        </Grid>
+        <Hidden smDown>
+          <Grid item md={4} sm={false} lg={false}>
+            <Grid container direction="column" alignItems="stretch" spacing={3}>
+              {people.data && people.data.length > 0 && (
                 <Grid item>
-                  <Typography variant="h6" gutterBottom>
-                    Rooms
+                  <Typography variant="h6" className={classes.suggestionHeader}>
+                    Suggestions For You
+                    <Link href={SUGESTED_PEOPLE} variant="caption">
+                      See All
+                    </Link>
                   </Typography>
-                  <MeetTools />
+                  <RelationshipList items={people.data} onFollowClick={handleFollowPeopleClick} />
                 </Grid>
+              )}
+
+              <Grid item>
+                <Typography variant="h6" gutterBottom>
+                  Rooms
+                </Typography>
+                <MeetTools />
               </Grid>
             </Grid>
-          </Hidden>
-        </Grid>
+          </Grid>
+        </Hidden>
+      </Grid>
 
-        <Dialog
-          open={interestsModalShow && !isInterestsSkip && Object.keys(interests.data).length}
-          onClose={handleInterestsModalClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">Choose your interests</DialogTitle>
-          <InterestList ref={interestsEl} items={interests.data} />
-          <DialogActions>
-            <Button onClick={handleInterestsModalSkip}>Skip</Button>
-            <Button onClick={handleInterestSubmit} color="primary">
-              Save
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </Box>
+      <Dialog
+        open={interestsModalShow && !isInterestsSkip && Object.keys(interests.data).length}
+        onClose={handleInterestsModalClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Choose your interests</DialogTitle>
+        <InterestList ref={interestsEl} items={interests.data} />
+        <DialogActions>
+          <Button onClick={handleInterestsModalSkip}>Skip</Button>
+          <Button onClick={handleInterestSubmit} color="primary">
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }
 
 function mapStateToProps(state) {
   return {
-    userInfo: {
-      id: state.signIn?.userInfo?.id,
-      userName: state.signIn?.userInfo?.userName,
-      avatarUrl: state.signIn?.userInfo?.avatarUrl,
-      name: state.signIn?.userInfo?.name,
-      bio: state.signIn?.userInfo.bio,
-    },
+    userInfo: state.signIn?.userInfo,
+
     posts: {
       isFetching: state.posts.isFetching,
       data: state.posts?.data,
@@ -283,9 +280,10 @@ function mapDispatchToProps(dispatch) {
 
     getStory: (api, opts) => dispatch(storyActions.getStory(api, opts)),
     resetStory: (api, opts) => dispatch(storyActions.resetStory(api, opts)),
-    createStorySlide: (api, story, media) => dispatch(storyActions.createStorySlide(api, story, media)),
+    createStory: (api, story, media) => dispatch(storyActions.createStorySlide(api, story, media)),
     resetFollowingStories: () => dispatch(storyActions.resetFollowingStories()),
     getFollowingStories: (api, opts) => dispatch(storyActions.getFollowingStories(api, opts)),
+    createMood: (api, data) => dispatch(moodAction.createMood(api, data))
   };
 }
 
