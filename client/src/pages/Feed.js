@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext, useCallback } from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   Container,
   Box,
@@ -11,8 +11,7 @@ import {
   DialogTitle,
   Button,
   Hidden,
-  Link,
-  makeStyles,
+  Link as MUILink,
 } from "@material-ui/core";
 
 import { PostsList, PostSprout } from "../domain/PostsList";
@@ -34,18 +33,8 @@ import { POST_ROUTE, SUGESTED_PEOPLE } from "../constants/routes";
 import InterestList from "../components/InterestsList";
 import useSprout from "../hooks/useSprout";
 
-const useStyles = makeStyles((theme) => ({
-  suggestionHeader: {
-    display: "flex",
-    justifyContent: "space-between",
-    marginBottom: "10px",
-    alignItems: "center",
-  },
-}));
-
 function Feed(props) {
   const history = useHistory();
-  const classes = useStyles();
   const apiClient = useContext(ApiContext);
   const interestsEl = useRef();
 
@@ -161,53 +150,54 @@ function Feed(props) {
 
   return (
     <Container>
-      <Grid container spacing={2} >
-        <Grid item md={8} sm={12} >
-          
-          {/* <PreviewStoriesList loading={story.isFetching} userStory={story.data.mStories} items={story.data.fStories} /> */}
+        <Grid container spacing={2} >
+          <Grid item md={8} sm={12} >
 
+            {/* <PreviewStoriesList loading={story.isFetching} userStory={story.data.mStories} items={story.data.fStories} /> */}
+
+            <Hidden smDown>
+              <PostSprout user={userInfo} onSubmit={onSproutSubmit} />
+            </Hidden>
+            
+            <PostsList
+              items={posts.data}
+              hasMore={posts.hasMore}
+              onFetchMore={handleFetchMore}
+              onGoToClick={handleGoToClick}
+              onLikeClick={handleLikeClick}
+              onFavoriteClick={handleFavoriteClick}
+              onFollowClick={handleFollowPostClick}
+              onPayClick={handleBuyClick}
+            />
+          </Grid>
           <Hidden smDown>
-            <PostSprout user={userInfo} onSubmit={onSproutSubmit} />
-          </Hidden>
+            <Grid item xs={4} >
 
-          <PostsList
-            items={posts.data}
-            hasMore={posts.hasMore}
-            onFetchMore={handleFetchMore}
-            onGoToClick={handleGoToClick}
-            onLikeClick={handleLikeClick}
-            onFavoriteClick={handleFavoriteClick}
-            onFollowClick={handleFollowPostClick}
-            onPayClick={handleBuyClick}
-          />
-        </Grid>
-        <Hidden smDown>
-          <Grid item md={4} >
-            <Grid container direction="column" alignItems="stretch" spacing={3}>
               {people.data && people.data.length > 0 && (
-                <Grid item>
-                  <Typography variant="h6" className={classes.suggestionHeader}>
-                    Suggestions For You
-                    <Link href={SUGESTED_PEOPLE} variant="caption">
+                <Box>
+                  <Box mb={1} display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap">
+                    <Typography variant="h6">
+                      Suggestions For You
+                    </Typography>
+                    <MUILink variant="caption" to={SUGESTED_PEOPLE} component={Link}>
                       See All
-                    </Link>
-                  </Typography>
+                    </MUILink>
+                  </Box>
                   <RelationshipList items={people.data} onFollowClick={handleFollowPeopleClick} />
-                </Grid>
+                </Box>
               )}
 
-              <Grid item>
+              <Box>
                 <Typography variant="h6" gutterBottom>
                   Rooms
                 </Typography>
                 <MeetTools />
-              </Grid>
+              </Box>
             </Grid>
-          </Grid>
-        </Hidden>
-      </Grid>
+          </Hidden>
+        </Grid>
 
-      <Dialog
+        <Dialog
         open={interestsModalShow && !isInterestsSkip && Object.keys(interests.data).length}
         onClose={handleInterestsModalClose}
         aria-labelledby="alert-dialog-title"

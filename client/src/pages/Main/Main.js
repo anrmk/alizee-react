@@ -1,43 +1,45 @@
-import React, { useContext, useEffect, useState, useCallback } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
-import ApiContext from "../context/ApiContext";
-import { Navbar, BottomBar } from "../domain/Navbar";
-import Sidebar from "../components/Sidebar";
+import ApiContext from "../../context/ApiContext";
+import { Navbar, BottomBar } from "../../domain/Navbar";
+import Sidebar from "../../components/Sidebar";
 
-import { SignIn, SignUp } from "./Auth";
-import EmailConfirmation from "./EmailConfirmation";
-import EmailVerify from "./EmailVerify";
-import PrivateRoute from "./PrivateRoute";
-import Chat from "./Chat";
-import Post from "./Post";
-import Feed from "./Feed";
-import Activity from "./Activity";
-import Explore from "./Explore";
-import PeopleSuggested from "./PeopleSuggested";
-import CreateRoom from "./Meet/CreateRoom";
-import Meeting from "./Meet/Meeting";
-import Room from "./Meet/Room";
-import Profile from "./Profile";
-import Followers from "./Followers";
-import Followings from "./Followings";
-import { Settings } from "./Settings";
-import { ResetPassword, ChangePassword } from "./Password";
-import Story from "./Story";
+import { SignIn, SignUp } from "../Auth";
+import EmailConfirmation from "../EmailConfirmation";
+import EmailVerify from "../EmailVerify";
+import PrivateRoute from "../PrivateRoute";
+import Chat from "../Chat";
+import Post from "../Post";
+import Feed from "../Feed";
+import Activity from "../Activity";
+import Explore from "../Explore";
+import PeopleSuggested from "../PeopleSuggested";
+import CreateRoom from "../Meet/CreateRoom";
+import Meeting from "../Meet/Meeting";
+import Room from "../Meet/Room";
+import Profile from "../Profile";
+import Followers from "../Followers";
+import Followings from "../Followings";
+import { Settings } from "../Settings";
+import { ResetPassword, ChangePassword } from "../Password";
+import Story from "../Story";
 
-import * as userActions from "../store/actions/user";
-import { signOutUser } from "../store/actions/signIn";
-import * as Routes from "../constants/routes";
-import useHideNavigation from "../hooks/useHideNavigation";
+import * as userActions from "../../store/actions/user";
+import { signOutUser } from "../../store/actions/signIn";
+import * as Routes from "../../constants/routes";
+import useHideNavigation from "../../hooks/useHideNavigation";
 
-import * as postActions from "../store/actions/post";
-import * as storyActions from "../store/actions/story";
-import * as moodAction from "../store/actions/mood";
+import * as postActions from "../../store/actions/post";
+import * as storyActions from "../../store/actions/story";
+import * as moodAction from "../../store/actions/mood";
 
-import useSprout from "../hooks/useSprout";
+import useSprout from "../../hooks/useSprout";
 
 import { Box, Hidden } from "@material-ui/core";
+
+import useStyles from "./styles";
 
 function Main(props) {
   const { userInfo,  isAuthenticated, userStatistics, getUserStatistics } = props;
@@ -46,6 +48,7 @@ function Main(props) {
   const apiClient = useContext(ApiContext);
   const [open, setOpen] = useState(true);
   const isNavigationHide = useHideNavigation(Routes.STORIES_DEFAULT_ROUTE);
+  const classes = useStyles({ isAuthenticated, isNavigationHide });
   const { onSproutSubmit } = useSprout({ createStory, createPost, createMood });
 
   const handleDrawerToggle = () => {
@@ -54,7 +57,6 @@ function Main(props) {
 
   useEffect(() => {
     if (userInfo.id) {
-      
       (async () => {
         await getUserStatistics(apiClient, userInfo.id);
       })();
@@ -62,7 +64,7 @@ function Main(props) {
   }, [userInfo.id]);
 
   return (
-    <Box style={isAuthenticated && !isNavigationHide ? { display: "flex" } : null}>
+    <Box className={classes.mainContainer}>
       {isAuthenticated && !isNavigationHide && (
         <>
           <Navbar username={userInfo.userName} avatarUrl={userInfo.avatarUrl} open={open} onSignOut={signOut} />
@@ -76,7 +78,7 @@ function Main(props) {
           </Hidden>
         </>
       )}
-      <Box style={isAuthenticated && !isNavigationHide ? { flexGrow: 1, paddingTop: 64, paddingBottom: 64 } : null}>
+      <Box className={classes.routesContainer}>
         <Switch>
           <Route exact path={Routes.DEFAULT_ROUTE} render={() => <Redirect to={Routes.HOME_ROUTE} />} />
           <Route path={Routes.SIGN_UP_ROUTE} component={SignUp} />
@@ -134,4 +136,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
-

@@ -6,29 +6,29 @@ import { useTranslation } from "react-i18next";
 
 import { PROFILE_ROUTE } from "../../constants/routes";
 
-import { ListItem, ListItemText, ListItemAvatar, ListItemSecondaryAction, IconButton } from "@material-ui/core";
-import CommentIcon from "@material-ui/icons/ToggleOnOutlined";
-import PowerOffIcon from "@material-ui/icons/ToggleOffOutlined";
+import { Button, ListItem, ListItemText, ListItemAvatar, Typography } from "@material-ui/core";
 
 import Avatar from "../Avatar";
 
 import useStyles from "./styles";
 
-const RelationshipItem = React.memo(({
-  id,
-  followId,
-  userId,
-  avatarUrl,
-  title,
-  subtitle,
-  isFollow,
-  isMe,
-
-  onFollowClick,
-}) => {
+const RelationshipItem = React.memo((props) => {
   const history = useHistory();
   const { t } = useTranslation();
   const classes = useStyles();
+
+  const {
+    id,
+    followId,
+    userId,
+    avatarUrl,
+    title,
+    subtitle,
+    isFollow,
+    isMe
+  } = props;
+
+  const { onFollowClick } = props;
 
   const handleFollowClick = () => {
     onFollowClick && onFollowClick({ id, followId, userId, isFollow });
@@ -40,20 +40,30 @@ const RelationshipItem = React.memo(({
         <Avatar src={avatarUrl} />
       </ListItemAvatar>
       <ListItemText
-        primary={title}
-        secondary={subtitle}
-        onClick={() => history.push(PROFILE_ROUTE(subtitle))} />
-
+        primary={
+          <Typography noWrap variant="body2" color="textPrimary">
+            {title}
+          </Typography>
+        }
+        secondary={
+          <Typography noWrap variant="body2" color="textPrimary">
+            {subtitle}
+          </Typography>
+        }
+        onClick={() => history.push(PROFILE_ROUTE(subtitle))}
+      />
       {!isMe && (
-        <ListItemSecondaryAction>
-          <IconButton
-            edge="end"
-            color={isFollow ? "primary" : "default"}
-            aria-label={isFollow ? t("FollowingBtnTextFollowerItem") : t("FollowerBtnTextFollowerItem")}
-            onClick={handleFollowClick}>
-            {isFollow ? <CommentIcon /> : <PowerOffIcon />}
-          </IconButton>
-        </ListItemSecondaryAction>
+        <Button
+          className={classes.itemButton}
+          disableElevation
+          disableRipple
+          variant="contained"
+          color="primary"
+          size="small"
+          onClick={handleFollowClick}
+        >
+          {isFollow ? t("FollowingBtnTextFollowerItem") : t("FollowerBtnTextFollowerItem")}
+        </Button>
       )}
     </ListItem>
   );
