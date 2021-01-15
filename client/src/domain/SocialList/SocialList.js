@@ -1,94 +1,63 @@
-import React from 'react';
-import { 
-  FacebookShareButton, FacebookIcon,
-  TwitterShareButton, TwitterIcon,
-  TelegramShareButton, TelegramIcon
-} from "react-share";
-import LinkIcon from '@material-ui/icons/Link';
+import React from "react";
+import { FacebookShareButton, TwitterShareButton, TelegramShareButton } from "react-share";
 
-import { getUrlTo } from '../../helpers/functions';
-import { VerticalList } from '../../components/List';
-import { POST_ROUTE } from '../../constants/routes';
-import SocialItem from './SocialItem';
+import LinkIcon from "@material-ui/icons/Link";
+import FacebookIcon from "@material-ui/icons/Facebook";
+import TelegramIcon from "@material-ui/icons/Telegram";
+import TwitterIcon from "@material-ui/icons/Twitter";
 
-import './SocialList.scss';
+import { getUrlTo } from "../../helpers/functions";
+import { POST_ROUTE } from "../../constants/routes";
+
+import { ListItem, List, ListItemIcon, ListItemText } from "@material-ui/core";
 
 export default function SocialList({ id, username, description }) {
   const location = window.location.origin;
   const postUrl = getUrlTo(location, POST_ROUTE, id);
 
-  const renderFacebookBtn = ({ children }) => {
-    return (
-      <FacebookShareButton
+  return (
+    <List>
+      <ListItem
+        button
         url={postUrl}
         title={username}
         quote={description}
         resetButtonStyle={false}
-        className="social-btn">
-          {children}
-      </FacebookShareButton>
-    );
-  }
+        component={FacebookShareButton}
+      >
+        <ListItemIcon>
+          <FacebookIcon fontSize="large" />
+        </ListItemIcon>
+        <ListItemText primary="Share to Facebook" />
+      </ListItem>
 
-  const renderTwitterBtn = ({ children }) => {
-    return (
-      <TwitterShareButton
+      <ListItem
+        button
         url={postUrl}
         title={username}
         via={description}
         resetButtonStyle={false}
-        className="social-btn">
-        {children}
-      </TwitterShareButton>
-    );
-  }
+        component={TwitterShareButton}
+      >
+        <ListItemIcon>
+          <TwitterIcon fontSize="large" />
+        </ListItemIcon>
+        <ListItemText primary="Share to Twitter" />
+      </ListItem>
 
-  const renderTelegramBtn = ({ children }) => {
-    return (
-      <TelegramShareButton
-        url={postUrl}
-        title={username}
-        resetButtonStyle={false}
-        className="social-btn">
-          {children}
-      </TelegramShareButton>
-    );
-  }
+      <ListItem button url={postUrl} title={username} resetButtonStyle={false} component={TelegramShareButton}>
+        <ListItemIcon>
+          <TelegramIcon fontSize="large" />
+        </ListItemIcon>
+        <ListItemText primary="Share to Telegram" />
+      </ListItem>
 
-  const renderCopyBtn = ({ children }) => {
-    return (
-      <div className="react-share__ShareButton social-btn" onClick={() => navigator.clipboard.writeText(postUrl)}>
-        {children}
-      </div>
-    );
-  }
-
-  return (
-    <VerticalList>
-      <SocialItem 
-        renderIcon={() => (
-          <FacebookIcon size={32} round />
-        )}
-        text="Share to Facebook"
-        renderButton={(props) => renderFacebookBtn(props)} />
-      <SocialItem 
-        renderIcon={() => (
-          <TwitterIcon size={32} round />
-        )}
-        text="Share to Twitter"
-        renderButton={(props) => renderTwitterBtn(props)} />
-      <SocialItem 
-        renderIcon={() => (
-          <TelegramIcon size={32} round />
-        )}
-        text="Share to Telegram"
-        renderButton={(props) => renderTelegramBtn(props)} />
-      <SocialItem 
-        renderIcon={() => (
-          <LinkIcon style={{ fontSize: "32px", color: "#37aee2" }} />
-        )}
-        text="Copy"
-        renderButton={(props) => renderCopyBtn(props)} />
-    </VerticalList>
-  )
-};
+      <ListItem button onClick={() => navigator.clipboard.writeText(postUrl)}>
+        <ListItemIcon>
+          <LinkIcon fontSize="large" />
+        </ListItemIcon>
+        <ListItemText primary="Copy" />
+      </ListItem>
+    </List>
+  );
+}

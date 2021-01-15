@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core";
-import { getStyleByTheme } from "../../helpers/functions";
 
 const useStyles = makeStyles((theme) => {
   const hideScroll = {
@@ -50,6 +49,10 @@ const useStyles = makeStyles((theme) => {
       flex: "1 1 70%",
       textAlign: "end"
     },
+
+    icon: {
+      fontSize: theme.spacing(8)
+    }
   }
 });
 

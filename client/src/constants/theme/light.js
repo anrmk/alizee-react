@@ -102,9 +102,9 @@ export default createMuiTheme({
     MuiSvgIcon: {
       root: {},
 
-      fontSizeLarge: {
-        fontSize: "8rem",
-      },
+      // fontSizeLarge: {
+      //   fontSize: "8rem",
+      // },
     },
   },
 

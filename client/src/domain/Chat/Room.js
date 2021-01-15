@@ -119,7 +119,7 @@ function Room({
         <Empty
           title={t("ChatChatRoomEmptyTitle")}
           subTitle={t("ChatChatRoomEmptySubtitle")}
-          iconComponent={<SendOutlinedIcon fontSize="large" />}
+          iconComponent={<SendOutlinedIcon className={classes.icon} />}
         />
       )}
     </>
