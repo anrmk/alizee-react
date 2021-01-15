@@ -86,6 +86,7 @@ export default createMuiTheme({
 
     MuiIconButton: {
       root: {
+        padding: "8px",
         "&.success": {
           color: "#3CFDB7",
         },

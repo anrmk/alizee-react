@@ -55,6 +55,8 @@ export function createPost(api, postData, mediaData=[]) {
         media = getState().media.data;
       }
 
+      console.log("Create Post", postData);
+
       const { data } = await api
         .setData({ 
           amount: postData.amount && Number(postData.amount) || 0,
@@ -63,8 +65,7 @@ export function createPost(api, postData, mediaData=[]) {
           kind: postData.private ? POST_PRIVATE : POST_PUBLIC,
           latitude: postData?.latitude,
           longitude: postData?.longitude,
-          media: media,
-          type: postData.type
+          media: media
          })
         .query(url);
 

@@ -161,10 +161,10 @@ function Feed(props) {
 
   return (
     <Container>
-      <Grid container spacing={2} direction="row">
-        <Grid container item md={8} sm={12} direction="column">
+      <Grid container spacing={2} >
+        <Grid item md={8} sm={12} >
           
-          <PreviewStoriesList loading={story.isFetching} userStory={story.data.mStories} items={story.data.fStories} />
+          {/* <PreviewStoriesList loading={story.isFetching} userStory={story.data.mStories} items={story.data.fStories} /> */}
 
           <Hidden smDown>
             <PostSprout user={userInfo} onSubmit={onSproutSubmit} />
@@ -182,7 +182,7 @@ function Feed(props) {
           />
         </Grid>
         <Hidden smDown>
-          <Grid item md={4} sm={false} lg={false}>
+          <Grid item md={4} >
             <Grid container direction="column" alignItems="stretch" spacing={3}>
               {people.data && people.data.length > 0 && (
                 <Grid item>

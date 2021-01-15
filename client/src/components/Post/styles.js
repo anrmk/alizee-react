@@ -46,7 +46,8 @@ const useStyles = makeStyles((theme) => ({
     borderTopColor: theme.palette.divider,
 
     "& > .MuiIconButton-root, & > .MuiButton-root": {
-      marginLeft: theme.spacing(1),
+      marginLeft: theme.spacing(0.2),
+    //  padding: theme.spacing(1)
     },
   },
 

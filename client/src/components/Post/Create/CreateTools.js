@@ -27,6 +27,7 @@ function CreateTools({
             <TextField 
               fullWidth
               size="small"
+              name="amount"
               placeholder="Amount"
               onChange={onChange}
               variant="outlined"

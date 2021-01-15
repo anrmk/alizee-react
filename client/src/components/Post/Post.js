@@ -70,17 +70,15 @@ const Post = React.memo((props) => {
       <CardMedia>
         <MediaContent className={classes.post} items={mediaUrls} amount={amount} isPurchased={isPurchased} />
       </CardMedia>
-
       {!hideContent && description?.trim().length !== 0 && (
         <CardContent>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant="body2" >
             {description}
           </Typography>
         </CardContent>
       )}
-
       {!hideToolbar && (
-        <CardActions className={classes.action} disableSpacing>
+        <CardActions className={classes.action} >
           <Tools
             userId={userId}
             id={id}
@@ -100,6 +98,9 @@ const Post = React.memo((props) => {
             onReceiptClick={onReceiptClick} />
         </CardActions>
       )}
+
+   
+
     </Card>
   );
 });
