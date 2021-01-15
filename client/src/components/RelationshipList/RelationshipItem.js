@@ -1,10 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-
-import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-
-import { PROFILE_ROUTE } from "../../constants/routes";
 
 import { Button, ListItem, ListItemText, ListItemAvatar, Typography } from "@material-ui/core";
 
@@ -13,7 +9,6 @@ import Avatar from "../Avatar";
 import useStyles from "./styles";
 
 const RelationshipItem = React.memo((props) => {
-  const history = useHistory();
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -28,7 +23,7 @@ const RelationshipItem = React.memo((props) => {
     isMe
   } = props;
 
-  const { onFollowClick } = props;
+  const {onItemClick, onFollowClick } = props;
 
   const handleFollowClick = () => {
     onFollowClick && onFollowClick({ id, followId, userId, isFollow });
@@ -50,7 +45,7 @@ const RelationshipItem = React.memo((props) => {
             {subtitle}
           </Typography>
         }
-        onClick={() => history.push(PROFILE_ROUTE(subtitle))}
+        onClick={onItemClick}
       />
       {!isMe && (
         <Button
@@ -77,6 +72,7 @@ RelationshipItem.propTypes = {
   isMe: PropTypes.bool,
 
   onFollowClick: PropTypes.func,
+  onItemClick: PropTypes.func
 };
 
 RelationshipItem.defaultProps = {
@@ -87,6 +83,7 @@ RelationshipItem.defaultProps = {
   isMe: false,
 
   onFollowClick: undefined,
+  onItemClick: undefined
 };
 
 export default RelationshipItem;

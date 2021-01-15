@@ -30,8 +30,7 @@ function PeopleSuggested(props) {
       <Box my={4}>
         <Typography variant="subtitle1">Suggestions For You</Typography>
         <Divider />
-        <RelationshipList items={people} 
-          onFollowClick={(item) => handleFollowPeople(item, isFetching)} />
+        <RelationshipList items={people} onFollowClick={(item) => handleFollowPeople(item, isFetching)} />
       </Box>
     </Container>
   );

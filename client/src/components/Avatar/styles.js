@@ -3,7 +3,6 @@ import yellow from "@material-ui/core/colors/yellow";
 import blue from "@material-ui/core/colors/blue";
 import blueGrey from "@material-ui/core/colors/blueGrey";
 import grey from "@material-ui/core/colors/grey";
-import { STREAM_VARIANT } from "./constants";
 
 const SIZES = {
   small: "25px",

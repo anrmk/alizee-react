@@ -5,14 +5,12 @@ import { connect } from "react-redux";
 import {
   Container,
   Grid,
-  Box,
   Card,
   Typography,
   ButtonGroup,
   Button,
   Divider,
   CardContent,
-  CardHeader,
   CardActions,
 } from "@material-ui/core/";
 
@@ -126,6 +124,7 @@ function Profile(props) {
   const handleGiftSend = (userName) => {};
 
   const handleFollowingClick = (userName) => {
+    console.log("handleFollowingClick", userName)
     history.push(FOLLOWINGS_ROUTE(userName));
   };
 
@@ -135,36 +134,35 @@ function Profile(props) {
 
   return (
     <Container>
-      <Box mb={8}>
-        <ProfileHeader
-          isOwner={username === me.username}
-          isOnline={!user.offlineDate}
-          isFollow={user.isFollow}
-          avatarUrl={user.avatarUrl}
-          imageUrl={user.coverUrl}
-          userName={user.userName}
-          fullName={user.name}
-          membership={user.membership}
-          mood={user.mood}
-          onPostCreate={() => {}}
-          onFollowClick={() => handlePeopleFollow(user.id)}
-          onEditCover={handleCoverEdit}
-          onMessageClick={() => handleMessageClick(user.username)}
-          onSendGiftClick={() => handleGiftSend(user.username)}
-        />
+      <ProfileHeader
+        isOwner={username === me.userName}
+        isOnline={!user.offlineDate}
+        isFollow={user.isFollow}
+        avatarUrl={user.avatarUrl}
+        imageUrl={user.coverUrl}
+        userName={user.userName}
+        fullName={user.name}
+        membership={user.membership}
+        mood={user.mood}
+        onPostCreate={() => {}}
+        onFollowClick={() => handlePeopleFollow(user.id)}
+        onEditCover={handleCoverEdit}
+        onMessageClick={() => handleMessageClick(user.userName)}
+        onSendGiftClick={() => handleGiftSend(user.userName)}
+      />
 
-        <Grid container spacing={3}>
+      <Grid container spacing={3} >
           <Grid item sm={12} md={4} >
             <Card>
               <CardActions>
                 <ButtonGroup disableElevation variant="text" fullWidth>
                   <Button
                     disabled={!user.followingsCount}
-                    onClick={() => handleFollowingClick(user.username)}
+                    onClick={() => handleFollowingClick(user.userName)}
                   >{user.followingsCount} following</Button>
                   <Button
                     disabled={!user.followersCount}
-                    onClick={() => handleFollowersClick(user.username)}
+                    onClick={() => handleFollowersClick(user.userName)}
                   >{user.followersCount} followers</Button>
                 </ButtonGroup>
               </CardActions>
@@ -182,7 +180,7 @@ function Profile(props) {
           </Grid>
           <Grid item sm={12} md={8}>
             <ProfileContent
-              isOwner={username === me.username}
+              isOwner={username === me.userName}
               tabIndex={postSettings.index}
               items={post.data}
               hasMore={post.hasMore}
@@ -193,7 +191,6 @@ function Profile(props) {
             />
           </Grid>
         </Grid>
-      </Box>
     </Container>
   );
 }
@@ -202,7 +199,7 @@ function mapStateToProps(state) {
   return {
     me: {
       id: state.signIn?.userInfo?.id,
-      username: state.signIn?.userInfo?.userName,
+      userName: state.signIn?.userInfo?.userName,
     },
     user: state.user?.data,
     post: {
@@ -217,7 +214,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchUser: (api, username) => dispatch(userActions.getUser(api, username)),
+    fetchUser: (api, userName) => dispatch(userActions.getUser(api, userName)),
     resetUser: () => dispatch(userActions.resetUser()),
 
     fetchPosts: (api, opts) => dispatch(postActions.getPosts(api, opts)),

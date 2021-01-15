@@ -8,7 +8,7 @@ import { COMMENTS_POST_LENGTH } from "../constants/feed";
 import * as postActions from "../store/actions/post";
 import * as commentActions from "../store/actions/comment";
 
-import { Container, Box, Grid } from "@material-ui/core/";
+import { Container, Grid } from "@material-ui/core/";
 
 function PostPage(props) {
   const apiClient = useContext(ApiContext);
@@ -54,8 +54,7 @@ function PostPage(props) {
 
   return (
     <Container>
-      <Box my={4}>
-        <Grid container spacing={2} direction="row">
+      <Grid container spacing={2} direction="row">
           <Grid item md={8}>
             {!post.isFetching && (
               <Post hideHeader hideToolbar hideContent id={post.id} mediaUrls={post.media} amount={post.amount} isPurchased={post.isPurchased} />
@@ -92,7 +91,6 @@ function PostPage(props) {
             )}
           </Grid>
         </Grid>
-      </Box>
     </Container>
   );
 }

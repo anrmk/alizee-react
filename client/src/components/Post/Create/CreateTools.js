@@ -6,7 +6,7 @@ import CommentOutlinedIcon from "@material-ui/icons/SpeakerNotesOutlined";
 import CommentBlockOutlinedIcon from "@material-ui/icons/SpeakerNotesOffOutlined";
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary";
 
-import { Box, Input, TextField, IconButton, InputAdornment, Tooltip } from "@material-ui/core";
+import { Box, TextField, IconButton, InputAdornment, Tooltip } from "@material-ui/core";
 import useStyles from "./styles";
 
 function CreateTools({

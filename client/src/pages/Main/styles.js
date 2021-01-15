@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: ({ isAuthenticated, isNavigationHide }) => ({
+  // <Box style={isAuthenticated && !isNavigationHide ? { flexGrow: 1, paddingTop: 64, paddingBottom: 32 } : null}>
     [theme.breakpoints.up("sm")]: {
       display: isAuthenticated && !isNavigationHide ? "flex" : "block",
     },

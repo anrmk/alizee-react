@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Button, Hidden, IconButton } from "@material-ui/core";
+import { Button, Chip, Hidden, IconButton, Tooltip } from "@material-ui/core";
 
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import FavoriteIcon from "@material-ui/icons/FavoriteRounded";
@@ -11,6 +11,7 @@ import MonetizationOnIcon from "@material-ui/icons/MonetizationOnRounded";
 import BookmarkIcon from "@material-ui/icons/BookmarkOutlined";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorderOutlined";
 import ShareIcon from "@material-ui/icons/ShareOutlined";
+import VisibilityIcon from "@material-ui/icons/VisibilityOutlined";
 
 import useStyles from "./styles";
 
@@ -68,15 +69,16 @@ const Tools = React.memo(
       if (amount !== 0) {
         if (!isPurchased) {
           return (
-            <Button
-              variant="contained"
-              size="small"
-              className="gold"
-              onClick={handlePayClick}
-              startIcon={<MonetizationOnIcon />}
-            >
-              {amount}
-            </Button>
+            <Tooltip title="Unlock post">
+              <Chip 
+                label={amount} 
+                clickable
+                variant="outlined"
+                color="primary" 
+                onClick={handlePayClick}
+                icon={<MonetizationOnIcon />} 
+                />
+            </Tooltip>
           );
         } else {
           return (
@@ -98,11 +100,6 @@ const Tools = React.memo(
 
         <Hidden mdDown>{likes > 0 && <strong>{likes}</strong>}</Hidden>
 
-        <IconButton className="warning" onClick={handleGoToClick}>
-          <ChatIcon />
-          {/* {isCommentable && !hideCommentable && ( */}
-        </IconButton>
-
         <IconButton aria-label="share" onClick={handleShareClick}>
           <ShareIcon />
         </IconButton>
@@ -113,6 +110,11 @@ const Tools = React.memo(
 
         <IconButton className="success" aria-label="share" onClick={handleFavoriteClick}>
           {isFavorite ? <BookmarkIcon /> : <BookmarkBorderIcon />}
+        </IconButton>
+
+        <IconButton className="warning" onClick={handleGoToClick}>
+          <VisibilityIcon />
+          {/* {isCommentable && !hideCommentable && ( */}
         </IconButton>
       </>
     );
