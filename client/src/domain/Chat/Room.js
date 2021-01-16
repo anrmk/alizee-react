@@ -81,7 +81,7 @@ function Room({
           <CardHeader
             avatar={<Avatar src={data.avatarUrl} />}
             title={data.name}
-            subheader={data.showActivity && data.offlineDate && formatDate(data.offlineDate)}
+            subheader={data.showActivity && (data.offlineDate ? formatDate(data.offlineDate) : "online")}
             action={
               <IconButton
                 aria-label="settings"

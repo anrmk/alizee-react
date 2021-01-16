@@ -25,7 +25,7 @@ function NotificationHub(props) {
     if (chat.currentRoom && data.roomId === chat.currentRoom.id) {
       addMessage(data);
     } else {
-      incrementNewMessageCount(data.roomId);
+      incrementNewMessageCount(data);
     }
   };
 

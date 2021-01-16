@@ -79,6 +79,40 @@ export function getRooms(api) {
   };
 }
 
+export function filter(query) {
+  return async (dispatch) => {
+    dispatch(filterRooms(query));
+  };
+}
+
+export function incrementNewMessageCount(data) {
+  return (dispatch, getState) => {
+    const oldRooms = getState().chat.data;
+    const updatedRooms = [...oldRooms];
+    const roomIndex = updatedRooms.findIndex((room) => room.id === data.roomId);
+    const currentRoom = updatedRooms[roomIndex];
+
+    if (roomIndex !== -1) {
+      currentRoom.unreadMessageCount++;
+      currentRoom.lastMessage = data.message;
+    }
+
+    dispatch(successIncrementNewMessageCount([
+      currentRoom,
+      ...updatedRooms.filter(room => room.id !== currentRoom.id)
+    ]));
+  };
+}
+
+export function removeRoom(roomId) {
+  return (dispatch, getState) => {
+    const oldRooms = getState().chat.data;
+    const updatedRooms = oldRooms.filter((room) => room.id !== roomId);
+
+    dispatch(receiveGetRooms(updatedRooms));
+  }
+}
+
 // SELECTOR FILTER
 const querySelector = (state) => state.chat.query;
 const dataSelector = (state) => state.chat.data;
@@ -90,33 +124,3 @@ export const getFilteredRooms = createSelector([querySelector, dataSelector], (q
     .filter((item) => item && item.name.toLowerCase().includes(query))
     .sort((a, b) => b.unreadMessageCount - a.unreadMessageCount);
 });
-
-export function filter(query) {
-  return async (dispatch) => {
-    dispatch(filterRooms(query));
-  };
-}
-
-export function incrementNewMessageCount(roomId, count) {
-  return (dispatch, getState) => {
-    const oldRooms = getState().chat.data;
-    const updatedRooms = [...oldRooms];
-    const roomIndex = updatedRooms.findIndex((room) => room.id === roomId);
-
-    if (roomIndex !== -1) {
-      updatedRooms[roomIndex].unreadMessageCount++;
-    }
-
-    dispatch(successIncrementNewMessageCount(updatedRooms));
-  };
-}
-
-export function removeRoom(roomId) {
-  return (dispatch, getState) => {
-    console.log("remove room ", roomId)
-    const oldRooms = getState().chat.data;
-    const updatedRooms = oldRooms.filter((room) => room.id !== roomId);
-
-    dispatch(receiveGetRooms(updatedRooms));
-  }
-}

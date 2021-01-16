@@ -35,11 +35,12 @@ function errorCreateMessage(message) {
   };
 }
 
-function addMessageSuccess(room) {
+function addMessageSuccess(room, rooms) {
   return {
     type: ADD_MESSAGE_TO_LOCAL,
     payload: {
-      currentRoom: room
+      currentRoom: room,
+      data: rooms
     }
   };
 }
@@ -49,12 +50,19 @@ export function addMessage(message) {
     dispatch(receiveCreateMessage());
 
     const currentRoom = getState().chat.currentRoom;
-    const updatedRoom = {
-      ...currentRoom,
-      messages: [...currentRoom.messages, message]
-    }
+    const currentRooms = getState().chat.data;
+    
+    const roomIndex = currentRooms.findIndex((room) => room.id === currentRoom.id);
+    
+    const updatedRoom = { ...currentRoom };
+    currentRooms[roomIndex].lastMessage = message.message;
+    updatedRoom.messages = [...updatedRoom.messages, message];
+    const updatedRooms = [
+      currentRooms[roomIndex],
+      ...currentRooms.filter(room => room.id !== currentRoom.id) || []
+    ];
 
-    dispatch(addMessageSuccess(updatedRoom));
+    dispatch(addMessageSuccess(updatedRoom, updatedRooms));
   }
 }
 
