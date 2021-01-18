@@ -1,7 +1,8 @@
-import { generateUrl } from "../../../helpers/functions";
+import { generateUrl, isEmptyObject } from "../../../helpers/functions";
 
 export const LIKE_POST_REQUEST = "LIKE_POST_REQUEST";
 export const LIKE_POST_SUCCESS = "LIKE_POST_SUCCESS";
+export const LIKE_CURRENT_POST_SUCCESS = "LIKE_CURRENT_POST_SUCCESS";
 export const LIKE_POST_FAILURE = "LIKE_POST_FAILURE";
 
 function requestLikePost() {
@@ -9,7 +10,7 @@ function requestLikePost() {
     type: LIKE_POST_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: "",
+      errorMessage: ""
     },
   };
 }
@@ -20,7 +21,18 @@ function receiveLikePost(post) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      data: post,
+      data: post
+    },
+  };
+}
+
+function receiveLikeCurrentPost(post) {
+  return {
+    type: LIKE_CURRENT_POST_SUCCESS,
+    payload: {
+      isFetching: false,
+      errorMessage: "",
+      currentPost: post
     },
   };
 }
@@ -30,7 +42,7 @@ function errorLikePost(message) {
     type: LIKE_POST_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message,
+      errorMessage: message
     },
   };
 }
@@ -39,29 +51,54 @@ export function likePost(api, id) {
   return async (dispatch, getState) => {
     dispatch(requestLikePost());
 
-    const postsState = getState().posts;
-    const posts = [...postsState.data];
-    const postIndex = posts.findIndex((post) => post.id === id);
-
+    const url = generateUrl("likePost");
     try {
-      if (postIndex === -1) {
-        throw "Item not found!";
+      const postsState = getState().posts;
+
+      if (!postsState.data.length && isEmptyObject(postsState.currentPost)) {
+        throw "There is no local data";
       }
 
-      const post = posts[postIndex];
-      const url = generateUrl("likePost");
+      if (postsState.data.length) {
+        const posts = [...postsState.data];
+        const postIndex = posts.findIndex((post) => post.id === id);
 
-      await api
-        .setMethod(post.iLike ? "DELETE" : "POST")
-        .setParams({ id })
-        .query(url);
+        if (postIndex === -1) {
+          throw "Item not found!";
+        }
 
-      posts[postIndex].likes += post.iLike ? -1 : 1;
-      posts[postIndex].iLike = !post.iLike;
+        const post = posts[postIndex];
+        const method = post.iLike ? "DELETE" : "POST";
 
-      dispatch(receiveLikePost(posts));
+        await api.setMethod(method).setParams({ id }).query(url);
+
+        posts[postIndex].likes += post.iLike ? -1 : 1;
+        posts[postIndex].iLike = !post.iLike;
+
+        dispatch(receiveLikePost(posts));
+      }
+
+      if (!isEmptyObject(postsState.currentPost)) {
+        const currentPost = { ...postsState.currentPost };
+        const method = currentPost.iLike ? "DELETE" : "POST";
+
+        await api.setMethod(method).setParams({ id }).query(url);
+
+        currentPost.likes += currentPost.iLike ? -1 : 1;
+        currentPost.iLike = !currentPost.iLike;
+
+        dispatch(receiveLikeCurrentPost(currentPost));
+      }
     } catch (e) {
       dispatch(errorLikePost("Error: something went wrong"));
     }
   };
+}
+
+async function likePostApi(api, id, method, callback) {
+  const url = generateUrl("likePost");
+
+  await api.setMethod(method).setParams({ id }).query(url);
+
+  callback();
 }

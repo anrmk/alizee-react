@@ -26,7 +26,7 @@ function MediaContent({
           if (item.kind === MEDIA_IMAGE) {
             return <ImagesContent key={item.id} url={url} amount={amount} />;
           } else if (item.kind === MEDIA_VIDEO) {
-            return <VideoContent key={item.id} url={url} showControls={amount === 0} />;
+            return <VideoContent key={item.id} url={url} showControls={amount === 0 || isPurchased} />;
           } else {
             return <></>;
           }

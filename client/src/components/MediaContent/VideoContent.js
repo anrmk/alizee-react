@@ -90,7 +90,7 @@ export default function VideoContent({
     <Box id={id} className={clsx(classes.videoContent, wrapperClassName)} onMouseEnter={() => setShowing(true)} onMouseLeave={() => setShowing(false)}>
       {showControls && renderPlayBtn(showing, playing)}
       {showControls && renderMuteBtn(showing, muted, playing)}
-      <VisibilitySensor onChange={(isVisible) => setIsVisible(isVisible)}>
+      <VisibilitySensor partialVisibility onChange={(isVisible) => setIsVisible(isVisible)}>
         <ReactPlayer className={clsx(classes.player, videoClassName)} width="100%" height="100%" playing={playing} muted={muted} url={url} {...videoPlayerProps} />
       </VisibilitySensor>
     </Box>

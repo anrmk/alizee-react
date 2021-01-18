@@ -12,10 +12,11 @@ export const RECEIPT_DIALOG_TYPE = "receipt";
 export default function usePostDialog({
   onPayClick
 }) {
+  const [currentDialog, setCurrentDialog] = useState({ type: PAYMENT_DIALOG_TYPE, data: {} });
   const dialogs = {
     [PAYMENT_DIALOG_TYPE]: {
       title: "Payment",
-      content: <Payment />,
+      content: <Payment {...currentDialog.data} />,
       actionsComponent: (
         <DialogActions>
           <Button color="primary" onClick={handlePayClick}>Pay</Button>
@@ -25,7 +26,7 @@ export default function usePostDialog({
     },
     [SHARE_DIALOG_TYPE]: {
       title: "Share post",
-      content: <SocialList />,
+      content: <SocialList {...currentDialog.data} />,
       actionsComponent: (
         <DialogActions>
           <Button onClick={() => dialog.toggleDialog(false)}>Close</Button>
@@ -34,7 +35,7 @@ export default function usePostDialog({
     },
     [RECEIPT_DIALOG_TYPE]: {
       title: "Receipt",
-      content: <Receipt />,
+      content: <Receipt {...currentDialog.data} />,
       actionsComponent: (
         <DialogActions>
           <Button onClick={() => dialog.toggleDialog(false)}>Close</Button>
@@ -42,8 +43,6 @@ export default function usePostDialog({
       )
     },
   };
-
-  const [currentDialog, setCurrentDialog] = useState({ type: PAYMENT_DIALOG_TYPE, data: {} });
   const dialog = useDialog({
     ...dialogs[currentDialog.type],
     dialogProps: { fullWidth: true }
@@ -61,5 +60,5 @@ export default function usePostDialog({
     onPayClick && onPayClick(currentDialog.data);
   }
 
-  return { toggleDialog };
+  return { toggleDialog, currentDialog };
 };

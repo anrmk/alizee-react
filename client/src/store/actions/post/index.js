@@ -22,6 +22,7 @@ export {
   GET_FOLLOWING_POSTS_REQUEST,
   GET_FOLLOWING_POSTS_SUCCESS,
   GET_FOLLOWING_POSTS_FAILURE,
+
   getFollowingPosts
 } from "./getFollowingPosts";
 
@@ -44,14 +45,18 @@ export {
 export { 
   LIKE_POST_REQUEST,
   LIKE_POST_SUCCESS,
+  LIKE_CURRENT_POST_SUCCESS,
   LIKE_POST_FAILURE,
+
   likePost
 } from "./likePost";
 
 export { 
   FAVORITE_POST_REQUEST,
   FAVORITE_POST_SUCCESS,
+  FAVORITE_CURRENT_POST_SUCCESS,
   FAVORITE_POST_FAILURE,
+
   favoritePost
 } from "./favoritePost";
 

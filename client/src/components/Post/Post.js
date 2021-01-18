@@ -24,7 +24,6 @@ import useStyles from "./styles";
 // TODO: add optimization (list item doesn't optimized)
 const Post = React.memo((props) => {
   const classes = useStyles();
-
   const {
     id,
     userId,
@@ -40,67 +39,60 @@ const Post = React.memo((props) => {
     isFavorite,
     isPurchased,
     createdDate,
-    hideToolbar,
-    hideHeader,
-    hideContent
   } = props;
 
-  const { onLikeClick, onFavoriteClick, onShareClick, onGoToClick, onPayClick, onReceiptClick } = props;
+  const {
+    onLikeClick,
+    onFavoriteClick,
+    onGoToClick,
+    onDialogToggle 
+  } = props;
 
   return (
     <Card className={classes.root} variant="outlined">
-      {!hideHeader && (
-        <CardHeader
-          avatar={<Avatar src={avatarUrl} />}
-          title={name}
-          subheader={username}
-          action={
-            <>
-              <Typography display="inline" variant="caption">
-                {createdDate && formatDate(createdDate)}
-              </Typography>
-              <IconButton aria-label="settings">
-                <MoreVertIcon />
-              </IconButton>
-            </>
-          }
-        ></CardHeader>
-      )}
+      <CardHeader
+        avatar={<Avatar src={avatarUrl} />}
+        title={name}
+        subheader={username}
+        action={
+          <>
+            <Typography display="inline" variant="caption">
+              {createdDate && formatDate(createdDate)}
+            </Typography>
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+          </>
+        }
+      />
 
       <CardMedia>
         <MediaContent className={classes.post} items={mediaUrls} amount={amount} isPurchased={isPurchased} />
       </CardMedia>
-      {!hideContent && description?.trim().length !== 0 && (
-        <CardContent>
-          <Typography variant="body2" >
-            {description}
-          </Typography>
-        </CardContent>
-      )}
-      {!hideToolbar && (
-        <CardActions className={classes.action} >
-          <Tools
-            userId={userId}
-            id={id}
-            isCommentable={isCommentable}
-            likes={likes}
-            iLike={iLike}
-            isFavorite={isFavorite}
-            amount={amount}
-            username={username}
-            description={description}
-            isPurchased={isPurchased}
-            onLikeClick={onLikeClick}
-            onGoToClick={onGoToClick}
-            onShareClick={onShareClick}
-            onFavoriteClick={onFavoriteClick}
-            onPayClick={onPayClick}
-            onReceiptClick={onReceiptClick} />
-        </CardActions>
-      )}
 
-   
+      <CardContent>
+        <Typography variant="body2" color="textSecondary" component="p">
+          {description}
+        </Typography>
+      </CardContent>
 
+      <CardActions className={classes.action} disableSpacing>
+        <Tools
+          userId={userId}
+          id={id}
+          isCommentable={isCommentable}
+          likes={likes}
+          iLike={iLike}
+          isFavorite={isFavorite}
+          amount={amount}
+          username={username}
+          description={description}
+          isPurchased={isPurchased}
+          onLikeClick={onLikeClick}
+          onGoToClick={onGoToClick}
+          onFavoriteClick={onFavoriteClick}
+          onDialogToggle={onDialogToggle} />
+      </CardActions>
     </Card>
   );
 });
@@ -118,15 +110,9 @@ Post.propTypes = {
   iLike: PropTypes.bool,
   isFavorite: PropTypes.bool,
   createdDate: PropTypes.string,
-  hideToolbar: PropTypes.bool,
-  hideHeader: PropTypes.bool,
-  hideContent: PropTypes.bool,
 
   onFavoriteClick: PropTypes.func,
   onCommentsClick: PropTypes.func,
-  onShareClick: PropTypes.func,
-  onPayClick: PropTypes.func,
-  onReceiptClick: PropTypes.func,
 };
 
 Post.defaultProps = {
@@ -142,15 +128,10 @@ Post.defaultProps = {
   iLike: false,
   isFavorite: false,
   createdDate: "",
-  hideToolbar: false,
-  hideHeader: false,
-  hideContent: false,
 
   onFavoriteClick: undefined,
   onCommentsClick: undefined,
-  onShareClick: undefined,
-  onPayClick: undefined,
-  onReceiptClick: undefined,
+  onDialogToggle: undefined
 };
 
 export default Post;

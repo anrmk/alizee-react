@@ -7,12 +7,12 @@ import {formatDate} from "../../helpers/functions";
 
 import useStyles from "./styles";
 
-function Message({
+const Message = React.memo(({
   message,
   isOwner,
   liveChat,
   className
-}) {
+}) => {
   const classes = useStyles();
 
   return (
@@ -24,8 +24,8 @@ function Message({
         {formatDate(message.createdDate)}
       </Typography>
     </Paper>
-  )
-}
+  );
+});
 
 Message.propTypes = {
   message:  PropTypes.any,

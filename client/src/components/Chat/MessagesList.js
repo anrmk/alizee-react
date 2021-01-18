@@ -8,7 +8,7 @@ import { Box } from "@material-ui/core/";
 import Message from "./Message";
 import useStyles from "./styles";
 
-function MessagesList({
+const MessagesList = React.memo(({
   hasMore,
 
   userId,
@@ -18,7 +18,7 @@ function MessagesList({
   messageClassName,
 
   onFetchMore
-}) {
+}) => {
   const classes = useStyles();
   const messagesContainer = useRef(null);
 
@@ -53,8 +53,8 @@ function MessagesList({
       ))}
       </InfiniteScroll>
     </Box>
-  )
-}
+  );
+});
 
 MessagesList.propTypes = {
   hasMore: PropTypes.bool,

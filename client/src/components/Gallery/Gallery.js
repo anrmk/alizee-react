@@ -37,12 +37,14 @@ function Gallery({
       <SwipeableViews enableMouseEvents index={localIndex} onChangeIndex={handleIndexChange}>
         {children}
       </SwipeableViews>
-      <Pagination
-        className={classes.pagination}
-        dots={children.length}
-        currentIndex={localIndex}
-        onChangeIndex={handleIndexChange}
-      />
+      {(amount === 0 || isPurchased) && (
+        <Pagination
+          className={classes.pagination}
+          dots={children.length}
+          currentIndex={localIndex}
+          onChangeIndex={handleIndexChange}
+        />
+      )}
     </Box>
   );
 }

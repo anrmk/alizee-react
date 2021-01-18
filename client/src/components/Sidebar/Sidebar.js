@@ -21,7 +21,7 @@ import NightsStayIcon from "@material-ui/icons/NightsStayOutlined";
 import SunnyIcon from "@material-ui/icons/WbSunnyOutlined";
 
 import { HOME_ROUTE, EXPLORE_ROUTE, MEET_ROUTE, ACTIVITY_ROUTE } from "../../constants/routes";
-import { useChangeTheme } from "../../domain/ThemeProvider";
+import useChangeTheme from "../../hooks/useChangeTheme";
 import UserCard from "./UserCard";
 import Footer from "../Footer";
 

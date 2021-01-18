@@ -1,8 +1,9 @@
-import { generateUrl } from "../../../helpers/functions";
+import { generateUrl, isEmptyObject } from "../../../helpers/functions";
 import { fetchPost } from "./getPost";
 
 export const BUY_POST_REQUEST = "BUY_POST_REQUEST";
 export const BUY_POST_SUCCESS = "BUY_POST_SUCCESS";
+export const BUY_CURRENT_POST_SUCCESS = "BUY_CURRENT_POST_SUCCESS";
 export const BUY_POST_FAILURE = "BUY_POST_FAILURE";
 
 function requestBuyPost() {
@@ -10,19 +11,29 @@ function requestBuyPost() {
     type: BUY_POST_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: "",
+      errorMessage: ""
     },
   };
 }
 
-function receiveBuyPost(post) {
+function receiveBuyPost(posts) {
   return {
     type: BUY_POST_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
-      data: post,
+      data: posts || [],
       currentPost: {}
+    },
+  };
+}
+
+function receiveBuyCurrentPost() {
+  return {
+    type: BUY_CURRENT_POST_SUCCESS,
+    payload: {
+      isFetching: false,
+      errorMessage: "",
     },
   };
 }
@@ -32,7 +43,7 @@ function errorBuyPost(message) {
     type: BUY_POST_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message,
+      errorMessage: message
     },
   };
 }
@@ -41,29 +52,36 @@ export function buyPost(api, id) {
   return async (dispatch, getState) => {
     dispatch(requestBuyPost());
 
-    const postsState = getState().posts;
-    const posts = [...postsState.data];
-    const postIndex = posts.findIndex((post) => post.id === id);
-
-    debugger
-
+    const url = generateUrl("buyPost");
     try {
-      if (postIndex === -1) {
-        throw "Item not found!";
+      const postsState = getState().posts;
+      const currentPost = postsState.currentPost;
+
+      if (!postsState.data.length && isEmptyObject(postsState.currentPost)) {
+        throw "There is no local data";
       }
 
-      const post = posts[postIndex];
-      const url = generateUrl("buyPost");
-
       await api.setParams({ id }).query(url);
+      await dispatch(fetchPost(api, currentPost.id));
 
-      await dispatch(fetchPost(api, id));
+      if (postsState.data.length) {
+        const posts = [...postsState.data];
+        const postIndex = posts.findIndex((post) => post.id === id);
 
-      const currentPostState = getState().posts.currentPost;
-      //currentPostState.isPurchased = currentPostState.amount > 0 && currentPost
-      posts[postIndex] = currentPostState;
+        if (postIndex === -1) {
+          throw "Item not found!";
+        }
 
-      dispatch(receiveBuyPost(posts));
+        const currentPost = { ...getState().posts.currentPost };
+        
+        posts[postIndex] = currentPost;
+
+        dispatch(receiveBuyPost(posts));
+      }
+
+      if (!isEmptyObject(postsState.currentPost)) {
+        dispatch(receiveBuyCurrentPost());
+      }
     } catch (e) {
       dispatch(errorBuyPost("Error: something went wrong"));
     }

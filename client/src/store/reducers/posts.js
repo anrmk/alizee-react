@@ -2,25 +2,34 @@ import {
   GET_POST_REQUEST,
   GET_POST_SUCCESS,
   GET_POST_FAILURE,
+
   GET_POSTS_REQUEST,
   GET_POSTS_SUCCESS,
   GET_POSTS_FAILURE,
+
   GET_FAVORITE_POSTS_REQUEST,
   GET_FAVORITE_POSTS_SUCCESS,
   GET_FAVORITE_POSTS_FAILURE,
+
   GET_FOLLOWING_POSTS_REQUEST,
   GET_FOLLOWING_POSTS_SUCCESS,
   GET_FOLLOWING_POSTS_FAILURE,
+
   CREATE_POST_REQUEST,
   CREATE_POST_SUCCESS,
   CREATE_POST_FAILURE,
   RESET_POSTS,
+
   LIKE_POST_REQUEST,
   LIKE_POST_SUCCESS,
+  LIKE_CURRENT_POST_SUCCESS,
   LIKE_POST_FAILURE,
+
   FAVORITE_POST_REQUEST,
   FAVORITE_POST_SUCCESS,
+  FAVORITE_CURRENT_POST_SUCCESS,
   FAVORITE_POST_FAILURE,
+
   BUY_POST_REQUEST,
   BUY_POST_SUCCESS,
   BUY_POST_FAILURE,
@@ -139,6 +148,12 @@ export default function post(
         ...action.payload,
       };
 
+    case LIKE_CURRENT_POST_SUCCESS:
+      return {
+        ...state,
+        ...action.payload,
+      };
+
     case LIKE_POST_FAILURE:
       return {
         ...state,
@@ -153,6 +168,12 @@ export default function post(
       };
 
     case FAVORITE_POST_SUCCESS:
+      return {
+        ...state,
+        ...action.payload,
+      };
+
+    case FAVORITE_CURRENT_POST_SUCCESS:
       return {
         ...state,
         ...action.payload,
