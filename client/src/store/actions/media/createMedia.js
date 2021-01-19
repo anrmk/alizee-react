@@ -43,7 +43,7 @@ export function createMedia(api, media) {
     try {
       const formData = new FormData();
       media.forEach(file => {
-        formData.append(file.name, file);
+        formData.append("files", file);
       });
 
       const { data } = await api
