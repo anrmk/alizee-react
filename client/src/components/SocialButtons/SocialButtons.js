@@ -1,36 +1,30 @@
 import React from "react";
 import { GoogleLogin } from "react-google-login";
-import { Box, IconButton } from "@material-ui/core";
+import PropTypes from "prop-types";
+import { Avatar, Box, IconButton } from "@material-ui/core";
 
 import { SOCIAL_GOOGLE } from "../../constants/social_types";
 import GoogleIcon from "../../assets/img/social-icons/google.svg";
 
-const useStyles = () => ({
-  icon: {
-    height: "20px",
-    width: "20px",
-  }
-});
+import useStyles from "./styles";
 
 function SocialButtons({
   className,
   googleClientId,
-  signIn,
 
   onRequest,
   onSuccess,
-  onFailure
+  onFailure,
 }) {
-  const classes =  useStyles();
+  const classes = useStyles();
 
   return (
     <Box className={className} display="flex" alignContent="center" justifyContent="center">
       <GoogleLogin
-        isSignedIn={signIn}
         clientId={googleClientId}
         render={(props) => (
           <IconButton {...props}>
-            <img src={GoogleIcon} style={classes.icon} />
+            <Avatar src={GoogleIcon} className={classes.googleIcon} />
           </IconButton>
         )}
         onRequest={onRequest}
@@ -38,7 +32,25 @@ function SocialButtons({
         onFailure={onFailure}
       />
     </Box>
-  )
+  );
 }
+
+SocialButtons.propTypes = {
+  className: PropTypes.string,
+  googleClientId: PropTypes.string,
+
+  onRequest: PropTypes.func,
+  onSuccess: PropTypes.func,
+  onFailure: PropTypes.func,
+};
+
+SocialButtons.defaultProps = {
+  className: "",
+  googleClientId: "",
+
+  onRequest: undefined,
+  onSuccess: undefined,
+  onFailure: undefined,
+};
 
 export default SocialButtons;

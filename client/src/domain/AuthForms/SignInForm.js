@@ -44,7 +44,7 @@ function SignInForm({
 
   return (
     <AuthBaseForm
-      isSingInForm={true}
+      isSingUpForm={false}
       error={error}
       onFormSubmit={handleSubmit(onSubmit)}
       onSocialRequest={onSocialRequest}

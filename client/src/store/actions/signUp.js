@@ -1,4 +1,4 @@
-import { generateUrl, getFullName } from '../../helpers/functions';
+import { generateUrl } from '../../helpers/functions';
 
 export const SIGNUP_REQUEST = 'SIGNUP_REQUEST';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
@@ -50,12 +50,8 @@ export function signUpUser(api, creds) {
     try {
       const { status, data } = await api
         .setData({
-          name: getFullName(creds.name, creds.surname),
-          birthday: creds.birthday,
           userName: creds.username,
           email: creds.email,
-          phoneNumber: creds.phoneNumber,
-          avatarUrl: creds.imageUrl
         })
         .query(url, { "g-recaptcha-response": creds.token });
 

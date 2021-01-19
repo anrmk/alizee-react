@@ -20,6 +20,7 @@ import CreateRoom from "../Meet/CreateRoom";
 import Meeting from "../Meet/Meeting";
 import Room from "../Meet/Room";
 import Profile from "../Profile";
+import PrivacyPolicy from "../PrivacyPolicy";
 import Followers from "../Followers";
 import Followings from "../Followings";
 import { Settings } from "../Settings";
@@ -83,6 +84,7 @@ function Main(props) {
           <Route exact path={Routes.DEFAULT_ROUTE} render={() => <Redirect to={Routes.HOME_ROUTE} />} />
           <Route path={Routes.SIGN_UP_ROUTE} component={SignUp} />
           <Route path={Routes.SIGN_IN_ROUTE} component={SignIn} />
+          <Route path={Routes.PRIVACY_POLICY_ROUTE} component={PrivacyPolicy} />
           <Route path={Routes.EMAIL_CONFIRMATION} component={EmailConfirmation} />
           <Route path={Routes.EMAIL_VERIFY} component={EmailVerify} />
           <Route exact path={Routes.RESET_PASSWORD_ROUTE} component={ResetPassword} />

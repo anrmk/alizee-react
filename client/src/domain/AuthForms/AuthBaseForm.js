@@ -1,15 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
-import { Box, Typography, Card, CardContent, Button } from "@material-ui/core";
+import { Box, Button, Card, CardContent, Typography } from "@material-ui/core";
 
 import SocialButtons from "../../components/SocialButtons/SocialButtons";
 
 import { GOOGLE_CLIENT_ID } from "../../constants/social_client_ids";
+
 import useStyles from "./styles";
 
+const FORM_ID = "signUp";
+
 function AuthBaseForm({
-  isSingInForm = true,
+  isSingUpForm,
   error,
 
   children,
@@ -25,13 +28,13 @@ function AuthBaseForm({
   const classes = useStyles();
 
   return (
-    <Box>
+    <Box textAlign="center">
       <Card className={classes.formElementIndent}>
         <CardContent>
           <Box className={clsx(classes.logoBox, classes.formElementIndent)}>
             <Box className={classes.logoImage} />
           </Box>
-          <form onSubmit={onFormSubmit} autoComplete="off">
+          <form id={FORM_ID} onSubmit={onFormSubmit} autoComplete="off">
             {formComponent || children}
             {error && (
               <Typography
@@ -43,26 +46,27 @@ function AuthBaseForm({
                 {error}
               </Typography>
             )}
-            <Box>
-              <Button
-                fullWidth
-                className={classes.formElementIndent}
-                disableElevation
-                type="submit"
-                variant="contained"
-                color="primary"
-              >
-                {isSingInForm ? "Sign In" : "Sing Up"}
-              </Button>
-              <SocialButtons
-                className={clsx(classes.formElement, helpComponent && classes.formElementIndent)}
-                googleClientId={GOOGLE_CLIENT_ID}
-                onRequest={onSocialRequest}
-                onSuccess={onSocialSuccess}
-                onFailure={onSocialFailure}
-              />
-            </Box>
           </form>
+          <Box>
+            <Button
+              form={FORM_ID}
+              fullWidth
+              className={classes.formElementIndent}
+              disableElevation
+              type="submit"
+              variant="contained"
+              color="primary"
+            >
+              {isSingUpForm ? "Sing Up" : "Sign In"}
+            </Button>
+            <SocialButtons
+              className={clsx(classes.formElement, helpComponent && classes.formElementIndent)}
+              googleClientId={GOOGLE_CLIENT_ID}
+              onRequest={onSocialRequest}
+              onSuccess={onSocialSuccess}
+              onFailure={onSocialFailure}
+            />
+          </Box>
           {helpComponent}
         </CardContent>
       </Card>
@@ -72,7 +76,7 @@ function AuthBaseForm({
 }
 
 AuthBaseForm.propTypes = {
-  isSingInForm: PropTypes.bool,
+  isSingUpForm: PropTypes.bool,
   error: PropTypes.string,
 
   children: PropTypes.any,
@@ -87,7 +91,7 @@ AuthBaseForm.propTypes = {
 };
 
 AuthBaseForm.defaultProps = {
-  isSingInForm: true,
+  isSingUpForm: true,
   error: "",
 
   children: null,

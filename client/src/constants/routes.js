@@ -17,6 +17,7 @@ export const ROOM_ID_DEFAULT_ROUTE = "/room/:roomId";
 export const ROOM_ID_ROUTE = roomId => `/room/${roomId}`;
 export const SIGN_IN_ROUTE = "/signIn";
 export const SIGN_UP_ROUTE = "/signUp";
+export const PRIVACY_POLICY_ROUTE = "/terms";
 export const EMAIL_CONFIRMATION = "/email-confirmation";
 export const EMAIL_VERIFY = "/email-verify";
 export const FOLLOWERS_ROUTE = username => `/${username}/followers`;
