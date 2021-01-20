@@ -17,7 +17,7 @@ export default function VideoContent({
   id,
   url,
   showControls,
-  wrapperClassName,
+  className,
   videoClassName,
   videoPlayerProps
 }) {
@@ -87,7 +87,7 @@ export default function VideoContent({
   };
 
   return (
-    <Box id={id} className={clsx(classes.videoContent, wrapperClassName)} onMouseEnter={() => setShowing(true)} onMouseLeave={() => setShowing(false)}>
+    <Box id={id} className={clsx(classes.videoContent, className)} onMouseEnter={() => setShowing(true)} onMouseLeave={() => setShowing(false)}>
       {showControls && renderPlayBtn(showing, playing)}
       {showControls && renderMuteBtn(showing, muted, playing)}
       <VisibilitySensor partialVisibility onChange={(isVisible) => setIsVisible(isVisible)}>

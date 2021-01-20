@@ -55,14 +55,13 @@ export function buyPost(api, id) {
     const url = generateUrl("buyPost");
     try {
       const postsState = getState().posts;
-      const currentPost = postsState.currentPost;
 
       if (!postsState.data.length && isEmptyObject(postsState.currentPost)) {
         throw "There is no local data";
       }
 
       await api.setParams({ id }).query(url);
-      await dispatch(fetchPost(api, currentPost.id));
+      await dispatch(fetchPost(api, id));
 
       if (postsState.data.length) {
         const posts = [...postsState.data];

@@ -56,7 +56,7 @@ export default function usePostDialog({
   };
   const dialog = useDialog({
     ...dialogs[currentDialog.type],
-    dialogProps: { fullWidth: true }
+    dialogProps: { fullWidth: true, onClose: () => dialog.toggleDialog(false) }
   });
 
   useEffect(() => dialog.setParams(dialog[currentDialog]), [onPayClick]);

@@ -1,20 +1,24 @@
-import React, { useState, useEffect, useContext } from "react";
-import {useParams} from "react-router-dom";
-
+import React, { useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
-import { Container, Grid, Box } from "@material-ui/core/";
+import { useTranslation } from "react-i18next";
+import { Button, Container, DialogActions } from "@material-ui/core/";
 
 import ApiContext from "../context/ApiContext";
 
 import { Room, Sidebar, FollowingDialog } from "../domain/Chat";
+import SlidingViews from "../components/SlidingViews";
 
 import * as actionRelationship from "../store/actions/relationship";
 import * as actionChat from "../store/actions/chat";
 import * as settings from "../store/actions/settings";
 import { ESC_KEY_CODE } from "../constants/key_codes";
+import useSlidingViews from "../hooks/useSlidingViews";
+import useDialog from "../hooks/useDialog";
 
 function Chat(props) {
   const apiClient = useContext(ApiContext);
+  const { t } = useTranslation();
 
   const { username } = useParams(); //Здесь сделать функцию создания и получения данных чата по имени пользователя
 
@@ -23,32 +27,39 @@ function Chat(props) {
   const { chat, getRoom, createRoom, getRooms, removeRoom, deleteRoom, deleteRoomHistory, filterRooms, createBlackList, resetCurrentRoom } = props;
   const { createMessage } = props;
 
-  const [followingsModalOpen, setFollowingsModalOpen] = useState(false);
+  const { currentSlidingViewsState, toggleSlidingViewsState } = useSlidingViews();
+  const dialog = useDialog({
+    title: t("ChatFollowingDialogTitle"),
+    dialogProps: { onClose: () => dialog.toggleDialog(false) },
+    content: (
+      <FollowingDialog
+        items={followings.data}
+        onItemClick={handleRoomCreate}
+        onSearchChange={handleFollowingsFilter} />
+    ),
+    actionsComponent: (
+      <DialogActions>
+        <Button onClick={() => dialog.toggleDialog(false)}>Close</Button>
+      </DialogActions>
+    )
+  });
 
   const handleModalCloseKeyPress = (e) => {
     if (e.keyCode === ESC_KEY_CODE) {
-      setFollowingsModalOpen(false);
+      dialog.toggleDialog(false);
     }
   };
 
   useEffect(() => {
+    getRooms(apiClient);
+
     document.addEventListener("keydown", handleModalCloseKeyPress, false);
     return () => {
       document.removeEventListener("keydown", handleModalCloseKeyPress, false);
     };
   }, []);
 
-  useEffect(() => {
-    (async () => {
-      if (followingsModalOpen) {
-        await getFollowings(apiClient, user.id);
-      } else {
-        await getRooms(apiClient);
-      }
-    })();
-  }, [followingsModalOpen]);
-
-  const handleFollowingsFilter = (e) => {
+  function handleFollowingsFilter(e) {
     filterFollowings(e.target.value.toLowerCase());
   };
 
@@ -59,12 +70,13 @@ function Chat(props) {
   const handleRoomGet = async (id) => {
     if (chat.currentRoom?.id !== id) {
       await getRoom(apiClient, id);
+      toggleSlidingViewsState();
     }
   };
 
-  const handleRoomCreate = async (userId) => {
+  async function handleRoomCreate(userId) {
     await createRoom(apiClient, userId);
-    setFollowingsModalOpen(false);
+    dialog.toggleDialog(false);
   };
 
   const handleRoomDelete = async (id) => {
@@ -98,43 +110,45 @@ function Chat(props) {
     resetCurrentRoom();
   }
 
+  const handleRoomClose = (data) => {
+    if (data) {
+      toggleSlidingViewsState();
+      resetCurrentRoom();
+    }
+  };
+
+  const handleUserListBtnClick = async () => {
+    await getFollowings(apiClient, user.id);
+    dialog.toggleDialog(true);
+  };
+
   return (
     <Container>
-      <Box my={4}>
-        <Grid container spacing={2} direction="row">
-          <Grid item md={4}>
-            <Sidebar
-              isLoading={chat.isFetching}
-              user={user}
-              items={chat.data}
-              selectedItemId={chat.currentRoom?.id}
-              onItemClick={handleRoomGet}
-              onActionClick={handleRoomGet}
-              onSearchChange={handleRoomsFilter}
-              onNewChatClick={() => setFollowingsModalOpen(true)}
-            />
-          </Grid>
-          <Grid item md={8}>
-            <Room
-              data={chat.currentRoom}
-              userId={user.id}
-              onClose={resetCurrentRoom}
-              onMessageCreate={handleMessageCreate}
-              onMessageClear={handleMessageClear}
-              onRoomDelete={handleRoomDelete}
-              onAccountBlock={handleAccountBlock}
-            />
-          </Grid>
-        </Grid>
-      </Box>
-
-      <FollowingDialog
-        data={followings.data}
-        open={followingsModalOpen}
-        onItemClick={handleRoomCreate}
-        onSearchChange={handleFollowingsFilter}
-        onClose={() => setFollowingsModalOpen(false)}
-      />
+      <SlidingViews
+        mobileOnly
+        currentState={currentSlidingViewsState}
+        firstSize={4}
+        secondSize={8}>
+        <Sidebar
+          isLoading={chat.isFetching}
+          user={user}
+          items={chat.data}
+          selectedItemId={chat.currentRoom?.id}
+          onItemClick={handleRoomGet}
+          onActionClick={handleRoomGet}
+          onSearchChange={handleRoomsFilter}
+          onUserListBtnClick={handleUserListBtnClick}
+        />
+        <Room
+          data={chat.currentRoom}
+          userId={user.id}
+          onClose={handleRoomClose}
+          onMessageCreate={handleMessageCreate}
+          onMessageClear={handleMessageClear}
+          onRoomDelete={handleRoomDelete}
+          onAccountBlock={handleAccountBlock}
+        />
+      </SlidingViews>
     </Container>
   );
 }
@@ -158,7 +172,7 @@ function mapStateToProps(state) {
       data: actionChat.getFilteredRooms(state),
       errorMessage: state.chat.errorMessage,
       keywords: state.keywords,
-      currentRoom: state.chat?.currentRoom,
+      currentRoom: state.chat.currentRoom,
     },
   };
 }

@@ -1,9 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
   List,
   ListItem,
   ListItemText,
@@ -13,30 +10,20 @@ import {
 } from "@material-ui/core/";
 
 import Search from "../../components/Search";
-import useStyles from "./styles";
 
 function FollowingDialog({
-  open,
-  data,
+  items,
 
   onSearchChange,
   onItemClick,
-  onClose
 }) {
-  const classes = useStyles();
   const { t } = useTranslation();
 
   return (
-    <Dialog
-      maxWidth="lg"
-      aria-labelledby="follower-dialog-title"
-      onClose={onClose}
-      open={open}>
-      <DialogTitle id="follower-dialog-title">{t("ChatFollowingDialogTitle")}</DialogTitle>
-      <DialogContent>
+    <>
       <Search placeholder={t("ChatFollowingDialogSearchInputLabel")} onChange={onSearchChange} />
       <List >
-        {data && data.length ? data.map((follower) => (
+        {items && items.length ? items.map((follower) => (
           <ListItem button key={follower.id} onClick={() => onItemClick(follower.userId)}>
             <ListItemAvatar>
               <Avatar src={follower.avatarUrl} />
@@ -52,8 +39,7 @@ function FollowingDialog({
           </Typography>
         )}
       </List>
-      </DialogContent>
-    </Dialog>
+    </>
   )
 }
 

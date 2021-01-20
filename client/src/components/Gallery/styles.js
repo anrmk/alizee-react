@@ -11,14 +11,29 @@ const useStyles = makeStyles((theme) => ({
     }
   },
 
-  title: {
+  payableDescription: {
     position: "absolute",
     height: "100%",
     width: "100%",
-    textAlign: "center",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
     zIndex: 1,
     backgroundColor: theme.palette.type === "dark" ? "rgba(0,0,0,0.7)" : "rgba(255,255,255,0.7)",
     padding: "30% 0" 
+  },
+
+  swipeableView: {
+    height: "100%",
+    "& > .react-swipeable-view-container": {
+      height: "100%"
+    }
+  },
+
+  slide: {
+    overflow: "hidden !important",
+    height: "100%"
   },
 
   pagination: {

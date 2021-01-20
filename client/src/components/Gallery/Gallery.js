@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import clsx from "clsx";
 import SwipeableViews from "react-swipeable-views";
 
 import Pagination from "./Pagination";
@@ -14,9 +15,11 @@ function Gallery({
   currentIndex, 
   amount, 
   isPurchased,
+  className,
   
   onPayClick,
-  onChangeIndex }) {
+  onChangeIndex
+}) {
   const classes = useStyles();
   const [localIndex, setLocalIndex] = useState(currentIndex);
 
@@ -26,15 +29,19 @@ function Gallery({
   };
 
   return (
-    <Box className={classes.root}>
+    <Box className={clsx(classes.root, className)}>
       {(amount !== 0 && !isPurchased) && (
-        <Box className={classes.title}>
+        <Box className={classes.payableDescription}>
           <IconButton onClick={onPayClick}><LockIcon fontSize="large" /></IconButton>
           <Typography variant="h4">Unlock post for ${amount}</Typography>
         </Box>
       )}
-      
-      <SwipeableViews enableMouseEvents index={localIndex} onChangeIndex={handleIndexChange}>
+      <SwipeableViews
+        className={classes.swipeableView}
+        slideClassName={classes.slide}
+        enableMouseEvents
+        index={localIndex}
+        onChangeIndex={handleIndexChange}>
         {children}
       </SwipeableViews>
       {(amount === 0 || isPurchased) && (
@@ -54,6 +61,7 @@ Gallery.propTypes = {
   currentIndex: PropTypes.number,
   amount: PropTypes.number,
   isPurchased: PropTypes.bool,
+  className: PropTypes.any,
 
   onPayClick: PropTypes.func,
   onChangeIndex: PropTypes.func,
@@ -64,6 +72,7 @@ Gallery.defaultProps = {
   currentIndex: 0,
   amount: 0,
   isPurchased: false,
+  className: null,
 
   onPayClick: undefined,
   onChangeIndex: undefined,

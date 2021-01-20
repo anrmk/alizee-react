@@ -7,6 +7,8 @@ import VideoContent from "./VideoContent";
 
 import Gallery from "../Gallery";
 
+import useStyles from "./styles";
+
 function MediaContent({
   items,
   amount,
@@ -15,21 +17,23 @@ function MediaContent({
 
   onPayClick,
 }) {
+  const classes = useStyles();
+
   if (!items || !items.length) return <></>;
 
   return (
-    <Gallery amount={amount} isPurchased={isPurchased} onPayClick={onPayClick} >
+    <Gallery className={classes.root} amount={amount} isPurchased={isPurchased} onPayClick={onPayClick} >
       {items.length &&
         items.map((item) => {
           const url = showThumbnail ? item.thumbnailUrl : item.url;
 
           if (item.kind === MEDIA_IMAGE) {
-            return <ImagesContent key={item.id} url={url} amount={amount} />;
+            return <ImagesContent className={classes.mediaContent} wrapperClassName={classes.imageContentWrapper} key={item.id} url={url} amount={amount} />;
           } else if (item.kind === MEDIA_VIDEO) {
-            return <VideoContent key={item.id} url={url} showControls={amount === 0 || isPurchased} />;
-          } else {
-            return <></>;
+            return <VideoContent className={classes.mediaContent} key={item.id} url={url} showControls={amount === 0 || isPurchased} />;
           }
+
+          return null;
         })}
     </Gallery>
   );

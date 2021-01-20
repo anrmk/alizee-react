@@ -10,7 +10,7 @@ import useStyles from "./styles";
 
 function Comments(props) {
   const classes = useStyles();
-  const { children } = props;
+  const { children, headerBackComponent } = props;
   const { hasMore } = props;
   const { userId, avatarUrl, title, subheader, description, items, isCommentable } = props;
   const { onFetchMore, onSendMessageClick } = props;
@@ -22,9 +22,12 @@ function Comments(props) {
         title={title}
         subheader={subheader}
         action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
+          <>
+            {headerBackComponent}
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+          </>
         }
       />
       <CardContent>{description}</CardContent>

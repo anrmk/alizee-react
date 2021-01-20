@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 
-import { Divider, Card, CardActions, CardContent, CardHeader, IconButton } from "@material-ui/core";
+import { Divider, Card, CardActions, CardContent, CardHeader, IconButton, Hidden } from "@material-ui/core";
 
-import SendOutlinedIcon from "@material-ui/icons/SendOutlined";
-import MoreVertIcon from "@material-ui/icons/MoreVertOutlined";
+import SendOutlinedIcon from "@material-ui/icons/SendRounded";
+import MoreVertIcon from "@material-ui/icons/MoreVertRounded";
+import BackIcon from "@material-ui/icons/ArrowBackRounded";
 
 import Avatar from "../../components/Avatar";
 import { MessageSenderInput, MessagesList } from "../../components/Chat";
@@ -43,12 +44,6 @@ function Room({
     setAnchorEl(null);
   };
 
-  const handleRoomCloseKeyPress = (e) => {
-    if (e.keyCode === ESC_KEY_CODE) {
-      onClose && onClose();
-    }
-  };
-
   const handleMessageClear = (e) => {
     e.preventDefault();
     handleMenuClose();
@@ -67,31 +62,28 @@ function Room({
     onAccountBlock && onAccountBlock(data.id, data.followerId)
   }
 
-  useEffect(() => {
-    document.addEventListener("keydown", handleRoomCloseKeyPress, false);
-    return () => {
-      document.removeEventListener("keydown", handleRoomCloseKeyPress, false);
-    };
-  }, []);
-
   return (
     <>
       {data ? (
-        <Card className={classes.card} onKeyDown={handleRoomCloseKeyPress}>
+        <Card className={classes.card}>
           <CardHeader
             avatar={<Avatar src={data.avatarUrl} />}
             title={data.name}
             subheader={data.showActivity && (data.offlineDate ? formatDate(data.offlineDate) : "online")}
             action={
-              <IconButton
-                aria-label="settings"
-                ref={anchorEl}
-                aria-controls={data.id}
-                aria-haspopup="true"
-                onClick={handleMenuOpen}
-              >
-                <MoreVertIcon />
-              </IconButton>
+              <>
+                <IconButton onClick={onClose}>
+                  <BackIcon />
+                </IconButton>
+                <IconButton
+                  aria-label="settings"
+                  ref={anchorEl}
+                  aria-controls={data.id}
+                  aria-haspopup="true"
+                  onClick={handleMenuOpen}>
+                  <MoreVertIcon />
+                </IconButton>
+              </>
             }
           />
 
@@ -116,11 +108,13 @@ function Room({
           </CardActions>
         </Card>
       ) : (
-        <Empty
-          title={t("ChatChatRoomEmptyTitle")}
-          subTitle={t("ChatChatRoomEmptySubtitle")}
-          iconComponent={<SendOutlinedIcon className={classes.icon} />}
-        />
+        <Hidden smDown>
+          <Empty
+            title={t("ChatChatRoomEmptyTitle")}
+            subTitle={t("ChatChatRoomEmptySubtitle")}
+            iconComponent={<SendOutlinedIcon className={classes.icon} />}
+          />
+        </Hidden>
       )}
     </>
   );

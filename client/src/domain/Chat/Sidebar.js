@@ -21,7 +21,7 @@ function Sidebar({
   onSearchChange,
   onItemClick,
   onActionClick,
-  onNewChatClick,
+  onUserListBtnClick
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -33,7 +33,7 @@ function Sidebar({
         title={user.name}
         subheader={user.username}
         action={
-          <IconButton aria-label="new chat" onClick={onNewChatClick}>
+          <IconButton aria-label="new chat" onClick={onUserListBtnClick}>
             <ChatIcon />
           </IconButton>
         }

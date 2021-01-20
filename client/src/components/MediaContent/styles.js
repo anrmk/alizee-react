@@ -1,17 +1,20 @@
 import { makeStyles } from "@material-ui/core/styles";
+import { object } from "yup";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // display: "flex",
-    // justifyContent: "center",
-    // alignItems: "center",
-    // position: "relative",
-    // maxHeight: "600px",
-    // height: "100vh",
-    // cursor: "pointer",
-    // color: "red",
+    height: "100%"
   },
 
+  mediaContent: {
+    height: "100%",
+    objectFit: "cover"
+  },
+
+  imageContentWrapper: {
+    height: "100%",
+    width: "100%"
+  },
 
   payable: {
     display: "flex",

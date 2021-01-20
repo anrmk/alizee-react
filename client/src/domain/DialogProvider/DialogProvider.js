@@ -21,22 +21,6 @@ export default function DialogProvider({ children }) {
     }
   }, initialContext);
 
-  const renderTitle = (title) => {
-    if (typeof title === "string") {
-      return <DialogTitle id="post-dialog-title">{title}</DialogTitle>
-    }
-
-    return title;
-  }
-
-  const renderContent = (content) => {
-    if (typeof content === "string") {
-      return <DialogContent id="post-dialog-content">{content}</DialogContent>
-    }
-
-    return content;
-  }
-
   return (
     <DialogContext.Provider value={dispatch}>
       {children}
@@ -48,8 +32,6 @@ export default function DialogProvider({ children }) {
         {...dialogOptions.dialogProps}>
         {dialogOptions.title && <DialogTitle id="post-dialog-title">{dialogOptions.title}</DialogTitle>}
         {dialogOptions.content && <DialogContent id="post-dialog-title">{dialogOptions.content}</DialogContent>}
-        {/* {renderTitle(dialogOptions.title)}
-        {renderContent(dialogOptions.content)} */}
         {dialogOptions.actionsComponent}
         {dialogOptions.bodyComponent}
       </Dialog>
