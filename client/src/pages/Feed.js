@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext, useCallback } from "react";
 import { connect } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Container,
   Box,
@@ -32,10 +32,8 @@ import ApiContext from "../context/ApiContext";
 import { INTERESTS_SKIP, STORIES_LENGTH } from "../constants/feed";
 import { SUGESTED_PEOPLE } from "../constants/routes";
 
-import usePostDialog, { PURCHASES_DIALOG_TYPE, RECEIPT_DIALOG_TYPE } from "../hooks/usePostDialog";
 import useSprout from "../hooks/useSprout";
 import usePostActions from "../hooks/usePostActions";
-import { isEmptyObject } from "../helpers/functions";
 
 function Feed(props) {
   const apiClient = useContext(ApiContext);
@@ -50,7 +48,7 @@ function Feed(props) {
   const { interests, getInterests, createInterests } = props;
   const { story, getStory, getFollowingStories, createStory, resetFollowingStories, resetStory } = props;
 
-  const { buyAction, favoriteAction, likeAction, purachasesAction, receiptAction, goToAction } = usePostActions({
+  const { favoriteAction, likeAction, goToAction, dialogToggleAction } = usePostActions({
     isFetching: props.posts.isFetching,
     onPurchases: props.getPurchases,
     onReceipt: props.getReceipt,
@@ -75,7 +73,6 @@ function Feed(props) {
     })();
 
     return () => {
-      console.log("Unmount feed");
       resetPosts();
       resetStory();
       resetFollowingStories();
@@ -98,14 +95,6 @@ function Feed(props) {
       })();
     }
   }, [userInfo.id]);
-
-  useEffect(() => {
-    posts.receipt && !isEmptyObject(posts.receipt) && postDialog.toggleDialog(RECEIPT_DIALOG_TYPE, true, posts.receipt);
-  }, [posts.receipt]);
-
-  useEffect(() => {
-    posts.purchases && posts.purchases.length && postDialog.toggleDialog(PURCHASES_DIALOG_TYPE, true, {purchases: posts.purchases });
-  }, [posts.purchases]);
 
   const handleFetchMore = (isLoading) => {
     if (!isLoading) {
@@ -144,23 +133,6 @@ function Feed(props) {
     setInterestsModalShow(false);
   };
 
-  const handleDialogToggle = async (data, type) => {
-    switch(type) {
-      case RECEIPT_DIALOG_TYPE: {
-        receiptAction(data.id);
-        break;
-      }
-      case PURCHASES_DIALOG_TYPE: {
-        purachasesAction(data.id);
-        break;
-      }
-      default: 
-        postDialog.toggleDialog(type, true, data);
-    }
-  };
-
-  const postDialog = usePostDialog({ onPayClick: buyAction });
-
   return (
     <Container>
       <Grid container spacing={2}>
@@ -180,9 +152,8 @@ function Feed(props) {
             onLikeClick={likeAction}
             onFavoriteClick={favoriteAction}
             onFollowClick={handleFollowPost}
-            onDialogToggle={handleDialogToggle}
+            onDialogToggle={dialogToggleAction}
           />
-          
         </Grid>
         <Hidden smDown>
           <Grid item md={4}>
@@ -236,8 +207,6 @@ function mapStateToProps(state) {
       data: state.posts?.data,
       errorMessage: state.posts.errorMessage,
       hasMore: state.posts.hasMore,
-      purchases: state.posts?.purchases,
-      receipt: state.posts?.receipt,
     },
 
     media: {
@@ -273,8 +242,8 @@ function mapDispatchToProps(dispatch) {
     getPosts: (api, opts) => dispatch(postActions.getFollowingPosts(api, opts)),
     createPost: (api, post, media) => dispatch(postActions.createPost(api, post, media)),
     buyPost: (api, id) => dispatch(postActions.buyPost(api, id)),
-    getPurchases: (api, id) => dispatch(postActions.getPurchases(api, id)),
-    getReceipt: (api, id) => dispatch(postActions.getReceipt(api, id)),
+    getPurchases: (api, id, callback) => dispatch(postActions.getPurchases(api, id, callback)),
+    getReceipt: (api, id, callback) => dispatch(postActions.getReceipt(api, id, callback)),
     likePost: (api, id) => dispatch(postActions.likePost(api, id)),
     favoritePost: (api, id) => dispatch(postActions.favoritePost(api, id)),
     resetPosts: () => dispatch(postActions.resetPosts()),

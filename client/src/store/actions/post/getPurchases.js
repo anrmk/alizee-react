@@ -35,7 +35,7 @@ function errorPurchasePost(message) {
   };
 }
 
-export function getPurchases(api, id) {
+export function getPurchases(api, id, callback) {
   return async (dispatch, getState) => {
     dispatch(requestPurchasePost());
     const url = generateUrl("getPurchases");
@@ -46,6 +46,7 @@ export function getPurchases(api, id) {
       });
 
       dispatch(receivePurchasePost(data));
+      callback && callback(data);
     } catch (e) {
       dispatch(errorPurchasePost("Error: something went wrong"));
     }

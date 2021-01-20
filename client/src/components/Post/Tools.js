@@ -21,7 +21,7 @@ const Tools = React.memo(({
   iLike,
   isFavorite,
   amount,
-  username,
+  userName,
   description,
   isPurchased,
   isOwner,
@@ -117,7 +117,7 @@ Tools.propTypes = {
   iLike: PropTypes.bool,
   isFavorite: PropTypes.bool,
   amount: PropTypes.number,
-  username: PropTypes.string,
+  userName: PropTypes.string,
   description: PropTypes.string,
 
   onGoToClick: PropTypes.func,

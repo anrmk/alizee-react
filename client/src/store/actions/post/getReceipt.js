@@ -35,7 +35,7 @@ function errorReceiptPost(message) {
   };
 }
 
-export function getReceipt(api, id) {
+export function getReceipt(api, id, callback) {
   return async (dispatch, getState) => {
     dispatch(requestReceiptPost());
     
@@ -45,6 +45,7 @@ export function getReceipt(api, id) {
       data.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, data.avatarUrl);
 
       dispatch(receiveReceiptPost(data));
+      callback && callback(data);
     } catch (e) {
       dispatch(errorReceiptPost("Error: something went wrong"));
     }

@@ -18,7 +18,6 @@ import { HOME_ROUTE } from "../../constants/routes";
 import SlidingViews from "../../components/SlidingViews";
 import useSlidingViews from "../../hooks/useSlidingViews";
 import usePostActions from "../../hooks/usePostActions";
-import usePostDialog, { RECEIPT_DIALOG_TYPE } from "../../hooks/usePostDialog";
 
 import useStyles from "./styles";
 
@@ -29,7 +28,7 @@ function PostPage(props) {
 
   const postId = props.match.params.id;
 
-  const { post, comment } = props;
+  const { user, post, comment } = props;
   const {
     getPost,
     getComments,
@@ -37,13 +36,14 @@ function PostPage(props) {
     createComment
   } = props;
 
-  const { buyAction, favoriteAction, likeAction, purachasesAction } = usePostActions({
+  const { favoriteAction, likeAction, goToAction, dialogToggleAction } = usePostActions({
     isFetching: props.post.isFetching,
-    onPurchase: props.getPurchases,
+    onPurchases: props.getPurchases,
+    onReceipt: props.getReceipt,
     onBuy: props.buyPost,
     onFavorite: props.favoritePost,
-    onLike: props.likePost
-  })
+    onLike: props.likePost,
+  });
 
   useEffect(() => {
     if (!postId) {
@@ -66,23 +66,6 @@ function PostPage(props) {
   const handleSendMessageClick = useCallback(async (text) => {
     !comment.isFetching && await createComment(apiClient, { postId, text });
   }, []);
-
-  const handlePayConfirmClick = useCallback(async ({ id }) => {
-    !post.isFetching && await buyAction(apiClient, id);
-  }, []);
-
-  const handleDialogToggle = async (data, type) => {
-    if (type === RECEIPT_DIALOG_TYPE) {
-      purachasesAction(data.id);
-      if(!post.isFetching) {
-        postDialog.toggleDialog(type, true, post.data?.purchase);
-      }
-    } else {
-      postDialog.toggleDialog(type, true, data);
-    }
-  };
-
-  const postDialog = usePostDialog({ onPayClick: handlePayConfirmClick });
 
   if (post.errorMessage) {
     return <Redirect to={HOME_ROUTE} />
@@ -128,19 +111,23 @@ function PostPage(props) {
             </Hidden>
           }>
           <Tools
-            userId={post.data.user?.id}
             id={post.data.id}
+            userId={post.data.user?.id}
+            userName={post.data.user?.name}
+            isOwner={user.id === post.data.user?.id}
+            likes={post.data.likes}
+            iLike={post.data.iLike}
+
             amount={post.data.amount}
             isFavorite={post.data.isFavorite}
             isPurchased={post.data.isPurchased}
             isCommentable={post.data.isCommentable}
-            likes={post.data.likes}
-            iLike={post.data.iLike}
+            
             hideCommentable={true}
             hideWatch={true}
             onLikeClick={likeAction}
             onFavoriteClick={favoriteAction}
-            onDialogToggle={handleDialogToggle} />
+            onDialogToggle={dialogToggleAction} />
         </Comments>
       </SlidingViews>
     </Container>
@@ -149,6 +136,7 @@ function PostPage(props) {
 
 function mapStateToProps(state) {
   return {
+    user: state.signIn?.userInfo,
     post: {
       isFetching: state.posts.isFetching,
       errorMessage: state.posts.errorMessage,
@@ -167,6 +155,9 @@ function mapDispatchToProps(dispatch) {
     getPost: (api, id) => dispatch(postActions.fetchPost(api, id)),
     likePost: (api, id) => dispatch(postActions.likePost(api, id)),
     buyPost: (api, id) => dispatch(postActions.buyPost(api, id)),
+    getPurchases: (api, id, callback) => dispatch(postActions.getPurchases(api, id, callback)),
+    getReceipt: (api, id, callback) => dispatch(postActions.getReceipt(api, id, callback)),
+   
     favoritePost: (api, id) => dispatch(postActions.favoritePost(api, id)),
 
     getComments: (api, opts) => dispatch(commentActions.getCommentsPost(api, opts)),
