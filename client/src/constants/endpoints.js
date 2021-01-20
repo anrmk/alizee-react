@@ -12,6 +12,8 @@ export default {
     // POSTS
     getPost: "post/getpost",
     getPosts: "post/getposts",
+    getReceipt: "post/receipt",
+    getPurchases: "post/purchases",
 
     // FAVORITE POSTS
     getFavoritePosts: "post/getfavouriteposts",

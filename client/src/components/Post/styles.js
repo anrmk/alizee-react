@@ -51,6 +51,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
+  receipt: {
+    textAlign: "center"
+  },
+
   grow: {
     flexGrow: 1,
   },

@@ -66,3 +66,17 @@ export {
   BUY_POST_FAILURE,
   buyPost
 } from "./buyPost";
+
+export { 
+  PURCHASE_POST_REQUEST,
+  PURCHASE_POST_SUCCESS,
+  PURCHASE_POST_FAILURE,
+  getPurchases
+} from "./getPurchases";
+
+export {
+  RECEIPT_POST_REQUEST,
+  RECEIPT_POST_SUCCESS,
+  RECEIPT_POST_FAILURE,
+  getReceipt
+} from "./getReceipt"

@@ -12,7 +12,7 @@ import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorderOutlined";
 import ShareIcon from "@material-ui/icons/ShareOutlined";
 import VisibilityIcon from "@material-ui/icons/VisibilityOutlined";
 
-import { PAYMENT_DIALOG_TYPE, SHARE_DIALOG_TYPE, RECEIPT_DIALOG_TYPE } from "../../hooks/usePostDialog";
+import { PAYMENT_DIALOG_TYPE, SHARE_DIALOG_TYPE, RECEIPT_DIALOG_TYPE, PURCHASES_DIALOG_TYPE } from "../../hooks/usePostDialog";
 import useStyles from "./styles";
 
 const Tools = React.memo(({
@@ -24,6 +24,7 @@ const Tools = React.memo(({
   username,
   description,
   isPurchased,
+  isOwner,
 
   onGoToClick,
   onLikeClick,
@@ -49,11 +50,11 @@ const Tools = React.memo(({
   };
 
   const handleReceiptClick = () => {
-    onDialogToggle && onDialogToggle({ id }, RECEIPT_DIALOG_TYPE);
+    onDialogToggle && onDialogToggle({ id }, isOwner ? PURCHASES_DIALOG_TYPE : RECEIPT_DIALOG_TYPE);
   };
 
   const handleShareClick = () => {
-    onDialogToggle && onDialogToggle({ id, title: username, quote: description }, SHARE_DIALOG_TYPE);
+    onDialogToggle && onDialogToggle({ id }, SHARE_DIALOG_TYPE);
   };
 
   const renderPurchase = (amount, isPurchased) => {

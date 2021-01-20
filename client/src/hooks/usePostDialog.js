@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { DialogActions, Button } from "@material-ui/core";
 
 import useDialog from "../hooks/useDialog";
-import { Payment, Receipt } from "../components/Post";
+import { Payment, Receipt, Purchase } from "../components/Post";
 import SocialList from "../domain/SocialList";
 
 export const PAYMENT_DIALOG_TYPE = "payment";
 export const SHARE_DIALOG_TYPE = "share";
 export const RECEIPT_DIALOG_TYPE = "receipt";
+export const PURCHASES_DIALOG_TYPE = "purchases";
 
 export default function usePostDialog({
   onPayClick
@@ -42,6 +43,16 @@ export default function usePostDialog({
         </DialogActions>
       )
     },
+    [PURCHASES_DIALOG_TYPE]: {
+      title: "Purchases",
+      content: <Purchase {...currentDialog.data} />,
+      actionsComponent: (
+        <DialogActions>
+          <Button onClick={() => dialog.toggleDialog(false)}>Close</Button>
+        </DialogActions>
+      )
+    },
+    
   };
   const dialog = useDialog({
     ...dialogs[currentDialog.type],

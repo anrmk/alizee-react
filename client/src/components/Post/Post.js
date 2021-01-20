@@ -21,43 +21,22 @@ import MediaContent from "../../components/MediaContent";
 
 import useStyles from "./styles";
 
-// TODO: add optimization (list item doesn't optimized)
 const Post = React.memo((props) => {
   const classes = useStyles();
-  const {
-    id,
-    userId,
-    avatarUrl,
-    name,
-    username,
-    mediaUrls,
-    amount,
-    description,
-    isCommentable,
-    likes,
-    iLike,
-    isFavorite,
-    isPurchased,
-    createdDate,
-  } = props;
 
-  const {
-    onLikeClick,
-    onFavoriteClick,
-    onGoToClick,
-    onDialogToggle 
-  } = props;
+  const { id, user, owner, post } = props;
+  const { onLikeClick, onFavoriteClick, onGoToClick, onDialogToggle } = props;
 
   return (
     <Card className={classes.root} variant="outlined">
       <CardHeader
-        avatar={<Avatar src={avatarUrl} />}
-        title={name}
-        subheader={username}
+        avatar={<Avatar src={owner.avatarUrl} />}
+        title={owner.name}
+        subheader={owner.userName}
         action={
           <>
             <Typography display="inline" variant="caption">
-              {createdDate && formatDate(createdDate)}
+              {post.createdDate && formatDate(post.createdDate)}
             </Typography>
             <IconButton aria-label="settings">
               <MoreVertIcon />
@@ -67,31 +46,33 @@ const Post = React.memo((props) => {
       />
 
       <CardMedia>
-        <MediaContent className={classes.post} items={mediaUrls} amount={amount} isPurchased={isPurchased} />
+        <MediaContent className={classes.post} items={post.media} amount={post.amount} isPurchased={post.isPurchased} />
       </CardMedia>
 
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {description}
+          {post.description}
         </Typography>
       </CardContent>
 
       <CardActions className={classes.action} disableSpacing>
         <Tools
-          userId={userId}
           id={id}
-          isCommentable={isCommentable}
-          likes={likes}
-          iLike={iLike}
-          isFavorite={isFavorite}
-          amount={amount}
-          username={username}
-          description={description}
-          isPurchased={isPurchased}
+          userId={owner.id}
+          username={owner.username}
+          isOwner={user.id === owner.id}
+          isCommentable={post.isCommentable}
+          likes={post.likes}
+          iLike={post.iLike}
+          isFavorite={post.isFavorite}
+          amount={post.amount}
+          description={post.description}
+          isPurchased={post.isPurchased}
           onLikeClick={onLikeClick}
           onGoToClick={onGoToClick}
           onFavoriteClick={onFavoriteClick}
-          onDialogToggle={onDialogToggle} />
+          onDialogToggle={onDialogToggle}
+        />
       </CardActions>
     </Card>
   );
@@ -99,17 +80,9 @@ const Post = React.memo((props) => {
 
 Post.propTypes = {
   id: PropTypes.string,
-  userId: PropTypes.string,
-  avatarUrl: PropTypes.string,
-  username: PropTypes.string,
-  mediaUrls: PropTypes.array,
-  amount: PropTypes.number,
-  description: PropTypes.string,
-  isCommentable: PropTypes.bool,
-  likes: PropTypes.number,
-  iLike: PropTypes.bool,
-  isFavorite: PropTypes.bool,
-  createdDate: PropTypes.string,
+  user: PropTypes.object,
+  owner: PropTypes.object,
+  post: PropTypes.object,
 
   onFavoriteClick: PropTypes.func,
   onCommentsClick: PropTypes.func,
@@ -117,21 +90,13 @@ Post.propTypes = {
 
 Post.defaultProps = {
   id: "",
-  userId: "",
-  avatarUrl: "",
-  username: "",
-  mediaUrls: [],
-  amount: 0,
-  description: "",
-  isCommentable: false,
-  likes: 0,
-  iLike: false,
-  isFavorite: false,
-  createdDate: "",
+  user: {},
+  owner: {},
+  post: {},
 
   onFavoriteClick: undefined,
   onCommentsClick: undefined,
-  onDialogToggle: undefined
+  onDialogToggle: undefined,
 };
 
 export default Post;

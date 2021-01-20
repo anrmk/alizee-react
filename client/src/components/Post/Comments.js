@@ -29,7 +29,9 @@ function Comments(props) {
       />
       <CardContent>{description}</CardContent>
 
-      <CardActions>{children}</CardActions>
+      <CardActions className={classes.action} disableSpacing>
+        {children}
+      </CardActions>
 
       <Divider />
 

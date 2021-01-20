@@ -94,11 +94,3 @@ export function likePost(api, id) {
     }
   };
 }
-
-async function likePostApi(api, id, method, callback) {
-  const url = generateUrl("likePost");
-
-  await api.setMethod(method).setParams({ id }).query(url);
-
-  callback();
-}

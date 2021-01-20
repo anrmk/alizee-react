@@ -25,16 +25,19 @@ import * as storyActions from "../store/actions/story";
 import * as moodAction from "../store/actions/mood";
 
 import { RelationshipList } from "../components/RelationshipList";
+import InterestList from "../components/InterestsList";
 import { PreviewStoriesList } from "../domain/StoriesLists";
 
 import ApiContext from "../context/ApiContext";
-import { INTERESTS_SKIP, STORIES_LENGTH, POST_TYPE } from "../constants/feed";
-import { POST_ROUTE, SUGESTED_PEOPLE } from "../constants/routes";
-import InterestList from "../components/InterestsList";
+import { INTERESTS_SKIP, STORIES_LENGTH } from "../constants/feed";
+import { SUGESTED_PEOPLE } from "../constants/routes";
+
+import usePostDialog, { PURCHASES_DIALOG_TYPE, RECEIPT_DIALOG_TYPE } from "../hooks/usePostDialog";
 import useSprout from "../hooks/useSprout";
+import usePostActions from "../hooks/usePostActions";
+import { isEmptyObject } from "../helpers/functions";
 
 function Feed(props) {
-  const history = useHistory();
   const apiClient = useContext(ApiContext);
   const interestsEl = useRef();
 
@@ -43,9 +46,18 @@ function Feed(props) {
   const { userInfo } = props;
   const { settings, getAccountPersonalized } = props;
   const { people, getPeople, createFollow, deleteFollow } = props;
-  const { posts, getPosts, createPost, buyPost, likePost, resetPosts, favoritePost, createMood } = props;
+  const { posts, getPosts, createPost, resetPosts, createMood } = props;
   const { interests, getInterests, createInterests } = props;
   const { story, getStory, getFollowingStories, createStory, resetFollowingStories, resetStory } = props;
+
+  const { buyAction, favoriteAction, likeAction, purachasesAction, receiptAction, goToAction } = usePostActions({
+    isFetching: props.posts.isFetching,
+    onPurchases: props.getPurchases,
+    onReceipt: props.getReceipt,
+    onBuy: props.buyPost,
+    onFavorite: props.favoritePost,
+    onLike: props.likePost,
+  });
 
   const isInterestsSkip = localStorage.getItem(INTERESTS_SKIP);
 
@@ -87,6 +99,14 @@ function Feed(props) {
     }
   }, [userInfo.id]);
 
+  useEffect(() => {
+    posts.receipt && !isEmptyObject(posts.receipt) && postDialog.toggleDialog(RECEIPT_DIALOG_TYPE, true, posts.receipt);
+  }, [posts.receipt]);
+
+  useEffect(() => {
+    posts.purchases && posts.purchases.length && postDialog.toggleDialog(PURCHASES_DIALOG_TYPE, true, {purchases: posts.purchases });
+  }, [posts.purchases]);
+
   const handleFetchMore = (isLoading) => {
     if (!isLoading) {
       (async () => {
@@ -95,19 +115,11 @@ function Feed(props) {
     }
   };
 
-  const handleLikeClick = useCallback(async (id) => {
-    !posts.isFetching && (await likePost(apiClient, id));
-  }, []);
-
-  const handleFavoriteClick = useCallback(async (id) => {
-    !posts.isFetching && (await favoritePost(apiClient, id));
-  }, []);
-
-  const handleFollowPeopleClick = useCallback(async ({ id, isFollow }) => {
+  const handleFollowPeople = useCallback(async ({ id, isFollow }) => {
     await handleFollowClick(id, isFollow);
   }, []);
 
-  const handleFollowPostClick = useCallback(async ({ id, isFollow }) => {
+  const handleFollowPost = useCallback(async ({ id, isFollow }) => {
     await handleFollowClick(id, isFollow);
   }, []);
 
@@ -115,28 +127,12 @@ function Feed(props) {
     !people.isFetching && isFollow ? await deleteFollow(apiClient, id) : await createFollow(apiClient, id);
   };
 
-  const handleBuyClick = useCallback(async ({ id }) => {
-    !posts.isFetching && (await buyPost(apiClient, id));
-  }, []);
-
-  const handleFormSubmit = useCallback(async (formData, mediaData) => {
-    if (formData.type === POST_TYPE.STORY) {
-      await createStory(apiClient, formData, mediaData);
-    } else {
-      await createPost(apiClient, formData, mediaData);
-    }
-  }, []);
-
   const handleInterestSubmit = useCallback(async () => {
     const selectedInterests = interestsEl.current.getSelectedIds();
     if (selectedInterests.length) {
       await createInterests(apiClient, selectedInterests);
       setInterestsModalShow(false);
     }
-  }, []);
-
-  const handleGoToClick = useCallback((id) => {
-    history.push(`${POST_ROUTE}/${id}`);
   }, []);
 
   const handleInterestsModalClose = () => {
@@ -148,56 +144,71 @@ function Feed(props) {
     setInterestsModalShow(false);
   };
 
+  const handleDialogToggle = async (data, type) => {
+    switch(type) {
+      case RECEIPT_DIALOG_TYPE: {
+        receiptAction(data.id);
+        break;
+      }
+      case PURCHASES_DIALOG_TYPE: {
+        purachasesAction(data.id);
+        break;
+      }
+      default: 
+        postDialog.toggleDialog(type, true, data);
+    }
+  };
+
+  const postDialog = usePostDialog({ onPayClick: buyAction });
+
   return (
     <Container>
-        <Grid container spacing={2} >
-          <Grid item md={8} sm={12} >
+      <Grid container spacing={2}>
+        <Grid item md={8} sm={12}>
+          {/* <PreviewStoriesList loading={story.isFetching} userStory={story.data.mStories} items={story.data.fStories} /> */}
 
-            {/* <PreviewStoriesList loading={story.isFetching} userStory={story.data.mStories} items={story.data.fStories} /> */}
-
-            <Hidden smDown>
-              <PostSprout user={userInfo} onSubmit={onSproutSubmit} />
-            </Hidden>
-            
-            <PostsList
-              items={posts.data}
-              hasMore={posts.hasMore}
-              onFetchMore={handleFetchMore}
-              onGoToClick={handleGoToClick}
-              onLikeClick={handleLikeClick}
-              onFavoriteClick={handleFavoriteClick}
-              onFollowClick={handleFollowPostClick}
-              onPayClick={handleBuyClick}
-            />
-          </Grid>
           <Hidden smDown>
-            <Grid item xs={4} >
-
-              {people.data && people.data.length > 0 && (
-                <Box>
-                  <Box mb={1} display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap">
-                    <Typography variant="h6">
-                      Suggestions For You
-                    </Typography>
-                    <MUILink variant="caption" to={SUGESTED_PEOPLE} component={Link}>
-                      See All
-                    </MUILink>
-                  </Box>
-                  <RelationshipList items={people.data} onFollowClick={handleFollowPeopleClick} />
-                </Box>
-              )}
-
-              <Box>
-                <Typography variant="h6" gutterBottom>
-                  Rooms
-                </Typography>
-                <MeetTools />
-              </Box>
-            </Grid>
+            <PostSprout user={userInfo} onSubmit={onSproutSubmit} />
           </Hidden>
-        </Grid>
 
-        <Dialog
+          <PostsList
+            user={userInfo}
+            items={posts.data}
+            hasMore={posts.hasMore}
+            onFetchMore={handleFetchMore}
+            onGoToClick={goToAction}
+            onLikeClick={likeAction}
+            onFavoriteClick={favoriteAction}
+            onFollowClick={handleFollowPost}
+            onDialogToggle={handleDialogToggle}
+          />
+          
+        </Grid>
+        <Hidden smDown>
+          <Grid item md={4}>
+            {people.data && people.data.length > 0 && (
+              <Box>
+                <Box mb={1} display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap">
+                  <Typography variant="h6">Suggestions For You</Typography>
+                  <MUILink variant="caption" to={SUGESTED_PEOPLE} component={Link}>
+                    See All
+                  </MUILink>
+                </Box>
+                <RelationshipList items={people.data} onFollowClick={handleFollowPeople} />
+              </Box>
+            )}
+
+            <Box>
+              <Typography variant="h6" gutterBottom>
+                Rooms
+              </Typography>
+              <MeetTools />
+            </Box>
+          </Grid>
+        </Hidden>
+      </Grid>
+
+      <Dialog
         open={interestsModalShow && !isInterestsSkip && Object.keys(interests.data).length}
         onClose={handleInterestsModalClose}
         aria-labelledby="alert-dialog-title"
@@ -225,22 +236,29 @@ function mapStateToProps(state) {
       data: state.posts?.data,
       errorMessage: state.posts.errorMessage,
       hasMore: state.posts.hasMore,
+      purchases: state.posts?.purchases,
+      receipt: state.posts?.receipt,
     },
+
     media: {
       isFetching: state.media.isFetching,
       data: state.media.data,
     },
+
     people: {
       isFetching: state.suggestion.people.isFetching,
       data: state.suggestion.people.data,
       errorMessage: state.suggestion.people.errorMessage,
     },
+
     settings: {
       isAccountPersonalized: state.settings.isAccountPersonalized,
     },
+
     interests: {
       data: interestsActions.getSelectableInterests(state),
     },
+
     story: {
       isFetching: state.story.isFetching,
       data: storyActions.getFollowingsStoriesWithMyself(state),
@@ -255,6 +273,8 @@ function mapDispatchToProps(dispatch) {
     getPosts: (api, opts) => dispatch(postActions.getFollowingPosts(api, opts)),
     createPost: (api, post, media) => dispatch(postActions.createPost(api, post, media)),
     buyPost: (api, id) => dispatch(postActions.buyPost(api, id)),
+    getPurchases: (api, id) => dispatch(postActions.getPurchases(api, id)),
+    getReceipt: (api, id) => dispatch(postActions.getReceipt(api, id)),
     likePost: (api, id) => dispatch(postActions.likePost(api, id)),
     favoritePost: (api, id) => dispatch(postActions.favoritePost(api, id)),
     resetPosts: () => dispatch(postActions.resetPosts()),
@@ -273,7 +293,7 @@ function mapDispatchToProps(dispatch) {
     createStory: (api, story, media) => dispatch(storyActions.createStorySlide(api, story, media)),
     resetFollowingStories: () => dispatch(storyActions.resetFollowingStories()),
     getFollowingStories: (api, opts) => dispatch(storyActions.getFollowingStories(api, opts)),
-    createMood: (api, data) => dispatch(moodAction.createMood(api, data))
+    createMood: (api, data) => dispatch(moodAction.createMood(api, data)),
   };
 }
 

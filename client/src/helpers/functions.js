@@ -305,8 +305,7 @@ export function formatDate(value, opts = { timeOffset: 12 }) {
   const currentDate = new Date();
   const delta = currentDate - new Date(value);
 
-  let options = {};
-
+  let options = {}, subText = "";
  
   if(delta > ONE_HOUR_MILLISECONDS * opts.timeOffset) {
     options = { 
@@ -315,6 +314,7 @@ export function formatDate(value, opts = { timeOffset: 12 }) {
       hour12: true
     };
   } else {
+    subText = "Today at";
     options = {
       hour: "numeric",
       minute: "numeric",
@@ -323,7 +323,7 @@ export function formatDate(value, opts = { timeOffset: 12 }) {
   }
   
   var formatter = new Intl.DateTimeFormat("en-US", options);
-  return formatter.format(new Date(value));
+  return `${subText} ${formatter.format(new Date(value))}`;
 }
 
 export function copyFlatObjectWithIgnore(obj, ignores) {

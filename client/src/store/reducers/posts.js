@@ -33,6 +33,15 @@ import {
   BUY_POST_REQUEST,
   BUY_POST_SUCCESS,
   BUY_POST_FAILURE,
+
+  RECEIPT_POST_REQUEST,
+  RECEIPT_POST_SUCCESS,
+  RECEIPT_POST_FAILURE,
+
+  PURCHASE_POST_REQUEST,
+  PURCHASE_POST_SUCCESS,
+  PURCHASE_POST_FAILURE,
+  
 } from "../actions/post";
 import { POSTS_DEFAULT_OFFSET } from "../../constants/feed";
 
@@ -42,6 +51,8 @@ export default function post(
     hasMore: false,
     data: [],
     currentPost: {},
+    purchases: [],
+    receipt: {},
     currentCommnets: [],
     offset: POSTS_DEFAULT_OFFSET,
   },
@@ -64,7 +75,7 @@ export default function post(
         ...state,
         ...action.payload,
       };
-      // All Favorite posts
+    // All Favorite posts
     case GET_FAVORITE_POSTS_REQUEST:
       return {
         ...state,
@@ -113,96 +124,158 @@ export default function post(
         ...state,
         ...action.payload,
       };
-    // Create Post
-    case CREATE_POST_REQUEST:
+
+    // CREATE
+    case CREATE_POST_REQUEST: {
       return {
         ...state,
         ...action.payload,
       };
-    case CREATE_POST_SUCCESS:
+    }
+    case CREATE_POST_SUCCESS: {
       return {
         ...state,
         data: [action.payload.data, ...state.data],
       };
-    case CREATE_POST_FAILURE:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case RESET_POSTS:
-      return {
-        ...state,
-        ...action.payload,
-      };
+    }
 
-    // Like/Unlike post
-    case LIKE_POST_REQUEST:
+    case CREATE_POST_FAILURE: {
       return {
         ...state,
         ...action.payload,
       };
+    }
 
-    case LIKE_POST_SUCCESS:
+    case RESET_POSTS: {
       return {
         ...state,
         ...action.payload,
       };
+    }
 
-    case LIKE_CURRENT_POST_SUCCESS:
+    // LIKE/UNLIKE
+    case LIKE_POST_REQUEST: {
       return {
         ...state,
         ...action.payload,
       };
+    }
 
-    case LIKE_POST_FAILURE:
+    case LIKE_POST_SUCCESS: {
       return {
         ...state,
         ...action.payload,
       };
+    }
 
-    // Favorite/Unfavorite
-    case FAVORITE_POST_REQUEST:
+    case LIKE_CURRENT_POST_SUCCESS: {
       return {
         ...state,
         ...action.payload,
       };
+    }
 
-    case FAVORITE_POST_SUCCESS:
+    case LIKE_POST_FAILURE: {
       return {
         ...state,
         ...action.payload,
       };
+    }
 
-    case FAVORITE_CURRENT_POST_SUCCESS:
+    // FAVORITE/UNFAVORITE
+    case FAVORITE_POST_REQUEST: {
       return {
         ...state,
         ...action.payload,
       };
+    }
 
-    case FAVORITE_POST_FAILURE:
+    case FAVORITE_POST_SUCCESS: {
       return {
         ...state,
         ...action.payload,
       };
+    }
 
-    // Favorite/Unfavorite
-    case BUY_POST_REQUEST:
+    case FAVORITE_CURRENT_POST_SUCCESS: {
       return {
         ...state,
         ...action.payload,
       };
+    }
 
-    case BUY_POST_SUCCESS:
+    case FAVORITE_POST_FAILURE: {
       return {
         ...state,
         ...action.payload,
       };
+    }
 
-    case BUY_POST_FAILURE:
+    // BUY
+    case BUY_POST_REQUEST: {
       return {
         ...state,
         ...action.payload,
       };
+    }
+
+    case BUY_POST_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case BUY_POST_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    // RECEIPT
+    case RECEIPT_POST_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case RECEIPT_POST_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case RECEIPT_POST_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    // PURCHASE
+    case PURCHASE_POST_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case PURCHASE_POST_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case PURCHASE_POST_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
 
     default:
       return state;
