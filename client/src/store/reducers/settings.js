@@ -37,7 +37,11 @@ import {
 
   DELETE_BLACK_LIST_REQUEST,
   DELETE_BLACK_LIST_SUCCESS,
-  DELETE_BLACK_LIST_FAILURE
+  DELETE_BLACK_LIST_FAILURE,
+
+  UPDATE_COVER_REQUEST,
+  UPDATE_COVER_SUCCESS,
+  UPDATE_COVER_FAILURE,
 } from '../actions/settings';
 
 export default function settings(state = {
@@ -50,164 +54,181 @@ export default function settings(state = {
   switch (action.type) {
     // Update privacy
     case UPDATE_PRIVACY_REQUEST:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     case UPDATE_PRIVACY_SUCCESS:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     case UPDATE_PRIVACY_FAILURE:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     // Update activity status
     case UPDATE_ACTIVITY_STATUS_REQUEST:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     case UPDATE_ACTIVITY_STATUS_SUCCESS:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     case UPDATE_ACTIVITY_STATUS_FAILURE:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     // Update private status
     case UPDATE_PRIVATE_STATUS_REQUEST:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     case UPDATE_PRIVATE_STATUS_SUCCESS:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     case UPDATE_PRIVATE_STATUS_FAILURE:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     // Update private status
     case UPDATE_OFFENSIVE_COMMENTS_REQUEST:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     case UPDATE_OFFENSIVE_COMMENTS_SUCCESS:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     case UPDATE_OFFENSIVE_COMMENTS_FAILURE:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     // Get privacy
     case GET_PRIVACY_REQUEST:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     case GET_PRIVACY_SUCCESS:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     case GET_PRIVACY_FAILURE:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     // Delete account
     case DELETE_ACCOUNT_REQUEST:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     case DELETE_ACCOUNT_SUCCESS:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     case DELETE_ACCOUNT_FAILURE:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     // Get account personalized
     case GET_ACCOUNT_PERSONALIZED_REQUEST:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     case GET_ACCOUNT_PERSONALIZED_SUCCESS:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     case GET_ACCOUNT_PERSONALIZED_FAILURE:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     // Get account settings
     case GET_ACCOUNT_INTERESTS_REQUEST:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     case GET_ACCOUNT_INTERESTS_SUCCESS:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     case GET_ACCOUNT_INTERESTS_FAILURE:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
-      // Get black list
+    // Get black list
     case GET_BLACK_LIST_REQUEST:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     case GET_BLACK_LIST_SUCCESS:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     case GET_BLACK_LIST_FAILURE:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
-      // Delete black list user
+    // Delete black list user
     case DELETE_BLACK_LIST_REQUEST:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     case DELETE_BLACK_LIST_SUCCESS:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
     case DELETE_BLACK_LIST_FAILURE:
-      return { 
+      return {
         ...state,
         ...action.payload
       }
+
+    case UPDATE_COVER_REQUEST:
+      return {
+        ...state,
+        ...action.payload,
+      }
+    case UPDATE_COVER_SUCCESS:
+      return {
+        ...state,
+        ...action.payload,
+      }
+    case UPDATE_COVER_FAILURE:
+      return {
+        ...state,
+        ...action.payload,
+      }
+
     default:
       return state
   }

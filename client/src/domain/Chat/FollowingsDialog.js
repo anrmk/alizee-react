@@ -24,11 +24,11 @@ function FollowingDialog({
       <Search placeholder={t("ChatFollowingDialogSearchInputLabel")} onChange={onSearchChange} />
       <List >
         {items && items.length ? items.map((follower) => (
-          <ListItem button key={follower.id} onClick={() => onItemClick(follower.userId)}>
+          <ListItem button key={follower.id} onClick={() => onItemClick(follower.userName)}>
             <ListItemAvatar>
               <Avatar src={follower.avatarUrl} />
             </ListItemAvatar>
-            <ListItemText primary={follower.fullName} />
+            <ListItemText primary={follower.name} />
           </ListItem>
         )) : (
           <Typography

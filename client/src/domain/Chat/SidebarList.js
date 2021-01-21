@@ -16,7 +16,6 @@ function SidebarList({
   selectedItemId,
 
   onItemClick,
-  onActionClick,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -28,15 +27,15 @@ function SidebarList({
           <SidebarListItem
             id={item.id}
             key={item.id}
+            userName={item.userName}
             fullName={item.name}
             avatarUrl={item.avatarUrl}
-            description={item.lastMessage}
+            description={item.lastMessageText}
             showActivity={item.showActivity}
             offlineDate={item.offlineDate}
             newMessages={item.unreadMessageCount}
             selected={selectedItemId === item.id}
             onItemClick={onItemClick}
-            onActionClick={onActionClick}
           />
         ))
       ) : isLoading ? (
@@ -58,7 +57,6 @@ SidebarList.propTypes = {
   items: PropTypes.array,
 
   onItemClick: PropTypes.func,
-  onActionClick: PropTypes.func,
 };
 
 SidebarList.defaultProps = {
@@ -67,7 +65,6 @@ SidebarList.defaultProps = {
   items: [],
 
   onItemClick: undefined,
-  onActionClick: undefined,
 };
 
 export default SidebarList;

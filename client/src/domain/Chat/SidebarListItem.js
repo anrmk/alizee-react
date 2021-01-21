@@ -9,6 +9,7 @@ import useStyles from "./styles";
 
 function SidebarListItem({
   id,
+  userName,
   fullName,
   avatarUrl,
   description,
@@ -18,18 +19,11 @@ function SidebarListItem({
   selected,
 
   onItemClick,
-  onActionClick,
 }) {
   const classes = useStyles();
 
-  const handleItemClick = (e) => {
-    e.preventDefault();
-    onItemClick && onItemClick(id);
-  };
-
-  const handleActionClick = (e) => {
-    e.preventDefault();
-    onActionClick && onActionClick(id);
+  const handleItemClick = () => {
+    onItemClick && onItemClick(userName);
   };
 
   return (
@@ -48,11 +42,9 @@ function SidebarListItem({
         }
       />
       {newMessages > 0 && (
-        <IconButton edge="start" aria-label="new messages" onClick={handleActionClick}>
-          <Badge color="primary" badgeContent={newMessages}>
-            <MailIcon />
-          </Badge>
-        </IconButton>
+        <Badge color="primary" badgeContent={newMessages}>
+          <MailIcon />
+        </Badge>
       )}
     </ListItem>
   );
@@ -61,6 +53,7 @@ function SidebarListItem({
 SidebarListItem.propTypes = {
   id: PropTypes.string,
   fullName: PropTypes.string,
+  userName: PropTypes.string,
   avatarUrl: PropTypes.string,
   description: PropTypes.string,
   showActivity: PropTypes.bool,
@@ -69,12 +62,12 @@ SidebarListItem.propTypes = {
   selected: PropTypes.bool,
 
   onItemClick: PropTypes.func,
-  onActionClick: PropTypes.func,
 };
 
 SidebarListItem.defaultProps = {
   id: "",
   fullName: "",
+  userName: "",
   avatarUrl: "",
   description: "",
   showActivity: false,
@@ -84,7 +77,6 @@ SidebarListItem.defaultProps = {
   selected: false,
 
   onItemClick: undefined,
-  onActionClick: undefined,
 };
 
 export default SidebarListItem;

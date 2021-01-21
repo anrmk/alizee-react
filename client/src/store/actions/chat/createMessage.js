@@ -55,7 +55,7 @@ export function addMessage(message) {
     const roomIndex = currentRooms.findIndex((room) => room.id === currentRoom.id);
     
     const updatedRoom = { ...currentRoom };
-    currentRooms[roomIndex].lastMessage = message.message;
+    currentRooms[roomIndex].lastMessageText = message.message;
     updatedRoom.messages = [...updatedRoom.messages, message];
     const updatedRooms = [
       currentRooms[roomIndex],

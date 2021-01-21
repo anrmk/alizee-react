@@ -20,7 +20,6 @@ function Sidebar({
 
   onSearchChange,
   onItemClick,
-  onActionClick,
   onUserListBtnClick
 }) {
   const classes = useStyles();
@@ -49,7 +48,6 @@ function Sidebar({
           items={items}
           selectedItemId={selectedItemId}
           onItemClick={onItemClick}
-          onActionClick={onActionClick}
         />
       </CardContent>
     </Card>
@@ -64,7 +62,6 @@ Sidebar.propTypes = {
 
   onSearchChange: PropTypes.func,
   onItemClick: PropTypes.func,
-  onActionClick: PropTypes.func,
   onNewChatClick: PropTypes.func,
 };
 
@@ -80,7 +77,6 @@ PropTypes.defaultProps = {
 
   onSearchChange: undefined,
   onItemClick: undefined,
-  onActionClick: undefined,
   onNewChatClick: undefined,
 };
 

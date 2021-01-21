@@ -83,6 +83,7 @@ export default {
     getBlackList: "accountsetting/blacklist",
     deleteBlackList: "accountsetting/blacklist",
     createBlackList: "accountsetting/blacklist",
+    updateCover: "accountsetting/updatecover",
 
     // INTERESTS
     getInterests: "interest/getinterests"

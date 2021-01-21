@@ -36,13 +36,13 @@ function errorGetRoom(message) {
   };
 }
 
-export function getRoom(api, id) {
+export function getRoom(api, userName) {
   return async (dispatch, getState) => {
     dispatch(requestGetRoom());
 
     const url = generateUrl("getRoom");
     try {
-      const { data } = await api.setMethod("GET").setParams({ id }).query(url);
+      const { data } = await api.setMethod("GET").setParams({ userName }).query(url);
 
       const transformedData = {
         ...copyFlatObjectWithIgnore(data, ["userName"]),

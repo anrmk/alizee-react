@@ -94,7 +94,7 @@ export function incrementNewMessageCount(data) {
 
     if (roomIndex !== -1) {
       currentRoom.unreadMessageCount++;
-      currentRoom.lastMessage = data.message;
+      currentRoom.lastMessageText = data.message;
     }
 
     dispatch(successIncrementNewMessageCount([

@@ -15,7 +15,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: "center",
     wordBreak: "break-all"
   },
-
+  coverEditButton: {
+    zIndex: 1000
+  },
+  coverInputField: {
+    display: "none"
+  },
   coverBox: {
     display: "flex",
     position: "absolute",

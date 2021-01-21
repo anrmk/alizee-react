@@ -3,7 +3,9 @@ import { Redirect, useHistory, useParams, useRouteMatch } from "react-router-dom
 import { connect } from "react-redux";
 
 import {
+  Box,
   Container,
+  DialogActions,
   Grid,
   Card,
   Typography,
@@ -16,12 +18,13 @@ import {
 
 import ApiContext from "../context/ApiContext";
 import { SocialControl } from "../components/Social";
-import ProfileHeader from "../domain/ProfileHeader";
+import Cover from "../domain/Cover";
 import ProfileContent from "../domain/ProfileContent";
 
 import * as postActions from "../store/actions/post";
 import * as relationshipActions from "../store/actions/relationship";
 import * as userActions from "../store/actions/user";
+import * as settingsActions from "../store/actions/settings";
 
 import {
   HOME_ROUTE,
@@ -33,6 +36,17 @@ import {
   FOLLOWINGS_ROUTE,
 } from "../constants/routes";
 
+import useDialog from "../hooks/useDialog";
+
+const useStyles = {
+  dialogBox: {
+    display: "block",
+  },
+  dialogImage: {
+    width: "100%",
+  },
+};
+
 function Profile(props) {
   const initPostsSettings = {
     index: 0,
@@ -43,13 +57,49 @@ function Profile(props) {
   const { url } = useRouteMatch();
   const apiClient = useContext(ApiContext);
   const history = useHistory();
+  const classes = useStyles;
   const [postSettings, setPostSettings] = useState(initPostsSettings);
+  const [coverData, setCoverData] = useState({});
 
-  const { me, user, post } = props;
+  const { me, user, post, media } = props;
   const { fetchUser, resetUser } = props;
   const { fetchPosts, resetPosts, getFavoritePosts } = props;
 
   const { createFollow, deleteFollow } = props;
+
+  const { updateCover } = props;
+
+  const handleCoverEdit = (data) => {
+    setCoverData(data);
+    dialog.toggleDialog(true);
+  };
+
+  const handleCoverSave = async () => {
+      dialog.toggleDialog(false);
+      await updateCover(apiClient, [coverData.file]);
+      setCoverData({ coverUrl: user.coverUrl });
+  };
+
+  const handleCoverClose = () => {
+    setCoverData({ coverUrl: user.coverUrl });
+    dialog.toggleDialog(false);
+  };
+
+  const dialog = useDialog({
+    title: "Edit Cover",
+    content: (
+      <Box style={classes.dialogBox}>
+        <img style={classes.dialogImage} src={coverData.coverUrl} alt={coverData.file?.name} />
+      </Box>
+    ),
+    actionsComponent: (
+      <DialogActions>
+        <Button onClick={handleCoverSave}>Save</Button>
+        <Button onClick={handleCoverClose}>Close</Button>
+      </DialogActions>
+    ),
+    dialogProps: { fullWidth: true },
+  });
 
   useEffect(() => {
     return () => {
@@ -74,6 +124,12 @@ function Profile(props) {
       handleFetchPosts();
     }
   }, [postSettings]);
+
+  useEffect(() => {
+    if (user.coverUrl) {
+      setCoverData({ coverUrl: user.coverUrl });
+    }
+  }, [user]);
 
   if (url.includes(SETTINGS_ROUTE)) {
     return <Redirect to={SETTINGS_EDIT_PROFILE_ROUTE} />;
@@ -109,10 +165,6 @@ function Profile(props) {
     });
   };
 
-  const handleCoverEdit = (id) => {
-    console.log("onEditCover", id);
-  };
-
   const handlePeopleFollow = (id) => {
     user.isFollow ? deleteFollow(apiClient, id) : createFollow(apiClient, id);
   };
@@ -123,27 +175,20 @@ function Profile(props) {
 
   const handleGiftSend = (userName) => {};
 
-  const handleFollowingClick = (userName) => {
-    console.log("handleFollowingClick", userName)
-    history.push(FOLLOWINGS_ROUTE(userName));
+  const handleFollowingClick = () => {
+    history.push(FOLLOWINGS_ROUTE(user.userName));
   };
 
-  const handleFollowersClick = (userName) => {
-    history.push(FOLLOWERS_ROUTE(userName));
+  const handleFollowersClick = () => {
+    history.push(FOLLOWERS_ROUTE(user.userName));
   };
 
   return (
     <Container>
-      <ProfileHeader
+      <Cover
+        user={user}
         isOwner={username === me.userName}
-        isOnline={!user.offlineDate}
-        isFollow={user.isFollow}
-        avatarUrl={user.avatarUrl}
-        imageUrl={user.coverUrl}
-        userName={user.userName}
-        fullName={user.name}
-        membership={user.membership}
-        mood={user.mood}
+        disabled={media.isFetching}
         onPostCreate={() => {}}
         onFollowClick={() => handlePeopleFollow(user.id)}
         onEditCover={handleCoverEdit}
@@ -151,46 +196,44 @@ function Profile(props) {
         onSendGiftClick={() => handleGiftSend(user.userName)}
       />
 
-      <Grid container spacing={3} >
-          <Grid item sm={12} md={4} >
-            <Card>
+      <Grid container spacing={3}>
+        <Grid item sm={12} md={4}>
+          <Card>
+            <CardActions>
+              <ButtonGroup disableElevation variant="text" fullWidth>
+                <Button disabled={!user.followingsCount} onClick={handleFollowingClick}>
+                  {user.followingsCount} following
+                </Button>
+                <Button disabled={!user.followersCount} onClick={handleFollowersClick}>
+                  {user.followersCount} followers
+                </Button>
+              </ButtonGroup>
+            </CardActions>
+            <Divider />
+            <CardContent>
+              <Typography variant="h6">Bio</Typography>
+              <Typography variant="body2">{user.bio}</Typography>
+            </CardContent>
+            {user.sites && (
               <CardActions>
-                <ButtonGroup disableElevation variant="text" fullWidth>
-                  <Button
-                    disabled={!user.followingsCount}
-                    onClick={() => handleFollowingClick(user.userName)}
-                  >{user.followingsCount} following</Button>
-                  <Button
-                    disabled={!user.followersCount}
-                    onClick={() => handleFollowersClick(user.userName)}
-                  >{user.followersCount} followers</Button>
-                </ButtonGroup>
+                <SocialControl urls={user.sites} />
               </CardActions>
-              <Divider />
-              <CardContent>
-                <Typography variant="h6">Bio</Typography>
-                <Typography variant="body2">{user.bio}</Typography>
-              </CardContent>
-              {user.sites && (
-                <CardActions>
-                  <SocialControl urls={user.sites} />
-                </CardActions>
-              )}
-            </Card>
-          </Grid>
-          <Grid item sm={12} md={8}>
-            <ProfileContent
-              isOwner={username === me.userName}
-              tabIndex={postSettings.index}
-              items={post.data}
-              hasMore={post.hasMore}
-              disabled={post.isFetching}
-              onFetchMore={handleFetchPosts}
-              onItemClick={handleItemClick}
-              onTabChange={handleTabChange}
-            />
-          </Grid>
+            )}
+          </Card>
         </Grid>
+        <Grid item sm={12} md={8}>
+          <ProfileContent
+            isOwner={username === me.userName}
+            tabIndex={postSettings.index}
+            items={post.data}
+            hasMore={post.hasMore}
+            disabled={post.isFetching}
+            onFetchMore={handleFetchPosts}
+            onItemClick={handleItemClick}
+            onTabChange={handleTabChange}
+          />
+        </Grid>
+      </Grid>
     </Container>
   );
 }
@@ -209,6 +252,9 @@ function mapStateToProps(state) {
       errorMessage: state.posts.errorMessage,
       hasMore: state.posts.hasMore,
     },
+    media: {
+      isFetching: state.media.isFetching,
+    },
   };
 }
 
@@ -224,6 +270,8 @@ function mapDispatchToProps(dispatch) {
 
     createFollow: (api, userId) => dispatch(relationshipActions.createFollow(api, userId)),
     deleteFollow: (api, userId) => dispatch(relationshipActions.deleteFollow(api, userId)),
+
+    updateCover: (api, coverUrl) => dispatch(settingsActions.updateCover(api, coverUrl)),
   };
 }
 

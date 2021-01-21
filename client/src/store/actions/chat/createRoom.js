@@ -36,25 +36,25 @@ function errorCreateRoom(message) {
   };
 }
 
-export function createRoom(api, id) {
+export function createRoom(api, userName) {
   return async (dispatch, getState) => {
     dispatch(requestCreateRoom());
 
     const url = generateUrl("createRoom");
     try {
-      const { data } = await api.setParams({ id }).query(url);
+      const { data } = await api.setParams({ userName }).query(url);
 
       const transformedData = {
         ...copyFlatObjectWithIgnore(data, ["userName"]),
         avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, data.avatarUrl),
-        username: data.userName
+        userName: data.userName
       };
 
       const chatState = getState().chat;
       const existedRoom = chatState.data.filter(room => room.id === transformedData.id);
-      const rooms = existedRoom.length ? 
-        [...chatState.data] : 
-        [...chatState.data,  { ...transformedData }];
+      const rooms = existedRoom.length ?
+        [...chatState.data] :
+        [...chatState.data, { ...transformedData }];
 
       dispatch(receiveCreateRoom(rooms, transformedData));
     } catch (e) {

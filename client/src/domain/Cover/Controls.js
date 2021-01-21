@@ -8,9 +8,14 @@ import GiftIcon from "@material-ui/icons/RedeemOutlined";
 import FollowIcon from "@material-ui/icons/PersonAddOutlined";
 import UnfollowIcon from "@material-ui/icons/PersonAddDisabledOutlined";
 
-function Controls(props) {
-  const { isOwner, isFollow } = props;
-  const { onMessageClick, onFollowClick, onSendGiftClick } = props;
+function Controls({
+  isOwner,
+  isFollow,
+
+  onMessageClick,
+  onFollowClick,
+  onSendGiftClick,
+}) {
 
   return (
     <Box>
@@ -26,7 +31,9 @@ function Controls(props) {
       </Tooltip>
       {!isOwner && (
         <Tooltip title={isFollow ? "Unfollow" : "Follow"}>
-          <IconButton color={isFollow ? "primary": "default"} onClick={onFollowClick}>{isFollow ? <UnfollowIcon /> : <FollowIcon />}</IconButton>
+          <IconButton color={isFollow ? "primary" : "default"} onClick={onFollowClick}>
+            {isFollow ? <UnfollowIcon /> : <FollowIcon />}
+          </IconButton>
         </Tooltip>
       )}
     </Box>

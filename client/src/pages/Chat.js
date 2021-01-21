@@ -67,15 +67,15 @@ function Chat(props) {
     filterRooms(e.target.value.toLowerCase());
   };
 
-  const handleRoomGet = async (id) => {
-    if (chat.currentRoom?.id !== id) {
-      await getRoom(apiClient, id);
+  const handleRoomGet = async (userName) => {
+    if (chat.currentRoom?.username !== userName) {
+      await getRoom(apiClient, userName);
       toggleSlidingViewsState();
     }
   };
 
-  async function handleRoomCreate(userId) {
-    await createRoom(apiClient, userId);
+  async function handleRoomCreate(userName) {
+    await createRoom(apiClient, userName);
     dialog.toggleDialog(false);
   };
 
@@ -83,7 +83,7 @@ function Chat(props) {
     if (!window.confirm("Are you sure? This can not be undone!")) {
       return;
     }
-    
+
     await deleteRoom(apiClient, id);
   };
 
@@ -135,7 +135,6 @@ function Chat(props) {
           items={chat.data}
           selectedItemId={chat.currentRoom?.id}
           onItemClick={handleRoomGet}
-          onActionClick={handleRoomGet}
           onSearchChange={handleRoomsFilter}
           onUserListBtnClick={handleUserListBtnClick}
         />
@@ -185,9 +184,9 @@ function mapDispatchToProps(dispatch) {
     getRooms: (api) => dispatch(actionChat.getRooms(api)),
     filterRooms: (query) => dispatch(actionChat.filter(query)),
 
-    getRoom: (api, id) => dispatch(actionChat.getRoom(api, id)),
+    getRoom: (api, userName) => dispatch(actionChat.getRoom(api, userName)),
     removeRoom: (id) => dispatch(actionChat.removeRoom(id)),
-    createRoom: (api, id) => dispatch(actionChat.createRoom(api, id)),
+    createRoom: (api, userName) => dispatch(actionChat.createRoom(api, userName)),
     deleteRoom: (api, id) => dispatch(actionChat.deleteRoom(api, id)),
     deleteRoomHistory: (api, id) => dispatch(actionChat.deleteRoomHistory(api, id)),
     resetCurrentRoom: () => dispatch(actionChat.resetCurrentRoom()),

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useRef } from "react";
 import PropTypes from "prop-types";
-import { Grid, Box, Typography, IconButton, Divider } from "@material-ui/core";
+import { Grid, Box, Typography, IconButton } from "@material-ui/core";
 
 import EditIcon from "@material-ui/icons/Edit";
 import Avatar from "../../components/Avatar";
@@ -10,21 +10,41 @@ import Controls from "./Controls";
 import useStyles from "./styles";
 
 function Cover(props) {
-  const { isOwner, isOnline, isLive, isFollow, imageUrl, fullName, userName, avatarUrl, membership, mood } = props;
+  const { user } = props;
+  const { isOwner, isLive, disabled } = props;
   const { onMessageClick, onFollowClick, onSendGiftClick, onEditCover } = props;
 
-  const classes = useStyles({ imageUrl });
+  const classes = useStyles({ imageUrl: user.coverUrl });
+
+  const mediaRef = useRef();
+
+  const handleCoverChange = (e) => {
+    const files = e.target.files;
+    const coverUrl = URL.createObjectURL(files[0]);
+    (onEditCover && onEditCover({ coverUrl, file: files[0] }));
+  };
 
   return (
     <Box marginBottom={10} position="relative">
       <Box className={classes.cover}>
         <Box p={3}>
-          <Typography variant="caption" >{mood}</Typography>
+          <Typography variant="caption">{user.mood}</Typography>
         </Box>
         {isOwner && (
-          <IconButton onClick={onEditCover} style={{ zIndex: 1000 }}>
-            <EditIcon />
-          </IconButton>
+          <>
+            <IconButton onClick={(e) => mediaRef.current.click()} className={classes.coverEditButton} disabled={disabled}>
+              <EditIcon />
+            </IconButton>
+
+            <input
+              className={classes.coverInputField}
+              type="file"
+              name="cover"
+              ref={mediaRef}
+              accept="image/jpeg, image/jpg, image/gif, image/png"
+              onChange={handleCoverChange}
+            />
+          </>
         )}
 
         <Grid container className={classes.coverBox}>
@@ -32,18 +52,18 @@ function Cover(props) {
             <Grid container direction="row" justify="flex-start" alignItems="flex-end">
               <Grid item>
                 <Avatar
-                  src={avatarUrl}
+                  src={user.avatarUrl}
                   size="extraLarge"
-                  bordermembership={membership}
-                  online={isOnline}
+                  membership={user.membership}
+                  online={!user.offlineDate}
                   live={isLive}
                   borderColor="gold"
                   className={classes.avatar}
                 />
               </Grid>
               <Grid item>
-                <Typography variant="h6">{fullName}</Typography>
-                <Typography variant="subtitle2">{userName}</Typography>
+                <Typography variant="h6">{user.name}</Typography>
+                <Typography variant="subtitle2">{user.userName}</Typography>
               </Grid>
             </Grid>
           </Grid>
@@ -51,7 +71,7 @@ function Cover(props) {
           <Grid item>
             <Controls
               isOwner={isOwner}
-              isFollow={isFollow}
+              isFollow={user.isFollow}
               onMessageClick={onMessageClick}
               onFollowClick={onFollowClick}
               onSendGiftClick={onSendGiftClick}
@@ -64,17 +84,11 @@ function Cover(props) {
 }
 
 Cover.propTypes = {
-  isOwner: PropTypes.bool,
-  isOnline: PropTypes.bool,
-  isLive: PropTypes.bool,
-  isFollow: PropTypes.bool,
+  user: PropTypes.object,
 
-  imageUrl: PropTypes.string,
-  fullName: PropTypes.string,
-  userName: PropTypes.string,
-  avatarUrl: PropTypes.string,
-  membership: PropTypes.number,
-  mood: PropTypes.string,
+  isOwner: PropTypes.bool,
+  isLive: PropTypes.bool,
+  disabled: PropTypes.bool,
 
   onEditCover: PropTypes.func,
   onMessageClick: PropTypes.func,
@@ -83,17 +97,11 @@ Cover.propTypes = {
 };
 
 Cover.defaultProps = {
-  isOwner: false,
-  isOnline: false,
-  isLive: false,
-  isFollow: false,
+  user: {},
 
-  imageUrl: "",
-  fullName: "",
-  userName: "",
-  avatarUrl: "",
-  membership: 0,
-  mood: "",
+  isOwner: false,
+  isLive: false,
+  disabled: false,
 
   onEditCover: undefined,
   onMessageClick: undefined,

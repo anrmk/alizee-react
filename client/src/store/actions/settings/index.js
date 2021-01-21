@@ -94,3 +94,11 @@ export {
 
   deleteBlackList
 } from "./deleteBlackList";
+
+export {
+  UPDATE_COVER_REQUEST,
+  UPDATE_COVER_SUCCESS,
+  UPDATE_COVER_FAILURE,
+
+  updateCover
+} from "./updateCover";
