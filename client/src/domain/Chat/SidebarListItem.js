@@ -1,21 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { ListItem, ListItemAvatar, ListItemText, Badge, IconButton, Typography } from "@material-ui/core";
-import MailIcon from "@material-ui/icons/MailOutlineOutlined";
+import { ListItem, ListItemAvatar, ListItemText, Typography } from "@material-ui/core";
 
 import Avatar from "../../components/Avatar";
-import useStyles from "./styles";
+
+import { formatDate } from "../../helpers/functions";
+
+import useStyles, { StyledBadge } from "./styles";
 
 function SidebarListItem({
-  id,
-  userName,
-  fullName,
-  avatarUrl,
-  description,
-  showActivity,
-  offlineDate,
-  newMessages,
+  item,
   selected,
 
   onItemClick,
@@ -23,57 +18,47 @@ function SidebarListItem({
   const classes = useStyles();
 
   const handleItemClick = () => {
-    onItemClick && onItemClick(userName);
+    onItemClick && onItemClick(item.userName);
   };
 
   return (
-    <ListItem button key={id} selected={selected} onClick={handleItemClick}>
+    <ListItem button selected={selected} onClick={handleItemClick}>
       <ListItemAvatar>
-        <Avatar src={avatarUrl} online={showActivity && !offlineDate} />
+        <Avatar src={item.avatarUrl} online={item.showActivity && !item.offlineDate} />
       </ListItemAvatar>
 
       <ListItemText
         className={classes.sidebarListItemText}
-        primary={fullName}
+        primary={<
+          Typography noWrap variant="body1" color="textPrimary">
+          {item.name}
+        </Typography>
+        }
         secondary={
           <Typography noWrap variant="body2" color="textPrimary">
-            {description}
+            {item.lastMessageText}
           </Typography>
         }
       />
-      {newMessages > 0 && (
-        <Badge color="primary" badgeContent={newMessages}>
-          <MailIcon />
-        </Badge>
-      )}
+
+      <StyledBadge color="primary" badgeContent={item.unreadMessageCount}>
+        <Typography noWrap variant="caption" color="textSecondary">
+          {formatDate(item.lastMessageDate, { timeOffset: 24, showSubText: false })}
+        </Typography>
+      </StyledBadge>
     </ListItem>
   );
 }
 
 SidebarListItem.propTypes = {
-  id: PropTypes.string,
-  fullName: PropTypes.string,
-  userName: PropTypes.string,
-  avatarUrl: PropTypes.string,
-  description: PropTypes.string,
-  showActivity: PropTypes.bool,
-  offlineDate: PropTypes.string,
-  newMessages: PropTypes.number,
+  item: PropTypes.object,
   selected: PropTypes.bool,
 
   onItemClick: PropTypes.func,
 };
 
 SidebarListItem.defaultProps = {
-  id: "",
-  fullName: "",
-  userName: "",
-  avatarUrl: "",
-  description: "",
-  showActivity: false,
-  offlineDate: null,
-
-  newMessages: 0,
+  item: {},
   selected: false,
 
   onItemClick: undefined,

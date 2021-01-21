@@ -301,7 +301,9 @@ export function formatCurrency(amount, currency = "USD") {
 
 const ONE_HOUR_MILLISECONDS = 1000*60*60;
 
-export function formatDate(value, opts = { timeOffset: 12 }) {
+export function formatDate(value, opts = { timeOffset: 12, showSubText: true }) {
+  if (!value) return null;
+  
   const currentDate = new Date();
   const delta = currentDate - new Date(value);
 
@@ -314,7 +316,7 @@ export function formatDate(value, opts = { timeOffset: 12 }) {
       hour12: true
     };
   } else {
-    subText = "Today at";
+    subText = opts.showSubText ? "Today at " : "";
     options = {
       hour: "numeric",
       minute: "numeric",
@@ -323,7 +325,7 @@ export function formatDate(value, opts = { timeOffset: 12 }) {
   }
   
   var formatter = new Intl.DateTimeFormat("en-US", options);
-  return `${subText} ${formatter.format(new Date(value))}`;
+  return `${subText}${formatter.format(new Date(value))}`;
 }
 
 export function copyFlatObjectWithIgnore(obj, ignores) {

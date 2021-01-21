@@ -1,4 +1,17 @@
-import { makeStyles } from "@material-ui/core";
+import { Badge, makeStyles, withStyles } from "@material-ui/core";
+
+export const StyledBadge = withStyles(() => ({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-end",
+  },
+
+  badge: {
+    position: "relative",
+    transform: "none"
+  },
+}))(Badge);
 
 const useStyles = makeStyles((theme) => {
   const hideScroll = {

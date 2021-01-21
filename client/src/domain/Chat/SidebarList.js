@@ -25,15 +25,8 @@ function SidebarList({
       {items && items.length ? (
         items.map((item) => (
           <SidebarListItem
-            id={item.id}
+            item={item}
             key={item.id}
-            userName={item.userName}
-            fullName={item.name}
-            avatarUrl={item.avatarUrl}
-            description={item.lastMessageText}
-            showActivity={item.showActivity}
-            offlineDate={item.offlineDate}
-            newMessages={item.unreadMessageCount}
             selected={selectedItemId === item.id}
             onItemClick={onItemClick}
           />
@@ -41,12 +34,12 @@ function SidebarList({
       ) : isLoading ? (
         <CircularProgress className={classes.progress} />
       ) : (
-        <Empty
-          title={t("ChatChatListEmptyTitle")}
-          subTitle={t("ChatChatListEmptySubtitle")}
-          iconComponent={<ChatIcon fontSize="large" />}
-        />
-      )}
+            <Empty
+              title={t("ChatChatListEmptyTitle")}
+              subTitle={t("ChatChatListEmptySubtitle")}
+              iconComponent={<ChatIcon fontSize="large" />}
+            />
+          )}
     </List>
   );
 }
