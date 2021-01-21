@@ -112,19 +112,13 @@ function PostPage(props) {
           }>
           <Tools
             id={post.data.id}
-            userId={post.data.user?.id}
-            userName={post.data.user?.name}
-            isOwner={user.id === post.data.user?.id}
             likes={post.data.likes}
             iLike={post.data.iLike}
-
-            amount={post.data.amount}
             isFavorite={post.data.isFavorite}
+            amount={post.data.amount}
             isPurchased={post.data.isPurchased}
-            isCommentable={post.data.isCommentable}
+            isOwner={user.id === post.data.user?.id}
             
-            hideCommentable={true}
-            hideWatch={true}
             onLikeClick={likeAction}
             onFavoriteClick={favoriteAction}
             onDialogToggle={dialogToggleAction} />

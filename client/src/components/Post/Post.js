@@ -58,18 +58,15 @@ const Post = React.memo((props) => {
       <CardActions className={classes.action} disableSpacing>
         <Tools
           id={id}
-          userId={owner.id}
-          username={owner.username}
-          isOwner={user.id === owner.id}
-          isCommentable={post.isCommentable}
           likes={post.likes}
           iLike={post.iLike}
           isFavorite={post.isFavorite}
           amount={post.amount}
-          description={post.description}
           isPurchased={post.isPurchased}
-          onLikeClick={onLikeClick}
+          isOwner={user.id === owner.id}
+          
           onGoToClick={onGoToClick}
+          onLikeClick={onLikeClick}
           onFavoriteClick={onFavoriteClick}
           onDialogToggle={onDialogToggle}
         />

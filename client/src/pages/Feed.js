@@ -22,7 +22,7 @@ import * as postActions from "../store/actions/post";
 import * as settingsActions from "../store/actions/settings";
 import * as interestsActions from "../store/actions/interests";
 import * as storyActions from "../store/actions/story";
-import * as moodAction from "../store/actions/mood";
+import * as moodActions from "../store/actions/mood";
 
 import { RelationshipList } from "../components/RelationshipList";
 import InterestList from "../components/InterestsList";
@@ -262,7 +262,7 @@ function mapDispatchToProps(dispatch) {
     createStory: (api, story, media) => dispatch(storyActions.createStorySlide(api, story, media)),
     resetFollowingStories: () => dispatch(storyActions.resetFollowingStories()),
     getFollowingStories: (api, opts) => dispatch(storyActions.getFollowingStories(api, opts)),
-    createMood: (api, data) => dispatch(moodAction.createMood(api, data)),
+    createMood: (api, data) => dispatch(moodActions.createMood(api, data)),
   };
 }
 

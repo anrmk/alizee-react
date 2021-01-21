@@ -14,14 +14,18 @@ import {
   Divider,
   CardContent,
   CardActions,
+  Hidden
 } from "@material-ui/core/";
 
 import ApiContext from "../context/ApiContext";
 import { SocialControl } from "../components/Social";
+import {  PostSprout } from "../domain/PostsList";
 import Cover from "../domain/Cover";
 import ProfileContent from "../domain/ProfileContent";
 
 import * as postActions from "../store/actions/post";
+import * as storyActions from "../store/actions/story";
+import * as moodActions from "../store/actions/mood";
 import * as relationshipActions from "../store/actions/relationship";
 import * as userActions from "../store/actions/user";
 import * as settingsActions from "../store/actions/settings";
@@ -37,15 +41,7 @@ import {
 } from "../constants/routes";
 
 import useDialog from "../hooks/useDialog";
-
-const useStyles = {
-  dialogBox: {
-    display: "block",
-  },
-  dialogImage: {
-    width: "100%",
-  },
-};
+import useSprout from "../hooks/useSprout";
 
 function Profile(props) {
   const initPostsSettings = {
@@ -53,21 +49,20 @@ function Profile(props) {
     tagged: false,
   };
 
+  const { me, user, post, media } = props;
+  const { fetchUser, resetUser } = props;
+  const { fetchPosts, resetPosts, getFavoritePosts } = props;
+  const { createFollow, deleteFollow } = props;
+  const { createPost, createStory, createMood, updateCover } = props;
+
   const { username } = useParams();
   const { url } = useRouteMatch();
   const apiClient = useContext(ApiContext);
   const history = useHistory();
-  const classes = useStyles;
   const [postSettings, setPostSettings] = useState(initPostsSettings);
   const [coverData, setCoverData] = useState({});
 
-  const { me, user, post, media } = props;
-  const { fetchUser, resetUser } = props;
-  const { fetchPosts, resetPosts, getFavoritePosts } = props;
-
-  const { createFollow, deleteFollow } = props;
-
-  const { updateCover } = props;
+  const { onSproutSubmit } = useSprout({ createStory, createPost, createMood });
 
   const handleCoverEdit = (data) => {
     setCoverData(data);
@@ -88,8 +83,8 @@ function Profile(props) {
   const dialog = useDialog({
     title: "Edit Cover",
     content: (
-      <Box style={classes.dialogBox}>
-        <img style={classes.dialogImage} src={coverData.coverUrl} alt={coverData.file?.name} />
+      <Box display="block">
+        <img src={coverData.coverUrl} alt={coverData.file?.name} width="100%" />
       </Box>
     ),
     actionsComponent: (
@@ -198,6 +193,10 @@ function Profile(props) {
 
       <Grid container spacing={3}>
         <Grid item sm={12} md={4}>
+          {username === me.userName && (<Hidden smDown>
+            <PostSprout user={me} onSubmit={onSproutSubmit} />
+          </Hidden>)}
+
           <Card>
             <CardActions>
               <ButtonGroup disableElevation variant="text" fullWidth>
@@ -271,6 +270,9 @@ function mapDispatchToProps(dispatch) {
     createFollow: (api, userId) => dispatch(relationshipActions.createFollow(api, userId)),
     deleteFollow: (api, userId) => dispatch(relationshipActions.deleteFollow(api, userId)),
 
+    createPost: (api, post, media) => dispatch(postActions.createPost(api, post, media)),
+    createStory: (api, story, media) => dispatch(storyActions.createStorySlide(api, story, media)),
+    createMood: (api, data) => dispatch(moodActions.createMood(api, data)),
     updateCover: (api, coverUrl) => dispatch(settingsActions.updateCover(api, coverUrl)),
   };
 }
