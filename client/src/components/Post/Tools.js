@@ -1,7 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
+import {useHistory} from "react-router-dom";
 
-import { Chip, Hidden, IconButton, Tooltip } from "@material-ui/core";
+import { POST_ID_ROUTE } from "../../constants/routes";
+
+import {Box, Chip, Hidden, IconButton, Tooltip, Typography } from "@material-ui/core";
 
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import FavoriteIcon from "@material-ui/icons/FavoriteRounded";
@@ -17,42 +19,45 @@ import useStyles from "./styles";
 
 const Tools = React.memo(({
   id,
+
   likes,
+  amount,
+
   iLike,
   isFavorite,
-  amount,
   isPurchased,
   isOwner,
 
-  onGoToClick,
-  onLikeClick,
-  onFavoriteClick,
+  onLike,
+  onFavorite,
   onDialogToggle
 }) => {
+  const location = window.location.href;
+  const history = useHistory();
   const classes = useStyles();
 
-  const handleLikeClick = () => {
-    onLikeClick && onLikeClick(id);
+  const handleLike = () => {
+    onLike && onLike(id);
   };
 
-  const handleFavoriteClick = () => {
-    onFavoriteClick && onFavoriteClick(id);
+  const handleFavorite = () => {
+    onFavorite && onFavorite(id);
   };
 
-  const handleGoToClick = () => {
-    onGoToClick && onGoToClick(id);
-  };
-
-  const handlePayClick = () => {
+  const handlePay = () => {
     onDialogToggle && onDialogToggle({ id, amount }, PAYMENT_DIALOG_TYPE);
   };
 
-  const handleReceiptClick = () => {
+  const handleReceipt = () => {
     onDialogToggle && onDialogToggle({ id }, isOwner ? PURCHASES_DIALOG_TYPE : RECEIPT_DIALOG_TYPE);
   };
 
-  const handleShareClick = () => {
+  const handleShare = () => {
     onDialogToggle && onDialogToggle({ id }, SHARE_DIALOG_TYPE);
+  };
+
+  const handleGoToPost = () => {
+    history.push(POST_ID_ROUTE(id));
   };
 
   const renderPurchase = (amount, isPurchased) => {
@@ -63,16 +68,16 @@ const Tools = React.memo(({
             <Chip
               label={amount}
               clickable
-              variant="outlined"
+            
               color="primary"
-              onClick={handlePayClick}
+              onClick={handlePay}
               icon={<MonetizationOnIcon />}
             />
           </Tooltip>
         );
       } else {
         return (
-          <IconButton onClick={handleReceiptClick}>
+          <IconButton onClick={handleReceipt}>
             <ReceiptIcon />
           </IconButton>
         );
@@ -84,13 +89,12 @@ const Tools = React.memo(({
 
   return (
     <>
-      <IconButton className="danger" onClick={handleLikeClick} aria-label="add to favorites">
-        {iLike ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+      <IconButton className="danger" onClick={handleLike} aria-label="add to favorites">
+          {iLike ? <FavoriteIcon /> : <FavoriteBorderIcon />}
       </IconButton>
+      <Typography>{likes > 0 && <strong>{likes}</strong>}</Typography>
 
-      <Hidden mdDown>{likes > 0 && <strong>{likes}</strong>}</Hidden>
-
-      <IconButton aria-label="share" onClick={handleShareClick}>
+      <IconButton aria-label="share" onClick={handleShare}>
         <ShareIcon />
       </IconButton>
 
@@ -98,47 +102,17 @@ const Tools = React.memo(({
 
       {renderPurchase(amount, isPurchased)}
 
-      <IconButton className="success" aria-label="share" onClick={handleFavoriteClick}>
+      <IconButton className="success" aria-label="share" onClick={handleFavorite}>
         {isFavorite ? <BookmarkIcon /> : <BookmarkBorderIcon />}
       </IconButton>
 
-      {onGoToClick && <IconButton className="warning" onClick={handleGoToClick}>
-        <VisibilityIcon />
-      </IconButton>}
+      {!location.includes(POST_ID_ROUTE(id)) && (
+        <IconButton className="warning" onClick={handleGoToPost}>
+          <VisibilityIcon />
+        </IconButton>
+      )}
     </>
   );
 });
-
-Tools.propTypes = {
-  id: PropTypes.string,
-  likes: PropTypes.number,
-  iLike: PropTypes.bool,
-  isFavorite: PropTypes.bool,
-  amount: PropTypes.number,
-  userName: PropTypes.string,
-  description: PropTypes.string,
-
-  onGoToClick: PropTypes.func,
-  onShareClick: PropTypes.func,
-  onFavoriteClick: PropTypes.func,
-  onPayClick: PropTypes.func,
-  onReceiptClick: PropTypes.func,
-  onDialogToggle: PropTypes.func
-};
-
-Tools.defaultProps = {
-  id: undefined,
-  likes: 0,
-  iLike: false,
-  isFavorite: false,
-  amount: 0,
-
-  onGoToClick: undefined,
-  onShareClick: undefined,
-  onFavoriteClick: undefined,
-  onPayClick: undefined,
-  onReceiptClick: undefined,
-  onDialogToggle: undefined
-};
 
 export default Tools;

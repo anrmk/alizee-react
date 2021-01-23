@@ -21,14 +21,7 @@ function Comments(props) {
         avatar={<Avatar src={avatarUrl} />}
         title={title}
         subheader={subheader}
-        action={
-          <>
-            {headerBackComponent}
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
-          </>
-        }
+        action={headerBackComponent}
       />
       <CardContent>{description}</CardContent>
 

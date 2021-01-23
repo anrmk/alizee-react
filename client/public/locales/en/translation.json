@@ -64,5 +64,14 @@
   "NavbarMenuItemProfileText": "Profile",
   "NavbarMenuItemPostSavedText": "Saved",
   "NavbarMenuItemSettingsText": "Settings",
-  "NavbarMenuItemSignOutText": "Sign Out"
+  "NavbarMenuItemSignOutText": "Sign Out",
+
+  "GoToProfile": "Go to profile",
+  "ShareTo": "Share to...",
+  "CopyLink": "Copy Link",
+  "Follow": "Follow",
+  "Unfollow": "Unfollow",
+  "Report": "Report",
+  "Block": "Block",
+  "Unblock": "Unblock"
 }

@@ -5,8 +5,8 @@ export const HELP_ROUTE = "help";
 export const PRIVACY_ROUTE = "";
 export const EXPLORE_ROUTE = "/explore";
 export const ACTIVITY_ROUTE = "/activity";
-export const POST_ROUTE = "/posts";
-export const POST_ID_ROUTE = "/posts/:id";
+export const POST_ID_ROUTE = (id) => `/posts/${id}`;
+export const POST_ROUTE = "/posts/:id";
 export const MEET_ROUTE = "/meet";
 //export const CHAT_ROUTE = "/chat";
 export const CHAT_ROUTE = username => `/chat/${username}`;
@@ -22,11 +22,13 @@ export const EMAIL_CONFIRMATION = "/email-confirmation";
 export const EMAIL_VERIFY = "/email-verify";
 export const FOLLOWERS_ROUTE = username => `/${username}/followers`;
 export const FOLLOWINGS_ROUTE = username => `/${username}/followings`;
-export const PROFILE_ROUTE = username => `/${username}`;
 export const SEARCH_ROUTE = "/search";
-export const PROFILE_USERNAME_ROUTE = "/:username";
+
+export const PROFILE_USERNAME_ROUTE = username => `/${username}`;
+export const PROFILE_ROUTE = "/:username";
 export const PROFILE_FOLLOWERS_ROUTE = "/:username/followers";
 export const PROFILE_FOLLOWINGS_ROUTE = "/:username/followings";
+
 export const SUGESTED_PEOPLE = "/people/suggested";
 export const SETTINGS_TYPE_ROUTE = "/settings/:type";
 export const SETTINGS_ROUTE = "/settings";

@@ -7,19 +7,20 @@ import TelegramIcon from "@material-ui/icons/Telegram";
 import TwitterIcon from "@material-ui/icons/Twitter";
 
 import { getUrlTo } from "../../helpers/functions";
-import { POST_ROUTE } from "../../constants/routes";
+import { POST_ID_ROUTE } from "../../constants/routes";
 
 import { ListItem, List, ListItemIcon, ListItemText } from "@material-ui/core";
 
 export default function SocialList({ id, username, description }) {
   const location = window.location.origin;
-  const postUrl = getUrlTo(location, POST_ROUTE, id);
+  const postUrl = getUrlTo(location, POST_ID_ROUTE(id));
 
   return (
     <List>
       <ListItem
         button
         url={postUrl}
+        href={postUrl}
         title={username}
         quote={description}
         resetButtonStyle={false}

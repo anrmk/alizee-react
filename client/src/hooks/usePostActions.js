@@ -1,12 +1,10 @@
 import { useContext, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 
-import { POST_ROUTE } from "../constants/routes";
 import ApiContext from "../context/ApiContext";
-import usePostDialog, { PURCHASES_DIALOG_TYPE, RECEIPT_DIALOG_TYPE } from "../hooks/usePostDialog";
+import usePostDialog, { PURCHASES_DIALOG_TYPE, RECEIPT_DIALOG_TYPE, PROFILE_DIALOG_TYPE } from "../hooks/usePostDialog";
 
 export default function usePostActions({ isFetching, onBuy, onPurchases, onReceipt, onFavorite, onLike }) {
-  const history = useHistory();
   const apiClient = useContext(ApiContext);
   const postDialog = usePostDialog({ onPayClick: handleBuy });
 
@@ -20,10 +18,6 @@ export default function usePostActions({ isFetching, onBuy, onPurchases, onRecei
 
   const handleFavorite = useCallback(async (id) => {
     !isFetching && (await onFavorite(apiClient, id));
-  }, []);
-
-  const handleGoTo = useCallback((id) => {
-    history.push(`${POST_ROUTE}/${id}`);
   }, []);
 
   const handleDialogToggle = async (data, type) => {
@@ -48,9 +42,8 @@ export default function usePostActions({ isFetching, onBuy, onPurchases, onRecei
   };
 
   return {
-    likeAction: handleLike,
-    favoriteAction: handleFavorite,
-    goToAction: handleGoTo,
+    like: handleLike,
+    favorite: handleFavorite,
     dialogToggleAction: handleDialogToggle,
   };
 }

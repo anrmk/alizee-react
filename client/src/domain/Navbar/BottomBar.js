@@ -18,7 +18,7 @@ import CameraIcon from '@material-ui/icons/CameraAltOutlined';
 import MoodIcon from '@material-ui/icons/MoodOutlined';
 import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 
-import {HOME_ROUTE, SEARCH_ROUTE, EXPLORE_ROUTE, PROFILE_ROUTE } from "../../constants/routes";
+import {HOME_ROUTE, SEARCH_ROUTE, EXPLORE_ROUTE, PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 
 import { PostSprout } from "../PostsList";
 
@@ -53,7 +53,7 @@ function BottomBar({
           <IconButton onClick={() => { history.push(EXPLORE_ROUTE)}} color={`${location.pathname.includes(EXPLORE_ROUTE) ? "primary" : "default" }`}>
             <ExploreIcon />
           </IconButton>
-          <IconButton onClick={() => { history.push(PROFILE_ROUTE(user.userName))}} >
+          <IconButton onClick={() => { history.push(PROFILE_USERNAME_ROUTE(user.userName))}} >
             <Avatar src={user.avatarUrl} size="small" borderColor="default" />
           </IconButton>
         </Toolbar>

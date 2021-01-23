@@ -33,7 +33,7 @@ import * as settingsActions from "../store/actions/settings";
 import {
   HOME_ROUTE,
   SETTINGS_ROUTE,
-  POST_ROUTE,
+  POST_ID_ROUTE,
   SETTINGS_EDIT_PROFILE_ROUTE,
   CHAT_ROUTE,
   FOLLOWERS_ROUTE,
@@ -150,7 +150,7 @@ function Profile(props) {
   };
 
   const handleItemClick = (id) => {
-    history.push(`${POST_ROUTE}/${id}`);
+    history.push(POST_ID_ROUTE(id));
   };
 
   const handleTabChange = (index) => {

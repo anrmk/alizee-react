@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import CustomLink from "../../components/CustomLink";
 import MediaContent from "../../components/MediaContent";
-import { POST_ROUTE } from "../../constants/routes";
+import { POST_ID_ROUTE } from "../../constants/routes";
 
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibraryOutlined";
 import VideoLibraryIcon from "@material-ui/icons/VideoLibraryOutlined";
@@ -21,7 +21,7 @@ function Tile({
     <div className="col-4" onClick={onClick}>
       <CustomLink
         as="a"
-        to={`${POST_ROUTE}/${id}`}
+        to={POST_ID_ROUTE(id)}
         className={`tile ${media.length > 0 ? "" : "tile-text"}`}
       >
         <div className="tile-icon">

@@ -91,7 +91,7 @@ function Main(props) {
           <Route exact path={Routes.PASSWORD_CHANGE_ROUTE} component={ChangePassword} />
           <PrivateRoute path={Routes.HOME_ROUTE} component={Feed} />
           <PrivateRoute path={Routes.EXPLORE_ROUTE} component={Explore} />
-          <PrivateRoute path={Routes.POST_ID_ROUTE} component={Post} />
+          <PrivateRoute path={Routes.POST_ROUTE} component={Post} />
           <PrivateRoute path={Routes.ACTIVITY_ROUTE} component={Activity} />
           <PrivateRoute path={Routes.MEET_ROUTE} component={Meeting} />
           <PrivateRoute path={Routes.CHAT_USERNAME_ROUTE} component={Chat} />
@@ -99,7 +99,7 @@ function Main(props) {
           <PrivateRoute path={Routes.ROOM_ID_DEFAULT_ROUTE} component={Room} />
           <PrivateRoute path={Routes.SUGESTED_PEOPLE} component={PeopleSuggested} />
           <PrivateRoute path={Routes.SETTINGS_TYPE_ROUTE} component={Settings} />
-          <PrivateRoute exact path={Routes.PROFILE_USERNAME_ROUTE} component={Profile} />
+          <PrivateRoute exact path={Routes.PROFILE_ROUTE} component={Profile} />
           <PrivateRoute exact path={Routes.PROFILE_FOLLOWERS_ROUTE} component={Followers} />
           <PrivateRoute exact path={Routes.PROFILE_FOLLOWINGS_ROUTE} component={Followings} />
           <PrivateRoute exact path={Routes.STORIES_ID_ROUTE} component={Story} />

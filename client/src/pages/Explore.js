@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { Container, Box, Typography } from "@material-ui/core";
 
 import { POSTS_LENGTH } from "../constants/feed";
-import { POST_ROUTE } from "../constants/routes";
+import { POST_ID_ROUTE } from "../constants/routes";
 
 import * as actionSuggestion from "../store/actions/suggestion";
 import ApiContext from "../context/ApiContext";
@@ -32,7 +32,7 @@ function Explore(props) {
   };
 
   const onItemClick = (id) => {
-    history.push(`${POST_ROUTE}/${id}`);
+    history.push(POST_ID_ROUTE(id));
   };
 
   return (

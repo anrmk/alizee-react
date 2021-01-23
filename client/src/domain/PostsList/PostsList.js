@@ -14,9 +14,15 @@ const PostsList = React.memo(({
   hasMore,
 
   onFetchMore,
-  onGoToClick,
-  onLikeClick,
-  onFavoriteClick,
+
+  onFollow,
+  onUnfollow,
+  onBlock,
+  onUnblock,
+  onReport,
+
+  onLike,
+  onFavorite,
   onDialogToggle
 }) => {
   return (
@@ -36,9 +42,14 @@ const PostsList = React.memo(({
             owner={item.user}
             post={item}
 
-            onGoToClick={onGoToClick}
-            onLikeClick={onLikeClick}
-            onFavoriteClick={onFavoriteClick}
+            onFollow={onFollow}
+            onUnfollow={onUnfollow}
+            onBlock={onBlock}
+            onUnblock={onUnblock}
+            onReport={onReport}
+
+            onLike={onLike}
+            onFavorite={onFavorite}
             onDialogToggle={onDialogToggle} />
         ))}
     </InfiniteScroll>

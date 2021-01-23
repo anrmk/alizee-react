@@ -34,6 +34,7 @@ import { SUGESTED_PEOPLE } from "../constants/routes";
 
 import useSprout from "../hooks/useSprout";
 import usePostActions from "../hooks/usePostActions";
+import useProfileActions from "../hooks/useProfileActions";
 
 function Feed(props) {
   const apiClient = useContext(ApiContext);
@@ -42,24 +43,33 @@ function Feed(props) {
   const [interestsModalShow, setInterestsModalShow] = useState(false);
 
   const { userInfo } = props;
-  const { settings, getAccountPersonalized } = props;
+  const { settings, getAccountPersonalized, blockUser, unblockUser, reportUser } = props;
   const { people, getPeople, createFollow, deleteFollow } = props;
   const { posts, getPosts, createPost, resetPosts, createMood } = props;
   const { interests, getInterests, createInterests } = props;
   const { story, getStory, getFollowingStories, createStory, resetFollowingStories, resetStory } = props;
 
-  const { favoriteAction, likeAction, goToAction, dialogToggleAction } = usePostActions({
+  const { onSproutSubmit } = useSprout({ createStory, createPost, createMood });
+
+  const profileAction = useProfileActions({
+    onFollow: createFollow,
+    onUnfollow: deleteFollow,
+    onBlock: blockUser,
+    onUnblock: unblockUser,
+    onReport: reportUser,
+  })
+
+  const postAction = usePostActions({
     isFetching: props.posts.isFetching,
+    onLike: props.likePost,
+    onFavorite: props.favoritePost,
+
     onPurchases: props.getPurchases,
     onReceipt: props.getReceipt,
     onBuy: props.buyPost,
-    onFavorite: props.favoritePost,
-    onLike: props.likePost,
   });
 
   const isInterestsSkip = localStorage.getItem(INTERESTS_SKIP);
-
-  const { onSproutSubmit } = useSprout({ createStory, createPost, createMood });
 
   useEffect(() => {
     (async () => {
@@ -105,16 +115,8 @@ function Feed(props) {
   };
 
   const handleFollowPeople = useCallback(async ({ id, isFollow }) => {
-    await handleFollowClick(id, isFollow);
-  }, []);
-
-  const handleFollowPost = useCallback(async ({ id, isFollow }) => {
-    await handleFollowClick(id, isFollow);
-  }, []);
-
-  const handleFollowClick = async (id, isFollow) => {
     !people.isFetching && isFollow ? await deleteFollow(apiClient, id) : await createFollow(apiClient, id);
-  };
+  }, []);
 
   const handleInterestSubmit = useCallback(async () => {
     const selectedInterests = interestsEl.current.getSelectedIds();
@@ -147,12 +149,18 @@ function Feed(props) {
             user={userInfo}
             items={posts.data}
             hasMore={posts.hasMore}
+
             onFetchMore={handleFetchMore}
-            onGoToClick={goToAction}
-            onLikeClick={likeAction}
-            onFavoriteClick={favoriteAction}
-            onFollowClick={handleFollowPost}
-            onDialogToggle={dialogToggleAction}
+
+            onFollow={profileAction.follow}
+            onUnfollow={profileAction.unfollow}
+            onBlock={profileAction.block}
+            onUnblock={profileAction.unblock}
+            onReport={profileAction.report}
+
+            onLike={postAction.like}
+            onFavorite={postAction.favorite}
+            onDialogToggle={postAction.dialogToggleAction}
           />
         </Grid>
         <Hidden smDown>
@@ -239,6 +247,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+
     getPosts: (api, opts) => dispatch(postActions.getFollowingPosts(api, opts)),
     createPost: (api, post, media) => dispatch(postActions.createPost(api, post, media)),
     buyPost: (api, id) => dispatch(postActions.buyPost(api, id)),
@@ -253,6 +262,9 @@ function mapDispatchToProps(dispatch) {
     deleteFollow: (api, id) => dispatch(actionSuggestion.deleteFollow(api, id)),
 
     getAccountPersonalized: (api) => dispatch(settingsActions.getAccountPersonalized(api)),
+    blockUser: (api, id) => dispatch(settingsActions.createBlackList(api, id)),
+    unblockUser: (api, id) => dispatch(settingsActions.deleteBlackList(api, id)),
+    reportUser: (api, id) => {console.log("Report user")},    
 
     getInterests: (api) => dispatch(interestsActions.getInterests(api)),
     createInterests: (api, ids) => dispatch(interestsActions.createInterests(api, ids)),

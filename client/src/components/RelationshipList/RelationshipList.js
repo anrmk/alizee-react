@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { List } from "@material-ui/core";
 
-import { PROFILE_ROUTE } from "../../constants/routes";
+import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 import RelationshipItem from "./RelationshipItem";
 
 import useStyles from "./styles";
@@ -28,7 +28,7 @@ const RelationshipList = React.memo(({ items, currentUserName, onFollowClick }) 
             isFollow={item.isFollow}
             isMe={item.userName === currentUserName}
             onFollowClick={onFollowClick}
-            onItemClick={() => history.push(PROFILE_ROUTE(item.userName))}
+            onItemClick={() => history.push(PROFILE_USERNAME_ROUTE(item.userName))}
           />
         ))}
     </List>

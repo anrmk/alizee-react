@@ -52,7 +52,7 @@ const RelationshipItem = React.memo((props) => {
           className={classes.itemButton}
           disableElevation
           disableRipple
-          variant="contained"
+          variant={isFollow ? "outlined": "contained"}
           color="primary"
           size="small"
           onClick={handleFollowClick}

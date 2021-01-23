@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     borderTopColor: theme.palette.divider,
 
     "& > .MuiIconButton-root, & > .MuiButton-root": {
-      marginLeft: theme.spacing(0.2),
+      margin: theme.spacing(0, 0.5),
       padding: theme.spacing(1)
     },
   },

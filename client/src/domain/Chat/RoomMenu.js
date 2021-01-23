@@ -11,7 +11,7 @@ import DeleteIcon from "@material-ui/icons/DeleteOutline";
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircleOutline';
 import BlockIcon from '@material-ui/icons/BlockOutlined';
 
-import { PROFILE_ROUTE } from "../../constants/routes";
+import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 
 function RoomMenu({
   id,
@@ -39,7 +39,7 @@ function RoomMenu({
       open={open}
       onClose={onClose}
     >
-      <MenuItem onClick={() => history.push(PROFILE_ROUTE(userName))}>
+      <MenuItem onClick={() => history.push(PROFILE_USERNAME_ROUTE(userName))}>
         <ListItemIcon>
           <AccountIcon />
         </ListItemIcon>

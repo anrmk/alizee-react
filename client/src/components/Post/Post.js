@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 
 import { formatDate } from "../../helpers/functions";
@@ -11,12 +11,9 @@ import {
   CardActions,
   Avatar,
   Typography,
-  IconButton,
 } from "@material-ui/core";
 
-import MoreVertIcon from "@material-ui/icons/MoreVertOutlined";
-
-import { Tools } from "../../components/Post";
+import { Tools, Menu } from "../../components/Post";
 import MediaContent from "../../components/MediaContent";
 
 import useStyles from "./styles";
@@ -25,7 +22,8 @@ const Post = React.memo((props) => {
   const classes = useStyles();
 
   const { id, user, owner, post } = props;
-  const { onLikeClick, onFavoriteClick, onGoToClick, onDialogToggle } = props;
+  const { onFollow, onUnfollow, onBlock, onUnblock, onReport } = props;
+  const { onLike, onFavorite, onDialogToggle } = props;
 
   return (
     <Card className={classes.root} variant="outlined">
@@ -38,9 +36,17 @@ const Post = React.memo((props) => {
             <Typography display="inline" variant="caption">
               {post.createdDate && formatDate(post.createdDate)}
             </Typography>
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
+
+            <Menu 
+              user={owner}
+              isOwner={user.id === owner.id}
+
+              onFollow={onFollow}
+              onUnfollow={onUnfollow}
+              onBlock={onBlock}
+              onUnblock={onUnblock}
+              onReport={onReport}
+            />
           </>
         }
       />
@@ -65,9 +71,8 @@ const Post = React.memo((props) => {
           isPurchased={post.isPurchased}
           isOwner={user.id === owner.id}
           
-          onGoToClick={onGoToClick}
-          onLikeClick={onLikeClick}
-          onFavoriteClick={onFavoriteClick}
+          onLike={onLike}
+          onFavorite={onFavorite}
           onDialogToggle={onDialogToggle}
         />
       </CardActions>

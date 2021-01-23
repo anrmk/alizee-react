@@ -73,10 +73,10 @@ export function getOffset(currentOffset, total, step = 1) {
  * @param {number} id
  * @return {number} full url to post
  */
-export function getUrlTo(location, route, id) {
-  if (!location || !route || !id) return null;
+export function getUrlTo(location, route) {
+  if (!location || !route ) return null;
 
-  return `${location}${route}/${id}`
+  return `${location}${route}`
 }
 
 /**

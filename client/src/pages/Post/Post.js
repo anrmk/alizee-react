@@ -8,16 +8,19 @@ import ImageIcon from "@material-ui/icons/ImageRounded";
 import CommentIcon from "@material-ui/icons/CommentRounded";
 
 import ApiContext from "../../context/ApiContext";
-import { Tools, Comments } from "../../components/Post";
+import { Tools, Menu, Comments } from "../../components/Post";
 import MediaContent from "../../components/MediaContent";
 import { COMMENTS_POST_LENGTH } from "../../constants/feed";
 import * as postActions from "../../store/actions/post";
+import * as settingsActions from "../../store/actions/settings";
+import * as relationshipActions from "../../store/actions/relationship";
 import * as commentActions from "../../store/actions/comment";
 
 import { HOME_ROUTE } from "../../constants/routes";
 import SlidingViews from "../../components/SlidingViews";
 import useSlidingViews from "../../hooks/useSlidingViews";
 import usePostActions from "../../hooks/usePostActions";
+import useProfileActions from "../../hooks/useProfileActions";
 
 import useStyles from "./styles";
 
@@ -29,20 +32,24 @@ function PostPage(props) {
   const postId = props.match.params.id;
 
   const { user, post, comment } = props;
-  const {
-    getPost,
-    getComments,
-    resetComments,
-    createComment
-  } = props;
+  const { getPost, getComments, resetComments, createComment } = props;
+  const { createFollow, deleteFollow, blockUser, unblockUser, reportUser } = props;
 
-  const { favoriteAction, likeAction, goToAction, dialogToggleAction } = usePostActions({
+  const profileAction = useProfileActions({
+    onFollow: createFollow,
+    onUnfollow: deleteFollow,
+    onBlock: blockUser,
+    onUnblock: unblockUser,
+    onReport: reportUser,
+  })
+
+  const postAction = usePostActions({
     isFetching: props.post.isFetching,
+    onLike: props.likePost,
+    onFavorite: props.favoritePost,
     onPurchases: props.getPurchases,
     onReceipt: props.getReceipt,
     onBuy: props.buyPost,
-    onFavorite: props.favoritePost,
-    onLike: props.likePost,
   });
 
   useEffect(() => {
@@ -93,10 +100,10 @@ function PostPage(props) {
           </CardMedia>
         </Card>
         <Comments
-          userId={post.data.user?.id}
-          avatarUrl={post.data.user?.avatarUrl}
-          title={post.data.user?.name}
-          subheader={post.data.user?.userName}
+          userId={post.owner?.id}
+          avatarUrl={post.owner?.avatarUrl}
+          title={post.owner?.name}
+          subheader={post.owner?.userName}
           description={post.data.description}
           items={comment.data}
           hasMore={comment.hasMore}
@@ -104,11 +111,23 @@ function PostPage(props) {
           onFetchMore={handleCommentMore}
           onSendMessageClick={handleSendMessageClick}
           headerBackComponent={
-            <Hidden mdUp>
-              <IconButton onClick={toggleSlidingViewsState}>
-                <ImageIcon />
-              </IconButton>
-            </Hidden>
+            <>
+              <Hidden mdUp>
+                <IconButton onClick={toggleSlidingViewsState}>
+                  <ImageIcon />
+                </IconButton>
+              </Hidden>
+              <Menu 
+                user={post.owner}
+                isOwner={user.id === post.owner?.id}
+
+                onFollow={profileAction.follow}
+                onUnfollow={profileAction.unfollow}
+                onBlock={profileAction.block}
+                onUnblock={profileAction.unblock}
+                onReport={profileAction.report}
+              />
+            </>
           }>
           <Tools
             id={post.data.id}
@@ -117,11 +136,11 @@ function PostPage(props) {
             isFavorite={post.data.isFavorite}
             amount={post.data.amount}
             isPurchased={post.data.isPurchased}
-            isOwner={user.id === post.data.user?.id}
+            isOwner={user.id === post.owner?.id}
             
-            onLikeClick={likeAction}
-            onFavoriteClick={favoriteAction}
-            onDialogToggle={dialogToggleAction} />
+            onLike={postAction.like}
+            onFavorite={postAction.favorite}
+            onDialogToggle={postAction.dialogToggleAction} />
         </Comments>
       </SlidingViews>
     </Container>
@@ -134,7 +153,8 @@ function mapStateToProps(state) {
     post: {
       isFetching: state.posts.isFetching,
       errorMessage: state.posts.errorMessage,
-      data: state.posts.currentPost
+      data: state.posts.currentPost,
+      owner: state.posts.currentPost.user || {}
     },
     comment: {
       isFetching: state.comment.isFetching,
@@ -151,8 +171,13 @@ function mapDispatchToProps(dispatch) {
     buyPost: (api, id) => dispatch(postActions.buyPost(api, id)),
     getPurchases: (api, id, callback) => dispatch(postActions.getPurchases(api, id, callback)),
     getReceipt: (api, id, callback) => dispatch(postActions.getReceipt(api, id, callback)),
-   
     favoritePost: (api, id) => dispatch(postActions.favoritePost(api, id)),
+
+    createFollow: (api, id) => dispatch(relationshipActions.createFollow(api, id)),
+    deleteFollow: (api, id) => dispatch(relationshipActions.deleteFollow(api, id)),
+    blockUser: (api, id) => dispatch(settingsActions.createBlackList(api, id)),
+    unblockUser: (api, id) => dispatch(settingsActions.deleteBlackList(api, id)),
+    reportUser: (api, id) => {console.log("Report user")},  
 
     getComments: (api, opts) => dispatch(commentActions.getCommentsPost(api, opts)),
     resetComments: () => dispatch(commentActions.resetCommentsPost()),

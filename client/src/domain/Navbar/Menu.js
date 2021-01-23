@@ -9,7 +9,7 @@ import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
 import SettingsIcon from "@material-ui/icons/Settings";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorderOutlined";
 
-import { PROFILE_ROUTE, SEARCH_ROUTE, SETTINGS_EDIT_PROFILE_ROUTE } from "../../constants/routes";
+import { PROFILE_USERNAME_ROUTE, SEARCH_ROUTE, SETTINGS_EDIT_PROFILE_ROUTE } from "../../constants/routes";
 
 export default function NavMenu({
   id,
@@ -17,17 +17,11 @@ export default function NavMenu({
   open,
   anchorEl,
 
-  onCloseClick,
   onClose,
   onLogout,
 }) {
   const { t } = useTranslation();
   const history = useHistory();
-
-  const handleCloseClick = () => {
-    onCloseClick && onCloseClick();
-    onClose && onClose();
-  };
 
   const handleMenuItemClick = (url) => {
     history.push(url);
@@ -45,7 +39,7 @@ export default function NavMenu({
       open={open}
       onClose={onClose}
     >
-      <MenuItem onClick={() => handleMenuItemClick(PROFILE_ROUTE(username))}>
+      <MenuItem onClick={() => handleMenuItemClick(PROFILE_USERNAME_ROUTE(username))}>
         <ListItemIcon>
           <AccountIcon />
         </ListItemIcon>
