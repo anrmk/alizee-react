@@ -163,7 +163,7 @@ function EditProfileForm({
                 variant="outlined"
                 fullWidth
                 id={FULL_NAME_ID}
-                placeholder="Full Name"
+                label="Full Name"
                 type="text"
                 value={value}
                 error={!!errors[FULL_NAME_ID]}
@@ -186,7 +186,7 @@ function EditProfileForm({
                 variant="outlined"
                 fullWidth
                 id={USERNAME_INPUT_ID}
-                placeholder="Username"
+                label="Username"
                 type="text"
                 value={value}
                 error={!!errors[USERNAME_INPUT_ID]}
@@ -195,9 +195,9 @@ function EditProfileForm({
                 onChange={e => onChange(e.target.value)} />
             )} />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className={classes.formElementIndent}>
           <ChipsInput
-            placeholder="Sites"
+            label="Sites"
             id={SITES_INPUT_ID}
             name={SITES_INPUT_ID}
             max={4}
@@ -214,7 +214,7 @@ function EditProfileForm({
                 variant="outlined"
                 fullWidth
                 id={BIO_INPUT_ID}
-                placeholder="Bio"
+                label="Bio"
                 type="text"
                 value={value}
                 multiline
@@ -233,11 +233,15 @@ function EditProfileForm({
               <TextField
                 variant="outlined"
                 fullWidth
+                label="Birthday"
                 id={BIRTHDAY_INPUT_ID}
                 type="date"
                 value={value || undefined}
                 error={!!errors[BIRTHDAY_INPUT_ID]}
                 helperText={errors[BIRTHDAY_INPUT_ID]?.message}
+                InputLabelProps={{
+                  shrink: true,
+                }}
                 onBlur={onBlur}
                 onChange={e => onChange(e.target.value)} />
             )} />
@@ -250,14 +254,14 @@ function EditProfileForm({
               <InputMask
                 mask={PHONE_REGEX}
                 disabled={false}
-                value={value}
+                value={value || ""}
                 onBlur={onBlur}
-                onChange={(e) => onChange(e.target.value.replace(/\D+/g, ''))}>
+                onChange={(e) => onChange(e.target.value.replace(/\D+/g, ""))}>
                 <TextField
                   variant="outlined"
                   fullWidth
                   id={PHONE_INPUT_ID}
-                  placeholder="Phone Number"
+                  label="Phone Number"
                   type="text"
                   value={value}
                   error={!!errors[PHONE_INPUT_ID]}
@@ -275,7 +279,7 @@ function EditProfileForm({
                 variant="outlined"
                 fullWidth
                 id={GENDER_INPUT_ID}
-                placeholder="Gender"
+                label="Gender"
                 type="text"
                 value={value}
                 error={!!errors[GENDER_INPUT_ID]}

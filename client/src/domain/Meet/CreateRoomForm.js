@@ -164,7 +164,7 @@ function CreateRoomForm({
               )} />
           </FormGroup>
 
-          <FormGroup>
+          <FormGroup className={classes.formElementIndent}>
             <Controller
               name={DESCRIPTION_ID}
               control={control}
@@ -250,10 +250,14 @@ function CreateRoomForm({
                   variant="outlined"
                   fullWidth
                   id={STREAMING_DATE_ID}
+                  label={t("MeetCreateRoomFormStreamingDateInputLabel")}
                   type="datetime-local"
                   value={value}
                   error={!!errors[STREAMING_DATE_ID]}
                   helperText={errors[STREAMING_DATE_ID]?.message}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   onBlur={onBlur}
                   onChange={e => onChange(e.target.value)} />
               )} />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import clsx from "clsx";
-import { Box, Chip, Grid, TextField, Typography } from "@material-ui/core";
+import { Box, Chip, TextField, Typography } from "@material-ui/core";
 
 import useStyles from "./styles";
 
@@ -24,13 +24,13 @@ function ChipsInput({
 
   useEffect(() => {
     onChange && onChange(localItems);
-  }, [localItems])
+  }, [localItems]);
 
   useEffect(() => {
     onError && onError(localError);
-  }, [localError])
+  }, [localError]);
 
-  const handleKeyDown = evt => {
+  const handleKeyDown = (evt) => {
     if (["Enter", "Tab", ","].includes(evt.key)) {
       evt.preventDefault();
 
@@ -43,25 +43,25 @@ function ChipsInput({
     }
   };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setLocalValue(e.target.value);
-    setLocalError(null)
+    setLocalError(null);
   };
 
-  const handleDelete = item => {
-    setLocalItems(localItems.filter(i => i !== item));
+  const handleDelete = (item) => {
+    setLocalItems(localItems.filter((i) => i !== item));
   };
 
-  const isValid = val => {
+  const isValid = (val) => {
     let err = null;
 
-    filters.forEach(filter => {
+    filters.forEach((filter) => {
       const message = filter(val, localItems);
 
       if (message) {
         err = message;
       }
-    })
+    });
 
     if (isInList(val)) {
       err = `${val} has already been added.`;
@@ -78,35 +78,51 @@ function ChipsInput({
     }
 
     return true;
-  }
+  };
 
   const isInList = (email) => {
     return localItems.includes(email);
-  }
+  };
+
+  const chipComponents = localItems.map((itemId) => (
+    <Chip
+      className={clsx(classes.chip, classChipName)}
+      key={itemId}
+      label={itemId}
+      onDelete={() => handleDelete(itemId)}
+    />
+  ));
 
   return (
-    <Grid container direction="column">
-      <Box>
-        {localItems.map(itemId => (
-          <Chip className={clsx(classes.chip, classChipName)} key={itemId} label={itemId} onDelete={() => handleDelete(itemId)} />
-        ))}
-      </Box>
-
+    <Box>
       <TextField
         {...rest}
         variant="outlined"
         fullWidth
-        className={classes.input}
+        className={classes.textField}
         type="text"
         value={localValue}
         error={!!localError}
         helperText={localError}
+        inputProps={{
+          autoComplete: "off",
+        }}
+        InputProps={{
+          startAdornment: <>{chipComponents}</>,
+          className: classes.inputBase,
+          classes: { input: classes.input },
+        }}
         onChange={handleChange}
-        onKeyDown={handleKeyDown} />
+        onKeyDown={handleKeyDown}
+      />
 
-      {max > 0 && <Typography variant="caption" gutterBottom>{localItems.length}/{max}</Typography>}
-    </Grid>
-  )
+      {max > 0 && (
+        <Typography variant="caption" gutterBottom>
+          {localItems.length}/{max}
+        </Typography>
+      )}
+    </Box>
+  );
 }
 
 export default ChipsInput;

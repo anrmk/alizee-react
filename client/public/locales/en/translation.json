@@ -12,7 +12,8 @@
   "MeetCreateRoomFormTitleInputLabel": "Title",
   "MeetCreateRoomFormTagsInputLabel": "Tags",
   "MeetCreateRoomFormTypeInputLabel": "Room",
-  "MeetCreateRoomFormTicketPriceInputLabel": "Ticket Price",
+  "MeetCreateRoomFormTicketPriceInputLabel": "Ticket price",
+  "MeetCreateRoomFormStreamingDateInputLabel": "Streaming date",
   "MeetCreateRoomFormJoinButtonLabel": "Join now",
   "MeetCreateRoomFormTitle": "Streaming ready...",
 
