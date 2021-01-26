@@ -86,6 +86,9 @@ export default {
     updateCover: "accountsetting/updatecover",
 
     // INTERESTS
-    getInterests: "interest/getinterests"
+    getInterests: "interest/getinterests",
+
+    //STREAM
+    getHotStreamers: "stream/hotstreamers",
   },
 };

@@ -17,10 +17,10 @@ function ChipsInput({
 
   ...rest
 }) {
-  const classes = useStyles();
   const [localItems, setLocalItems] = useState(items);
   const [localValue, setLocalValue] = useState(value);
   const [localError, setLocalError] = useState(error);
+  const classes = useStyles({localItems});
 
   useEffect(() => {
     onChange && onChange(localItems);

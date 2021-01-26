@@ -198,6 +198,7 @@ function EditProfileForm({
         <FormGroup className={classes.formElementIndent}>
           <ChipsInput
             label="Sites"
+            placeholder="Sites"
             id={SITES_INPUT_ID}
             name={SITES_INPUT_ID}
             max={4}

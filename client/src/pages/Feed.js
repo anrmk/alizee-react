@@ -15,13 +15,14 @@ import {
 } from "@material-ui/core";
 
 import { PostsList, PostSprout } from "../domain/PostsList";
-import { Tools as MeetTools } from "../components/Meet";
+import { HotStreamersItemList } from "../domain/Stream";
 
 import * as actionSuggestion from "../store/actions/suggestion";
 import * as postActions from "../store/actions/post";
 import * as settingsActions from "../store/actions/settings";
 import * as interestsActions from "../store/actions/interests";
 import * as storyActions from "../store/actions/story";
+import * as streamActions from "../store/actions/stream";
 import * as moodActions from "../store/actions/mood";
 
 import { RelationshipList } from "../components/RelationshipList";
@@ -48,6 +49,7 @@ function Feed(props) {
   const { posts, getPosts, createPost, resetPosts, createMood } = props;
   const { interests, getInterests, createInterests } = props;
   const { story, getStory, getFollowingStories, createStory, resetFollowingStories, resetStory } = props;
+  const { hotStreamers, getHotStreamers } = props;
 
   const { onSproutSubmit } = useSprout({ createStory, createPost, createMood });
 
@@ -57,7 +59,7 @@ function Feed(props) {
     onBlock: blockUser,
     onUnblock: unblockUser,
     onReport: reportUser,
-  })
+  });
 
   const postAction = usePostActions({
     isFetching: props.posts.isFetching,
@@ -80,6 +82,7 @@ function Feed(props) {
       });
       await getFollowingStories(apiClient, { length: STORIES_LENGTH });
       await getStory(apiClient, { username: userInfo.userName, length: STORIES_LENGTH });
+      await getHotStreamers(apiClient);
     })();
 
     return () => {
@@ -135,6 +138,10 @@ function Feed(props) {
     setInterestsModalShow(false);
   };
 
+  const handleJoinStream = () => {
+    console.log("handleJoinStream");
+  };
+
   return (
     <Container>
       <Grid container spacing={2}>
@@ -149,15 +156,12 @@ function Feed(props) {
             user={userInfo}
             items={posts.data}
             hasMore={posts.hasMore}
-
             onFetchMore={handleFetchMore}
-
             onFollow={profileAction.follow}
             onUnfollow={profileAction.unfollow}
             onBlock={profileAction.block}
             onUnblock={profileAction.unblock}
             onReport={profileAction.report}
-
             onLike={postAction.like}
             onFavorite={postAction.favorite}
             onDialogToggle={postAction.dialogToggleAction}
@@ -177,12 +181,14 @@ function Feed(props) {
               </Box>
             )}
 
-            <Box>
-              <Typography variant="h6" gutterBottom>
-                Rooms
-              </Typography>
-              <MeetTools />
-            </Box>
+            {hotStreamers.data && hotStreamers.data.length > 0 && (
+              <Box>
+                <Typography variant="h6" gutterBottom>
+                  Hot Streamers
+                </Typography>
+                <HotStreamersItemList items={hotStreamers.data} onJoinStream={handleJoinStream} />
+              </Box>
+            )}
           </Grid>
         </Hidden>
       </Grid>
@@ -242,12 +248,16 @@ function mapStateToProps(state) {
       errorMessage: state.story.errorMessage,
       hasMore: state.story.hasMore,
     },
+    hotStreamers: {
+      isFetching: state.stream.isFetching,
+      data: state.stream?.hotStreamers,
+      errorMessage: state.stream.errorMessage,
+    },
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-
     getPosts: (api, opts) => dispatch(postActions.getFollowingPosts(api, opts)),
     createPost: (api, post, media) => dispatch(postActions.createPost(api, post, media)),
     buyPost: (api, id) => dispatch(postActions.buyPost(api, id)),
@@ -264,7 +274,9 @@ function mapDispatchToProps(dispatch) {
     getAccountPersonalized: (api) => dispatch(settingsActions.getAccountPersonalized(api)),
     blockUser: (api, id) => dispatch(settingsActions.createBlackList(api, id)),
     unblockUser: (api, id) => dispatch(settingsActions.deleteBlackList(api, id)),
-    reportUser: (api, id) => {console.log("Report user")},    
+    reportUser: (api, id) => {
+      console.log("Report user");
+    },
 
     getInterests: (api) => dispatch(interestsActions.getInterests(api)),
     createInterests: (api, ids) => dispatch(interestsActions.createInterests(api, ids)),
@@ -275,6 +287,8 @@ function mapDispatchToProps(dispatch) {
     resetFollowingStories: () => dispatch(storyActions.resetFollowingStories()),
     getFollowingStories: (api, opts) => dispatch(storyActions.getFollowingStories(api, opts)),
     createMood: (api, data) => dispatch(moodActions.createMood(api, data)),
+
+    getHotStreamers: (api) => dispatch(streamActions.getHotStreamers(api)),
   };
 }
 

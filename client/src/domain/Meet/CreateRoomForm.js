@@ -193,6 +193,7 @@ function CreateRoomForm({
             <ChipsInput
               classChipName={classes.createRoomChip}
               label={t("MeetCreateRoomFormTagsInputLabel")}
+              placeholder={t("MeetCreateRoomFormTagsInputLabel")}
               id={TAGS_ID}
               name={TAGS_ID}
               max={4}
