@@ -22,6 +22,7 @@ export {
 
   getSettingsResetPasswordConfirm
 } from "./getSettingsResetPasswordConfirm";
+
 export {
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
@@ -29,6 +30,7 @@ export {
 
   resetPassword
 } from "./resetPassword";
+
 export {
   GET_USER_STATISTICS_REQUEST,
   GET_USER_STATISTICS_SUCCESS,
@@ -46,6 +48,16 @@ export {
   REMOVE_FOLLOWER_SUCCESS,
   removeFollower,
 } from "./removeFollower";
+
+export {
+  ADD_FAVORITE_SUCCESS, 
+  addFavorite,
+} from "./addFavorite";
+
+export {
+  REMOVE_FAVORITE_SUCCESS,
+  removeFavorite,
+} from "./removeFavorite";
 
 export {
   UPDATE_MOOD_SUCCESS,

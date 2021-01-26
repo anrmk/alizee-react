@@ -14,13 +14,13 @@ function requestrequestBlock() {
   };
 }
 
-function receiverequestBlock(current) {
+function receiverequestBlock(data) {
   return {
     type: USER_BLOCK_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
-      current: current || [],
+      data
     },
   };
 }
@@ -35,23 +35,21 @@ function errorrequestBlock(message) {
   };
 }
 
-export function blockUser(api, userId, followId) {
+export function blockUser(api, userName, followName) {
   return async (dispatch, getState) => {
     dispatch(requestrequestBlock());
 
     const url = generateUrl("blockUser");
     try {
-      await api.setParams({ id: userId }).query(url);
+      await api.setParams({ id: userName }).query(url);
 
-      const current = [...getState().relationship.current];
+      const list = [...getState().users.data];
+      const index = list.findIndex((item) => item.userName === userName);
+      if (index !== -1) {
+        list[index]["isBlocked"] = true;
+      } 
 
-      current.forEach(item => {
-        if (item.id === followId) {
-          item.isFollow = true
-        }
-      })
-
-      dispatch(receiverequestBlock(current));
+      dispatch(receiverequestBlock(list));
     } catch {
       return dispatch(errorrequestBlock("When follow was creating then something went wrong"));
     }

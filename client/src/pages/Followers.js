@@ -15,27 +15,20 @@ function Followers(props) {
 
   const apiClient = useContext(ApiContext);
 
-  const { user, me, follower } = props;
+  const { user, me, followers } = props;
   const { fetchUser, fetchFollowers, createFollow, deleteFollow } = props;
 
   useEffect(() => {
     if (username) {
       (async () => {
         await fetchUser(apiClient, username);
+        await fetchFollowers(apiClient, username);
       })();
     }
   }, [username]);
 
-  useEffect(() => {
-    if (user.id) {
-      (async () => {
-        await fetchFollowers(apiClient, user.id);
-      })();
-    }
-  }, [user.id]);
-
-  const handleFollowClick = ({ followId, isFollow }) => {
-    !follower.isLoading && isFollow ? deleteFollow(apiClient, followId) : createFollow(apiClient, followId);
+  const handleFollowClick = ({ userName, isFollow }) => {
+    !followers.isFetching && isFollow ? deleteFollow(apiClient, userName) : createFollow(apiClient, userName);
   };
 
   return (
@@ -43,13 +36,13 @@ function Followers(props) {
       <Box my={4}>
         <Box display="flex" flexWrap="noWrap" justifyContent="space-between">
           <Typography variant="subtitle1">Followers</Typography>
-          <Typography>[{follower?.data.length}]</Typography>
+          <Typography variant="subtitle1">[{followers.data?.length}]</Typography>
         </Box>
         <Divider />
         <RelationshipList
-          items={follower?.data}
+          items={followers.data}
           currentUserName={me.userName}
-          onFollowClick={(item) => handleFollowClick(item, follower.isFetching)}
+          onFollowClick={(item) => handleFollowClick(item, followers.isFetching)}
         />
       </Box>
     </Container>
@@ -59,25 +52,22 @@ function Followers(props) {
 function mapStateToProps(state) {
   return {
     me: {
-      userName: state.signIn?.userInfo?.userName,
+      userName: state.signIn?.userInfo.userName,
     },
-    user: {
-      id: state.user.data?.id,
-    },
-    follower: {
-      isFetching: state.relationship.isFetching,
-      data: state.relationship?.followers,
-      errorMessage: state.relationship.errorMessage,
-    },
+    user: state.user.data,
+    followers: {
+      isFetching: state.users.isFetching, 
+      data: state.users.data,
+    }
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchUser: (api, username) => dispatch(userActions.getUser(api, username)),
-    fetchFollowers: (api, userId) => dispatch(relationshipActions.getFollowers(api, userId)),
-    createFollow: (api, userId) => dispatch(relationshipActions.createFollow(api, userId)),
-    deleteFollow: (api, userId) => dispatch(relationshipActions.deleteFollow(api, userId)),
+    fetchUser: (api, userName) => dispatch(userActions.getUser(api, userName)),
+    fetchFollowers: (api, userName) => dispatch(relationshipActions.getFollowers(api, userName)),
+    createFollow: (api, userName) => dispatch(relationshipActions.createFollow(api, userName)),
+    deleteFollow: (api, userName) => dispatch(relationshipActions.deleteFollow(api, userName)),
   };
 }
 

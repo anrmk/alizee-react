@@ -161,9 +161,9 @@ function mapStateToProps(state) {
       avatarUrl: state.signIn?.userInfo?.avatarUrl,
     },
     followings: {
-      isFetching: state.relationship.isFetching,
+      isFetching: state.users.isFetching,
       data: actionRelationship.getFilteredFollowings(state),
-      errorMessage: state.relationship.errorMessage,
+      errorMessage: state.users.errorMessage,
       keywords: state.keywords,
     },
     chat: {

@@ -20,8 +20,8 @@ const RelationshipList = React.memo(({ items, currentUserName, onFollowClick }) 
           <RelationshipItem
             key={item.id}
             id={item.id}
-            followId={item.followId}
-            userId={item.userId}
+           // followName={item.followName}
+            userName={item.userName}
             avatarUrl={item.avatarUrl}
             title={item.name}
             subtitle={item.mood || item.userName}

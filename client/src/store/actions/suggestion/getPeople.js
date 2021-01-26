@@ -18,11 +18,9 @@ function receiveGetPeople(data) {
   return {
     type: GET_PEOPLE_SUGGESTIONS_SUCCESS,
     payload: {
-      people: {
-        data,
-        isFetching: false,
-        errorMessage: "",
-      }
+      data,
+      isFetching: false,
+      errorMessage: "",
     },
   };
 }

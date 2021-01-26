@@ -8,7 +8,7 @@ import posts from "./posts";
 import media from './media';
 import comment from "./comment";
 
-import relationship from "./relationship";
+import users from "./users";
 import suggestion from "./suggestion";
 
 import chat from "./chat";
@@ -29,7 +29,7 @@ const appReducer = combineReducers({
   signIn,
   socialAuth,
   confirmEmail,
-  relationship,
+  users,
   suggestion,
   chat,
   posts,

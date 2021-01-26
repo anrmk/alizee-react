@@ -24,6 +24,7 @@ import * as interestsActions from "../store/actions/interests";
 import * as storyActions from "../store/actions/story";
 import * as streamActions from "../store/actions/stream";
 import * as moodActions from "../store/actions/mood";
+import * as relationshipActions from "../store/actions/relationship";
 
 import { RelationshipList } from "../components/RelationshipList";
 import InterestList from "../components/InterestsList";
@@ -117,8 +118,8 @@ function Feed(props) {
     }
   };
 
-  const handleFollowPeople = useCallback(async ({ id, isFollow }) => {
-    !people.isFetching && isFollow ? await deleteFollow(apiClient, id) : await createFollow(apiClient, id);
+  const handleFollowPeople = useCallback(async ({ userName, isFollow }) => {
+    !people.isFetching && isFollow ? await deleteFollow(apiClient, userName) : await createFollow(apiClient, userName);
   }, []);
 
   const handleInterestSubmit = useCallback(async () => {
@@ -229,9 +230,9 @@ function mapStateToProps(state) {
     },
 
     people: {
-      isFetching: state.suggestion.people.isFetching,
-      data: state.suggestion.people.data,
-      errorMessage: state.suggestion.people.errorMessage,
+      isFetching: state.users.isFetching,
+      data: state.users.data,
+      errorMessage: state.users.errorMessage,
     },
 
     settings: {
@@ -268,8 +269,8 @@ function mapDispatchToProps(dispatch) {
     resetPosts: () => dispatch(postActions.resetPosts()),
 
     getPeople: (api, count) => dispatch(actionSuggestion.getPeople(api, count)),
-    createFollow: (api, id) => dispatch(actionSuggestion.createFollow(api, id)),
-    deleteFollow: (api, id) => dispatch(actionSuggestion.deleteFollow(api, id)),
+    createFollow: (api, userName) => dispatch(relationshipActions.createFollow(api, userName)),
+    deleteFollow: (api, userName) => dispatch(relationshipActions.deleteFollow(api, userName)),
 
     getAccountPersonalized: (api) => dispatch(settingsActions.getAccountPersonalized(api)),
     blockUser: (api, id) => dispatch(settingsActions.createBlackList(api, id)),

@@ -12,18 +12,18 @@ function requestGetFollowings() {
     type: GET_FOLLOWINGS_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: ""
+      errorMessage: "",
     },
   };
 }
 
-function receiveGetFollowings(followingsData) {
+function receiveGetFollowings(data) {
   return {
     type: GET_FOLLOWINGS_SUCCESS,
     payload: {
       isFetching: false,
+      data,
       errorMessage: "",
-      followings: followingsData || [],
     },
   };
 }
@@ -33,7 +33,7 @@ function errorGetFollowings(message) {
     type: GET_FOLLOWINGS_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message
+      errorMessage: message,
     },
   };
 }
@@ -49,21 +49,18 @@ function filterQueryFollowings(query) {
   };
 }
 
-export function getFollowings(api, userId) {
+export function getFollowings(api, userName) {
   return async (dispatch) => {
     dispatch(requestGetFollowings());
 
     const url = generateUrl("getFollowings");
     try {
-      const { data } = await api
-        .setMethod("GET")
-        .setParams({ userId })
-        .query(url);
+      const { data } = await api.setMethod("GET").setParams({ userName }).query(url);
 
-        data.map((item) => {
-          item.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, item.avatarUrl);
-        });
-      
+      data.map((item) => {
+        item.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, item.avatarUrl);
+      });
+
       dispatch(receiveGetFollowings(data));
     } catch {
       dispatch(errorGetFollowings("Error: GetFollowings"));
@@ -78,16 +75,11 @@ export function filterFollowings(query) {
 }
 
 // Sellectors
-const querySelector = (state) => state.relationship.query;
-const dataSelector = (state) => state.relationship.followings;
+const querySelector = (state) => state.users.query;
+const dataSelector = (state) => state.users.data;
 
-export const getFilteredFollowings = createSelector(
-  [querySelector, dataSelector],
-  (query, data) => {
-    if (!query) return data;
+export const getFilteredFollowings = createSelector([querySelector, dataSelector], (query, data) => {
+  if (!query) return data;
 
-    return data.filter((item) =>
-      item?.fullName?.toLowerCase().includes(query.toLowerCase())
-    );
-  }
-);
+  return data.filter((item) => item?.fullName?.toLowerCase().includes(query.toLowerCase()));
+});

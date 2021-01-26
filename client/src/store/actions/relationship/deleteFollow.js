@@ -15,14 +15,13 @@ function requestDeleteFollow() {
   };
 }
 
-function receiveDeleteFollow(followers, followings) {
+function receiveDeleteFollow(data) {
   return {
     type: DELETE_FOLLOW_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
-      followers: followers || [],
-      followings: followings || [],
+      data,
     },
   };
 }
@@ -37,28 +36,21 @@ function errorDeleteFollow(message) {
   };
 }
 
-export function deleteFollow(api, userId) {
+export function deleteFollow(api, userName) {
   return async (dispatch, getState) => {
     dispatch(requestDeleteFollow());
-
     try {
       const url = generateUrl("deleteFollow");
-      await api.setMethod("DELETE").setParams({ id: userId }).query(url);
+      await api.setMethod("DELETE").setParams({ userName: userName }).query(url);
 
-      const peopleFollowers = [...getState().relationship.followers];
-      const followerIndex = peopleFollowers.findIndex((item) => item.followId === userId);
-      if (followerIndex !== -1) {
-        peopleFollowers[followerIndex]["isFollow"] = false;
-      }
-
-      const peopleFollowings = [...getState().relationship.followings];
-      const followingIndex = peopleFollowings.findIndex((item) => item.userId === userId);
-      if (followingIndex !== -1) {
-        peopleFollowings[followingIndex]["isFollow"] = false;
+      const list = [...getState().users.data];
+      const index = list.findIndex((item) => item.userName === userName);
+      if (index !== -1) {
+        list[index]["isFollow"] = false;
       }
 
       dispatch(removeFollower());
-      dispatch(receiveDeleteFollow(peopleFollowers, peopleFollowings));
+      dispatch(receiveDeleteFollow(list));
     } catch (e) {
       return dispatch(errorDeleteFollow("When follow was deleting then something went wrong"));
     }

@@ -6,43 +6,44 @@ import ApiContext from "../context/ApiContext";
 
 import { RelationshipList } from "../components/RelationshipList";
 import * as userActions from "../store/actions/user";
+import * as accountActions from "../store/actions/account";
 import * as relationshipActions from "../store/actions/relationship";
 
 import { Container, Box, Typography, Divider } from "@material-ui/core";
 
-function Followings(props) {
+function Favorites(props) {
   const { username } = useParams();
 
   const apiClient = useContext(ApiContext);
 
-  const { user, me, following } = props;
-  const { fetchUser, fetchFollowings, createFollow, deleteFollow } = props;
+  const { user, me, favorites } = props;
+  const { fetchUser, fetchFavorites, createFollow, deleteFollow } = props;
 
   useEffect(() => {
     if (username) {
       (async () => {
         await fetchUser(apiClient, username);
-        await fetchFollowings(apiClient, username);
+        await fetchFavorites(apiClient, username);
       })();
     }
   }, [username]);
 
-  const handleFollowClick = ({ userName, isFollow }) => {
-    !following.isFetching && isFollow ? deleteFollow(apiClient, userName) : createFollow(apiClient, userName);
-  };
+   const handleFollowClick = ({ userName, isFollow }) => {
+     !favorites.isLoading && isFollow ? deleteFollow(apiClient, userName) : createFollow(apiClient, userName);
+   };
 
   return (
     <Container maxWidth="sm">
       <Box my={4}>
         <Box display="flex" flexWrap="noWrap" justifyContent="space-between">
-          <Typography variant="subtitle1">Following</Typography>
-          <Typography variant="subtitle1">[{following.data?.length}]</Typography>
+          <Typography variant="subtitle1">Favorites</Typography>
+          <Typography>[{favorites.data?.length}]</Typography>
         </Box>
         <Divider />
         <RelationshipList
-          items={following.data}
+          items={favorites.data}
           currentUserName={me.userName}
-          onFollowClick={(item) => handleFollowClick(item, following.isFetching)}
+          onFollowClick={(item) => handleFollowClick(item, favorites.isFetching)}
         />
       </Box>
     </Container>
@@ -52,12 +53,12 @@ function Followings(props) {
 function mapStateToProps(state) {
   return {
     me: {
-      userName: state.signIn?.userInfo.userName
+      userName: state.signIn?.userInfo?.userName,
     },
     user: state.user.data,
-    following: {
-      isFetching: state.users.isFetching,
-      data: state.users.data
+    favorites: {
+      isFetching: state.users.isFetching, 
+      data: state.users.data,
     }
   };
 }
@@ -65,10 +66,10 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchUser: (api, username) => dispatch(userActions.getUser(api, username)),
-    fetchFollowings: (api, userName) => dispatch(relationshipActions.getFollowings(api, userName)),
+    fetchFavorites: (api, userName) => dispatch(accountActions.getFavorites(api, userName)),
     createFollow: (api, userName) => dispatch(relationshipActions.createFollow(api, userName)),
     deleteFollow: (api, userName) => dispatch(relationshipActions.deleteFollow(api, userName)),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Followings);
+export default connect(mapStateToProps, mapDispatchToProps)(Favorites);

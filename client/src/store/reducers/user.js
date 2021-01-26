@@ -3,34 +3,34 @@ import {
   GET_USER_SUCCESS,
   GET_USER_FAILURE,
   RESET_USER,
-
   RESET_PASSWORD_CONFIRM_REQUEST,
   RESET_PASSWORD_CONFIRM_SUCCESS,
   RESET_PASSWORD_CONFIRM_FAILURE,
-
   GET_SETTINGS_RESET_PASSWORD_CONFIRM_REQUEST,
   GET_SETTINGS_RESET_PASSWORD_CONFIRM_SUCCESS,
   GET_SETTINGS_RESET_PASSWORD_CONFIRM_FAILURE,
-
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAILURE,
-
   GET_USER_STATISTICS_REQUEST,
   GET_USER_STATISTICS_SUCCESS,
   GET_USER_STATISTICS_FAILURE,
-
   ADD_FOLLOWER_SUCCESS,
   REMOVE_FOLLOWER_SUCCESS,
-
-  UPDATE_MOOD_SUCCESS
+  UPDATE_MOOD_SUCCESS,
+  ADD_FAVORITE_SUCCESS,
+  REMOVE_FAVORITE_SUCCESS,
 } from "../actions/user";
 
+// import {
+
+// } from "../actions/account"
+
 export default function user(
-  state = { 
-    isFetching: false, 
+  state = {
+    isFetching: false,
     data: {},
-    statistics: {}
+    statistics: {},
   },
   action
 ) {
@@ -72,7 +72,7 @@ export default function user(
         ...state,
         ...action.payload,
       };
-    // Get reset password confirm from settings 
+    // Get reset password confirm from settings
     case GET_SETTINGS_RESET_PASSWORD_CONFIRM_REQUEST:
       return {
         ...state,
@@ -104,7 +104,7 @@ export default function user(
         ...state,
         ...action.payload,
       };
-      // Get user statistics
+    // Get user statistics
     case GET_USER_STATISTICS_REQUEST:
       return {
         ...state,
@@ -120,24 +120,45 @@ export default function user(
         ...state,
         ...action.payload,
       };
-    case ADD_FOLLOWER_SUCCESS:
+
+    //FOLLOW
+    case ADD_FOLLOWER_SUCCESS: {
       return {
         ...state,
         ...action.payload,
       };
+    }
 
-    case REMOVE_FOLLOWER_SUCCESS:
+    case REMOVE_FOLLOWER_SUCCESS: {
       return {
         ...state,
         ...action.payload,
       };
+    }
 
+    //MOOD
     case UPDATE_MOOD_SUCCESS: {
       return {
         ...state,
-        ...action.payload
-      }
-    }  
+        ...action.payload,
+      };
+    }
+
+    //FAVORITE
+    case ADD_FAVORITE_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case REMOVE_FAVORITE_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
     default:
       return state;
   }

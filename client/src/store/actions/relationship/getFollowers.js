@@ -14,14 +14,14 @@ function requestGetFollowers() {
   };
 }
 
-function receiveGetFollowers(followersData) {
+function receiveGetFollowers(data) {
   return {
     type: GET_FOLLOWERS_SUCCESS,
     payload: {
       isFetching: false,
+      data,
       errorMessage: "",
-      followers: followersData || []
-        },
+    },
   };
 }
 
@@ -35,16 +35,13 @@ function errorGetFollowers(message) {
   };
 }
 
-export function getFollowers(api, userId, status) {
+export function getFollowers(api, userName, status) {
   return async (dispatch) => {
     dispatch(requestGetFollowers());
 
     const url = generateUrl("getFollowers");
     try {
-      const { data } = await api
-        .setParams({ userId, status })
-        .setMethod("GET")
-        .query(url);
+      const { data } = await api.setParams({ userName, status }).setMethod("GET").query(url);
 
       data.forEach((item) => {
         item.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, item.avatarUrl);

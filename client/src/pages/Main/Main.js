@@ -23,6 +23,7 @@ import Profile from "../Profile";
 import PrivacyPolicy from "../PrivacyPolicy";
 import Followers from "../Followers";
 import Followings from "../Followings";
+import Favorites from "../Favorites";
 import { Settings } from "../Settings";
 import { ResetPassword, ChangePassword } from "../Password";
 import Story from "../Story";
@@ -102,6 +103,7 @@ function Main(props) {
           <PrivateRoute exact path={Routes.PROFILE_ROUTE} component={Profile} />
           <PrivateRoute exact path={Routes.PROFILE_FOLLOWERS_ROUTE} component={Followers} />
           <PrivateRoute exact path={Routes.PROFILE_FOLLOWINGS_ROUTE} component={Followings} />
+          <PrivateRoute exact path={Routes.FAVORITES_ROUTE} component={Favorites} />
           <PrivateRoute exact path={Routes.STORIES_ID_ROUTE} component={Story} />
         </Switch>
       </Box>

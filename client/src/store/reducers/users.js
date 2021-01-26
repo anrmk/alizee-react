@@ -19,12 +19,31 @@ import {
   RESET_RELATIONSHIP
 } from "../actions/relationship";
 
-export default function relationshipReducer(
+import {
+  GET_PEOPLE_SUGGESTIONS_REQUEST,
+  GET_PEOPLE_SUGGESTIONS_SUCCESS,
+  GET_PEOPLE_SUGGESTIONS_FAILURE
+} from "../actions/suggestion"
+
+import { 
+  GET_USER_FAVORITES_REQUEST,
+  GET_USER_FAVORITES_SUCCESS,
+  GET_USER_FAVORITES_FAILURE,
+
+  CREATE_USER_FAVORITES_REQUEST,
+  CREATE_USER_FAVORITES_SUCCESS,
+  CREATE_USER_FAVORITES_FAILURE,
+  
+  DELETE_USER_FAVORITES_REQUEST,
+  DELETE_USER_FAVORITES_SUCCESS,
+  DELETE_USER_FAVORITES_FAILURE,
+ } from "../actions/account";
+
+
+export default function usersReducer(
   state = { 
     isFetching: false,
-    followers: [],
-    followings: [],
-    current: [],
+    data: [],
     query: "" 
   },
   action
@@ -46,6 +65,7 @@ export default function relationshipReducer(
         ...state,
         ...action.payload,
       };
+
     // Followings
     case GET_FOLLOWINGS_REQUEST:
       return {
@@ -104,6 +124,92 @@ export default function relationshipReducer(
         ...state,
         ...action.payload
       };
+
+    //FAVORITES
+    case GET_USER_FAVORITES_REQUEST: {
+      return {
+        ...state,
+        ...action.payload
+      }
+    }
+
+    case GET_USER_FAVORITES_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload
+      }
+    }
+
+    case GET_USER_FAVORITES_FAILURE: {
+      return {
+        ...state,
+        ...action.payload
+      }
+    }
+
+    //FAVORITE
+    case CREATE_USER_FAVORITES_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case CREATE_USER_FAVORITES_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    
+    case CREATE_USER_FAVORITES_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case DELETE_USER_FAVORITES_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case DELETE_USER_FAVORITES_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case DELETE_USER_FAVORITES_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    //PEOPLE SUGGESTIONS
+    case GET_PEOPLE_SUGGESTIONS_REQUEST:{
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case GET_PEOPLE_SUGGESTIONS_SUCCESS:{
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+    case GET_PEOPLE_SUGGESTIONS_FAILURE:{
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
     default:
       return state;
   }

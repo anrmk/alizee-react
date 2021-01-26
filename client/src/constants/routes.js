@@ -24,6 +24,9 @@ export const FOLLOWERS_ROUTE = username => `/${username}/followers`;
 export const FOLLOWINGS_ROUTE = username => `/${username}/followings`;
 export const SEARCH_ROUTE = "/search";
 
+export const FAVORITES_USERNAME_ROUTE = username => `/${username}/favorites`;
+export const FAVORITES_ROUTE = "/:username/favorites";
+
 export const PROFILE_USERNAME_ROUTE = username => `/${username}`;
 export const PROFILE_ROUTE = "/:username";
 export const PROFILE_FOLLOWERS_ROUTE = "/:username/followers";

@@ -13,7 +13,6 @@ function receiveUserMood(user) {
 
 export function updateMood(mood) {
   return (dispatch, getState) => {
-    console.log("updateMood", mood);
     const user = getState().user.data;
     user.mood = mood;
 

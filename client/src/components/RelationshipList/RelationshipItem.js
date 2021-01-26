@@ -14,8 +14,7 @@ const RelationshipItem = React.memo((props) => {
 
   const {
     id,
-    followId,
-    userId,
+    userName,
     avatarUrl,
     title,
     subtitle,
@@ -26,7 +25,7 @@ const RelationshipItem = React.memo((props) => {
   const {onItemClick, onFollowClick } = props;
 
   const handleFollowClick = () => {
-    onFollowClick && onFollowClick({ id, followId, userId, isFollow });
+    onFollowClick && onFollowClick({ id, userName, isFollow });
   };
 
   return (

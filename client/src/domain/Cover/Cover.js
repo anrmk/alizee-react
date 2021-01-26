@@ -11,8 +11,8 @@ import useStyles from "./styles";
 
 function Cover(props) {
   const { user } = props;
-  const { isOwner, isLive, disabled } = props;
-  const { onMessageClick, onFollowClick, onSendGiftClick, onEditCover } = props;
+  const { isOwner, isFavorite, isLive, disabled } = props;
+  const { onFavoriteClick, onMessageClick, onFollowClick, onSendGiftClick, onEditCover } = props;
 
   const classes = useStyles({ imageUrl: user.coverUrl });
 
@@ -72,6 +72,9 @@ function Cover(props) {
             <Controls
               isOwner={isOwner}
               isFollow={user.isFollow}
+              isFavorite={user.isFavorite}
+
+              onFavoriteClick={onFavoriteClick}
               onMessageClick={onMessageClick}
               onFollowClick={onFollowClick}
               onSendGiftClick={onSendGiftClick}

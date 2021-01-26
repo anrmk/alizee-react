@@ -68,6 +68,11 @@ export default {
     getSettingsPasswordConfirm: "account/passwordchangeconfirm",
     getUserStatistics: "account/statistics",
 
+    // ACCOUNT FAVORITES
+    getAccountFavorites: "account/favorites",
+    createAccountFavorites: "account/favorites",
+    deleteAccountFavorites: "account/favorites",
+
     // SETTINGS
     updateAccount: "accountsetting/updateaccount",
     updateUsername: "accountsetting/updateusername",

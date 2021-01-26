@@ -13,8 +13,10 @@ function requestGetPosts() {
   return {
     type: GET_POST_SUGGESTIONS_REQUEST,
     payload: {
-      isFetching: true,
-      errorMessage: "",
+      posts: {
+        isFetching: true,
+        errorMessage: "",
+      }
     },
   };
 }
@@ -39,9 +41,11 @@ function errorGetPosts(message) {
   return {
     type: GET_POST_SUGGESTIONS_FAILURE,
     payload: {
-      isFetching: false,
-      hasMore: false,
-      errorMessage: message,
+      posts: {
+        isFetching: false,
+        hasMore: false,
+        errorMessage: message,
+      }
     },
   };
 }
@@ -51,11 +55,13 @@ export function resetPosts() {
     dispatch({
       type: RESET_POSTS_SUGGESTIONS,
       payload: {
-        isFetching: false,
-        offset: 0,
-        hasMore: false,
-        errorMessage: "",
-        data: [],
+        posts: {
+          isFetching: false,
+          offset: 0,
+          hasMore: false,
+          errorMessage: "",
+          data: [],
+        }
       },
     });
 }

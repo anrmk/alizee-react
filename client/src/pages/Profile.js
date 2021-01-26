@@ -11,15 +11,21 @@ import {
   Typography,
   ButtonGroup,
   Button,
+  Link,
   Divider,
   CardContent,
   CardActions,
-  Hidden
+  Hidden,
+  Stepper,
+  Step,
+  StepLabel,
+  BottomNavigation,
+  BottomNavigationAction
 } from "@material-ui/core/";
 
 import ApiContext from "../context/ApiContext";
 import { SocialControl } from "../components/Social";
-import {  PostSprout } from "../domain/PostsList";
+import { PostSprout } from "../domain/PostsList";
 import Cover from "../domain/Cover";
 import ProfileContent from "../domain/ProfileContent";
 
@@ -28,6 +34,7 @@ import * as storyActions from "../store/actions/story";
 import * as moodActions from "../store/actions/mood";
 import * as relationshipActions from "../store/actions/relationship";
 import * as userActions from "../store/actions/user";
+import * as accountActions from "../store/actions/account";
 import * as settingsActions from "../store/actions/settings";
 
 import {
@@ -38,6 +45,7 @@ import {
   CHAT_ROUTE,
   FOLLOWERS_ROUTE,
   FOLLOWINGS_ROUTE,
+  FAVORITES_USERNAME_ROUTE,
 } from "../constants/routes";
 
 import useDialog from "../hooks/useDialog";
@@ -52,7 +60,7 @@ function Profile(props) {
   const { me, user, post, media } = props;
   const { fetchUser, resetUser } = props;
   const { fetchPosts, resetPosts, getFavoritePosts } = props;
-  const { createFollow, deleteFollow } = props;
+  const { createFollow, deleteFollow, createFavorites, deleteFavorites } = props;
   const { createPost, createStory, createMood, updateCover } = props;
 
   const { username } = useParams();
@@ -70,9 +78,9 @@ function Profile(props) {
   };
 
   const handleCoverSave = async () => {
-      dialog.toggleDialog(false);
-      await updateCover(apiClient, [coverData.file]);
-      setCoverData({ coverUrl: user.coverUrl });
+    dialog.toggleDialog(false);
+    await updateCover(apiClient, [coverData.file]);
+    setCoverData({ coverUrl: user.coverUrl });
   };
 
   const handleCoverClose = () => {
@@ -160,9 +168,17 @@ function Profile(props) {
     });
   };
 
-  const handlePeopleFollow = (id) => {
-    user.isFollow ? deleteFollow(apiClient, id) : createFollow(apiClient, id);
+  const handlePeopleFollow = (userName) => {
+    user.isFollow ? deleteFollow(apiClient, userName) : createFollow(apiClient, userName);
   };
+
+  const handleFavorite = (userName) => {
+    user.isFavorite ? deleteFavorites(apiClient, userName) : createFavorites(apiClient, userName);
+  };
+
+  const handleFavorites = () => {
+    history.push(FAVORITES_USERNAME_ROUTE(user.userName));
+  }
 
   const handleMessageClick = (userName) => {
     history.push(CHAT_ROUTE(userName));
@@ -183,9 +199,10 @@ function Profile(props) {
       <Cover
         user={user}
         isOwner={username === me.userName}
+        isFavorite={user.isFavorite}
         disabled={media.isFetching}
-        onPostCreate={() => {}}
-        onFollowClick={() => handlePeopleFollow(user.id)}
+        onFavoriteClick={() => handleFavorite(user.userName)}
+        onFollowClick={() => handlePeopleFollow(user.userName)}
         onEditCover={handleCoverEdit}
         onMessageClick={() => handleMessageClick(user.userName)}
         onSendGiftClick={() => handleGiftSend(user.userName)}
@@ -193,32 +210,24 @@ function Profile(props) {
 
       <Grid container spacing={3}>
         <Grid item sm={12} md={4}>
-          {username === me.userName && (<Hidden smDown>
-            <PostSprout user={me} onSubmit={onSproutSubmit} />
-          </Hidden>)}
+          {username === me.userName && (
+            <Hidden smDown>
+              <PostSprout user={me} onSubmit={onSproutSubmit} />
+            </Hidden>
+          )}
 
-          <Card>
-            <CardActions>
-              <ButtonGroup disableElevation variant="text" fullWidth>
-                <Button disabled={!user.followingsCount} onClick={handleFollowingClick}>
-                  {user.followingsCount} following
-                </Button>
-                <Button disabled={!user.followersCount} onClick={handleFollowersClick}>
-                  {user.followersCount} followers
-                </Button>
-              </ButtonGroup>
-            </CardActions>
-            <Divider />
-            <CardContent>
-              <Typography variant="h6">Bio</Typography>
-              <Typography variant="body2">{user.bio}</Typography>
-            </CardContent>
-            {user.sites && (
-              <CardActions>
-                <SocialControl urls={user.sites} />
-              </CardActions>
-            )}
-          </Card>
+          <BottomNavigation showLabels >
+            <BottomNavigationAction label="Followers" disabled={!user.followersCount} onClick={() => handleFollowersClick()} icon={<Typography>{user?.followersCount || "0"}</Typography>} />
+            <BottomNavigationAction label="Following" disabled={!user.followingsCount} onClick={() => handleFollowingClick()} icon={<Typography>{user?.followingsCount || "0"}</Typography>}  />
+            <BottomNavigationAction label="Favorites" disabled={!user.favoritesCount} onClick={() => handleFavorites()} icon={<Typography>{user?.favoritesCount || "0"}</Typography>}  />
+          </BottomNavigation>
+
+          <Box>
+            <Typography variant="h6">Bio</Typography>
+            <Typography variant="body2">{user.bio}</Typography>
+          </Box>
+
+          {user.sites && (<SocialControl urls={user.sites} />)}
         </Grid>
         <Grid item sm={12} md={8}>
           <ProfileContent
@@ -261,14 +270,16 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchUser: (api, userName) => dispatch(userActions.getUser(api, userName)),
     resetUser: () => dispatch(userActions.resetUser()),
+    createFavorites: (api, userName) => dispatch(accountActions.createFavorites(api, userName)),
+    deleteFavorites: (api, userName) => dispatch(accountActions.deleteFavorites(api, userName)),
 
     fetchPosts: (api, opts) => dispatch(postActions.getPosts(api, opts)),
     resetPosts: () => dispatch(postActions.resetPosts()),
 
     getFavoritePosts: (api, opts) => dispatch(postActions.getFavoritePosts(api, opts)),
 
-    createFollow: (api, userId) => dispatch(relationshipActions.createFollow(api, userId)),
-    deleteFollow: (api, userId) => dispatch(relationshipActions.deleteFollow(api, userId)),
+    createFollow: (api, userName) => dispatch(relationshipActions.createFollow(api, userName)),
+    deleteFollow: (api, userName) => dispatch(relationshipActions.deleteFollow(api, userName)),
 
     createPost: (api, post, media) => dispatch(postActions.createPost(api, post, media)),
     createStory: (api, story, media) => dispatch(storyActions.createStorySlide(api, story, media)),
