@@ -21,6 +21,7 @@ import {
   CREATE_MESSAGE_FAILURE,
   ADD_MESSAGE_TO_LOCAL,
   RESET_CURRENT_ROOM,
+  SET_ROOM_SUCCESS,
 } from "../actions/chat";
 
 export default function chatReducer(state = { isFetching: false, data: [], query: "" }, action) {
@@ -103,6 +104,14 @@ export default function chatReducer(state = { isFetching: false, data: [], query
       };
     }
     case DELETE_ROOM_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    // Set room
+    case SET_ROOM_SUCCESS: {
       return {
         ...state,
         ...action.payload,

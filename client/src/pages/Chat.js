@@ -20,11 +20,23 @@ function Chat(props) {
   const apiClient = useContext(ApiContext);
   const { t } = useTranslation();
 
-  const { username } = useParams(); //Здесь сделать функцию создания и получения данных чата по имени пользователя
+  const { username } = useParams();
 
   const { user } = props;
   const { followings, getFollowings, filterFollowings } = props;
-  const { chat, getRoom, createRoom, getRooms, removeRoom, deleteRoom, deleteRoomHistory, filterRooms, createBlackList, resetCurrentRoom } = props;
+  const {
+    chat,
+    getRoom,
+    createRoom,
+    setRoom,
+    getRooms,
+    removeRoom,
+    deleteRoom,
+    deleteRoomHistory,
+    filterRooms,
+    createBlackList,
+    resetCurrentRoom
+  } = props;
   const { createMessage } = props;
 
   const { currentSlidingViewsState, toggleSlidingViewsState } = useSlidingViews();
@@ -51,13 +63,23 @@ function Chat(props) {
   };
 
   useEffect(() => {
-    getRooms(apiClient);
+    (async () => {
+      await getRooms(apiClient);
+    })();
 
     document.addEventListener("keydown", handleModalCloseKeyPress, false);
     return () => {
       document.removeEventListener("keydown", handleModalCloseKeyPress, false);
     };
   }, []);
+
+  useEffect(() => {
+    if (username) {
+      (async () => {
+        await setRoom(apiClient, username);
+      })();
+    }
+  }, [username]);
 
   function handleFollowingsFilter(e) {
     filterFollowings(e.target.value.toLowerCase());
@@ -118,7 +140,7 @@ function Chat(props) {
   };
 
   const handleUserListBtnClick = async () => {
-    await getFollowings(apiClient, user.id);
+    await getFollowings(apiClient, user.username);
     dialog.toggleDialog(true);
   };
 
@@ -185,6 +207,7 @@ function mapDispatchToProps(dispatch) {
     filterRooms: (query) => dispatch(actionChat.filter(query)),
 
     getRoom: (api, userName) => dispatch(actionChat.getRoom(api, userName)),
+    setRoom: (api, userName) => dispatch(actionChat.setRoom(api, userName)),
     removeRoom: (id) => dispatch(actionChat.removeRoom(id)),
     createRoom: (api, userName) => dispatch(actionChat.createRoom(api, userName)),
     deleteRoom: (api, id) => dispatch(actionChat.deleteRoom(api, id)),

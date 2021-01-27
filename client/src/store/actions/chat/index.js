@@ -34,3 +34,5 @@ export {
 } from "./deleteRoomHistory";
 
 export { RESET_CURRENT_ROOM, resetCurrentRoom } from "./resetCurrentRoom";
+
+export { SET_ROOM_SUCCESS, setRoom } from "./setRoom";
