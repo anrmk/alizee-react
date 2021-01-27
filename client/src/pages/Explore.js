@@ -46,8 +46,8 @@ function Explore(props) {
 
 function mapStateToProps(state) {
   return {
-    posts: state.suggestion.posts,
-    people: state.suggestion.people
+    posts: state.posts,
+    people: state.users.data
   };
 }
 

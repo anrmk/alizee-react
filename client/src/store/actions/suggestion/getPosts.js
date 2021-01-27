@@ -13,10 +13,8 @@ function requestGetPosts() {
   return {
     type: GET_POST_SUGGESTIONS_REQUEST,
     payload: {
-      posts: {
-        isFetching: true,
-        errorMessage: "",
-      }
+      isFetching: true,
+      errorMessage: "",
     },
   };
 }
@@ -25,14 +23,12 @@ function receiveGetPosts(data, total, start, hasMore) {
   return {
     type: GET_POST_SUGGESTIONS_SUCCESS,
     payload: {
-      posts: {
-        data: data || [],
-        hasMore,
-        isFetching: false,
-        errorMessage: "",
-        offset: getOffset(start, total, POSTS_OFFSET),
-        count: total
-      }
+      data: data || [],
+      hasMore,
+      isFetching: false,
+      errorMessage: "",
+      offset: getOffset(start, total, POSTS_OFFSET),
+      count: total,
     },
   };
 }
@@ -41,11 +37,9 @@ function errorGetPosts(message) {
   return {
     type: GET_POST_SUGGESTIONS_FAILURE,
     payload: {
-      posts: {
-        isFetching: false,
-        hasMore: false,
-        errorMessage: message,
-      }
+      isFetching: false,
+      hasMore: false,
+      errorMessage: message,
     },
   };
 }
@@ -61,7 +55,7 @@ export function resetPosts() {
           hasMore: false,
           errorMessage: "",
           data: [],
-        }
+        },
       },
     });
 }
@@ -72,7 +66,7 @@ export function getPosts(api, opts) {
 
     try {
       const url = generateUrl("getPostsSuggestions");
-      const currentOffset = getState().suggestion.posts.offset;
+      const currentOffset = getState().posts.offset;
 
       const { data } = await api
         .setMethod("GET")
@@ -94,14 +88,9 @@ export function getPosts(api, opts) {
           media.thumbnailUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, media.thumbnailUrl);
         });
       });
-   
+
       dispatch(
-        receiveGetPosts(
-          [...getState().suggestion.posts.data, ...data.data],
-          data.recordsTotal,
-          currentOffset,
-          !!data.data.length
-        )
+        receiveGetPosts([...getState().posts.data, ...data.data], data.recordsTotal, currentOffset, !!data.data.length)
       );
     } catch (e) {
       dispatch(errorGetPosts("Error: something went wrong:", e));

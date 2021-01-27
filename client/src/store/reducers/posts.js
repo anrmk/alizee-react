@@ -43,6 +43,13 @@ import {
   PURCHASE_POST_FAILURE,
   
 } from "../actions/post";
+
+import {
+  GET_POST_SUGGESTIONS_REQUEST,
+  GET_POST_SUGGESTIONS_SUCCESS,
+  GET_POST_SUGGESTIONS_FAILURE
+} from "../actions/suggestion";
+
 import { POSTS_DEFAULT_OFFSET } from "../../constants/feed";
 
 export default function post(
@@ -124,6 +131,28 @@ export default function post(
         ...state,
         ...action.payload,
       };
+
+    //SUGGESTION POSTS
+    case GET_POST_SUGGESTIONS_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case GET_POST_SUGGESTIONS_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+
+    case GET_POST_SUGGESTIONS_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
 
     // CREATE
     case CREATE_POST_REQUEST: {

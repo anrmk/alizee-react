@@ -13,9 +13,9 @@ function HotStreamersItemList({
 
   return (
     <Box>
-      {items && items.map((item) => (
+      {items && items.length && items.map((item) => (
         <HotStreamersItem
-          key={item.userName}
+          key={item.id}
           item={item}
           onJoinStream={onJoinStream} />
       ))}

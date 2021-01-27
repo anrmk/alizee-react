@@ -9,7 +9,6 @@ import media from './media';
 import comment from "./comment";
 
 import users from "./users";
-import suggestion from "./suggestion";
 
 import chat from "./chat";
 import user from "./user";
@@ -30,7 +29,6 @@ const appReducer = combineReducers({
   socialAuth,
   confirmEmail,
   users,
-  suggestion,
   chat,
   posts,
   media,
