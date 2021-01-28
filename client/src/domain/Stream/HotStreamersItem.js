@@ -22,6 +22,7 @@ function HotStreamersItem({
     <Card variant="outlined" className={classes.itemCard}>
       <CardActionArea onClick={onJoinStream}>
         <CardHeader
+          className={classes.itemCardHeader}
           avatar={<Avatar src={item.user.avatarUrl} online={!item.user.offlineDate} />}
           title={
             <Typography noWrap variant="body1" color="textPrimary">
@@ -33,8 +34,9 @@ function HotStreamersItem({
               {item.user.offlineDate ? formatDate(item.user.offlineDate) : "available now"}
             </Typography>
           }
+          classes={{ content: classes.itemCardHeaderContent }}
         />
-        <CardActions disableSpacing>
+        <CardActions disableSpacing className={classes.itemActions}>
           <Box ml={2} display="flex">
             <FavoriteIcon color="disabled" />
             <Typography variant="body2" color="textSecondary" className={classes.itemCountText}>
@@ -47,7 +49,7 @@ function HotStreamersItem({
               {item.commentCount ? item.commentCount : 0}
             </Typography>
           </Box>
-          <Typography noWrap variant="body1" color="primary" className={classes.itemJoinTicketPriceText}>
+          <Typography variant="body1" color="primary" className={classes.itemJoinTicketPriceText}>
             Join {item.ticketPrice ? `for $${item.ticketPrice}` : "Free"}
           </Typography>
         </CardActions>
