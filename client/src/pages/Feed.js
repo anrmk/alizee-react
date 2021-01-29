@@ -25,6 +25,7 @@ import * as storyActions from "../store/actions/story";
 import * as streamActions from "../store/actions/stream";
 import * as moodActions from "../store/actions/mood";
 import * as relationshipActions from "../store/actions/relationship";
+import * as paymentActions from "../store/actions/payment";
 
 import { RelationshipList } from "../components/RelationshipList";
 import InterestList from "../components/InterestsList";
@@ -45,7 +46,7 @@ function Feed(props) {
   const [interestsModalShow, setInterestsModalShow] = useState(false);
 
   const { userInfo } = props;
-  const { settings, getAccountPersonalized, blockUser, unblockUser, reportUser } = props;
+  const { settings, getAccountPersonalized, blockUser, unblockUser, reportUser, sendTip } = props;
   const { people, getPeople, createFollow, deleteFollow } = props;
   const { posts, getPosts, createPost, resetPosts, createMood } = props;
   const { interests, getInterests, createInterests } = props;
@@ -60,6 +61,7 @@ function Feed(props) {
     onBlock: blockUser,
     onUnblock: unblockUser,
     onReport: reportUser,
+   // onSendTip: sendTip
   });
 
   const postAction = usePostActions({
@@ -70,6 +72,7 @@ function Feed(props) {
     onPurchases: props.getPurchases,
     onReceipt: props.getReceipt,
     onBuy: props.buyPost,
+    onSendTip: sendTip
   });
 
   const isInterestsSkip = localStorage.getItem(INTERESTS_SKIP);
@@ -163,6 +166,7 @@ function Feed(props) {
             onBlock={profileAction.block}
             onUnblock={profileAction.unblock}
             onReport={profileAction.report}
+
             onLike={postAction.like}
             onFavorite={postAction.favorite}
             onDialogToggle={postAction.dialogToggleAction}
@@ -249,6 +253,7 @@ function mapStateToProps(state) {
       errorMessage: state.story.errorMessage,
       hasMore: state.story.hasMore,
     },
+
     hotStreamers: {
       isFetching: state.stream.isFetching,
       data: state.stream?.hotStreamers,
@@ -275,9 +280,8 @@ function mapDispatchToProps(dispatch) {
     getAccountPersonalized: (api) => dispatch(settingsActions.getAccountPersonalized(api)),
     blockUser: (api, id) => dispatch(settingsActions.createBlackList(api, id)),
     unblockUser: (api, id) => dispatch(settingsActions.deleteBlackList(api, id)),
-    reportUser: (api, id) => {
-      console.log("Report user");
-    },
+    reportUser: (api, id) => { console.log("Report user"); },
+    sendTip: (api, userName, amount, message) => dispatch(paymentActions.sendTip(api, userName, amount, message)),
 
     getInterests: (api) => dispatch(interestsActions.getInterests(api)),
     createInterests: (api, ids) => dispatch(interestsActions.createInterests(api, ids)),

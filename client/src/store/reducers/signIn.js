@@ -20,6 +20,16 @@ import {
   CREATE_MOOD_FAILURE 
 } from "../actions/mood";
 
+import {
+  SEND_TIP_REQUEST,
+  SEND_TIP_SUCCESS,
+  SEND_TIP_FAILURE,
+} from "../actions/payment"
+
+import {
+  ADD_DEPOSIT_SUCCESS
+} from "../actions/account"
+
 import { USER_TOKEN } from '../../constants/user';
 
 export default function signIn(state = {
@@ -98,6 +108,32 @@ export default function signIn(state = {
     }
 
     case CREATE_MOOD_FAILURE: {
+      return {
+        ...state,
+        ...action.payload
+      }
+    }
+
+    //DEPOSIT
+    case SEND_TIP_REQUEST: {
+      return {
+        ...state,
+        ...action.payload
+      }
+    }
+    case SEND_TIP_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload
+      }
+    }
+    case SEND_TIP_FAILURE: {
+      return {
+        ...state,
+        ...action.payload
+      }
+    }
+    case ADD_DEPOSIT_SUCCESS: {
       return {
         ...state,
         ...action.payload

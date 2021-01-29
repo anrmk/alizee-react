@@ -3,14 +3,16 @@ import { DialogActions, Button } from "@material-ui/core";
 
 import useDialog from "../hooks/useDialog";
 import { Payment, Receipt, Purchase } from "../components/Post";
+import { SendTip } from "../components/Tip";
 import SocialList from "../domain/SocialList";
 
 export const PAYMENT_DIALOG_TYPE = "payment";
 export const SHARE_DIALOG_TYPE = "share";
 export const RECEIPT_DIALOG_TYPE = "receipt";
 export const PURCHASES_DIALOG_TYPE = "purchases";
+export const SEND_TIP_DIALOG_TYPE = "tip";
 
-export default function usePostDialog({ onPayClick }) {
+export default function usePostDialog({ onPayClick, onSendTip }) {
   const [currentDialog, setCurrentDialog] = useState({ type: PAYMENT_DIALOG_TYPE, data: {} });
 
   const dialogs = {
@@ -53,14 +55,26 @@ export default function usePostDialog({ onPayClick }) {
         </DialogActions>
       ),
     },
+    [SEND_TIP_DIALOG_TYPE]: {
+      title: "Send Tip",
+      content: <SendTip {...currentDialog.data} id="formSendTip" onSubmit={handleSendTip} />,
+      actionsComponent: (
+        <DialogActions>
+          <Button onClick={() => handleCloseBtnClick()}>Close</Button>
+          <Button color="primary" form="formSendTip" type="submit">
+            Send Tip
+          </Button>
+        </DialogActions>
+      ),
+    },
   };
 
   const dialog = useDialog({
     ...dialogs[currentDialog.type],
-    dialogProps: { fullWidth: true, onClose: () => dialog.toggleDialog(false) }
+    dialogProps: { fullWidth: true, onClose: () => dialog.toggleDialog(false) },
   });
 
-  useEffect(() => dialog.setParams(dialog[currentDialog]), [onPayClick]);
+  useEffect(() => dialog.setParams(dialog[currentDialog]), [onPayClick, onSendTip]);
 
   const toggleDialog = (type, state, data) => {
     setCurrentDialog({ type, data });
@@ -70,6 +84,11 @@ export default function usePostDialog({ onPayClick }) {
   function handlePayClick() {
     handleCloseBtnClick(false);
     onPayClick && onPayClick(currentDialog.data);
+  }
+
+  function handleSendTip(formData) {
+    handleCloseBtnClick(false);
+    onSendTip && onSendTip({ ...currentDialog.data, ...formData });
   }
 
   function handleCloseBtnClick() {

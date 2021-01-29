@@ -131,6 +131,7 @@ function PostPage(props) {
           }>
           <Tools
             id={post.data.id}
+            user={post.owner}
             likes={post.data.likes}
             iLike={post.data.iLike}
             isFavorite={post.data.isFavorite}

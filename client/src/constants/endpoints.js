@@ -15,6 +15,9 @@ export default {
     getReceipt: "post/receipt",
     getPurchases: "post/purchases",
 
+    //PAYMENT
+    sendTip: "payment/sendTip",
+
     // FAVORITE POSTS
     getFavoritePosts: "post/getfavouriteposts",
 

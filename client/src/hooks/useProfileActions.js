@@ -3,7 +3,7 @@ import { useContext, useCallback } from "react";
 import ApiContext from "../context/ApiContext";
 
 export default function useProfileActions({
-  onFollow, onUnfollow, onBlock, onUnblock, onReport
+  onFollow, onUnfollow, onBlock, onUnblock, onReport, onSendTip
 }) {
   const apiClient = useContext(ApiContext);
 
@@ -27,11 +27,16 @@ export default function useProfileActions({
     await onReport(apiClient, userName);
   }, []);
 
+  const handleSendTip = useCallback(async (userName, amount) => {
+    await onSendTip(apiClient, userName, amount);
+  }, []);
+
   return {
     follow: handleFollow,
     unfollow: handleUnfollow,
     block: handleBlock,
     unblock: handleUnblock,
     report: handleReport, 
+    sendTip: handleSendTip
   }
 }

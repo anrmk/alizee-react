@@ -1,15 +1,18 @@
 import { useContext, useCallback } from "react";
-import { useHistory } from "react-router-dom";
 
 import ApiContext from "../context/ApiContext";
-import usePostDialog, { PURCHASES_DIALOG_TYPE, RECEIPT_DIALOG_TYPE, PROFILE_DIALOG_TYPE } from "../hooks/usePostDialog";
+import usePostDialog, { PURCHASES_DIALOG_TYPE, RECEIPT_DIALOG_TYPE } from "../hooks/usePostDialog";
 
-export default function usePostActions({ isFetching, onBuy, onPurchases, onReceipt, onFavorite, onLike }) {
+export default function usePostActions({ isFetching, onBuy, onPurchases, onReceipt, onFavorite, onLike, onSendTip }) {
   const apiClient = useContext(ApiContext);
-  const postDialog = usePostDialog({ onPayClick: handleBuy });
+  const postDialog = usePostDialog({ onPayClick: handleBuy, onSendTip: handleSendTip });
 
   async function handleBuy({ id }) {
     !isFetching && (await onBuy(apiClient, id));
+  }
+
+  async function handleSendTip({id, user, amount, message}) {
+    !isFetching && (await onSendTip(apiClient, user.userName, amount, message))
   }
 
   const handleLike = useCallback(async (id) => {

@@ -36,7 +36,7 @@ const PostsList = React.memo(({
       {items.length > 0 &&
         items.map((item) => (
           <Post
-            key={item.id}
+            key={`post-${item.id}`}
             id={item.id}
             user={user}
             owner={item.user}

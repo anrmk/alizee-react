@@ -24,14 +24,13 @@ import { HOME_ROUTE, EXPLORE_ROUTE, MEET_ROUTE, ACTIVITY_ROUTE } from "../../con
 import useChangeTheme from "../../hooks/useChangeTheme";
 import UserCard from "./UserCard";
 import Footer from "../Footer";
+import { Wallet } from "../Wallet";
 
 import useStyles from "./styles";
 
 function Sidebar({
-  userInfo,
+  user,
   open,
-
-  userStatistics,
 
   onDrawerToggle,
 }) {
@@ -94,16 +93,17 @@ function Sidebar({
         </Grid>
       </Typography>
 
-      <UserCard
-        username={userInfo.userName}
-        name={userInfo.name}
-        avatarUrl={userInfo.avatarUrl}
-        open={open}
-        postCount={userStatistics?.postCount}
-        followerCount={userStatistics?.followerCount}
-        followingCount={userStatistics?.followingCount}
-        onNavigationChange={handleUserCardNavigationChange}
-      />
+      {open && (
+        <UserCard
+          username={user.userName}
+          name={user.name}
+          avatarUrl={user.avatarUrl}
+          open={open}
+          onNavigationChange={handleUserCardNavigationChange}
+        />
+      )}
+
+      {open && <Wallet deposit={user.deposit} />}
 
       <Divider />
 

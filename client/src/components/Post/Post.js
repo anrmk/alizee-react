@@ -1,5 +1,4 @@
-import React, {useState} from "react";
-import PropTypes from "prop-types";
+import React from "react";
 
 import { formatDate } from "../../helpers/functions";
 
@@ -64,6 +63,7 @@ const Post = React.memo((props) => {
       <CardActions className={classes.action} disableSpacing>
         <Tools
           id={id}
+          user={owner}
           likes={post.likes}
           iLike={post.iLike}
           isFavorite={post.isFavorite}
@@ -80,25 +80,5 @@ const Post = React.memo((props) => {
   );
 });
 
-Post.propTypes = {
-  id: PropTypes.string,
-  user: PropTypes.object,
-  owner: PropTypes.object,
-  post: PropTypes.object,
-
-  onFavoriteClick: PropTypes.func,
-  onCommentsClick: PropTypes.func,
-};
-
-Post.defaultProps = {
-  id: "",
-  user: {},
-  owner: {},
-  post: {},
-
-  onFavoriteClick: undefined,
-  onCommentsClick: undefined,
-  onDialogToggle: undefined,
-};
 
 export default Post;

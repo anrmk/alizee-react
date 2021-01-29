@@ -44,7 +44,7 @@ import { Box, Hidden } from "@material-ui/core";
 import useStyles from "./styles";
 
 function Main(props) {
-  const { userInfo,  isAuthenticated, userStatistics, getUserStatistics } = props;
+  const { userInfo, isAuthenticated, userStatistics } = props;
   const { signOut, createPost, createStory, createMood } = props;
 
   const apiClient = useContext(ApiContext);
@@ -57,13 +57,6 @@ function Main(props) {
     setOpen(!open);
   };
 
-  useEffect(() => {
-    if (userInfo.id) {
-      (async () => {
-        await getUserStatistics(apiClient, userInfo.id);
-      })();
-    }
-  }, [userInfo.id]);
 
   return (
     <Box className={classes.mainContainer}>
@@ -72,7 +65,7 @@ function Main(props) {
           <Navbar username={userInfo.userName} avatarUrl={userInfo.avatarUrl} open={open} onSignOut={signOut} />
           <Hidden smDown>
             <Sidebar
-              userInfo={userInfo}
+              user={userInfo}
               open={open}
               userStatistics={userStatistics}
               onDrawerToggle={handleDrawerToggle}
@@ -118,7 +111,7 @@ function Main(props) {
 
 function mapStateToProps(state) {
   return {
-    userInfo: state.signIn?.userInfo,
+    userInfo: state.signIn.userInfo,
     isAuthenticated: state.signIn.isAuthenticated,
 
     isFetchingPost: state.posts.isFetching,

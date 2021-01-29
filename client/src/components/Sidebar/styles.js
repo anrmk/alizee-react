@@ -66,15 +66,12 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
 
-  card: (props) => ({
+  card: {
     flexDirection: "column",
     alignItems: "center",
     textAlign: "center",
-    display: !props.open ? "none" : "flex",
-    [theme.breakpoints.down("sm")]: {
-      display: "none !important",
-    },
-  }),
+    display: "flex",
+  },
 
   navigation: {
     margin: theme.spacing(2, 0),
