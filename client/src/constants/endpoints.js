@@ -97,6 +97,8 @@ export default {
     getInterests: "interest/getinterests",
 
     //STREAM
+    createStreamRoom: "stream/room",
+    updateStreamRoom: "stream/room",
     getHotStreamers: "stream/hotstreamers",
   },
 };

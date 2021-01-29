@@ -1,18 +1,29 @@
-import { Container } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { v1 as uuid } from "uuid";
+import { Container } from "@material-ui/core";
+
+import ApiContext from "../../context/ApiContext";
+
+import * as actionStream from "../../store/actions/stream";
 
 import AlertContainer from "../../components/AlertContainer";
-import useStyles from "./styles";
 import { CreateRoomForm } from "../../domain/Meet";
+
+import useStyles from "./styles";
 
 const DEFAULT_ALERT_SUCCESS_TEXT = "Operation was successfully completed";
 const DEFAULT_ALERT_ERROR_TEXT = "Something wrong...";
 
-function CreateRoom() {
+function CreateRoom(props) {
+  const apiClient = useContext(ApiContext);
   const history = useHistory();
   const classes = useStyles();
+
+  const { room, errorMessage } = props;
+
+  const { createStreamRoom, updateStreamRoom } = props;
+
   const [stream, setStream] = useState();
 
   const [isAlertError, setIsAlertError] = useState(true);
@@ -23,7 +34,9 @@ function CreateRoom() {
   const [roomId, setRoomId] = useState();
 
   useEffect(() => {
-    setRoomId(uuid());
+    (async () => {
+      await createStreamRoom(apiClient);
+    })();
 
     navigator.mediaDevices
       .getUserMedia({
@@ -35,7 +48,7 @@ function CreateRoom() {
             maxHeight: 117
           }
         },
-        audio: true 
+        audio: true
       })
       .then((stream) => {
         setStream(stream);
@@ -46,9 +59,15 @@ function CreateRoom() {
       });
   }, []);
 
-  const joiningLiveStream = (data) => {
-    console.log("joiningLiveStream", data);
-    history.push(`/room/${roomId}`);
+  const joiningLiveStream = async (data) => {
+    await updateStreamRoom(apiClient, data);
+
+    if (!errorMessage) {
+      history.push(`/room/${roomId}`);
+    } else {
+      setAlertErrorText(errorMessage);
+      setAlertOpen(true);
+    }
   };
 
   const handleCopyClickRoom = (message) => {
@@ -68,11 +87,25 @@ function CreateRoom() {
       onAlertClose={() => setAlertOpen(false)}>
       <CreateRoomForm
         stream={stream}
-        roomId={roomId}
+        room={room}
         onCopyLinkRoom={handleCopyClickRoom}
         onSubmit={joiningLiveStream} />
     </AlertContainer>
   )
 }
 
-export default CreateRoom;
+function mapStateToProps(state) {
+  return {
+    room: state.stream.data,
+    errorMessage: state.stream.errorMessage,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    createStreamRoom: (api) => dispatch(actionStream.createStreamRoom(api)),
+    updateStreamRoom: (api, roomData) => dispatch(actionStream.updateStreamRoom(api, roomData)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateRoom);

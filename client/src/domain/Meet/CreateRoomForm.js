@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Controller, useForm } from "react-hook-form";
 import clsx from "clsx";
@@ -11,12 +12,13 @@ import FileCopyOutlined from "@material-ui/icons/FileCopyOutlined";
 import ChipsInput from "../../components/ChipsInput";
 import useStyles from "./styles"
 
+const ROOM_ID = "id";
 const TITLE_ID = "title";
 const DESCRIPTION_ID = "description";
 const TAGS_ID = "tags";
-const ROOM_TYPE_ID = "roomType";
+const ROOM_TYPE_ID = "type";
 const TICKET_PRICE_ID = "ticketPrice";
-const STREAMING_DATE_ID = "streamingDate";
+const STREAMING_DATE_ID = "announceDate";
 
 const FORM_ID = "createRoom";
 
@@ -36,6 +38,9 @@ const COPY_LINK_ROOM_ALERT_SUCCESS_TEXT = "Copying link room successfully";
 const COPY_LINK_ROOM_ALERT_ERROR_TEXT = "Copying link room failed";
 
 const schema = yup.object().shape({
+  [ROOM_ID]: yup
+    .string()
+    .required(),
   [TITLE_ID]: yup
     .string()
     .required(EMPTY_VALUE_ERROR)
@@ -65,7 +70,7 @@ const schema = yup.object().shape({
 });
 
 function CreateRoomForm({
-  roomId,
+  room,
   stream,
 
   onCopyLinkRoom,
@@ -88,11 +93,12 @@ function CreateRoomForm({
   const { control, errors, handleSubmit, register, setValue } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      [TITLE_ID]: "",
-      [DESCRIPTION_ID]: "",
-      [ROOM_TYPE_ID]: 0,
-      [TICKET_PRICE_ID]: 0,
-      [STREAMING_DATE_ID]: undefined
+      [ROOM_ID]: room.id,
+      [TITLE_ID]: room.title,
+      [DESCRIPTION_ID]: room.description,
+      [ROOM_TYPE_ID]: room.type || 0,
+      [TICKET_PRICE_ID]: room.ticketPrice || 0,
+      [STREAMING_DATE_ID]: room.announceDate
     },
   });
 
@@ -134,16 +140,29 @@ function CreateRoomForm({
         <Typography variant="h4" gutterBottom align="center">
           {t("MeetCreateRoomFormTitle")}
         </Typography>
-        <Paper elevation={1} className={clsx(classes.createRoomLinkId, classes.formElementIndent)}>
+        <Paper elevation={0} className={clsx(classes.createRoomLinkId, classes.formElementIndent)}>
           <Typography variant="body2" align="center" noWrap className={classes.createRoomLinkLabel}>
-            {`https://meet.com/${roomId}`}
+            {`https://meet.com/${room.id}`}
           </Typography>
-          <IconButton onClick={() => handleCopyClick(roomId)}>
+          <IconButton onClick={() => handleCopyClick(room.id)}>
             <FileCopyOutlined />
           </IconButton>
         </Paper>
 
         <form id={FORM_ID} onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+          <FormGroup className={classes.formElementHidden}>
+            <Controller
+              name={ROOM_ID}
+              control={control}
+              render={({ onChange, onBlur, value }) => (
+                <input
+                  id={ROOM_ID}
+                  type="hidden"
+                  value={value}
+                />
+              )} />
+          </FormGroup>
+
           <FormGroup className={classes.formElementIndent}>
             <Controller
               name={TITLE_ID}
@@ -189,7 +208,7 @@ function CreateRoomForm({
               )} />
           </FormGroup>
 
-          <FormGroup>
+          <FormGroup className={clsx(room.title && classes.formElementIndent)}>
             <ChipsInput
               classChipName={classes.createRoomChip}
               label={t("MeetCreateRoomFormTagsInputLabel")}
@@ -200,7 +219,7 @@ function CreateRoomForm({
               onChange={handleTagsChange} />
           </FormGroup>
 
-          <FormGroup className={classes.formElementIndent}>
+          <FormGroup className={clsx(classes.formElementIndent, room.title && classes.formElementHidden)}>
             <Controller
               name={ROOM_TYPE_ID}
               control={control}
@@ -242,7 +261,7 @@ function CreateRoomForm({
               )} />
           </FormGroup>
 
-          <FormGroup className={classes.formElementIndent}>
+          <FormGroup className={clsx(classes.formElementIndent, room.title && classes.formElementHidden)}>
             <Controller
               name={STREAMING_DATE_ID}
               control={control}
@@ -275,6 +294,22 @@ function CreateRoomForm({
     </Grid>
   );
 }
+
+CreateRoomForm.propTypes = {
+  room: PropTypes.object,
+  stream: PropTypes.any,
+
+  onCopyLinkRoom: PropTypes.func,
+  onSubmit: PropTypes.func,
+};
+
+CreateRoomForm.defaultProps = {
+  room: {},
+  stream: null,
+
+  onCopyLinkRoom: undefined,
+  onSubmit: undefined,
+};
 
 export default CreateRoomForm;
 

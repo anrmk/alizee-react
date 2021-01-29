@@ -21,6 +21,9 @@ const useStyles = makeStyles(theme => ({
   formElementIndent: {
     marginBottom: theme.spacing(2),
   },
+  formElementHidden: {
+    display: "none",
+  },
   createRoomLinkId: {
     display: "flex",
     flexDirection: "row",
