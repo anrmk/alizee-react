@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { formatCurrency } from "../../helpers/functions";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -24,29 +24,37 @@ import Avatar from "../Avatar";
 
 const AMOUNT_INPUT_ID = "amount";
 const MESSAGE_INPUT_ID = "message";
+const USER_ID = "user";
 const EMPTY_VALUE_ERROR = "It is a required filed";
 const INVALID_AMOUNT_MAX_ERROR = "Maximum $200 USD";
 
 const schema = yup.object().shape({
   [AMOUNT_INPUT_ID]: yup.number().required(EMPTY_VALUE_ERROR),
   [MESSAGE_INPUT_ID]: yup.string(),
+  [USER_ID]: yup.object()
 });
 
-function SendTip(props) {
-  const { id, user } = props;
-  const { onSubmit } = props;
+function SendTip({
+  formId,
+  user,
 
-  const { errors, control, handleSubmit } = useForm({
+  onSubmit
+}) {
+  const { errors, control, register, handleSubmit } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       [AMOUNT_INPUT_ID]: "",
       [MESSAGE_INPUT_ID]: "",
+      [USER_ID]: user
     },
   });
 
+  useEffect(() => {
+    register({ name: USER_ID });
+  }, []);
+
   return (
-    <Grid container direction="column" >
-      <Grid item>
+    <>
         <Box display="flex" flexWrap="nowrap" alignItems="center">
           <Box p={1}>
             <Avatar aria-label={user.userName} src={user.avatarUrl} size="large" />
@@ -56,9 +64,7 @@ function SendTip(props) {
             <Typography>{user.userName}</Typography>
           </Box>
         </Box>
-      </Grid>
-      <Grid item>
-        <Box component="form" id={id} onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+        <Box component="form" id={formId} onSubmit={handleSubmit(onSubmit)} autoComplete="off">
           <Controller
             name={AMOUNT_INPUT_ID}
             control={control}
@@ -75,7 +81,7 @@ function SendTip(props) {
                 error={!!errors[AMOUNT_INPUT_ID]}
                 helperText={errors[AMOUNT_INPUT_ID]?.message}
                 onBlur={onBlur}
-                onChange={(e) => onChange(e.target.value)}
+                onChange={onChange}
                 // InputProps={{
                 //   max: 200,
                 //   min: 5,
@@ -120,8 +126,7 @@ function SendTip(props) {
             )}
           />
         </Box>
-      </Grid>
-    </Grid>
+    </>
   );
 }
 

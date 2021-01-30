@@ -16,13 +16,13 @@ function requestCreatePost() {
   }
 }
 
-function receiveCreatePost(post) {
+function receiveCreatePost(posts) {
   return {
     type: CREATE_POST_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: '',
-      data: post
+      data: posts
     }
   }
 }
@@ -37,12 +37,13 @@ function errorCreatePost(message) {
   }
 }
 
-export function createPost(api, postData, mediaData=[]) {
+export function createPost(api, postData) {
   return async (dispatch, getState) => {
     dispatch(requestCreatePost());
 
     const url = generateUrl('createPost');
     try {
+      const mediaData = postData.medias;
       let media = [];
       if (mediaData.length > 0) {
         await dispatch(createMedia(api, mediaData));
@@ -54,8 +55,6 @@ export function createPost(api, postData, mediaData=[]) {
 
         media = getState().media.data;
       }
-
-      console.log("Create Post", postData);
 
       const { data } = await api
         .setData({ 
@@ -78,7 +77,9 @@ export function createPost(api, postData, mediaData=[]) {
         item.url = generateFileUrl(process.env.REACT_APP_DOMAIN, item.url);
       });
 
-      dispatch(receiveCreatePost(data));
+      const updatedPosts = [data, ...getState().posts.data];
+
+      dispatch(receiveCreatePost(updatedPosts));
     } catch(e) {
       dispatch(errorCreatePost("Error: something went wrong"));
     }

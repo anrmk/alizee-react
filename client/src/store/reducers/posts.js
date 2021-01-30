@@ -164,7 +164,7 @@ export default function post(
     case CREATE_POST_SUCCESS: {
       return {
         ...state,
-        data: [action.payload.data, ...state.data],
+        ...action.payload
       };
     }
 

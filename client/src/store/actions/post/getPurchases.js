@@ -46,7 +46,7 @@ export function getPurchases(api, id, callback) {
       });
 
       dispatch(receivePurchasePost(data));
-      callback && callback(data);
+      callback && callback(data); // TODO: refactor this, we can't directly pass data in callback
     } catch (e) {
       dispatch(errorPurchasePost("Error: something went wrong"));
     }

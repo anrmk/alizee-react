@@ -1,16 +1,10 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-
-import { CreatePost, CreateMood, CreateStories } from "../../components/Post";
-import { POST_TYPE } from "../../constants/feed";
-
 import {
   Paper,
   Box,
   Avatar,
-  DialogActions,
   ButtonBase,
-  Button,
   IconButton,
   Drawer,
   List,
@@ -27,73 +21,34 @@ import MoodIcon from "@material-ui/icons/Mood";
 import AddCircleIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 
 import useStyle from "./styles";
-import useDialog from "../../hooks/useDialog";
+import { CREATE_MOOD_DIALOG_TYPE, CREATE_POST_DIALOG_TYPE, CREATE_STORY_DIALOG_TYPE } from "../../constants/dialogs";
 
 function PostSprout({
-  user,
+  userName,
   variant,
 
-  onSubmit
+  onDialogToggle
 }) {
   const classes = useStyle();
-
-  const FORM_ID = "test";
-
-  const container = window !== undefined ? () => window.document.body : undefined;
-
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [postType, setPostType] = useState(POST_TYPE.POST);
 
-  const handleFormSubmit = (formData, media) => {
-    onSubmit && onSubmit(formData, media);
-    dialog.toggleDialog(false);
-  };
-
-  const dialogs = {
-    [POST_TYPE.POST]: {
-      title: "Create Post",
-      content: <CreatePost id={FORM_ID} user={user} onSubmit={handleFormSubmit} />,
-    },
-    [POST_TYPE.STORY]: {
-      title: "Create Story",
-      content: <CreateStories id={FORM_ID} user={user} onSubmit={handleFormSubmit} />,
-    },
-    [POST_TYPE.MOOD]: {
-      title: "Create Mood",
-      content: <CreateMood id={FORM_ID} user={user} onSubmit={handleFormSubmit} />,
-    },
-  };
-
-  const dialog = useDialog({
-    ...dialogs[postType],
-    actionsComponent: (
-      <DialogActions>
-        <Button form={FORM_ID} type="submit">
-          Save
-        </Button>
-        <Button onClick={() => dialog.toggleDialog(false)}>Close</Button>
-      </DialogActions>
-    ),
-    dialogProps: { fullWidth: true },
-  });
+  const container = window !== undefined ? window.document.body : undefined;
 
   const handleDrawerClose = () => {
     setDrawerOpen(false);
-    dialog.toggleDialog(false);
   };
 
   const handleDrawerOpen = () => {
     setDrawerOpen(true);
-    dialog.toggleDialog(false);
   };
 
-  const handleModalOpen = (ptype) => {
-    setPostType(ptype);
+  const handleDialogToggle = (type, data) => {
     handleDrawerClose();
-    dialog.toggleDialog(true);
+    onDialogToggle && onDialogToggle(type, data);
   };
 
-  const render = () => {
+  // TODO: remove it
+  const renderBtn = () => {
     if (variant === "icon") {
       return (
         <IconButton onClick={handleDrawerOpen}>
@@ -119,8 +74,9 @@ function PostSprout({
 
   return (
     <>
-      {render()}
+      {renderBtn()}
 
+      {/* TODO: create independent DrawerProvider and move out this logic */}
       <Drawer
         anchor="bottom"
         open={drawerOpen}
@@ -129,23 +85,23 @@ function PostSprout({
         ModalProps={{ keepMounted: true }}
       >
         <List>
-          <ListItem button onClick={() => handleModalOpen(POST_TYPE.MOOD)}>
+          <ListItem button onClick={() => handleDialogToggle(CREATE_MOOD_DIALOG_TYPE, userName)}>
             <ListItemIcon>
               <MoodIcon />
             </ListItemIcon>
-            <ListItemText primary={POST_TYPE.MOOD} />
+            <ListItemText primary="Mood" />
           </ListItem>
-          <ListItem button onClick={() => handleModalOpen(POST_TYPE.STORY)}>
+          <ListItem button onClick={() => handleDialogToggle(CREATE_STORY_DIALOG_TYPE)}>
             <ListItemIcon>
               <StoriesIcon />
             </ListItemIcon>
-            <ListItemText primary={POST_TYPE.STORY} />
+            <ListItemText primary="Story" />
           </ListItem>
-          <ListItem button onClick={() => handleModalOpen(POST_TYPE.POST)}>
+          <ListItem button onClick={() => handleDialogToggle(CREATE_POST_DIALOG_TYPE)}>
             <ListItemIcon>
               <CameraIcon />
             </ListItemIcon>
-            <ListItemText primary={POST_TYPE.POST} />
+            <ListItemText primary="Post" />
           </ListItem>
         </List>
       </Drawer>

@@ -61,18 +61,20 @@ export function getStory(api, opts) {
         })
         .query(url);
 
-      data.slides.forEach((slide) => {
-        slide.media = {
-          ...slide.media,
-          thumbnailUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, slide.media.thumbnailUrl),
-          url: generateFileUrl(process.env.REACT_APP_DOMAIN, slide.media.url)
-        }
-      });
-      data.thumbnailUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, data.thumbnailUrl);
-      data.user = {
-        ...data.user,
-        avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, data.user.avatarUrl)
-      };
+      if (data) {
+        data.slides.forEach((slide) => {
+          slide.media = {
+            ...slide.media,
+            thumbnailUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, slide.media.thumbnailUrl),
+            url: generateFileUrl(process.env.REACT_APP_DOMAIN, slide.media.url)
+          }
+        });
+        data.thumbnailUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, data?.thumbnailUrl);
+        data.user = {
+          ...data?.user,
+          avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, data?.user.avatarUrl)
+        };
+      }
 
       dispatch(receiveGetStory(data));
     } catch (e) {

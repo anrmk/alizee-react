@@ -8,10 +8,15 @@ export const initialContext = {
 	title: null,
 	content: null,
 	actionsComponent: null,
-	bodyComponent: null,
+	tempData: null,
 	dialogProps: null,
+	mainBtnProps: null,
+	mainBtnText: "OK",
+	closeBtnProps: null,
+	closeBtnText: "Close",
 
-	onModalHide: undefined
+	onCloseClick: null,
+	onMainClick: null
 };
 
 const DialogContext = React.createContext(initialContext);

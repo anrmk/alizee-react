@@ -6,7 +6,7 @@ import CommentOutlinedIcon from "@material-ui/icons/SpeakerNotesOutlined";
 import CommentBlockOutlinedIcon from "@material-ui/icons/SpeakerNotesOffOutlined";
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary";
 
-import { Box, TextField, IconButton, InputAdornment, Tooltip } from "@material-ui/core";
+import { Box, IconButton, Tooltip } from "@material-ui/core";
 import useStyles from "./styles";
 
 function CreateTools({
@@ -14,32 +14,20 @@ function CreateTools({
   onlyMedia,
   isPrivate,
   isCommentable,
+  commentBtnName = "comment",
+  privateBtnName = "private",
+
   onChange
 }) {
   const mediaRef = useRef();
-  const classes = useStyles();
 
   return (
-    <Box className={classes.root} display="flex" my={1}>
+    <Box display="flex">
       {!onlyMedia && (
         <>
-          <Box flexGrow={1} mr={1}>
-            <TextField 
-              fullWidth
-              size="small"
-              name="amount"
-              placeholder="Amount"
-              onChange={onChange}
-              variant="outlined"
-              inputMode="numeric"
-              InputProps={{
-                startAdornment: <InputAdornment position="start">$</InputAdornment>
-              }}
-            />
-          </Box>
           <Box>
             <Tooltip title="Set Post to Private">
-              <IconButton onClick={onChange} name="private">
+              <IconButton onClick={onChange} name={privateBtnName}>
                 {isPrivate ? (
                   <LockOutlinedIcon fontSize="small" color="secondary" />
                 ) : (
@@ -49,7 +37,7 @@ function CreateTools({
             </Tooltip>
 
             <Tooltip title="Turn off Commenting">
-              <IconButton onClick={onChange} name="commentable">
+              <IconButton onClick={onChange} name={commentBtnName}>
                 {isCommentable ? (
                   <CommentOutlinedIcon fontSize="small" />
                 ) : (

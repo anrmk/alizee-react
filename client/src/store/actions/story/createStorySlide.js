@@ -36,13 +36,14 @@ function errorCreateStory(message) {
   }
 }
 
-export function createStorySlide(api, storyData, mediaData=[]) {
+export function createStorySlide(api, storyData) {
   return async (dispatch, getState) => {
     dispatch(requestCreateStory());
 
     const url = generateUrl("createStorySlide");
     
     try {
+      const mediaData = storyData.medias;
       let media = [];
       if (mediaData.length > 0) {
         await dispatch(createMedia(api, mediaData));

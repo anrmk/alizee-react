@@ -2,16 +2,17 @@ import React from "react";
 import { List, CircularProgress } from "@material-ui/core";
 import ScrollContainer from "react-indiana-drag-scroll";
 
+import { isEmptyObject } from "../../helpers/functions";
 import PreviewStoriesListItem from "./PreviewStoriesListItem";
 import useStyles from "./styles";
-import { isEmptyObject } from "../../helpers/functions";
 
 const PreviewStoriesList = React.memo(({
   items,
   userStory,
   loading = false,
 
-  onItemClick
+  onItemClick,
+  onCreateStoryClick
 }) => {
   const classes = useStyles({ loading });
 
@@ -20,16 +21,15 @@ const PreviewStoriesList = React.memo(({
       {loading ? <CircularProgress className={classes.previewStoryListProgress} />
        : (
          <>
-          {!isEmptyObject(userStory) && (
-            <PreviewStoriesListItem
-              key={userStory?.userId}
-              id={userStory?.userId}
-              username={userStory?.user?.userName}
-              name={userStory?.user?.name}
-              previewUrl={userStory?.thumbnailUrl}
-              avatarUrl={userStory?.user?.avatarUrl}
-              onClick={onItemClick} />
-          )}
+          <PreviewStoriesListItem
+            key={userStory?.userId}
+            id={userStory?.userId}
+            username={userStory?.user?.userName}
+            name={userStory?.user?.name}
+            previewUrl={userStory?.thumbnailUrl}
+            avatarUrl={userStory?.user?.avatarUrl}
+            empty={isEmptyObject(userStory)}
+            onClick={isEmptyObject(userStory) ? onCreateStoryClick : onItemClick} />
           {items && items.map(item => (
             <PreviewStoriesListItem
               key={item?.userId}
@@ -43,7 +43,7 @@ const PreviewStoriesList = React.memo(({
          </>
       )}
     </List>
-  )
+  );
 });
 
 export default PreviewStoriesList;

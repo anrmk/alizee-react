@@ -1,53 +1,62 @@
-import React, { useState } from "react";
+import React from "react";
+import { Controller, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 import { FormControl, TextField } from "@material-ui/core";
 
-import { POST_TYPE } from "../../../constants/feed";
+import { CREATE_MOOD_DIALOG_TYPE } from "../../../constants/dialogs";
 
 import useStyles from "./styles";
 
+const MOOD_ID = "mood";
+
+const schema = yup.object().shape({
+  [MOOD_ID]: yup
+    .string()
+    .max(128, "Must be no more than 128 characters")
+    .required("Is required field")
+});
+
 function CreateMood({
-  id,
-  user,
+  formId,
+  name,
 
   onSubmit
 }) {
   const classes = useStyles();
-  const defaultFormData = {
-    text: "",
-    type: POST_TYPE.MOOD,
-  };
-  const [formData, setFormData] = useState(defaultFormData);
+  const { errors, control, handleSubmit } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      [MOOD_ID]: ""
+    }
+  });
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    if (formData.text?.trim().length === 0) return;
-
-    onSubmit && onSubmit(formData, []);
-    setFormData(defaultFormData);
-  };
-
-  const handleFormDataChange = (e) => {
-    var target = e.currentTarget;
-    setFormData({ ...formData, [target.name]: target.value });
+  const handleFormSubmit = (data) => {
+    onSubmit && onSubmit(CREATE_MOOD_DIALOG_TYPE, data);
   };
 
   return (
-    <form id={id} className={classes.root} onSubmit={handleFormSubmit} autoComplete="off">
+    <form id={formId} className={classes.root} onSubmit={handleSubmit(handleFormSubmit)} autoComplete="off">
       <FormControl variant="filled" fullWidth>
-        <TextField
-          required
-          autoFocus
-          multiline
-          name="text"
-          variant="filled"
-          placeholder={`What's on your mind, ${user.name}?`}
-          rows={3}
-          onChange={handleFormDataChange}
-          value={formData.text}
-          helperText={`Characters entered ${formData.text.length} out of 128`}
-          inputProps={{ maxLength: 128 }}
-          margin="dense"
+        <Controller
+          name={MOOD_ID}
+          control={control}
+          render={({ onChange, onBlur, value }) => (
+            <TextField
+              autoFocus
+              multiline
+              variant="filled"
+              placeholder={`What's on your mind, ${name}?`}
+              rows={3}
+              onBlur={onBlur}
+              onChange={onChange}
+              value={value}
+              error={!!errors[MOOD_ID]}
+              helperText={errors[MOOD_ID]?.message}
+              inputProps={{ maxLength: 128 }}
+              margin="dense" />
+          )}
         />
       </FormControl>
     </form>

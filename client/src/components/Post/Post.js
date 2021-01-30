@@ -12,7 +12,8 @@ import {
   Typography,
 } from "@material-ui/core";
 
-import { Tools, Menu } from "../../components/Post";
+import Tools from "./Tools";
+import Menu from "./Menu";
 import MediaContent from "../../components/MediaContent";
 
 import useStyles from "./styles";
@@ -21,6 +22,7 @@ const Post = React.memo((props) => {
   const classes = useStyles();
 
   const { id, user, owner, post } = props;
+  const { likes, isLike, isFavorite } = props;
   const { onFollow, onUnfollow, onBlock, onUnblock, onReport } = props;
   const { onLike, onFavorite, onDialogToggle } = props;
 
@@ -64,9 +66,9 @@ const Post = React.memo((props) => {
         <Tools
           id={id}
           user={owner}
-          likes={post.likes}
-          iLike={post.iLike}
-          isFavorite={post.isFavorite}
+          likes={likes}
+          isLike={isLike}
+          isFavorite={isFavorite}
           amount={post.amount}
           isPurchased={post.isPurchased}
           isOwner={user.id === owner.id}
@@ -79,6 +81,5 @@ const Post = React.memo((props) => {
     </Card>
   );
 });
-
 
 export default Post;

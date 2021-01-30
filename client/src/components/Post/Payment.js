@@ -1,8 +1,6 @@
 import React from "react";
 
-function Payment(props) {
-  const { amount } = props;
-  
+function Payment({ amount }) {
   return <div>Please confirm you want to purchase a post for ${amount}</div>;
 }
 

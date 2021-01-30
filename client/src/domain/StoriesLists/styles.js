@@ -1,4 +1,5 @@
 import { LinearProgress, withStyles, makeStyles } from "@material-ui/core";
+import { getStyleByTheme } from "../../helpers/functions";
 
 const tintedBg = (opacity) => `
   linear-gradient(
@@ -10,7 +11,7 @@ const tintedBg = (opacity) => `
 const useStyles = makeStyles(theme => ({
   previewStoryList: {
     width: "100%",
-    display: "flex",
+    display: ({ loading }) => loading ? "block" : "flex",
     overflowX: "scroll",
     padding: theme.spacing(1),
     "&::-webkit-scrollbar": {
@@ -18,8 +19,9 @@ const useStyles = makeStyles(theme => ({
     }
   },
   previewStoryListProgress: {
-    alignSelf: "center",
-    marginLeft: theme.spacing(3)
+    display: "block",
+    marginLeft: "auto",
+    marginRight: "auto"
   },
   previewStoryListWrapper: {
     width: "100%",
@@ -31,11 +33,12 @@ const useStyles = makeStyles(theme => ({
     }
   },
   previewStoryListItem: {
-    width: "114px",
+    minWidth: "114px",
+    maxWidth: "114px",
     height: "144px",
     display: "flex",
-    alignItems: "flex-end",
-    justifyContent: "flex-start",
+    alignItems: ({ empty }) => !empty ? "flex-end" : "center",
+    justifyContent: ({ empty }) => !empty ? "flex-start" : "center",
     padding: theme.spacing(2),
     borderRadius: theme.shape.borderRadius,
     backgroundImage: ({ previewUrl }) => tintedBg(0.25) + `url("${previewUrl}")`,
@@ -55,6 +58,11 @@ const useStyles = makeStyles(theme => ({
   },
   previewStoryListItemAvatar: {
     marginRight: theme.spacing(1)
+  },
+  previewStoryListItemAddButton: {
+    marginRight: theme.spacing(1),
+    fontSize: theme.typography.h3.fontSize,
+    color: getStyleByTheme(theme, theme.palette.common.white, theme.palette.text.secondary) 
   }
 }));
 

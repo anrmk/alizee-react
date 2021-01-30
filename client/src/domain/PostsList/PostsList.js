@@ -2,7 +2,6 @@ import React from "react";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 
-
 import { Post } from "../../components/Post";
 
 import Loader from "./Loader";
@@ -41,6 +40,9 @@ const PostsList = React.memo(({
             user={user}
             owner={item.user}
             post={item}
+            likes={item.likes}
+            isLike={item.iLike}
+            isFavorite={item.isFavorite}
 
             onFollow={onFollow}
             onUnfollow={onUnfollow}

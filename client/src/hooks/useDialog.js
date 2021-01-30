@@ -3,39 +3,37 @@ import { useLocation } from "react-router-dom";
 
 import DialogContext, { initialContext, UPDATE_BODY_MODAL, TOGGLE_BODY_MODAL } from "../context/DialogContext";
 
-export default function useDialog(props) {
+export default function useDialog() {
   const { pathname } = useLocation();
-  const dispatch = useContext(DialogContext);
+  const { dialogOptions, setData } = useContext(DialogContext);
 
   useEffect(() => {
-    setParams(props);
-  }, [props]);
-
-   useEffect(() => {
     resetDialog();
-   }, [pathname]);
+  }, [pathname]);
 
   const setParams = React.useCallback((data) => {
-    dispatch({
+    setData({
       type: UPDATE_BODY_MODAL,
       payload: data
     });
-  }, [dispatch]);
+  }, [setData]);
 
-  const toggleDialog = React.useCallback((open) => {
-    dispatch({
+  const toggle = React.useCallback(({ open = !dialogOptions.open, ...rest }) => {
+    resetDialog();
+    setData({
       type: TOGGLE_BODY_MODAL,
-      payload: { open }
+      payload: { open, ...rest }
     });
-  }, [dispatch]);
+  }, [setData]);
 
   const resetDialog = React.useCallback(() => {
-    setParams(initialContext)
-  }, [dispatch]);
+    setParams(initialContext);
+  }, [setData]);
 
-  return { 
+  return {
     setParams,
-    toggleDialog,
-    resetDialog
+    toggle,
+    resetDialog,
+    dialogOptions
   }
 };

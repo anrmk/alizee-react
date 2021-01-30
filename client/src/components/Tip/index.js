@@ -1,3 +1,3 @@
 import SendTip from "./SendTip";
 
-export { SendTip };
+export default SendTip;

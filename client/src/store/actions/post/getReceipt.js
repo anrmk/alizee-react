@@ -45,7 +45,7 @@ export function getReceipt(api, id, callback) {
       data.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, data.avatarUrl);
 
       dispatch(receiveReceiptPost(data));
-      callback && callback(data);
+      callback && callback(data); // TODO: refactor this, we can't directly pass data in callback
     } catch (e) {
       dispatch(errorReceiptPost("Error: something went wrong"));
     }

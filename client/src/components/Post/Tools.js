@@ -1,5 +1,5 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
+import React, { useCallback } from "react";
+import { Link } from "react-router-dom";
 
 import { POST_ID_ROUTE } from "../../constants/routes";
 
@@ -14,114 +14,104 @@ import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorderOutlined";
 import ShareIcon from "@material-ui/icons/ShareOutlined";
 import VisibilityIcon from "@material-ui/icons/VisibilityOutlined";
 
-import {
-  PAYMENT_DIALOG_TYPE,
-  SHARE_DIALOG_TYPE,
-  RECEIPT_DIALOG_TYPE,
-  PURCHASES_DIALOG_TYPE,
-  SEND_TIP_DIALOG_TYPE,
-} from "../../hooks/usePostDialog";
+import { PAYMENT_DIALOG_TYPE, SHARE_DIALOG_TYPE, RECEIPT_DIALOG_TYPE, PURCHASES_DIALOG_TYPE, SEND_TIP_DIALOG_TYPE } from "../../constants/dialogs";
 import useStyles from "./styles";
 
-const Tools = React.memo(
-  ({
-    id,
+const Tools = React.memo(({
+  id,
 
-    user,
+  user,
 
-    likes,
-    amount,
+  likes,
+  amount,
 
-    iLike,
-    isFavorite,
-    isPurchased,
-    isOwner,
+  isLike,
+  isFavorite,
+  isPurchased,
+  isOwner,
 
-    onLike,
-    onFavorite,
-    onDialogToggle,
-  }) => {
-    const location = window.location.href;
-    const history = useHistory();
-    const classes = useStyles();
+  onLike,
+  onFavorite,
+  onDialogToggle
+}) => {
+  const location = window.location.href;
+  const classes = useStyles();
 
-    const handleLike = () => {
-      onLike && onLike(id);
-    };
+  const handleLikeClick = () => {
+    onLike && onLike(id);
+  };
 
-    const handleFavorite = () => {
-      onFavorite && onFavorite(id);
-    };
+  const handleFavoriteClick = () => {
+    onFavorite && onFavorite(id);
+  };
 
-    const handlePay = () => {
-      onDialogToggle && onDialogToggle({ id, amount }, PAYMENT_DIALOG_TYPE);
-    };
+  const handlePayClick = () => {
+    onDialogToggle && onDialogToggle(PAYMENT_DIALOG_TYPE, { id, amount });
+  };
 
-    const handleReceipt = () => {
-      onDialogToggle && onDialogToggle({ id }, isOwner ? PURCHASES_DIALOG_TYPE : RECEIPT_DIALOG_TYPE);
-    };
+  const handleReceiptClick = () => {
+    onDialogToggle && onDialogToggle(isOwner ? PURCHASES_DIALOG_TYPE : RECEIPT_DIALOG_TYPE, { id });
+  };
 
-    const handleSendTip = () => {
-      onDialogToggle && onDialogToggle({ id, user }, SEND_TIP_DIALOG_TYPE);
-    };
+  const handleShareClick = useCallback(() => {
+    onDialogToggle && onDialogToggle(SHARE_DIALOG_TYPE, { id });
+  }, []);
 
-    const handleShare = () => {
-      onDialogToggle && onDialogToggle({ id }, SHARE_DIALOG_TYPE);
-    };
+  const handleSendTipClick = useCallback(() => {
+    onDialogToggle && onDialogToggle(SEND_TIP_DIALOG_TYPE, { user });
+  }, []);
 
-    const handleGoToPost = () => {
-      history.push(POST_ID_ROUTE(id));
-    };
-
-    const renderPurchase = (amount, isPurchased) => {
-      if (amount !== 0) {
-        if (!isPurchased) {
-          return (
-            <Tooltip title="Unlock post">
-              <Chip label={amount} clickable color="primary" onClick={handlePay} icon={<MonetizationOnIcon />} />
-            </Tooltip>
-          );
-        } else {
-          return (
-            <IconButton onClick={handleReceipt}>
-              <ReceiptIcon />
-            </IconButton>
-          );
-        }
-      }
-
-      return null;
-    };
-
-    return (
-      <>
-        <IconButton className="danger" onClick={handleLike} aria-label="add to favorites">
-          {iLike ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-        </IconButton>
-        <Typography>{likes > 0 && <strong>{likes}</strong>}</Typography>
-
-        <IconButton aria-label="share" onClick={handleShare}>
-          <ShareIcon />
-        </IconButton>
-
-        <Chip icon={<MonetizationOnIcon />} onClick={handleSendTip} label="SEND TIP" variant="outlined" clickable />
-
-        <div className={classes.grow}></div>
-
-        {renderPurchase(amount, isPurchased)}
-
-        <IconButton className="success" aria-label="share" onClick={handleFavorite}>
-          {isFavorite ? <BookmarkIcon /> : <BookmarkBorderIcon />}
-        </IconButton>
-
-        {!location.includes(POST_ID_ROUTE(id)) && (
-          <IconButton className="warning" onClick={handleGoToPost}>
-            <VisibilityIcon />
+  const renderPurchase = () => {
+    if (amount !== 0) {
+      if (!isPurchased) {
+        return (
+          <Tooltip title="Unlock post">
+            <Chip label={amount} clickable color="primary" onClick={handlePayClick} icon={<MonetizationOnIcon />} />
+          </Tooltip>
+        );
+      } else {
+        return (
+          <IconButton onClick={handleReceiptClick}>
+            <ReceiptIcon />
           </IconButton>
-        )}
-      </>
-    );
-  }
-);
+        );
+      }
+    }
+
+    return null;
+  };
+
+  return (
+    <>
+      <IconButton className="danger" onClick={handleLikeClick} aria-label="add to favorites">
+        {isLike ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+      </IconButton>
+      <Typography>{likes > 0 && <strong>{likes}</strong>}</Typography>
+
+      <IconButton aria-label="share" onClick={handleShareClick}>
+        <ShareIcon />
+      </IconButton>
+
+      <Chip icon={<MonetizationOnIcon />} onClick={handleSendTipClick} label="SEND TIP" variant="outlined" clickable />
+
+      <div className={classes.grow}></div>
+
+      <IconButton className="success" aria-label="share" onClick={handleFavoriteClick}>
+        {isFavorite ? <BookmarkIcon /> : <BookmarkBorderIcon />}
+      </IconButton>
+
+      {renderPurchase()}
+
+      {!location.includes(POST_ID_ROUTE(id)) && (
+        <IconButton
+          className="warning"
+          to={POST_ID_ROUTE(id)}
+          component={Link}>
+          <VisibilityIcon />
+        </IconButton>
+      )}
+    </>
+  )
+});
 
 export default Tools;

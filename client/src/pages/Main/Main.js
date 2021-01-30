@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { Box, Hidden } from "@material-ui/core";
 
 import ApiContext from "../../context/ApiContext";
 import { Navbar, BottomBar } from "../../domain/Navbar";
@@ -32,14 +33,11 @@ import * as userActions from "../../store/actions/user";
 import { signOutUser } from "../../store/actions/signIn";
 import * as Routes from "../../constants/routes";
 import useHideNavigation from "../../hooks/useHideNavigation";
+import usePostSproutDialog from "../../hooks/usePostSproutDialog";
 
 import * as postActions from "../../store/actions/post";
 import * as storyActions from "../../store/actions/story";
 import * as moodAction from "../../store/actions/mood";
-
-import useSprout from "../../hooks/useSprout";
-
-import { Box, Hidden } from "@material-ui/core";
 
 import useStyles from "./styles";
 
@@ -51,7 +49,11 @@ function Main(props) {
   const [open, setOpen] = useState(true);
   const isNavigationHide = useHideNavigation(Routes.STORIES_DEFAULT_ROUTE);
   const classes = useStyles({ isAuthenticated, isNavigationHide });
-  const { onSproutSubmit } = useSprout({ createStory, createPost, createMood });
+  const { dialogToggleSprout } = usePostSproutDialog({ 
+    onCreatePost: createPost,
+    onCreateStory: createStory,
+    onCreateMood: createMood
+  });
 
   const handleDrawerToggle = () => {
     setOpen(!open);
@@ -102,7 +104,7 @@ function Main(props) {
       </Box>
       {isAuthenticated && !isNavigationHide && (
         <Hidden mdUp>
-          <BottomBar user={userInfo} onSproutSubmit={onSproutSubmit}  />
+          <BottomBar user={userInfo} onDialogToggle={dialogToggleSprout} />
         </Hidden>
       )}
     </Box>

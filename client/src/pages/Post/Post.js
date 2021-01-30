@@ -10,14 +10,16 @@ import CommentIcon from "@material-ui/icons/CommentRounded";
 import ApiContext from "../../context/ApiContext";
 import { Tools, Menu, Comments } from "../../components/Post";
 import MediaContent from "../../components/MediaContent";
-import { COMMENTS_POST_LENGTH } from "../../constants/feed";
+import SlidingViews from "../../components/SlidingViews";
+
 import * as postActions from "../../store/actions/post";
 import * as settingsActions from "../../store/actions/settings";
 import * as relationshipActions from "../../store/actions/relationship";
 import * as commentActions from "../../store/actions/comment";
+import * as paymentActions from "../../store/actions/payment";
 
+import { COMMENTS_POST_LENGTH } from "../../constants/feed";
 import { HOME_ROUTE } from "../../constants/routes";
-import SlidingViews from "../../components/SlidingViews";
 import useSlidingViews from "../../hooks/useSlidingViews";
 import usePostActions from "../../hooks/usePostActions";
 import useProfileActions from "../../hooks/useProfileActions";
@@ -50,6 +52,7 @@ function PostPage(props) {
     onPurchases: props.getPurchases,
     onReceipt: props.getReceipt,
     onBuy: props.buyPost,
+    onSendTip: props.sendTip
   });
 
   useEffect(() => {
@@ -133,7 +136,9 @@ function PostPage(props) {
             id={post.data.id}
             user={post.owner}
             likes={post.data.likes}
-            iLike={post.data.iLike}
+            isLike={post.data.iLike}
+
+            amount={post.data.amount}
             isFavorite={post.data.isFavorite}
             amount={post.data.amount}
             isPurchased={post.data.isPurchased}
@@ -173,6 +178,7 @@ function mapDispatchToProps(dispatch) {
     getPurchases: (api, id, callback) => dispatch(postActions.getPurchases(api, id, callback)),
     getReceipt: (api, id, callback) => dispatch(postActions.getReceipt(api, id, callback)),
     favoritePost: (api, id) => dispatch(postActions.favoritePost(api, id)),
+    sendTip: (api, userName, amount, message) => dispatch(paymentActions.sendTip(api, userName, amount, message)),
 
     createFollow: (api, id) => dispatch(relationshipActions.createFollow(api, id)),
     deleteFollow: (api, id) => dispatch(relationshipActions.deleteFollow(api, id)),

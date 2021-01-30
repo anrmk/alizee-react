@@ -34,8 +34,9 @@ import { PreviewStoriesList } from "../domain/StoriesLists";
 import ApiContext from "../context/ApiContext";
 import { INTERESTS_SKIP, STORIES_LENGTH } from "../constants/feed";
 import { SUGESTED_PEOPLE } from "../constants/routes";
+import { CREATE_STORY_DIALOG_TYPE } from "../constants/dialogs";
 
-import useSprout from "../hooks/useSprout";
+import usePostSproutDialog from "../hooks/usePostSproutDialog";
 import usePostActions from "../hooks/usePostActions";
 import useProfileActions from "../hooks/useProfileActions";
 
@@ -52,8 +53,6 @@ function Feed(props) {
   const { interests, getInterests, createInterests } = props;
   const { story, getStory, getFollowingStories, createStory, resetFollowingStories, resetStory } = props;
   const { hotStreamers, getHotStreamers } = props;
-
-  const { onSproutSubmit } = useSprout({ createStory, createPost, createMood });
 
   const profileAction = useProfileActions({
     onFollow: createFollow,
@@ -73,6 +72,12 @@ function Feed(props) {
     onReceipt: props.getReceipt,
     onBuy: props.buyPost,
     onSendTip: sendTip
+  });
+
+  const { dialogToggleSprout } = usePostSproutDialog({ 
+    onCreatePost: createPost,
+    onCreateStory: createStory,
+    onCreateMood: createMood,
   });
 
   const isInterestsSkip = localStorage.getItem(INTERESTS_SKIP);
@@ -149,11 +154,17 @@ function Feed(props) {
   return (
     <Container>
       <Grid container spacing={2}>
-        <Grid item md={8} sm={12}>
-          {/* <PreviewStoriesList loading={story.isFetching} userStory={story.data.mStories} items={story.data.fStories} /> */}
+        <Grid item xs={12} md={8}>
+          <PreviewStoriesList 
+            loading={story.isFetching}
+            userStory={story.data.mStories}
+            items={story.data.fStories}
+            onCreateStoryClick={() => dialogToggleSprout(CREATE_STORY_DIALOG_TYPE)} />
 
           <Hidden smDown>
-            <PostSprout user={userInfo} onSubmit={onSproutSubmit} />
+            <PostSprout
+              user={userInfo}
+              onDialogToggle={dialogToggleSprout} />
           </Hidden>
 
           <PostsList
@@ -202,8 +213,7 @@ function Feed(props) {
         open={interestsModalShow && !isInterestsSkip && Object.keys(interests.data).length}
         onClose={handleInterestsModalClose}
         aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
+        aria-describedby="alert-dialog-description">
         <DialogTitle id="alert-dialog-title">Choose your interests</DialogTitle>
         <InterestList ref={interestsEl} items={interests.data} />
         <DialogActions>

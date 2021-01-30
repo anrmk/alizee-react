@@ -49,7 +49,7 @@ import {
 } from "../constants/routes";
 
 import useDialog from "../hooks/useDialog";
-import useSprout from "../hooks/useSprout";
+import usePostSproutDialog from "../hooks/usePostSproutDialog";
 
 function Profile(props) {
   const initPostsSettings = {
@@ -70,7 +70,11 @@ function Profile(props) {
   const [postSettings, setPostSettings] = useState(initPostsSettings);
   const [coverData, setCoverData] = useState({});
 
-  const { onSproutSubmit } = useSprout({ createStory, createPost, createMood });
+  const { dialogToggleSprout } = usePostSproutDialog({ 
+    onCreatePost: createPost,
+    onCreateStory: createStory,
+    onCreateMood: createMood,
+  });
 
   const handleCoverEdit = (data) => {
     setCoverData(data);
@@ -212,7 +216,9 @@ function Profile(props) {
         <Grid item sm={12} md={4}>
           {username === me.userName && (
             <Hidden smDown>
-              <PostSprout user={me} onSubmit={onSproutSubmit} />
+              <PostSprout
+                user={me}
+                onDialogToggle={dialogToggleSprout} />
             </Hidden>
           )}
 
