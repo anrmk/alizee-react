@@ -20,8 +20,11 @@ function Cover(props) {
 
   const handleCoverChange = (e) => {
     const files = e.target.files;
-    const coverUrl = URL.createObjectURL(files[0]);
-    (onEditCover && onEditCover({ coverUrl, file: files[0] }));
+
+    if (files && files.length) {
+      const coverUrl = URL.createObjectURL(files[0]);
+      onEditCover && onEditCover({ coverUrl, file: files[0] });
+    }
   };
 
   return (

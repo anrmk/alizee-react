@@ -1,24 +1,23 @@
 import React, { useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
-import { useTranslation } from "react-i18next";
-import { Button, Container, DialogActions } from "@material-ui/core/";
+import { Container } from "@material-ui/core/";
 
 import ApiContext from "../context/ApiContext";
 
-import { Room, Sidebar, FollowingDialog } from "../domain/Chat";
+import { Room, Sidebar } from "../domain/Chat";
 import SlidingViews from "../components/SlidingViews";
 
 import * as actionRelationship from "../store/actions/relationship";
 import * as actionChat from "../store/actions/chat";
 import * as settings from "../store/actions/settings";
 import { ESC_KEY_CODE } from "../constants/key_codes";
-import useSlidingViews from "../hooks/useSlidingViews";
+import useSlidingViews, { RIGHT_OPEN_TYPE } from "../hooks/useSlidingViews";
 import useDialog from "../hooks/useDialog";
+import dialogs, { CHAT_FOLLOWERS_TYPE } from "../constants/dialogs";
 
 function Chat(props) {
   const apiClient = useContext(ApiContext);
-  const { t } = useTranslation();
 
   const { username } = useParams();
 
@@ -39,26 +38,12 @@ function Chat(props) {
   } = props;
   const { createMessage } = props;
 
-  const { currentSlidingViewsState, toggleSlidingViewsState } = useSlidingViews();
-  const dialog = useDialog({
-    title: t("ChatFollowingDialogTitle"),
-    dialogProps: { onClose: () => dialog.toggleDialog(false) },
-    content: (
-      <FollowingDialog
-        items={followings.data}
-        onItemClick={handleRoomCreate}
-        onSearchChange={handleFollowingsFilter} />
-    ),
-    actionsComponent: (
-      <DialogActions>
-        <Button onClick={() => dialog.toggleDialog(false)}>Close</Button>
-      </DialogActions>
-    )
-  });
+  const { currentSlidingViewsState, toggleSlidingViewsState } = useSlidingViews(RIGHT_OPEN_TYPE);
+  const dialog = useDialog();
 
   const handleModalCloseKeyPress = (e) => {
     if (e.keyCode === ESC_KEY_CODE) {
-      dialog.toggleDialog(false);
+      dialog.toggle({ open: false });
     }
   };
 
@@ -81,7 +66,19 @@ function Chat(props) {
     }
   }, [username]);
 
-  function handleFollowingsFilter(e) {
+  useEffect(() => {
+    if (followings.data.length) {
+      dialog.setParams(dialogs[CHAT_FOLLOWERS_TYPE]({ 
+        loading: false
+      }, {
+        items: followings.data,
+        onItemClick: handleRoomCreate,
+        onSearchChange: handleFollowingsFilter
+      }));
+    }
+  }, [followings.data]);
+
+  const handleFollowingsFilter = (e) => {
     filterFollowings(e.target.value.toLowerCase());
   };
 
@@ -96,9 +93,9 @@ function Chat(props) {
     }
   };
 
-  async function handleRoomCreate(userName) {
+  const handleRoomCreate = async (userName) => {
     await createRoom(apiClient, userName);
-    dialog.toggleDialog(false);
+    dialog.toggle({ open: false });
   };
 
   const handleRoomDelete = async (id) => {
@@ -107,6 +104,8 @@ function Chat(props) {
     }
 
     await deleteRoom(apiClient, id);
+
+    toggleSlidingViewsState();
   };
 
   const handleMessageCreate = async (message) => {
@@ -140,8 +139,8 @@ function Chat(props) {
   };
 
   const handleUserListBtnClick = async () => {
+    dialog.toggle(dialogs[CHAT_FOLLOWERS_TYPE]({ loading: true }));
     await getFollowings(apiClient, user.username);
-    dialog.toggleDialog(true);
   };
 
   return (

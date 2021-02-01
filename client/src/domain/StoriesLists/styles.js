@@ -13,7 +13,6 @@ const useStyles = makeStyles(theme => ({
     width: "100%",
     display: ({ loading }) => loading ? "block" : "flex",
     overflowX: "scroll",
-    padding: theme.spacing(1),
     "&::-webkit-scrollbar": {
       display: "none"
     }
@@ -22,15 +21,6 @@ const useStyles = makeStyles(theme => ({
     display: "block",
     marginLeft: "auto",
     marginRight: "auto"
-  },
-  previewStoryListWrapper: {
-    width: "100%",
-    display: "flex",
-    overflowX: "scroll",
-    padding: theme.spacing(1),
-    "&::-webkit-scrollbar": {
-      display: "none"
-    }
   },
   previewStoryListItem: {
     minWidth: "114px",

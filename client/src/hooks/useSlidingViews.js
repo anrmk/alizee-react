@@ -6,13 +6,13 @@ export const LEFT_OPEN_TYPE = 0;
 export const BOTH_OPEN_TYPE = 1;
 export const RIGHT_OPEN_TYPE = 2;
 
-export default function useSlidingViews(priorityView = LEFT_OPEN_TYPE) {
+export default function useSlidingViews(priorityView = LEFT_OPEN_TYPE, initView = LEFT_OPEN_TYPE) {
   const [currentState, setCurrentState] = useState(priorityView);
   const { up } = useViewport();
 
   useEffect(() => {
     if (!up("md")) {
-      setCurrentState(priorityView);
+      setCurrentState(initView);
     } else {
       toggleState(BOTH_OPEN_TYPE);
     }

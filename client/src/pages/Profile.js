@@ -5,20 +5,9 @@ import { connect } from "react-redux";
 import {
   Box,
   Container,
-  DialogActions,
   Grid,
-  Card,
   Typography,
-  ButtonGroup,
-  Button,
-  Link,
-  Divider,
-  CardContent,
-  CardActions,
   Hidden,
-  Stepper,
-  Step,
-  StepLabel,
   BottomNavigation,
   BottomNavigationAction
 } from "@material-ui/core/";
@@ -50,6 +39,7 @@ import {
 
 import useDialog from "../hooks/useDialog";
 import usePostSproutDialog from "../hooks/usePostSproutDialog";
+import dialogs, { PROFILE_EDIT_COVER } from "../constants/dialogs";
 
 function Profile(props) {
   const initPostsSettings = {
@@ -68,45 +58,29 @@ function Profile(props) {
   const apiClient = useContext(ApiContext);
   const history = useHistory();
   const [postSettings, setPostSettings] = useState(initPostsSettings);
-  const [coverData, setCoverData] = useState({});
 
+  const dialog = useDialog();
   const { dialogToggleSprout } = usePostSproutDialog({ 
     onCreatePost: createPost,
     onCreateStory: createStory,
     onCreateMood: createMood,
   });
 
+  const handleCoverSave = async (data) => {
+    dialog.toggle({ open: false });
+    await updateCover(apiClient, [data.file]);
+  };
+
   const handleCoverEdit = (data) => {
-    setCoverData(data);
-    dialog.toggleDialog(true);
+    dialog.toggle(dialogs[PROFILE_EDIT_COVER]({ 
+      open: true,
+      onMainClick: handleCoverSave,
+      tempData: data
+     }, { 
+      src: data.coverUrl, 
+      alt: data.file?.name
+    }));
   };
-
-  const handleCoverSave = async () => {
-    dialog.toggleDialog(false);
-    await updateCover(apiClient, [coverData.file]);
-    setCoverData({ coverUrl: user.coverUrl });
-  };
-
-  const handleCoverClose = () => {
-    setCoverData({ coverUrl: user.coverUrl });
-    dialog.toggleDialog(false);
-  };
-
-  const dialog = useDialog({
-    title: "Edit Cover",
-    content: (
-      <Box display="block">
-        <img src={coverData.coverUrl} alt={coverData.file?.name} width="100%" />
-      </Box>
-    ),
-    actionsComponent: (
-      <DialogActions>
-        <Button onClick={handleCoverSave}>Save</Button>
-        <Button onClick={handleCoverClose}>Close</Button>
-      </DialogActions>
-    ),
-    dialogProps: { fullWidth: true },
-  });
 
   useEffect(() => {
     return () => {
@@ -131,12 +105,6 @@ function Profile(props) {
       handleFetchPosts();
     }
   }, [postSettings]);
-
-  useEffect(() => {
-    if (user.coverUrl) {
-      setCoverData({ coverUrl: user.coverUrl });
-    }
-  }, [user]);
 
   if (url.includes(SETTINGS_ROUTE)) {
     return <Redirect to={SETTINGS_EDIT_PROFILE_ROUTE} />;
@@ -217,7 +185,7 @@ function Profile(props) {
           {username === me.userName && (
             <Hidden smDown>
               <PostSprout
-                user={me}
+                userName={me.userName}
                 onDialogToggle={dialogToggleSprout} />
             </Hidden>
           )}

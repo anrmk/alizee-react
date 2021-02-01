@@ -31,6 +31,7 @@ const schema = yup.object().shape({
     .boolean(),
   [AMOUNT_ID]: yup
     .number()
+    .typeError("Must be a number")
     .min(0)
     .notRequired()
 });
@@ -131,6 +132,8 @@ export default function CreatePost({
                 variant="outlined"
                 inputMode="numeric"
                 value={value}
+                error={!!errors[AMOUNT_ID]}
+                helperText={errors[AMOUNT_ID]?.message}
                 onBlur={onBlur}
                 onChange={onChange}
                 InputProps={{

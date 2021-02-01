@@ -9,6 +9,7 @@ export const initialContext = {
 	content: null,
 	actionsComponent: null,
 	tempData: null,
+	loading: false,
 	dialogProps: null,
 	mainBtnProps: null,
 	mainBtnText: "OK",

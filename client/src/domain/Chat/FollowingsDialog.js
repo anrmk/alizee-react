@@ -1,12 +1,13 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import {
+  Box,
   List,
   ListItem,
   ListItemText,
   ListItemAvatar,
   Avatar,
-  Typography
+  Typography,
 } from "@material-ui/core/";
 
 import Search from "../../components/Search";
@@ -20,7 +21,7 @@ function FollowingDialog({
   const { t } = useTranslation();
 
   return (
-    <>
+    <Box display="flex" flexDirection="column" alignItems="center">
       <Search placeholder={t("ChatFollowingDialogSearchInputLabel")} onChange={onSearchChange} />
       <List >
         {items && items.length ? items.map((follower) => (
@@ -39,7 +40,7 @@ function FollowingDialog({
           </Typography>
         )}
       </List>
-    </>
+    </Box>
   )
 }
 

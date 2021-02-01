@@ -85,7 +85,7 @@ function PostSprout({
         ModalProps={{ keepMounted: true }}
       >
         <List>
-          <ListItem button onClick={() => handleDialogToggle(CREATE_MOOD_DIALOG_TYPE, userName)}>
+          <ListItem button onClick={() => handleDialogToggle(CREATE_MOOD_DIALOG_TYPE, { userName })}>
             <ListItemIcon>
               <MoodIcon />
             </ListItemIcon>

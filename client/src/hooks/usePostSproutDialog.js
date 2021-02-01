@@ -30,12 +30,13 @@ export default function usePostSproutDialog(props) {
     }
   }, [onCreatePost, onCreateStory, onCreateMood]);
 
-  const handleDialogToggle = useCallback(async (type) => {
+  const handleDialogToggle = useCallback(async (type, data) => {
     dialog.toggle(dialogs[type]({
       mainBtnProps: { type: "submit", form: FORM_ID },
     }, {
       formId: FORM_ID,
-      onSubmit: handleSubmit
+      onSubmit: handleSubmit,
+      name: data.userName
     }));
   }, [handleSubmit]);
 

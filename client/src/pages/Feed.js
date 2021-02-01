@@ -163,7 +163,7 @@ function Feed(props) {
 
           <Hidden smDown>
             <PostSprout
-              user={userInfo}
+              userName={userInfo.userName}
               onDialogToggle={dialogToggleSprout} />
           </Hidden>
 
