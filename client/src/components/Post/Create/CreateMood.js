@@ -20,7 +20,7 @@ const schema = yup.object().shape({
 
 function CreateMood({
   formId,
-  name,
+  userName,
 
   onSubmit
 }) {
@@ -47,7 +47,7 @@ function CreateMood({
               autoFocus
               multiline
               variant="filled"
-              placeholder={`What's on your mind, ${name}?`}
+              placeholder={`What's on your mind, ${userName}?`}
               rows={3}
               onBlur={onBlur}
               onChange={onChange}

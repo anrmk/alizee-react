@@ -36,7 +36,7 @@ export default function usePostSproutDialog(props) {
     }, {
       formId: FORM_ID,
       onSubmit: handleSubmit,
-      name: data.userName
+      ...data
     }));
   }, [handleSubmit]);
 
