@@ -35,7 +35,7 @@ function errorCreateMedia(message) {
   }
 }
 
-export function createMedia(api, media) {
+export function createMedia(api, media, mediaType) {
   return async dispatch => {
     dispatch(requestCreateMedia());
 
@@ -47,6 +47,7 @@ export function createMedia(api, media) {
       });
 
       const { data } = await api
+        .setParams({ mediaType })
         .setData(formData)
         .query(url);
 

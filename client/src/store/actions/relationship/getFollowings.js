@@ -81,5 +81,5 @@ const dataSelector = (state) => state.users.data;
 export const getFilteredFollowings = createSelector([querySelector, dataSelector], (query, data) => {
   if (!query) return data;
 
-  return data.filter((item) => item?.fullName?.toLowerCase().includes(query.toLowerCase()));
+  return data.filter((item) => item?.name?.toLowerCase().includes(query.toLowerCase()));
 });

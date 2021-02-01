@@ -1,3 +1,4 @@
+import { MEDIA_COVER } from '../../../constants/media_types';
 import { generateUrl, generateFileUrl } from '../../../helpers/functions';
 import { createMedia } from '../media';
 
@@ -46,7 +47,7 @@ export function updateCover(api, mediaData = []) {
         throw "Media data doesn't exist";
       }
 
-      await dispatch(createMedia(api, mediaData));
+      await dispatch(createMedia(api, mediaData, MEDIA_COVER));
 
       const mediaErrorMessage = getState().media.errorMessage;
       if (mediaErrorMessage) {

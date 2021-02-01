@@ -1,3 +1,4 @@
+import { MEDIA_AVATAR } from '../../../constants/media_types';
 import { generateUrl, generateFileUrl, getAccountSnapshot } from '../../../helpers/functions';
 import { createMedia } from '../media';
 import { updateUsername } from './updateUsername';
@@ -45,7 +46,7 @@ export function updateAccount(api, opts) {
       const signInState = getState().signIn;
       const currentAvatarUrl = signInState?.userInfo.avatarUrl;
       if (opts.avatarUrl && currentAvatarUrl !== opts.avatarUrl) {
-        await dispatch(createMedia(api, [opts.avatarFile]));
+        await dispatch(createMedia(api, [opts.avatarFile], MEDIA_AVATAR));
 
         const mediaErrorMessage = getState().media.errorMessage;
         if (mediaErrorMessage) {

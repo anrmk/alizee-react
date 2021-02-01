@@ -1,5 +1,6 @@
 import { generateUrl, generateFileUrl } from '../../../helpers/functions';
 import { POST_PRIVATE, POST_PUBLIC } from '../../../constants/feed';
+import { MEDIA_CONTENT } from '../../../constants/media_types';
 import { createMedia } from '../media';
 
 export const CREATE_POST_REQUEST = 'CREATE_POST_REQUEST';
@@ -46,7 +47,7 @@ export function createPost(api, postData) {
       const mediaData = postData.medias;
       let media = [];
       if (mediaData.length > 0) {
-        await dispatch(createMedia(api, mediaData));
+        await dispatch(createMedia(api, mediaData, MEDIA_CONTENT));
 
         const mediaErrorMessage = getState().media.errorMessage;
         if (mediaErrorMessage) {
