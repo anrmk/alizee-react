@@ -94,8 +94,8 @@ function CreateRoomForm({
     resolver: yupResolver(schema),
     defaultValues: {
       [ROOM_ID]: room.id,
-      [TITLE_ID]: room.title,
-      [DESCRIPTION_ID]: room.description,
+      [TITLE_ID]: room.title || "",
+      [DESCRIPTION_ID]: room.description || "",
       [ROOM_TYPE_ID]: room.type || 0,
       [TICKET_PRICE_ID]: room.ticketPrice || 0,
       [STREAMING_DATE_ID]: room.announceDate
@@ -304,7 +304,12 @@ CreateRoomForm.propTypes = {
 };
 
 CreateRoomForm.defaultProps = {
-  room: {},
+  room: {
+    [TITLE_ID]: "",
+    [DESCRIPTION_ID]: "",
+    [ROOM_TYPE_ID]: 0,
+    [TICKET_PRICE_ID]: 0,
+  },
   stream: null,
 
   onCopyLinkRoom: undefined,

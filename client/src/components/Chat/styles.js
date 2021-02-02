@@ -44,12 +44,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.success.dark,
     justifyContent: "flex-end",
   },
-  
+
   messengerMessageDate: {
     width: "fit-content",
     alignSelf: "flex-end",
     whiteSpace: "nowrap",
-    padding: theme.spacing(0, 0,0, 1),
+    padding: theme.spacing(0, 0, 0, 1),
     color: grey["400"],
   },
 
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     color: theme.palette.grey["400"]
-  }
+  },
 }));
 
 export default useStyles;

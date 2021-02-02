@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { InputAdornment, IconButton, TextField } from "@material-ui/core";
 
 import SendIcon from "@material-ui/icons/SendOutlined";
 import ImageIcon from "@material-ui/icons/ImageOutlined";
+
+import { EmojiPicker } from "../EmojiPicker"
 
 import useStyles from "./styles";
 
@@ -12,11 +14,15 @@ function MessageSenderInput({
   onSendMessageClick
 }) {
   const classes = useStyles();
+  const inputRef = useRef(null);
+  const textFieldRef = useRef(null);
+  const [closePickerModal, setClosePickerModal] = useState(false);
   const [value, setValue] = useState("");
 
   const messageSend = () => {
     onSendMessageClick && onSendMessageClick(value.trim());
     setValue("");
+    setClosePickerModal(true);
   }
 
   const handleMessageSendClick = () => {
@@ -25,12 +31,18 @@ function MessageSenderInput({
 
   const handleEnterKeyDown = (e) => {
     if (e.key === "Enter") {
-      messageSend()
+      messageSend();
     }
+  }
+
+  const handleChangeInputValue = (text) => {
+    setValue(text);
   }
 
   return (
     <TextField
+      ref={textFieldRef}
+      inputRef={inputRef}
       variant="outlined"
       fullWidth
       placeholder={placeholder}
@@ -42,6 +54,13 @@ function MessageSenderInput({
             <IconButton>
               <ImageIcon className={classes.icon} />
             </IconButton>
+            <EmojiPicker
+              inputRef={inputRef}
+              textFieldRef={textFieldRef}
+              value={value}
+              closePickerModal={closePickerModal}
+              onChangeInputValue={handleChangeInputValue}
+            />
           </InputAdornment>,
         endAdornment:
           <InputAdornment position="end">
