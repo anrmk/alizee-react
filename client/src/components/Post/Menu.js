@@ -40,19 +40,19 @@ function Menu({
   };
 
   const handleFollow = () => {
-    onFollow && onFollow(user.name);
+    onFollow && onFollow(user.userName);
   };
 
   const handleUnfollow = () => {
-    onUnfollow && onUnfollow(user.name);
+    onUnfollow && onUnfollow(user.userName);
   };
 
   const handleBlock = () => {
-    onBlock && onBlock(user.name);
+    onBlock && onBlock(user.userName);
   };
 
   const handleUnblock = () => {
-    onUnblock && onUnblock(user.name);
+    onUnblock && onUnblock(user.userName);
   };
 
   const handleGoToProfile = () => {
@@ -66,7 +66,7 @@ function Menu({
 
   const handleReport = () => {
     handleMenuClose();
-    onReport && onReport(user.name);
+    onReport && onReport(user.userName);
   };
 
   return (

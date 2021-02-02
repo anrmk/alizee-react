@@ -9,9 +9,9 @@ function requestGetBlackList() {
     type: GET_BLACK_LIST_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: ""
-    }
-  }
+      errorMessage: "",
+    },
+  };
 }
 
 function receiveGetBlackList(data) {
@@ -20,9 +20,9 @@ function receiveGetBlackList(data) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      blackList: data || []
-    }
-  }
+      blackList: data || [],
+    },
+  };
 }
 
 function errorGetBlackList(message) {
@@ -30,31 +30,26 @@ function errorGetBlackList(message) {
     type: GET_BLACK_LIST_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message
-    }
-  }
+      errorMessage: message,
+    },
+  };
 }
 
 export function getBlackList(api) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(requestGetBlackList());
 
     const url = generateUrl("getBlackList");
     try {
-      const { data } = await api
-        .setMethod("GET")
-        .query(url);
+      const { data } = await api.setMethod("GET").query(url);
 
-      const transformedData = data.map((item) => ({
-        username: item.userName,
-        avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, item.avatarUrl),
-        createdDate: item.createdDate,
-        id: item.userId
-      }))
+      data.forEach((item) => {
+        item.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, item.avatarUrl);
+      });
 
-      dispatch(receiveGetBlackList(transformedData));
+      dispatch(receiveGetBlackList(data));
     } catch (e) {
       dispatch(errorGetBlackList("Error: something went wrong:", e));
     }
-  }
+  };
 }

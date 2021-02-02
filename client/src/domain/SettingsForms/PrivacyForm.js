@@ -10,9 +10,10 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Divider
+  Divider,
+  Link
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 import { SETTINGS_BLACK_LIST_ROUTE } from "../../constants/routes";
 import useStyles from "./styles"
@@ -150,7 +151,7 @@ function PrivacyForm({
         <Typography variant="h6">
           Comments
         </Typography>
-        <Link to={SETTINGS_BLACK_LIST_ROUTE}>Black list</Link>
+        <Link href={SETTINGS_BLACK_LIST_ROUTE}>Black list</Link>
       </FormGroup>
 
       <Divider />

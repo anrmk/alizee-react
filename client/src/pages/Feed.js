@@ -288,9 +288,9 @@ function mapDispatchToProps(dispatch) {
     deleteFollow: (api, userName) => dispatch(relationshipActions.deleteFollow(api, userName)),
 
     getAccountPersonalized: (api) => dispatch(settingsActions.getAccountPersonalized(api)),
-    blockUser: (api, id) => dispatch(settingsActions.createBlackList(api, id)),
-    unblockUser: (api, id) => dispatch(settingsActions.deleteBlackList(api, id)),
-    reportUser: (api, id) => { console.log("Report user"); },
+    blockUser: (api, userName) => dispatch(settingsActions.createBlackList(api, userName)),
+    unblockUser: (api, userName) => dispatch(settingsActions.deleteBlackList(api, userName)),
+    reportUser: (api, userName) => { console.log("Report user"); },
     sendTip: (api, userName, amount, message) => dispatch(paymentActions.sendTip(api, userName, amount, message)),
 
     getInterests: (api) => dispatch(interestsActions.getInterests(api)),

@@ -35,16 +35,16 @@ function errorCreateBlackList(message) {
   };
 }
 
-export function createBlackList(api, userId) {
+export function createBlackList(api, userName) {
   return async (dispatch, getState) => {
     dispatch(requestCreateBlackList());
 
     const url = generateUrl("createBlackList");
     try {
-      await api.setParams({ id: userId }).query(url);
+      await api.setParams({ userName: userName }).query(url);
 
       const blackList = getState().settings.blackList;
-      const updatedBlackList = [...blackList, userId];
+      const updatedBlackList = [...blackList, userName];
 
       dispatch(receiveCreateBlackList(updatedBlackList));
     } catch {
