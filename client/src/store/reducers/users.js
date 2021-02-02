@@ -16,6 +16,18 @@ import {
   DELETE_FOLLOW_SUCCESS,
   DELETE_FOLLOW_FAILURE,
 
+  ACCEPT_FOLLOW_REQUEST,
+  ACCEPT_FOLLOW_SUCCESS,
+  ACCEPT_FOLLOW_FAILURE,
+
+  REJECT_FOLLOW_REQUEST, 
+  REJECT_FOLLOW_SUCCESS, 
+  REJECT_FOLLOW_FAILURE,
+
+  UNREJECT_FOLLOW_REQUEST, 
+  UNREJECT_FOLLOW_SUCCESS,
+  UNREJECT_FOLLOW_FAILURE,
+
   RESET_RELATIONSHIP
 } from "../actions/relationship";
 
@@ -209,6 +221,67 @@ export default function usersReducer(
         ...action.payload,
       };
     }
+
+    //ACCEPT
+    case ACCEPT_FOLLOW_REQUEST:{
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case ACCEPT_FOLLOW_SUCCESS:{
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+    case ACCEPT_FOLLOW_FAILURE:{
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    // REJECT
+    case REJECT_FOLLOW_REQUEST:{
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case REJECT_FOLLOW_SUCCESS:{
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+    case REJECT_FOLLOW_FAILURE:{
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    
+    //UNREJECT
+    case UNREJECT_FOLLOW_REQUEST:{
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case UNREJECT_FOLLOW_SUCCESS:{
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+    case UNREJECT_FOLLOW_FAILURE:{
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
 
     default:
       return state;

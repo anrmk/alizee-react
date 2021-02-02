@@ -38,6 +38,9 @@
   "SecondTextFollowerItem": "recommended",
   "FollowerBtnTextFollowerItem": "Follow",
   "FollowingBtnTextFollowerItem": "Following",
+  "ConfirmBtnTextFollowerItem": "Confirm",
+  "DeclineBtnTextFollowerItem": "Decline",
+  "UnrejectBtnTextFollowerItem": "Undo",
 
   "SidebarFeedText": "Feed",
   "SidebarExploreText": "Explore",

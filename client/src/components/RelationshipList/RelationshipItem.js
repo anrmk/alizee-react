@@ -1,8 +1,8 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 
 import { Button, ListItem, ListItemText, ListItemAvatar, Typography } from "@material-ui/core";
+import { FOLLOW_ACCEPTED, FOLLOW_PENDING, FOLLOW_REJECTED } from "../../constants/follow_types";
 
 import Avatar from "../Avatar";
 
@@ -15,6 +15,7 @@ const RelationshipItem = React.memo((props) => {
   const {
     id,
     userName,
+    status,
     avatarUrl,
     title,
     subtitle,
@@ -22,11 +23,23 @@ const RelationshipItem = React.memo((props) => {
     isMe
   } = props;
 
-  const {onItemClick, onFollowClick } = props;
+  const {onItemClick, onFollowClick, onConfirmClick, onRejectClick, onUnrejectClick } = props;
 
   const handleFollowClick = () => {
     onFollowClick && onFollowClick({ id, userName, isFollow });
   };
+
+  const handleConfirmClick = () => {
+    onConfirmClick && onConfirmClick({id, userName, status});
+  }
+
+  const handleRejectClick = () => {
+    onRejectClick && onRejectClick({id, userName, status});
+  }
+
+  const handleUnrejectClick = () => {
+    onUnrejectClick && onUnrejectClick({id, userName}); 
+  }
 
   return (
     <ListItem button className={classes.item}>
@@ -46,7 +59,47 @@ const RelationshipItem = React.memo((props) => {
         }
         onClick={onItemClick}
       />
-      {!isMe && (
+      {status === FOLLOW_PENDING && (
+        <>
+        <Button
+          className={classes.itemButton}
+          disableElevation
+          disableRipple
+          size="small"
+          variant="contained"
+          color="primary"
+          onClick={handleConfirmClick}
+        >
+          {t("ConfirmBtnTextFollowerItem") }
+        </Button>
+
+        <Button
+          className={classes.itemButton}
+          disableElevation
+          disableRipple
+          size="small"
+          color="secondary"
+          onClick={handleRejectClick}
+        >
+          {t("DeclineBtnTextFollowerItem") }
+        </Button>
+        </>
+      )}
+
+      {status === FOLLOW_REJECTED && (
+        <Button
+          className={classes.itemButton}
+          disableElevation
+          disableRipple
+          size="small"
+          color="secondary"
+          onClick={handleUnrejectClick}
+        >
+          {t("UnrejectBtnTextFollowerItem") }
+        </Button>
+      )}
+
+      {status === FOLLOW_ACCEPTED && !isMe && (
         <Button
           className={classes.itemButton}
           disableElevation
@@ -62,27 +115,5 @@ const RelationshipItem = React.memo((props) => {
     </ListItem>
   );
 });
-
-RelationshipItem.propTypes = {
-  avatarUrl: PropTypes.string,
-  title: PropTypes.string,
-  subtitle: PropTypes.string,
-  isFollow: PropTypes.bool,
-  isMe: PropTypes.bool,
-
-  onFollowClick: PropTypes.func,
-  onItemClick: PropTypes.func
-};
-
-RelationshipItem.defaultProps = {
-  avatarUrl: "",
-  title: "",
-  subtitle: "",
-  isFollow: false,
-  isMe: false,
-
-  onFollowClick: undefined,
-  onItemClick: undefined
-};
 
 export default RelationshipItem;

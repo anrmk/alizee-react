@@ -59,6 +59,8 @@ export default {
     getFollowings: "relationship/getfollowings",
     createFollow: "relationship/follow",
     deleteFollow: "relationship/follow",
+    acceptFollow: "relationship/accept",
+    rejectFollow: "relationship/reject",
 
     // SUGGESTIONS
     getPeopleSuggestions: "suggestion/people",
