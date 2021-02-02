@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import "emoji-mart/css/emoji-mart.css"
-import { Picker } from "emoji-mart"
+import "emoji-mart/css/emoji-mart.css";
+import { Picker } from "emoji-mart";
 
 import { Box, IconButton } from "@material-ui/core";
 
 import useTheme from "@material-ui/core/styles/useTheme";
 
-import SentimentSatisfiedOutlinedIcon from '@material-ui/icons/SentimentSatisfiedOutlined';
+import SentimentSatisfiedOutlinedIcon from "@material-ui/icons/SentimentSatisfiedOutlined";
 
 import useStyles from "./styles";
 
@@ -23,18 +23,18 @@ function EmojiPicker({
   const [emojiPickerIsOpen, setEmojiPickerIsOpen] = useState(false);
 
   useEffect(() => {
-    if(closePickerModal) {
+    if (closePickerModal) {
       setEmojiPickerIsOpen(false);
     }
   }, [closePickerModal]);
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleTextFieldMouseDown);
-    document.addEventListener('touchstart', handleTextFieldMouseDown);
+    document.addEventListener("mousedown", handleTextFieldMouseDown);
+    document.addEventListener("touchstart", handleTextFieldMouseDown);
 
     return () => {
-      document.removeEventListener('mousedown', handleTextFieldMouseDown);
-      document.removeEventListener('touchstart', handleTextFieldMouseDown);
+      document.removeEventListener("mousedown", handleTextFieldMouseDown);
+      document.removeEventListener("touchstart", handleTextFieldMouseDown);
     };
   }, [textFieldRef]);
 
@@ -45,10 +45,10 @@ function EmojiPicker({
 
     setEmojiPickerIsOpen(false);
   };
-  
+
   const handleEmojiPickerModal = () => {
     setEmojiPickerIsOpen((prev) => !prev);
-  }
+  };
 
   const handleAddEmoji = (emoji) => {
     const input = inputRef.current;
@@ -76,10 +76,13 @@ function EmojiPicker({
           theme={theme.palette.type === "light" ? "light" : "dark"}
           style={{
             position: "absolute",
+            width: "auto",
+            maxWidth: "355px",
             bottom: "60px",
-            left: "10px",
+            left: 0,
             display: emojiPickerIsOpen ? null : "none",
-            backgroundColor: theme.palette.type === "light" ? theme.palette.common.white : theme.palette.background.paper,
+            backgroundColor:
+              theme.palette.type === "light" ? theme.palette.common.white : theme.palette.background.paper,
           }}
           onClick={handleAddEmoji}
         />
@@ -94,7 +97,7 @@ function EmojiPicker({
         <SentimentSatisfiedOutlinedIcon className={classes.icon} />
       </IconButton>
     </>
-  )
+  );
 }
 
 export default EmojiPicker;
