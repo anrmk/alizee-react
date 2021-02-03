@@ -61,11 +61,12 @@ export function updateCover(api, mediaData = []) {
       }
 
       const updatedCoverUrl = media[0].url;
+      const updatedCoverMediaId = media[0].id;
 
       await api
         .setMethod('PUT')
         .setParams({
-          url: updatedCoverUrl
+          mediaId: updatedCoverMediaId
         })
         .query(url);
 

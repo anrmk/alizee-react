@@ -56,6 +56,7 @@ export function updateAccount(api, opts) {
         const media = getState().media.data;
         if (media.length) {
           opts.avatarUrl = media[0]?.url;
+          opts.mediaId = media[0]?.id;
         }
       }
 
@@ -81,7 +82,7 @@ export function updateAccount(api, opts) {
             name: opts.fullName,
             birthday: opts.birthday || undefined,
             phoneNumber: opts.phone || undefined,
-            avatarUrl: opts.avatarUrl || undefined,
+            mediaId: opts.mediaId || undefined,
             bio: opts.bio || undefined,
             sites: opts.sites 
           })
