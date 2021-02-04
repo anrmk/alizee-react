@@ -1,11 +1,9 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Box, Divider, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText } from "@material-ui/core";
+import { Box, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Typography } from "@material-ui/core";
+import {formatDate} from "../../helpers/functions"
 
-import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import DeleteIcon from "@material-ui/icons/Delete";
+import { Avatar, Button } from "@material-ui/core";
 
 import useStyles from "./styles";
 
@@ -18,10 +16,12 @@ function BlackListForm({
   const classes = useStyles();
 
   return (
-    <Box className={classes.blackListRoot}>
-      <Typography variant="h6" align="center">
-        {t("SettingFormsBlackListFormTitle")}
+    <Box>
+      <Typography>{t("SettingFormsBlackListFormTitle")}</Typography>
+      <Typography>
+        They won't be able to find your profile, posts or story. System won't let them know you blocked them.
       </Typography>
+
       <List dense={true}>
         {items &&
           items.map((item) => (
@@ -29,11 +29,9 @@ function BlackListForm({
               <ListItemAvatar>
                 <Avatar src={item.avatarUrl} />
               </ListItemAvatar>
-              <ListItemText primary={item.name} secondary={`${item.userName} - ${item.createdDate}`} />
+              <ListItemText primary={item.name} secondary={`${item.userName} - ${formatDate(item.createdDate)}`} />
               <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="delete" onClick={() => onDelete(item.userName)}>
-                  <DeleteIcon />
-                </IconButton>
+                <Button onClick={() => onDelete(item.userName)}>Unblock</Button>
               </ListItemSecondaryAction>
             </ListItem>
           ))}

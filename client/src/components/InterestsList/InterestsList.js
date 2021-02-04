@@ -1,21 +1,16 @@
 import React, { useState, useEffect, forwardRef, useImperativeHandle } from "react";
-import clsx from 'clsx';
+import clsx from "clsx";
 import { Box, Chip } from "@material-ui/core";
 
 import useStyles from "./styles";
 
-const InterestsList = forwardRef(({
-  items,
-  className,
-
-  onSelected
-}, ref) => {
+const InterestsList = forwardRef(({ items, className, onSelected }, ref) => {
   const classes = useStyles();
   const [selected, setSelected] = useState(items);
 
   useEffect(() => {
     setSelected(items);
-  }, [items])
+  }, [items]);
 
   const handleChipClick = (chip) => {
     const updatedSelected = { ...selected };
@@ -23,7 +18,7 @@ const InterestsList = forwardRef(({
 
     setSelected(updatedSelected);
     onSelected && onSelected(chip);
-  }
+  };
 
   useImperativeHandle(ref, () => ({
     getSelected() {
@@ -31,23 +26,25 @@ const InterestsList = forwardRef(({
     },
     getSelectedIds() {
       return Object.values(selected)
-        .filter(item => item.isSelected)
-        .map(item => item.id);
-    }
-  }))
+        .filter((item) => item.isSelected)
+        .map((item) => item.id);
+    },
+  }));
 
   return (
     <Box className={clsx(classes.chipList, className)}>
-      {selected && Object.values(selected).map(item => (
-        <Chip 
-          key={item.id}
-          className={classes.chip}
-          color={item.isSelected ? "secondary" : "default"}
-          label={item.name}
-          onClick={() => handleChipClick(item)} />
-      ))}
+      {selected &&
+        Object.values(selected).map((item) => (
+          <Chip
+            key={item.id}
+            className={classes.chip}
+            color={item.isSelected ? "primary" : "default"}
+            label={item.name}
+            onClick={() => handleChipClick(item)}
+          />
+        ))}
     </Box>
   );
-})
+});
 
 export default InterestsList;

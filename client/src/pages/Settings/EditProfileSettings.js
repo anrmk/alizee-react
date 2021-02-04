@@ -28,7 +28,8 @@ function mapStateToProps(state) {
   return {
     me: {
       avatarUrl: state.signIn?.userInfo?.avatarUrl,
-      username: state.signIn?.userInfo?.userName,
+      userName: state.signIn?.userInfo?.userName,
+      membership: state.signIn?.userInfo?.membership,
       name: state.signIn?.userInfo?.name,
       bio: state.signIn?.userInfo?.bio,
       birthday: state.signIn?.userInfo?.birthday,

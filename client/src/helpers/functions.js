@@ -195,7 +195,7 @@ export function getDate(date) {
     return `${year}-${month}-${day}`;
   }
 
-  return null;
+  return "";
 }
 
 /**

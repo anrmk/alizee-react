@@ -45,6 +45,7 @@ export function updateAccount(api, opts) {
     try {
       const signInState = getState().signIn;
       const currentAvatarUrl = signInState?.userInfo.avatarUrl;
+
       if (opts.avatarUrl && currentAvatarUrl !== opts.avatarUrl) {
         await dispatch(createMedia(api, [opts.avatarFile], MEDIA_AVATAR));
 
@@ -61,8 +62,8 @@ export function updateAccount(api, opts) {
       }
 
       const currentUsername = signInState?.userInfo.userName;
-      if (opts.username && currentUsername !== opts.username) {
-        await dispatch(updateUsername(api, opts.username));
+      if (opts.userName && currentUsername !== opts.userName) {
+        await dispatch(updateUsername(api, opts.userName));
 
         const signInError = signInState.errorMessage;
 
@@ -93,7 +94,7 @@ export function updateAccount(api, opts) {
         const oldUserInfo = signInState?.userInfo;
         const updatedData =  {
           name: opts.fullName,
-          userName: opts.username,
+          userName: opts.userName,
           birthday: opts.birthday,
           phoneNumber: opts.phone,
           avatarUrl: opts.avatarUrl,

@@ -5,6 +5,8 @@ import SendTip from "../components/Tip";
 import SocialList from "../domain/SocialList";
 import { FollowingDialog } from "../domain/Chat";
 import EditCoverDialog from "../domain/EditCoverDialog";
+import DeleteAccountDialog from "../domain/DeleteAccountDialog";
+import ResetPasswordDialog from "../domain/ResetPasswordDialog";
 
 export const CREATE_POST_DIALOG_TYPE = "createPost";
 export const CREATE_STORY_DIALOG_TYPE = "createStory";
@@ -18,6 +20,8 @@ export const SEND_TIP_DIALOG_TYPE = "sentTip";
 
 export const CHAT_FOLLOWERS_TYPE = "chatFollowers";
 export const PROFILE_EDIT_COVER = "profileEditCover";
+export const DELETE_ACCOUNT_DIALOG_TYPE = "deleteAccount";
+export const RESET_PWD_ACCOUNT_DIALOG_TYPE = "resetPasswordAccount";
 
 const baseDialogProps = {
   dialogProps: { fullWidth: true },
@@ -89,4 +93,22 @@ export default {
     ...baseDialogProps,
     ...dialogProps
   }),
+  [DELETE_ACCOUNT_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+    title: "Delete Account",
+    content: <DeleteAccountDialog {...contentProps} />,
+    mainBtnText: "Confirm",
+    closeBtnText: "Disagree",
+    ...baseDialogProps,
+    ...dialogProps
+  }),
+  [RESET_PWD_ACCOUNT_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+    title: "Reset Your Password",
+    content: <ResetPasswordDialog {...contentProps} />,
+    mainBtnText: "Confirm",
+    closeBtnText: "Disagree",
+    ...baseDialogProps,
+    ...dialogProps
+  }),
+
+  
 };

@@ -21,7 +21,7 @@ function FollowingDialog({
   const { t } = useTranslation();
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center">
+    <Box display="flex" flexDirection="column" >
       <Search placeholder={t("ChatFollowingDialogSearchInputLabel")} onChange={onSearchChange} />
       <List >
         {items && items.length ? items.map((follower) => (

@@ -141,7 +141,6 @@ function Chat(props) {
   const handleUserListBtnClick = async () => {
     dialog.toggle(dialogs[CHAT_FOLLOWERS_TYPE]({ loading: true }));
     await getFollowings(apiClient, user.username);
-    dialog.toggle(true);
   };
 
   return (

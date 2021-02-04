@@ -45,18 +45,18 @@ export function createMood(api, postData) {
 
       await api
         .setData({
-          text: postData.text,
+          text: postData.mood,
           latitude: postData?.latitude,
           longitude: postData?.longitude,
         })
         .query(url);
 
       const userInfo = getState().signIn?.userInfo;
-      userInfo.mood = postData.text;
+      userInfo.mood = postData.mood;
 
        const user = getState().user?.data;
        if(user && user.userName == userInfo.userName) {
-        dispatch(updateMood(postData.text));
+        dispatch(updateMood(postData.mood));
        }
 
       dispatch(receiveCreateMood(userInfo));

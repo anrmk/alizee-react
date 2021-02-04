@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import { connect } from "react-redux";
 
+import AlertContainer from "../../components/AlertContainer"
+import { PrivacyForm } from '../../domain/SettingsForms';
+
 import ApiContext from '../../context/ApiContext';
 import * as settingsActions from '../../store/actions/settings';
 import * as userActions from '../../store/actions/user';
-import AlertContainer from "../../components/AlertContainer"
-import { PrivacyForm } from '../../domain/SettingsForms';
+import dialogs, { DELETE_ACCOUNT_DIALOG_TYPE, RESET_PWD_ACCOUNT_DIALOG_TYPE } from "../../constants/dialogs";
+import useDialog from "../../hooks/useDialog";
 
 const DEFAULT_ALERT_SUCCESS_TEXT = "Settings have been updated";
 const DEFAULT_ALERT_ERROR_TEXT = "Settings have not been updated";
@@ -29,6 +32,7 @@ function PrivacySecuritySettings(props) {
     deleteAccount,
     getSettingsResetPasswordConfirm
   } = props;
+  const dialog = useDialog();
 
   useEffect(() => {
     (async () => {
@@ -63,7 +67,7 @@ function PrivacySecuritySettings(props) {
     }
   }
 
-  const handlePasswordResetClick = () => {
+  const handlePasswordResetConfirmClick = () => {
     (async () => {
       await getSettingsResetPasswordConfirm(apiClient);
       setAlertSuccessText(RESET_PASSWORD_ALERT_SUCCESS_TEXT)
@@ -72,7 +76,11 @@ function PrivacySecuritySettings(props) {
     })();
   }
 
-  const handleAccountDeleteClick = () => {
+  const handlePasswordResetClick = () => {
+    dialog.toggle(dialogs[RESET_PWD_ACCOUNT_DIALOG_TYPE]({ onMainClick: handlePasswordResetConfirmClick }));
+  }
+
+  const handleAccountDeleteConfirmClick = () => {
     (async () => {
       await deleteAccount(apiClient);
       setAlertSuccessText(DELETE_ACCOUNT_ALERT_SUCCESS_TEXT);
@@ -81,6 +89,10 @@ function PrivacySecuritySettings(props) {
     })();
   }
 
+  const handleAccountDeleteClick = () => {
+    dialog.toggle(dialogs[DELETE_ACCOUNT_DIALOG_TYPE]({ onMainClick: handleAccountDeleteConfirmClick }));
+  }
+  
   const handleAlertClose = () => {
     setAlertOpen(false)
   }

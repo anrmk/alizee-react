@@ -1,92 +1,113 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Container, Box, Card, Tabs, Tab } from "@material-ui/core";
+import { Container, Tabs, Tab, IconButton, Card, CardContent, CardHeader } from "@material-ui/core";
+import BackIcon from "@material-ui/icons/ArrowBackRounded";
 
-import { 
+import {
   SETTINGS_BLACK_LIST_ROUTE,
   SETTINGS_EDIT_PROFILE_ROUTE,
   SETTINGS_INTERESTS_ROUTE,
   SETTINGS_NOTIFICATION_ROUTE,
-  SETTINGS_PRIVACY_SECURITY_ROUTE
+  SETTINGS_PRIVACY_SECURITY_ROUTE,
 } from "../../constants/routes";
 import PrivateRoute from "../PrivateRoute";
+import SlidingViews from "../../components/SlidingViews";
 
 import BlackList from "./BlackList";
 import EditProfileSettings from "./EditProfileSettings";
 import InterestsSettings from "./InterestsSettings";
 import PrivacySecuritySettings from "./PrivacySecuritySettings";
 import useStyles from "./styles";
+import useSlidingViews, { RIGHT_OPEN_TYPE } from "../../hooks/useSlidingViews";
+import useViewport from "../../hooks/useViewport";
 
-function a11yProps(key) {
-  return {
-    id: `vertical-tab-${key}`,
-    'aria-controls': `vertical-tabpanel-${key}`,
-  };
+const TABS = [
+  {
+    index: 0,
+    name: "edit-profile",
+    title: "Profile",
+    route: SETTINGS_EDIT_PROFILE_ROUTE,
+  },
+  {
+    index: 1,
+    name: "interests",
+    title: "Interests",
+    route: SETTINGS_INTERESTS_ROUTE,
+  },
+  {
+    index: 2,
+    name: "notification",
+    title: "Notification",
+    route: SETTINGS_NOTIFICATION_ROUTE,
+  },
+  {
+    index: 3,
+    name: "privacy-security",
+    title: "Privacy and Security",
+    route: SETTINGS_PRIVACY_SECURITY_ROUTE,
+  }
+];
+
+const findTab = (value) => {
+  return TABS.find(x => x.name === value || x.index === value)
 }
 
-const TABS = {
-  "edit-profile": 0,
-  "interests": 1,
-  "notification": 2,
-  "privacy-security": 3
+const a11yProps = (key) => {
+  return {
+    id: `vertical-tab-${key}`,
+    "aria-controls": `vertical-tabpanel-${key}`,
+  };
 }
 
 function Settings() {
   const { type } = useParams();
-  const [currentTab, setCurrentTab] = useState(TABS[type]);
+  const { up } = useViewport();
+  const [currentTab, setCurrentTab] = useState(findTab(type));
+  const { currentSlidingViewsState, toggleSlidingViewsState } = useSlidingViews(RIGHT_OPEN_TYPE);
   const classes = useStyles();
 
   useEffect(() => {
     if (type) {
-      setCurrentTab(TABS[type]);
+      setCurrentTab(findTab(type));
+      toggleSlidingViewsState();
     }
-  }, [type])
+  }, [type]);
 
   return (
-    <Container className={classes.container}>
-      <Card className={classes.card}>
+    <Container>
+      <SlidingViews mobileOnly currentState={currentSlidingViewsState} firstSize={4} secondSize={8}>
         <Tabs
           orientation="vertical"
-          variant="scrollable"
-          value={currentTab}
-          onChange={(_, value) => setCurrentTab(value)}
-          aria-label="Vertical tabs example"
+          variant="fullWidth"
+          value={currentTab.index}
           className={classes.tabs}
+          onChange={(_, value) => setCurrentTab(findTab(value))}
         >
-          <Tab 
-            to={SETTINGS_EDIT_PROFILE_ROUTE} 
-            className={classes.tab}
-            component={Link} 
-            label="Edit Profile"
-            {...a11yProps(TABS["edit-profile"])} />
-          <Tab 
-            to={SETTINGS_INTERESTS_ROUTE} 
-            className={classes.tab}
-            component={Link} 
-            label="Interests" 
-            {...a11yProps(TABS["interests"])} />
-          <Tab 
-            to={SETTINGS_NOTIFICATION_ROUTE} 
-            className={classes.tab}
-            component={Link} 
-            label="Notification" 
-            {...a11yProps(TABS["notification"])} />
-          <Tab 
-            to={SETTINGS_PRIVACY_SECURITY_ROUTE} 
-            className={classes.tab}
-            component={Link} 
-            label="Privacy and Security" 
-            {...a11yProps(TABS["privacy-security"])} />
+          {TABS && TABS.map((tab) => (
+            <Tab key={tab.index} to={tab.route} component={Link} label={tab.title} {...a11yProps(tab.index)} />
+          ))}
         </Tabs>
-        <Box className={classes.content}>
-          <PrivateRoute exact path={SETTINGS_EDIT_PROFILE_ROUTE} component={EditProfileSettings} />
-          <PrivateRoute exact path={SETTINGS_INTERESTS_ROUTE} component={InterestsSettings} />
-          <PrivateRoute exact path={SETTINGS_PRIVACY_SECURITY_ROUTE} component={PrivacySecuritySettings} />
-          <PrivateRoute exact path={SETTINGS_BLACK_LIST_ROUTE} component={BlackList} />
-        </Box>
-      </Card>
+
+        <Card>
+          <CardHeader
+            title={currentTab.title}
+            action={
+              !up("md") &&
+              <IconButton onClick={() => toggleSlidingViewsState()}>
+                <BackIcon />
+              </IconButton>
+            }
+          />
+          <CardContent>
+            <PrivateRoute exact path={SETTINGS_EDIT_PROFILE_ROUTE} component={EditProfileSettings} />
+            <PrivateRoute exact path={SETTINGS_INTERESTS_ROUTE} component={InterestsSettings} />
+            <PrivateRoute exact path={SETTINGS_PRIVACY_SECURITY_ROUTE} component={PrivacySecuritySettings} />
+            <PrivateRoute exact path={SETTINGS_BLACK_LIST_ROUTE} component={BlackList} />
+          </CardContent>
+        </Card>
+      </SlidingViews>
     </Container>
-  )
+  );
 }
 
 export default Settings;
