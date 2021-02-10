@@ -17,6 +17,8 @@ import BlackList from "./BlackList";
 import EditProfileSettings from "./EditProfileSettings";
 import InterestsSettings from "./InterestsSettings";
 import PrivacySecuritySettings from "./PrivacySecuritySettings";
+import NotificationSettings from "./NotificationSettings";
+
 import useStyles from "./styles";
 import useSlidingViews, { RIGHT_OPEN_TYPE } from "../../hooks/useSlidingViews";
 import useViewport from "../../hooks/useViewport";
@@ -101,6 +103,8 @@ function Settings() {
           <CardContent>
             <PrivateRoute exact path={SETTINGS_EDIT_PROFILE_ROUTE} component={EditProfileSettings} />
             <PrivateRoute exact path={SETTINGS_INTERESTS_ROUTE} component={InterestsSettings} />
+            
+            <PrivateRoute exact path={SETTINGS_NOTIFICATION_ROUTE} component={NotificationSettings} />
             <PrivateRoute exact path={SETTINGS_PRIVACY_SECURITY_ROUTE} component={PrivacySecuritySettings} />
             <PrivateRoute exact path={SETTINGS_BLACK_LIST_ROUTE} component={BlackList} />
           </CardContent>

@@ -86,6 +86,8 @@ export default {
     updatePrivateStatus: "accountsetting/privatestatus",
     updateOffensiveComments: "accountsetting/offensivecontentstatus",
     getPrivacy: "accountsetting/privacysettings",
+    getNotification: "accountsetting/notification",
+    updateNotification: "accountsetting/notification",
     deleteAccount: "accountsetting/deleteaccount",
     getAccountPersonalized: "accountsetting/isaccountpersonalized",
     getAccountInterests: "accountsetting/interests",

@@ -42,6 +42,14 @@ import {
   UPDATE_COVER_REQUEST,
   UPDATE_COVER_SUCCESS,
   UPDATE_COVER_FAILURE,
+
+  GET_NOTIFICATION_REQUEST,
+  GET_NOTIFICATION_SUCCESS,
+  GET_NOTIFICATION_FAILURE,
+
+  UPDATE_NOTIFICATION_REQUEST,
+  UPDATE_NOTIFICATION_SUCCESS,
+  UPDATE_NOTIFICATION_FAILURE,
 } from '../actions/settings';
 
 export default function settings(state = {
@@ -56,180 +64,223 @@ export default function settings(state = {
     case UPDATE_PRIVACY_REQUEST:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case UPDATE_PRIVACY_SUCCESS:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case UPDATE_PRIVACY_FAILURE:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     // Update activity status
     case UPDATE_ACTIVITY_STATUS_REQUEST:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case UPDATE_ACTIVITY_STATUS_SUCCESS:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case UPDATE_ACTIVITY_STATUS_FAILURE:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     // Update private status
     case UPDATE_PRIVATE_STATUS_REQUEST:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case UPDATE_PRIVATE_STATUS_SUCCESS:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case UPDATE_PRIVATE_STATUS_FAILURE:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     // Update private status
     case UPDATE_OFFENSIVE_COMMENTS_REQUEST:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case UPDATE_OFFENSIVE_COMMENTS_SUCCESS:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case UPDATE_OFFENSIVE_COMMENTS_FAILURE:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     // Get privacy
     case GET_PRIVACY_REQUEST:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case GET_PRIVACY_SUCCESS:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case GET_PRIVACY_FAILURE:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     // Delete account
     case DELETE_ACCOUNT_REQUEST:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case DELETE_ACCOUNT_SUCCESS:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case DELETE_ACCOUNT_FAILURE:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     // Get account personalized
     case GET_ACCOUNT_PERSONALIZED_REQUEST:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case GET_ACCOUNT_PERSONALIZED_SUCCESS:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case GET_ACCOUNT_PERSONALIZED_FAILURE:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     // Get account settings
     case GET_ACCOUNT_INTERESTS_REQUEST:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case GET_ACCOUNT_INTERESTS_SUCCESS:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case GET_ACCOUNT_INTERESTS_FAILURE:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     // Get black list
     case GET_BLACK_LIST_REQUEST:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case GET_BLACK_LIST_SUCCESS:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case GET_BLACK_LIST_FAILURE:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     // Delete black list user
     case DELETE_BLACK_LIST_REQUEST:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case DELETE_BLACK_LIST_SUCCESS:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case DELETE_BLACK_LIST_FAILURE:
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
 
     case UPDATE_COVER_REQUEST:
       return {
         ...state,
         ...action.payload,
-      }
+      };
     case UPDATE_COVER_SUCCESS:
       return {
         ...state,
         ...action.payload,
-      }
+      };
     case UPDATE_COVER_FAILURE:
       return {
         ...state,
         ...action.payload,
-      }
+      };
+
+    //NOTIFICATION SETTINGS
+    case GET_NOTIFICATION_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case GET_NOTIFICATION_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case GET_NOTIFICATION_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case UPDATE_NOTIFICATION_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case UPDATE_NOTIFICATION_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case UPDATE_NOTIFICATION_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
 
     default:
-      return state
+      return state;
   }
 }

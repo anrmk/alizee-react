@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Button, Checkbox, FormGroup, FormControlLabel, Divider, Link, Typography, Grid } from "@material-ui/core";
+import { Button, Checkbox, FormGroup, FormControlLabel, Divider, Typography, Grid } from "@material-ui/core";
 
 import { SETTINGS_BLACK_LIST_ROUTE } from "../../constants/routes";
-import useStyles from "./styles";
 
 const ACCOUNT_PRIVACY_HEADER = "Account Privacy";
 const ACCOUNT_PRIVACY_HELPER =
@@ -34,7 +33,6 @@ function PrivacyForm({
   onPasswordReset,
   onAccountDelete,
 }) {
-  const classes = useStyles();
   const [lAccountPrivate, setLAccountPrivate] = useState(accountPrivate);
   const [lActivityStatus, setLActivityStatus] = useState(showActivity);
   const [lOffensiveComments, setLOffensiveComments] = useState(offensiveCommentsHidden);
