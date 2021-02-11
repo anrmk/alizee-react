@@ -42,6 +42,6 @@ export const SETTINGS_PRIVACY_SECURITY_ROUTE = "/settings/privacy-security";
 export const SETTINGS_BLACK_LIST_ROUTE = "/settings/privacy-security/black-list";
 export const RESET_PASSWORD_ROUTE = "/reset-password";
 export const PASSWORD_CHANGE_ROUTE = "/password-change";
-export const STORIES_ROUTE = (id) => `/stories/${id}`;
+export const STORIES_ROUTE = (id, username) => username ? `/stories/${username}/${id}` : `/stories/${id}`;
 export const STORIES_ID_ROUTE = "/stories/:username/:storyId?";
 export const STORIES_DEFAULT_ROUTE = "/stories";

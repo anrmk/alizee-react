@@ -32,8 +32,7 @@ function Menu({
   const menuOpen = Boolean(anchorEl);
 
   const history = useHistory();
-  const location = window.location.origin;
-  const profileUrl = getUrlTo(location, PROFILE_USERNAME_ROUTE(user.userName));
+  const profileUrl = getUrlTo(PROFILE_USERNAME_ROUTE(user.userName));
 
   const handleMenuClose = () => {
     setAnchorEl(null);

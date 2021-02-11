@@ -11,10 +11,16 @@ const getProgressInnerStyles = (count, type) => {
   }
 };
 
-const opacityTransition = (pause) => ({
-  transition: "opacity 400ms ease-in-out",
-  opacity: pause ? 0 : 1
-})
+const getShadow = (theme) => ({
+  position: "absolute",
+  width: "100%",
+  height: `calc(65px + ${theme.spacing(2)}px )`,
+  left: 0,
+  backgroundColor: theme.palette.common.black,
+  opacity: 0.2,
+  filter: `blur(${theme.spacing(1)}px)`,
+  zIndex: theme.zIndex.mobileStepper
+});
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -24,17 +30,44 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.common.black,
     position: "relative"
   },
-  header: ({ pause }) => ({
+  header: {
     position: "absolute",
-    display: "flex",
+    left: "0",
     width: "100%",
+    padding: theme.spacing(2),
+    zIndex: theme.zIndex.drawer,
+  },
+  headerInner: {
+    display: "flex",
+    justifyContent: "space-between",
+    marginTop: theme.spacing(1)
+  },
+  headerShadow: {
+    top: 0,
+    ...getShadow(theme)
+  },
+  footer: {
+    width: "100%",
+    bottom: 0,
+    display: "flex",
+    position: "absolute",
+    justifyContent: "space-between",
+    padding: theme.spacing(2),
+    zIndex: theme.zIndex.drawer
+  },
+  footerShadow: {
+    bottom: 0,
+    ...getShadow(theme)
+  },
+  userInfo: {
+    display: "flex",
     alignItems: "center",
-    paddingTop: theme.spacing(3),
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-    zIndex: theme.zIndex.appBar,
-    ...opacityTransition(pause)
-  }),
+  },
+  tools: {
+  },
+  btn: {
+    color: theme.palette.common.white
+  },
   headerText: {
     marginLeft: theme.spacing(2),
     color: theme.palette.common.white
@@ -56,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
     background: "#555",
     margin: theme.spacing(0.2),
     overflow: "hidden",
-    borderRadius: theme.shape.borderRadius
+    borderRadius: theme.shape.borderRadius,
   },
   progressInner: ({ count, active }) => ({
     ...getProgressInnerStyles(count, active),
@@ -74,22 +107,16 @@ const useStyles = makeStyles((theme) => ({
     WebkitPerspective: 1000,
     MozPerspective: 1000,
     msPerspective: 1000,
-    perspective: 1000
+    perspective: 1000,
   }),
-  progressList: ({ pause }) => ({
+  progressList: {
     display: "flex",
     justifyContent: "center",
     maxWidth: "100%",
-    flexWrap: "row",
-    position: "absolute",
-    width: "98%",
-    padding: theme.spacing(0.5),
-    paddingTop: theme.spacing(1),
-    alignSelf: "center",
-    zIndex: theme.zIndex.appBar,
-    filter: "drop-shadow(0 1px 8px #222)",
-    ...opacityTransition(pause)
-  }),
+    flexWrap: "nowrap",
+    width: "100%",
+    alignSelf: "center"
+  },
   story: {
     width: "100%",
     height: "100%",

@@ -48,6 +48,7 @@ export default {
     getRoom: "chat/getRoom",
     getRooms: "chat/getRooms",
     createRoom: "chat/createRoom",
+    shareMessage: "chat/shareMessage",
     deleteRoom: "chat/deleteRoom",
     deleteRoomHistory: "chat/deleteRoomHistory",
     chat: "/hubs/chat",

@@ -19,6 +19,9 @@ import {
   CREATE_MESSAGE_REQUEST,
   CREATE_MESSAGE_SUCCESS,
   CREATE_MESSAGE_FAILURE,
+  SHARE_MESSAGE_REQUEST,
+  SHARE_MESSAGE_SUCCESS,
+  SHARE_MESSAGE_FAILURE,
   ADD_MESSAGE_TO_LOCAL,
   RESET_CURRENT_ROOM,
   SET_ROOM_SUCCESS,
@@ -135,6 +138,26 @@ export default function chatReducer(state = { isFetching: false, data: [], query
       return {
         ...state,
         ...action.payload,
+      };
+    }
+
+    // Share a message to different rooms
+    case SHARE_MESSAGE_REQUEST: {
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+    case SHARE_MESSAGE_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+    case SHARE_MESSAGE_FAILURE: {
+      return {
+        ...state,
+        ...action.payload
       };
     }
 

@@ -10,10 +10,10 @@ import useStyles from "./styles";
 
 export default function ProgressList() {
   const [count, setCount] = useState(0);
-  const { currentId, next, videoDuration, pause, bufferAction } = useContext(ProgressContext);
+  const { currentId, next, videoDuration, pause } = useContext(ProgressContext);
   const { defaultInterval, onStoryEnd, onStoryStart, onAllStoriesEnd } = useContext(GlobalContext);
-  const { stories } = useContext(StoriesContext);
-  const classes = useStyles({ pause, bufferAction });
+  const { storyOptions: { stories } } = useContext(StoriesContext);
+  const classes = useStyles();
   let animationFrameId = useRef();
 
   useEffect(() => {
@@ -27,16 +27,17 @@ export default function ProgressList() {
     return () => {
       cancelAnimationFrame(animationFrameId.current);
     }
-  }, [currentId, pause]);
+  }, [pause]);
 
   let countCopy = count;
   const incrementCount = () => {
     if (countCopy === 0) storyStartCallback();
+
     setCount(count => {
       const interval = getCurrentInterval();
       countCopy = count + (100 / ((interval / 1000) * 60));
       return count + (100 / ((interval / 1000) * 60));
-    })
+    });
 
     if (countCopy < 100) {
       animationFrameId.current = requestAnimationFrame(incrementCount);
@@ -63,14 +64,14 @@ export default function ProgressList() {
   }
 
   const getCurrentInterval = () => {
-    if (stories[currentId]?.kind === MEDIA_VIDEO) return videoDuration;
+    if (stories[currentId]?.media?.kind === MEDIA_VIDEO) return videoDuration;
 
     return defaultInterval;
   }
 
   return (
     <Box className={classes.progressList}>
-      {stories.map((_, i) =>
+      {stories.length && stories.map((_, i) =>
         <Progress
           key={i}
           count={count}

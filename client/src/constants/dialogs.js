@@ -5,6 +5,8 @@ import SendTip from "../components/Tip";
 import SocialList from "../domain/SocialList";
 import { FollowingDialog } from "../domain/Chat";
 import EditCoverDialog from "../domain/EditCoverDialog";
+import StoryDialog from "../domain/StoryDialog";
+import ChatListDialog from "../domain/ChatListDialog";
 import DeleteAccountDialog from "../domain/DeleteAccountDialog";
 import ResetPasswordDialog from "../domain/ResetPasswordDialog";
 
@@ -20,6 +22,8 @@ export const SEND_TIP_DIALOG_TYPE = "sentTip";
 
 export const CHAT_FOLLOWERS_TYPE = "chatFollowers";
 export const PROFILE_EDIT_COVER = "profileEditCover";
+export const STORY_DIALOG_TYPE = "story";
+export const CHAT_LIST_DIALOG_TYPE = "chatList";
 export const DELETE_ACCOUNT_DIALOG_TYPE = "deleteAccount";
 export const RESET_PWD_ACCOUNT_DIALOG_TYPE = "resetPasswordAccount";
 
@@ -93,6 +97,20 @@ export default {
     ...baseDialogProps,
     ...dialogProps
   }),
+  [STORY_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+    title: "Story",
+    content: <StoryDialog {...contentProps} />,
+    ...baseDialogProps,
+    ...dialogProps
+  }),
+  [CHAT_LIST_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+    title: "Chat List",
+    content: <ChatListDialog {...contentProps} />,
+    mainBtnText: "Share",
+    closeBtnText: "Cancel",
+    ...baseDialogProps,
+    ...dialogProps
+  }),
   [DELETE_ACCOUNT_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Delete Account",
     content: <DeleteAccountDialog {...contentProps} />,
@@ -109,6 +127,4 @@ export default {
     ...baseDialogProps,
     ...dialogProps
   }),
-
-  
 };

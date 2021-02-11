@@ -1,6 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import clsx from "clsx";
 import CircularProgress from "@material-ui/core/CircularProgress";
+
+import useStoriesControls from "../../hooks/useStoriesControls";
+import StoriesContext from "./Context/StoriesContext";
 
 import useStyles from "./styles";
 
@@ -14,9 +17,12 @@ export default function VideoContent({
 }) {
   const classes = useStyles();
   const [loaded, setLoaded] = useState(false);
-  const [muted, setMuted] = useState(true);
+  const { storyOptions: { muted } } = useContext(StoriesContext);
+  const { muteAudio } = useStoriesControls();
   const { videoContentClassName } = config;
   let videoEl = useRef(null);
+
+  useEffect(() => muteAudio(false), []);
 
   useEffect(() => {
     if (videoEl.current) {
@@ -34,7 +40,7 @@ export default function VideoContent({
     videoEl.current.play().then(() => {
       action("play");
     }).catch(() => {
-      setMuted(true);
+      muteAudio(true);
       videoEl.current.play().finally(() => {
         action("play");
       })
@@ -43,6 +49,9 @@ export default function VideoContent({
   
   return (
     <>
+      {!loaded && (
+        <CircularProgress className={classes.loader} />
+      )}
       <video
         className={clsx(classes.video, videoContentClassName)}
         ref={videoEl}
@@ -51,9 +60,6 @@ export default function VideoContent({
         onLoadedData={handleLoadedData}
         playsInline
         muted={muted} />
-      {!loaded && (
-        <CircularProgress className={classes.loader} />
-      )}
     </>
   );
 }

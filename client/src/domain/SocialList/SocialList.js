@@ -12,8 +12,7 @@ import { POST_ID_ROUTE } from "../../constants/routes";
 import { ListItem, List, ListItemIcon, ListItemText } from "@material-ui/core";
 
 export default function SocialList({ id, username, description }) {
-  const location = window.location.origin;
-  const postUrl = getUrlTo(location, POST_ID_ROUTE(id));
+  const postUrl = getUrlTo(POST_ID_ROUTE(id));
 
   return (
     <List>

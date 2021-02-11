@@ -73,7 +73,9 @@ export function getOffset(currentOffset, total, step = 1) {
  * @param {number} id
  * @return {number} full url to post
  */
-export function getUrlTo(location, route) {
+export function getUrlTo(route) {
+  const location = window.location.origin;
+
   if (!location || !route ) return null;
 
   return `${location}${route}`

@@ -1,12 +1,22 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { Box, Avatar, Typography } from "@material-ui/core";
-import ProgressList from "./ProgressList";
+import { Box, Avatar, Typography, IconButton } from "@material-ui/core";
+
+import CloseIcon from "@material-ui/icons/CloseRounded";
+import PauseIcon from "@material-ui/icons/PauseRounded";
+import PlayIcon from "@material-ui/icons/PlayArrowRounded";
+import VolumeUpIcon from "@material-ui/icons/VolumeUpRounded";
+import VolumeOffIcon from "@material-ui/icons/VolumeOffRounded";
+import MoreHorizIcon from "@material-ui/icons/MoreHorizRounded";
 
 import GlobalContext from "./Context/GlobalContext";
-import StoriesContext from "./Context/StoriesContext";
+import StoriesContext, { UPDATE_STORY_DATA } from "./Context/StoriesContext";
 import ProgressContext from "./Context/ProgressContext";
 import Story from "./Story";
+import ProgressList from "./ProgressList";
+
 import useStyles from "./styles";
+import { getDate } from "../../helpers/functions";
+import { MEDIA_VIDEO } from "../../constants/media_types";
 
 export default function Container() {
   const [currentId, setCurrentId] = useState(0);
@@ -14,8 +24,18 @@ export default function Container() {
   // TODO: maybe remove bufferAction
   const [bufferAction, setBufferAction] = useState(true);
   const [videoDuration, setVideoDuration] = useState(0);
-  const { loop, currentIndex, isPaused, onChange, avatarUrl, fullName } = useContext(GlobalContext);
-  const { stories } = useContext(StoriesContext);
+  const {
+    loop,
+    currentIndex,
+    isPaused,
+    avatarUrl,
+    fullName,
+    createdDate,
+    onMoreClick,
+    onCloseClick,
+    onChange
+  } = useContext(GlobalContext);
+  const { storyOptions: { stories, muted }, setStoriesOptions } = useContext(StoriesContext);
   let mousedownId = useRef();
   const classes = useStyles({ pause, bufferAction });
 
@@ -73,6 +93,7 @@ export default function Container() {
 
   const debouncePause = (e) => {
     e.preventDefault();
+
     mousedownId.current = setTimeout(() => {
       toggleState("pause");
     }, 200);
@@ -87,8 +108,34 @@ export default function Container() {
       pause && currentId < stories.length - 1) {
       toggleState("play");
     } else if (stories.length > 1) {
-      type === "next" ? next() : previous();
+      if (type === "previous" && currentId === 0) {
+        toggleState("play");
+      } else if (type === "next" && currentId === stories.length - 1) {
+        toggleState("play");
+      } else {
+        type === "next" ? next() : previous();
+      }
     }
+  }
+
+  const handleBtnPlayClick = () => {
+    mousedownId.current && clearTimeout(mousedownId.current);
+
+    mousedownId.current = setTimeout(() => {
+      toggleState(pause ? "play" : "pause");
+    }, 0);
+  }
+
+  const handleMuteClick = () => {
+    setStoriesOptions({
+      type: UPDATE_STORY_DATA,
+      payload: { muted: !muted }
+    });
+  }
+
+  const handleMoreBtnClick = () => {
+    toggleState("pause", false);
+    onMoreClick && onMoreClick();
   }
 
   const handleVideoDuration = (duration) => {
@@ -97,26 +144,54 @@ export default function Container() {
 
   return (
     <Box className={classes.container}>
-      <ProgressContext.Provider value={{
-        bufferAction: bufferAction,
-        videoDuration: videoDuration,
-        currentId,
-        pause,
-        next
-      }}>
-        <ProgressList />
-      </ProgressContext.Provider>
       <Box className={classes.header}>
-        <Avatar src={avatarUrl} />
-        <Typography className={classes.headerText} variant="body1" noWrap>{fullName}</Typography>
+        <ProgressContext.Provider value={{
+          bufferAction: bufferAction,
+          videoDuration: videoDuration,
+          currentId,
+          pause,
+          next
+        }}>
+          <ProgressList />
+        </ProgressContext.Provider>
+        <Box className={classes.headerInner}>
+          <Box className={classes.userInfo}>
+            <Avatar src={avatarUrl} />
+            <Box>
+              {fullName && <Typography className={classes.headerText} variant="body1" noWrap>{fullName}</Typography>}
+              {createdDate && <Typography className={classes.headerText} variant="caption" noWrap>asdg{getDate(createdDate)}</Typography>}
+            </Box>
+          </Box>
+          <Box className={classes.tools}>
+            <IconButton className={classes.btn} size="small" onClick={handleBtnPlayClick}>
+              {pause ? <PlayIcon /> : <PauseIcon />}
+            </IconButton>
+            {stories[currentId]?.media?.kind === MEDIA_VIDEO && (
+              <IconButton className={classes.btn} size="small" onClick={handleMuteClick}>
+                {muted ? <VolumeOffIcon /> : <VolumeUpIcon />}
+              </IconButton>
+            )}
+            <IconButton className={classes.btn} size="small" onClick={onCloseClick}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+        </Box>
       </Box>
+      <Box className={classes.headerShadow} />
       <Story
         action={toggleState}
         bufferAction={bufferAction}
         playState={pause}
         url={stories[currentId]?.media.url}
-        kind={stories[currentId]?.media.kind}
+        kind={stories[currentId]?.media?.kind}
         onVideoDuration={handleVideoDuration} />
+      <Box className={classes.footer}>
+        <Box></Box>
+        <IconButton className={classes.btn} size="small" onClick={handleMoreBtnClick}>
+          <MoreHorizIcon />
+        </IconButton>
+      </Box>
+      <Box className={classes.footerShadow} />
       <Box className={classes.overlay}>
         <Box
           className={classes.controls}

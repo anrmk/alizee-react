@@ -1,8 +1,11 @@
 import React from "react";
 
 export const initialContext = {
-	stories: []
+	stories: [],
+	muted: false
 };
+
+export const UPDATE_STORY_DATA = "UPDATE_STORY_DATA";
 
 const StoriesContext = React.createContext(
 	initialContext

@@ -33,6 +33,14 @@ export {
   deleteRoomHistory,
 } from "./deleteRoomHistory";
 
+export {
+  SHARE_MESSAGE_REQUEST,
+  SHARE_MESSAGE_SUCCESS,
+  SHARE_MESSAGE_FAILURE,
+
+  shareMessage
+} from "./shareMessage";
+
 export { RESET_CURRENT_ROOM, resetCurrentRoom } from "./resetCurrentRoom";
 
 export { SET_ROOM_SUCCESS, setRoom } from "./setRoom";
