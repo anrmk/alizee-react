@@ -7,17 +7,8 @@ import * as yup from "yup";
 import {
   Box,
   TextField,
-  FilledInput,
   InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  Input,
-  Card,
-  CardContent,
-  CardHeader,
-  Grid,
   Typography,
-  FormControl,
   FormHelperText,
 } from "@material-ui/core";
 import Avatar from "../Avatar";
@@ -27,6 +18,7 @@ const MESSAGE_INPUT_ID = "message";
 const USER_ID = "user";
 const EMPTY_VALUE_ERROR = "It is a required filed";
 const INVALID_AMOUNT_MAX_ERROR = "Maximum $200 USD";
+const TAX_VALUE = 0.07;
 
 const schema = yup.object().shape({
   [AMOUNT_INPUT_ID]: yup.number().required(EMPTY_VALUE_ERROR),
@@ -89,7 +81,7 @@ function SendTip({
                 // }}
                 InputProps={{
                   startAdornment: <InputAdornment position="start">$</InputAdornment>,
-                  endAdornment: <InputAdornment position="end">+ {value && formatCurrency(value * 0.07)} (GTS)</InputAdornment>
+                  endAdornment: <InputAdornment position="end">+ {value && formatCurrency(value * TAX_VALUE)} (GTS)</InputAdornment>
                 }}
 
                 // inputProps={{max: 200, maxLength: 3}}
@@ -99,7 +91,7 @@ function SendTip({
                   <FormHelperText>{INVALID_AMOUNT_MAX_ERROR}</FormHelperText>
                 </Box>
                 <Box>
-                  <FormHelperText>Total: {value && formatCurrency(value*1 + value*0.07)}</FormHelperText>
+                  <FormHelperText>Total: {value && formatCurrency(value*1 + value*TAX_VALUE)}</FormHelperText>
                 </Box>
               </Box>
               </>

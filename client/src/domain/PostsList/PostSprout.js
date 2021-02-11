@@ -62,7 +62,7 @@ function PostSprout({
             <Avatar>
               <AddIcon />
             </Avatar>
-            <Box p={(0, 2)}>
+            <Box p={(0, 1)}>
               <Typography variant="h6">Create a Story</Typography>
               <Typography variant="caption">Share a post or write something</Typography>
             </Box>

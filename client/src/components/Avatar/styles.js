@@ -8,7 +8,8 @@ const SIZES = {
   small: "25px",
   medium: "40px",
   large: "65px",
-  extraLarge: "150px"
+  big: "96px",
+  huge: "150px"
 };
 
 const BORDER_COLORS = {
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     height: ({ size }) => (SIZES[size] ? SIZES[size] : SIZES["medium"]),
     boxShadow: ({ borderWidth, borderColor }) => getBorder(borderWidth, borderColor),
     backgroundColor:  theme.palette.background.default,
-    padding: ({size}) => (size === "large" || size === "extraLarge" ? theme.spacing(0.5) : theme.spacing(0.25)),
+    padding: ({size}) => (size === "large" || size === "big" || size === "huge" ? theme.spacing(0.5) : theme.spacing(0.25)),
     overflow: "visible",
     "& > img.MuiAvatar-img": {
       borderRadius: "50%",

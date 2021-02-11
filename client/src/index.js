@@ -8,7 +8,6 @@ import { store, persistor } from './store';
 import ApiClient from './services/api';
 import ApiContext from './context/ApiContext';
 import "./i18n";
-import './assets/scss/index.scss';
 
 const clientApi = new ApiClient();
 

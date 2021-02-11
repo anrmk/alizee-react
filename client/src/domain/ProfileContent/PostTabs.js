@@ -1,8 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import PropTypes from "prop-types";
 
-import { Tabs, Tab } from "@material-ui/core";
+import { Box, Tabs, Tab } from "@material-ui/core";
 
 // import GridIcon from "@material-ui/icons/GridOnOutlined";
 // import StarIcon from "@material-ui/icons/Star";
@@ -10,45 +9,29 @@ import { Tabs, Tab } from "@material-ui/core";
 
 import useStyles from "./styles";
 
-function PostTabs(props) {
+function PostTabs({
+  isOwner,
+  index,
+  disabled,
+
+  onTabChange,
+}) {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const { isOwner, index, children, disabled } = props;
-  const { onTabChange } = props;
-
-  const handleChange = (e, newValue) => {
+  const handleChange = (_, newValue) => {
     onTabChange && onTabChange(newValue);
   };
 
   return (
-    <>
-      <Tabs className={classes.tabs} centered value={index} onChange={handleChange}>
+    <Box marginBottom={1}>
+      <Tabs value={index} onChange={handleChange} variant="fullWidth" centered>
         <Tab label={t("ProfileProfileContentPostsTabLabel")} disabled={disabled} />
         <Tab label={t("ProfileProfileContentTaggedTabLabel")} disabled={disabled} />
         {isOwner && <Tab label={t("ProfileProfileContentFavoritesTabLabel")} disabled={disabled} />}
       </Tabs>
-      {children}
-    </>
+    </Box>
   );
 }
-
-PostTabs.propTypes = {
-  isOwner: PropTypes.bool,
-  media: PropTypes.array,
-  hasMore: PropTypes.bool,
-  disable: PropTypes.bool,
-
-  onTabChange: PropTypes.func,
-};
-
-PostTabs.defaultProps = {
-  isOwner: false,
-  media: [],
-  hasMore: false,
-  disable: true,
-
-  onTabChange: undefined,
-};
 
 export default PostTabs;

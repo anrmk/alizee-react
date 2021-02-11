@@ -11,10 +11,7 @@ import PinterestIcon from "@material-ui/icons/Pinterest";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import YouTubeIcon from "@material-ui/icons/YouTube";
 
-function SocialControl(props) {
-  const { urls } = props;
-  const { onClick } = props;
-
+function SocialControl({ urls, onClick }) {
   const renderIcon = (url) => {
     if (url.includes("instagram.com")) {
       return <InstagramIcon />;
@@ -33,7 +30,7 @@ function SocialControl(props) {
   };
 
   return (
-    <Box display="flex" justifyItems="end">
+    <Box display="flex" flexDirection="row-reverse">
       {urls.map((item) => (
         <IconButton onClick={() => onClick && onClick(item)} key={item}>
           {renderIcon(item)}

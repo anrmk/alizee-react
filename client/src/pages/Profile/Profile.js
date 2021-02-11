@@ -1,30 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import { Redirect, useHistory, useParams, useRouteMatch } from "react-router-dom";
 import { connect } from "react-redux";
 
-import {
-  Box,
-  Container,
-  Grid,
-  Typography,
-  Hidden,
-  BottomNavigation,
-  BottomNavigationAction
-} from "@material-ui/core/";
+import { Box, Container, Grid, Typography, Hidden } from "@material-ui/core/";
 
-import ApiContext from "../context/ApiContext";
-import { SocialControl } from "../components/Social";
-import { PostSprout } from "../domain/PostsList";
-import Cover from "../domain/Cover";
-import ProfileContent from "../domain/ProfileContent";
+import ApiContext from "../../context/ApiContext";
+import { SocialControl } from "../../components/Social";
+import { PostSprout } from "../../domain/PostsList";
+import Cover from "../../domain/Cover";
+import ProfileContent from "../../domain/ProfileContent";
 
-import * as postActions from "../store/actions/post";
-import * as storyActions from "../store/actions/story";
-import * as moodActions from "../store/actions/mood";
-import * as relationshipActions from "../store/actions/relationship";
-import * as userActions from "../store/actions/user";
-import * as accountActions from "../store/actions/account";
-import * as settingsActions from "../store/actions/settings";
+import * as postActions from "../../store/actions/post";
+import * as storyActions from "../../store/actions/story";
+import * as moodActions from "../../store/actions/mood";
+import * as relationshipActions from "../../store/actions/relationship";
+import * as userActions from "../../store/actions/user";
+import * as accountActions from "../../store/actions/account";
+import * as settingsActions from "../../store/actions/settings";
+import * as paymentActions from "../../store/actions/payment";
 
 import {
   HOME_ROUTE,
@@ -32,14 +25,12 @@ import {
   POST_ID_ROUTE,
   SETTINGS_EDIT_PROFILE_ROUTE,
   CHAT_ROUTE,
-  FOLLOWERS_ROUTE,
-  FOLLOWINGS_ROUTE,
-  FAVORITES_USERNAME_ROUTE,
-} from "../constants/routes";
+} from "../../constants/routes";
 
-import useDialog from "../hooks/useDialog";
-import usePostSproutDialog from "../hooks/usePostSproutDialog";
-import dialogs, { PROFILE_EDIT_COVER } from "../constants/dialogs";
+import useDialog from "../../hooks/useDialog";
+import usePostSproutDialog from "../../hooks/usePostSproutDialog";
+import dialogs, { PROFILE_EDIT_COVER, SEND_TIP_DIALOG_TYPE } from "../../constants/dialogs";
+import Navigation from "./Navigation";
 
 function Profile(props) {
   const initPostsSettings = {
@@ -48,7 +39,7 @@ function Profile(props) {
   };
 
   const { me, user, post, media } = props;
-  const { fetchUser, resetUser } = props;
+  const { fetchUser, resetUser, sendTip } = props;
   const { fetchPosts, resetPosts, getFavoritePosts } = props;
   const { createFollow, deleteFollow, createFavorites, deleteFavorites } = props;
   const { createPost, createStory, createMood, updateCover } = props;
@@ -59,28 +50,14 @@ function Profile(props) {
   const history = useHistory();
   const [postSettings, setPostSettings] = useState(initPostsSettings);
 
+  const FORM_ID = "dialog-sendTip";
   const dialog = useDialog();
-  const { dialogToggleSprout } = usePostSproutDialog({ 
+
+  const { dialogToggleSprout } = usePostSproutDialog({
     onCreatePost: createPost,
     onCreateStory: createStory,
     onCreateMood: createMood,
   });
-
-  const handleCoverSave = async (data) => {
-    dialog.toggle({ open: false });
-    await updateCover(apiClient, [data.file]);
-  };
-
-  const handleCoverEdit = (data) => {
-    dialog.toggle(dialogs[PROFILE_EDIT_COVER]({ 
-      open: true,
-      onMainClick: handleCoverSave,
-      tempData: data
-     }, { 
-      src: data.coverUrl, 
-      alt: data.file?.name
-    }));
-  };
 
   useEffect(() => {
     return () => {
@@ -114,6 +91,49 @@ function Profile(props) {
     return <Redirect exact to={HOME_ROUTE} />;
   }
 
+  const handleCoverSave = async (data) => {
+    dialog.toggle({ open: false });
+    await updateCover(apiClient, [data.file]);
+  };
+
+  const handleCoverEditDialog = (data) => {
+    dialog.toggle(
+      dialogs[PROFILE_EDIT_COVER](
+        {
+          open: true,
+          onMainClick: handleCoverSave,
+          tempData: data,
+        },
+        {
+          src: data.coverUrl,
+          alt: data.file?.name,
+        }
+      )
+    );
+  };
+
+  const handleSendTipDialog = (data) => {
+    dialog.toggle(
+      dialogs[SEND_TIP_DIALOG_TYPE](
+        {
+          open: true,
+          mainBtnProps: { type: "submit", form: FORM_ID },
+          tempData: data,
+        },
+        {
+          formId: FORM_ID,
+          onSubmit: handleSendTipClick,
+          user: data,
+        }
+      )
+    );
+  };
+
+  const handleSendTipClick = (data) => {
+    dialog.toggle({ open: false });
+    sendTip(apiClient, data.user.userName, data.amount, data.message);
+  };
+
   const handleFetchPosts = async () => {
     if (post.isFetching) {
       return;
@@ -129,10 +149,6 @@ function Profile(props) {
     }
   };
 
-  const handleItemClick = (id) => {
-    history.push(POST_ID_ROUTE(id));
-  };
-
   const handleTabChange = (index) => {
     setPostSettings({
       index: index,
@@ -140,70 +156,75 @@ function Profile(props) {
     });
   };
 
-  const handlePeopleFollow = (userName) => {
+  const handlePeopleFollowClick = (userName) => {
     user.isFollow ? deleteFollow(apiClient, userName) : createFollow(apiClient, userName);
   };
 
-  const handleFavorite = (userName) => {
+  const handleFavoriteClick = (userName) => {
     user.isFavorite ? deleteFavorites(apiClient, userName) : createFavorites(apiClient, userName);
   };
 
-  const handleFavorites = () => {
-    history.push(FAVORITES_USERNAME_ROUTE(user.userName));
-  }
+  const handleItemClick = (id) => {
+    history.push(POST_ID_ROUTE(id));
+  };
 
   const handleMessageClick = (userName) => {
     history.push(CHAT_ROUTE(userName));
   };
 
-  const handleGiftSend = (userName) => {};
-
-  const handleFollowingClick = () => {
-    history.push(FOLLOWINGS_ROUTE(user.userName));
-  };
-
-  const handleFollowersClick = () => {
-    history.push(FOLLOWERS_ROUTE(user.userName));
-  };
+  const handleGiftSendClick = (userName) => {};
 
   return (
     <Container>
       <Cover
         user={user}
         isOwner={username === me.userName}
-        isFavorite={user.isFavorite}
         disabled={media.isFetching}
-        onFavoriteClick={() => handleFavorite(user.userName)}
-        onFollowClick={() => handlePeopleFollow(user.userName)}
-        onEditCover={handleCoverEdit}
+        onFavoriteClick={() => handleFavoriteClick(user.userName)}
+        onFollowClick={() => handlePeopleFollowClick(user.userName)}
         onMessageClick={() => handleMessageClick(user.userName)}
-        onSendGiftClick={() => handleGiftSend(user.userName)}
+        onSendGiftClick={() => handleGiftSendClick(user.userName)}
+        onEditCover={handleCoverEditDialog}
+        onSendTipClick={handleSendTipDialog}
       />
 
-      <Grid container spacing={3}>
-        <Grid item sm={12} md={4}>
+      <Hidden smUp>
+        <Box>
+          <Typography variant="h6">{user.name}</Typography>
+          <Typography variant="subtitle2" gutterBottom>
+            {user.userName}
+          </Typography>
+        </Box>
+      </Hidden>
+
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={4}>
           {username === me.userName && (
             <Hidden smDown>
-              <PostSprout
-                userName={me.userName}
-                onDialogToggle={dialogToggleSprout} />
+              <PostSprout userName={me.userName} onDialogToggle={dialogToggleSprout} />
             </Hidden>
           )}
 
-          <BottomNavigation showLabels >
-            <BottomNavigationAction label="Followers" disabled={!user.followersCount} onClick={() => handleFollowersClick()} icon={<Typography>{user?.followersCount || "0"}</Typography>} />
-            <BottomNavigationAction label="Following" disabled={!user.followingsCount} onClick={() => handleFollowingClick()} icon={<Typography>{user?.followingsCount || "0"}</Typography>}  />
-            <BottomNavigationAction label="Favorites" disabled={!user.favoritesCount} onClick={() => handleFavorites()} icon={<Typography>{user?.favoritesCount || "0"}</Typography>}  />
-          </BottomNavigation>
+          <Navigation
+            userName={user.userName}
+            followersCount={user?.followersCount}
+            followingsCount={user?.followingsCount}
+            favoritesCount={user?.favoritesCount}
+          />
 
           <Box>
-            <Typography variant="h6">Bio</Typography>
-            <Typography variant="body2">{user.bio}</Typography>
+            <Typography variant="h6" gutterBottom>
+              Bio
+            </Typography>
+            <Typography variant="body2" gutterBottom>
+              {user.bio}
+            </Typography>
           </Box>
 
-          {user.sites && (<SocialControl urls={user.sites} />)}
+          {user.sites && <SocialControl urls={user.sites} />}
         </Grid>
-        <Grid item sm={12} md={8}>
+
+        <Grid item xs={12} md={8}>
           <ProfileContent
             isOwner={username === me.userName}
             tabIndex={postSettings.index}
@@ -259,6 +280,7 @@ function mapDispatchToProps(dispatch) {
     createStory: (api, story, media) => dispatch(storyActions.createStorySlide(api, story, media)),
     createMood: (api, data) => dispatch(moodActions.createMood(api, data)),
     updateCover: (api, coverUrl) => dispatch(settingsActions.updateCover(api, coverUrl)),
+    sendTip: (api, userName, amount, message) => dispatch(paymentActions.sendTip(api, userName, amount, message)),
   };
 }
 
