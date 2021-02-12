@@ -32,11 +32,11 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     display: "flex",
     flexFlow: "nowrap",
-    flexDirection: "row",
+    flexDirection: "column",
     alignSelf: "flex-start",
     wordBreak: "break-word",
     backgroundColor: theme.palette.primary.main,
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
   },
 
   messengerMyMessage: {
@@ -56,11 +56,19 @@ const useStyles = makeStyles((theme) => ({
   infinite: {
     width: "100%",
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
   },
   icon: {
-    color: theme.palette.grey["400"]
+    color: theme.palette.grey["400"],
   },
+  gridItem: {
+    width: "120px",
+    height: "120px",
+  },
+  gridItemImage: {
+    width: "100%",
+    height: "100%",
+  }
 }));
 
 export default useStyles;
