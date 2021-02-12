@@ -44,3 +44,10 @@ export {
 export { RESET_CURRENT_ROOM, resetCurrentRoom } from "./resetCurrentRoom";
 
 export { SET_ROOM_SUCCESS, setRoom } from "./setRoom";
+
+export {
+  CREATE_CHAT_MEDIA_REQUEST,
+  CREATE_CHAT_MEDIA_SUCCESS,
+  CREATE_CHAT_MEDIA_FAILURE,
+  createChatMedia,
+} from "./createChatMedia";

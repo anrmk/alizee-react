@@ -1,4 +1,6 @@
 import { generateUrl } from "../../../helpers/functions";
+import { MEDIA_CONTENT } from "../../../constants/media_types";
+import { createChatMedia } from "./createChatMedia";
 
 export const CREATE_MESSAGE_REQUEST = "CREATE_MESSAGE_REQUEST";
 export const CREATE_MESSAGE_SUCCESS = "CREATE_MESSAGE_SUCCESS";
@@ -20,7 +22,7 @@ function receiveCreateMessage() {
     type: CREATE_MESSAGE_SUCCESS,
     payload: {
       isFetching: false,
-      errorMessage: ""
+      errorMessage: "",
     },
   };
 }
@@ -40,8 +42,8 @@ function addMessageSuccess(room, rooms) {
     type: ADD_MESSAGE_TO_LOCAL,
     payload: {
       currentRoom: room,
-      data: rooms
-    }
+      data: rooms,
+    },
   };
 }
 
@@ -51,31 +53,47 @@ export function addMessage(message) {
 
     const currentRoom = getState().chat.currentRoom;
     const currentRooms = getState().chat.data;
-    
+
     const roomIndex = currentRooms.findIndex((room) => room.id === currentRoom.id);
-    
+
     const updatedRoom = { ...currentRoom };
     currentRooms[roomIndex].lastMessageText = message.message;
     updatedRoom.messages = [...updatedRoom.messages, message];
     const updatedRooms = [
       currentRooms[roomIndex],
-      ...currentRooms.filter(room => room.id !== currentRoom.id) || []
+      ...(currentRooms.filter((room) => room.id !== currentRoom.id) || []),
     ];
 
     dispatch(addMessageSuccess(updatedRoom, updatedRooms));
-  }
+  };
 }
 
-export function createMessage(api, id, message) {
-  return async (dispatch) => {
+export function createMessage(api, opts) {
+  return async (dispatch, getState) => {
     dispatch(requestCreateMessage());
 
     const url = generateUrl("createMessage");
     try {
+      const { id, message, mediaFiles } = opts;
+
+      const mediaList = [];
+      if (mediaFiles.length) {
+        await dispatch(createChatMedia(api, mediaFiles, MEDIA_CONTENT));
+
+        const media = getState().chatMedia;
+        if (media.errorMessage) {
+          throw media.errorMessage;
+        }
+        media.data.map((item) => {
+          mediaList.push({ id: item.id });
+        });
+      }
+
       await api
-        .setData({ 
-          roomId: id, 
-          message
+        .setData({
+          roomId: id,
+          message,
+          media: mediaList,
         })
         .query(url);
     } catch (e) {

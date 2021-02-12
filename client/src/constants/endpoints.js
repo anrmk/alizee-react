@@ -38,6 +38,7 @@ export default {
     getFollowingPosts: "post/getfollowingposts",
     createPost: "post/createpost",
     createMedia: "media/createmedia",
+    createChatMedia: "media/createChatMedia",
 
     // LIKES
     likePost: "post/like",

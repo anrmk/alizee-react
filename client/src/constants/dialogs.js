@@ -1,4 +1,5 @@
 import React from "react";
+import { Typography } from "@material-ui/core";
 
 import { Payment, Receipt, Purchase, CreatePost, CreateStories, CreateMood } from "../components/Post";
 import SendTip from "../components/Tip";
@@ -9,6 +10,7 @@ import StoryDialog from "../domain/StoryDialog";
 import ChatListDialog from "../domain/ChatListDialog";
 import DeleteAccountDialog from "../domain/DeleteAccountDialog";
 import ResetPasswordDialog from "../domain/ResetPasswordDialog";
+import { MediaEditorPreview } from "../components/MediaEditor"
 
 export const CREATE_POST_DIALOG_TYPE = "createPost";
 export const CREATE_STORY_DIALOG_TYPE = "createStory";
@@ -27,9 +29,12 @@ export const CHAT_LIST_DIALOG_TYPE = "chatList";
 export const DELETE_ACCOUNT_DIALOG_TYPE = "deleteAccount";
 export const RESET_PWD_ACCOUNT_DIALOG_TYPE = "resetPasswordAccount";
 
+export const UPLOAD_FILE_EDIT_DIALOG_TYPE = "uploadFileEdit";
+export const UPLOAD_FILE_AMOUNT_ERROR_DIALOG_TYPE = "uploadFileAmountError";
+
 const baseDialogProps = {
   dialogProps: { fullWidth: true },
-  onCloseClick: () => {}
+  onCloseClick: () => { }
 }
 
 export default {
@@ -88,7 +93,7 @@ export default {
   [CHAT_FOLLOWERS_TYPE]: (dialogProps, contentProps) => ({
     title: "Chat Followers",
     content: <FollowingDialog {...contentProps} />,
-    onCloseClick: () => {},
+    onCloseClick: () => { },
     ...dialogProps
   }),
   [PROFILE_EDIT_COVER]: (dialogProps, contentProps) => ({
@@ -125,6 +130,23 @@ export default {
     mainBtnText: "Confirm",
     closeBtnText: "Disagree",
     ...baseDialogProps,
+    ...dialogProps
+  }),
+  [UPLOAD_FILE_AMOUNT_ERROR_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+    title: "Error",
+    content: <Typography variant="h6" color="error" align="center">{contentProps.errorText}</Typography>,
+    ...baseDialogProps,
+    ...dialogProps
+  }),
+  [UPLOAD_FILE_EDIT_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+    title: "Media Preview",
+    content:
+      <MediaEditorPreview onChangeMediaFiles={contentProps.onChangeMediaFiles} mediaFiles={contentProps.files} />,
+    mainBtnText: "Send",
+    dialogProps: {
+      disableBackdropClick: true,
+      fullWidth: false
+    },
     ...dialogProps
   }),
 };

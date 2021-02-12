@@ -68,7 +68,7 @@ function Chat(props) {
 
   useEffect(() => {
     if (followings.data.length) {
-      dialog.setParams(dialogs[CHAT_FOLLOWERS_TYPE]({ 
+      dialog.setParams(dialogs[CHAT_FOLLOWERS_TYPE]({
         loading: false
       }, {
         items: followings.data,
@@ -108,9 +108,13 @@ function Chat(props) {
     toggleSlidingViewsState();
   };
 
-  const handleMessageCreate = async (message) => {
-    if (message && message.length > 0) {
-      await createMessage(apiClient, chat.currentRoom.id, message);
+  const handleMessageCreate = async (data) => {
+    if (data && (data.message.length || data.media.length)) {
+      await createMessage(apiClient, {
+        id: chat.currentRoom.id,
+        message: data.message,
+        mediaFiles: data.media
+      });
     }
   };
 

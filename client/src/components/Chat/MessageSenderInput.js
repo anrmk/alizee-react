@@ -1,11 +1,12 @@
 import React, { useState, useRef } from "react";
+import PropTypes from "prop-types";
 import { InputAdornment, IconButton, TextField } from "@material-ui/core";
 
 import SendIcon from "@material-ui/icons/SendOutlined";
-import ImageIcon from "@material-ui/icons/ImageOutlined";
 
 import { EmojiPicker } from "../EmojiPicker"
 
+import { MediaEditor } from "../MediaEditor"
 import useStyles from "./styles";
 
 function MessageSenderInput({
@@ -20,7 +21,7 @@ function MessageSenderInput({
   const [value, setValue] = useState("");
 
   const messageSend = () => {
-    onSendMessageClick && onSendMessageClick(value.trim());
+    onSendMessageClick && onSendMessageClick({ media: [], message: value.trim() });
     setValue("");
     setClosePickerModal(true);
   }
@@ -39,6 +40,12 @@ function MessageSenderInput({
     setValue(text);
   }
 
+  const handleMediaMessageSendClick = (mediaFiles) => {
+    if (mediaFiles.length) {
+      onSendMessageClick && onSendMessageClick({ media: mediaFiles, message: "" });
+    }
+  }
+
   return (
     <TextField
       ref={textFieldRef}
@@ -51,9 +58,7 @@ function MessageSenderInput({
       InputProps={{
         startAdornment:
           <InputAdornment position="start">
-            <IconButton>
-              <ImageIcon className={classes.icon} />
-            </IconButton>
+            <MediaEditor onSendMediaMessageClick={handleMediaMessageSendClick} />
             <EmojiPicker
               inputRef={inputRef}
               textFieldRef={textFieldRef}
@@ -74,4 +79,15 @@ function MessageSenderInput({
   )
 }
 
+MessageSenderInput.propTypes = {
+  placeholder: PropTypes.string,
+
+  onSendMessageClick: PropTypes.func,
+};
+
+MessageSenderInput.defaultProps = {
+  placeholder: "",
+
+  onSendMessageClick: undefined,
+};
 export default MessageSenderInput;
