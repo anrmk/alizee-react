@@ -39,6 +39,20 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.common.white,
   },
 
+  messengerMediaMessage: {
+    maxWidth: "50%",
+    width: "100%",
+    [theme.breakpoints.down("md")]: {
+      maxWidth: "60%",
+    },
+    [theme.breakpoints.down("sm")]: {
+      maxWidth: "70%",
+    },
+    [theme.breakpoints.down("xs")]: {
+      maxWidth: "80%",
+    },
+  },
+
   messengerMyMessage: {
     alignSelf: "flex-end",
     backgroundColor: theme.palette.success.dark,
@@ -68,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
   gridItemImage: {
     width: "100%",
     height: "100%",
-  }
+  },
 }));
 
 export default useStyles;
