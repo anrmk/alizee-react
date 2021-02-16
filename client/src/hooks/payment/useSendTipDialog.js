@@ -27,7 +27,7 @@ export default function useSendTipDialog({ isFetching, onSendTip }) {
         {
           formId: FORM_ID,
           onSubmit: handleSendTip,
-          user: user,
+          user
         }
       )
     );

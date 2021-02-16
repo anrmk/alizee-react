@@ -1,7 +1,7 @@
 import { useContext, useCallback } from "react";
 
 import ApiContext from "../context/ApiContext";
-import dialogs, { PAYMENT_DIALOG_TYPE, PURCHASES_DIALOG_TYPE, RECEIPT_DIALOG_TYPE, SEND_TIP_DIALOG_TYPE } from "../constants/dialogs";
+import dialogs, { PURCHASES_DIALOG_TYPE, RECEIPT_DIALOG_TYPE } from "../constants/dialogs";
 import useDialog from "./useDialog";
 
 export default function usePostActions({ isFetching, onBuy, onPurchases, onReceipt, onFavorite, onLike }) {
@@ -37,10 +37,6 @@ export default function usePostActions({ isFetching, onBuy, onPurchases, onRecei
           (await onPurchases(apiClient, data.id, (d) => {
             dialog.toggle(dialogs[type](null, { purchases: d }));
           }));
-        break;
-      }
-      case PAYMENT_DIALOG_TYPE: {
-        dialog.toggle(dialogs[type]({ onMainClick: handleBuy, tempData: data }, data));
         break;
       }
       default:

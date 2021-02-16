@@ -23,7 +23,7 @@ import { HOME_ROUTE } from "../../constants/routes";
 import useSlidingViews from "../../hooks/useSlidingViews";
 import usePostActions from "../../hooks/usePostActions";
 import useProfileActions from "../../hooks/useProfileActions";
-import { useSendTipDialog } from "../../hooks/payment";
+import { useSendTipDialog, usePaymentDialog } from "../../hooks/payment";
 
 import useStyles from "./styles";
 
@@ -39,6 +39,7 @@ function PostPage(props) {
   const { createFollow, deleteFollow, blockUser, unblockUser, reportUser } = props;
 
   const sendTipDialog = useSendTipDialog({ onSendTip: props.sendTip})
+  const buyPostDialog = usePaymentDialog({ onPayment: props.buyPost });
 
   const profileAction = useProfileActions({
     onFollow: createFollow,
@@ -54,8 +55,7 @@ function PostPage(props) {
     onFavorite: props.favoritePost,
     onPurchases: props.getPurchases,
     onReceipt: props.getReceipt,
-    onBuy: props.buyPost,
-  });
+   });
 
   useEffect(() => {
     if (!postId) {
@@ -149,6 +149,7 @@ function PostPage(props) {
             onLike={postAction.like}
             onFavorite={postAction.favorite}
             onSendTip={sendTipDialog.toggle}
+            onBuyPost={buyPostDialog.toggle}
             onDialogToggle={postAction.dialogToggleAction} />
         </Comments>
       </SlidingViews>

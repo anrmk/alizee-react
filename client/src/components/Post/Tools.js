@@ -14,7 +14,7 @@ import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorderOutlined";
 import ShareIcon from "@material-ui/icons/ShareOutlined";
 import VisibilityIcon from "@material-ui/icons/VisibilityOutlined";
 
-import { PAYMENT_DIALOG_TYPE, SHARE_DIALOG_TYPE, RECEIPT_DIALOG_TYPE, PURCHASES_DIALOG_TYPE, SEND_TIP_DIALOG_TYPE } from "../../constants/dialogs";
+import { SHARE_DIALOG_TYPE, RECEIPT_DIALOG_TYPE, PURCHASES_DIALOG_TYPE, SEND_TIP_DIALOG_TYPE } from "../../constants/dialogs";
 import useStyles from "./styles";
 
 const Tools = React.memo(({
@@ -33,6 +33,7 @@ const Tools = React.memo(({
   onLike,
   onFavorite,
   onSendTip,
+  onBuyPost,
   onDialogToggle
 }) => {
   const location = window.location.href;
@@ -46,8 +47,8 @@ const Tools = React.memo(({
     onFavorite && onFavorite(id);
   };
 
-  const handlePayClick = () => {
-    onDialogToggle && onDialogToggle(PAYMENT_DIALOG_TYPE, { id, amount });
+  const handleBuyPostClick = () => {
+    onBuyPost && onBuyPost({ id, amount, user });
   };
 
   const handleReceiptClick = () => {
@@ -67,7 +68,7 @@ const Tools = React.memo(({
       if (!isPurchased) {
         return (
           <Tooltip title="Unlock post">
-            <Chip label={amount} clickable color="primary" onClick={handlePayClick} icon={<MonetizationOnIcon />} />
+            <Chip label={amount} clickable color="primary" onClick={handleBuyPostClick} icon={<MonetizationOnIcon />} />
           </Tooltip>
         );
       } else {

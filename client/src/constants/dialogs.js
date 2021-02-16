@@ -1,8 +1,8 @@
 import React from "react";
 import { Typography } from "@material-ui/core";
 
-import { Payment, Receipt, Purchase, CreatePost, CreateStories, CreateMood } from "../components/Post";
-import SendTip from "../components/Tip";
+import { Receipt, Purchase, CreatePost, CreateStories, CreateMood } from "../components/Post";
+import { SendTip , Payment} from "../components/Payment";
 import SocialList from "../domain/SocialList";
 import { FollowingDialog } from "../domain/Chat";
 import EditCoverDialog from "../domain/EditCoverDialog";
@@ -41,7 +41,7 @@ export default {
   [PAYMENT_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Payment",
     content: <Payment {...contentProps} />,
-    mainBtnText: "Buy",
+    mainBtnText: "Pay",
     ...baseDialogProps,
     ...dialogProps
   }),

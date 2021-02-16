@@ -39,7 +39,7 @@ import { CREATE_STORY_DIALOG_TYPE } from "../constants/dialogs";
 import usePostSproutDialog from "../hooks/usePostSproutDialog";
 import usePostActions from "../hooks/usePostActions";
 import useProfileActions from "../hooks/useProfileActions";
-import { useSendTipDialog } from "../hooks/payment";
+import { useSendTipDialog, usePaymentDialog } from "../hooks/payment";
 
 function Feed(props) {
   const apiClient = useContext(ApiContext);
@@ -56,6 +56,7 @@ function Feed(props) {
   const { hotStreamers, getHotStreamers } = props;
 
   const sendTipDialog = useSendTipDialog({ onSendTip: props.sendTip });
+  const buyPostDialog = usePaymentDialog({ onPayment: props.buyPost });
 
   const profileAction = useProfileActions({
     onFollow: createFollow,
@@ -72,7 +73,6 @@ function Feed(props) {
 
     onPurchases: props.getPurchases,
     onReceipt: props.getReceipt,
-    onBuy: props.buyPost,
   });
 
   const { dialogToggleSprout } = usePostSproutDialog({
@@ -180,6 +180,7 @@ function Feed(props) {
             onLike={postAction.like}
             onFavorite={postAction.favorite}
             onSendTip={sendTipDialog.toggle}
+            onBuyPost={buyPostDialog.toggle}
             onDialogToggle={postAction.dialogToggleAction}
           />
         </Grid>
