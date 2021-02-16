@@ -10,7 +10,7 @@ import StoryDialog from "../domain/StoryDialog";
 import ChatListDialog from "../domain/ChatListDialog";
 import DeleteAccountDialog from "../domain/DeleteAccountDialog";
 import ResetPasswordDialog from "../domain/ResetPasswordDialog";
-import { MediaEditorPreview } from "../components/MediaEditor"
+import { MediaEditorPreview, MediaPreview } from "../components/MediaEditor";
 
 export const CREATE_POST_DIALOG_TYPE = "createPost";
 export const CREATE_STORY_DIALOG_TYPE = "createStory";
@@ -32,10 +32,12 @@ export const RESET_PWD_ACCOUNT_DIALOG_TYPE = "resetPasswordAccount";
 export const UPLOAD_FILE_EDIT_DIALOG_TYPE = "uploadFileEdit";
 export const UPLOAD_FILE_AMOUNT_ERROR_DIALOG_TYPE = "uploadFileAmountError";
 
+export const MEDIA_PREVIEW_DIALOG_TYPE = "mediaPreview";
+
 const baseDialogProps = {
   dialogProps: { fullWidth: true },
-  onCloseClick: () => { }
-}
+  onCloseClick: () => { },
+};
 
 export default {
   [PAYMENT_DIALOG_TYPE]: (dialogProps, contentProps) => ({
@@ -43,70 +45,70 @@ export default {
     content: <Payment {...contentProps} />,
     mainBtnText: "Pay",
     ...baseDialogProps,
-    ...dialogProps
+    ...dialogProps,
   }),
   [SHARE_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Share post",
     content: <SocialList {...contentProps} />,
     ...baseDialogProps,
-    ...dialogProps
+    ...dialogProps,
   }),
   [RECEIPT_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Receipt",
     content: <Receipt {...contentProps} />,
     ...baseDialogProps,
-    ...dialogProps
+    ...dialogProps,
   }),
   [PURCHASES_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Purchases",
     content: <Purchase {...contentProps} />,
     ...baseDialogProps,
-    ...dialogProps
+    ...dialogProps,
   }),
   [CREATE_POST_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Create Post",
     content: <CreatePost {...contentProps} />,
     mainBtnText: "Create",
     ...baseDialogProps,
-    ...dialogProps
+    ...dialogProps,
   }),
   [CREATE_STORY_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Create Story",
     content: <CreateStories {...contentProps} />,
     mainBtnText: "Create",
     ...baseDialogProps,
-    ...dialogProps
+    ...dialogProps,
   }),
   [CREATE_MOOD_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Create Mood",
     content: <CreateMood {...contentProps} />,
     mainBtnText: "Create",
     ...baseDialogProps,
-    ...dialogProps
+    ...dialogProps,
   }),
   [SEND_TIP_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Send Tip",
     content: <SendTip {...contentProps} />,
     ...baseDialogProps,
-    ...dialogProps
+    ...dialogProps,
   }),
   [CHAT_FOLLOWERS_TYPE]: (dialogProps, contentProps) => ({
     title: "Chat Followers",
     content: <FollowingDialog {...contentProps} />,
     onCloseClick: () => { },
-    ...dialogProps
+    ...dialogProps,
   }),
   [PROFILE_EDIT_COVER]: (dialogProps, contentProps) => ({
     title: "Edit Cover",
     content: <EditCoverDialog {...contentProps} />,
     ...baseDialogProps,
-    ...dialogProps
+    ...dialogProps,
   }),
   [STORY_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Story",
     content: <StoryDialog {...contentProps} />,
     ...baseDialogProps,
-    ...dialogProps
+    ...dialogProps,
   }),
   [CHAT_LIST_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Chat List",
@@ -114,7 +116,7 @@ export default {
     mainBtnText: "Share",
     closeBtnText: "Cancel",
     ...baseDialogProps,
-    ...dialogProps
+    ...dialogProps,
   }),
   [DELETE_ACCOUNT_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Delete Account",
@@ -122,7 +124,7 @@ export default {
     mainBtnText: "Confirm",
     closeBtnText: "Disagree",
     ...baseDialogProps,
-    ...dialogProps
+    ...dialogProps,
   }),
   [RESET_PWD_ACCOUNT_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Reset Your Password",
@@ -130,23 +132,37 @@ export default {
     mainBtnText: "Confirm",
     closeBtnText: "Disagree",
     ...baseDialogProps,
-    ...dialogProps
+    ...dialogProps,
   }),
   [UPLOAD_FILE_AMOUNT_ERROR_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Error",
-    content: <Typography variant="h6" color="error" align="center">{contentProps.errorText}</Typography>,
+    content: (
+      <Typography variant="h6" color="error" align="center">
+        {contentProps.errorText}
+      </Typography>
+    ),
     ...baseDialogProps,
-    ...dialogProps
+    ...dialogProps,
   }),
   [UPLOAD_FILE_EDIT_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Media Preview",
-    content:
-      <MediaEditorPreview onChangeMediaFiles={contentProps.onChangeMediaFiles} mediaFiles={contentProps.files} />,
+    content: (
+      <MediaEditorPreview onChangeMediaFiles={contentProps.onChangeMediaFiles} mediaFiles={contentProps.files} />
+    ),
     mainBtnText: "Send",
     dialogProps: {
       disableBackdropClick: true,
-      fullWidth: false
+      fullWidth: false,
     },
-    ...dialogProps
+    ...dialogProps,
+  }),
+  [MEDIA_PREVIEW_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+    content: (
+      <MediaPreview fullWidth={true}
+        {...contentProps}
+      />
+    ),
+    ...baseDialogProps,
+    ...dialogProps,
   }),
 };

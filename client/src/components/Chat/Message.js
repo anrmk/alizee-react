@@ -1,17 +1,28 @@
 import React from "react";
 import clsx from "clsx";
 import { Box, GridList, GridListTile, Paper, Typography, withWidth } from "@material-ui/core/";
-
 import { formatDate, generateFileUrl } from "../../helpers/functions";
 
 import useStyles from "./styles";
 
-const Message = React.memo(({ width, message, isOwner, liveChat, className }) => {
+const Message = React.memo(({
+  width,
+  message,
+  isOwner,
+  liveChat,
+  className,
+
+  onMediaView
+}) => {
   const classes = useStyles();
+
+  const handleMediaPreviewClick = (file) => {
+    onMediaView && onMediaView({type: file.kind, url:  generateFileUrl(process.env.REACT_APP_DOMAIN, file.url)})
+  }
 
   const renderGridListTile = (file, cols = 1, rows = 1) => {
     return (
-      <GridListTile key={file.id} cols={cols} rows={rows}>
+      <GridListTile key={file.id} cols={cols} rows={rows} onClick={() => handleMediaPreviewClick(file)}>
         <img src={generateFileUrl(process.env.REACT_APP_DOMAIN, file.thumbnailUrl)} />
       </GridListTile>
     );

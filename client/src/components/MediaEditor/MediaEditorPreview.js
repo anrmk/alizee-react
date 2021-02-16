@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import ReactPlayer from "react-player";
 import ScrollContainer from "react-indiana-drag-scroll";
 import PropTypes from "prop-types";
-import clsx from "clsx";
 import { Grid, GridList, GridListTile, GridListTileBar, IconButton, Typography } from "@material-ui/core";
 
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
@@ -13,6 +11,7 @@ import {
   MEDIA_GROUP_TYPE,
   MEDIA_TYPE,
 } from "../../constants/media_types";
+import MediaPreview from "./MediaPreview";
 
 import useStyles from "./styles";
 
@@ -43,20 +42,15 @@ function MediaEditorPreview({
     setChangedMediaFiles(changedMediaFiles.filter((file) => file.name !== fileName));
   };
 
-  const renderMediaItem = (type, url, isSelected) => {
+  const mediaTypeToKind = (type) => {
+    let localType;
     if (MEDIA_TYPE[type] === MEDIA_GROUP_TYPE.IMAGE) {
-      return <img src={url} className={clsx(classes.image, isSelected && classes.imagePreview)} />;
+      localType = 2;
     } else if (MEDIA_TYPE[type] === MEDIA_GROUP_TYPE.VIDEO) {
-      return (
-        <ReactPlayer
-          className={clsx(classes.video, isSelected && classes.videoPreview)}
-          controls={isSelected}
-          muted={true}
-          url={url}
-        />
-      );
+      localType = 1;
     }
-  };
+    return localType;
+  }
 
   const renderError = (file) => {
     if (
@@ -77,7 +71,7 @@ function MediaEditorPreview({
     <>
       <Grid container direction="column" className={classes.gridContainer}>
         <Grid item className={classes.gridListPreviewItem}>
-          {renderMediaItem(selectedMediaFile.type, selectedMediaFile.previewURL, true)}
+          <MediaPreview type={mediaTypeToKind(selectedMediaFile.type)} url={selectedMediaFile.previewURL} fullWidth={true} />
         </Grid>
         <GridList spacing={12} className={classes.gridList} component={ScrollContainer}>
           {mediaFiles.length > 0 &&
@@ -90,7 +84,7 @@ function MediaEditorPreview({
                     root: classes.gridListItem,
                   }}
                 >
-                  {renderMediaItem(file.type, file.previewURL)}
+                  <MediaPreview type={mediaTypeToKind(file.type)} url={file.previewURL} />
                   <GridListTileBar
                     title={renderError(file)}
                     titlePosition="top"

@@ -17,7 +17,8 @@ const MessagesList = React.memo(({
   className,
   messageClassName,
 
-  onFetchMore
+  onFetchMore,
+  onMediaView
 }) => {
   const classes = useStyles();
   const messagesContainer = useRef(null);
@@ -49,7 +50,8 @@ const MessagesList = React.memo(({
           message={message}
           isOwner={message.userId === userId}
           liveChat={liveChat}
-          className={messageClassName} />
+          className={messageClassName}
+          onMediaView={onMediaView} />
       ))}
       </InfiniteScroll>
     </Box>

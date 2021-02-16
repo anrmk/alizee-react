@@ -30,6 +30,7 @@ function Room({
   onMessageClear,
   onRoomDelete,
   onAccountBlock,
+  onMediaView,
   onSendTip
 }) {
   const classes = useStyles();
@@ -107,7 +108,7 @@ function Room({
           <Divider />
 
           <CardContent className={classes.cardContent}>
-            <MessagesList userId={userId} items={data.messages} />
+            <MessagesList userId={userId} items={data.messages} onMediaView={onMediaView}/>
           </CardContent>
           <CardActions className={classes.cardFooter}>
             <MessageSenderInput onSendMessageClick={onMessageCreate} onSendTip={handleSendTipClick} />

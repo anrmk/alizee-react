@@ -16,6 +16,12 @@ const useStyles = makeStyles((theme) => ({
     padding: "0 !important",
     margin: theme.spacing(1),
   },
+  image: {
+    left: "50%",
+    height: "100%",
+    position: "relative",
+    transform: "translateX(-50%)"
+  },
   video: {
     width: "120px !important",
     height: "120px !important",
@@ -30,10 +36,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   },
   imagePreview: {
-    top: "50%",
+    objectFit: "contain",
     width: "100%",
-    position: "relative",
-    transform: "translateY(-50%)",
+    height: "100%"
   },
   videoPreview: {
     height: "100% !important",

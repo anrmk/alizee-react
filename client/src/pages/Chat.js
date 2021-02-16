@@ -16,9 +16,11 @@ import * as paymentActions from "../store/actions/payment";
 import { ESC_KEY_CODE } from "../constants/key_codes";
 import useSlidingViews, { RIGHT_OPEN_TYPE } from "../hooks/useSlidingViews";
 import useDialog from "../hooks/useDialog";
-import { useSendTipDialog } from "../hooks/payment";
 
-import dialogs, { CHAT_FOLLOWERS_TYPE, SEND_TIP_DIALOG_TYPE } from "../constants/dialogs";
+import { useSendTipDialog } from "../hooks/payment";
+import { useMediaPreviewDialog } from "../hooks/media";
+
+import dialogs, { CHAT_FOLLOWERS_TYPE } from "../constants/dialogs";
 
 function Chat(props) {
   const apiClient = useContext(ApiContext);
@@ -46,6 +48,7 @@ function Chat(props) {
 
   const { currentSlidingViewsState, toggleSlidingViewsState } = useSlidingViews(RIGHT_OPEN_TYPE);
   const dialog = useDialog();
+  const mediaViewDialog = useMediaPreviewDialog();
 
   const handleModalCloseKeyPress = (e) => {
     if (e.keyCode === ESC_KEY_CODE) {
@@ -153,23 +156,6 @@ function Chat(props) {
     await getFollowings(apiClient, user.username);
   };
 
-  const handleSendTipClick = () => {
-    const FORM_ID = "CHAT_SEND_TIP_FORM"
-    const usr = {
-      name: chat.currentRoom.name,
-      userName: chat.currentRoom.username,
-      avatarUrl: chat.currentRoom.avatarUrl,
-    }
-    dialog.toggle(dialogs[SEND_TIP_DIALOG_TYPE]({
-      mainBtnProps: { type: "submit", form: FORM_ID },
-      //tempData: data
-    }, { 
-      formId: FORM_ID,
-      onSubmit: ({ user, amount, message }) => {console.log("Submit", amount)},
-      user: usr
-    }));
-  }
-
   return (
     <Container>
       <SlidingViews
@@ -194,6 +180,7 @@ function Chat(props) {
           onMessageClear={handleMessageClear}
           onRoomDelete={handleRoomDelete}
           onAccountBlock={handleAccountBlock}
+          onMediaView={mediaViewDialog.toggle}
           onSendTip={sendTipDialog.toggle}
         />
       </SlidingViews>
