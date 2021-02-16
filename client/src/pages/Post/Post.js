@@ -23,6 +23,7 @@ import { HOME_ROUTE } from "../../constants/routes";
 import useSlidingViews from "../../hooks/useSlidingViews";
 import usePostActions from "../../hooks/usePostActions";
 import useProfileActions from "../../hooks/useProfileActions";
+import { useSendTipDialog } from "../../hooks/payment";
 
 import useStyles from "./styles";
 
@@ -36,6 +37,8 @@ function PostPage(props) {
   const { user, post, comment } = props;
   const { getPost, getComments, resetComments, createComment } = props;
   const { createFollow, deleteFollow, blockUser, unblockUser, reportUser } = props;
+
+  const sendTipDialog = useSendTipDialog({ onSendTip: props.sendTip})
 
   const profileAction = useProfileActions({
     onFollow: createFollow,
@@ -52,7 +55,6 @@ function PostPage(props) {
     onPurchases: props.getPurchases,
     onReceipt: props.getReceipt,
     onBuy: props.buyPost,
-    onSendTip: props.sendTip
   });
 
   useEffect(() => {
@@ -73,8 +75,8 @@ function PostPage(props) {
     !comment.isFetching && await getComments(apiClient, { postId, length: COMMENTS_POST_LENGTH });
   };
 
-  const handleSendMessageClick = useCallback(async (text) => {
-    !comment.isFetching && await createComment(apiClient, { postId, text });
+  const handleSendMessageClick = useCallback(async ({media, message}) => {
+    !comment.isFetching && await createComment(apiClient, { postId, message });
   }, []);
 
   if (post.errorMessage) {
@@ -146,6 +148,7 @@ function PostPage(props) {
             
             onLike={postAction.like}
             onFavorite={postAction.favorite}
+            onSendTip={sendTipDialog.toggle}
             onDialogToggle={postAction.dialogToggleAction} />
         </Comments>
       </SlidingViews>
@@ -172,12 +175,13 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getPost: (api, id) => dispatch(postActions.fetchPost(api, id)),
+    getPost: (api, id) => dispatch(postActions.getPost(api, id)),
     likePost: (api, id) => dispatch(postActions.likePost(api, id)),
-    buyPost: (api, id) => dispatch(postActions.buyPost(api, id)),
     getPurchases: (api, id, callback) => dispatch(postActions.getPurchases(api, id, callback)),
     getReceipt: (api, id, callback) => dispatch(postActions.getReceipt(api, id, callback)),
     favoritePost: (api, id) => dispatch(postActions.favoritePost(api, id)),
+
+    buyPost: (api, id) => dispatch(paymentActions.buyPost(api, id)),
     sendTip: (api, userName, amount, message) => dispatch(paymentActions.sendTip(api, userName, amount, message)),
 
     createFollow: (api, id) => dispatch(relationshipActions.createFollow(api, id)),

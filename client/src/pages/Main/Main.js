@@ -42,10 +42,9 @@ import * as moodAction from "../../store/actions/mood";
 import useStyles from "./styles";
 
 function Main(props) {
-  const { userInfo, isAuthenticated, userStatistics } = props;
+  const { user, isAuthenticated, userStatistics } = props;
   const { signOut, createPost, createStory, createMood } = props;
 
-  const apiClient = useContext(ApiContext);
   const [open, setOpen] = useState(true);
   const isNavigationHide = useHideNavigation(Routes.STORIES_DEFAULT_ROUTE);
   const classes = useStyles({ isAuthenticated, isNavigationHide });
@@ -59,15 +58,15 @@ function Main(props) {
     setOpen(!open);
   };
 
-
   return (
     <Box className={classes.mainContainer}>
       {isAuthenticated && !isNavigationHide && (
         <>
-          <Navbar username={userInfo.userName} avatarUrl={userInfo.avatarUrl} open={open} onSignOut={signOut} />
+          <Navbar username={user.userName} avatarUrl={user.avatarUrl} open={open} onSignOut={signOut} />
+
           <Hidden smDown>
-            <Sidebar
-              user={userInfo}
+            <Sidebar 
+              user={user}
               open={open}
               userStatistics={userStatistics}
               onDrawerToggle={handleDrawerToggle}
@@ -104,7 +103,7 @@ function Main(props) {
       </Box>
       {isAuthenticated && !isNavigationHide && (
         <Hidden mdUp>
-          <BottomBar user={userInfo} onDialogToggle={dialogToggleSprout} />
+          <BottomBar user={user} onDialogToggle={dialogToggleSprout} />
         </Hidden>
       )}
     </Box>
@@ -113,7 +112,7 @@ function Main(props) {
 
 function mapStateToProps(state) {
   return {
-    userInfo: state.signIn.userInfo,
+    user: state.signIn.userInfo,
     isAuthenticated: state.signIn.isAuthenticated,
 
     isFetchingPost: state.posts.isFetching,
@@ -126,7 +125,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     signOut: (api) => dispatch(signOutUser(api)),
-    getUserStatistics: (api, userId) => dispatch(userActions.getUserStatistics(api, userId)),
 
     createPost: (api, data, media) => dispatch(postActions.createPost(api, data, media)),
     createStory: (api, data, media) => dispatch(storyActions.createStorySlide(api, data, media)),

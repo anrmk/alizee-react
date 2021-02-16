@@ -39,6 +39,7 @@ import { CREATE_STORY_DIALOG_TYPE } from "../constants/dialogs";
 import usePostSproutDialog from "../hooks/usePostSproutDialog";
 import usePostActions from "../hooks/usePostActions";
 import useProfileActions from "../hooks/useProfileActions";
+import { useSendTipDialog } from "../hooks/payment";
 
 function Feed(props) {
   const apiClient = useContext(ApiContext);
@@ -47,12 +48,14 @@ function Feed(props) {
   const [interestsModalShow, setInterestsModalShow] = useState(false);
 
   const { userInfo } = props;
-  const { settings, getAccountPersonalized, blockUser, unblockUser, reportUser, sendTip } = props;
+  const { settings, getAccountPersonalized, blockUser, unblockUser, reportUser } = props;
   const { people, getPeople, createFollow, deleteFollow } = props;
   const { posts, getPosts, createPost, resetPosts, createMood } = props;
   const { interests, getInterests, createInterests } = props;
   const { story, getStory, getFollowingStories, createStory, resetFollowingStories, resetStory } = props;
   const { hotStreamers, getHotStreamers } = props;
+
+  const sendTipDialog = useSendTipDialog({ onSendTip: props.sendTip });
 
   const profileAction = useProfileActions({
     onFollow: createFollow,
@@ -60,7 +63,6 @@ function Feed(props) {
     onBlock: blockUser,
     onUnblock: unblockUser,
     onReport: reportUser,
-   // onSendTip: sendTip
   });
 
   const postAction = usePostActions({
@@ -71,10 +73,9 @@ function Feed(props) {
     onPurchases: props.getPurchases,
     onReceipt: props.getReceipt,
     onBuy: props.buyPost,
-    onSendTip: sendTip
   });
 
-  const { dialogToggleSprout } = usePostSproutDialog({ 
+  const { dialogToggleSprout } = usePostSproutDialog({
     onCreatePost: createPost,
     onCreateStory: createStory,
     onCreateMood: createMood,
@@ -155,16 +156,15 @@ function Feed(props) {
     <Container>
       <Grid container spacing={2}>
         <Grid item xs={12} md={8}>
-          <PreviewStoriesList 
+          <PreviewStoriesList
             loading={story.isFetching}
             userStory={story.data.mStories}
             items={story.data.fStories}
-            onCreateStoryClick={() => dialogToggleSprout(CREATE_STORY_DIALOG_TYPE)} />
+            onCreateStoryClick={() => dialogToggleSprout(CREATE_STORY_DIALOG_TYPE)}
+          />
 
           <Hidden smDown>
-            <PostSprout
-              userName={userInfo.userName}
-              onDialogToggle={dialogToggleSprout} />
+            <PostSprout userName={userInfo.userName} onDialogToggle={dialogToggleSprout} />
           </Hidden>
 
           <PostsList
@@ -177,9 +177,9 @@ function Feed(props) {
             onBlock={profileAction.block}
             onUnblock={profileAction.unblock}
             onReport={profileAction.report}
-
             onLike={postAction.like}
             onFavorite={postAction.favorite}
+            onSendTip={sendTipDialog.toggle}
             onDialogToggle={postAction.dialogToggleAction}
           />
         </Grid>
@@ -213,7 +213,8 @@ function Feed(props) {
         open={interestsModalShow && !isInterestsSkip && Object.keys(interests.data).length}
         onClose={handleInterestsModalClose}
         aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description">
+        aria-describedby="alert-dialog-description"
+      >
         <DialogTitle id="alert-dialog-title">Choose your interests</DialogTitle>
         <InterestList ref={interestsEl} items={interests.data} />
         <DialogActions>
@@ -276,7 +277,6 @@ function mapDispatchToProps(dispatch) {
   return {
     getPosts: (api, opts) => dispatch(postActions.getFollowingPosts(api, opts)),
     createPost: (api, post, media) => dispatch(postActions.createPost(api, post, media)),
-    buyPost: (api, id) => dispatch(postActions.buyPost(api, id)),
     getPurchases: (api, id, callback) => dispatch(postActions.getPurchases(api, id, callback)),
     getReceipt: (api, id, callback) => dispatch(postActions.getReceipt(api, id, callback)),
     likePost: (api, id) => dispatch(postActions.likePost(api, id)),
@@ -290,7 +290,11 @@ function mapDispatchToProps(dispatch) {
     getAccountPersonalized: (api) => dispatch(settingsActions.getAccountPersonalized(api)),
     blockUser: (api, userName) => dispatch(settingsActions.createBlackList(api, userName)),
     unblockUser: (api, userName) => dispatch(settingsActions.deleteBlackList(api, userName)),
-    reportUser: (api, userName) => { console.log("Report user"); },
+    reportUser: (api, userName) => {
+      console.log("Report user");
+    },
+
+    buyPost: (api, id) => dispatch(paymentActions.buyPost(api, id)),
     sendTip: (api, userName, amount, message) => dispatch(paymentActions.sendTip(api, userName, amount, message)),
 
     getInterests: (api) => dispatch(interestsActions.getInterests(api)),

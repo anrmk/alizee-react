@@ -6,6 +6,8 @@ import {
   GET_POSTS_REQUEST,
   GET_POSTS_SUCCESS,
   GET_POSTS_FAILURE,
+  RESET_POSTS,
+  REFRESH_POSTS,
 
   GET_FAVORITE_POSTS_REQUEST,
   GET_FAVORITE_POSTS_SUCCESS,
@@ -18,7 +20,6 @@ import {
   CREATE_POST_REQUEST,
   CREATE_POST_SUCCESS,
   CREATE_POST_FAILURE,
-  RESET_POSTS,
 
   LIKE_POST_REQUEST,
   LIKE_POST_SUCCESS,
@@ -29,10 +30,6 @@ import {
   FAVORITE_POST_SUCCESS,
   FAVORITE_CURRENT_POST_SUCCESS,
   FAVORITE_POST_FAILURE,
-
-  BUY_POST_REQUEST,
-  BUY_POST_SUCCESS,
-  BUY_POST_FAILURE,
 
   RECEIPT_POST_REQUEST,
   RECEIPT_POST_SUCCESS,
@@ -67,21 +64,39 @@ export default function post(
 ) {
   switch (action.type) {
     // All posts
-    case GET_POSTS_REQUEST:
+    case GET_POSTS_REQUEST: {
       return {
         ...state,
         ...action.payload,
       };
-    case GET_POSTS_SUCCESS:
+    }
+    case GET_POSTS_SUCCESS:{
       return {
         ...state,
         ...action.payload,
       };
-    case GET_POSTS_FAILURE:
+    }
+    case GET_POSTS_FAILURE: {
       return {
         ...state,
         ...action.payload,
       };
+    }
+
+    case REFRESH_POSTS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case RESET_POSTS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
     // All Favorite posts
     case GET_FAVORITE_POSTS_REQUEST:
       return {
@@ -116,21 +131,24 @@ export default function post(
       };
 
     // Some Post
-    case GET_POST_REQUEST:
+    case GET_POST_REQUEST: {
       return {
         ...state,
         ...action.payload,
       };
-    case GET_POST_SUCCESS:
+    }
+    case GET_POST_SUCCESS: {
       return {
         ...state,
         ...action.payload,
       };
-    case GET_POST_FAILURE:
+    }
+    case GET_POST_FAILURE: {
       return {
         ...state,
         ...action.payload,
       };
+    }
 
     //SUGGESTION POSTS
     case GET_POST_SUGGESTIONS_REQUEST: {
@@ -169,13 +187,6 @@ export default function post(
     }
 
     case CREATE_POST_FAILURE: {
-      return {
-        ...state,
-        ...action.payload,
-      };
-    }
-
-    case RESET_POSTS: {
       return {
         ...state,
         ...action.payload,
@@ -234,28 +245,6 @@ export default function post(
     }
 
     case FAVORITE_POST_FAILURE: {
-      return {
-        ...state,
-        ...action.payload,
-      };
-    }
-
-    // BUY
-    case BUY_POST_REQUEST: {
-      return {
-        ...state,
-        ...action.payload,
-      };
-    }
-
-    case BUY_POST_SUCCESS: {
-      return {
-        ...state,
-        ...action.payload,
-      };
-    }
-
-    case BUY_POST_FAILURE: {
       return {
         ...state,
         ...action.payload,

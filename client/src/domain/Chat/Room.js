@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 
@@ -7,6 +7,7 @@ import { Divider, Card, CardActions, CardContent, CardHeader, IconButton, Hidden
 import SendOutlinedIcon from "@material-ui/icons/SendRounded";
 import MoreVertIcon from "@material-ui/icons/MoreVertRounded";
 import BackIcon from "@material-ui/icons/ArrowBackRounded";
+import MonetizationOnIcon from "@material-ui/icons/MonetizationOnOutlined";
 
 import Avatar from "../../components/Avatar";
 import { MessageSenderInput, MessagesList } from "../../components/Chat";
@@ -28,7 +29,8 @@ function Room({
   onMessageCreate,
   onMessageClear,
   onRoomDelete,
-  onAccountBlock
+  onAccountBlock,
+  onSendTip
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -61,6 +63,10 @@ function Room({
     handleMenuClose();
     onAccountBlock && onAccountBlock(data.id, data.followerId)
   }
+
+  const handleSendTipClick = useCallback(() => {
+    onSendTip && onSendTip({name: data.name, userName: data.username, avatarUrl: data.avatarUrl});
+  }, [data]);
 
   return (
     <>
@@ -104,7 +110,7 @@ function Room({
             <MessagesList userId={userId} items={data.messages} />
           </CardContent>
           <CardActions className={classes.cardFooter}>
-            <MessageSenderInput onSendMessageClick={onMessageCreate} />
+            <MessageSenderInput onSendMessageClick={onMessageCreate} onSendTip={handleSendTipClick} />
           </CardActions>
         </Card>
       ) : (

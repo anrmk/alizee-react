@@ -72,13 +72,24 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
   },
-  icon: {
-    color: theme.palette.grey["400"],
+
+  input: {
+    padding: theme.spacing(0.5),
+
+    "& .MuiIconButton-root": {
+      padding: theme.spacing(1)
+    },
+
+    "& input": {
+      padding: theme.spacing(1.5)
+    }
   },
+
   gridItem: {
     width: "120px",
     height: "120px",
   },
+
   gridItemImage: {
     width: "100%",
     height: "100%",

@@ -6,7 +6,7 @@ import { POSTS_OFFSET, POSTS_LENGTH } from "../../../constants/feed";
 export const GET_POSTS_REQUEST = "GET_POSTS_REQUEST";
 export const GET_POSTS_SUCCESS = "GET_POSTS_SUCCESS";
 export const GET_POSTS_FAILURE = "GET_POSTS_FAILURE";
-
+export const REFRESH_POSTS = "REFRESH_POSTS";
 export const RESET_POSTS = "RESET_POSTS";
 
 function requestGetPosts() {
@@ -57,6 +57,25 @@ export function resetPosts() {
       },
     });
 }
+
+export function refreshPosts(postData) {
+  return (dispatch, getState) => {
+    const posts = [...getState().posts.data];
+    const postIndex = posts.findIndex((post) => post.id === postData.id);
+    if (postIndex === -1) return;
+  
+    posts[postIndex] = postData;
+    dispatch({
+      type: REFRESH_POSTS,
+      payload: {
+        isFetching: false,
+        errorMessage: "",
+        data: posts,
+      },
+    });
+  }
+}
+
 
 export function getPosts(api, opts) {
   return async (dispatch, getState) => {

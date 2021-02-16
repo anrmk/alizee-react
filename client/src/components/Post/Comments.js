@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 
 import { MessageSenderInput, MessagesList } from "../Chat";
 
-import { Avatar, Card, CardHeader, CardContent, CardActions, IconButton, Divider } from "@material-ui/core";
-import MoreVertIcon from "@material-ui/icons/MoreVertOutlined";
+import { Avatar, Card, CardHeader, CardContent, CardActions, Divider } from "@material-ui/core";
 
 import useStyles from "./styles";
 
@@ -37,7 +36,7 @@ function Comments(props) {
 
       {isCommentable && (
         <CardActions className={classes.cardFooter}>
-          <MessageSenderInput onSendMessageClick={onSendMessageClick} />
+          <MessageSenderInput onSendMessageClick={onSendMessageClick} hideMediaEditor={true} />
         </CardActions>
       )}
     </Card>

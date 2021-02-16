@@ -19,6 +19,7 @@ const PostsList = React.memo(({
   onBlock,
   onUnblock,
   onReport,
+  onSendTip,
 
   onLike,
   onFavorite,
@@ -52,6 +53,7 @@ const PostsList = React.memo(({
 
             onLike={onLike}
             onFavorite={onFavorite}
+            onSendTip={onSendTip}
             onDialogToggle={onDialogToggle} />
         ))}
     </InfiniteScroll>

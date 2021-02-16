@@ -40,11 +40,10 @@ export function createCommentPost(api, opts) {
     dispatch(requestCreateCommentPost());
 
     const url = generateUrl("createCommentPost");
-
     try {
       const { data } = await api
         .setData({
-          text: opts.text,
+          text: opts.message,
           postId: opts.postId,
         })
         .query(url);

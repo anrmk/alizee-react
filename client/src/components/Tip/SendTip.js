@@ -4,13 +4,7 @@ import { formatCurrency } from "../../helpers/functions";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import {
-  Box,
-  TextField,
-  InputAdornment,
-  Typography,
-  FormHelperText,
-} from "@material-ui/core";
+import { Card, CardHeader, CardContent, Box, TextField, InputAdornment, FormHelperText } from "@material-ui/core";
 import Avatar from "../Avatar";
 
 const AMOUNT_INPUT_ID = "amount";
@@ -23,21 +17,21 @@ const TAX_VALUE = 0.07;
 const schema = yup.object().shape({
   [AMOUNT_INPUT_ID]: yup.number().required(EMPTY_VALUE_ERROR),
   [MESSAGE_INPUT_ID]: yup.string(),
-  [USER_ID]: yup.object()
+  [USER_ID]: yup.object(),
 });
 
 function SendTip({
   formId,
   user,
 
-  onSubmit
+  onSubmit,
 }) {
   const { errors, control, register, handleSubmit } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       [AMOUNT_INPUT_ID]: "",
       [MESSAGE_INPUT_ID]: "",
-      [USER_ID]: user
+      [USER_ID]: user,
     },
   });
 
@@ -46,22 +40,14 @@ function SendTip({
   }, []);
 
   return (
-    <>
-        <Box display="flex" flexWrap="nowrap" alignItems="center">
-          <Box p={1}>
-            <Avatar aria-label={user.userName} src={user.avatarUrl} size="large" />
-          </Box>
-          <Box p={1}>
-            <Typography>{user.name}</Typography>
-            <Typography>{user.userName}</Typography>
-          </Box>
-        </Box>
-        <Box component="form" id={formId} onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-          <Controller
-            name={AMOUNT_INPUT_ID}
-            control={control}
-            render={({ onChange, onBlur, value }) => (
-              <>
+    <Card variant="outlined">
+      <CardHeader avatar={<Avatar src={user.avatarUrl} />} title={user.name} subheader={user.userName} />
+      <CardContent component="form" id={formId} onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+        <Controller
+          name={AMOUNT_INPUT_ID}
+          control={control}
+          render={({ onChange, onBlur, value }) => (
+            <>
               <TextField
                 id={AMOUNT_INPUT_ID}
                 name={AMOUNT_INPUT_ID}
@@ -74,51 +60,46 @@ function SendTip({
                 helperText={errors[AMOUNT_INPUT_ID]?.message}
                 onBlur={onBlur}
                 onChange={onChange}
-                // InputProps={{
-                //   max: 200,
-                //   min: 5,
-                //   minLength: 3,
-                // }}
                 InputProps={{
                   startAdornment: <InputAdornment position="start">$</InputAdornment>,
-                  endAdornment: <InputAdornment position="end">+ {value && formatCurrency(value * TAX_VALUE)} (GTS)</InputAdornment>
+                  endAdornment: (
+                    <InputAdornment position="end">+ {value && formatCurrency(value * TAX_VALUE)} (GTS)</InputAdornment>
+                  ),
                 }}
-
-                // inputProps={{max: 200, maxLength: 3}}
               />
               <Box display="flex" alignItems="between">
                 <Box flexGrow={1}>
                   <FormHelperText>{INVALID_AMOUNT_MAX_ERROR}</FormHelperText>
                 </Box>
                 <Box>
-                  <FormHelperText>Total: {value && formatCurrency(value*1 + value*TAX_VALUE)}</FormHelperText>
+                  <FormHelperText>Total: {value && formatCurrency(value * 1 + value * TAX_VALUE)}</FormHelperText>
                 </Box>
               </Box>
-              </>
-            )}
-          />
+            </>
+          )}
+        />
 
-          <Controller
-            name={MESSAGE_INPUT_ID}
-            control={control}
-            render={({ onChange, onBlur, value }) => (
-              <TextField
-                variant="outlined"
-                fullWidth
-                id={MESSAGE_INPUT_ID}
-                name={MESSAGE_INPUT_ID}
-                label="Message"
-                type="text"
-                value={value}
-                error={!!errors[MESSAGE_INPUT_ID]}
-                helperText={errors[MESSAGE_INPUT_ID]?.message}
-                onBlur={onBlur}
-                onChange={(e) => onChange(e.target.value)}
-              />
-            )}
-          />
-        </Box>
-    </>
+        <Controller
+          name={MESSAGE_INPUT_ID}
+          control={control}
+          render={({ onChange, onBlur, value }) => (
+            <TextField
+              variant="outlined"
+              fullWidth
+              id={MESSAGE_INPUT_ID}
+              name={MESSAGE_INPUT_ID}
+              label="Message"
+              type="text"
+              value={value}
+              error={!!errors[MESSAGE_INPUT_ID]}
+              helperText={errors[MESSAGE_INPUT_ID]?.message}
+              onBlur={onBlur}
+              onChange={(e) => onChange(e.target.value)}
+            />
+          )}
+        />
+      </CardContent>
+    </Card>
   );
 }
 

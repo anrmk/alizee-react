@@ -7,20 +7,15 @@ import confirmEmail from './confirmEmail';
 import posts from "./posts";
 import media from './media';
 import comment from "./comment";
-
 import users from "./users";
-
 import chat from "./chat";
 import chatMedia from "./chatMedia";
 import user from "./user";
-
 import settings from "./settings";
-
 import interests from "./interests";
-
 import story from "./story";
-
 import stream from "./stream";
+import payment from "./payment";
 
 import { SIGNOUT_SUCCESS } from "../actions/signIn";
 
@@ -39,7 +34,8 @@ const appReducer = combineReducers({
   interests,
   comment,
   story,
-  stream
+  stream,
+  payment
 });
 
 export default function(state, action) {

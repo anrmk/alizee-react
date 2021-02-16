@@ -1,17 +1,18 @@
-import { generateUrl, generateFileUrl } from '../../../helpers/functions';
+import { generateUrl, generateFileUrl } from "../../../helpers/functions";
+import { refreshPosts } from "./getPosts";
 
-export const GET_POST_REQUEST = 'GET_POST_REQUEST';
-export const GET_POST_SUCCESS = 'GET_POST_SUCCESS';
-export const GET_POST_FAILURE = 'GET_POST_FAILURE';
+export const GET_POST_REQUEST = "GET_POST_REQUEST";
+export const GET_POST_SUCCESS = "GET_POST_SUCCESS";
+export const GET_POST_FAILURE = "GET_POST_FAILURE";
 
 function requestGetPost() {
   return {
     type: GET_POST_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: '',
-    }
-  }
+      errorMessage: "",
+    },
+  };
 }
 
 function receiveGetPost(post) {
@@ -19,10 +20,10 @@ function receiveGetPost(post) {
     type: GET_POST_SUCCESS,
     payload: {
       isFetching: false,
-      errorMessage: '',
-      currentPost: post
-    }
-  }
+      errorMessage: "",
+      currentPost: post,
+    },
+  };
 }
 
 function errorGetPost(message) {
@@ -30,36 +31,34 @@ function errorGetPost(message) {
     type: GET_POST_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message
-    }
-  }
+      errorMessage: message,
+    },
+  };
 }
 
-export function fetchPost(api, id) {
-  return async dispatch => {
+export function getPost(api, id) {
+  return async (dispatch) => {
     dispatch(requestGetPost());
 
-    const url = generateUrl('getPost');
+    const url = generateUrl("getPost");
     try {
-      const { data } = await api
-        .setMethod('GET')
-        .setParams({ id })
-        .query(url);
+      const { data } = await api.setMethod("GET").setParams({ id }).query(url);
 
       // Extend relative path to absolute (to remote server)
-      const avatarUrl = data.user.avatarUrl;
-      data.user = { 
-        ...data.user, 
-        avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, avatarUrl)
+      data.user = {
+        ...data.user,
+        avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, data.user.avatarUrl),
       };
-      data.media.forEach(item => {
+      data.media.forEach((item) => {
         item.url = generateFileUrl(process.env.REACT_APP_DOMAIN, item.url);
         item.thumbnailUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, item.thumbnailUrl);
       });
 
       dispatch(receiveGetPost(data));
+
+      await dispatch(refreshPosts(data));
     } catch {
       dispatch(errorGetPost("Error: something went wrong"));
     }
-  }
+  };
 }

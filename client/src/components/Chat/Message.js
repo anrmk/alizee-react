@@ -6,13 +6,7 @@ import { formatDate, generateFileUrl } from "../../helpers/functions";
 
 import useStyles from "./styles";
 
-const Message = React.memo(({
-  width,
-  message,
-  isOwner,
-  liveChat,
-  className
-}) => {
+const Message = React.memo(({ width, message, isOwner, liveChat, className }) => {
   const classes = useStyles();
 
   const renderGridListTile = (file, cols = 1, rows = 1) => {
@@ -26,24 +20,24 @@ const Message = React.memo(({
   const renderChatMediaItem = (mediaLength, file, index) => {
     switch (mediaLength) {
       case 1:
-          return renderGridListTile(file, 1, 2);
+        return renderGridListTile(file, 1, 2);
       case 2:
       case 4:
-          return renderGridListTile(file);
+        return renderGridListTile(file);
       case 3:
-          if (index === 0) {
-            return renderGridListTile(file, 2);
-          } else {
-            return renderGridListTile(file);
-          }
+        if (index === 0) {
+          return renderGridListTile(file, 2);
+        } else {
+          return renderGridListTile(file);
+        }
       case 5:
-          if (index === 0) {
-            return renderGridListTile(file, 3);
-          } else if (index === 1 || index === 4) {
-            return renderGridListTile(file);
-          } else {
-            return renderGridListTile(file, 2);
-          }
+        if (index === 0) {
+          return renderGridListTile(file, 3);
+        } else if (index === 1 || index === 4) {
+          return renderGridListTile(file);
+        } else {
+          return renderGridListTile(file, 2);
+        }
       default:
         return;
     }
@@ -64,12 +58,16 @@ const Message = React.memo(({
           {formatDate(message.createdDate)}
         </Typography>
       </Box>
-      {message.media.length > 0 &&
-        <GridList cellHeight={width === "xs" ? 120 : 160 } cols={message.media.length === 2 ? 2 : Math.ceil(message.media.length / 2)}>
+      {message.media?.length > 0 && (
+        <GridList
+          cellHeight={width === "xs" ? 120 : 160}
+          cols={message.media.length === 2 ? 2 : Math.ceil(message.media.length / 2)}
+        >
           {message.media.map((file, index) => {
             return renderChatMediaItem(message.media.length, file, index);
           })}
-        </GridList>}
+        </GridList>
+      )}
     </Paper>
   );
 });

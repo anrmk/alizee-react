@@ -8,6 +8,7 @@ export default {
     googleAuth: "account/signingoogle",
     confirmEmail: "account/confirmemail",
     resendEmailVerification: "account/resendemailverification",
+    getCurrentDeposit: "deposit/current",
 
     // POSTS
     getPost: "post/getpost",
@@ -16,6 +17,7 @@ export default {
     getPurchases: "post/purchases",
 
     //PAYMENT
+    buyPost: "payment/buyPost",
     sendTip: "payment/sendTip",
 
     // FAVORITE POSTS
@@ -43,7 +45,7 @@ export default {
     // LIKES
     likePost: "post/like",
     favoritePost: "post/favorite",
-    buyPost: "post/buy",
+    
     
     // CHAT
     getRoom: "chat/getRoom",

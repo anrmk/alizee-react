@@ -1,5 +1,5 @@
 import { generateUrl } from "../../../helpers/functions";
-import { addDeposit } from "../account";
+import { getDeposit } from "../account";
 
 export const SEND_TIP_REQUEST = "SEND_TIP_REQUEST";
 export const SEND_TIP_SUCCESS = "SEND_TIP_SUCCESS";
@@ -50,8 +50,8 @@ export function sendTip(api, userName, amount, message) {
         })
         .query(url);
 
-      dispatch(addDeposit(amount * -1));
       dispatch(receiveSendTip());
+      dispatch(getDeposit(api));
     } catch (e) {
       dispatch(errorSendTip("Error: something went wrong"));
     }

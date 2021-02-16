@@ -24,7 +24,7 @@ const Post = React.memo((props) => {
   const { id, user, owner, post } = props;
   const { likes, isLike, isFavorite } = props;
   const { onFollow, onUnfollow, onBlock, onUnblock, onReport } = props;
-  const { onLike, onFavorite, onDialogToggle } = props;
+  const { onLike, onFavorite, onSendTip, onDialogToggle } = props;
 
   return (
     <Card className={classes.root} variant="outlined">
@@ -75,6 +75,7 @@ const Post = React.memo((props) => {
           
           onLike={onLike}
           onFavorite={onFavorite}
+          onSendTip={onSendTip}
           onDialogToggle={onDialogToggle}
         />
       </CardActions>

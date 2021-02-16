@@ -21,13 +21,9 @@ import {
 } from "../actions/mood";
 
 import {
-  SEND_TIP_REQUEST,
-  SEND_TIP_SUCCESS,
-  SEND_TIP_FAILURE,
-} from "../actions/payment"
-
-import {
-  ADD_DEPOSIT_SUCCESS
+  GET_USER_DEPOSIT_REQUEST,
+  GET_USER_DEPOSIT_SUCCESS,
+  GET_USER_DEPOSIT_FAILURE,
 } from "../actions/account"
 
 import { USER_TOKEN } from '../../constants/user';
@@ -37,7 +33,7 @@ export default function signIn(state = {
   isAuthenticated: !!localStorage.getItem(USER_TOKEN),
   isVerified: false,
   isSocial: false,
-  userInfo: {}
+  userInfo: { deposit: 0 }
 }, action) {
   switch (action.type) {
     case SIGNIN_REQUEST:
@@ -115,25 +111,21 @@ export default function signIn(state = {
     }
 
     //DEPOSIT
-    case SEND_TIP_REQUEST: {
+    case GET_USER_DEPOSIT_REQUEST :  {
       return {
         ...state,
         ...action.payload
       }
     }
-    case SEND_TIP_SUCCESS: {
+
+    case GET_USER_DEPOSIT_SUCCESS :  {
       return {
         ...state,
         ...action.payload
       }
     }
-    case SEND_TIP_FAILURE: {
-      return {
-        ...state,
-        ...action.payload
-      }
-    }
-    case ADD_DEPOSIT_SUCCESS: {
+
+    case GET_USER_DEPOSIT_FAILURE :  {
       return {
         ...state,
         ...action.payload

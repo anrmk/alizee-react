@@ -3,6 +3,7 @@ export {
   GET_POSTS_SUCCESS,
   GET_POSTS_FAILURE,
   RESET_POSTS,
+  REFRESH_POSTS,
 
   getPosts,
   resetPosts,
@@ -31,7 +32,7 @@ export {
   GET_POST_SUCCESS,
   GET_POST_FAILURE,
 
-  fetchPost
+  getPost
 } from "./getPost";
 
 export { 
@@ -59,13 +60,6 @@ export {
 
   favoritePost
 } from "./favoritePost";
-
-export { 
-  BUY_POST_REQUEST,
-  BUY_POST_SUCCESS,
-  BUY_POST_FAILURE,
-  buyPost
-} from "./buyPost";
 
 export { 
   PURCHASE_POST_REQUEST,

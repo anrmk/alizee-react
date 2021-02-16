@@ -19,7 +19,9 @@ export {
   deleteFavorites,
 } from "./deleteFavorites";
 
-export { 
-  ADD_DEPOSIT_SUCCESS, 
-  addDeposit 
-} from "./addDeposit";
+export {
+  GET_USER_DEPOSIT_REQUEST,
+  GET_USER_DEPOSIT_SUCCESS,
+  GET_USER_DEPOSIT_FAILURE,
+  getDeposit
+} from "./getDeposit";

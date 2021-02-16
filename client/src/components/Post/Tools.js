@@ -32,6 +32,7 @@ const Tools = React.memo(({
 
   onLike,
   onFavorite,
+  onSendTip,
   onDialogToggle
 }) => {
   const location = window.location.href;
@@ -58,8 +59,8 @@ const Tools = React.memo(({
   }, []);
 
   const handleSendTipClick = useCallback(() => {
-    onDialogToggle && onDialogToggle(SEND_TIP_DIALOG_TYPE, { user });
-  }, []);
+    onSendTip && onSendTip(user);
+  }, [user]);
 
   const renderPurchase = () => {
     if (amount !== 0) {
