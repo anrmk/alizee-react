@@ -7,7 +7,7 @@ export default function useMediaPreviewDialog() {
   const dialog = useDialog();
 
   const handleDialogToggle = useCallback(async (data) => {
-    dialog.toggle(dialogs[MEDIA_PREVIEW_DIALOG_TYPE](null, data));
+    dialog.toggle(dialogs[MEDIA_PREVIEW_DIALOG_TYPE](null, { ...data, fullWidth: true }));
   }, []);
 
   return {

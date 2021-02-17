@@ -1,8 +1,8 @@
 import React from "react";
-import { Typography } from "@material-ui/core";
 
+import { Error } from "../components/ErrorDialog"
 import { Receipt, Purchase, CreatePost, CreateStories, CreateMood } from "../components/Post";
-import { SendTip , Payment} from "../components/Payment";
+import { SendTip, Payment } from "../components/Payment";
 import SocialList from "../domain/SocialList";
 import { FollowingDialog } from "../domain/Chat";
 import EditCoverDialog from "../domain/EditCoverDialog";
@@ -29,7 +29,7 @@ export const CHAT_LIST_DIALOG_TYPE = "chatList";
 export const DELETE_ACCOUNT_DIALOG_TYPE = "deleteAccount";
 export const RESET_PWD_ACCOUNT_DIALOG_TYPE = "resetPasswordAccount";
 
-export const UPLOAD_FILE_EDIT_DIALOG_TYPE = "uploadFileEdit";
+export const MEDIA_EDITOR_DIALOG_TYPE = "uploadFileEdit";
 export const UPLOAD_FILE_AMOUNT_ERROR_DIALOG_TYPE = "uploadFileAmountError";
 
 export const MEDIA_PREVIEW_DIALOG_TYPE = "mediaPreview";
@@ -137,17 +137,15 @@ export default {
   [UPLOAD_FILE_AMOUNT_ERROR_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Error",
     content: (
-      <Typography variant="h6" color="error" align="center">
-        {contentProps.errorText}
-      </Typography>
+      <Error {...contentProps}/>
     ),
     ...baseDialogProps,
     ...dialogProps,
   }),
-  [UPLOAD_FILE_EDIT_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+  [MEDIA_EDITOR_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Media Preview",
     content: (
-      <MediaEditorPreview onChangeMediaFiles={contentProps.onChangeMediaFiles} mediaFiles={contentProps.files} />
+      <MediaEditorPreview {...contentProps} />
     ),
     mainBtnText: "Send",
     dialogProps: {
@@ -158,9 +156,7 @@ export default {
   }),
   [MEDIA_PREVIEW_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     content: (
-      <MediaPreview fullWidth={true}
-        {...contentProps}
-      />
+      <MediaPreview {...contentProps} />
     ),
     ...baseDialogProps,
     ...dialogProps,

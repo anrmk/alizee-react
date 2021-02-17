@@ -94,7 +94,7 @@ function EmojiPicker({
     <>
       {renderEmojiPicker()}
       <IconButton onClick={handleEmojiPickerModal}>
-        <SentimentSatisfiedOutlinedIcon className={classes.icon} />
+        <SentimentSatisfiedOutlinedIcon />
       </IconButton>
     </>
   );

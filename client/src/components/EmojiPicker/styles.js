@@ -7,10 +7,6 @@ const useStyles = makeStyles((theme) => {
     theme.palette.type === "light" ? theme.palette.common.white : theme.palette.background.paper;
 
   return {
-    icon: {
-      color: theme.palette.grey["400"],
-    },
-
     picker: {
       whiteSpace: "break-spaces",
       "& .emoji-mart-category-label span": {
