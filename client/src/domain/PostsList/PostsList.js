@@ -19,6 +19,7 @@ const PostsList = React.memo(({
   onBlock,
   onUnblock,
   onReport,
+  onShareToChatClick,
   onSendTip,
   onBuyPost,
 
@@ -51,6 +52,7 @@ const PostsList = React.memo(({
             onBlock={onBlock}
             onUnblock={onUnblock}
             onReport={onReport}
+            onShareToChatClick={onShareToChatClick}
 
             onLike={onLike}
             onFavorite={onFavorite}

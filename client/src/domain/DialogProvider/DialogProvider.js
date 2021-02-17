@@ -2,20 +2,27 @@ import React, { useReducer } from "react";
 
 import { Button, Dialog, DialogContent, DialogTitle, DialogActions, CircularProgress } from "@material-ui/core";
 
-import DialogContext, { initialContext, UPDATE_BODY_MODAL, TOGGLE_BODY_MODAL } from "../../context/DialogContext";
+import DialogContext, { initialContext, TOGGLE_WITH_STACK_MODAL, UPDATE_MODAL, TOGGLE_MODAL } from "../../context/DialogContext";
 
 export default function DialogProvider({ children }) {
   const [dialogOptions, dispatch] = useReducer((state, action) => {
     switch (action.type) {
-      case UPDATE_BODY_MODAL:
+      case UPDATE_MODAL:
         return {
           ...state,
           ...action.payload
         };
-      case TOGGLE_BODY_MODAL:
+      case TOGGLE_MODAL:
         return {
           ...state,
-          ...action.payload
+          ...action.payload,
+        };
+      case TOGGLE_WITH_STACK_MODAL:
+        const { stack } = state;
+        return {
+          ...state,
+          ...action.payload,
+          stack: [...stack, action.payload]
         };
       default:
         return state;
@@ -24,7 +31,7 @@ export default function DialogProvider({ children }) {
 
   const handleCloseClick = () => {
     dispatch({
-      type: UPDATE_BODY_MODAL,
+      type: UPDATE_MODAL,
       payload: { open: false }
     });
     dialogOptions.onCloseClick && dialogOptions.onCloseClick();

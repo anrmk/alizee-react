@@ -11,6 +11,7 @@ import UnfollowIcon from "@material-ui/icons/PersonAddDisabledOutlined";
 import StarBorderIcon from "@material-ui/icons/StarBorderOutlined";
 import StarIcon from "@material-ui/icons/StarOutlined";
 import MonetizationIcon from "@material-ui/icons/MonetizationOnOutlined";
+import ShareIcon from "@material-ui/icons/ShareOutlined";
 
 import useStyles from "./styles";
 
@@ -25,6 +26,7 @@ function Controls({
   onSendGiftClick,
   onFavoriteClick,
   onSendTipClick,
+  onShareClick
 }) {
   const classes = useStyles();
 
@@ -44,6 +46,12 @@ function Controls({
           </IconButton>
         )}
       </Tooltip>)}
+
+      <Tooltip title="Share">
+        <IconButton onClick={onShareClick}>
+          <ShareIcon />
+        </IconButton>
+      </Tooltip>
       
       <Tooltip title="Message">
         <IconButton onClick={onMessageClick}>
@@ -77,6 +85,7 @@ Controls.propTypes = {
   onSendGiftClick: PropTypes.func,
   onMessageClick: PropTypes.func,
   onFollowClick: PropTypes.func,
+  onShareClick: PropTypes.func
 };
 
 Controls.defaultProps = {
@@ -86,6 +95,7 @@ Controls.defaultProps = {
   onSendGiftClick: undefined,
   onMessageClick: undefined,
   onFollowClick: undefined,
+  onShareClick: undefined
 };
 
 export default withWidth()(Controls);

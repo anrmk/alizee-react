@@ -12,7 +12,15 @@ import useStyles from "./styles";
 function Cover(props) {
   const { user, width } = props;
   const { isOwner, isLive, disabled } = props;
-  const { onFavoriteClick, onMessageClick, onFollowClick, onSendGiftClick, onEditCover, onSendTipClick } = props;
+  const {
+    onFavoriteClick,
+    onMessageClick,
+    onFollowClick,
+    onSendGiftClick,
+    onEditCover,
+    onSendTipClick,
+    onShareClick
+  } = props;
 
   const classes = useStyles({ imageUrl: user.coverUrl });
 
@@ -75,6 +83,7 @@ function Cover(props) {
             onFollowClick={onFollowClick}
             onSendGiftClick={onSendGiftClick}
             onSendTipClick={handleSendTipClick}
+            onShareClick={onShareClick}
           />
         </Grid>
       </Grid>

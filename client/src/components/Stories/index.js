@@ -27,12 +27,12 @@ export default function({
         payload: { stories }
       });
     }
-  }, [stories]);
+  }, [stories.length]);
 
   return (
     <GlobalContext.Provider value={{ ...rest }}>
       <StoriesContext.Provider value={{ storyOptions, setStoriesOptions }}>
-        {storyOptions.stories && storyOptions.stories.length > 1 && <Container />}
+        {storyOptions.stories && storyOptions.stories.length > 0 && <Container />}
       </StoriesContext.Provider>
     </GlobalContext.Provider>
   );

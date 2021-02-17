@@ -1,7 +1,8 @@
 import React from "react";
 
-export const UPDATE_BODY_MODAL = "UPDATE_BODY_MODAL";
-export const TOGGLE_BODY_MODAL = "TOGGLE_BODY_MODAL";
+export const UPDATE_MODAL = "UPDATE_MODAL";
+export const TOGGLE_MODAL = "TOGGLE_MODAL";
+export const TOGGLE_WITH_STACK_MODAL = "TOGGLE_WITH_STACK_MODAL";
 
 export const initialContext = {
 	open: false,
@@ -15,6 +16,7 @@ export const initialContext = {
 	mainBtnText: "OK",
 	closeBtnProps: null,
 	closeBtnText: "Close",
+	stack: [],
 
 	onCloseClick: null,
 	onMainClick: null

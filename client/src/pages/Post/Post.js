@@ -23,6 +23,7 @@ import { HOME_ROUTE } from "../../constants/routes";
 import useSlidingViews from "../../hooks/useSlidingViews";
 import usePostActions from "../../hooks/usePostActions";
 import useProfileActions from "../../hooks/useProfileActions";
+import useShareDialog, { SHARE_DIALOG_POST_TYPE } from "../../hooks/useShareDialog";
 import { useSendTipDialog, usePaymentDialog } from "../../hooks/payment";
 
 import useStyles from "./styles";
@@ -56,6 +57,10 @@ function PostPage(props) {
     onPurchases: props.getPurchases,
     onReceipt: props.getReceipt,
    });
+
+  const { dialogShareOpenClick } = useShareDialog({
+    type: SHARE_DIALOG_POST_TYPE,
+  });
 
   useEffect(() => {
     if (!postId) {
@@ -123,6 +128,7 @@ function PostPage(props) {
                 </IconButton>
               </Hidden>
               <Menu 
+                postId={postId}
                 user={post.owner}
                 isOwner={user.id === post.owner?.id}
 
@@ -131,6 +137,7 @@ function PostPage(props) {
                 onBlock={profileAction.block}
                 onUnblock={profileAction.unblock}
                 onReport={profileAction.report}
+                onShareToChatClick={dialogShareOpenClick}
               />
             </>
           }>

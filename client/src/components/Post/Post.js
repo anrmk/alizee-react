@@ -23,7 +23,7 @@ const Post = React.memo((props) => {
 
   const { id, user, owner, post } = props;
   const { likes, isLike, isFavorite } = props;
-  const { onFollow, onUnfollow, onBlock, onUnblock, onReport } = props;
+  const { onFollow, onUnfollow, onBlock, onUnblock, onReport, onShareToChatClick } = props;
   const { onLike, onFavorite, onSendTip, onBuyPost, onDialogToggle } = props;
 
   return (
@@ -39,6 +39,7 @@ const Post = React.memo((props) => {
             </Typography>
 
             <Menu 
+              postId={id}
               user={owner}
               isOwner={user.id === owner.id}
 
@@ -47,6 +48,7 @@ const Post = React.memo((props) => {
               onBlock={onBlock}
               onUnblock={onUnblock}
               onReport={onReport}
+              onShareToChatClick={onShareToChatClick}
             />
           </>
         }

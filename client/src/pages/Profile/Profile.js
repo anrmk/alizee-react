@@ -29,6 +29,7 @@ import {
 
 import useDialog from "../../hooks/useDialog";
 import usePostSproutDialog from "../../hooks/usePostSproutDialog";
+import useShareDialog, { SHARE_DIALOG_PROFILE_TYPE } from "../../hooks/useShareDialog";
 import dialogs, { PROFILE_EDIT_COVER, SEND_TIP_DIALOG_TYPE } from "../../constants/dialogs";
 import Navigation from "./Navigation";
 
@@ -57,6 +58,11 @@ function Profile(props) {
     onCreatePost: createPost,
     onCreateStory: createStory,
     onCreateMood: createMood,
+  });
+
+  const { dialogShareOpenClick } = useShareDialog({
+    userName: username,
+    type: SHARE_DIALOG_PROFILE_TYPE,
   });
 
   useEffect(() => {
@@ -184,6 +190,7 @@ function Profile(props) {
         onFollowClick={() => handlePeopleFollowClick(user.userName)}
         onMessageClick={() => handleMessageClick(user.userName)}
         onSendGiftClick={() => handleGiftSendClick(user.userName)}
+        onShareClick={() => dialogShareOpenClick({ userName: user.userName })}
         onEditCover={handleCoverEditDialog}
         onSendTipClick={handleSendTipDialog}
       />

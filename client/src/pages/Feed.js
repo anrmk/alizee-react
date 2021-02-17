@@ -39,6 +39,7 @@ import { CREATE_STORY_DIALOG_TYPE } from "../constants/dialogs";
 import usePostSproutDialog from "../hooks/usePostSproutDialog";
 import usePostActions from "../hooks/usePostActions";
 import useProfileActions from "../hooks/useProfileActions";
+import useShareDialog, { SHARE_DIALOG_POST_TYPE } from "../hooks/useShareDialog";
 import { useSendTipDialog, usePaymentDialog } from "../hooks/payment";
 
 function Feed(props) {
@@ -46,6 +47,7 @@ function Feed(props) {
   const interestsEl = useRef();
 
   const [interestsModalShow, setInterestsModalShow] = useState(false);
+  const [currentPostId, setCurrentPostId] = useState(false);
 
   const { userInfo } = props;
   const { settings, getAccountPersonalized, blockUser, unblockUser, reportUser } = props;
@@ -79,6 +81,10 @@ function Feed(props) {
     onCreatePost: createPost,
     onCreateStory: createStory,
     onCreateMood: createMood,
+  });
+
+  const { dialogShareOpenClick } = useShareDialog({
+    type: SHARE_DIALOG_POST_TYPE
   });
 
   const isInterestsSkip = localStorage.getItem(INTERESTS_SKIP);
@@ -182,6 +188,7 @@ function Feed(props) {
             onSendTip={sendTipDialog.toggle}
             onBuyPost={buyPostDialog.toggle}
             onDialogToggle={postAction.dialogToggleAction}
+            onShareToChatClick={dialogShareOpenClick}
           />
         </Grid>
         <Hidden smDown>

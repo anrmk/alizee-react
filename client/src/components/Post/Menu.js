@@ -13,8 +13,10 @@ import ReportIcon from "@material-ui/icons/ReportOutlined";
 import FollowIcon from "@material-ui/icons/PersonAddOutlined";
 import UnfollowIcon from "@material-ui/icons/PersonAddDisabledOutlined";
 import MoreVertIcon from "@material-ui/icons/MoreVertOutlined";
+import SendIcon from "@material-ui/icons/SendOutlined";
 
 function Menu({
+  postId,
   user,
   isOwner,
 
@@ -23,6 +25,7 @@ function Menu({
 
   onBlock,
   onUnblock,
+  onShareToChatClick,
 
   onReport,
 }) {
@@ -61,6 +64,11 @@ function Menu({
   const handleCopyLink = () => {
     handleMenuClose();
     navigator.clipboard.writeText(profileUrl);
+  };
+
+  const handleShareToChatClick = () => {
+    handleMenuClose();
+    onShareToChatClick && onShareToChatClick({ id: postId });
   };
 
   const handleReport = () => {
@@ -126,6 +134,13 @@ function Menu({
             <LinkIcon />
           </ListItemIcon>
           <ListItemText primary={t("CopyLink")} />
+        </MenuItem>
+
+        <MenuItem onClick={handleShareToChatClick}>
+          <ListItemIcon>
+            <SendIcon />
+          </ListItemIcon>
+          <ListItemText primary={t("ShareToChat")} />
         </MenuItem>
       </MUIMenu>
     </>

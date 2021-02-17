@@ -25,7 +25,7 @@ export const SEND_TIP_DIALOG_TYPE = "sentTip";
 export const CHAT_FOLLOWERS_TYPE = "chatFollowers";
 export const PROFILE_EDIT_COVER = "profileEditCover";
 export const STORY_DIALOG_TYPE = "story";
-export const CHAT_LIST_DIALOG_TYPE = "chatList";
+export const FOLLOWERS_LIST_DIALOG_TYPE = "chatList";
 export const DELETE_ACCOUNT_DIALOG_TYPE = "deleteAccount";
 export const RESET_PWD_ACCOUNT_DIALOG_TYPE = "resetPasswordAccount";
 
@@ -110,8 +110,8 @@ export default {
     ...baseDialogProps,
     ...dialogProps,
   }),
-  [CHAT_LIST_DIALOG_TYPE]: (dialogProps, contentProps) => ({
-    title: "Chat List",
+  [FOLLOWERS_LIST_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+    title: "Share List",
     content: <ChatListDialog {...contentProps} />,
     mainBtnText: "Share",
     closeBtnText: "Cancel",
