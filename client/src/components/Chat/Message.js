@@ -60,7 +60,7 @@ const Message = React.memo(({
         classes.messengerMessage,
         className,
         isOwner && classes.messengerMyMessage,
-        message.media.length > 0 && classes.messengerMediaMessage
+        message.media?.length > 0 && classes.messengerMediaMessage
       )}
     >
       <Box display="flex" flexDirection="row" justifyContent="flex-end">
