@@ -2,12 +2,13 @@ import React, { useContext, useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import { Container, Box, Typography } from "@material-ui/core";
+import { Container, Box } from "@material-ui/core";
 
 import { POSTS_LENGTH } from "../constants/feed";
 import { POST_ID_ROUTE } from "../constants/routes";
 
 import * as actionSuggestion from "../store/actions/suggestion";
+import * as postActions from "../store/actions/post";
 import ApiContext from "../context/ApiContext";
 
 import GridGallery from "../domain/GridGallery";
@@ -16,13 +17,16 @@ function Explore(props) {
   const history = useHistory();
   const apiClient = useContext(ApiContext);
 
-  const { posts, getPosts, getPeople } = props;
+  const { posts, getPosts, getPeople, resetPosts } = props;
 
   useEffect(() => {
     (async () => {
       await getPosts(apiClient, { length: POSTS_LENGTH });
       await getPeople(apiClient);
     })();
+    return () => {
+      resetPosts();
+    };
   }, []);
 
   const onFetchMore = (isLoading) => {
@@ -55,6 +59,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getPeople: (api, count) => dispatch(actionSuggestion.getPeople(api, count)),
     getPosts: (api, opts) => dispatch(actionSuggestion.getPosts(api, opts)),
+    resetPosts: () => dispatch(postActions.resetPosts())
   };
 }
 
