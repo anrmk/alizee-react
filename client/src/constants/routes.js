@@ -36,6 +36,7 @@ export const SUGESTED_PEOPLE = "/people/suggested";
 export const SETTINGS_TYPE_ROUTE = "/settings/:type";
 export const SETTINGS_ROUTE = "/settings";
 export const SETTINGS_EDIT_PROFILE_ROUTE = "/settings/edit-profile";
+export const SETTINGS_PERSONAL_ROUTE = "/settings/personal-info";
 export const SETTINGS_INTERESTS_ROUTE = "/settings/interests";
 export const SETTINGS_NOTIFICATION_ROUTE = "/settings/notification";
 export const SETTINGS_PRIVACY_SECURITY_ROUTE = "/settings/privacy-security";

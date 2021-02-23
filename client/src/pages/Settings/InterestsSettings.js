@@ -40,7 +40,7 @@ function InterestsSettings({
     <Box>
       <Typography variant="subtitle2">{INTEREST_DESCRIPTION}</Typography>
       <InterestsList ref={interestsEl} items={settings.data} />
-      <Button disableElevation disabled={settings.isFetching || interests.isFetching} onClick={handleInterestSubmit} >
+      <Button disableElevation variant="contained" color="primary" disabled={settings.isFetching || interests.isFetching} onClick={handleInterestSubmit} >
         Update
       </Button>
     </Box>

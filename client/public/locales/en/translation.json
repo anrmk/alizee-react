@@ -78,5 +78,17 @@
   "Unfollow": "Unfollow",
   "Report": "Report",
   "Block": "Block",
-  "Unblock": "Unblock"
+  "Unblock": "Unblock",
+
+  "Name": "Name",
+  "LastName": "Last Name",
+  "Bithdate": "Date of birth",
+  "ExpDate": "ID experation date",
+  "DocType": "Document Type",
+  "Country" : "Country",
+  "Address": "Address",
+  "City": "City",
+  "State": "State/Province",
+  "Postal": "Postal/ZIP"
+
 }

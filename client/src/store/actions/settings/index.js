@@ -5,6 +5,21 @@ export {
 
   updateAccount
 } from "./updateAccount";
+
+export {
+  GET_PERSONAL_REQUEST,
+  GET_PERSONAL_SUCCESS,
+  GET_PERSONAL_FAILURE,
+  getPersonal
+} from "./getPersonal";
+
+export {
+  UPDATE_PERSONAL_REQUEST,
+  UPDATE_PERSONAL_SUCCESS,
+  UPDATE_PERSONAL_FAILURE,
+  updatePersonal
+} from "./updatePersonal";
+
 export {
   UPDATE_USERNAME_REQUEST,
   UPDATE_USERNAME_SUCCESS,

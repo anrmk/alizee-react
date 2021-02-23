@@ -82,7 +82,7 @@ export function updateAccount(api, opts) {
           .setData({
             name: opts.fullName,
             birthday: opts.birthday || undefined,
-            phoneNumber: opts.phone || undefined,
+            phoneNumber: opts.phoneNumber || undefined,
             mediaId: opts.mediaId || undefined,
             bio: opts.bio || undefined,
             sites: opts.sites 

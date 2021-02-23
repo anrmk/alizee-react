@@ -8,10 +8,10 @@ export default function usePostActions({ isFetching, onBuy, onPurchases, onRecei
   const apiClient = useContext(ApiContext);
   const dialog = useDialog();
 
-  const handleBuy = useCallback(async ({id}) => {
-    dialog.toggle({ open: false });
-    !isFetching && (await onBuy(apiClient, id));
-  }, [onBuy]);
+  // const handleBuy = useCallback(async ({id}) => {
+  //   dialog.toggle({ open: false });
+  //   !isFetching && (await onBuy(apiClient, id));
+  // }, [onBuy]);
 
   const handleLike = useCallback(async (id) => {
     !isFetching && (await onLike(apiClient, id));

@@ -7,7 +7,6 @@ import useDialog from "../useDialog";
 export default function usePaymentDialog({ isFetching, onPayment }) {
   const apiClient = useContext(ApiContext);
   const dialog = useDialog();
-  const FORM_ID = "dialog-payment";
 
   const handlePayment = useCallback(
     async ({ id }) => {

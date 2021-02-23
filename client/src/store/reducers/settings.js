@@ -31,6 +31,14 @@ import {
   GET_ACCOUNT_INTERESTS_SUCCESS,
   GET_ACCOUNT_INTERESTS_FAILURE,
 
+  GET_PERSONAL_REQUEST,
+  GET_PERSONAL_SUCCESS,
+  GET_PERSONAL_FAILURE,
+
+  UPDATE_PERSONAL_REQUEST,
+  UPDATE_PERSONAL_SUCCESS,
+  UPDATE_PERSONAL_FAILURE,
+
   GET_BLACK_LIST_REQUEST,
   GET_BLACK_LIST_SUCCESS,
   GET_BLACK_LIST_FAILURE,
@@ -188,6 +196,46 @@ export default function settings(state = {
         ...state,
         ...action.payload,
       };
+
+    //GET PERSONAL
+    case GET_PERSONAL_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case GET_PERSONAL_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case GET_PERSONAL_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case UPDATE_PERSONAL_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case UPDATE_PERSONAL_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case UPDATE_PERSONAL_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
     // Get black list
     case GET_BLACK_LIST_REQUEST:
       return {

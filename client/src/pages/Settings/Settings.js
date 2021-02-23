@@ -9,12 +9,14 @@ import {
   SETTINGS_INTERESTS_ROUTE,
   SETTINGS_NOTIFICATION_ROUTE,
   SETTINGS_PRIVACY_SECURITY_ROUTE,
+  SETTINGS_PERSONAL_ROUTE,
 } from "../../constants/routes";
 import PrivateRoute from "../PrivateRoute";
 import SlidingViews from "../../components/SlidingViews";
 
 import BlackList from "./BlackList";
 import EditProfileSettings from "./EditProfileSettings";
+import EditPersonalSettings from "./EditPersonalSettings";
 import InterestsSettings from "./InterestsSettings";
 import PrivacySecuritySettings from "./PrivacySecuritySettings";
 import NotificationSettings from "./NotificationSettings";
@@ -32,34 +34,41 @@ const TABS = [
   },
   {
     index: 1,
+    name: "personal-info",
+    title: "Personal Info",
+    route: SETTINGS_PERSONAL_ROUTE,
+  },
+  {
+    index: 2,
     name: "interests",
     title: "Interests",
     route: SETTINGS_INTERESTS_ROUTE,
   },
+
   {
-    index: 2,
+    index: 3,
     name: "notification",
     title: "Notification",
     route: SETTINGS_NOTIFICATION_ROUTE,
   },
   {
-    index: 3,
+    index: 4,
     name: "privacy-security",
     title: "Privacy and Security",
     route: SETTINGS_PRIVACY_SECURITY_ROUTE,
-  }
+  },
 ];
 
 const findTab = (value) => {
-  return TABS.find(x => x.name === value || x.index === value)
-}
+  return TABS.find((x) => x.name === value || x.index === value);
+};
 
 const a11yProps = (key) => {
   return {
     id: `vertical-tab-${key}`,
     "aria-controls": `vertical-tabpanel-${key}`,
   };
-}
+};
 
 function Settings() {
   const { type } = useParams();
@@ -85,25 +94,28 @@ function Settings() {
           className={classes.tabs}
           onChange={(_, value) => setCurrentTab(findTab(value))}
         >
-          {TABS && TABS.map((tab) => (
-            <Tab key={tab.index} to={tab.route} component={Link} label={tab.title} {...a11yProps(tab.index)} />
-          ))}
+          {TABS &&
+            TABS.map((tab) => (
+              <Tab key={tab.index} to={tab.route} component={Link} label={tab.title} {...a11yProps(tab.index)} />
+            ))}
         </Tabs>
 
         <Card>
           <CardHeader
             title={currentTab.title}
             action={
-              !up("md") &&
-              <IconButton onClick={() => toggleSlidingViewsState()}>
-                <BackIcon />
-              </IconButton>
+              !up("md") && (
+                <IconButton onClick={() => toggleSlidingViewsState()}>
+                  <BackIcon />
+                </IconButton>
+              )
             }
           />
           <CardContent>
             <PrivateRoute exact path={SETTINGS_EDIT_PROFILE_ROUTE} component={EditProfileSettings} />
+            <PrivateRoute exact path={SETTINGS_PERSONAL_ROUTE} component={EditPersonalSettings} />
             <PrivateRoute exact path={SETTINGS_INTERESTS_ROUTE} component={InterestsSettings} />
-            
+
             <PrivateRoute exact path={SETTINGS_NOTIFICATION_ROUTE} component={NotificationSettings} />
             <PrivateRoute exact path={SETTINGS_PRIVACY_SECURITY_ROUTE} component={PrivacySecuritySettings} />
             <PrivateRoute exact path={SETTINGS_BLACK_LIST_ROUTE} component={BlackList} />

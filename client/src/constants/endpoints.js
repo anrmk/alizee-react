@@ -46,7 +46,6 @@ export default {
     likePost: "post/like",
     favoritePost: "post/favorite",
     
-    
     // CHAT
     getRoom: "chat/getRoom",
     getRooms: "chat/getRooms",
@@ -100,6 +99,8 @@ export default {
     deleteBlackList: "accountsetting/blacklist",
     createBlackList: "accountsetting/blacklist",
     updateCover: "accountsetting/updatecover",
+    getPersonal: "accountsetting/personal",
+    updatePersonal: "accountsetting/personal",
 
     // INTERESTS
     getInterests: "interest/getinterests",
