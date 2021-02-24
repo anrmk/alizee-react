@@ -109,5 +109,8 @@ export default {
     createStreamRoom: "stream/room",
     updateStreamRoom: "stream/room",
     getHotStreamers: "stream/hotstreamers",
+
+    //SEARCH
+    getSearchData: "search/search",
   },
 };

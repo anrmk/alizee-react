@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import { Container, Box, AppBar, Toolbar, Tooltip, IconButton, InputBase, Badge, Hidden } from "@material-ui/core";
+import { Container, Box, AppBar, Toolbar, Tooltip, IconButton, Badge, Hidden } from "@material-ui/core";
 
 import NotificationsIcon from "@material-ui/icons/NotificationsActiveOutlined";
 import MailIcon from "@material-ui/icons/MailOutline";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorderOutlined";
 
-import { ACTIVITY_ROUTE, CHAT_ROUTE } from "../../constants/routes";
+import { ACTIVITY_ROUTE, CHAT_ROUTE, SEARCH_ROUTE } from "../../constants/routes";
 import Avatar from "../../components/Avatar";
 
 import useStyles from "./styles";
@@ -54,26 +54,16 @@ function Navbar({
 
           <Box className={classes.grow} />
 
-          <Hidden smDown>
-            <Box className={classes.search}>
-              <Box className={classes.searchIcon}>
-                <SearchIcon />
-              </Box>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Box>
-          </Hidden>
-
           <Box className={classes.grow} />
 
           <Box className={classes.controls}>
             <Hidden smDown>
+              <Tooltip title={t("SidebarSearchText")} >
+                <IconButton onClick={() => { history.push(SEARCH_ROUTE) }}>
+                  <SearchIcon />
+                </IconButton>
+              </Tooltip>
+
               <Tooltip title={t("SidebarNotificationText")} >
                 <IconButton>
                   <Badge badgeContent={notificationsCount}>
@@ -84,7 +74,7 @@ function Navbar({
             </Hidden>
 
             <Tooltip title={t("SidebarActivityText")} >
-              <IconButton onClick={() => { history.push(ACTIVITY_ROUTE)}} color={`${location.pathname.includes(ACTIVITY_ROUTE) ? "primary" : "default" }`}>
+              <IconButton onClick={() => { history.push(ACTIVITY_ROUTE) }} color={`${location.pathname.includes(ACTIVITY_ROUTE) ? "primary" : "default"}`}>
                 <FavoriteBorderIcon />
               </IconButton>
             </Tooltip>

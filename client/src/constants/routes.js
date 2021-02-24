@@ -4,6 +4,7 @@ export const ABOUT_ROUTE = "";
 export const HELP_ROUTE = "help";
 export const PRIVACY_ROUTE = "";
 export const EXPLORE_ROUTE = "/explore";
+export const EXPLORE_BY_TAG_ROUTE = (tag) => `/explore?tag=${tag}`;
 export const ACTIVITY_ROUTE = "/activity";
 export const POST_ID_ROUTE = (id) => `/posts/${id}`;
 export const POST_ROUTE = "/posts/:id";

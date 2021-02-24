@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((_theme) => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     overflow: "hidden !important",
   },
@@ -23,8 +23,23 @@ const useStyles = makeStyles((_theme) => ({
     height: "auto !important"
   },
 
+  gridListTileImageUserView: {
+    overflow: "hidden",
+    borderRadius: "50%",
+  },
+
   gridListTileBar: {
     background: "none",
+  },
+
+  gridListTileBarUserView: {
+    position: "relative",
+  },
+
+  gridListTileBarTitleUserView: {
+    textAlign: "center",
+    alignSelf: "start",
+    marginTop: theme.spacing(0.5),
   },
 
   icon: {

@@ -1,6 +1,9 @@
 import React from "react";
 import clsx from "clsx";
-import { Box, GridList, GridListTile, Paper, Typography, withWidth } from "@material-ui/core/";
+import { Box, GridList, GridListTile, GridListTileBar, Paper, IconButton, Typography, withWidth } from "@material-ui/core/";
+
+import PlayArrowIcon from "@material-ui/icons/PlayArrowOutlined";
+
 import { formatDate, generateFileUrl } from "../../helpers/functions";
 
 import useStyles from "./styles";
@@ -17,13 +20,21 @@ const Message = React.memo(({
   const classes = useStyles();
 
   const handleMediaPreviewClick = (file) => {
-    onMediaView && onMediaView({type: file.kind, url:  generateFileUrl(process.env.REACT_APP_DOMAIN, file.url)})
+    onMediaView && onMediaView({ type: file.kind, url: generateFileUrl(process.env.REACT_APP_DOMAIN, file.url) })
   }
 
   const renderGridListTile = (file, cols = 1, rows = 1) => {
     return (
       <GridListTile key={file.id} cols={cols} rows={rows} onClick={() => handleMediaPreviewClick(file)}>
         <img src={generateFileUrl(process.env.REACT_APP_DOMAIN, file.thumbnailUrl)} />
+        {file.kind === 1 && <GridListTileBar
+          titlePosition="top"
+          actionPosition="right"
+          className={classes.gridListTileBar}
+          actionIcon={
+            <PlayArrowIcon className={classes.icon} />
+          }
+        />}
       </GridListTile>
     );
   };

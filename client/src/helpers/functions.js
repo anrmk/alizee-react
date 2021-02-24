@@ -350,6 +350,23 @@ export function isEmptyObject(obj) {
   return JSON.stringify(obj) === JSON.stringify({});
 }
 
+/**
+ * To control how many times we allow a function to be executed over time
+ * @fn {function}
+ * @time {ms}
+ */
+
+export function debounce (fn, time) {
+  let timeout;
+
+  return function() {
+    const functionCall = () => fn.apply(this, arguments);
+    timeout && clearTimeout(timeout);
+    
+    timeout = setTimeout(functionCall, time);
+  }
+}
+
 export function getBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();

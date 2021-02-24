@@ -13,6 +13,7 @@ import chatMedia from "./chatMedia";
 import user from "./user";
 import settings from "./settings";
 import interests from "./interests";
+import search from "./search";
 import story from "./story";
 import stream from "./stream";
 import payment from "./payment";
@@ -33,6 +34,7 @@ const appReducer = combineReducers({
   settings,
   interests,
   comment,
+  search,
   story,
   stream,
   payment

@@ -8,7 +8,7 @@ import {
   CREATE_INTERESTS_FAILURE
 } from '../actions/interests';
 
-export default function confirmEmail(state = {
+export default function interests(state = {
   isFetching: false,
   data: [],
 }, action) {

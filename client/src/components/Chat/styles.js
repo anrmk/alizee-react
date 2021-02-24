@@ -77,12 +77,12 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0.5),
 
     "& .MuiIconButton-root": {
-      padding: theme.spacing(1)
+      padding: theme.spacing(1),
     },
 
     "& input": {
-      padding: theme.spacing(1.5)
-    }
+      padding: theme.spacing(1.5),
+    },
   },
 
   gridItem: {
@@ -93,6 +93,15 @@ const useStyles = makeStyles((theme) => ({
   gridItemImage: {
     width: "100%",
     height: "100%",
+  },
+
+  icon: {
+    color: "white",
+    marginRight: theme.spacing(1)
+  },
+
+  gridListTileBar: {
+    background: "none",
   },
 }));
 

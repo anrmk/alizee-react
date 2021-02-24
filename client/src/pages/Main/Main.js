@@ -27,6 +27,7 @@ import Followings from "../Followings";
 import Favorites from "../Favorites";
 import { Settings } from "../Settings";
 import { ResetPassword, ChangePassword } from "../Password";
+import Search from "../Search"
 import Story from "../Story";
 
 import * as userActions from "../../store/actions/user";
@@ -90,10 +91,11 @@ function Main(props) {
           <PrivateRoute path={Routes.ACTIVITY_ROUTE} component={Activity} />
           <PrivateRoute path={Routes.MEET_ROUTE} component={Meeting} />
           <PrivateRoute path={Routes.CHAT_USERNAME_ROUTE} component={Chat} />
-          <PrivateRoute exact path={Routes.ROOM_ROUTE} component={CreateRoom} />
           <PrivateRoute path={Routes.ROOM_ID_DEFAULT_ROUTE} component={Room} />
           <PrivateRoute path={Routes.SUGESTED_PEOPLE} component={PeopleSuggested} />
+          <PrivateRoute path={Routes.SEARCH_ROUTE} component={Search} />
           <PrivateRoute path={Routes.SETTINGS_TYPE_ROUTE} component={Settings} />
+          <PrivateRoute exact path={Routes.ROOM_ROUTE} component={CreateRoom} />
           <PrivateRoute exact path={Routes.PROFILE_ROUTE} component={Profile} />
           <PrivateRoute exact path={Routes.PROFILE_FOLLOWERS_ROUTE} component={Followers} />
           <PrivateRoute exact path={Routes.PROFILE_FOLLOWINGS_ROUTE} component={Followings} />
