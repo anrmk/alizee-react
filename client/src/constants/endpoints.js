@@ -110,6 +110,9 @@ export default {
     updateStreamRoom: "stream/room",
     getHotStreamers: "stream/hotstreamers",
 
+    // ACTIVITY
+    getActivityPayments: "activity/payments",
+
     //SEARCH
     getSearchData: "search/search",
   },

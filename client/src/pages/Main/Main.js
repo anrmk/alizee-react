@@ -29,6 +29,7 @@ import { Settings } from "../Settings";
 import { ResetPassword, ChangePassword } from "../Password";
 import Search from "../Search"
 import Story from "../Story";
+import Statistics from "../Statistics";
 
 import * as userActions from "../../store/actions/user";
 import { signOutUser } from "../../store/actions/signIn";
@@ -95,6 +96,7 @@ function Main(props) {
           <PrivateRoute path={Routes.SUGESTED_PEOPLE} component={PeopleSuggested} />
           <PrivateRoute path={Routes.SEARCH_ROUTE} component={Search} />
           <PrivateRoute path={Routes.SETTINGS_TYPE_ROUTE} component={Settings} />
+          <PrivateRoute path={Routes.STATISTICS_ROUTE} component={Statistics} />
           <PrivateRoute exact path={Routes.ROOM_ROUTE} component={CreateRoom} />
           <PrivateRoute exact path={Routes.PROFILE_ROUTE} component={Profile} />
           <PrivateRoute exact path={Routes.PROFILE_FOLLOWERS_ROUTE} component={Followers} />

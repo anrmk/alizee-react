@@ -54,6 +54,12 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
 
+    overflowY: "auto",
+    "&::-webkit-scrollbar":
+    {
+      display: "none"
+    },
+
     [theme.breakpoints.up("sm")]: {
       width: drawerWidth,
     },

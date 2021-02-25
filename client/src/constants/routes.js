@@ -47,3 +47,5 @@ export const PASSWORD_CHANGE_ROUTE = "/password-change";
 export const STORIES_ROUTE = (id, username) => username ? `/stories/${username}/${id}` : `/stories/${id}`;
 export const STORIES_ID_ROUTE = "/stories/:username/:storyId?";
 export const STORIES_DEFAULT_ROUTE = "/stories";
+
+export const STATISTICS_ROUTE = "/statistics";

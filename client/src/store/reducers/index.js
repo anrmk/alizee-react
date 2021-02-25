@@ -17,6 +17,7 @@ import search from "./search";
 import story from "./story";
 import stream from "./stream";
 import payment from "./payment";
+import activity from "./activity";
 
 import { SIGNOUT_SUCCESS } from "../actions/signIn";
 
@@ -37,7 +38,8 @@ const appReducer = combineReducers({
   search,
   story,
   stream,
-  payment
+  payment,
+  activity
 });
 
 export default function(state, action) {
