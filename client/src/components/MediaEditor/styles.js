@@ -5,7 +5,7 @@ const useStyles = makeStyles((theme) => ({
     display: "none",
   },
   gridContainer: {
-    flexWrap: "nowrap",
+    flexWrap: "nowrap !important",
   },
   gridList: {
     flexWrap: "nowrap",
@@ -28,12 +28,13 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.common.black,
   },
   gridListPreviewItem: {
-    marginRight: "auto",
-    marginLeft: "auto",
+    marginRight: "auto !important",
+    marginLeft: "auto !important",
     height: "350px",
     maxWidth: "300px",
+    width: "100%",
     overflow: "hidden",
-    marginBottom: theme.spacing(2),
+    marginBottom: `${theme.spacing(2)}px !important`,
   },
   imagePreview: {
     objectFit: "contain",
