@@ -58,6 +58,14 @@ import {
   UPDATE_NOTIFICATION_REQUEST,
   UPDATE_NOTIFICATION_SUCCESS,
   UPDATE_NOTIFICATION_FAILURE,
+
+  GET_CARD_REQUEST,
+  GET_CARD_SUCCESS,
+  GET_CARD_FAILURE,
+
+  UPDATE_CARD_REQUEST,
+  UPDATE_CARD_SUCCESS,
+  UPDATE_CARD_FAILURE
 } from '../actions/settings';
 
 export default function settings(state = {
@@ -322,6 +330,45 @@ export default function settings(state = {
     }
 
     case UPDATE_NOTIFICATION_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    //CARD SETTINGS
+    case GET_CARD_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case GET_CARD_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case GET_CARD_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case UPDATE_CARD_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case UPDATE_CARD_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case UPDATE_CARD_FAILURE: {
       return {
         ...state,
         ...action.payload,

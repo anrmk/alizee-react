@@ -101,6 +101,8 @@ export default {
     updateCover: "accountsetting/updatecover",
     getPersonal: "accountsetting/personal",
     updatePersonal: "accountsetting/personal",
+    getCard: "accountsetting/card",
+    updateCard: "accountsetting/card",
 
     // INTERESTS
     getInterests: "interest/getinterests",

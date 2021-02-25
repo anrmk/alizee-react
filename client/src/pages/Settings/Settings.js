@@ -6,6 +6,7 @@ import BackIcon from "@material-ui/icons/ArrowBackRounded";
 import {
   SETTINGS_BLACK_LIST_ROUTE,
   SETTINGS_EDIT_PROFILE_ROUTE,
+  SETTINGS_CARD_ROUTE,
   SETTINGS_INTERESTS_ROUTE,
   SETTINGS_NOTIFICATION_ROUTE,
   SETTINGS_PRIVACY_SECURITY_ROUTE,
@@ -17,6 +18,7 @@ import SlidingViews from "../../components/SlidingViews";
 import BlackList from "./BlackList";
 import EditProfileSettings from "./EditProfileSettings";
 import EditPersonalSettings from "./EditPersonalSettings";
+import EditCardSettings from "./EditCardSettings";
 import InterestsSettings from "./InterestsSettings";
 import PrivacySecuritySettings from "./PrivacySecuritySettings";
 import NotificationSettings from "./NotificationSettings";
@@ -40,19 +42,25 @@ const TABS = [
   },
   {
     index: 2,
+    name: "card",
+    title: "Your Cards",
+    route: SETTINGS_CARD_ROUTE,
+  },
+  {
+    index: 3,
     name: "interests",
     title: "Interests",
     route: SETTINGS_INTERESTS_ROUTE,
   },
 
   {
-    index: 3,
+    index: 4,
     name: "notification",
     title: "Notification",
     route: SETTINGS_NOTIFICATION_ROUTE,
   },
   {
-    index: 4,
+    index: 5,
     name: "privacy-security",
     title: "Privacy and Security",
     route: SETTINGS_PRIVACY_SECURITY_ROUTE,
@@ -114,6 +122,7 @@ function Settings() {
           <CardContent>
             <PrivateRoute exact path={SETTINGS_EDIT_PROFILE_ROUTE} component={EditProfileSettings} />
             <PrivateRoute exact path={SETTINGS_PERSONAL_ROUTE} component={EditPersonalSettings} />
+            <PrivateRoute exact path={SETTINGS_CARD_ROUTE} component={EditCardSettings} />
             <PrivateRoute exact path={SETTINGS_INTERESTS_ROUTE} component={InterestsSettings} />
 
             <PrivateRoute exact path={SETTINGS_NOTIFICATION_ROUTE} component={NotificationSettings} />
