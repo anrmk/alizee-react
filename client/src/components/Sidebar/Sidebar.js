@@ -11,17 +11,17 @@ import useTheme from "@material-ui/core/styles/useTheme";
 
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import PersonOutlineIcon from '@material-ui/icons/PersonOutlineOutlined';
 import HomeIcon from "@material-ui/icons/HomeOutlined";
+import MailIcon from "@material-ui/icons/MailOutline";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import ExploreIcon from "@material-ui/icons/ExploreOutlined";
-import AccountBalanceWalletIcon from "@material-ui/icons/AccountBalanceWalletOutlined";
-import WhatshotIcon from "@material-ui/icons/WhatshotOutlined";
-import GrainIcon from "@material-ui/icons/GrainOutlined";
 import NightsStayIcon from "@material-ui/icons/NightsStayOutlined";
 import SunnyIcon from "@material-ui/icons/WbSunnyOutlined";
 
-import { HOME_ROUTE, EXPLORE_ROUTE, MEET_ROUTE, ACTIVITY_ROUTE } from "../../constants/routes";
+import { HOME_ROUTE, CHAT_ROUTE, PROFILE_USERNAME_ROUTE, EXPLORE_ROUTE, MEET_ROUTE, ACTIVITY_ROUTE } from "../../constants/routes";
 import useChangeTheme from "../../hooks/useChangeTheme";
+import usePostSproutDialog from "../../hooks/usePostSproutDialog";
 import UserCard from "./UserCard";
 import Footer from "../Footer";
 import { Wallet } from "../Wallet";
@@ -42,7 +42,7 @@ function Sidebar({
   const theme = useTheme();
   const changeTheme = useChangeTheme();
 
-  const handleUserCardNavigationChange = (value) => {
+  const handleUserCardOnClick = (value) => {
     switch (value) {
       case "goLive":
         history.push(MEET_ROUTE);
@@ -99,7 +99,7 @@ function Sidebar({
           name={user.name}
           avatarUrl={user.avatarUrl}
           open={open}
-          onNavigationChange={handleUserCardNavigationChange}
+          onClick={handleUserCardOnClick}
         />
       )}
 
@@ -108,12 +108,36 @@ function Sidebar({
       <Divider />
 
       <List>
+        <Tooltip title={t("SidebarProfileText")} placement="right">
+          <ListItem button selected={location.pathname.includes(PROFILE_USERNAME_ROUTE(user.userName))} onClick={() => history.push(PROFILE_USERNAME_ROUTE(user.userName))}>
+            <ListItemIcon>
+              <PersonOutlineIcon color="secondary" />
+            </ListItemIcon>
+            <ListItemText primary={t("SidebarProfileText")} />
+          </ListItem>
+        </Tooltip>
+
         <Tooltip title={t("SidebarFeedText")} placement="right">
           <ListItem button selected={location.pathname.includes(HOME_ROUTE)} onClick={() => history.push(HOME_ROUTE)}>
             <ListItemIcon>
-              <HomeIcon />
+              <HomeIcon color="secondary" />
             </ListItemIcon>
             <ListItemText primary={t("SidebarFeedText")} />
+          </ListItem>
+        </Tooltip>
+
+        <Tooltip title={t("SidebarChatText")} placement="right">
+          <ListItem
+            button
+            selected={location.pathname.includes(CHAT_ROUTE(""))}
+            onClick={() => {
+              history.push(CHAT_ROUTE(""));
+            }}
+          >
+            <ListItemIcon>
+              <MailIcon color="secondary" />
+            </ListItemIcon>
+            <ListItemText primary={t("SidebarChatText")} />
           </ListItem>
         </Tooltip>
 
@@ -124,7 +148,7 @@ function Sidebar({
             onClick={() => history.push(EXPLORE_ROUTE)}
           >
             <ListItemIcon>
-              <ExploreIcon />
+              <ExploreIcon color="secondary" />
             </ListItemIcon>
             <ListItemText primary={t("SidebarExploreText")} />
           </ListItem>
@@ -137,36 +161,9 @@ function Sidebar({
             onClick={() => history.push(ACTIVITY_ROUTE)}
           >
             <ListItemIcon>
-              <FavoriteBorderIcon />
+              <FavoriteBorderIcon  color="secondary" />
             </ListItemIcon>
             <ListItemText primary={t("SidebarActivityText")} />
-          </ListItem>
-        </Tooltip>
-
-        <Tooltip title={t("SidebarPopularTagsText")} placement="right">
-          <ListItem button>
-            <ListItemIcon>
-              <GrainIcon />
-            </ListItemIcon>
-            <ListItemText primary={t("SidebarPopularTagsText")} />
-          </ListItem>
-        </Tooltip>
-
-        <Tooltip title={t("SidebarWalletText")} placement="right">
-          <ListItem button>
-            <ListItemIcon>
-              <AccountBalanceWalletIcon />
-            </ListItemIcon>
-            <ListItemText primary={t("SidebarWalletText")} />
-          </ListItem>
-        </Tooltip>
-
-        <Tooltip title={t("SidebarHotTipsText")} placement="right">
-          <ListItem button>
-            <ListItemIcon>
-              <WhatshotIcon />
-            </ListItemIcon>
-            <ListItemText primary={t("SidebarHotTipsText")} />
           </ListItem>
         </Tooltip>
       </List>

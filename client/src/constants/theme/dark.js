@@ -7,15 +7,15 @@ export default createMuiTheme({
   palette: {
     type: "dark",
     primary: {
-      main: "#845DD7",
+      main: "#35B1F6" //"#845DD7",
     },
 
     secondary: {
-      main: "#8A2260",
+      main: "#845DD7" //"#8A2260",
     },
 
     success: {
-      main:  "#18AA7E"
+      main: "#58CD86"//"#18AA7E"
     },
 
     warning: {
@@ -97,6 +97,7 @@ export default createMuiTheme({
 
     MuiIconButton: {
       root: {
+        padding: "8px",
         "&.success": {
           color: "#3CFDB7",
         },
@@ -141,4 +142,10 @@ export default createMuiTheme({
       opacity: "0.6",
     },
   },
+
+  MuiDivider: {
+    root: {
+      background: "#1C1A1A"
+    }
+  }
 });

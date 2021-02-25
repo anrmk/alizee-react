@@ -73,12 +73,6 @@ function Navbar({
               </Tooltip>
             </Hidden>
 
-            <Tooltip title={t("SidebarActivityText")} >
-              <IconButton onClick={() => { history.push(ACTIVITY_ROUTE) }} color={`${location.pathname.includes(ACTIVITY_ROUTE) ? "primary" : "default"}`}>
-                <FavoriteBorderIcon />
-              </IconButton>
-            </Tooltip>
-
             <Tooltip title={t("SidebarChatText")} >
               <IconButton onClick={() => { history.push(CHAT_ROUTE("")) }} >
                 <Badge badgeContent={messagesCount} color="primary">

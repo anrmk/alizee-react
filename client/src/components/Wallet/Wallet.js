@@ -24,7 +24,7 @@ function Wallet({ deposit }) {
           <Typography variant="subtitle2">Available</Typography>
         </CardContent>
         <CardActions>
-          <Link href="#" >
+          <Link href="#" color="secondary" >
             Transfer to your bank
           </Link>
         </CardActions>

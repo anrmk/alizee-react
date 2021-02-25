@@ -7,15 +7,15 @@ export default createMuiTheme({
   palette: {
     type: "light",
     primary: {
-      main: "#845DD7",
+      main: "#35B1F6",
     },
 
     secondary: {
-      main: "#8A2260",
+      main: "#845DD7",
     },
 
     success: {
-      main: "#18AA7E"
+      main: "#58CD86"
     },
 
     warning: {

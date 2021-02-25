@@ -81,6 +81,16 @@ const useStyles = makeStyles((theme) => ({
 
   navigation: {
     margin: theme.spacing(2, 0),
+
+    "& .success": {
+      color: theme.palette.success.main
+    },
+    "& .secondary": {
+      color: theme.palette.secondary.main
+    },
+    "& .primary": {
+      color: theme.palette.primary.main
+    }
   },
 }));
 

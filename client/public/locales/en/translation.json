@@ -42,6 +42,7 @@
   "DeclineBtnTextFollowerItem": "Decline",
   "UnrejectBtnTextFollowerItem": "Undo",
 
+  "SidebarProfileText": "Profile",
   "SidebarFeedText": "Feed",
   "SidebarExploreText": "Explore",
   "SidebarActivityText": "Activity",
@@ -50,7 +51,7 @@
   "SidebarHotTipsText": "Hot tips",
   "SidebarSearchText": "Search",
   "SidebarNotificationText": "Norification",
-  "SidebarChatText": "Chat",
+  "SidebarChatText": "Messages",
 
   "ChatSidebarSearchInputLabel": "Search a chat",
   "ChatFollowingDialogTitle": "Start a new conversation",
