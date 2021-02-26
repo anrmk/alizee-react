@@ -7,9 +7,9 @@ import useStyles from "./styles";
 function Video({
   classVideoName,
   controls = true,
-  stream,
+  customControls = true,
 
-  onOpenDrawer
+  stream,
 }) {
   const classes = useStyles();
 
@@ -29,7 +29,7 @@ function Video({
         allowFullScreen
         controls={controls}>
       </video>
-      <VideoControlButtons onOpenDrawer={onOpenDrawer} />
+      {customControls && <VideoControlButtons />}
     </Box>
   );
 }

@@ -1,11 +1,4 @@
-import { Drawer, withStyles, makeStyles } from "@material-ui/core";
-
-export const StyledDrawer = withStyles((theme) => ({
-  paper: {
-    width: "316px",
-    padding: theme.spacing(1)
-  }
-}))(Drawer);
+import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   createRoomContainer: {
@@ -17,35 +10,6 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('md')]: {
       marginTop: theme.spacing(1)
     }
-  },
-  roomDescription: {
-    marginTop: theme.spacing(1)
-  },
-  roomBox: {
-    display: "flex",
-    marginTop: theme.spacing(1),
-    height: `calc(100vh - ${(theme.mixins.toolbar.minHeight * 2) + (theme.spacing(2) * 3) + theme.spacing(1) * 3}px)`,
-  },
-  roomBoxVideo: {
-    minWidth: "300px",
-    flex: 1,
-    marginLeft: theme.spacing(1),
-    [theme.breakpoints.down('md')]: {
-      marginRight: theme.spacing(1)
-    }
-  },
-  roomBoxTabs: {
-    width: "300px",
-    margin: theme.spacing(0, 1)
-  },
-  roomVideo: {
-    height: "auto",
-    width: "100%",
-    backgroundColor: theme.palette.background.paper,
-    borderRadius: theme.shape.borderRadius
-  },
-  roomBoxDrawerCloseButton: {
-    alignSelf: "flex-end"
   },
   meetingContainer: {
     height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px - 32px)`,

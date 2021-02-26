@@ -55,11 +55,23 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center"
   },
   roomBoxTabChatMessageList: {
-    height: `calc(100vh - ${(theme.mixins.toolbar.minHeight * 2) + (theme.spacing(2) * 3) + theme.spacing(1) * 3}px - 18px)`,
-    position: "relative"
+    height: `calc(100vh - ${(theme.mixins.toolbar.minHeight * 3) + (theme.spacing(2) * 3) + theme.spacing(1) * 3}px - 72px)`,
+    position: "relative",
   },
-  roomBoxDrawerTabChatMessageList: {
-    height: `calc(100vh - ${(theme.mixins.toolbar.minHeight * 2) + (theme.spacing(2) * 3) + theme.spacing(1) * 3}px - 10px)`,
+  roomVideoBox: {
+    height: "100%"
+  },
+  roomVideo: {
+    height: "auto",
+    width: "100%",
+    [theme.breakpoints.only('sm')]: {
+      width: "85%",
+    },
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: theme.shape.borderRadius
+  },
+  roomVideoDivider: {
+    marginBottom: theme.spacing(2)
   },
 }));
 

@@ -2,16 +2,13 @@ import React from "react";
 import { Box, IconButton, Hidden } from "@material-ui/core";
 
 import CallEndIcon from "@material-ui/icons/CallEnd";
-import ChatIcon from "@material-ui/icons/Chat";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import MicNoneIcon from "@material-ui/icons/MicNone";
 import VideocamIcon from "@material-ui/icons/Videocam";
 
 import useStyles, { StyledButton } from "./styles";
 
-function VideoControlButtons({
-  onOpenDrawer
-}) {
+function VideoControlButtons() {
   const classes = useStyles();
 
   return (
@@ -36,13 +33,6 @@ function VideoControlButtons({
         color="secondary"
         startIcon={<VideocamIcon />}
         endIcon={<ExpandLessIcon />} />
-
-      <Hidden lgUp >
-        <IconButton color="secondary"
-          onClick={onOpenDrawer()}>
-          <ChatIcon />
-        </IconButton>
-      </Hidden>
     </Box>
   );
 }
