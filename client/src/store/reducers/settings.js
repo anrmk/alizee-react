@@ -65,7 +65,15 @@ import {
 
   UPDATE_CARD_REQUEST,
   UPDATE_CARD_SUCCESS,
-  UPDATE_CARD_FAILURE
+  UPDATE_CARD_FAILURE,
+
+  GET_BANK_REQUEST,
+  GET_BANK_SUCCESS,
+  GET_BANK_FAILURE,
+
+  UPDATE_BANK_REQUEST,
+  UPDATE_BANK_SUCCESS,
+  UPDATE_BANK_FAILURE,
 } from '../actions/settings';
 
 export default function settings(state = {
@@ -369,6 +377,45 @@ export default function settings(state = {
       };
     }
     case UPDATE_CARD_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    //BANK SETTINGS
+    case GET_BANK_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case GET_BANK_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case GET_BANK_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case UPDATE_BANK_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case UPDATE_BANK_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case UPDATE_BANK_FAILURE: {
       return {
         ...state,
         ...action.payload,

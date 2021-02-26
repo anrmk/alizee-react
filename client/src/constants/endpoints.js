@@ -103,6 +103,8 @@ export default {
     updatePersonal: "accountsetting/personal",
     getCard: "accountsetting/card",
     updateCard: "accountsetting/card",
+    getBank: "accountsetting/bankAccount",
+    updateBank: "accountsetting/bankAccount",
 
     // INTERESTS
     getInterests: "interest/getinterests",

@@ -93,7 +93,9 @@
   "Postal": "Postal/ZIP",
 
   "CardNumber": "Card number",
-  "NameOnCard": "Name on card"
-
+  "NameOnCard": "Name on card",
+  "AccountNumber": "Account Number", 
+  "RoutingNumber": "Routing Number", 
+  "BankAccountType": "Type of Bank Account"
 
 }

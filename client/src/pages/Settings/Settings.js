@@ -7,6 +7,7 @@ import {
   SETTINGS_BLACK_LIST_ROUTE,
   SETTINGS_EDIT_PROFILE_ROUTE,
   SETTINGS_CARD_ROUTE,
+  SETTINGS_BANK_ROUTE,
   SETTINGS_INTERESTS_ROUTE,
   SETTINGS_NOTIFICATION_ROUTE,
   SETTINGS_PRIVACY_SECURITY_ROUTE,
@@ -19,6 +20,7 @@ import BlackList from "./BlackList";
 import EditProfileSettings from "./EditProfileSettings";
 import EditPersonalSettings from "./EditPersonalSettings";
 import EditCardSettings from "./EditCardSettings";
+import EditBankSettings from "./EditBankSettings";
 import InterestsSettings from "./InterestsSettings";
 import PrivacySecuritySettings from "./PrivacySecuritySettings";
 import NotificationSettings from "./NotificationSettings";
@@ -48,19 +50,25 @@ const TABS = [
   },
   {
     index: 3,
+    name: "bank",
+    title: "Banking",
+    route: SETTINGS_BANK_ROUTE,
+  },
+  {
+    index: 4,
     name: "interests",
     title: "Interests",
     route: SETTINGS_INTERESTS_ROUTE,
   },
 
   {
-    index: 4,
+    index: 5,
     name: "notification",
     title: "Notification",
     route: SETTINGS_NOTIFICATION_ROUTE,
   },
   {
-    index: 5,
+    index: 6,
     name: "privacy-security",
     title: "Privacy and Security",
     route: SETTINGS_PRIVACY_SECURITY_ROUTE,
@@ -123,8 +131,8 @@ function Settings() {
             <PrivateRoute exact path={SETTINGS_EDIT_PROFILE_ROUTE} component={EditProfileSettings} />
             <PrivateRoute exact path={SETTINGS_PERSONAL_ROUTE} component={EditPersonalSettings} />
             <PrivateRoute exact path={SETTINGS_CARD_ROUTE} component={EditCardSettings} />
+            <PrivateRoute exact path={SETTINGS_BANK_ROUTE} component={EditBankSettings} />
             <PrivateRoute exact path={SETTINGS_INTERESTS_ROUTE} component={InterestsSettings} />
-
             <PrivateRoute exact path={SETTINGS_NOTIFICATION_ROUTE} component={NotificationSettings} />
             <PrivateRoute exact path={SETTINGS_PRIVACY_SECURITY_ROUTE} component={PrivacySecuritySettings} />
             <PrivateRoute exact path={SETTINGS_BLACK_LIST_ROUTE} component={BlackList} />

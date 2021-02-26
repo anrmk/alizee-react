@@ -149,3 +149,19 @@ export {
 
   updateCard
 } from "./updateCard"
+
+export {
+  GET_BANK_REQUEST,
+  GET_BANK_SUCCESS,
+  GET_BANK_FAILURE,
+
+  getBank
+} from "./getBank"
+
+export {
+  UPDATE_BANK_REQUEST,
+  UPDATE_BANK_SUCCESS,
+  UPDATE_BANK_FAILURE,
+
+  updateBank
+} from "./updateBank"
