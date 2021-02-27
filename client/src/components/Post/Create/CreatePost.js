@@ -8,7 +8,6 @@ import { Typography, GridList, GridListTile, FormControl, TextField, InputAdornm
 import { CreateTools } from "../../../components/Post";
 
 import useStyles from "./styles";
-import { CREATE_POST_DIALOG_TYPE } from "../../../constants/dialogs";
 
 const MEDIA_ID = "medias";
 const DESCRIPTION_ID = "description";
@@ -68,14 +67,13 @@ export default function CreatePost({
   }, [])
 
   const handleFormSubmit = (data) => {
-    onSubmit && onSubmit(CREATE_POST_DIALOG_TYPE, data);
+    onSubmit && onSubmit(data);
   };
 
   const handleToolsChange = (e) => {
     var target = e.currentTarget;
     switch (target.type) {
       case "button":
-        console.log("TARGET", target.name);
         if (target.name === COMMENTABLE_ID) {
           setValue(target.name, !commentableWatcher);
         } else if (target.name === PRIVATE_ID) {

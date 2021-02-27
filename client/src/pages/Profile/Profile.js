@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useCallback } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Redirect, useHistory, useParams, useRouteMatch } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -6,7 +6,6 @@ import { Box, Container, Grid, Typography, Hidden } from "@material-ui/core/";
 
 import ApiContext from "../../context/ApiContext";
 import { SocialControl } from "../../components/Social";
-import { PostSprout } from "../../domain/PostsList";
 import Cover from "../../domain/Cover";
 import ProfileContent from "../../domain/ProfileContent";
 
@@ -28,7 +27,6 @@ import {
 } from "../../constants/routes";
 
 import useDialog from "../../hooks/useDialog";
-import usePostSproutDialog from "../../hooks/usePostSproutDialog";
 import useShareDialog, { SHARE_DIALOG_PROFILE_TYPE } from "../../hooks/useShareDialog";
 import dialogs, { PROFILE_EDIT_COVER, SEND_TIP_DIALOG_TYPE } from "../../constants/dialogs";
 import Navigation from "./Navigation";
@@ -53,12 +51,6 @@ function Profile(props) {
 
   const FORM_ID = "dialog-sendTip";
   const dialog = useDialog();
-
-  const { dialogToggleSprout } = usePostSproutDialog({
-    onCreatePost: createPost,
-    onCreateStory: createStory,
-    onCreateMood: createMood,
-  });
 
   const { dialogShareOpenClick } = useShareDialog({
     userName: username,
@@ -206,12 +198,6 @@ function Profile(props) {
 
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
-          {username === me.userName && (
-            <Hidden smDown>
-              <PostSprout userName={me.userName} onDialogToggle={dialogToggleSprout} />
-            </Hidden>
-          )}
-
           <Navigation
             userName={user.userName}
             followersCount={user?.followersCount}
@@ -283,9 +269,9 @@ function mapDispatchToProps(dispatch) {
     createFollow: (api, userName) => dispatch(relationshipActions.createFollow(api, userName)),
     deleteFollow: (api, userName) => dispatch(relationshipActions.deleteFollow(api, userName)),
 
-    createPost: (api, post, media) => dispatch(postActions.createPost(api, post, media)),
-    createStory: (api, story, media) => dispatch(storyActions.createStorySlide(api, story, media)),
-    createMood: (api, data) => dispatch(moodActions.createMood(api, data)),
+    // createPost: (api, post, media) => dispatch(postActions.createPost(api, post, media)),
+    // createStory: (api, story, media) => dispatch(storyActions.createStorySlide(api, story, media)),
+    // createMood: (api, data) => dispatch(moodActions.createMood(api, data)),
     updateCover: (api, coverUrl) => dispatch(settingsActions.updateCover(api, coverUrl)),
     sendTip: (api, userName, amount, message) => dispatch(paymentActions.sendTip(api, userName, amount, message)),
   };

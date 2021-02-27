@@ -31,11 +31,13 @@ import Search from "../Search"
 import Story from "../Story";
 import Statistics from "../Statistics";
 
-import * as userActions from "../../store/actions/user";
 import { signOutUser } from "../../store/actions/signIn";
 import * as Routes from "../../constants/routes";
 import useHideNavigation from "../../hooks/useHideNavigation";
-import usePostSproutDialog from "../../hooks/usePostSproutDialog";
+
+import usePostDialog from "../../hooks/usePostDialog";
+import useStoryDialog from "../../hooks/useStoryDialog";
+import useMoodDialog from "../../hooks/useMoodDialog";
 
 import * as postActions from "../../store/actions/post";
 import * as storyActions from "../../store/actions/story";
@@ -45,16 +47,15 @@ import useStyles from "./styles";
 
 function Main(props) {
   const { user, isAuthenticated, userStatistics } = props;
-  const { signOut, createPost, createStory, createMood } = props;
+  const { signOut } = props;
 
   const [open, setOpen] = useState(true);
   const isNavigationHide = useHideNavigation(Routes.STORIES_DEFAULT_ROUTE);
   const classes = useStyles({ isAuthenticated, isNavigationHide });
-  const { dialogToggleSprout } = usePostSproutDialog({ 
-    onCreatePost: createPost,
-    onCreateStory: createStory,
-    onCreateMood: createMood
-  });
+
+  const createPostDialog = usePostDialog({ onPostCreate: props.createPost });
+  const createStoryDialog = useStoryDialog({ onStoryCreate: props.createStory });
+  const createMoodDialog = useMoodDialog({ onMoodCreate: props.createMood });
 
   const handleDrawerToggle = () => {
     setOpen(!open);
@@ -71,6 +72,8 @@ function Main(props) {
               user={user}
               open={open}
               userStatistics={userStatistics}
+              onCreatePost={createPostDialog.toggle}
+              onCreateStory={createStoryDialog.toggle}
               onDrawerToggle={handleDrawerToggle}
             />
           </Hidden>
@@ -107,7 +110,11 @@ function Main(props) {
       </Box>
       {isAuthenticated && !isNavigationHide && (
         <Hidden mdUp>
-          <BottomBar user={user} onDialogToggle={dialogToggleSprout} />
+          <BottomBar user={user} 
+             onCreatePost={createPostDialog.toggle}
+             onCreateStory={createStoryDialog.toggle}
+             onCreateMood={createMoodDialog.toggle} 
+          />
         </Hidden>
       )}
     </Box>

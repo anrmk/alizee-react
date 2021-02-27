@@ -85,7 +85,7 @@ const Tools = React.memo(({
 
   return (
     <>
-      <IconButton className="danger" onClick={handleLikeClick} aria-label="add to favorites">
+      <IconButton color="secondary" onClick={handleLikeClick} aria-label="add to favorites">
         {isLike ? <FavoriteIcon /> : <FavoriteBorderIcon />}
       </IconButton>
       <Typography>{likes > 0 && <strong>{likes}</strong>}</Typography>
@@ -98,18 +98,17 @@ const Tools = React.memo(({
 
       <div className={classes.grow}></div>
 
-      <IconButton className="success" aria-label="share" onClick={handleFavoriteClick}>
+      <IconButton  color="primary" aria-label="favorite" onClick={handleFavoriteClick}>
         {isFavorite ? <BookmarkIcon /> : <BookmarkBorderIcon />}
       </IconButton>
 
       {renderPurchase()}
 
       {!location.includes(POST_ID_ROUTE(id)) && (
-        <IconButton
-          className="warning"
+        <IconButton 
           to={POST_ID_ROUTE(id)}
           component={Link}>
-          <VisibilityIcon />
+          <VisibilityIcon  />
         </IconButton>
       )}
     </>

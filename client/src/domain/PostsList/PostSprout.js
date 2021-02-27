@@ -1,35 +1,24 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
+
 import {
-  Paper,
-  Box,
-  Avatar,
-  ButtonBase,
   IconButton,
   Drawer,
   List,
   ListItem,
   ListItemText,
   ListItemIcon,
-  Typography,
 } from "@material-ui/core";
 
-import AddIcon from "@material-ui/icons/Add";
-import CameraIcon from "@material-ui/icons/PhotoCamera";
-import StoriesIcon from "@material-ui/icons/AmpStories";
+import PhotoCameraIcon from "@material-ui/icons/PhotoCameraOutlined";
+import ControlPointIcon from "@material-ui/icons/ControlPointDuplicateOutlined";
 import MoodIcon from "@material-ui/icons/Mood";
 import AddCircleIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 
-import useStyle from "./styles";
-import { CREATE_MOOD_DIALOG_TYPE, CREATE_POST_DIALOG_TYPE, CREATE_STORY_DIALOG_TYPE } from "../../constants/dialogs";
-
 function PostSprout({
-  userName,
-  variant,
-
-  onDialogToggle
+  onCreatePost,
+  onCreateStory,
+  onCreateMood,
 }) {
-  const classes = useStyle();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const container = window !== undefined ? window.document.body : undefined;
@@ -42,39 +31,26 @@ function PostSprout({
     setDrawerOpen(true);
   };
 
-  const handleDialogToggle = (type, data) => {
+  const handleCreateMood = () => {
     handleDrawerClose();
-    onDialogToggle && onDialogToggle(type, data);
-  };
+    onCreateMood && onCreateMood();
+  }
 
-  // TODO: remove it
-  const renderBtn = () => {
-    if (variant === "icon") {
-      return (
-        <IconButton onClick={handleDrawerOpen}>
-          <AddCircleIcon />
-        </IconButton>
-      );
-    } else if (variant === "button") {
-      return (
-        <Paper className={classes.root} variant="outlined">
-          <ButtonBase className={classes.button} onClick={handleDrawerOpen}>
-            <Avatar>
-              <AddIcon />
-            </Avatar>
-            <Box p={(0, 1)}>
-              <Typography variant="h6">Create a Story</Typography>
-              <Typography variant="caption">Share a post or write something</Typography>
-            </Box>
-          </ButtonBase>
-        </Paper>
-      );
-    }
-  };
+  const handleCreateStory = () => {
+    handleDrawerClose();
+    onCreateStory && onCreateStory();
+  }
+
+  const handleCreatePost = () => {
+    handleDrawerClose();
+    onCreatePost && onCreatePost();
+  }
 
   return (
     <>
-      {renderBtn()}
+      <IconButton onClick={handleDrawerOpen} color="primary">
+        <AddCircleIcon />
+      </IconButton>
 
       {/* TODO: create independent DrawerProvider and move out this logic */}
       <Drawer
@@ -85,21 +61,21 @@ function PostSprout({
         ModalProps={{ keepMounted: true }}
       >
         <List>
-          <ListItem button onClick={() => handleDialogToggle(CREATE_MOOD_DIALOG_TYPE, { userName })}>
-            <ListItemIcon>
-              <MoodIcon />
+          <ListItem button onClick={handleCreateMood}>
+            <ListItemIcon >
+              <MoodIcon color="action" />
             </ListItemIcon>
             <ListItemText primary="Mood" />
           </ListItem>
-          <ListItem button onClick={() => handleDialogToggle(CREATE_STORY_DIALOG_TYPE)}>
+          <ListItem button onClick={handleCreateStory}>
             <ListItemIcon>
-              <StoriesIcon />
+              <ControlPointIcon color="primary" />
             </ListItemIcon>
             <ListItemText primary="Story" />
           </ListItem>
-          <ListItem button onClick={() => handleDialogToggle(CREATE_POST_DIALOG_TYPE)}>
+          <ListItem button onClick={handleCreatePost}>
             <ListItemIcon>
-              <CameraIcon />
+              <PhotoCameraIcon color="secondary" />
             </ListItemIcon>
             <ListItemText primary="Post" />
           </ListItem>
@@ -108,17 +84,5 @@ function PostSprout({
     </>
   );
 }
-
-PostSprout.propTypes = {
-  user: PropTypes.object,
-  variant: PropTypes.string,
-  onSubmit: PropTypes.func,
-};
-
-PostSprout.defaultProps = {
-  user: {},
-  variant: "button" || "icon",
-  onSubmit: undefined,
-};
 
 export default PostSprout;

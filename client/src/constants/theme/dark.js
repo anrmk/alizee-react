@@ -4,8 +4,14 @@ import defaultTheme from "./default";
 
 export default createMuiTheme({
   ...defaultTheme,
+
   palette: {
     type: "dark",
+
+    action: {
+      main: "#FEDB5F" 
+    },
+
     primary: {
       main: "#35B1F6" //"#845DD7",
     },
@@ -82,36 +88,21 @@ export default createMuiTheme({
             opacity: "1",
           },
         },
-
-        "&.gold": {
-          background: "linear-gradient(89.86deg, #FEDB5F -2.12%, #2B30B1 201.58%)",
-          backgroundColor: "#FEDB5F",
-          color: "white",
-          opacity: ".8",
-          "&:hover": {
-            opacity: "1",
-          },
-        },
       },
     },
 
     MuiIconButton: {
       root: {
-        padding: "8px",
-        "&.success": {
-          color: "#3CFDB7",
-        },
-        "&.warning": {
-          color: "#FEDB5F",
-        },
-        "&.danger": {
-          color: "#FE5F5F",
-        },
+        padding: "8px"
       },
     },
 
     MuiSvgIcon: {
       root: {},
+
+      colorAction: {
+        color: "#FEDB5F",
+      },
 
       // fontSizeLarge: {
       //   fontSize: "8rem",
@@ -120,21 +111,7 @@ export default createMuiTheme({
   },
 
   MuiBottomNavigationAction: {
-    root: {
-      "&.success": {
-        color: "#3CFDB7",
-        backgroundColor: "red",
-      },
-      "&.warning": {
-        color: "#FEDB5F",
-      },
-      "&.danger": {
-        color: "#FE5F5F",
-      },
-    },
-    "& .success": {
-      color: "#3CFDB7",
-    },
+   
   },
 
   MuiTypography: {

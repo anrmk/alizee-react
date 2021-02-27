@@ -1,11 +1,13 @@
-import { createMuiTheme } from '@material-ui/core';
+import { createMuiTheme } from "@material-ui/core";
 
 import defaultTheme from "./default";
 
 export default createMuiTheme({
   ...defaultTheme,
+
   palette: {
     type: "light",
+
     primary: {
       main: "#35B1F6",
     },
@@ -15,7 +17,7 @@ export default createMuiTheme({
     },
 
     success: {
-      main: "#58CD86"
+      main: "#58CD86",
     },
 
     warning: {
@@ -28,10 +30,10 @@ export default createMuiTheme({
 
     background: {
       default: "#F5F7F8",
-      paper: "#F0F2F6"
+      paper: "#F0F2F6",
     },
 
-    divider:  "rgba(26, 26, 26, 0.08)"
+    divider: "rgba(26, 26, 26, 0.08)",
   },
 
   overrides: {
@@ -45,7 +47,6 @@ export default createMuiTheme({
       paper: {
         backgroundColor: "#F5F7F8",
       },
-     
     },
 
     MuiCard: {
@@ -71,37 +72,22 @@ export default createMuiTheme({
             opacity: "1",
           },
         },
-
-        "&.gold": {
-          background: "linear-gradient(89.86deg, #FEDB5F -2.12%, #2B30B1 201.58%)",
-          backgroundColor: "#FEDB5F",
-          color: "white",
-          opacity: ".8",
-          "&:hover": {
-            opacity: "1",
-          },
-        },
       },
     },
 
     MuiIconButton: {
       root: {
-        padding: "8px",
-        "&.success": {
-          color: "#3CFDB7",
-        },
-        "&.warning": {
-          color: "#FEDB5F",
-        },
-        "&.danger": {
-          color: "#FE5F5F",
-        },
+        padding: "8px"
       },
     },
 
     MuiSvgIcon: {
       root: {},
 
+      colorAction: {
+        color: "#FEDB5F",
+      },
+      
       // fontSizeLarge: {
       //   fontSize: "8rem",
       // },
@@ -109,17 +95,7 @@ export default createMuiTheme({
   },
 
   MuiBottomNavigationAction: {
-    root: {
-      "&.success": {
-        color: "#3CFDB7",
-      },
-      "&.warning": {
-        color: "#FEDB5F",
-      },
-      "&.danger": {
-        color: "#FE5F5F",
-      },
-    },
+   
   },
 
   MuiTypography: {
@@ -130,7 +106,7 @@ export default createMuiTheme({
 
   MuiDivider: {
     root: {
-      background: "#1C1A1A"
-    }
-  }
+      background: "#1C1A1A",
+    },
+  },
 });

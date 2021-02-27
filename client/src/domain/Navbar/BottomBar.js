@@ -18,7 +18,9 @@ import useStyles from "./styles";
 function BottomBar({
   user,
 
-  onDialogToggle
+  onCreatePost,
+  onCreateStory,
+  onCreateMood
 }) {
   const classes = useStyles()();
   const location = useLocation();
@@ -35,7 +37,11 @@ function BottomBar({
             <SearchIcon />
           </IconButton>
 
-          <PostSprout variant="icon" userName={user.userName} onDialogToggle={onDialogToggle} />
+          <PostSprout 
+            onCreatePost={onCreatePost}
+            onCreateStory={onCreateStory}
+            onCreateMood={onCreateMood}
+            />
 
           <IconButton onClick={() => history.push(EXPLORE_ROUTE)} color={`${location.pathname.includes(EXPLORE_ROUTE) ? "primary" : "default" }`}>
             <ExploreIcon />

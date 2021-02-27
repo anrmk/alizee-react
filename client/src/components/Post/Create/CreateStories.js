@@ -6,7 +6,6 @@ import * as yup from "yup";
 import { GridList, GridListTile, Typography } from "@material-ui/core";
 
 import { CreateTools } from "../../../components/Post";
-import { CREATE_STORY_DIALOG_TYPE } from "../../../constants/dialogs";
 
 import useStyles from "./styles";
 
@@ -44,7 +43,7 @@ export default function CreateStories({
   }, [])
 
   const handleFormSubmit = (data) => {
-    onSubmit && onSubmit(CREATE_STORY_DIALOG_TYPE, data);
+    onSubmit && onSubmit(data);
   };
 
   const handleMediaChange = (e) => {

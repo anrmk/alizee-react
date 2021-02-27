@@ -34,12 +34,12 @@ import { PreviewStoriesList } from "../domain/StoriesLists";
 import ApiContext from "../context/ApiContext";
 import { INTERESTS_SKIP, STORIES_LENGTH } from "../constants/feed";
 import { SUGESTED_PEOPLE } from "../constants/routes";
-import { CREATE_STORY_DIALOG_TYPE } from "../constants/dialogs";
 
-import usePostSproutDialog from "../hooks/usePostSproutDialog";
 import usePostActions from "../hooks/usePostActions";
 import useProfileActions from "../hooks/useProfileActions";
 import useShareDialog, { SHARE_DIALOG_POST_TYPE } from "../hooks/useShareDialog";
+import useStoryDialog from "../hooks/useStoryDialog";
+
 import { useSendTipDialog, usePaymentDialog } from "../hooks/payment";
 
 function Feed(props) {
@@ -47,18 +47,18 @@ function Feed(props) {
   const interestsEl = useRef();
 
   const [interestsModalShow, setInterestsModalShow] = useState(false);
-  const [currentPostId, setCurrentPostId] = useState(false);
 
   const { userInfo } = props;
   const { settings, getAccountPersonalized, blockUser, unblockUser, reportUser } = props;
   const { people, getPeople, createFollow, deleteFollow } = props;
-  const { posts, getPosts, createPost, resetPosts, createMood } = props;
+  const { posts, getPosts, resetPosts } = props;
   const { interests, getInterests, createInterests } = props;
-  const { story, getStory, getFollowingStories, createStory, resetFollowingStories, resetStory } = props;
+  const { story, getStory, getFollowingStories, resetFollowingStories, resetStory } = props;
   const { hotStreamers, getHotStreamers } = props;
 
   const sendTipDialog = useSendTipDialog({ onSendTip: props.sendTip });
   const buyPostDialog = usePaymentDialog({ onPayment: props.buyPost });
+  const createStoryDialog = useStoryDialog({ onStoryCreate: props.createStory });
 
   const profileAction = useProfileActions({
     onFollow: createFollow,
@@ -77,14 +77,8 @@ function Feed(props) {
     onReceipt: props.getReceipt,
   });
 
-  const { dialogToggleSprout } = usePostSproutDialog({
-    onCreatePost: createPost,
-    onCreateStory: createStory,
-    onCreateMood: createMood,
-  });
-
   const { dialogShareOpenClick } = useShareDialog({
-    type: SHARE_DIALOG_POST_TYPE
+    type: SHARE_DIALOG_POST_TYPE,
   });
 
   const isInterestsSkip = localStorage.getItem(INTERESTS_SKIP);
@@ -166,12 +160,8 @@ function Feed(props) {
             loading={story.isFetching}
             userStory={story.data.mStories}
             items={story.data.fStories}
-            onCreateStoryClick={() => dialogToggleSprout(CREATE_STORY_DIALOG_TYPE)}
+            onCreateStoryClick={createStoryDialog.toggle}
           />
-
-          <Hidden smDown>
-            <PostSprout userName={userInfo.userName} onDialogToggle={dialogToggleSprout} />
-          </Hidden>
 
           <PostsList
             user={userInfo}

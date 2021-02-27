@@ -21,7 +21,7 @@ import SunnyIcon from "@material-ui/icons/WbSunnyOutlined";
 
 import { HOME_ROUTE, CHAT_ROUTE, PROFILE_USERNAME_ROUTE, EXPLORE_ROUTE, MEET_ROUTE, ACTIVITY_ROUTE } from "../../constants/routes";
 import useChangeTheme from "../../hooks/useChangeTheme";
-import usePostSproutDialog from "../../hooks/usePostSproutDialog";
+
 import UserCard from "./UserCard";
 import Footer from "../Footer";
 import { Wallet } from "../Wallet";
@@ -32,6 +32,8 @@ function Sidebar({
   user,
   open,
 
+  onCreatePost,
+  onCreateStory,
   onDrawerToggle,
 }) {
   const classes = useStyles({ open });
@@ -99,6 +101,8 @@ function Sidebar({
           name={user.name}
           avatarUrl={user.avatarUrl}
           open={open}
+          onCreatePost={onCreatePost}
+          onCreateStory={onCreateStory}
           onClick={handleUserCardOnClick}
         />
       )}

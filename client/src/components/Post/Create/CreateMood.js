@@ -5,8 +5,6 @@ import * as yup from "yup";
 
 import { FormControl, TextField } from "@material-ui/core";
 
-import { CREATE_MOOD_DIALOG_TYPE } from "../../../constants/dialogs";
-
 import useStyles from "./styles";
 
 const MOOD_ID = "mood";
@@ -33,7 +31,7 @@ function CreateMood({
   });
 
   const handleFormSubmit = (data) => {
-    onSubmit && onSubmit(CREATE_MOOD_DIALOG_TYPE, data);
+    onSubmit && onSubmit(data);
   };
 
   return (
