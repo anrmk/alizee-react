@@ -24,12 +24,6 @@ function SearchInput({
     setValue(e.target.value.trimStart().trimEnd());
   };
 
-  const handleEnterKeyDown = (e) => {
-    if (e.key === "Enter") {
-      setValue("");
-    }
-  };
-
   return (
     <Box mb={2} ml={"auto"} mr={"auto"} className={classes.search}>
       <Box className={classes.searchIcon}>
@@ -47,7 +41,6 @@ function SearchInput({
           }}
           inputProps={{ "aria-label": "search" }}
           onChange={handleChange}
-          onKeyDown={handleEnterKeyDown}
         />
       </Box>
     </Box>

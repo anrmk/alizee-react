@@ -24,10 +24,8 @@ const MessagesList = React.memo(({
   const classes = useStyles();
   const messagesContainer = useRef(null);
 
-  const [isLocalSendMessage] = useState(isSendMessage);
-
   useEffect(() => {
-    if (items.length > 0 && isLocalSendMessage) {
+    if (items.length > 0 && isSendMessage && messagesContainer.current.scrollTop < 0) {
       messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight;
     }
   }, [items]);
