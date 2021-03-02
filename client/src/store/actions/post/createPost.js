@@ -42,7 +42,7 @@ export function createPost(api, postData) {
   return async (dispatch, getState) => {
     dispatch(requestCreatePost());
 
-    const url = generateUrl('createPost');
+    const url = generateUrl("createPost");
     try {
       const mediaData = postData.medias;
       let media = [];
@@ -58,7 +58,7 @@ export function createPost(api, postData) {
       }
 
       const { data } = await api
-        .setData({ 
+        .setData({
           amount: postData.amount && Number(postData.amount) || 0,
           description: postData.description,
           isCommentable: postData.commentable,
@@ -66,22 +66,26 @@ export function createPost(api, postData) {
           latitude: postData?.latitude,
           longitude: postData?.longitude,
           media: media
-         })
+        })
         .query(url);
 
       // Extend relative path to absolute (to remote server)
-      const avatarUrl = getState().signIn?.userInfo?.avatarUrl;
-      if (avatarUrl) {
-        data.user.avatarUrl = avatarUrl;
+      const posts = getState().posts.data;
+
+      if (getState().user.data?.userName && getState().signIn.userInfo.userName !== getState().user.data.userName) {
+        dispatch(receiveCreatePost(posts));
+      } else {
+        const avatarUrl = getState().signIn?.userInfo?.avatarUrl;
+        if (avatarUrl) {
+          data.user.avatarUrl = avatarUrl;
+        }
+        data.media.forEach(item => {
+          item.url = generateFileUrl(process.env.REACT_APP_DOMAIN, item.url);
+        });
+
+        dispatch(receiveCreatePost([data, ...posts]));
       }
-      data.media.forEach(item => {
-        item.url = generateFileUrl(process.env.REACT_APP_DOMAIN, item.url);
-      });
-
-      const updatedPosts = [data, ...getState().posts.data];
-
-      dispatch(receiveCreatePost(updatedPosts));
-    } catch(e) {
+    } catch (e) {
       dispatch(errorCreatePost("Error: something went wrong"));
     }
   }
