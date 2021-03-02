@@ -5,8 +5,8 @@ export const POSTS_LENGTH = 20;
 export const POST_PUBLIC = 0;
 export const POST_PRIVATE = 1;
 
-export const COMMENTS_POST_LENGTH = 10;
-export const COMMENTS_POST_OFFSET = 10;
+export const COMMENTS_POST_LENGTH = 20;
+export const COMMENTS_POST_OFFSET = 20;
 
 export const POST_TYPE = {
   POST: "Post",

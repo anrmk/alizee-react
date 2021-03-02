@@ -9,6 +9,7 @@ import Message from "./Message";
 import useStyles from "./styles";
 
 const MessagesList = React.memo(({
+  isSendMessage,
   hasMore,
 
   userId,
@@ -23,26 +24,23 @@ const MessagesList = React.memo(({
   const classes = useStyles();
   const messagesContainer = useRef(null);
 
-  const [firstLoad, setFirstLoad] = useState(true);
+  const [isLocalSendMessage] = useState(isSendMessage);
 
   useEffect(() => {
-    if (items.length > 0 && firstLoad) {
+    if (items.length > 0 && isLocalSendMessage) {
       messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight;
-      setFirstLoad(false);
     }
-  }, [items])
+  }, [items]);
 
   return (
     <Box id="messagerContainer" className={clsx(classes.messenger, className)} ref={messagesContainer}>
      <InfiniteScroll
-        className={classes.messagesList}
+        className={classes.infinite}
         scrollableTarget="messagerContainer"
         scrollThreshold={-0.8}
         dataLength={items.length}
         next={onFetchMore}
         hasMore={hasMore}
-        inverse={true}
-        className={classes.infinite}
       >
       {items && items.map((message) => (
         <Message

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 import { MessageSenderInput, MessagesList } from "../Chat";
@@ -13,6 +13,19 @@ function Comments(props) {
   const { hasMore } = props;
   const { userId, avatarUrl, title, subheader, description, items, isCommentable } = props;
   const { onFetchMore, onSendMessageClick } = props;
+
+  const [isSendMessage, setIsSendMessage] = useState(false);
+
+  const handleMessageCreate = (data) => {
+    setIsSendMessage(true);
+    onSendMessageClick && onSendMessageClick(data);
+  };
+
+  useEffect(() => {
+    if (items) {
+      setIsSendMessage(false);
+    }
+  }, [items]);
 
   return (
     <Card className={classes.card}>
@@ -31,12 +44,12 @@ function Comments(props) {
       <Divider />
 
       <CardContent className={classes.cardContent}>
-        {<MessagesList userId={userId} items={items} onFetchMore={onFetchMore} hasMore={hasMore} />}
+        {<MessagesList isSendMessage={isSendMessage} userId={userId} items={items} onFetchMore={onFetchMore} hasMore={hasMore} />}
       </CardContent>
 
       {isCommentable && (
         <CardActions className={classes.cardFooter}>
-          <MessageSenderInput onSendMessageClick={onSendMessageClick} hideMediaEditor={true} />
+          <MessageSenderInput onSendMessageClick={handleMessageCreate} hideMediaEditor={true} />
         </CardActions>
       )}
     </Card>

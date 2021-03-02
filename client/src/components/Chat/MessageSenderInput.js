@@ -36,7 +36,6 @@ function MessageSenderInput({
   };
 
   const handleEnterKeyDown = (e) => {
-    console.log(e.key)
     if (e.key === "Enter") {
       messageSend();
     }

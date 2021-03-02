@@ -313,7 +313,7 @@ export function formatDate(value, opts = { timeOffset: 12, showSubText: true }) 
  
   if(delta > ONE_HOUR_MILLISECONDS * opts.timeOffset) {
     options = { 
-      year: "numeric", month: "short", day: "numeric", 
+      month: "short", day: "numeric", 
       hour: 'numeric', minute: 'numeric', 
       hour12: true
     };

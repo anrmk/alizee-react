@@ -32,6 +32,7 @@ function Sidebar({
   user,
   open,
 
+  onCreateMeet,
   onCreatePost,
   onCreateStory,
   onDrawerToggle,
@@ -101,6 +102,7 @@ function Sidebar({
           name={user.name}
           avatarUrl={user.avatarUrl}
           open={open}
+          onCreateMeet={onCreateMeet}
           onCreatePost={onCreatePost}
           onCreateStory={onCreateStory}
           onClick={handleUserCardOnClick}

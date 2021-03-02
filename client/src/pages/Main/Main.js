@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { Box, Hidden } from "@material-ui/core";
 
@@ -52,6 +52,7 @@ function Main(props) {
   const [open, setOpen] = useState(true);
   const isNavigationHide = useHideNavigation(Routes.STORIES_DEFAULT_ROUTE);
   const classes = useStyles({ isAuthenticated, isNavigationHide });
+  const history = useHistory();
 
   const createPostDialog = usePostDialog({ onPostCreate: props.createPost });
   const createStoryDialog = useStoryDialog({ onStoryCreate: props.createStory });
@@ -59,6 +60,10 @@ function Main(props) {
 
   const handleDrawerToggle = () => {
     setOpen(!open);
+  };
+
+  const handleCreateMeet = () => {
+    history.push(Routes.MEET_ROUTE);
   };
 
   return (
@@ -72,6 +77,7 @@ function Main(props) {
               user={user}
               open={open}
               userStatistics={userStatistics}
+              onCreateMeet={handleCreateMeet}
               onCreatePost={createPostDialog.toggle}
               onCreateStory={createStoryDialog.toggle}
               onDrawerToggle={handleDrawerToggle}

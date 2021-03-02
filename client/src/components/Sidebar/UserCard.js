@@ -12,7 +12,7 @@ import useStyles from "./styles";
 function UserCard(props) {
   const { open } = props;
   const { name, username, avatarUrl } = props;
-  const { onCreatePost, onCreateStory } = props;
+  const { onCreateMeet, onCreatePost, onCreateStory } = props;
 
   const classes = useStyles({ open });
 
@@ -25,7 +25,7 @@ function UserCard(props) {
         <Typography variant="subtitle1">{username}</Typography>
 
         <BottomNavigation showLabels className={classes.navigation} >
-          <BottomNavigationAction className="success" value="goLive" label="Go live" icon={<LiveTvIcon />} />
+          <BottomNavigationAction className="success" value="goLive" label="Go live" icon={<LiveTvIcon />} onClick={onCreateMeet} />
           <BottomNavigationAction className="secondary" value="post" label="Photo" icon={<PhotoCameraIcon />} onClick={onCreatePost} />
           <BottomNavigationAction className="primary" value="stories" label="Stories" icon={<ControlPointIcon />} onClick={onCreateStory} />
         </BottomNavigation>

@@ -37,7 +37,14 @@ function Room({
   const { t } = useTranslation();
 
   const [anchorEl, setAnchorEl] = useState(null);
+  const [isSendMessage, setIsSendMessage] = useState(false);
   const isMenuOpen = Boolean(anchorEl);
+
+  useEffect(() => {
+    if (data?.messages) {
+      setIsSendMessage(false);
+    }
+  }, [data?.messages]);
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -45,6 +52,11 @@ function Room({
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleMessageCreate = (data) => {
+    setIsSendMessage(true);
+    onMessageCreate && onMessageCreate(data);
   };
 
   const handleMessageClear = (e) => {
@@ -108,10 +120,10 @@ function Room({
           <Divider />
 
           <CardContent className={classes.cardContent}>
-            <MessagesList userId={userId} items={data.messages} onMediaView={onMediaView}/>
+            <MessagesList isSendMessage={isSendMessage} userId={userId} items={data.messages} onMediaView={onMediaView}/>
           </CardContent>
           <CardActions className={classes.cardFooter}>
-            <MessageSenderInput onSendMessageClick={onMessageCreate} onSendTip={handleSendTipClick} />
+            <MessageSenderInput onSendMessageClick={handleMessageCreate} onSendTip={handleSendTipClick} />
           </CardActions>
         </Card>
       ) : (
