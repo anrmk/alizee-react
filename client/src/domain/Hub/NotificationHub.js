@@ -38,6 +38,14 @@ function NotificationHub(props) {
       .configureLogging(signalR.LogLevel.Information)
       .build();
 
+      newHubConnection.onclose(() => {
+        if (newHubConnection.state === signalR.HubConnectionState.Disconnected) {
+          setTimeout(() => {
+            connectToHub();
+          }, 5000);
+        }
+      });
+
     setHubConnection(newHubConnection);
   }
 
@@ -59,10 +67,7 @@ function NotificationHub(props) {
             hubConnection.on("ReceiveMessage", (data) => setMsg(data));
           })
           .catch((err) => {
-            setTimeout(() => {
-              connectToHub();
-            }, 5000);
-            console.log("Error connection SignalR " + JSON.stringify(err));
+            console.log("SignalR Error retrieve message" + JSON.stringify(err));
           });
       }
     }
