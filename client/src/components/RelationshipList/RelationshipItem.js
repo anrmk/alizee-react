@@ -7,6 +7,8 @@ import { FOLLOW_ACCEPTED, FOLLOW_PENDING, FOLLOW_REJECTED } from "../../constant
 import Avatar from "../Avatar";
 
 import useStyles from "./styles";
+import { Link } from "react-router-dom";
+import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 
 const RelationshipItem = React.memo((props) => {
   const { t } = useTranslation();
@@ -25,24 +27,32 @@ const RelationshipItem = React.memo((props) => {
 
   const {onItemClick, onFollowClick, onConfirmClick, onRejectClick, onUnrejectClick } = props;
 
-  const handleFollowClick = () => {
+  const handleFollowClick = (e) => {
+    e.preventDefault();
     onFollowClick && onFollowClick({ id, userName, isFollow });
   };
 
-  const handleConfirmClick = () => {
+  const handleConfirmClick = (e) => {
+    e.preventDefault();
     onConfirmClick && onConfirmClick({id, userName, status});
   }
 
-  const handleRejectClick = () => {
+  const handleRejectClick = (e) => {
+    e.preventDefault();
     onRejectClick && onRejectClick({id, userName, status});
   }
 
-  const handleUnrejectClick = () => {
+  const handleUnrejectClick = (e) => {
+    e.preventDefault();
     onUnrejectClick && onUnrejectClick({id, userName}); 
   }
 
   return (
-    <ListItem button className={classes.item}>
+    <ListItem 
+      className={classes.item}
+      button
+      to={PROFILE_USERNAME_ROUTE(userName)}
+      component={Link}>
       <ListItemAvatar>
         <Avatar src={avatarUrl} />
       </ListItemAvatar>
@@ -101,7 +111,7 @@ const RelationshipItem = React.memo((props) => {
 
       {status === FOLLOW_ACCEPTED && !isMe && (
         <Button
-          className={classes.itemButton}
+          className="primary"
           disableElevation
           disableRipple
           variant={isFollow ? "outlined": "contained"}

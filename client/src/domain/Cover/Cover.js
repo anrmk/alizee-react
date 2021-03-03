@@ -1,28 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid, Box, Typography, IconButton, Hidden, withWidth } from "@material-ui/core";
 
-import EditIcon from "@material-ui/icons/Edit";
-import Avatar from "../../components/Avatar";
-import FileInput from "../../components/FileInput";
+import ArrowBackIcon from "@material-ui/icons/ArrowBackRounded";
+import MoreVertIcon from "@material-ui/icons/MoreVertRounded";
 
-import Controls from "./Controls";
+import EditIcon from "@material-ui/icons/Edit";
+import FileInput from "../../components/FileInput";
+import Avatar from "../../components/Avatar";
+import { ProfileStatistics, ProfileStatisticsMobile } from "../../domain/ProfileStatistics";
+
+import Menu from "./Menu";
 
 import useStyles from "./styles";
+import { useHistory } from "react-router-dom";
 
 function Cover(props) {
-  const { user, width } = props;
-  const { isOwner, isLive, disabled } = props;
+  const { user } = props;
+
+  const history = useHistory();
+  const classes = useStyles({ imageUrl: user.coverUrl });
+  const [menuAnchor, setMenuAnchor] = useState(false);
+
+  const { isOwner } = props;
   const {
     onFavoriteClick,
-    onMessageClick,
-    onFollowClick,
     onSendGiftClick,
     onEditCover,
-    onSendTipClick,
     onShareClick
   } = props;
-
-  const classes = useStyles({ imageUrl: user.coverUrl });
 
   const handleCoverChange = (e) => {
     const files = e.target.files;
@@ -33,60 +38,74 @@ function Cover(props) {
     }
   };
 
-  const handleSendTipClick = () => {
-    onSendTipClick && onSendTipClick(user);
-  };
-
   return (
-    <Box marginBottom={2} position="relative">
-      <Grid className={classes.cover}>
-        <Box className={classes.caption}>{user.mood && <Typography>{user.mood}</Typography>}</Box>
-        {isOwner && (
-          <FileInput onChange={handleCoverChange}>
-            <IconButton className={classes.coverEditButton} disabled={disabled}>
-              <EditIcon />
-            </IconButton>
-          </FileInput>
-        )}
-      </Grid>
-
-      <Grid container className={classes.coverBox} justify="space-between" alignItems="flex-end" wrap="nowrap">
-        <Grid item>
-          <Box display="flex" alignItems="flex-end">
-            <Avatar
-              src={user.avatarUrl}
-              size={["lg", "md"].includes(width) ? "huge" : "big"}
-              membership={user.membership}
-              online={!user.offlineDate}
-              live={isLive}
-              borderColor="gold"
-              className={classes.avatar}
-            />
-            <Hidden xsDown>
-              {
-                <Box>
-                  <Typography variant="h6">{user.name}</Typography>
-                  <Typography variant="subtitle2">{user.userName}</Typography>
-                </Box>
-              }
-            </Hidden>
-          </Box>
-        </Grid>
-
-        <Grid item>
-          <Controls
+    <Box className={classes.root}>
+      <Hidden smDown>
+        <Box className={classes.cover}>
+          {isOwner && (
+            <FileInput onChange={handleCoverChange}>
+              <IconButton className={classes.coverEditButton}>
+                <EditIcon />
+              </IconButton>
+            </FileInput>
+          )}
+        </Box>
+      </Hidden>
+      <Box className={classes.topControls}>
+        <Box display="flex" alignItems="center">
+          <IconButton className={classes.control} onClick={() => history.goBack()}>
+            <ArrowBackIcon />
+          </IconButton>
+          <Hidden smDown>
+            <ProfileStatistics
+              className={classes.profileStatistics}
+              isOwner={isOwner}
+              userName={user.userName}
+              followersCount={user?.followersCount}
+              followingsCount={user?.followingsCount}
+              favoritesCount={user?.favoritesCount} />
+          </Hidden>
+          <Hidden mdUp>
+            <Typography variant="subtitle1">{user.name}</Typography>
+          </Hidden>
+        </Box>
+        <IconButton
+          className={classes.control}
+          aria-label="Profile menu"
+          aria-haspopup="true"
+          onClick={(e) => setMenuAnchor(e.currentTarget)}>
+          <MoreVertIcon />
+        </IconButton>
+      </Box>
+      <Hidden mdUp>
+        <Box display="flex" paddingX={2}>
+          <Avatar
+            className={classes.avatarHeader}
+            src={user.avatarUrl}
+            membership={user.membership}
+            online={!user.offlineDate && !user.live}
+            live={user.live} // TODO: add a condition to check is not it me
+            size="large"
+            borderColor="blue"
+            borderWidth="4px"
+            dotWidth="8px" />
+          <ProfileStatisticsMobile
+            className={classes.profileStatistics}
             isOwner={isOwner}
-            isFollow={user.isFollow}
-            isFavorite={user.isFavorite}
-            onFavoriteClick={onFavoriteClick}
-            onMessageClick={onMessageClick}
-            onFollowClick={onFollowClick}
-            onSendGiftClick={onSendGiftClick}
-            onSendTipClick={handleSendTipClick}
-            onShareClick={onShareClick}
-          />
-        </Grid>
-      </Grid>
+            userName={user.userName}
+            followersCount={user?.followersCount}
+            followingsCount={user?.followingsCount}
+            favoritesCount={user?.favoritesCount} />
+        </Box>
+      </Hidden>
+      <Menu 
+        isOwner={isOwner}
+        isFollow={user.isFollow}
+        isFavorite={user.isFavorite}
+        anchorEl={menuAnchor} 
+        onFavoriteClick={onFavoriteClick}
+        onShareClick={onShareClick}
+        onClose={() => setMenuAnchor(null)} />
     </Box>
   );
 }

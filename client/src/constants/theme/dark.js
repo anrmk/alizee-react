@@ -1,4 +1,5 @@
 import { createMuiTheme } from "@material-ui/core";
+import ThemeDispatchContext from "../../context/ThemeDispatchContext";
 
 import defaultTheme from "./default";
 
@@ -21,7 +22,8 @@ export default createMuiTheme({
     },
 
     success: {
-      main: "#58CD86"//"#18AA7E"
+      main: "#58CD86",//"#18AA7E"
+      contrast: "#44b700"
     },
 
     warning: {
@@ -35,6 +37,12 @@ export default createMuiTheme({
     background: {
       default: "#1F2128",
       paper: "#242731",
+      mainGradient: "linear-gradient(141.21deg, #36704d -16.59%, #356078 40.28%, #70538a 90.77%)",
+      secondGradient: "linear-gradient(141.21deg, rgba(136, 108, 169, 0.15) -16.6%, rgba(104, 215, 148, 0.15) -16.59%, rgba(111, 203, 255, 0.15) 40.28%, rgba(184, 138, 225, 0.15) 90.77%)"
+    },
+    
+    common: {
+      gray: "#E4E6E7"
     },
 
     divider: "rgba(255, 255, 255, 0.08)",
@@ -80,9 +88,20 @@ export default createMuiTheme({
 
       contained: {
         "&.primary": {
-          background: "linear-gradient(89.86deg, #77306C -2.12%, #2B30B1 201.58%)",
-          backgroundColor: "#77306C",
+          background: "linear-gradient(141.21deg, #36704d -16.59%, #356078 40.28%, #70538a 90.77%)",
+          backgroundColor: "#35B1F6",
           color: "white",
+          borderRadius: "20px",
+          opacity: ".8",
+          "&:hover": {
+            opacity: "1",
+          },
+        },
+
+        "&.secondary": {
+          background: "linear-gradient(141.21deg, rgba(136, 108, 169, 0.15) -16.6%, rgba(104, 215, 148, 0.15) -16.59%, rgba(111, 203, 255, 0.15) 40.28%, rgba(184, 138, 225, 0.15) 90.77%)",
+          color: "#845DD7",
+          borderRadius: "20px",
           opacity: ".8",
           "&:hover": {
             opacity: "1",
@@ -108,6 +127,12 @@ export default createMuiTheme({
       //   fontSize: "8rem",
       // },
     },
+
+    MuiBottomNavigation: {
+      root: {
+        borderRadius: "4px"
+      }
+    }
   },
 
   MuiBottomNavigationAction: {

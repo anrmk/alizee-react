@@ -1,35 +1,62 @@
 import { makeStyles } from "@material-ui/core";
 
+const getGradient = () => (
+  "linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.28) 15.65%, rgba(0, 0, 0, 0) 32.97%),"
+);
+
 const useStyles = makeStyles((theme) => ({
+  root: {
+    position: "relative",
+    marginBottom: theme.spacing(1),
+    [theme.breakpoints.up("md")]: {
+      marginBottom: theme.spacing(3),
+    },
+  },
   cover: {
     height: "220px",
-    backgroundImage: ({ imageUrl }) => `url("${imageUrl}")`,
+    backgroundImage: ({ imageUrl }) => getGradient() + `url("${imageUrl}")`,
     backgroundColor: theme.palette.background.paper,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center",
     borderRadius: theme.shape.borderRadius,
-    marginBottom: theme.spacing(8),
+  },
 
-    [theme.breakpoints.down("sm")]: {
-      height: "100px",
+  topControls: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-between",
+    marginBottom: theme.spacing(1),
+    padding: 0,
+
+    [theme.breakpoints.up("md")]: {
+      padding: theme.spacing(1),
+      position: "absolute",
+      top: 0
     },
   },
 
-  caption: {
-    padding: theme.spacing(2),
-    background: "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
-    borderRadius: theme.shape.borderRadius,
-    [theme.breakpoints.down("sm")]: {
-      padding: theme.spacing(1),
+  profileStatistics: {
+    marginLeft: "auto",
+    marginRight: "auto",
+    [theme.breakpoints.up("md")]: {
+      marginLeft: theme.spacing(3),
+      marginRight: 0,
+    },
+  },
+
+  control: {
+    color: theme.palette.common.black,
+    [theme.breakpoints.up("md")]: {
+      color: theme.palette.common.white,
     },
   },
 
   coverEditButton: {
-    zIndex: 1000,
     position: "absolute",
     right: theme.spacing(1),
-    bottom: theme.spacing(1)
+    bottom: theme.spacing(1),
+    color: theme.palette.common.white
   },
 
   coverInputField: {
@@ -46,11 +73,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       margin: theme.spacing(0, 1),
     },
-  },
-  
-  control: {
-    whiteSpace: "nowrap",
-  },
+  }
 }));
 
 export default useStyles;

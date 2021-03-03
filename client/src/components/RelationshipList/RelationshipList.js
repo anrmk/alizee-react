@@ -1,15 +1,12 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 
 import { List } from "@material-ui/core";
 
-import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 import RelationshipItem from "./RelationshipItem";
 
 import useStyles from "./styles";
 
 const RelationshipList = React.memo(({ items, currentUserName, onFollowClick, onConfirmClick, onRejectClick, onUnrejectClick }) => {
-  const history = useHistory();
   const classes = useStyles();
 
   return (
@@ -30,7 +27,6 @@ const RelationshipList = React.memo(({ items, currentUserName, onFollowClick, on
             onConfirmClick={onConfirmClick}
             onRejectClick={onRejectClick}
             onUnrejectClick={onUnrejectClick}
-            onItemClick={() => history.push(PROFILE_USERNAME_ROUTE(item.userName))}
           />
         ))}
     </List>

@@ -19,6 +19,7 @@ function Avatar({
   live,
   avatarBaseProps,
   badgeProps,
+  dotWidth,
   children,
 }) {
   const classes = useStyles({
@@ -26,13 +27,12 @@ function Avatar({
     borderWidth,
     borderColor,
     variant,
-    online,
-    live,
+    online
   });
 
   if (online !== undefined) {
     return (
-      <StyledBadge {...badgeProps} className={clsx(classes.badge, badgeClassName, className)}>
+      <StyledBadge {...badgeProps} dotWidth={dotWidth} className={clsx(classes.badge, badgeClassName, className)}>
         <MUIAvatar {...avatarBaseProps} className={clsx(classes.avatar)} src={src}>
           {children}
         </MUIAvatar>
@@ -51,6 +51,7 @@ Avatar.propTypes = {
   live: PropTypes.bool,
   online: PropTypes.bool,
   badgeProps: PropTypes.object,
+  dotWidth: PropTypes.number
 };
 
 Avatar.defaultProps = {
@@ -64,6 +65,7 @@ Avatar.defaultProps = {
     },
     variant: "dot",
   },
+  dotWidth: undefined
 };
 
 export default Avatar;

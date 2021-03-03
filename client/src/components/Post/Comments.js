@@ -1,9 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 import { MessageSenderInput, MessagesList } from "../Chat";
 
 import { Avatar, Card, CardHeader, CardContent, CardActions, Divider } from "@material-ui/core";
+
+import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 
 import useStyles from "./styles";
 
@@ -34,9 +37,13 @@ function Comments(props) {
   return (
     <Card className={classes.card}>
       <CardHeader
-        avatar={<Avatar src={user.avatarUrl} />}
-        title={user.title}
-        subheader={user.subheader}
+        avatar={
+          <Link to={PROFILE_USERNAME_ROUTE(user.userName)}>
+            <Avatar src={user.avatarUrl} />
+          </Link>
+        }
+        title={user.name}
+        subheader={user.userName}
         action={headerBackComponent}
       />
       <CardContent>{description}</CardContent>

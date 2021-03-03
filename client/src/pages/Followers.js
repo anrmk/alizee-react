@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -58,13 +58,13 @@ function Followers(props) {
     <Container maxWidth="sm">
       <Card>
         <CardHeader
-          avatar={<Avatar src={user.avatarUrl} />}
+          avatar={
+            <Link to={PROFILE_USERNAME_ROUTE(user.userName)}>
+              <Avatar src={user.avatarUrl} />
+            </Link>
+          }
           title={user.name}
-          subheader={`Followers [${followers.data?.length}]`}
-          onClick={() => {
-            history.push(PROFILE_USERNAME_ROUTE(user.userName));
-          }}
-        ></CardHeader>
+          subheader={`Followers [${followers.data?.length}]`} />
         {me.userName === user.userName && (
           <Tabs
             value={status}
@@ -82,16 +82,14 @@ function Followers(props) {
         )}
       </Card>
 
-      {!followers.isFetching && (
-        <RelationshipList
-          items={followers.data}
-          currentUserName={me.userName}
-          onFollowClick={(item) => handleFollowClick(item)}
-          onConfirmClick={(item) => handleConfirmClick(item)}
-          onRejectClick={(item) => handleRejectClick(item)}
-          onUnrejectClick={(item) => handleUnrejectClick(item)}
-        />
-      )}
+      <RelationshipList
+        items={followers.data}
+        currentUserName={me.userName}
+        onFollowClick={(item) => handleFollowClick(item)}
+        onConfirmClick={(item) => handleConfirmClick(item)}
+        onRejectClick={(item) => handleRejectClick(item)}
+        onUnrejectClick={(item) => handleUnrejectClick(item)}
+      />
     </Container>
   );
 }

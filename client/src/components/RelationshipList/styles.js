@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
   itemButton: {
     marginLeft: theme.spacing(1),
     flexShrink: 0,
-    textTransform: "capitalize",
   },
 }));
 

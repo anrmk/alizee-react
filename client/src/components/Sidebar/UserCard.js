@@ -1,9 +1,9 @@
 import React from "react";
 
-import { Box, Typography, BottomNavigation, BottomNavigationAction, CardHeader, CardContent, CardActions } from "@material-ui/core";
+import { Box, Typography, BottomNavigation, BottomNavigationAction } from "@material-ui/core";
 
 import LiveTvIcon from "@material-ui/icons/LiveTvOutlined";
-import PhotoCameraIcon from '@material-ui/icons/PhotoCameraOutlined';
+import AddPhotoCameraIcon from '@material-ui/icons/AddAPhotoOutlined';
 import ControlPointIcon from '@material-ui/icons/ControlPointDuplicateOutlined';
 
 import Avatar from "../Avatar";
@@ -20,13 +20,12 @@ function UserCard(props) {
     <Box p={1} >
       <Box className={classes.card}>
         <Avatar src={avatarUrl} size="large" borderColor="blue" live />
-        <br />
         <Typography variant="h6">{name}</Typography>
         <Typography variant="subtitle1">{username}</Typography>
 
         <BottomNavigation showLabels className={classes.navigation} >
           <BottomNavigationAction className="success" value="goLive" label="Go live" icon={<LiveTvIcon />} onClick={onCreateMeet} />
-          <BottomNavigationAction className="secondary" value="post" label="Photo" icon={<PhotoCameraIcon />} onClick={onCreatePost} />
+          <BottomNavigationAction className="secondary" value="post" label="Photo" icon={<AddPhotoCameraIcon />} onClick={onCreatePost} />
           <BottomNavigationAction className="primary" value="stories" label="Stories" icon={<ControlPointIcon />} onClick={onCreateStory} />
         </BottomNavigation>
       </Box>

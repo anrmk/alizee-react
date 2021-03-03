@@ -46,6 +46,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.4",
     "react-share": "^4.3.0",
+    "react-show-more-text": "^1.4.6",
     "react-swipeable-views": "^0.13.9",
     "react-text-mask": "^5.4.3",
     "react-visibility-sensor": "^5.1.1",

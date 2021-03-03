@@ -27,11 +27,10 @@ const useStyles = makeStyles(theme => ({
     maxWidth: "114px",
     height: "144px",
     display: "flex",
-    alignItems: ({ empty }) => !empty ? "flex-end" : "center",
     justifyContent: ({ empty }) => !empty ? "flex-start" : "center",
     padding: theme.spacing(2),
     borderRadius: theme.shape.borderRadius,
-    backgroundImage: ({ previewUrl }) => tintedBg(0.25) + `url("${previewUrl}")`,
+    backgroundImage: ({ previewUrl }) => previewUrl && tintedBg(0.25) + `url("${previewUrl}")`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundColor: theme.palette.background.paper,
@@ -43,6 +42,12 @@ const useStyles = makeStyles(theme => ({
       marginLeft: theme.spacing(3)
     }
   },
+  previewStoryItemUserInfo: {
+    alignItems: "center",
+    display: "flex",
+    width: "100%",
+    alignSelf: "flex-end"
+  },
   previewStoryListItemName: {
     color: theme.palette.common.white
   },
@@ -50,9 +55,8 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(1)
   },
   previewStoryListItemAddButton: {
-    marginRight: theme.spacing(1),
     fontSize: theme.typography.h3.fontSize,
-    color: getStyleByTheme(theme, theme.palette.common.white, theme.palette.text.secondary) 
+    color: theme.palette.primary.main 
   }
 }));
 

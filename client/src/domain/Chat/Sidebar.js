@@ -1,15 +1,17 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { Card, CardContent, CardHeader, IconButton, Divider } from "@material-ui/core/";
-import { useTranslation } from "react-i18next";
+
+import ChatIcon from "@material-ui/icons/ChatOutlined";
 
 import Search from "../../components/Search";
 import Avatar from "../../components/Avatar";
 
-import ChatIcon from "@material-ui/icons/ChatOutlined";
-
+import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 import SidebarList from "./SidebarList";
+
 import useStyles from "./styles";
 
 function Sidebar({
@@ -28,7 +30,11 @@ function Sidebar({
   return (
     <Card className={classes.card}>
       <CardHeader
-        avatar={<Avatar src={user.avatarUrl} online />}
+        avatar={
+          <Link to={PROFILE_USERNAME_ROUTE(user.username)}>
+            <Avatar src={user.avatarUrl} />
+          </Link>
+        }
         title={user.name}
         subheader={user.username}
         action={
@@ -53,31 +59,5 @@ function Sidebar({
     </Card>
   );
 }
-
-Sidebar.propTypes = {
-  isLoading: PropTypes.bool,
-  user: PropTypes.any,
-  selectedItemId: PropTypes.any,
-  items: PropTypes.array,
-
-  onSearchChange: PropTypes.func,
-  onItemClick: PropTypes.func,
-  onNewChatClick: PropTypes.func,
-};
-
-PropTypes.defaultProps = {
-  isLoading: false,
-  user: {
-    avatarUrl: "",
-    name: "",
-    userName: "",
-  },
-  selectedItemId: undefined,
-  items: [],
-
-  onSearchChange: undefined,
-  onItemClick: undefined,
-  onNewChatClick: undefined,
-};
 
 export default Sidebar;

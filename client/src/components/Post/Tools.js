@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { POST_ID_ROUTE } from "../../constants/routes";
 
-import { Chip, IconButton, Tooltip, Typography } from "@material-ui/core";
+import { Chip, IconButton, Tooltip, Typography, Hidden } from "@material-ui/core";
 
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import FavoriteIcon from "@material-ui/icons/FavoriteRounded";
@@ -14,7 +14,7 @@ import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorderOutlined";
 import ShareIcon from "@material-ui/icons/ShareOutlined";
 import VisibilityIcon from "@material-ui/icons/VisibilityOutlined";
 
-import { SHARE_DIALOG_TYPE, RECEIPT_DIALOG_TYPE, PURCHASES_DIALOG_TYPE, SEND_TIP_DIALOG_TYPE } from "../../constants/dialogs";
+import { SHARE_DIALOG_TYPE, RECEIPT_DIALOG_TYPE, PURCHASES_DIALOG_TYPE } from "../../constants/dialogs";
 import useStyles from "./styles";
 
 const Tools = React.memo(({
@@ -94,7 +94,19 @@ const Tools = React.memo(({
         <ShareIcon />
       </IconButton>
 
-      {!isOwner && <Chip icon={<MonetizationOnIcon />} onClick={handleSendTipClick} label="SEND TIP" variant="outlined" clickable />}
+      {!isOwner && (
+        <>
+          <Hidden mdUp>
+            <IconButton aria-label="sendTip" onClick={handleSendTipClick}>
+              <MonetizationOnIcon />
+            </IconButton>
+          </Hidden>
+
+          <Hidden smDown>
+            <Chip icon={<MonetizationOnIcon />} onClick={handleSendTipClick} label="SEND TIP" variant="outlined" clickable />
+          </Hidden>
+        </>
+      )}
 
       <div className={classes.grow}></div>
 

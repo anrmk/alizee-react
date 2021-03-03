@@ -1,6 +1,5 @@
 import { Badge, makeStyles, withStyles } from "@material-ui/core";
 import yellow from "@material-ui/core/colors/yellow";
-import blue from "@material-ui/core/colors/blue";
 import blueGrey from "@material-ui/core/colors/blueGrey";
 import grey from "@material-ui/core/colors/grey";
 
@@ -9,13 +8,13 @@ const SIZES = {
   medium: "40px",
   large: "65px",
   big: "96px",
-  huge: "150px"
+  huge: "140px"
 };
 
 const BORDER_COLORS = {
   gold: yellow["A700"],
   silver: blueGrey["100"],
-  blue: blue["600"],
+  blue: "#6FCBFF",
   black: grey["900"],
 };
 
@@ -30,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
     height: ({ size }) => (SIZES[size] ? SIZES[size] : SIZES["medium"]),
     boxShadow: ({ borderWidth, borderColor }) => getBorder(borderWidth, borderColor),
     backgroundColor:  theme.palette.background.default,
-    padding: ({size}) => (size === "large" || size === "big" || size === "huge" ? theme.spacing(0.5) : theme.spacing(0.25)),
     overflow: "visible",
     "& > img.MuiAvatar-img": {
       borderRadius: "50%",
@@ -71,9 +69,9 @@ const useStyles = makeStyles((theme) => ({
 
 export const StyledBadge = withStyles((theme) => ({
   badge: {
-    backgroundColor: "#44b700",
-    color: "#44b700",
-    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+    background: theme.palette.success.contrast,
+    color: theme.palette.success.contrast,
+    boxShadow: `0 0 0 3px ${theme.palette.background.paper}`,
     "&::after": {
       position: "absolute",
       top: 0,
@@ -82,9 +80,14 @@ export const StyledBadge = withStyles((theme) => ({
       height: "100%",
       borderRadius: "50%",
       animation: "$statusRipple 1.2s infinite ease-in-out",
-      border: "1px solid currentColor",
+      border: "2px solid currentColor",
       content: '""',
     },
+  },
+  dot: {
+    height: ({ dotWidth }) => dotWidth ? dotWidth : "8px",
+    width: ({ dotWidth }) => dotWidth ? dotWidth : "8px",
+    borderRadius: "50%"
   },
   "@keyframes statusRipple": {
     "0%": {

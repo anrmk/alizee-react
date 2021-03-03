@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { formatDate } from "../../helpers/functions";
 
@@ -17,6 +18,7 @@ import Menu from "./Menu";
 import MediaContent from "../../components/MediaContent";
 
 import useStyles from "./styles";
+import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 
 const Post = React.memo((props) => {
   const classes = useStyles();
@@ -29,7 +31,11 @@ const Post = React.memo((props) => {
   return (
     <Card className={classes.root} variant="outlined">
       <CardHeader
-        avatar={<Avatar src={owner.avatarUrl} />}
+        avatar={
+          <Link to={PROFILE_USERNAME_ROUTE(owner.userName)}>
+            <Avatar src={owner.avatarUrl} />
+          </Link>
+        }
         title={owner.name}
         subheader={owner.userName}
         action={

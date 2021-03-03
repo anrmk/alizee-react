@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Redirect, useHistory, useParams, useRouteMatch } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { Box, Container, Grid, Typography, Hidden } from "@material-ui/core/";
+import { Box, Container, Grid, Hidden } from "@material-ui/core/";
 
 import ApiContext from "../../context/ApiContext";
 import { SocialControl } from "../../components/Social";
@@ -10,8 +10,6 @@ import Cover from "../../domain/Cover";
 import ProfileContent from "../../domain/ProfileContent";
 
 import * as postActions from "../../store/actions/post";
-import * as storyActions from "../../store/actions/story";
-import * as moodActions from "../../store/actions/mood";
 import * as relationshipActions from "../../store/actions/relationship";
 import * as userActions from "../../store/actions/user";
 import * as accountActions from "../../store/actions/account";
@@ -23,13 +21,14 @@ import {
   SETTINGS_ROUTE,
   POST_ID_ROUTE,
   SETTINGS_EDIT_PROFILE_ROUTE,
-  CHAT_ROUTE,
 } from "../../constants/routes";
 
 import useDialog from "../../hooks/useDialog";
 import useShareDialog, { SHARE_DIALOG_PROFILE_TYPE } from "../../hooks/useShareDialog";
 import dialogs, { PROFILE_EDIT_COVER, SEND_TIP_DIALOG_TYPE } from "../../constants/dialogs";
-import Navigation from "./Navigation";
+import ProfileUserInfo from "../../domain/ProfileUserInfo";
+
+import useStyles from "./style";
 
 function Profile(props) {
   const initPostsSettings = {
@@ -37,17 +36,18 @@ function Profile(props) {
     tagged: false,
   };
 
-  const { me, user, post, media } = props;
-  const { fetchUser, resetUser, sendTip } = props;
-  const { fetchPosts, resetPosts, getFavoritePosts } = props;
-  const { createFollow, deleteFollow, createFavorites, deleteFavorites } = props;
-  const { createPost, createStory, createMood, updateCover } = props;
-
+  const classes = useStyles();
   const { username } = useParams();
   const { url } = useRouteMatch();
   const apiClient = useContext(ApiContext);
   const history = useHistory();
   const [postSettings, setPostSettings] = useState(initPostsSettings);
+
+  const { me, user, post, media } = props;
+  const { fetchUser, resetUser, sendTip } = props;
+  const { fetchPosts, resetPosts, getFavoritePosts } = props;
+  const { createFollow, deleteFollow, createFavorites, deleteFavorites } = props;
+  const { updateCover } = props;
 
   const FORM_ID = "dialog-sendTip";
   const dialog = useDialog();
@@ -166,57 +166,21 @@ function Profile(props) {
     history.push(POST_ID_ROUTE(id));
   };
 
-  const handleMessageClick = (userName) => {
-    history.push(CHAT_ROUTE(userName));
-  };
-
-  const handleGiftSendClick = (userName) => {};
+  const handleGiftSendClick = (userName) => { };
 
   return (
-    <Container>
+    <Container className={classes.root} fixed>
       <Cover
         user={user}
         isOwner={username === me.userName}
         disabled={media.isFetching}
         onFavoriteClick={() => handleFavoriteClick(user.userName)}
         onFollowClick={() => handlePeopleFollowClick(user.userName)}
-        onMessageClick={() => handleMessageClick(user.userName)}
         onSendGiftClick={() => handleGiftSendClick(user.userName)}
         onShareClick={() => dialogShareOpenClick({ userName: user.userName })}
-        onEditCover={handleCoverEditDialog}
-        onSendTipClick={handleSendTipDialog}
-      />
+        onEditCover={handleCoverEditDialog} />
 
-      <Hidden smUp>
-        <Box>
-          <Typography variant="h6">{user.name}</Typography>
-          <Typography variant="subtitle2" gutterBottom>
-            {user.userName}
-          </Typography>
-        </Box>
-      </Hidden>
-
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={4}>
-          <Navigation
-            userName={user.userName}
-            followersCount={user?.followersCount}
-            followingsCount={user?.followingsCount}
-            favoritesCount={user?.favoritesCount}
-          />
-
-          <Box>
-            <Typography variant="h6" gutterBottom>
-              Bio
-            </Typography>
-            <Typography variant="body2" gutterBottom>
-              {user.bio}
-            </Typography>
-          </Box>
-
-          {user.sites && <SocialControl urls={user.sites} />}
-        </Grid>
-
+      <Grid container>
         <Grid item xs={12} md={8}>
           <ProfileContent
             isOwner={username === me.userName}
@@ -229,6 +193,18 @@ function Profile(props) {
             onTabChange={handleTabChange}
           />
         </Grid>
+        <Hidden smDown>
+          <Grid item xs={12} md={4}>
+            <Box position="sticky" top="4rem" paddingLeft="24px">
+              <ProfileUserInfo
+                className={classes.userInfo}
+                user={user}
+                isOwner={username === me.userName}
+                onSendTipClick={handleSendTipDialog} />
+              {user.sites && <SocialControl urls={user.sites} />}
+            </Box>
+          </Grid>
+        </Hidden>
       </Grid>
     </Container>
   );

@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { Link } from "react-router-dom";
-import { ListItem, Typography } from "@material-ui/core";
+import { Box, ListItem, Typography } from "@material-ui/core";
 
 import AddIcon from "@material-ui/icons/AddRounded";
 
@@ -33,14 +33,14 @@ const PreviewStoryListItem = React.memo(({
       button
       className={classes.previewStoryListItem}
       {...additionalProps}
-      onClick={handleItemClick}>
+      onClick={handleItemClick}> 
       {empty ? (
         <AddIcon className={classes.previewStoryListItemAddButton} />
       ) : (
-        <>
+        <Box className={classes.previewStoryItemUserInfo}>
           <Avatar className={classes.previewStoryListItemAvatar} size="small" src={avatarUrl} /> 
           <Typography className={classes.previewStoryListItemName} variant="caption" noWrap>{name}</Typography>
-        </>
+        </Box>
       )}
     </ListItem>
   )

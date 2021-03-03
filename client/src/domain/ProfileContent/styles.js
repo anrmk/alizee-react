@@ -1,15 +1,26 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { theme } from "@material-ui/core";
+import { getStyleByTheme } from "../../helpers/functions";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
 
+  },
+
+  tabsWrapper: {
+    position: "sticky",
+    top: "3rem",
+    zIndex: theme.zIndex.appBar,
+    backgroundColor: theme.palette.background.default,
+    [theme.breakpoints.up("md")]: {
+      top: "4rem"
+    },
   },
 
   tabs: {
     marginBottom: "20px",
   }
-});
+}));
 
 export const tabsStyles = () => ({
   root: {

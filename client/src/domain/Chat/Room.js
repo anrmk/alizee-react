@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { Divider, Card, CardActions, CardContent, CardHeader, IconButton, Hidden } from "@material-ui/core";
@@ -14,7 +15,7 @@ import { MessageSenderInput, MessagesList } from "../../components/Chat";
 import Empty from "../../components/Chat/Empty";
 
 import { ESC_KEY_CODE } from "../../constants/key_codes";
-
+import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 import { formatDate } from "../../helpers/functions";
 
 import RoomMenu from "./RoomMenu";
@@ -86,7 +87,11 @@ function Room({
       {data ? (
         <Card className={classes.card}>
           <CardHeader
-            avatar={<Avatar src={data.avatarUrl} />}
+            avatar={
+              <Link to={PROFILE_USERNAME_ROUTE(data.username)}>
+                <Avatar src={data.avatarUrl} />
+              </Link>
+            }
             title={data.name}
             subheader={data.showActivity && (data.offlineDate ? formatDate(data.offlineDate) : "online")}
             action={
@@ -114,8 +119,7 @@ function Room({
             onClose={handleMenuClose}
             onMessageClear={handleMessageClear}
             onRoomDelete={handleRoomDelete}
-            onAccountBlock={handleAccountBlock}
-          ></RoomMenu>
+            onAccountBlock={handleAccountBlock} />
 
           <Divider />
 

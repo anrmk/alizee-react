@@ -24,7 +24,7 @@ function PostTabs({
   };
 
   return (
-    <Box marginBottom={1}>
+    <Box marginBottom={1} className={classes.tabsWrapper}>
       <Tabs value={index} onChange={handleChange} variant="fullWidth" centered>
         <Tab label={t("ProfileProfileContentPostsTabLabel")} disabled={disabled} />
         <Tab label={t("ProfileProfileContentTaggedTabLabel")} disabled={disabled} />

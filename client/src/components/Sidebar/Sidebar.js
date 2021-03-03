@@ -19,9 +19,8 @@ import ExploreIcon from "@material-ui/icons/ExploreOutlined";
 import NightsStayIcon from "@material-ui/icons/NightsStayOutlined";
 import SunnyIcon from "@material-ui/icons/WbSunnyOutlined";
 
-import { HOME_ROUTE, CHAT_ROUTE, PROFILE_USERNAME_ROUTE, EXPLORE_ROUTE, MEET_ROUTE, ACTIVITY_ROUTE } from "../../constants/routes";
+import { HOME_ROUTE, CHAT_ROUTE, PROFILE_USERNAME_ROUTE, EXPLORE_ROUTE, ACTIVITY_ROUTE } from "../../constants/routes";
 import useChangeTheme from "../../hooks/useChangeTheme";
-
 import UserCard from "./UserCard";
 import Footer from "../Footer";
 import { Wallet } from "../Wallet";
@@ -35,7 +34,7 @@ function Sidebar({
   onCreateMeet,
   onCreatePost,
   onCreateStory,
-  onDrawerToggle,
+  onDrawerToggle
 }) {
   const classes = useStyles({ open });
   const { t } = useTranslation();
@@ -44,18 +43,6 @@ function Sidebar({
 
   const theme = useTheme();
   const changeTheme = useChangeTheme();
-
-  const handleUserCardOnClick = (value) => {
-    switch (value) {
-      case "goLive":
-        history.push(MEET_ROUTE);
-        break;
-      case "top":
-        break;
-      case "rewards":
-        break;
-    }
-  };
 
   return (
     <Drawer
@@ -105,13 +92,10 @@ function Sidebar({
           onCreateMeet={onCreateMeet}
           onCreatePost={onCreatePost}
           onCreateStory={onCreateStory}
-          onClick={handleUserCardOnClick}
         />
       )}
 
       {open && <Wallet deposit={user.deposit} />}
-
-      <Divider />
 
       <List>
         <Tooltip title={t("SidebarProfileText")} placement="right">

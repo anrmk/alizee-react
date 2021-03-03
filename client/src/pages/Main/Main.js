@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { Box, Hidden } from "@material-ui/core";

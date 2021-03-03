@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core";
-import grey from "@material-ui/core/colors/grey";
+
 
 const useStyles = makeStyles((theme) => ({
   emptyMessageContainer: {
@@ -37,8 +37,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignSelf: "flex-start",
     wordBreak: "break-word",
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.common.white,
+    background: theme.palette.primary.main,
+    color: theme.palette.common.white
   },
 
   messengerMediaMessage: {
@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
 
   messengerMyMessage: {
     alignSelf: "flex-end",
-    backgroundColor: theme.palette.success.dark,
+    background: theme.palette.secondary.main,
     justifyContent: "flex-end",
   },
 
@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: "flex-end",
     whiteSpace: "nowrap",
     padding: theme.spacing(0, 0, 0, 1),
-    color: grey["400"],
+    color: theme.palette.common.gray,
   },
 
   infinite: {

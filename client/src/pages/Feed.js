@@ -12,6 +12,7 @@ import {
   Button,
   Hidden,
   Link as MUILink,
+  makeStyles
 } from "@material-ui/core";
 
 import { PostsList, PostSprout } from "../domain/PostsList";
@@ -42,7 +43,17 @@ import useStoryDialog from "../hooks/useStoryDialog";
 
 import { useSendTipDialog, usePaymentDialog } from "../hooks/payment";
 
+// Spacing between grid item (Aziz)
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     [theme.breakpoints.down("sm")]: {
+//       padding: 0
+//     }
+//   }
+// }));
+
 function Feed(props) {
+  // const classes = useStyles();
   const apiClient = useContext(ApiContext);
   const interestsEl = useRef();
 
@@ -153,6 +164,7 @@ function Feed(props) {
   };
 
   return (
+    // <Container className={classes.root}>
     <Container>
       <Grid container spacing={2}>
         <Grid item xs={12} md={8}>
@@ -211,8 +223,7 @@ function Feed(props) {
         open={interestsModalShow && !isInterestsSkip && Object.keys(interests.data).length}
         onClose={handleInterestsModalClose}
         aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
+        aria-describedby="alert-dialog-description">
         <DialogTitle id="alert-dialog-title">Choose your interests</DialogTitle>
         <InterestList ref={interestsEl} items={interests.data} />
         <DialogActions>
