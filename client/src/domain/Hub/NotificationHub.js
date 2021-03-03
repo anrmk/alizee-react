@@ -67,6 +67,9 @@ function NotificationHub(props) {
             hubConnection.on("ReceiveMessage", (data) => setMsg(data));
           })
           .catch((err) => {
+            setTimeout(() => {
+              connectToHub();
+            }, 5000);
             console.log("SignalR Error retrieve message" + JSON.stringify(err));
           });
       }

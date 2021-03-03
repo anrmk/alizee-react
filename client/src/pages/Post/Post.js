@@ -39,7 +39,7 @@ function PostPage(props) {
   const { getPost, getComments, resetComments, createComment } = props;
   const { createFollow, deleteFollow, blockUser, unblockUser, reportUser } = props;
 
-  const sendTipDialog = useSendTipDialog({ onSendTip: props.sendTip})
+  const sendTipDialog = useSendTipDialog({ onSendTip: props.sendTip })
   const buyPostDialog = usePaymentDialog({ onPayment: props.buyPost });
 
   const profileAction = useProfileActions({
@@ -56,7 +56,7 @@ function PostPage(props) {
     onFavorite: props.favoritePost,
     onPurchases: props.getPurchases,
     onReceipt: props.getReceipt,
-   });
+  });
 
   const { dialogShareOpenClick } = useShareDialog({
     type: SHARE_DIALOG_POST_TYPE,
@@ -80,7 +80,7 @@ function PostPage(props) {
     !comment.isFetching && await getComments(apiClient, { postId, length: COMMENTS_POST_LENGTH });
   };
 
-  const handleSendMessageClick = useCallback(async ({media, message}) => {
+  const handleSendMessageClick = useCallback(async ({ media, message }) => {
     !comment.isFetching && await createComment(apiClient, { postId, message });
   }, []);
 
@@ -110,16 +110,15 @@ function PostPage(props) {
           </CardMedia>
         </Card>
         <Comments
-          userId={post.owner?.id}
-          avatarUrl={post.owner?.avatarUrl}
-          title={post.owner?.name}
-          subheader={post.owner?.userName}
+          isOwner={user.id === post.owner.id}
+          user={post.owner}
           description={post.data.description}
           items={comment.data}
           hasMore={comment.hasMore}
           isCommentable={post.data.isCommentable}
           onFetchMore={handleCommentMore}
           onSendMessageClick={handleSendMessageClick}
+          onSendTip={sendTipDialog.toggle}
           headerBackComponent={
             <>
               <Hidden mdUp>
@@ -127,7 +126,7 @@ function PostPage(props) {
                   <ImageIcon />
                 </IconButton>
               </Hidden>
-              <Menu 
+              <Menu
                 postId={postId}
                 user={post.owner}
                 isOwner={user.id === post.owner?.id}
@@ -152,7 +151,7 @@ function PostPage(props) {
             amount={post.data.amount}
             isPurchased={post.data.isPurchased}
             isOwner={user.id === post.owner?.id}
-            
+
             onLike={postAction.like}
             onFavorite={postAction.favorite}
             onSendTip={sendTipDialog.toggle}
@@ -196,7 +195,7 @@ function mapDispatchToProps(dispatch) {
     deleteFollow: (api, id) => dispatch(relationshipActions.deleteFollow(api, id)),
     blockUser: (api, id) => dispatch(settingsActions.createBlackList(api, id)),
     unblockUser: (api, id) => dispatch(settingsActions.deleteBlackList(api, id)),
-    reportUser: (api, id) => {console.log("Report user")},  
+    reportUser: (api, id) => { console.log("Report user") },
 
     getComments: (api, opts) => dispatch(commentActions.getCommentsPost(api, opts)),
     resetComments: () => dispatch(commentActions.resetCommentsPost()),

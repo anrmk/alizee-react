@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 import { MessageSenderInput, MessagesList } from "../Chat";
@@ -11,8 +11,8 @@ function Comments(props) {
   const classes = useStyles();
   const { children, headerBackComponent } = props;
   const { hasMore } = props;
-  const { userId, avatarUrl, title, subheader, description, items, isCommentable } = props;
-  const { onFetchMore, onSendMessageClick } = props;
+  const { isOwner, user, description, items, isCommentable } = props;
+  const { onFetchMore, onSendMessageClick, onSendTip } = props;
 
   const [isSendMessage, setIsSendMessage] = useState(false);
 
@@ -27,12 +27,16 @@ function Comments(props) {
     }
   }, [items]);
 
+  const handleSendTipClick = useCallback(() => {
+    onSendTip && onSendTip(user);
+  }, [user]);
+
   return (
     <Card className={classes.card}>
       <CardHeader
-        avatar={<Avatar src={avatarUrl} />}
-        title={title}
-        subheader={subheader}
+        avatar={<Avatar src={user.avatarUrl} />}
+        title={user.title}
+        subheader={user.subheader}
         action={headerBackComponent}
       />
       <CardContent>{description}</CardContent>
@@ -44,12 +48,12 @@ function Comments(props) {
       <Divider />
 
       <CardContent className={classes.cardContent}>
-        {<MessagesList isSendMessage={isSendMessage} userId={userId} items={items} onFetchMore={onFetchMore} hasMore={hasMore} />}
+        {<MessagesList isSendMessage={isSendMessage} userId={user.id} items={items} onFetchMore={onFetchMore} hasMore={hasMore} />}
       </CardContent>
 
       {isCommentable && (
         <CardActions className={classes.cardFooter}>
-          <MessageSenderInput onSendMessageClick={handleMessageCreate} hideMediaEditor={true} />
+          <MessageSenderInput hideMediaEditor={true} hidePayment={isOwner} onSendMessageClick={handleMessageCreate} onSendTip={handleSendTipClick} />
         </CardActions>
       )}
     </Card>
@@ -58,9 +62,9 @@ function Comments(props) {
 
 Comments.propTypes = {
   hasMore: PropTypes.bool,
+  isOwner: PropTypes.bool,
 
-  userId: PropTypes.string,
-  userName: PropTypes.string,
+  user: PropTypes.object,
   items: PropTypes.array,
   isCommentable: PropTypes.bool,
 
@@ -68,13 +72,13 @@ Comments.propTypes = {
 
   onFetchMore: PropTypes.func,
   onSendMessageClick: PropTypes.func,
+  onSendTip: PropTypes.func
 };
 
 Comments.defaultProps = {
   hasMore: false,
-
-  userId: "",
-  userName: "",
+  isOwner: false,
+  user: {},
   items: [],
   isCommentable: false,
 
@@ -82,6 +86,7 @@ Comments.defaultProps = {
 
   onFetchMore: undefined,
   onSendMessageClick: undefined,
+  onSendTip: undefined
 };
 
 export default Comments;

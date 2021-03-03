@@ -94,7 +94,7 @@ const Tools = React.memo(({
         <ShareIcon />
       </IconButton>
 
-      <Chip icon={<MonetizationOnIcon />} onClick={handleSendTipClick} label="SEND TIP" variant="outlined" clickable />
+      {!isOwner && <Chip icon={<MonetizationOnIcon />} onClick={handleSendTipClick} label="SEND TIP" variant="outlined" clickable />}
 
       <div className={classes.grow}></div>
 
