@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { Container, Box, AppBar, Toolbar, Tooltip, IconButton, Badge, Hidden } from "@material-ui/core";
@@ -7,9 +7,8 @@ import { Container, Box, AppBar, Toolbar, Tooltip, IconButton, Badge, Hidden } f
 import NotificationsIcon from "@material-ui/icons/NotificationsActiveOutlined";
 import MailIcon from "@material-ui/icons/MailOutline";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorderOutlined";
 
-import { ACTIVITY_ROUTE, CHAT_ROUTE, SEARCH_ROUTE } from "../../constants/routes";
+import { CHAT_ROUTE, SEARCH_ROUTE } from "../../constants/routes";
 import Avatar from "../../components/Avatar";
 
 import useStyles from "./styles";
@@ -17,17 +16,17 @@ import useStyles from "./styles";
 import Menu from "./Menu";
 
 function Navbar({
-  username,
-  messagesCount,
-  notificationsCount,
+  userName,
+  newMessage,
+  newNotification,
   avatarUrl,
   open,
 
+  onChange,
   onSignOut,
 }) {
   const classes = useStyles(open)();
   const { t } = useTranslation();
-  const location = useLocation();
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
 
@@ -45,6 +44,11 @@ function Navbar({
   const handleSignOut = () => {
     onSignOut && onSignOut();
   };
+
+  const handleMessage = () => {
+    onChange && onChange({newMessage: false})
+    history.push(CHAT_ROUTE(""));
+  }
 
   return (
     <AppBar position="fixed" className={classes.root}>
@@ -66,7 +70,7 @@ function Navbar({
 
               <Tooltip title={t("SidebarNotificationText")} >
                 <IconButton>
-                  <Badge badgeContent={notificationsCount}>
+                  <Badge variant="dot" invisible={!newNotification} color="secondary">
                     <NotificationsIcon />
                   </Badge>
                 </IconButton>
@@ -74,8 +78,8 @@ function Navbar({
             </Hidden>
 
             <Tooltip title={t("SidebarChatText")} >
-              <IconButton onClick={() => { history.push(CHAT_ROUTE("")) }} >
-                <Badge badgeContent={messagesCount} color="primary">
+              <IconButton onClick={handleMessage} >
+                <Badge variant="dot" invisible={!newMessage} color="primary">
                   <MailIcon />
                 </Badge>
               </IconButton>
@@ -94,7 +98,7 @@ function Navbar({
 
             <Menu
               id={menuId}
-              username={username}
+              userName={userName}
               anchorEl={anchorEl}
               open={isMenuOpen}
               onCloseClick={handleMenuClose}

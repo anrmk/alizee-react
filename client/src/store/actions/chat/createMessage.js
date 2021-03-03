@@ -41,30 +41,33 @@ function addMessageSuccess(room, rooms) {
   return {
     type: ADD_MESSAGE_TO_LOCAL,
     payload: {
-      currentRoom: room,
+      current: room,
       data: rooms,
     },
   };
 }
 
-export function addMessage(message) {
+export function addMessage(data) {
   return (dispatch, getState) => {
     dispatch(receiveCreateMessage());
 
-    const currentRoom = getState().chat.currentRoom;
-    const currentRooms = getState().chat.data;
+    const current = { ...getState().chat.current };
+    const rooms = [... getState().chat.data ];
 
-    const roomIndex = currentRooms.findIndex((room) => room.id === currentRoom.id);
+    const index = rooms.findIndex((item) => item.id === data.roomId);
+    if(index !== -1) {
+      rooms[index].lastMessageText = data.message;
 
-    const updatedRoom = { ...currentRoom };
-    currentRooms[roomIndex].lastMessageText = message.message;
-    updatedRoom.messages = [...updatedRoom.messages, message];
-    const updatedRooms = [
-      currentRooms[roomIndex],
-      ...(currentRooms.filter((room) => room.id !== currentRoom.id) || []),
-    ];
+      rooms[index].unreadMessageCount = (current && current.id === data.roomId) ? 0 : rooms[index].unreadMessageCount + 1;
 
-    dispatch(addMessageSuccess(updatedRoom, updatedRooms));
+      if(current && current.id === data.roomId) {
+        current.messages = [...current.messages, data];
+      } 
+    }
+
+    const updatedRooms = [rooms[index], ...(rooms.filter((item) => item.id !== data.roomId) || [])];
+    
+    dispatch(addMessageSuccess(current, updatedRooms));
   };
 }
 

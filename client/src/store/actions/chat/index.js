@@ -5,12 +5,10 @@ export {
   GET_ROOMS_SUCCESS,
   GET_ROOMS_FAILURE,
   FILTER_ROOMS,
-  INCREMENT_NEW_MESSAGE_COUNT,
   getRooms,
   removeRoom,
   getFilteredRooms,
   filter,
-  incrementNewMessageCount,
 } from "./getRooms";
 
 export { CREATE_ROOM_REQUEST, CREATE_ROOM_SUCCESS, CREATE_ROOM_FAILURE, createRoom } from "./createRoom";

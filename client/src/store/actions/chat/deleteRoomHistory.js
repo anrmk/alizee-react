@@ -14,13 +14,13 @@ function requestDeleteRoomHistory() {
   };
 }
 
-function receiveDeleteRoomHistory(currentRoom) {
+function receiveDeleteRoomHistory(current) {
   return {
     type: DELETE_ROOM_HISTORY_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
-      currentRoom,
+      current,
     },
   };
 }
@@ -43,13 +43,13 @@ export function deleteRoomHistory(api, id) {
     try {
       await api.setMethod("DELETE").setParams({ id }).query(url);
 
-      const currentRoom = getState().chat.currentRoom;
-      if (currentRoom?.id === id) {
+      const current = getState().chat.current;
+      if (current?.id === id) {
         errorDeleteRoomHistory("");
       }
 
       const updatedRoom = {
-        ...currentRoom,
+        ...current,
         messages: [],
       };
 

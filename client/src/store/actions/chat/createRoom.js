@@ -14,14 +14,14 @@ function requestCreateRoom() {
   };
 }
 
-function receiveCreateRoom(data, currentRoom) {
+function receiveCreateRoom(data, current) {
   return {
     type: CREATE_ROOM_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
       data,
-      currentRoom
+      current
     },
   };
 }

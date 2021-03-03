@@ -16,6 +16,7 @@ import * as paymentActions from "../store/actions/payment";
 import { ESC_KEY_CODE } from "../constants/key_codes";
 import useSlidingViews, { RIGHT_OPEN_TYPE } from "../hooks/useSlidingViews";
 import useDialog from "../hooks/useDialog";
+import useChatHub from "../hooks/useChatHub";
 
 import { useSendTipDialog } from "../hooks/payment";
 import { useMediaPreviewDialog } from "../hooks/media";
@@ -27,10 +28,11 @@ function Chat(props) {
 
   const { username } = useParams();
 
-  const { user } = props;
+  const { user, isAuthenticated } = props;
   const { followings, getFollowings, filterFollowings } = props;
   const {
     chat,
+    current,
     getRoom,
     createRoom,
     setRoom,
@@ -43,12 +45,18 @@ function Chat(props) {
     resetCurrentRoom
   } = props;
   const { createMessage } = props;
+  const { addMessage } = props;
 
   const sendTipDialog = useSendTipDialog({ onSendTip: props.sendTip})
 
   const { currentSlidingViewsState, toggleSlidingViewsState } = useSlidingViews(RIGHT_OPEN_TYPE);
   const dialog = useDialog();
   const mediaViewDialog = useMediaPreviewDialog();
+
+  let chathub = useChatHub({
+    isAuth : isAuthenticated, 
+    onReceiveMessage: addMessage
+  });
 
   const handleModalCloseKeyPress = (e) => {
     if (e.keyCode === ESC_KEY_CODE) {
@@ -96,7 +104,7 @@ function Chat(props) {
   };
 
   const handleRoomGet = async (userName) => {
-    if (chat.currentRoom?.username !== userName) {
+    if (current?.username !== userName) {
       await getRoom(apiClient, userName);
       toggleSlidingViewsState();
     }
@@ -120,7 +128,7 @@ function Chat(props) {
   const handleMessageCreate = async (data) => {
     if (data && (data.message.length || data.media.length)) {
       await createMessage(apiClient, {
-        id: chat.currentRoom.id,
+        id: current.id,
         message: data.message,
         mediaFiles: data.media
       });
@@ -167,13 +175,14 @@ function Chat(props) {
           isLoading={chat.isFetching}
           user={user}
           items={chat.data}
-          selectedItemId={chat.currentRoom?.id}
+          selectedItemId={current?.id}
           onItemClick={handleRoomGet}
           onSearchChange={handleRoomsFilter}
           onUserListBtnClick={handleUserListBtnClick}
         />
+        
         <Room
-          data={chat.currentRoom}
+          data={current}
           userId={user.id}
           onClose={handleRoomClose}
           onMessageCreate={handleMessageCreate}
@@ -196,6 +205,7 @@ function mapStateToProps(state) {
       name: state.signIn?.userInfo?.name,
       avatarUrl: state.signIn?.userInfo?.avatarUrl,
     },
+    isAuthenticated: state.signIn.isAuthenticated,
     followings: {
       isFetching: state.users.isFetching,
       data: actionRelationship.getFilteredFollowings(state),
@@ -207,8 +217,8 @@ function mapStateToProps(state) {
       data: actionChat.getFilteredRooms(state),
       errorMessage: state.chat.errorMessage,
       keywords: state.keywords,
-      currentRoom: state.chat.currentRoom,
     },
+    current: state.chat?.current
   };
 }
 
@@ -232,6 +242,8 @@ function mapDispatchToProps(dispatch) {
     createBlackList: (api, id) => dispatch(settings.createBlackList(api, id)),
 
     createMessage: (api, id, message) => dispatch(actionChat.createMessage(api, id, message)),
+
+    addMessage: (message) => dispatch(actionChat.addMessage(message)),
   };
 }
 

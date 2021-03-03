@@ -24,7 +24,6 @@ import useStyles from "./styles";
 function Room({
   userId,
   data,
-
   onClose,
   onMessageCreate,
   onMessageClear,
@@ -41,6 +40,7 @@ function Room({
   const isMenuOpen = Boolean(anchorEl);
 
   useEffect(() => {
+    console.log("MESSAGES", data?.messages.length)
     if (data?.messages) {
       setIsSendMessage(false);
     }

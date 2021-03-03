@@ -14,14 +14,14 @@ function requestGetRoom() {
   };
 }
 
-function receiveGetRoom(data, currentRoom) {
+function receiveGetRoom(data, current) {
   return {
     type: GET_ROOM_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
       data,
-      currentRoom
+      current
     }
   };
 }

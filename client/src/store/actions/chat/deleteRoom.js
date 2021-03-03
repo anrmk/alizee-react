@@ -21,7 +21,7 @@ function receiveDeleteRoom(data) {
       isFetching: false,
       errorMessage: "",
       data,
-      currentRoom: undefined,
+      current: undefined,
     },
   };
 }

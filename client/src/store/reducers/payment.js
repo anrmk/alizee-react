@@ -7,7 +7,7 @@ import { SEND_TIP_REQUEST,
   BUY_POST_FAILURE
 } from "../actions/payment";
 
-export default function chatMediaReducer(
+export default function paymentReducer(
   state = {
     isFetching: false,
     data: [],

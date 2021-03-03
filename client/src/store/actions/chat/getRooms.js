@@ -1,12 +1,11 @@
 import { createSelector } from "reselect";
 
-import { generateUrl, generateFileUrl, copyFlatObjectWithIgnore } from "../../../helpers/functions";
+import { generateUrl, generateFileUrl } from "../../../helpers/functions";
 
 export const GET_ROOMS_REQUEST = "GET_ROOMS_REQUEST";
 export const GET_ROOMS_SUCCESS = "GET_ROOMS_SUCCESS";
 export const GET_ROOMS_FAILURE = "GET_ROOMS_FAILURE";
 export const FILTER_ROOMS = "FILTER_ROOMS";
-export const INCREMENT_NEW_MESSAGE_COUNT = "INCREMENT_NEW_MESSAGE_COUNT";
 
 function requestGetRooms() {
   return {
@@ -50,15 +49,6 @@ function filterRooms(query) {
   };
 }
 
-function successIncrementNewMessageCount(rooms) {
-  return {
-    type: INCREMENT_NEW_MESSAGE_COUNT,
-    payload: {
-      data: rooms,
-    },
-  };
-}
-
 export function getRooms(api) {
   return async (dispatch) => {
     dispatch(requestGetRooms());
@@ -82,25 +72,6 @@ export function getRooms(api) {
 export function filter(query) {
   return async (dispatch) => {
     dispatch(filterRooms(query));
-  };
-}
-
-export function incrementNewMessageCount(data) {
-  return (dispatch, getState) => {
-    const oldRooms = getState().chat.data;
-    const updatedRooms = [...oldRooms];
-    const roomIndex = updatedRooms.findIndex((room) => room.id === data.roomId);
-    const currentRoom = updatedRooms[roomIndex];
-
-    if (roomIndex !== -1) {
-      currentRoom.unreadMessageCount++;
-      currentRoom.lastMessageText = data.message;
-    }
-
-    dispatch(successIncrementNewMessageCount([
-      currentRoom,
-      ...updatedRooms.filter(room => room.id !== currentRoom.id)
-    ]));
   };
 }
 

@@ -13,7 +13,7 @@ import { PROFILE_USERNAME_ROUTE, SEARCH_ROUTE, SETTINGS_EDIT_PROFILE_ROUTE } fro
 
 export default function NavMenu({
   id,
-  username,
+  userName,
   open,
   anchorEl,
 
@@ -26,20 +26,19 @@ export default function NavMenu({
   const handleMenuItemClick = (url) => {
     history.push(url);
     onClose && onClose();
-  }
+  };
 
   return (
     <Menu
       id={id}
       keepMounted
       anchorEl={anchorEl}
-      
       anchorOrigin={{ vertical: "top", horizontal: "left" }}
       transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={open}
       onClose={onClose}
     >
-      <MenuItem onClick={() => handleMenuItemClick(PROFILE_USERNAME_ROUTE(username))}>
+      <MenuItem onClick={() => handleMenuItemClick(PROFILE_USERNAME_ROUTE(userName))}>
         <ListItemIcon>
           <AccountIcon />
         </ListItemIcon>

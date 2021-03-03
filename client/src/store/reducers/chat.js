@@ -6,7 +6,6 @@ import {
   GET_ROOMS_SUCCESS,
   GET_ROOMS_FAILURE,
   FILTER_ROOMS,
-  INCREMENT_NEW_MESSAGE_COUNT,
   CREATE_ROOM_REQUEST,
   CREATE_ROOM_SUCCESS,
   CREATE_ROOM_FAILURE,
@@ -27,7 +26,7 @@ import {
   SET_ROOM_SUCCESS,
 } from "../actions/chat";
 
-export default function chatReducer(state = { isFetching: false, data: [], query: "" }, action) {
+export default function chatReducer(state = { isFetching: false, data: [], current: undefined, query: "" }, action) {
   switch (action.type) {
     // Get a room
     case GET_ROOM_REQUEST:
@@ -182,13 +181,7 @@ export default function chatReducer(state = { isFetching: false, data: [], query
         ...state,
         ...action.payload,
       };
-    // Increment message count
-    case INCREMENT_NEW_MESSAGE_COUNT: {
-      return {
-        ...state,
-        ...action.payload,
-      };
-    }
+
     default:
       return state;
   }

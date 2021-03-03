@@ -119,5 +119,8 @@ export default {
 
     //SEARCH
     getSearchData: "search/search",
+
+    //NOTIFICATION
+    notification: "/hubs/notification",
   },
 };

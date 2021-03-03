@@ -18,6 +18,7 @@ import story from "./story";
 import stream from "./stream";
 import payment from "./payment";
 import activity from "./activity";
+import notification from "./notification";
 
 import { SIGNOUT_SUCCESS } from "../actions/signIn";
 
@@ -39,7 +40,8 @@ const appReducer = combineReducers({
   story,
   stream,
   payment,
-  activity
+  activity,
+  notification
 });
 
 export default function(state, action) {

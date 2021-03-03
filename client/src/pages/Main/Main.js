@@ -3,7 +3,6 @@ import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { Box, Hidden } from "@material-ui/core";
 
-import ApiContext from "../../context/ApiContext";
 import { Navbar, BottomBar } from "../../domain/Navbar";
 import Sidebar from "../../components/Sidebar";
 
@@ -33,8 +32,9 @@ import Statistics from "../Statistics";
 
 import { signOutUser } from "../../store/actions/signIn";
 import * as Routes from "../../constants/routes";
-import useHideNavigation from "../../hooks/useHideNavigation";
 
+import useNotification from "../../hooks/useNotificationHub";
+import useHideNavigation from "../../hooks/useHideNavigation";
 import usePostDialog from "../../hooks/usePostDialog";
 import useStoryDialog from "../../hooks/useStoryDialog";
 import useMoodDialog from "../../hooks/useMoodDialog";
@@ -42,17 +42,20 @@ import useMoodDialog from "../../hooks/useMoodDialog";
 import * as postActions from "../../store/actions/post";
 import * as storyActions from "../../store/actions/story";
 import * as moodAction from "../../store/actions/mood";
+import * as notificationAction from "../../store/actions/notification";
 
 import useStyles from "./styles";
 
 function Main(props) {
-  const { user, isAuthenticated, userStatistics } = props;
-  const { signOut } = props;
+  const { user, notifyData, isAuthenticated, userStatistics } = props;
+  const { signOut, setNotification } = props;
 
   const [open, setOpen] = useState(true);
   const isNavigationHide = useHideNavigation(Routes.STORIES_DEFAULT_ROUTE);
   const classes = useStyles({ isAuthenticated, isNavigationHide });
   const history = useHistory();
+
+  const notification = useNotification({isAuth : isAuthenticated, onChange: setNotification});
 
   const createPostDialog = usePostDialog({ onPostCreate: props.createPost });
   const createStoryDialog = useStoryDialog({ onStoryCreate: props.createStory });
@@ -70,7 +73,15 @@ function Main(props) {
     <Box className={classes.mainContainer}>
       {isAuthenticated && !isNavigationHide && (
         <>
-          <Navbar username={user.userName} avatarUrl={user.avatarUrl} open={open} onSignOut={signOut} />
+          <Navbar 
+            userName={user.userName} 
+            avatarUrl={user.avatarUrl}
+            newMessage={notifyData?.newMessage}
+            newNotification={notifyData?.newNotification}
+            open={open} 
+
+            onChange={notification.toggle}
+            onSignOut={signOut} />
 
           <Hidden smDown>
             <Sidebar 
@@ -136,6 +147,7 @@ function mapStateToProps(state) {
     isFetchingStory: state.story.isFetching,
 
     userStatistics:  state.user.statistics,
+    notifyData: state.notification.data
   };
 }
 
@@ -145,7 +157,9 @@ function mapDispatchToProps(dispatch) {
 
     createPost: (api, data, media) => dispatch(postActions.createPost(api, data, media)),
     createStory: (api, data, media) => dispatch(storyActions.createStorySlide(api, data, media)),
-    createMood: (api, data) => dispatch(moodAction.createMood(api, data))
+    createMood: (api, data) => dispatch(moodAction.createMood(api, data)),
+
+    setNotification: (data) => dispatch(notificationAction.setNotification(data))
   };
 }
 
