@@ -14,6 +14,10 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 220,
   },
 
+  userViewGridList: {
+    margin: "0 !important",
+  },
+
   gridListTile: {
     height: "auto !important",
     padding: theme.spacing(0.1, 0.5) + " !important",
@@ -31,6 +35,10 @@ const useStyles = makeStyles((theme) => ({
 
   gridListTileBar: {
     background: "none",
+  },
+
+  gridListTileBarTitle: {
+    color: theme.palette.text.primary,
   },
 
   gridListTileBarUserView: {

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import clsx from "clsx";
 
-import { GridList, GridListTile, GridListTileBar, withWidth } from "@material-ui/core";
+import { GridList, GridListTile, GridListTileBar, Typography, withWidth } from "@material-ui/core";
 
 import AvatarIcon from "../../assets/img/avatar.png";
 
@@ -17,7 +17,7 @@ function GridGalleryUserList(props) {
   const [isLoading, setLoading] = useState(true);
 
   return (
-    <GridList spacing={12} cols={["xs", "sm"].includes(width) ? 3 : 6} className={classes.gridList}>
+    <GridList spacing={12} cols={["xs", "sm"].includes(width) ? 3 : 6} className={clsx(classes.gridList, classes.userViewGridList)}>
       {items &&
         items.map(
           (item, index) =>
@@ -43,7 +43,7 @@ function GridGalleryUserList(props) {
                     root: clsx(classes.gridListTileBar, item.userName && classes.gridListTileBarUserView),
                     titleWrap: classes.gridListTileBarTitleUserView
                   }}
-                  title={item.userName}
+                  title={<Typography className={classes.gridListTileBarTitle} noWrap variant="body1">{item.userName}</Typography>}
                 />
               }
             </GridListTile>

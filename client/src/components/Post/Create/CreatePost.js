@@ -117,7 +117,7 @@ export default function CreatePost({
       <Typography color="error">
         {errors[MEDIA_ID]?.message}
       </Typography>
-      <Box display="flex" flexWrap="wrap" mt={1}>
+      <Box display="flex" flexWrap="wrap" my={1}>
         <FormControl className={classes.inputText} variant="filled">
           <Controller
             name={AMOUNT_ID}
