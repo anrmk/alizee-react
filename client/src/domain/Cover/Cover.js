@@ -7,6 +7,8 @@ import MoreVertIcon from "@material-ui/icons/MoreVertRounded";
 import EditIcon from "@material-ui/icons/Edit";
 import FileInput from "../../components/FileInput";
 import Avatar from "../../components/Avatar";
+import { USER_RANKING } from "../../constants/user";
+
 import { ProfileStatistics, ProfileStatisticsMobile } from "../../domain/ProfileStatistics";
 
 import Menu from "./Menu";
@@ -82,13 +84,11 @@ function Cover(props) {
           <Avatar
             className={classes.avatarHeader}
             src={user.avatarUrl}
-            membership={user.membership}
-            online={!user.offlineDate && !user.live}
+            online={isOwner || !user.offlineDate}
             live={user.live} // TODO: add a condition to check is not it me
             size="large"
-            borderColor="blue"
-            borderWidth="4px"
-            dotWidth="8px" />
+            borderColor={USER_RANKING[user.ranking]}
+            borderWidth="4px" />
           <ProfileStatisticsMobile
             className={classes.profileStatistics}
             isOwner={isOwner}

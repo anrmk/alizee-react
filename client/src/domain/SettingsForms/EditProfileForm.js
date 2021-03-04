@@ -8,7 +8,7 @@ import { Grid, Button, FormGroup, TextField, Typography } from "@material-ui/cor
 import Avatar from "../../components/Avatar";
 import ChipsInput from "../../components/ChipsInput";
 import { SITE_REGEX, PHONE_REGEX } from "../../constants/regexs";
-import { USER_MEMBERSHIP } from "../../constants/user";
+import { USER_RANKING } from "../../constants/user";
 import { EMPTY_VALUE_ERROR, BIRTHDAY_LESS_200_ERROR, BIRTHDAY_GREATER_18_ERROR, VALUE_MIN_LENGTH, VALUE_MAX_LENGTH} from "../../constants/form_validations";
 
 import { getYearFromCurrentDate } from "../../helpers/functions";
@@ -51,7 +51,7 @@ function EditProfileForm({
   name,
   userName,
   email,
-  membership,
+  ranking,
   bio,
   phoneNumber,
   birthday,
@@ -123,8 +123,7 @@ function EditProfileForm({
           className={classes.avatar}
           src={watcherAvatarUrl}
           size="large"
-          membership
-          borderColor={USER_MEMBERSHIP(membership)}
+          borderColor={USER_RANKING[ranking]}
         />
         <Typography component="label">
           Change Profile Photo

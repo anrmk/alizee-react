@@ -6,12 +6,14 @@ import LiveTvIcon from "@material-ui/icons/LiveTvOutlined";
 import AddPhotoCameraIcon from '@material-ui/icons/AddAPhotoOutlined';
 import ControlPointIcon from '@material-ui/icons/ControlPointDuplicateOutlined';
 
+import { USER_RANKING } from "../../constants/user";
+
 import Avatar from "../Avatar";
 import useStyles from "./styles";
 
 function UserCard(props) {
   const { open } = props;
-  const { name, username, avatarUrl } = props;
+  const { name, username, avatarUrl, ranking } = props;
   const { onCreateMeet, onCreatePost, onCreateStory } = props;
 
   const classes = useStyles({ open });
@@ -19,7 +21,8 @@ function UserCard(props) {
   return (
     <Box p={1} >
       <Box className={classes.card}>
-        <Avatar src={avatarUrl} size="large" borderColor="blue" live />
+        <Avatar src={avatarUrl} size="large" borderColor={USER_RANKING[ranking]} live />
+        <br />
         <Typography variant="h6">{name}</Typography>
         <Typography variant="subtitle1">{username}</Typography>
 

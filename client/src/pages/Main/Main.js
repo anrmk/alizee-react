@@ -75,6 +75,8 @@ function Main(props) {
         <>
           <Navbar 
             userName={user.userName} 
+            ranking={user.ranking}
+            
             avatarUrl={user.avatarUrl}
             newMessage={notifyData?.newMessage}
             newNotification={notifyData?.newNotification}

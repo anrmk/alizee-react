@@ -8,6 +8,8 @@ import MessageIcon from "@material-ui/icons/MessageOutlined";
 import DollarIcon from "@material-ui/icons/MonetizationOnOutlined";
 
 import { CHAT_ROUTE } from "../../constants/routes";
+import { USER_RANKING } from "../../constants/user";
+
 import Avatar from "../../components/Avatar";
 
 import useStyles from "./style";
@@ -29,11 +31,10 @@ function ProfileUserInfo({
           <Avatar
             className={classes.avatarHeader}
             src={user.avatarUrl}
-            membership={user.membership}
-            online={!user.offlineDate && !user.live} 
+            online={isOwner || !user.offlineDate} 
             live={user.live} // TODO: add a condition to check is not it me
             size="huge"
-            borderColor="blue"
+            borderColor={USER_RANKING[user.ranking]}
             borderWidth="4px"
             dotWidth="12px" />
         }

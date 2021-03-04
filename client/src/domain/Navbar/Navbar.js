@@ -9,6 +9,8 @@ import MailIcon from "@material-ui/icons/MailOutline";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
 
 import { CHAT_ROUTE, SEARCH_ROUTE } from "../../constants/routes";
+import { USER_RANKING } from "../../constants/user";
+
 import Avatar from "../../components/Avatar";
 
 import useStyles from "./styles";
@@ -17,6 +19,7 @@ import Menu from "./Menu";
 
 function Navbar({
   userName,
+  ranking,
   newMessage,
   newNotification,
   avatarUrl,
@@ -70,7 +73,7 @@ function Navbar({
 
               <Tooltip title={t("SidebarNotificationText")} >
                 <IconButton>
-                  <Badge variant="dot" invisible={!newNotification} color="secondary">
+                  <Badge variant="dot" invisible={!newNotification} color="primary">
                     <NotificationsIcon />
                   </Badge>
                 </IconButton>
@@ -93,7 +96,10 @@ function Navbar({
               aria-haspopup="true"
               onClick={handleMenuOpen}
             >
-              <Avatar src={avatarUrl} size="small" borderColor="default" />
+              <Avatar src={avatarUrl} 
+                size="small" 
+                
+                borderColor={USER_RANKING[ranking]} />
             </IconButton>
 
             <Menu

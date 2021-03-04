@@ -88,6 +88,7 @@ function Sidebar({
           username={user.userName}
           name={user.name}
           avatarUrl={user.avatarUrl}
+          ranking={user.ranking}
           open={open}
           onCreateMeet={onCreateMeet}
           onCreatePost={onCreatePost}
