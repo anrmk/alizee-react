@@ -21,6 +21,22 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: "235px",
     overflowY: "auto"
   },
+  btnMobile: {
+    background: theme.palette.background.secondaryGradient,
+    color: theme.palette.primary.main,
+  },
+  btnsGroupMobile: {
+    display: "flex",
+    alignItems: "center",
+    "& > .MuiButtonBase-root + .MuiButtonBase-root": {
+      marginLeft: theme.spacing(1)
+    }
+  },
+  moodMobile: {
+    ...theme.typography.body1,
+    color: theme.palette.text.secondary,
+    overflowY: "auto"
+  },
 }));
 
 export default useStyles;

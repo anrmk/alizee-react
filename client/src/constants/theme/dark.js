@@ -92,9 +92,8 @@ export default createMuiTheme({
           backgroundColor: "#35B1F6",
           color: "white",
           borderRadius: "20px",
-          opacity: ".8",
           "&:hover": {
-            opacity: "1",
+            opacity: ".8",
           },
         },
 
@@ -102,9 +101,8 @@ export default createMuiTheme({
           background: "linear-gradient(141.21deg, rgba(136, 108, 169, 0.15) -16.6%, rgba(104, 215, 148, 0.15) -16.59%, rgba(111, 203, 255, 0.15) 40.28%, rgba(184, 138, 225, 0.15) 90.77%)",
           color: "#845DD7",
           borderRadius: "20px",
-          opacity: ".8",
           "&:hover": {
-            opacity: "1",
+            opacity: ".8",
           },
         },
       },

@@ -12,6 +12,7 @@ import ProfileContent from "../../domain/ProfileContent";
 import * as postActions from "../../store/actions/post";
 import * as relationshipActions from "../../store/actions/relationship";
 import * as userActions from "../../store/actions/user";
+import * as moodActions from "../../store/actions/mood";
 import * as accountActions from "../../store/actions/account";
 import * as settingsActions from "../../store/actions/settings";
 import * as paymentActions from "../../store/actions/payment";
@@ -25,8 +26,9 @@ import {
 
 import useDialog from "../../hooks/useDialog";
 import useShareDialog, { SHARE_DIALOG_PROFILE_TYPE } from "../../hooks/useShareDialog";
+import useMoodDialog from "../../hooks/useMoodDialog";
 import dialogs, { PROFILE_EDIT_COVER, SEND_TIP_DIALOG_TYPE } from "../../constants/dialogs";
-import ProfileUserInfo from "../../domain/ProfileUserInfo";
+import { ProfileUserInfo, ProfileUserInfoMobile } from "../../domain/ProfileUserInfo";
 
 import useStyles from "./style";
 
@@ -48,6 +50,7 @@ function Profile(props) {
   const { fetchPosts, resetPosts, getFavoritePosts } = props;
   const { createFollow, deleteFollow, createFavorites, deleteFavorites } = props;
   const { updateCover } = props;
+  const { createMood } = props;
 
   const FORM_ID = "dialog-sendTip";
   const dialog = useDialog();
@@ -56,6 +59,8 @@ function Profile(props) {
     userName: username,
     type: SHARE_DIALOG_PROFILE_TYPE,
   });
+
+  const createMoodDialog = useMoodDialog({ onMoodCreate: createMood });
 
   useEffect(() => {
     return () => {
@@ -179,6 +184,13 @@ function Profile(props) {
         onSendGiftClick={() => handleGiftSendClick(user.userName)}
         onShareClick={() => dialogShareOpenClick({ userName: user.userName })}
         onEditCover={handleCoverEditDialog} />
+      <Hidden mdUp>
+        <ProfileUserInfoMobile
+          user={user}
+          isOwner={username === me.userName}
+          onSendTipClick={handleSendTipDialog}
+          onMoodUpdateClick={createMoodDialog.toggle} />
+      </Hidden>
 
       <Grid container>
         <Grid item xs={12} md={8}>
@@ -200,7 +212,8 @@ function Profile(props) {
                 className={classes.userInfo}
                 user={user}
                 isOwner={username === me.userName}
-                onSendTipClick={handleSendTipDialog} />
+                onSendTipClick={handleSendTipDialog}
+                onMoodUpdateClick={createMoodDialog.toggle} />
               {user.sites && <SocialControl urls={user.sites} />}
             </Box>
           </Grid>
@@ -247,7 +260,7 @@ function mapDispatchToProps(dispatch) {
 
     // createPost: (api, post, media) => dispatch(postActions.createPost(api, post, media)),
     // createStory: (api, story, media) => dispatch(storyActions.createStorySlide(api, story, media)),
-    // createMood: (api, data) => dispatch(moodActions.createMood(api, data)),
+    createMood: (api, data) => dispatch(moodActions.createMood(api, data)),
     updateCover: (api, coverUrl) => dispatch(settingsActions.updateCover(api, coverUrl)),
     sendTip: (api, userName, amount, message) => dispatch(paymentActions.sendTip(api, userName, amount, message)),
   };

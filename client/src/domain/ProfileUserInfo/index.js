@@ -1,3 +1,2 @@
-import ProfileUserInfo from "./ProfileUserInfo";
-
-export default ProfileUserInfo;
+export { default as ProfileUserInfo } from "./ProfileUserInfo";
+export { default as ProfileUserInfoMobile } from "./ProfileUserInfoMobile";

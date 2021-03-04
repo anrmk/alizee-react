@@ -2,14 +2,14 @@ import React from "react";
 import ShowMoreText from "react-show-more-text";
 import { Link } from "react-router-dom";
 
-import { Typography, Box, Card, CardHeader, CardContent, Button } from "@material-ui/core/";
+import { Typography, Box, Card, CardHeader, CardContent, Button, IconButton, Tooltip } from "@material-ui/core/";
 
 import MessageIcon from "@material-ui/icons/MessageOutlined";
 import DollarIcon from "@material-ui/icons/MonetizationOnOutlined";
+import EditIcon from "@material-ui/icons/EditRounded";
 
 import { CHAT_ROUTE } from "../../constants/routes";
 import { USER_RANKING } from "../../constants/user";
-
 import Avatar from "../../components/Avatar";
 
 import useStyles from "./style";
@@ -20,8 +20,13 @@ function ProfileUserInfo({
   className,
   onSubscribeTipClick,
   onSendTipClick,
+  onMoodUpdateClick
 }) {
   const classes = useStyles();
+
+  const handleSendTipClick = () => {
+    onSendTipClick && onSendTipClick(user)
+  }
 
   return (
     <Card>
@@ -40,7 +45,20 @@ function ProfileUserInfo({
         }
         titleTypographyProps={{ variant: "h5" }}
         title={user.name}
-        subheader={<Typography variant="subtitle1" color="textSecondary">{user.mood}</Typography>} />
+        subheader={
+          <>
+            <Typography variant="subtitle1" color="textSecondary">
+              {user.mood}
+            </Typography>
+            {isOwner && (
+              <Tooltip title="Change mood">
+                <IconButton onClick={onMoodUpdateClick}>
+                  <EditIcon />
+                </IconButton>
+              </Tooltip>
+            )}
+          </>
+        } />
       <CardContent className={classes.content}>
         {isOwner ? (
           <Button
@@ -80,7 +98,7 @@ function ProfileUserInfo({
                 size="large"
                 variant="contained"
                 endIcon={<DollarIcon />}
-                onClick={() => onSendTipClick(user)}>
+                onClick={handleSendTipClick}>
                 Send Tip
               </Button>
             </Box>

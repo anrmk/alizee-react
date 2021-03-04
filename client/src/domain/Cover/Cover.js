@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Box, Typography, IconButton, Hidden, withWidth } from "@material-ui/core";
+import { Box, Typography, IconButton, Hidden, Tooltip } from "@material-ui/core";
 
 import ArrowBackIcon from "@material-ui/icons/ArrowBackRounded";
 import MoreVertIcon from "@material-ui/icons/MoreVertRounded";
@@ -46,9 +46,11 @@ function Cover(props) {
         <Box className={classes.cover}>
           {isOwner && (
             <FileInput onChange={handleCoverChange}>
-              <IconButton className={classes.coverEditButton}>
-                <EditIcon />
-              </IconButton>
+              <Tooltip title="Change cover image">
+                <IconButton className={classes.coverEditButton}>
+                  <EditIcon />
+                </IconButton>
+              </Tooltip>
             </FileInput>
           )}
         </Box>
@@ -80,7 +82,7 @@ function Cover(props) {
         </IconButton>
       </Box>
       <Hidden mdUp>
-        <Box display="flex" paddingX={2}>
+        <Box display="flex" paddingX={2} marginBottom={2}>
           <Avatar
             className={classes.avatarHeader}
             src={user.avatarUrl}
@@ -110,4 +112,4 @@ function Cover(props) {
   );
 }
 
-export default withWidth()(Cover);
+export default Cover;

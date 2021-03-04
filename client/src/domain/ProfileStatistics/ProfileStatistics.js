@@ -44,7 +44,7 @@ function ProfileStatistics({
         </>
       ) : (
         <Typography className={classes.text}>
-          {favoritesCount || "0"} Favorites
+          {followersCount || "0"} Followers
         </Typography>
       )}
     </Box>

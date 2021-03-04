@@ -59,17 +59,14 @@ function ProfileStatisticsMobile({
           </Box>
         </>
       ) : (
-        <>
-          <Typography
-            className={classes.textMobile}
-            to={FAVORITES_USERNAME_ROUTE(userName)}
-            component={Link}>
-            {favoritesCount || "0"}
+        <Box className={classes.itemMobile}>
+          <Typography className={classes.textMobile}>
+            {followersCount || "0"}
           </Typography>
           <Typography className={classes.textCaptionMobile}>
-            Favorites
+            Followers
           </Typography>
-        </>
+        </Box>
       )}
     </Box>
   );

@@ -6,6 +6,10 @@ const useStyles = makeStyles((theme) => ({
     "& span": {
       alignItems: "flex-start",
     },
+    [theme.breakpoints.up("sm")]: {
+      position: "sticky",
+      top: "4rem"
+    },
   },
 }));
 

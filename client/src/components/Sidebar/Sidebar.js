@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 
@@ -100,7 +100,11 @@ function Sidebar({
 
       <List>
         <Tooltip title={t("SidebarProfileText")} placement="right">
-          <ListItem button selected={location.pathname.includes(PROFILE_USERNAME_ROUTE(user.userName))} onClick={() => history.push(PROFILE_USERNAME_ROUTE(user.userName))}>
+          <ListItem 
+            button
+            selected={location.pathname.includes(PROFILE_USERNAME_ROUTE(user.userName))}
+            to={PROFILE_USERNAME_ROUTE(user.userName)}
+            component={Link}>
             <ListItemIcon>
               <PersonOutlineIcon color="secondary" />
             </ListItemIcon>
@@ -109,7 +113,11 @@ function Sidebar({
         </Tooltip>
 
         <Tooltip title={t("SidebarFeedText")} placement="right">
-          <ListItem button selected={location.pathname.includes(HOME_ROUTE)} onClick={() => history.push(HOME_ROUTE)}>
+          <ListItem
+            button
+            selected={location.pathname.includes(HOME_ROUTE)} 
+            to={HOME_ROUTE}
+            component={Link}>
             <ListItemIcon>
               <HomeIcon color="secondary" />
             </ListItemIcon>
@@ -121,10 +129,8 @@ function Sidebar({
           <ListItem
             button
             selected={location.pathname.includes(CHAT_ROUTE(""))}
-            onClick={() => {
-              history.push(CHAT_ROUTE(""));
-            }}
-          >
+            to={CHAT_ROUTE("")}
+            component={Link}>
             <ListItemIcon>
               <MailIcon color="secondary" />
             </ListItemIcon>
@@ -136,8 +142,8 @@ function Sidebar({
           <ListItem
             button
             selected={location.pathname.includes(EXPLORE_ROUTE)}
-            onClick={() => history.push(EXPLORE_ROUTE)}
-          >
+            to={EXPLORE_ROUTE}
+            component={Link}>
             <ListItemIcon>
               <ExploreIcon color="secondary" />
             </ListItemIcon>
@@ -149,8 +155,8 @@ function Sidebar({
           <ListItem
             button
             selected={location.pathname.includes(ACTIVITY_ROUTE)}
-            onClick={() => history.push(ACTIVITY_ROUTE)}
-          >
+            to={ACTIVITY_ROUTE}
+            component={Link}>
             <ListItemIcon>
               <FavoriteBorderIcon  color="secondary" />
             </ListItemIcon>
