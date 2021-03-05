@@ -1,5 +1,4 @@
 import { LinearProgress, withStyles, makeStyles } from "@material-ui/core";
-import { getStyleByTheme } from "../../helpers/functions";
 
 const tintedBg = (opacity) => `
   linear-gradient(
@@ -8,13 +7,21 @@ const tintedBg = (opacity) => `
   ),
 `;
 
+const previewStoryListItemBase = {
+  minWidth: "114px",
+  maxWidth: "114px",
+  height: "144px",
+}
+
 const useStyles = makeStyles(theme => ({
   previewStoryList: {
     width: "100%",
-    display: ({ loading }) => loading ? "block" : "flex",
-    overflowX: "scroll",
+    display: "flex",
     "&::-webkit-scrollbar": {
       display: "none"
+    },
+    [theme.breakpoints.up("md")]: {
+      maxWidth: "814px"
     }
   },
   previewStoryListProgress: {
@@ -23,9 +30,7 @@ const useStyles = makeStyles(theme => ({
     marginRight: "auto"
   },
   previewStoryListItem: {
-    minWidth: "114px",
-    maxWidth: "114px",
-    height: "144px",
+    ...previewStoryListItemBase,
     display: "flex",
     justifyContent: ({ empty }) => !empty ? "flex-start" : "center",
     padding: theme.spacing(2),
@@ -57,6 +62,13 @@ const useStyles = makeStyles(theme => ({
   previewStoryListItemAddButton: {
     fontSize: theme.typography.h3.fontSize,
     color: theme.palette.primary.main 
+  },
+  previewStoryListItemSkeleton: {
+    ...previewStoryListItemBase,
+    borderRadius: theme.shape.borderRadius,
+    "& + &": {
+      marginLeft: theme.spacing(3)
+    }
   }
 }));
 

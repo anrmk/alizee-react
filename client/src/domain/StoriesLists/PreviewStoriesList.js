@@ -1,6 +1,7 @@
-import React from "react";
-import { List, CircularProgress } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
 import ScrollContainer from "react-indiana-drag-scroll";
+import { List } from "@material-ui/core";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 import { isEmptyObject } from "../../helpers/functions";
 import PreviewStoriesListItem from "./PreviewStoriesListItem";
@@ -15,12 +16,22 @@ const PreviewStoriesList = React.memo(({
   onCreateStoryClick
 }) => {
   const classes = useStyles({ loading });
+  const [flag, setFlag] = useState(false);
+
+  useEffect(() => {
+    if (loading && !flag) {
+      setFlag(true);
+    }
+  }, [loading]);
+
+  const renderSkeletons = () => [...Array(6)].map((_) => (
+    <Skeleton className={classes.previewStoryListItemSkeleton} variant="rect" animation="wave" />
+  ));
 
   return (
     <List className={classes.previewStoryList} component={ScrollContainer}>
-      {loading ? <CircularProgress className={classes.previewStoryListProgress} />
-       : (
-         <>
+      {loading || !flag ? renderSkeletons() : (
+        <>
           <PreviewStoriesListItem
             key={userStory?.userId}
             id={userStory?.userId}
@@ -40,7 +51,7 @@ const PreviewStoriesList = React.memo(({
               avatarUrl={item?.user?.avatarUrl}
               onClick={onItemClick} />
           ))}
-         </>
+        </>
       )}
     </List>
   );
