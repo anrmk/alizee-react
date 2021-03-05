@@ -88,6 +88,18 @@ const useStyles = makeStyles((theme) => ({
       }
     }
   },
+
+  arrowButtonBox: {
+    position: "absolute",
+    bottom: "47%",
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-between",
+  },
+
+  arrowButton: {
+    color: theme.palette.grey["100"],
+  }
 }));
 
 export default useStyles;

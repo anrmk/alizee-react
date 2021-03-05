@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import clsx from "clsx";
 import SwipeableViews from "react-swipeable-views";
 
+import ArrowButtons from "./ArrowButtons";
 import Pagination from "./Pagination";
 
 import { Box, Typography, IconButton } from "@material-ui/core";
@@ -45,12 +46,16 @@ function Gallery({
         {children}
       </SwipeableViews>
       {(amount === 0 || isPurchased) && (
-        <Pagination
-          className={classes.pagination}
-          dots={children.length}
-          currentIndex={localIndex}
-          onChangeIndex={handleIndexChange}
-        />
+        <>
+          {children.length > 1
+            && <ArrowButtons length={children.length} currentIndex={localIndex} onChangeIndex={handleIndexChange} />}
+          <Pagination
+            className={classes.pagination}
+            dots={children.length}
+            currentIndex={localIndex}
+            onChangeIndex={handleIndexChange}
+          />
+        </>
       )}
     </Box>
   );
