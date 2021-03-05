@@ -27,7 +27,7 @@ function MediaContent({
         items.map((item) => {
           const url = showThumbnail ? item.thumbnailUrl : item.url;
 
-          if (item.kind === MEDIA_IMAGE) {
+          if (item.kind === MEDIA_IMAGE || !isPurchased) {
             return <ImagesContent className={classes.mediaContent} wrapperClassName={classes.imageContentWrapper} key={item.id} url={url} amount={amount} />;
           } else if (item.kind === MEDIA_VIDEO) {
             return <VideoContent className={classes.mediaContent} key={item.id} url={url} showControls={amount === 0 || isPurchased} />;

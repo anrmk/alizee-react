@@ -7,7 +7,19 @@ import CommentBlockOutlinedIcon from "@material-ui/icons/SpeakerNotesOffOutlined
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary";
 
 import { Box, IconButton, Tooltip } from "@material-ui/core";
-import useStyles from "./styles";
+
+import {
+  TYPE_JPEG,
+  TYPE_PJPEG,
+  TYPE_GIF,
+  TYPE_XPNG,
+  TYPE_PNG,
+  TYPE_MP4,
+  TYPE_WEBM,
+  TYPE_OGG,
+} from "../../../constants/media_types";
+
+const supportedInputMediaType = [TYPE_JPEG, TYPE_PJPEG, TYPE_GIF, TYPE_XPNG, TYPE_PNG, TYPE_MP4, TYPE_WEBM, TYPE_OGG];
 
 function CreateTools({
   multiple = true,
@@ -57,6 +69,7 @@ function CreateTools({
             id="medias"
             name="medias"
             ref={mediaRef}
+            accept={supportedInputMediaType.join(", ")}
             style={{ display: "none" }}
             onChange={onChange}
           />

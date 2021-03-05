@@ -1,11 +1,17 @@
 import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
+import ReactPlayer from "react-player";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import { Typography, GridList, GridListTile, FormControl, TextField, InputAdornment, Box } from "@material-ui/core";
 
 import { CreateTools } from "../../../components/Post";
+
+import {
+  MEDIA_GROUP_TYPE,
+  MEDIA_TYPE,
+} from "../../../constants/media_types";
 
 import useStyles from "./styles";
 
@@ -92,6 +98,30 @@ export default function CreatePost({
     }
   };
 
+  const mediaTypeToKind = (type) => {
+    let localType;
+    if (MEDIA_TYPE[type] === MEDIA_GROUP_TYPE.IMAGE) {
+      localType = 2;
+    } else if (MEDIA_TYPE[type] === MEDIA_GROUP_TYPE.VIDEO) {
+      localType = 1;
+    }
+    return localType;
+  }
+
+  const renderMediaItem = (type, url) => {
+    if (type === 1) {
+      return (
+        <ReactPlayer
+          className={classes.video}
+          controls={true}
+          muted={true}
+          url={url}
+        />
+      );
+    } else if (type === 2) {
+      return <img src={url} />;
+    }
+  };
 
   return (
     <form id={formId} className={classes.root} onSubmit={handleSubmit(handleFormSubmit)} autoComplete="off">
@@ -151,7 +181,7 @@ export default function CreatePost({
         <GridList cellHeight={120} cols={4} spacing={1}>
           {mediaWatcher.map((item) => (
             <GridListTile key={item.name} cols={1} rows={1}>
-              <img src={item.previewURL} alt={item.name} />
+              {renderMediaItem(mediaTypeToKind(item.type), item.previewURL)}
             </GridListTile>
           ))}
         </GridList>
