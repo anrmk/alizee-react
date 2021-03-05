@@ -24,8 +24,8 @@ const PreviewStoriesList = React.memo(({
     }
   }, [loading]);
 
-  const renderSkeletons = () => [...Array(6)].map((_) => (
-    <Skeleton className={classes.previewStoryListItemSkeleton} variant="rect" animation="wave" />
+  const renderSkeletons = () => [...Array(6)].map((_, index) => (
+    <Skeleton key={`${index}-skeleton`} className={classes.previewStoryListItemSkeleton} variant="rect" animation="wave" />
   ));
 
   return (

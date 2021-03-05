@@ -12,10 +12,9 @@ import {
   Button,
   Hidden,
   Link as MUILink,
-  makeStyles
 } from "@material-ui/core";
 
-import { PostsList, PostSprout } from "../domain/PostsList";
+import { PostsList } from "../domain/PostsList";
 import { HotStreamersItemList } from "../domain/Stream";
 
 import * as actionSuggestion from "../store/actions/suggestion";

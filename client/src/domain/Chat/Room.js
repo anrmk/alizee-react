@@ -8,13 +8,11 @@ import { Divider, Card, CardActions, CardContent, CardHeader, IconButton, Hidden
 import SendOutlinedIcon from "@material-ui/icons/SendRounded";
 import MoreVertIcon from "@material-ui/icons/MoreVertRounded";
 import BackIcon from "@material-ui/icons/ArrowBackRounded";
-import MonetizationOnIcon from "@material-ui/icons/MonetizationOnOutlined";
 
 import Avatar from "../../components/Avatar";
 import { MessageSenderInput, MessagesList } from "../../components/Chat";
 import Empty from "../../components/Chat/Empty";
 
-import { ESC_KEY_CODE } from "../../constants/key_codes";
 import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 import { formatDate } from "../../helpers/functions";
 
