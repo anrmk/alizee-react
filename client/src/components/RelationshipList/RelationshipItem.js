@@ -47,15 +47,76 @@ const RelationshipItem = React.memo((props) => {
     onUnrejectClick && onUnrejectClick({id, userName}); 
   }
 
+  const renderActionButtons = () => {
+    switch(status) {
+      case FOLLOW_PENDING:
+        return (
+          <>
+            <Button
+              className={classes.itemButton}
+              disableElevation
+              disableRipple
+              size="small"
+              variant="contained"
+              color="primary"
+              onClick={handleConfirmClick}
+            >
+              {t("ConfirmBtnTextFollowerItem") }
+            </Button>
+    
+            <Button
+              className={classes.itemButton}
+              disableElevation
+              disableRipple
+              size="small"
+              color="secondary"
+              onClick={handleRejectClick}
+            >
+              {t("DeclineBtnTextFollowerItem") }
+            </Button>
+          </>
+        )
+      case FOLLOW_REJECTED:
+        return (<Button
+          className={classes.itemButton}
+          disableElevation
+          disableRipple
+          size="small"
+          color="secondary"
+          onClick={handleUnrejectClick}
+        >
+          {t("UnrejectBtnTextFollowerItem") }
+        </Button>)
+
+      case FOLLOW_ACCEPTED:
+        break;
+      default: 
+          return (<Button
+            className="primary"
+            disableElevation
+            disableRipple
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={handleFollowClick}
+          >
+            {isFollow ? t("FollowingBtnTextFollowerItem") : t("FollowerBtnTextFollowerItem")}
+          </Button>)
+
+    }
+  }
+
   return (
     <ListItem 
       className={classes.item}
       button
       to={PROFILE_USERNAME_ROUTE(userName)}
       component={Link}>
+
       <ListItemAvatar>
         <Avatar src={avatarUrl} />
       </ListItemAvatar>
+      
       <ListItemText
         primary={
           <Typography noWrap variant="body2" color="textPrimary">
@@ -69,59 +130,7 @@ const RelationshipItem = React.memo((props) => {
         }
         onClick={onItemClick}
       />
-      {status === FOLLOW_PENDING && (
-        <>
-        <Button
-          className={classes.itemButton}
-          disableElevation
-          disableRipple
-          size="small"
-          variant="contained"
-          color="primary"
-          onClick={handleConfirmClick}
-        >
-          {t("ConfirmBtnTextFollowerItem") }
-        </Button>
-
-        <Button
-          className={classes.itemButton}
-          disableElevation
-          disableRipple
-          size="small"
-          color="secondary"
-          onClick={handleRejectClick}
-        >
-          {t("DeclineBtnTextFollowerItem") }
-        </Button>
-        </>
-      )}
-
-      {status === FOLLOW_REJECTED && (
-        <Button
-          className={classes.itemButton}
-          disableElevation
-          disableRipple
-          size="small"
-          color="secondary"
-          onClick={handleUnrejectClick}
-        >
-          {t("UnrejectBtnTextFollowerItem") }
-        </Button>
-      )}
-
-      {status === FOLLOW_ACCEPTED && !isMe && (
-        <Button
-          className="primary"
-          disableElevation
-          disableRipple
-          variant={isFollow ? "outlined": "contained"}
-          color="primary"
-          size="small"
-          onClick={handleFollowClick}
-        >
-          {isFollow ? t("FollowingBtnTextFollowerItem") : t("FollowerBtnTextFollowerItem")}
-        </Button>
-      )}
+      {!isMe && renderActionButtons()}
     </ListItem>
   );
 });
