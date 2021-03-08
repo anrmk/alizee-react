@@ -11,6 +11,7 @@ import ChatListDialog from "../domain/ChatListDialog";
 import DeleteAccountDialog from "../domain/DeleteAccountDialog";
 import ResetPasswordDialog from "../domain/ResetPasswordDialog";
 import { MediaEditorPreview, MediaPreview } from "../components/MediaEditor";
+import ConfirmDialog from "../domain/ConfirmDialog";
 
 export const CREATE_POST_DIALOG_TYPE = "createPost";
 export const CREATE_STORY_DIALOG_TYPE = "createStory";
@@ -18,6 +19,7 @@ export const CREATE_MOOD_DIALOG_TYPE = "createMood";
 
 export const POST_MENU_DIALOG_TYPE = "postmenu";
 export const PAYMENT_DIALOG_TYPE = "payment";
+export const FOLLOW_DIALOG_TYPE = "follow";
 export const SHARE_DIALOG_TYPE = "share";
 export const RECEIPT_DIALOG_TYPE = "receipt";
 export const PURCHASES_DIALOG_TYPE = "purchases";
@@ -34,6 +36,7 @@ export const MEDIA_EDITOR_DIALOG_TYPE = "uploadFileEdit";
 export const UPLOAD_FILE_AMOUNT_ERROR_DIALOG_TYPE = "uploadFileAmountError";
 
 export const MEDIA_PREVIEW_DIALOG_TYPE = "mediaPreview";
+export const CONFIRM_DIALOG_TYPE = "confirmation";
 
 const baseDialogProps = {
   dialogProps: { fullWidth: true },
@@ -50,6 +53,13 @@ export default {
 
   [PAYMENT_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Payment",
+    content: <Payment {...contentProps} />,
+    mainBtnText: "Pay",
+    ...baseDialogProps,
+    ...dialogProps,
+  }),
+  [FOLLOW_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+    title: "Follow",
     content: <Payment {...contentProps} />,
     mainBtnText: "Pay",
     ...baseDialogProps,
@@ -169,4 +179,11 @@ export default {
     ...baseDialogProps,
     ...dialogProps,
   }),
+  [CONFIRM_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+    title: "Confirm",
+    content: <ConfirmDialog {...contentProps} />,
+    mainBtnText: "Agree",
+    ...baseDialogProps,
+    ...dialogProps,
+  })
 };

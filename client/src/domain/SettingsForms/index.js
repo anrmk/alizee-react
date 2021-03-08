@@ -4,3 +4,4 @@ export { default as PrivacyForm } from "./PrivacyForm";
 export { default as NotificationForm } from "./NotificationForm";
 export { default as EditCardForm } from "./EditCardForm";
 export { default as EditBankForm } from "./EditBankForm";
+export { default as EditSubscriptionForm } from "./EditSubscriptionForm";

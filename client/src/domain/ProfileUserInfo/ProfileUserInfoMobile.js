@@ -15,8 +15,9 @@ import useStyles from "./style";
 function ProfileUserInfo({
   user,
   isOwner,
+  isFollow,
   className,
-  onSubscribeTipClick,
+  onSubscribeClick,
   onSendTipClick,
   onMoodUpdateClick
 }) {
@@ -26,13 +27,16 @@ function ProfileUserInfo({
     onSendTipClick && onSendTipClick(user)
   }
 
+  const handleSubscribeClick = () => {
+    onSubscribeClick && onSubscribeClick(user)
+  }
+
   return (
     <Box display="flex" flexDirection="column">
         {isOwner ? (
           <Button
-            className="primary"
             disableElevation
-            size="large"
+            color="primary"
             variant="contained"
             to="statistics"
             component={Link}>
@@ -42,13 +46,15 @@ function ProfileUserInfo({
           <>
             <Box className={classes.btnsGroupMobile}>
               <Button
-                className="primary"
                 fullWidth
                 disableElevation
-                size="large"
+                color="primary"
                 variant="contained"
-                onClick={onSubscribeTipClick}>
-                Follow {user.subscription ? `for ${user.subscription}` : "for Free"}
+                onClick={handleSubscribeClick}>
+                {isFollow ? 
+                  "Unfollow" : (
+                  `Follow ${user.subscription ? `for ${user.subscription}` : "for Free"}`
+                )}
               </Button>
               <IconButton
                 className={classes.btnMobile}

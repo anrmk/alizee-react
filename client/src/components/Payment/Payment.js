@@ -7,7 +7,7 @@ function Payment({ user, amount }) {
     <Card variant="outlined">
       <CardHeader avatar={<Avatar src={user.avatarUrl} />} title={user.name} subheader={user.userName} />
 
-      <CardContent>Please confirm you want to purchase for ${amount}</CardContent>
+      <CardContent>Please confirm you want to purchase {amount > 0 ? `for $${amount}` : "for Free"}</CardContent>
     </Card>
   );
 }

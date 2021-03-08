@@ -28,7 +28,8 @@ import useDialog from "../../hooks/useDialog";
 import useShareDialog, { SHARE_DIALOG_PROFILE_TYPE } from "../../hooks/useShareDialog";
 import { useMoodDialog } from "../../hooks/post";
 import { useSendTipDialog } from "../../hooks/payment";
-import dialogs, { PROFILE_EDIT_COVER, SEND_TIP_DIALOG_TYPE } from "../../constants/dialogs";
+import useFollowDialog from "../../hooks/payment/useFollowDialog";
+import dialogs, { PROFILE_EDIT_COVER } from "../../constants/dialogs";
 import { ProfileUserInfo, ProfileUserInfoMobile } from "../../domain/ProfileUserInfo";
 
 import useStyles from "./style";
@@ -52,7 +53,6 @@ function Profile(props) {
   const { createFollow, deleteFollow, createFavorites, deleteFavorites } = props;
   const { updateCover } = props;
 
-  const FORM_ID = "dialog-sendTip";
   const dialog = useDialog();
 
   const { dialogShareOpenClick } = useShareDialog({
@@ -60,6 +60,7 @@ function Profile(props) {
     type: SHARE_DIALOG_PROFILE_TYPE,
   });
 
+  const followDialog = useFollowDialog();
   const sendTipDialog = useSendTipDialog();
   const createMoodDialog = useMoodDialog();
 
@@ -167,6 +168,8 @@ function Profile(props) {
         <ProfileUserInfoMobile
           user={user}
           isOwner={username === me.userName}
+          isFollow={user.isFollow}
+          onSubscribeClick={followDialog.toggle}
           onSendTipClick={sendTipDialog.toggle}
           onMoodUpdateClick={createMoodDialog.toggle} />
       </Hidden>
@@ -191,6 +194,8 @@ function Profile(props) {
                 className={classes.userInfo}
                 user={user}
                 isOwner={username === me.userName}
+                isFollow={user.isFollow}
+                onSubscribeClick={followDialog.toggle}
                 onSendTipClick={sendTipDialog.toggle}
                 onMoodUpdateClick={createMoodDialog.toggle} />
               {user.sites && <SocialControl urls={user.sites} />}

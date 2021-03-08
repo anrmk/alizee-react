@@ -1,22 +1,20 @@
 export const ADD_FOLLOWER_SUCCESS = "ADD_FOLLOWER_SUCCESS";
 
-function receiveUserFollowerCountIncrement(user) {
+function receiveUserFollowerCountIncrement(data) {
   return {
     type: ADD_FOLLOWER_SUCCESS,
     payload: {
-      isFetching: true,
-      user,
-      errorMessage: "",
+      data,
     },
   };
 }
 
 export function addFollower() {
   return (dispatch, getState) => {
-    var user = getState().user;
-    user.data.followersCount += 1;
-    user.data.isFollow = true;
+    var data = getState().user.data;
+    data.followersCount += 1;
+    data.isFollow = true;
 
-    dispatch(receiveUserFollowerCountIncrement(user));
+    dispatch(receiveUserFollowerCountIncrement(data));
   };
 }

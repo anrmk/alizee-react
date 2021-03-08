@@ -34,8 +34,9 @@ const useStyles = makeStyles((theme) => ({
   },
   moodMobile: {
     ...theme.typography.body1,
+    width: "100%",
+    wordBreak: "break-all",
     color: theme.palette.text.secondary,
-    overflowY: "auto"
   },
 }));
 

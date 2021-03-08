@@ -28,7 +28,8 @@ function Cover(props) {
     onFavoriteClick,
     onSendGiftClick,
     onEditCover,
-    onShareClick
+    onShareClick,
+    onSubscribeClick
   } = props;
 
   const handleCoverChange = (e) => {
@@ -97,7 +98,8 @@ function Cover(props) {
             userName={user.userName}
             followersCount={user?.followersCount}
             followingsCount={user?.followingsCount}
-            favoritesCount={user?.favoritesCount} />
+            favoritesCount={user?.favoritesCount}
+            onSubscribeClick={onSubscribeClick} />
         </Box>
       </Hidden>
       <Menu 

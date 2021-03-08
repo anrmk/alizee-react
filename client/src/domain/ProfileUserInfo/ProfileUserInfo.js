@@ -7,6 +7,7 @@ import { Typography, Box, Card, CardHeader, CardContent, Button, IconButton, Too
 import MessageIcon from "@material-ui/icons/MessageOutlined";
 import DollarIcon from "@material-ui/icons/MonetizationOnOutlined";
 import EditIcon from "@material-ui/icons/EditRounded";
+import AddIcon from "@material-ui/icons/AddRounded";
 
 import { CHAT_ROUTE } from "../../constants/routes";
 import { USER_RANKING } from "../../constants/user";
@@ -17,8 +18,9 @@ import useStyles from "./style";
 function ProfileUserInfo({
   user,
   isOwner,
+  isFollow,
   className,
-  onSubscribeTipClick,
+  onSubscribeClick,
   onSendTipClick,
   onMoodUpdateClick
 }) {
@@ -26,6 +28,10 @@ function ProfileUserInfo({
 
   const handleSendTipClick = () => {
     onSendTipClick && onSendTipClick(user)
+  }
+
+  const handleSubscribeClick = () => {
+    onSubscribeClick && onSubscribeClick(user)
   }
 
   return (
@@ -51,9 +57,9 @@ function ProfileUserInfo({
               {user.mood}
             </Typography>
             {isOwner && (
-              <Tooltip title="Change mood">
+              <Tooltip title={user.mood ? "Change mood" : "Add mood"}>
                 <IconButton onClick={onMoodUpdateClick}>
-                  <EditIcon />
+                  {user.mood ? <EditIcon /> : <AddIcon />}
                 </IconButton>
               </Tooltip>
             )}
@@ -62,9 +68,9 @@ function ProfileUserInfo({
       <CardContent className={classes.content}>
         {isOwner ? (
           <Button
-            className="primary"
             disableElevation
             size="large"
+            color="primary"
             variant="contained"
             to="statistics"
             component={Link}>
@@ -73,19 +79,21 @@ function ProfileUserInfo({
         ) : (
           <>
             <Button
-              className="primary"
               disableElevation
               size="large"
+              color="primary"
               variant="contained"
-              onClick={onSubscribeTipClick}
-            >
-              Follow {user.subscription ? `for ${user.subscription}` : "for Free"}
+              onClick={handleSubscribeClick}>
+              {isFollow ? 
+                "Unfollow" : (
+                `Follow ${user.subscription ? `for ${user.subscription}` : "for Free"}`
+              )}
             </Button>
             <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap" my={1}>
               <Button
-                className="secondary"
                 disableElevation
                 size="large"
+                color="secondary"
                 variant="contained"
                 endIcon={<MessageIcon />}
                 to={CHAT_ROUTE(user.userName)}
@@ -93,9 +101,9 @@ function ProfileUserInfo({
                 Message
               </Button>
               <Button
-                className="secondary"
                 disableElevation
                 size="large"
+                color="secondary"
                 variant="contained"
                 endIcon={<DollarIcon />}
                 onClick={handleSendTipClick}>

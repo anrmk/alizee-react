@@ -67,36 +67,28 @@ export default createMuiTheme({
 
       text: {},
 
-      outlined: {},
+      outlinedPrimary: {
+        borderRadius: "20px",
+      },
 
-      contained: {
-        "&.primary": {
-          background: "linear-gradient(141.21deg, #68D794 -16.59%, #6FCBFF 40.28%, #B88AE1 90.77%)",
-          backgroundColor: "#35B1F6",
-          borderRadius: "20px",
-          color: "white",
-          "&:hover": {
-            opacity: ".8",
-          },
-        },
-
-        "&.secondary": {
-          background: "linear-gradient(141.21deg, rgba(136, 108, 169, 0.15) -16.6%, rgba(104, 215, 148, 0.15) -16.59%, rgba(111, 203, 255, 0.15) 40.28%, rgba(184, 138, 225, 0.15) 90.77%)",
-          color: "#845DD7",
-          borderRadius: "20px",
-          "&:hover": {
-            opacity: ".8",
-          },
-        },
-
-        "&.gold": {
-          background: "linear-gradient(89.86deg, #FEDB5F -2.12%, #2B30B1 201.58%)",
-          backgroundColor: "#FEDB5F",
-          color: "white",
+      containedPrimary: {
+        background: "linear-gradient(141.21deg, #68D794 -16.59%, #6FCBFF 40.28%, #B88AE1 90.77%)",
+        backgroundColor: "#35B1F6",
+        borderRadius: "20px",
+        color: "white",
+        "&:hover": {
           opacity: ".8",
-          "&:hover": {
-            opacity: "1",
-          },
+        },
+      },
+
+      containedSecondary: {
+        background: "linear-gradient(141.21deg, rgba(136, 108, 169, 0.15) -16.6%, rgba(104, 215, 148, 0.15) -16.59%, rgba(111, 203, 255, 0.15) 40.28%, rgba(184, 138, 225, 0.15) 90.77%)",
+        backgroundColor: "transparent",
+        color: "#845DD7",
+        borderRadius: "20px",
+        "&:hover": {
+          opacity: ".8",
+          backgroundColor: "transparent",
         },
       },
     },

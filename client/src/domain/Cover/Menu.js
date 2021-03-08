@@ -23,38 +23,55 @@ function Menu({
 }) {
   const classes = useStyles();
 
+  const renderOwnerMenu = () => (
+    <MUIMenu
+      keepMounted
+      anchorEl={anchorEl}
+      open={!!anchorEl}
+      anchorOrigin={{ vertical: "top", horizontal: "left" }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      onClose={onClose}>
+      <MenuItem disabled onClick={onSendGiftClick}>
+        <ListItemIcon color={isFavorite ? "primary" : "default"}>
+          <GiftIcon />
+        </ListItemIcon>
+        <ListItemText primary="Send gift" />
+      </MenuItem>
+      <MenuItem onClick={onFavoriteClick}>
+        <ListItemIcon color={isFavorite ? "primary" : "default"}>
+          {isFavorite ? <StarIcon /> : <StarBorderIcon />}
+        </ListItemIcon>
+        <ListItemText primary="Add to favorites" />
+      </MenuItem>
+      <MenuItem onClick={onShareClick}>
+        <ListItemIcon>
+          <SendIcon />
+        </ListItemIcon>
+        <ListItemText primary="Share to chat" />
+      </MenuItem>
+    </MUIMenu>
+  );
+
+  const renderMenu = () => (
+    <MUIMenu
+      keepMounted
+      anchorEl={anchorEl}
+      open={!!anchorEl}
+      anchorOrigin={{ vertical: "top", horizontal: "left" }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      onClose={onClose}>
+      <MenuItem onClick={onShareClick}>
+        <ListItemIcon>
+          <SendIcon />
+        </ListItemIcon>
+        <ListItemText primary="Share to chat" />
+      </MenuItem>
+    </MUIMenu>
+  );
+
   return (
     <Box className={classes.control}>
-      <MUIMenu
-        keepMounted
-        anchorEl={anchorEl}
-        open={!!anchorEl}
-        anchorOrigin={{ vertical: "top", horizontal: "left" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
-        onClose={onClose}>
-        {!isOwner && (
-          <>
-            <MenuItem disabled onClick={onSendGiftClick}>
-              <ListItemIcon color={isFavorite ? "primary" : "default"}>
-                <GiftIcon />
-              </ListItemIcon>
-              <ListItemText primary="Send gift" />
-            </MenuItem>
-            <MenuItem onClick={onFavoriteClick}>
-              <ListItemIcon color={isFavorite ? "primary" : "default"}>
-                {isFavorite ? <StarIcon /> : <StarBorderIcon />}
-              </ListItemIcon>
-              <ListItemText primary="Add to favorites" />
-            </MenuItem>
-          </>
-        )}
-        <MenuItem onClick={onShareClick}>
-          <ListItemIcon>
-            <SendIcon />
-          </ListItemIcon>
-          <ListItemText primary="Share to chat" />
-        </MenuItem>
-      </MUIMenu>
+      {!isOwner ? renderOwnerMenu() : renderMenu()}
     </Box>
   );
 }

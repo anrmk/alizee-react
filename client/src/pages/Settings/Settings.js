@@ -12,6 +12,7 @@ import {
   SETTINGS_NOTIFICATION_ROUTE,
   SETTINGS_PRIVACY_SECURITY_ROUTE,
   SETTINGS_PERSONAL_ROUTE,
+  SETTINGS_SUBSCRIPTION_ROUTE
 } from "../../constants/routes";
 import PrivateRoute from "../PrivateRoute";
 import SlidingViews from "../../components/SlidingViews";
@@ -20,6 +21,7 @@ import BlackList from "./BlackList";
 import EditProfileSettings from "./EditProfileSettings";
 import EditPersonalSettings from "./EditPersonalSettings";
 import EditCardSettings from "./EditCardSettings";
+import EditSubscriptionSettings from "./EditSubscriptionSettings";
 import EditBankSettings from "./EditBankSettings";
 import InterestsSettings from "./InterestsSettings";
 import PrivacySecuritySettings from "./PrivacySecuritySettings";
@@ -60,19 +62,24 @@ const TABS = [
     title: "Interests",
     route: SETTINGS_INTERESTS_ROUTE,
   },
-
   {
     index: 5,
+    name: "subscription",
+    title: "Subscription",
+    route: SETTINGS_SUBSCRIPTION_ROUTE
+  },
+  {
+    index: 6,
     name: "notification",
     title: "Notification",
     route: SETTINGS_NOTIFICATION_ROUTE,
   },
   {
-    index: 6,
+    index: 7,
     name: "privacy-security",
     title: "Privacy and Security",
     route: SETTINGS_PRIVACY_SECURITY_ROUTE,
-  },
+  }
 ];
 
 const findTab = (value) => {
@@ -133,6 +140,7 @@ function Settings() {
             <PrivateRoute exact path={SETTINGS_CARD_ROUTE} component={EditCardSettings} />
             <PrivateRoute exact path={SETTINGS_BANK_ROUTE} component={EditBankSettings} />
             <PrivateRoute exact path={SETTINGS_INTERESTS_ROUTE} component={InterestsSettings} />
+            <PrivateRoute exact path={SETTINGS_SUBSCRIPTION_ROUTE} component={EditSubscriptionSettings} />
             <PrivateRoute exact path={SETTINGS_NOTIFICATION_ROUTE} component={NotificationSettings} />
             <PrivateRoute exact path={SETTINGS_PRIVACY_SECURITY_ROUTE} component={PrivacySecuritySettings} />
             <PrivateRoute exact path={SETTINGS_BLACK_LIST_ROUTE} component={BlackList} />
