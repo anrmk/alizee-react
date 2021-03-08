@@ -1,9 +1,7 @@
 import React from "react";
 
 import { List } from "@material-ui/core";
-
 import RelationshipItem from "./RelationshipItem";
-
 import useStyles from "./styles";
 
 const RelationshipList = React.memo(({ items, currentUserName, onFollowClick, onConfirmClick, onRejectClick, onUnrejectClick }) => {

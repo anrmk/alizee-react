@@ -35,19 +35,14 @@ import * as Routes from "../../constants/routes";
 
 import useNotification from "../../hooks/useNotificationHub";
 import useHideNavigation from "../../hooks/useHideNavigation";
-import usePostDialog from "../../hooks/usePostDialog";
-import useStoryDialog from "../../hooks/useStoryDialog";
-import useMoodDialog from "../../hooks/useMoodDialog";
+import { usePostDialog, useStoryDialog, useMoodDialog} from "../../hooks/post";
 
-import * as postActions from "../../store/actions/post";
-import * as storyActions from "../../store/actions/story";
-import * as moodAction from "../../store/actions/mood";
 import * as notificationAction from "../../store/actions/notification";
 
 import useStyles from "./styles";
 
 function Main(props) {
-  const { user, notifyData, isAuthenticated, userStatistics } = props;
+  const { user, notifyData, isAuthenticated } = props;
   const { signOut, setNotification } = props;
 
   const [open, setOpen] = useState(true);
@@ -57,9 +52,9 @@ function Main(props) {
 
   const notification = useNotification({isAuth : isAuthenticated, onChange: setNotification});
 
-  const createPostDialog = usePostDialog({ onPostCreate: props.createPost });
-  const createStoryDialog = useStoryDialog({ onStoryCreate: props.createStory });
-  const createMoodDialog = useMoodDialog({ onMoodCreate: props.createMood });
+  const createPostDialog = usePostDialog();
+  const createStoryDialog = useStoryDialog();
+  const createMoodDialog = useMoodDialog();
 
   const handleDrawerToggle = () => {
     setOpen(!open);
@@ -89,7 +84,6 @@ function Main(props) {
             <Sidebar 
               user={user}
               open={open}
-              userStatistics={userStatistics}
               onCreateMeet={handleCreateMeet}
               onCreatePost={createPostDialog.toggle}
               onCreateStory={createStoryDialog.toggle}
@@ -144,11 +138,6 @@ function mapStateToProps(state) {
   return {
     user: state.signIn.userInfo,
     isAuthenticated: state.signIn.isAuthenticated,
-
-    isFetchingPost: state.posts.isFetching,
-    isFetchingStory: state.story.isFetching,
-
-    userStatistics:  state.user.statistics,
     notifyData: state.notification.data
   };
 }
@@ -156,11 +145,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     signOut: (api) => dispatch(signOutUser(api)),
-
-    createPost: (api, data, media) => dispatch(postActions.createPost(api, data, media)),
-    createStory: (api, data, media) => dispatch(storyActions.createStorySlide(api, data, media)),
-    createMood: (api, data) => dispatch(moodAction.createMood(api, data)),
-
     setNotification: (data) => dispatch(notificationAction.setNotification(data))
   };
 }

@@ -104,7 +104,7 @@ function CreateRoomForm({
 
   useEffect(() => {
     register({ name: TAGS_ID });
-  }, [])
+  }, [register])
 
   const handleTagsChange = (data) => {
     setValue(TAGS_ID, data);

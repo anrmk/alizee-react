@@ -9,7 +9,7 @@ import Avatar from "../Avatar";
 
 const AMOUNT_INPUT_ID = "amount";
 const MESSAGE_INPUT_ID = "message";
-const USER_ID = "user";
+const USER_ID = "userName";
 const EMPTY_VALUE_ERROR = "It is a required filed";
 const INVALID_AMOUNT_MAX_ERROR = "Maximum $200 USD";
 const TAX_VALUE = 0.07;
@@ -17,7 +17,7 @@ const TAX_VALUE = 0.07;
 const schema = yup.object().shape({
   [AMOUNT_INPUT_ID]: yup.number().required(EMPTY_VALUE_ERROR),
   [MESSAGE_INPUT_ID]: yup.string(),
-  [USER_ID]: yup.object(),
+  [USER_ID]: yup.string(),
 });
 
 function SendTip({
@@ -31,7 +31,7 @@ function SendTip({
     defaultValues: {
       [AMOUNT_INPUT_ID]: "",
       [MESSAGE_INPUT_ID]: "",
-      [USER_ID]: user,
+      [USER_ID]: user?.userName,
     },
   });
 

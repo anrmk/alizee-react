@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Error } from "../components/ErrorDialog"
-import { Receipt, Purchase, CreatePost, CreateStories, CreateMood } from "../components/Post";
+import { Receipt, Purchase, CreatePost, CreateStories, CreateMood, Menu as PostMenu } from "../components/Post";
 import { SendTip, Payment } from "../components/Payment";
 import SocialList from "../domain/SocialList";
 import { FollowingDialog } from "../domain/Chat";
@@ -16,6 +16,7 @@ export const CREATE_POST_DIALOG_TYPE = "createPost";
 export const CREATE_STORY_DIALOG_TYPE = "createStory";
 export const CREATE_MOOD_DIALOG_TYPE = "createMood";
 
+export const POST_MENU_DIALOG_TYPE = "postmenu";
 export const PAYMENT_DIALOG_TYPE = "payment";
 export const SHARE_DIALOG_TYPE = "share";
 export const RECEIPT_DIALOG_TYPE = "receipt";
@@ -40,6 +41,13 @@ const baseDialogProps = {
 };
 
 export default {
+  [POST_MENU_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+    title: "Menu",
+    content: <PostMenu {...contentProps} />,
+    ...baseDialogProps,
+    ...dialogProps,
+  }),
+
   [PAYMENT_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Payment",
     content: <Payment {...contentProps} />,

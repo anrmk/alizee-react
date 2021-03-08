@@ -1,8 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { formatDate } from "../../helpers/functions";
-
 import {
   Card,
   CardHeader,
@@ -11,10 +9,11 @@ import {
   CardActions,
   Avatar,
   Typography,
+  IconButton,
 } from "@material-ui/core";
+import MoreVertIcon from "@material-ui/icons/MoreVertOutlined";
 
 import Tools from "./Tools";
-import Menu from "./Menu";
 import MediaContent from "../../components/MediaContent";
 
 import useStyles from "./styles";
@@ -26,7 +25,11 @@ const Post = React.memo((props) => {
   const { id, user, owner, post } = props;
   const { likes, isLike, isFavorite } = props;
   const { onFollow, onUnfollow, onBlock, onUnblock, onReport, onShareToChatClick } = props;
-  const { onLike, onFavorite, onSendTip, onBuyPost, onDialogToggle } = props;
+  const { onLike, onFavorite, onSendTip, onBuyPost, onReceipt, onPurchase, onShare, onMenu } = props;
+
+  const handleMenuClick = () => {
+    onMenu && onMenu({ id, userName: owner.UserName });
+  };
 
   return (
     <Card className={classes.root} variant="outlined">
@@ -39,24 +42,9 @@ const Post = React.memo((props) => {
         title={owner.name}
         subheader={owner.userName}
         action={
-          <>
-            <Typography display="inline" variant="caption">
-              {post.createdDate && formatDate(post.createdDate)}
-            </Typography>
-
-            <Menu 
-              postId={id}
-              user={owner}
-              isOwner={user.id === owner.id}
-
-              onFollow={onFollow}
-              onUnfollow={onUnfollow}
-              onBlock={onBlock}
-              onUnblock={onUnblock}
-              onReport={onReport}
-              onShareToChatClick={onShareToChatClick}
-            />
-          </>
+          <IconButton onClick={handleMenuClick}>
+            <MoreVertIcon />
+          </IconButton>
         }
       />
 
@@ -80,12 +68,13 @@ const Post = React.memo((props) => {
           amount={post.amount}
           isPurchased={post.isPurchased}
           isOwner={user.id === owner.id}
-          
           onLike={onLike}
           onFavorite={onFavorite}
           onSendTip={onSendTip}
           onBuyPost={onBuyPost}
-          onDialogToggle={onDialogToggle}
+          onReceipt={onReceipt}
+          onPurchase={onPurchase}
+          onShare={onShare}
         />
       </CardActions>
     </Card>

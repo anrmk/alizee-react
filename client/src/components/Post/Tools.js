@@ -11,10 +11,9 @@ import ReceiptIcon from "@material-ui/icons/ReceiptOutlined";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOnRounded";
 import BookmarkIcon from "@material-ui/icons/BookmarkOutlined";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorderOutlined";
-import ShareIcon from "@material-ui/icons/ShareOutlined";
+import SendIcon from "@material-ui/icons/SendOutlined";
 import VisibilityIcon from "@material-ui/icons/VisibilityOutlined";
 
-import { SHARE_DIALOG_TYPE, RECEIPT_DIALOG_TYPE, PURCHASES_DIALOG_TYPE } from "../../constants/dialogs";
 import useStyles from "./styles";
 
 const Tools = React.memo(({
@@ -34,7 +33,9 @@ const Tools = React.memo(({
   onFavorite,
   onSendTip,
   onBuyPost,
-  onDialogToggle
+  onPurchase,
+  onReceipt,
+  onShare
 }) => {
   const location = window.location.href;
   const classes = useStyles();
@@ -51,12 +52,17 @@ const Tools = React.memo(({
     onBuyPost && onBuyPost({ id, amount, user });
   };
 
+  const handlePurchaseClick = () => {
+    onPurchase && onPurchase(id);
+  }
+
   const handleReceiptClick = () => {
-    onDialogToggle && onDialogToggle(isOwner ? PURCHASES_DIALOG_TYPE : RECEIPT_DIALOG_TYPE, { id });
+    onReceipt && onReceipt(id);
   };
 
   const handleShareClick = useCallback(() => {
-    onDialogToggle && onDialogToggle(SHARE_DIALOG_TYPE, { id });
+    const userName = user.userName;
+    onShare && onShare({id, userName});
   }, []);
 
   const handleSendTipClick = useCallback(() => {
@@ -73,7 +79,7 @@ const Tools = React.memo(({
         );
       } else {
         return (
-          <IconButton onClick={handleReceiptClick}>
+          <IconButton onClick={isOwner ? handlePurchaseClick : handleReceiptClick}>
             <ReceiptIcon />
           </IconButton>
         );
@@ -91,7 +97,7 @@ const Tools = React.memo(({
       <Typography>{likes > 0 && <strong>{likes}</strong>}</Typography>
 
       <IconButton aria-label="share" onClick={handleShareClick}>
-        <ShareIcon />
+        <SendIcon />
       </IconButton>
 
       {!isOwner && (

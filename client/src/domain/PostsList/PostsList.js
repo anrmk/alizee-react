@@ -22,10 +22,13 @@ const PostsList = React.memo(({
   onShareToChatClick,
   onSendTip,
   onBuyPost,
+  onReceipt,
+  onPurchase,
 
   onLike,
   onFavorite,
-  onDialogToggle
+  onMenu,
+  onShare
 }) => {
   return (
     <InfiniteScroll
@@ -58,7 +61,10 @@ const PostsList = React.memo(({
             onFavorite={onFavorite}
             onSendTip={onSendTip}
             onBuyPost={onBuyPost}
-            onDialogToggle={onDialogToggle} />
+            onReceipt={onReceipt}
+            onPurchase={onPurchase}
+            onMenu={onMenu}
+            onShare={onShare} />
         ))}
     </InfiniteScroll>
   );

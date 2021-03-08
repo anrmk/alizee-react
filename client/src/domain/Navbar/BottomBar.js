@@ -11,7 +11,7 @@ import ExploreIcon from "@material-ui/icons/ExploreOutlined";
 import { PostSprout } from "../PostsList";
 import Avatar from "../../components/Avatar";
 
-import {HOME_ROUTE, SEARCH_ROUTE, EXPLORE_ROUTE, PROFILE_USERNAME_ROUTE } from "../../constants/routes";
+import { HOME_ROUTE, SEARCH_ROUTE, EXPLORE_ROUTE, PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 
 import useStyles from "./styles";
 
@@ -20,30 +20,35 @@ function BottomBar({
 
   onCreatePost,
   onCreateStory,
-  onCreateMood
+  onCreateMood,
 }) {
   const classes = useStyles()();
   const location = useLocation();
   const history = useHistory();
 
   return (
-    <AppBar className={clsx (classes.root, "bottom")} component="footer" >
+    <AppBar className={clsx(classes.root, "bottom")} component="footer">
       <Container>
-        <Toolbar className={classes.toolbar} >
-          <IconButton onClick={() => history.push(HOME_ROUTE)} color={`${location.pathname.includes(HOME_ROUTE) ? "primary" : "default" }`}>
+        <Toolbar className={classes.toolbar}>
+          <IconButton
+            onClick={() => history.push(HOME_ROUTE)}
+            color={`${location.pathname.includes(HOME_ROUTE) ? "primary" : "default"}`}
+          >
             <HomeIcon />
           </IconButton>
-          <IconButton onClick={() => history.push(SEARCH_ROUTE)} color={`${location.pathname.includes(SEARCH_ROUTE) ? "primary" : "default" }`}>
+          <IconButton
+            onClick={() => history.push(SEARCH_ROUTE)}
+            color={`${location.pathname.includes(SEARCH_ROUTE) ? "primary" : "default"}`}
+          >
             <SearchIcon />
           </IconButton>
 
-          <PostSprout 
-            onCreatePost={onCreatePost}
-            onCreateStory={onCreateStory}
-            onCreateMood={onCreateMood}
-            />
+          <PostSprout onCreatePost={onCreatePost} onCreateStory={onCreateStory} onCreateMood={onCreateMood} />
 
-          <IconButton onClick={() => history.push(EXPLORE_ROUTE)} color={`${location.pathname.includes(EXPLORE_ROUTE) ? "primary" : "default" }`}>
+          <IconButton
+            onClick={() => history.push(EXPLORE_ROUTE)}
+            color={`${location.pathname.includes(EXPLORE_ROUTE) ? "primary" : "default"}`}
+          >
             <ExploreIcon />
           </IconButton>
           <IconButton onClick={() => history.push(PROFILE_USERNAME_ROUTE(user.userName))}>

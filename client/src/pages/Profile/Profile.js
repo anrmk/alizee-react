@@ -26,7 +26,8 @@ import {
 
 import useDialog from "../../hooks/useDialog";
 import useShareDialog, { SHARE_DIALOG_PROFILE_TYPE } from "../../hooks/useShareDialog";
-import useMoodDialog from "../../hooks/useMoodDialog";
+import { useMoodDialog } from "../../hooks/post";
+import { useSendTipDialog } from "../../hooks/payment";
 import dialogs, { PROFILE_EDIT_COVER, SEND_TIP_DIALOG_TYPE } from "../../constants/dialogs";
 import { ProfileUserInfo, ProfileUserInfoMobile } from "../../domain/ProfileUserInfo";
 
@@ -46,11 +47,10 @@ function Profile(props) {
   const [postSettings, setPostSettings] = useState(initPostsSettings);
 
   const { me, user, post, media } = props;
-  const { fetchUser, resetUser, sendTip } = props;
+  const { fetchUser, resetUser } = props;
   const { fetchPosts, resetPosts, getFavoritePosts } = props;
   const { createFollow, deleteFollow, createFavorites, deleteFavorites } = props;
   const { updateCover } = props;
-  const { createMood } = props;
 
   const FORM_ID = "dialog-sendTip";
   const dialog = useDialog();
@@ -60,7 +60,8 @@ function Profile(props) {
     type: SHARE_DIALOG_PROFILE_TYPE,
   });
 
-  const createMoodDialog = useMoodDialog({ onMoodCreate: createMood });
+  const sendTipDialog = useSendTipDialog();
+  const createMoodDialog = useMoodDialog();
 
   useEffect(() => {
     return () => {
@@ -115,28 +116,6 @@ function Profile(props) {
     );
   };
 
-  const handleSendTipDialog = (data) => {
-    dialog.toggle(
-      dialogs[SEND_TIP_DIALOG_TYPE](
-        {
-          open: true,
-          mainBtnProps: { type: "submit", form: FORM_ID },
-          tempData: data,
-        },
-        {
-          formId: FORM_ID,
-          onSubmit: handleSendTipClick,
-          user: data,
-        }
-      )
-    );
-  };
-
-  const handleSendTipClick = (data) => {
-    dialog.toggle({ open: false });
-    sendTip(apiClient, data.user.userName, data.amount, data.message);
-  };
-
   const handleFetchPosts = async () => {
     if (post.isFetching) {
       return;
@@ -188,7 +167,7 @@ function Profile(props) {
         <ProfileUserInfoMobile
           user={user}
           isOwner={username === me.userName}
-          onSendTipClick={handleSendTipDialog}
+          onSendTipClick={sendTipDialog.toggle}
           onMoodUpdateClick={createMoodDialog.toggle} />
       </Hidden>
 
@@ -212,7 +191,7 @@ function Profile(props) {
                 className={classes.userInfo}
                 user={user}
                 isOwner={username === me.userName}
-                onSendTipClick={handleSendTipDialog}
+                onSendTipClick={sendTipDialog.toggle}
                 onMoodUpdateClick={createMoodDialog.toggle} />
               {user.sites && <SocialControl urls={user.sites} />}
             </Box>
@@ -258,11 +237,7 @@ function mapDispatchToProps(dispatch) {
     createFollow: (api, userName) => dispatch(relationshipActions.createFollow(api, userName)),
     deleteFollow: (api, userName) => dispatch(relationshipActions.deleteFollow(api, userName)),
 
-    // createPost: (api, post, media) => dispatch(postActions.createPost(api, post, media)),
-    // createStory: (api, story, media) => dispatch(storyActions.createStorySlide(api, story, media)),
-    createMood: (api, data) => dispatch(moodActions.createMood(api, data)),
     updateCover: (api, coverUrl) => dispatch(settingsActions.updateCover(api, coverUrl)),
-    sendTip: (api, userName, amount, message) => dispatch(paymentActions.sendTip(api, userName, amount, message)),
   };
 }
 
