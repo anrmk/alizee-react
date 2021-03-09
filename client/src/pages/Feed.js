@@ -92,7 +92,7 @@ function Feed(props) {
   useEffect(() => {
     if (userInfo.id) {
       (async () => {
-        await getPeople(apiClient, 6);
+        await getPeople(apiClient, 4);
       })();
     }
   }, [userInfo.id]);
@@ -149,26 +149,28 @@ function Feed(props) {
         </Grid>
         <Hidden smDown>
           <Grid item md={4}>
-            {people.data && people.data.length > 0 && (
-              <Box>
-                <Box mb={1} display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap">
-                  <Typography variant="h6">Suggestions For You</Typography>
-                  <MUILink variant="caption" to={SUGESTED_PEOPLE} component={Link}>
-                    See All
-                  </MUILink>
+            <Box position="sticky" top="4rem" paddingLeft="24px">
+              {people.data && people.data.length > 0 && (
+                <Box>
+                  <Box mb={1} display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap">
+                    <Typography variant="h6">Suggestions For You</Typography>
+                    <MUILink variant="caption" to={SUGESTED_PEOPLE} component={Link}>
+                      See All
+                    </MUILink>
+                  </Box>
+                  <RelationshipList items={people.data} onFollowClick={handleFollowPeople} />
                 </Box>
-                <RelationshipList items={people.data} onFollowClick={handleFollowPeople} />
-              </Box>
-            )}
+              )}
 
-            {hotStreamers.data && hotStreamers.data.length > 0 && (
-              <Box>
-                <Typography variant="h6" gutterBottom>
-                  Hot Streamers
-                </Typography>
-                <HotStreamersItemList items={hotStreamers.data} onJoinStream={handleJoinStream} />
-              </Box>
-            )}
+              {hotStreamers.data && hotStreamers.data.length > 0 && (
+                <Box>
+                  <Typography variant="h6" gutterBottom>
+                    Hot Streamers
+                  </Typography>
+                  <HotStreamersItemList items={hotStreamers.data} onJoinStream={handleJoinStream} />
+                </Box>
+              )}
+            </Box>
           </Grid>
         </Hidden>
       </Grid>

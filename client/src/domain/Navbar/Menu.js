@@ -1,15 +1,25 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+
+import i18n from "i18next";
 import { useTranslation } from "react-i18next";
 
 import { Menu, MenuItem, ListItemIcon, ListItemText, Divider } from "@material-ui/core";
+import useTheme from "@material-ui/core/styles/useTheme";
 
 import ExitToAppIcon from "@material-ui/icons/ExitToAppOutlined";
 import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
 import SettingsIcon from "@material-ui/icons/Settings";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorderOutlined";
+import HelpIcon from "@material-ui/icons/ContactSupportOutlined";
+import NightIcon from "@material-ui/icons/NightsStayOutlined";
+import SunnyIcon from "@material-ui/icons/WbSunnyOutlined";
+import LanguageIcon from '@material-ui/icons/LanguageOutlined';
 
-import { PROFILE_USERNAME_ROUTE, SEARCH_ROUTE, SETTINGS_EDIT_PROFILE_ROUTE } from "../../constants/routes";
+import { HELP_ROUTE, PROFILE_USERNAME_ROUTE, SEARCH_ROUTE, SETTINGS_EDIT_PROFILE_ROUTE } from "../../constants/routes";
+
+import useChangeTheme from "../../hooks/useChangeTheme";
+import useLanguageDialog from "../../hooks/useLanguageDialog";
 
 export default function NavMenu({
   id,
@@ -21,6 +31,10 @@ export default function NavMenu({
   onLogout,
 }) {
   const { t } = useTranslation();
+  const theme = useTheme();
+  const changeTheme = useChangeTheme();
+  const langDialog = useLanguageDialog();
+  
   const history = useHistory();
 
   const handleMenuItemClick = (url) => {
@@ -57,6 +71,29 @@ export default function NavMenu({
           <SettingsIcon />
         </ListItemIcon>
         <ListItemText primary={t("NavbarMenuItemSettingsText")} />
+      </MenuItem>
+
+      <Divider />
+
+      <MenuItem onClick={() => handleMenuItemClick(HELP_ROUTE)}>
+        <ListItemIcon>
+          <HelpIcon />
+        </ListItemIcon>
+        <ListItemText primary={t("NavbarMenuItemHelpText")} />
+      </MenuItem>
+
+      <MenuItem onClick={changeTheme} >
+        <ListItemIcon>
+          {theme.palette.type === "light" ? <SunnyIcon /> : <NightIcon />}
+        </ListItemIcon>
+        <ListItemText primary={theme.palette.type === "light" ? t("NavbarMenuItemLightMode") : t("NavbarMenuItemDarkMode")} />
+      </MenuItem>
+
+      <MenuItem onClick={langDialog.toggle}>
+        <ListItemIcon>
+          <LanguageIcon />
+        </ListItemIcon>
+        <ListItemText primary={t(i18n.language)} />
       </MenuItem>
 
       <Divider />

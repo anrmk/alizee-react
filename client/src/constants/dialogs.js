@@ -10,8 +10,12 @@ import StoryDialog from "../domain/StoryDialog";
 import ChatListDialog from "../domain/ChatListDialog";
 import DeleteAccountDialog from "../domain/DeleteAccountDialog";
 import ResetPasswordDialog from "../domain/ResetPasswordDialog";
+import LanguageDialog from "../domain/LanguageDialog";
+
 import { MediaEditorPreview, MediaPreview } from "../components/MediaEditor";
 import ConfirmDialog from "../domain/ConfirmDialog";
+
+export const LANGUAGE_DIALOG_TYPE = "language";
 
 export const CREATE_POST_DIALOG_TYPE = "createPost";
 export const CREATE_STORY_DIALOG_TYPE = "createStory";
@@ -44,6 +48,12 @@ const baseDialogProps = {
 };
 
 export default {
+  [LANGUAGE_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+    content: <LanguageDialog {...contentProps} />,
+    ...baseDialogProps,
+    ...dialogProps,
+  }),
+
   [POST_MENU_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Menu",
     content: <PostMenu {...contentProps} />,

@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { Box, GridList, GridListTile, GridListTileBar, Paper, IconButton, Typography, withWidth } from "@material-ui/core/";
+import { Box, GridList, GridListTile, GridListTileBar, Paper, Typography, withWidth } from "@material-ui/core/";
 
 import PlayArrowIcon from "@material-ui/icons/PlayArrowOutlined";
 

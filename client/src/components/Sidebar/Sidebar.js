@@ -16,7 +16,7 @@ import HomeIcon from "@material-ui/icons/HomeOutlined";
 import MailIcon from "@material-ui/icons/MailOutline";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import ExploreIcon from "@material-ui/icons/ExploreOutlined";
-import NightsStayIcon from "@material-ui/icons/NightsStayOutlined";
+import NightIcon from "@material-ui/icons/NightsStayOutlined";
 import SunnyIcon from "@material-ui/icons/WbSunnyOutlined";
 
 import { HOME_ROUTE, CHAT_ROUTE, PROFILE_USERNAME_ROUTE, EXPLORE_ROUTE, ACTIVITY_ROUTE } from "../../constants/routes";
@@ -67,7 +67,7 @@ function Sidebar({
         </IconButton>
         <Grid component="label" container alignItems="center" className={classes.themeToggle}>
           <Grid item>
-            <NightsStayIcon />
+            <NightIcon />
           </Grid>
           <Grid item>
             <Switch

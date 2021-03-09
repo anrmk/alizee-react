@@ -29,6 +29,7 @@ import { ResetPassword, ChangePassword } from "../Password";
 import Search from "../Search"
 import Story from "../Story";
 import Statistics from "../Statistics";
+import Help from "../Help";
 
 import { signOutUser } from "../../store/actions/signIn";
 import * as Routes from "../../constants/routes";
@@ -102,6 +103,7 @@ function Main(props) {
           <Route path={Routes.EMAIL_VERIFY} component={EmailVerify} />
           <Route exact path={Routes.RESET_PASSWORD_ROUTE} component={ResetPassword} />
           <Route exact path={Routes.PASSWORD_CHANGE_ROUTE} component={ChangePassword} />
+          <Route exact path={Routes.HELP_ROUTE} component={Help} />
           <PrivateRoute path={Routes.HOME_ROUTE} component={Feed} />
           <PrivateRoute path={Routes.EXPLORE_ROUTE} component={Explore} />
           <PrivateRoute path={Routes.POST_ROUTE} component={Post} />

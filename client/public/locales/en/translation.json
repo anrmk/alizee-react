@@ -1,4 +1,7 @@
 {
+  "en": "English",
+  "ru": "Русский",
+
   "AuthFormsSingInFormEmailTextFieldLabel": "Email",
   "AuthFormsSingInFormPasswordTextFieldLabel": "Password",
 
@@ -69,6 +72,9 @@
   "NavbarMenuItemProfileText": "Profile",
   "NavbarMenuItemPostSavedText": "Saved",
   "NavbarMenuItemSettingsText": "Settings",
+  "NavbarMenuItemHelpText": "Help and support",
+  "NavbarMenuItemDarkMode": "Dark mode",
+  "NavbarMenuItemLightMode": "Light mode",
   "NavbarMenuItemSignOutText": "Sign Out",
 
   "GoToProfile": "Go to profile",
@@ -97,5 +103,4 @@
   "AccountNumber": "Account Number", 
   "RoutingNumber": "Routing Number", 
   "BankAccountType": "Type of Bank Account"
-
 }
