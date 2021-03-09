@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => {
     },
     logoImage: {
       display: "flex",
-      background: "url('/logo1.png') no-repeat",
+      background: "url('/logo.png') no-repeat",
       backgroundSize: "cover",
       backgroundPositionY: theme.palette.type === "dark" ? "-32px" : "0",
       height: "32px",
