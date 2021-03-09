@@ -99,19 +99,6 @@ function Sidebar({
       {open && <Wallet deposit={user.deposit} />}
 
       <List>
-        <Tooltip title={t("SidebarProfileText")} placement="right">
-          <ListItem 
-            button
-            selected={location.pathname.includes(PROFILE_USERNAME_ROUTE(user.userName))}
-            to={PROFILE_USERNAME_ROUTE(user.userName)}
-            component={Link}>
-            <ListItemIcon>
-              <PersonOutlineIcon color="secondary" />
-            </ListItemIcon>
-            <ListItemText primary={t("SidebarProfileText")} />
-          </ListItem>
-        </Tooltip>
-
         <Tooltip title={t("SidebarFeedText")} placement="right">
           <ListItem
             button
@@ -122,6 +109,19 @@ function Sidebar({
               <HomeIcon color="secondary" />
             </ListItemIcon>
             <ListItemText primary={t("SidebarFeedText")} />
+          </ListItem>
+        </Tooltip>
+
+        <Tooltip title={t("SidebarProfileText")} placement="right">
+          <ListItem 
+            button
+            selected={location.pathname.includes(PROFILE_USERNAME_ROUTE(user.userName))}
+            to={PROFILE_USERNAME_ROUTE(user.userName)}
+            component={Link}>
+            <ListItemIcon>
+              <PersonOutlineIcon color="secondary" />
+            </ListItemIcon>
+            <ListItemText primary={t("SidebarProfileText")} />
           </ListItem>
         </Tooltip>
 

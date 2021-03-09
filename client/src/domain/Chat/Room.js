@@ -39,7 +39,6 @@ function Room({
   const isMenuOpen = Boolean(anchorEl);
 
   useEffect(() => {
-    console.log("MESSAGES", data?.messages.length)
     if (data?.messages) {
       setIsSendMessage(false);
     }

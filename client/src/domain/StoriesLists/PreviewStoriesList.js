@@ -41,7 +41,7 @@ const PreviewStoriesList = React.memo(({
             avatarUrl={userStory?.user?.avatarUrl}
             empty={isEmptyObject(userStory)}
             onClick={isEmptyObject(userStory) ? onCreateStoryClick : onItemClick} />
-          {items && items.map(item => (
+          {items.length > 0 && items.map(item => (
             <PreviewStoriesListItem
               key={item?.userId}
               id={item?.userId}

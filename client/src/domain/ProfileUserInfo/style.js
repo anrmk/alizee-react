@@ -7,19 +7,24 @@ const useStyles = makeStyles((theme) => ({
   header: {
     flexDirection: "column",
     textAlign: "center",
-    wordBreak: "break-word"
+    wordBreak: "break-word",
+    paddingBottom: 0
   },
   avatarHeader: {
     marginBottom: theme.spacing(2)
   },
   content: {
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    paddingTop: theme.spacing(1)
   },
   bio: {
     ...theme.typography.body1,
     maxHeight: "235px",
     overflowY: "auto"
+  },
+  bioHeader: {
+    margin: theme.spacing(1, 0)
   },
   btnMobile: {
     background: theme.palette.background.secondaryGradient,

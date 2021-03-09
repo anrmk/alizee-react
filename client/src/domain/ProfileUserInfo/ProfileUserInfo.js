@@ -112,7 +112,7 @@ function ProfileUserInfo({
             </Box>
           </>
         )}
-        <Typography variant="h6" gutterBottom>
+        <Typography className={classes.bioHeader} variant="h6">
           Bio
         </Typography>
         <ShowMoreText

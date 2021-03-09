@@ -14,6 +14,7 @@ function MediaContent({
   amount,
   isOwner,
   isPurchased,
+  showThumbnail,
 
   onPayClick,
 }) {
@@ -26,7 +27,8 @@ function MediaContent({
       {items.length &&
         items.map((item) => {
           if ((item.kind === MEDIA_IMAGE) || (!isPurchased && !isOwner && amount > 0)) {
-            return <ImagesContent className={classes.mediaContent} wrapperClassName={classes.imageContentWrapper} key={item.id} url={item.thumbnailUrl} amount={amount} />;
+            const url = showThumbnail ? item.thumbnailUrl : item.url;
+            return <ImagesContent className={classes.mediaContent} wrapperClassName={classes.imageContentWrapper} key={item.id} url={url} amount={amount} />;
           } else if (item.kind === MEDIA_VIDEO) {
             return <VideoContent className={classes.mediaContent} key={item.id} url={item.url} showControls={amount === 0 || isPurchased} />
           }
