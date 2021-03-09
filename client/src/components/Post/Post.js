@@ -49,7 +49,7 @@ const Post = React.memo((props) => {
       />
 
       <CardMedia>
-        <MediaContent className={classes.post} items={post.media} amount={post.amount} isPurchased={post.isPurchased} />
+        <MediaContent className={classes.post} items={post.media} amount={post.amount} isPurchased={post.isPurchased} isOwner={user.id === owner.id} />
       </CardMedia>
 
       <CardContent>

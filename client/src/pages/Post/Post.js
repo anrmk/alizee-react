@@ -104,7 +104,7 @@ function PostPage(props) {
                 <CommentIcon />
               </IconButton>
             </Hidden>
-            <MediaContent items={post.data.media} amount={post.data.amount} isPurchased={post.data.isPurchased} />
+            <MediaContent items={post.data.media} amount={post.data.amount} isPurchased={post.data.isPurchased} isOwner={user.id === post.owner?.id} />
           </CardMedia>
         </Card>
         <Comments

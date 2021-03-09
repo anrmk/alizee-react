@@ -43,7 +43,7 @@ function Navbar({ open }) {
           <Link href="#">Language</Link>
         </ListItem>
       </List>
-      <Typography variant="caption">© 2021 ALIZEE </Typography>
+      <Typography variant="caption">© 2021 Studio XR </Typography>
     </Box>
   );
 }

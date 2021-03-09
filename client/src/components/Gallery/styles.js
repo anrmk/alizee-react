@@ -95,10 +95,12 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     display: "flex",
     justifyContent: "space-between",
+    pointerEvents: "none",
   },
 
   arrowButton: {
     color: theme.palette.grey["100"],
+    pointerEvents: "all",
   }
 }));
 

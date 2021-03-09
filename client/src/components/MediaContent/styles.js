@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
     transition: "opacity .5s",
     cursor: "pointer",
     color: "rgba(226, 223, 223, 0.9)",
+    zIndex: theme.zIndex.drawer,
 
     "&.volume": {
       bottom: theme.spacing(1),

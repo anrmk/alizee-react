@@ -12,8 +12,8 @@ import useStyles from "./styles";
 function MediaContent({
   items,
   amount,
+  isOwner,
   isPurchased,
-  showThumbnail,
 
   onPayClick,
 }) {
@@ -25,12 +25,10 @@ function MediaContent({
     <Gallery className={classes.root} amount={amount} isPurchased={isPurchased} onPayClick={onPayClick} >
       {items.length &&
         items.map((item) => {
-          const url = showThumbnail ? item.thumbnailUrl : item.url;
-
-          if (item.kind === MEDIA_IMAGE || !isPurchased) {
-            return <ImagesContent className={classes.mediaContent} wrapperClassName={classes.imageContentWrapper} key={item.id} url={url} amount={amount} />;
+          if ((item.kind === MEDIA_IMAGE) || (!isPurchased && !isOwner && amount > 0)) {
+            return <ImagesContent className={classes.mediaContent} wrapperClassName={classes.imageContentWrapper} key={item.id} url={item.thumbnailUrl} amount={amount} />;
           } else if (item.kind === MEDIA_VIDEO) {
-            return <VideoContent className={classes.mediaContent} key={item.id} url={url} showControls={amount === 0 || isPurchased} />;
+            return <VideoContent className={classes.mediaContent} key={item.id} url={item.url} showControls={amount === 0 || isPurchased} />
           }
 
           return null;
