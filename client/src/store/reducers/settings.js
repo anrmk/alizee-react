@@ -74,6 +74,14 @@ import {
   UPDATE_BANK_REQUEST,
   UPDATE_BANK_SUCCESS,
   UPDATE_BANK_FAILURE,
+
+  GET_SUBSCRIPTION_REQUEST,
+  GET_SUBSCRIPTION_SUCCESS,
+  GET_SUBSCRIPTION_FAILURE,
+
+  UPDATE_SUBSCRIPTION_REQUEST,
+  UPDATE_SUBSCRIPTION_SUCCESS,
+  UPDATE_SUBSCRIPTION_FAILURE,
 } from '../actions/settings';
 
 export default function settings(state = {
@@ -419,6 +427,44 @@ export default function settings(state = {
       return {
         ...state,
         ...action.payload,
+      };
+    }
+
+    case GET_SUBSCRIPTION_REQUEST: {
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+    case GET_SUBSCRIPTION_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+    case GET_SUBSCRIPTION_FAILURE: {
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+
+    case UPDATE_SUBSCRIPTION_REQUEST: {
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+    case UPDATE_SUBSCRIPTION_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+    case UPDATE_SUBSCRIPTION_FAILURE: {
+      return {
+        ...state,
+        ...action.payload
       };
     }
 

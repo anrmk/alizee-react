@@ -105,6 +105,8 @@ export default {
     updateCard: "accountsetting/card",
     getBank: "accountsetting/bankAccount",
     updateBank: "accountsetting/bankAccount",
+    getSubscription: "accountsetting/subscriptionsettings",
+    updateSubscription: "accountsetting/subscriptionsettings",
 
     // INTERESTS
     getInterests: "interest/getinterests",

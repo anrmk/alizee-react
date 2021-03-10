@@ -169,6 +169,7 @@ function Profile(props) {
           user={user}
           isOwner={username === me.userName}
           isFollow={user.isFollow}
+          subscriptionPrice={user.subscriptionPrice}
           onSubscribeClick={followDialog.toggle}
           onSendTipClick={sendTipDialog.toggle}
           onMoodUpdateClick={createMoodDialog.toggle} />
@@ -195,6 +196,7 @@ function Profile(props) {
                 user={user}
                 isOwner={username === me.userName}
                 isFollow={user.isFollow}
+                subscriptionPrice={user.subscriptionPrice}
                 onSubscribeClick={followDialog.toggle}
                 onSendTipClick={sendTipDialog.toggle}
                 onMoodUpdateClick={createMoodDialog.toggle} />

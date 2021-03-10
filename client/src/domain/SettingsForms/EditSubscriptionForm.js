@@ -8,7 +8,7 @@ import { EMPTY_VALUE_ERROR, MIN_AMOUNT, MAX_AMOUNT } from "../../constants/form_
 
 import useStyles from "./styles";
 
-const SUBSCRIPTION_PRICE_INPUT_ID = "subscriptionPrice";
+const SUBSCRIPTION_PRICE_INPUT_ID = "price";
 const MIN_VALUE = 0;
 const MAX_VALUE = 100;
 const SUBSCRIPTION_INPUT_HELPER = `Maximum ${MAX_VALUE}$ USD or free`;
@@ -27,12 +27,16 @@ function EditSubscriptionForm({
   onSubmit
 }) {
   const classes = useStyles();
-  const { errors, control, handleSubmit } = useForm({
+  const { errors, setValue, control, handleSubmit } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       [SUBSCRIPTION_PRICE_INPUT_ID]: price
     },
   });
+
+  useEffect(() => {
+    setValue(SUBSCRIPTION_PRICE_INPUT_ID, price);
+  }, [price]);
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>

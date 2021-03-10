@@ -1,5 +1,6 @@
 import { generateUrl } from "../../../helpers/functions";
 import { addFollower } from "../user";
+import { getDeposit } from "../account";
 
 export const CREATE_FOLLOW_REQUEST = "CREATE_FOLLOW_REQUEST";
 export const CREATE_FOLLOW_SUCCESS = "CREATE_FOLLOW_SUCCESS";
@@ -36,7 +37,7 @@ function errorCreateFollow(message) {
   };
 }
 
-export function createFollow(api, userName, byWho) {
+export function createFollow(api, userName) {
   return async (dispatch, getState) => {
     dispatch(requestCreateFollow());
 
@@ -52,6 +53,7 @@ export function createFollow(api, userName, byWho) {
 
       dispatch(addFollower());
       dispatch(receiveCreateFollow(list));
+      dispatch(getDeposit(api));
     } catch {
       return dispatch(errorCreateFollow("When follow was creating then something went wrong"));
     }

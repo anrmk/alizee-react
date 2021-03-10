@@ -2,7 +2,7 @@ import React from "react";
 import ShowMoreText from "react-show-more-text";
 import { Link } from "react-router-dom";
 
-import { Typography, Box, Button, IconButton, Tooltip } from "@material-ui/core/";
+import { Typography, Box, Button, IconButton } from "@material-ui/core/";
 
 import MessageIcon from "@material-ui/icons/MessageOutlined";
 import DollarIcon from "@material-ui/icons/MonetizationOnOutlined";
@@ -53,7 +53,7 @@ function ProfileUserInfo({
                 onClick={handleSubscribeClick}>
                 {isFollow ? 
                   "Unfollow" : (
-                  `Follow ${user.subscription ? `for ${user.subscription}` : "for Free"}`
+                  `Follow ${user.subscriptionPrice ? `for $${user.subscriptionPrice}` : "for Free"}`
                 )}
               </Button>
               <IconButton

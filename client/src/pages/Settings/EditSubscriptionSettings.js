@@ -1,31 +1,37 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { connect } from "react-redux";
 
 import ApiContext from "../../context/ApiContext";
 import * as settingsActions from "../../store/actions/settings";
 import { EditSubscriptionForm } from "../../domain/SettingsForms";
 
-function EditSubscriptionSettings({ user, updateAccount }) {
+function EditSubscriptionSettings({ data, getSubscription, updateSubscription }) {
   const apiClient = useContext(ApiContext);
 
-  const handleEditProfileSubmit = (data) => {
-    // (async () => {
-    //   await updateAccount(apiClient, data);
-    // })();
+  useEffect(() => {
+    (async () => {
+      await getSubscription(apiClient);
+    })();
+  }, []);
+
+  const handleEditProfileSubmit = async (data) => {
+    await updateSubscription(apiClient, data);
   };
 
-  return <EditSubscriptionForm {...user} onSubmit={handleEditProfileSubmit} />;
+  return <EditSubscriptionForm price={data.price} onSubmit={handleEditProfileSubmit} />;
 }
 
 function mapStateToProps(state) {
   return {
-    // user: state.signIn.userInfo,
+    data: state.settings.data,
+    isFetching: state.settings.isFetching
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    // updateAccount: (api, data) => dispatch(settingsActions.updateAccount(api, data)),
+    getSubscription: (api) => dispatch(settingsActions.getSubscription(api)),
+    updateSubscription: (api, opts) => dispatch(settingsActions.updateSubscription(api, opts)),
   };
 }
 

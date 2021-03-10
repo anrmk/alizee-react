@@ -86,7 +86,7 @@ function ProfileUserInfo({
               onClick={handleSubscribeClick}>
               {isFollow ? 
                 "Unfollow" : (
-                `Follow ${user.subscription ? `for ${user.subscription}` : "for Free"}`
+                `Follow ${user.subscriptionPrice ? `for $${user.subscriptionPrice}` : "for Free"}`
               )}
             </Button>
             <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap" my={1}>
