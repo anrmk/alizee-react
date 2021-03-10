@@ -28,6 +28,10 @@ const PreviewStoriesList = React.memo(({
     <Skeleton key={`${index}-skeleton`} className={classes.previewStoryListItemSkeleton} variant="rect" animation="wave" />
   ));
 
+  const isEmptyMyStories = () => {
+    return isEmptyObject(userStory) || !userStory?.thumbnailUrl;
+  }
+
   return (
     <List className={classes.previewStoryList} component={ScrollContainer}>
       {loading || !flag ? renderSkeletons() : (
@@ -39,8 +43,8 @@ const PreviewStoriesList = React.memo(({
             name={userStory?.user?.name}
             previewUrl={userStory?.thumbnailUrl}
             avatarUrl={userStory?.user?.avatarUrl}
-            empty={isEmptyObject(userStory)}
-            onClick={isEmptyObject(userStory) ? onCreateStoryClick : onItemClick} />
+            empty={isEmptyMyStories()}
+            onClick={isEmptyMyStories() ? onCreateStoryClick : onItemClick} />
           {items.length > 0 && items.map(item => (
             <PreviewStoriesListItem
               key={item?.userId}
