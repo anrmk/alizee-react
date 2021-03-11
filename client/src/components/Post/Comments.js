@@ -11,12 +11,12 @@ import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 import useStyles from "./styles";
 
 function Comments(props) {
-  const classes = useStyles();
   const { children, headerBackComponent } = props;
   const { hasMore } = props;
-  const { isOwner, user, description, items, isCommentable } = props;
+  const { isOwner, user, description, items, isCommentable, isPurchased } = props;
   const { onFetchMore, onSendMessageClick, onSendTip } = props;
 
+  const classes = useStyles({ isPurchased });
   const [isSendMessage, setIsSendMessage] = useState(false);
 
   const handleMessageCreate = (data) => {
@@ -54,11 +54,13 @@ function Comments(props) {
 
       <Divider />
 
-      <CardContent className={classes.cardContent}>
-        {<MessagesList isSendMessage={isSendMessage} userId={user.id} items={items} onFetchMore={onFetchMore} hasMore={hasMore} />}
-      </CardContent>
+      {isPurchased && (
+        <CardContent className={classes.cardContent}>
+          {<MessagesList isSendMessage={isSendMessage} userId={user.id} items={items} onFetchMore={onFetchMore} hasMore={hasMore} />}
+        </CardContent>
+      )}
 
-      {isCommentable && (
+      {isCommentable && isPurchased && (
         <CardActions className={classes.cardFooter}>
           <MessageSenderInput hideMediaEditor={true} hidePayment={isOwner} onSendMessageClick={handleMessageCreate} onSendTip={handleSendTipClick} />
         </CardActions>

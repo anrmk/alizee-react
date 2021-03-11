@@ -131,7 +131,7 @@ export const getGridGalleryPosts = createSelector([gridGallerySelector], (data) 
         id: curr.id,
         caption: curr.description,
         amount: curr.amount,
-        media: curr.media.length > 0 ? [curr.media[0]] : [],
+        media: curr.media.length > 0 ? [...curr.media] : [],
       },
     ],
     []

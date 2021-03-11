@@ -8,6 +8,7 @@ import PlayArrowIcon from "@material-ui/icons/PlayArrowOutlined";
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibraryOutlined";
 
 import useStyle from "./styles";
+import { MEDIA_IMAGE, MEDIA_VIDEO } from "../../constants/media_types";
 
 function GridGalleryPostList(props) {
   const { items } = props;
@@ -30,7 +31,7 @@ function GridGalleryPostList(props) {
                 <LazyLoadImage
                   className={classes.gridListTileImage}
                   effect={item && "blur"}
-                  src={item.media[0].kind === 1 ? item.media[0].thumbnailUrl : item.media[0].url}
+                  src={item.media[0].kind === MEDIA_VIDEO ? item.media[0].thumbnailUrl : item.media[0].url}
                   alt={item.title}
                   afterLoad={() => setLoading(false)}
                 />
@@ -45,7 +46,8 @@ function GridGalleryPostList(props) {
                       }}
                       actionIcon={
                         <IconButton aria-label={`star ${item.caption}`} className={classes.icon}>
-                          {item.media[0].kind === 1 ? <PlayArrowIcon /> : <PhotoLibraryIcon />}
+                          {item.media[0].kind === MEDIA_VIDEO && <PlayArrowIcon />}
+                          {item.media.length > 1 && item.media[0].kind === MEDIA_IMAGE && <PhotoLibraryIcon />}
                         </IconButton>
                       }
                     />

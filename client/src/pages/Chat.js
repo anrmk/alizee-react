@@ -116,7 +116,7 @@ function Chat(props) {
   };
 
   const handleRoomDelete = async (id) => {
-    if (!window.confirm("Are you sure? This can not be undone!")) {
+    if (!window.confirm("Are you sure?")) {
       return;
     }
 
@@ -143,7 +143,7 @@ function Chat(props) {
   };
 
   const handleAccountBlock = async (id, userId) => {
-    if (!window.confirm("Are you sure to block this user?")) {
+    if (!window.confirm("Block this User? They won't be able to see your profile")) {
       return;
     }
 

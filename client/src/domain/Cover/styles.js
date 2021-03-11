@@ -1,9 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 
-const getGradient = (theme) => (
-  theme === "dark" 
-    ? "linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.3) 15%, rgba(0, 0, 0, 0) 30%),"
-    : "linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.3) 15%, rgba(255, 255, 255, 0) 30%),"
+const getGradient = () => (
+  "linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.3) 15%, rgba(0, 0, 0, 0) 30%),"
 );
 
 const useStyles = makeStyles((theme) => ({
@@ -47,12 +45,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
-  //  control: {
-  //    color: theme.palette.common.,
-  //   //  [theme.breakpoints.up("md")]: {
-  //   //    color: theme.palette.common.white,
-  //   //  },
-  //  },
+   control: {
+     color: theme.palette.common.white
+   },
 
   coverEditButton: {
     position: "absolute",

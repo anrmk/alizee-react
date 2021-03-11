@@ -114,6 +114,7 @@ function PostPage(props) {
           items={comment.data}
           hasMore={comment.hasMore}
           isCommentable={post.data.isCommentable}
+          isPurchased={post.data.isPurchased || post.data.amount === 0}
           onFetchMore={handleCommentMore}
           onSendMessageClick={handleSendMessageClick}
           onSendTip={sendTipDialog.toggle}
