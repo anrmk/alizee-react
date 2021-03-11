@@ -19,23 +19,6 @@ export default function useDialog() {
     });
   }, [setData]);
 
-  const reset = () => {
-    setParams(initialContext);
-  }
-
-  const back = React.useCallback(() => {
-    if (stack.length - 2 < 0) return;
-
-    const prevDialogData = stack[stack.length-2];
-
-    if (prevDialogData) {
-      setParams({
-        ...prevDialogData,
-        stack: stack.slice(0, stack.length-1)
-      });
-    }
-  }, [stack]);
-
   const baseToggle = React.useCallback((opts, type) => {
     setData({
       type: type,
@@ -46,12 +29,32 @@ export default function useDialog() {
     });
   }, [setData, gOpen]);
 
+  const back = () => {
+    if (stack.length - 2 < 0) return;
+
+    const prevDialogData = stack[stack.length-2];
+
+    if (prevDialogData) {
+      setParams({
+        ...prevDialogData,
+        stack: stack.slice(0, stack.length-1)
+      });
+    }
+  }
+
+  const reset = () => {
+    setParams(initialContext);
+  }
+
   const toggle = (opts) => {
     reset();
     baseToggle(opts, TOGGLE_MODAL);
   }
 
-  const toggleWithStack = (opts) => {
+  const toggleWithStack = (opts, clearStack = false) => {
+    if (clearStack) {
+      reset();
+    }
     baseToggle(opts, TOGGLE_WITH_STACK_MODAL);
   }
 
@@ -61,6 +64,7 @@ export default function useDialog() {
     toggleWithStack,
     reset,
     back,
+    stack,
     dialogOptions
   }
 };

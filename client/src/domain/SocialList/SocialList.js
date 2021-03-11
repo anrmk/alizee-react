@@ -11,8 +11,8 @@ import { POST_ID_ROUTE } from "../../constants/routes";
 
 import { ListItem, List, ListItemIcon, ListItemText } from "@material-ui/core";
 
-export default function SocialList({ id, username, description }) {
-  const postUrl = getUrlTo(POST_ID_ROUTE(id));
+export default function SocialList({ postId, userName, description }) {
+  const postUrl = getUrlTo(POST_ID_ROUTE(postId));
 
   return (
     <List>
@@ -20,11 +20,10 @@ export default function SocialList({ id, username, description }) {
         button
         url={postUrl}
         href={postUrl}
-        title={username}
+        title={userName}
         quote={description}
         resetButtonStyle={false}
-        component={FacebookShareButton}
-      >
+        component={FacebookShareButton}>
         <ListItemIcon>
           <FacebookIcon fontSize="large" />
         </ListItemIcon>
@@ -34,18 +33,17 @@ export default function SocialList({ id, username, description }) {
       <ListItem
         button
         url={postUrl}
-        title={username}
+        title={userName}
         via={description}
         resetButtonStyle={false}
-        component={TwitterShareButton}
-      >
+        component={TwitterShareButton}>
         <ListItemIcon>
           <TwitterIcon fontSize="large" />
         </ListItemIcon>
         <ListItemText primary="Share to Twitter" />
       </ListItem>
 
-      <ListItem button url={postUrl} title={username} resetButtonStyle={false} component={TelegramShareButton}>
+      <ListItem button url={postUrl} title={userName} resetButtonStyle={false} component={TelegramShareButton}>
         <ListItemIcon>
           <TelegramIcon fontSize="large" />
         </ListItemIcon>

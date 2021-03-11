@@ -1,19 +1,19 @@
 import React from "react";
 
 import { Error } from "../components/ErrorDialog"
+import { MediaEditorPreview, MediaPreview } from "../components/MediaEditor";
+import SelectableList from "../components/SelectableList/SelectableList";
 import { Receipt, Purchase, CreatePost, CreateStories, CreateMood, Menu as PostMenu } from "../components/Post";
 import { SendTip, Payment } from "../components/Payment";
 import SocialList from "../domain/SocialList";
 import { FollowingDialog } from "../domain/Chat";
 import EditCoverDialog from "../domain/EditCoverDialog";
 import StoryDialog from "../domain/StoryDialog";
-import ChatListDialog from "../domain/ChatListDialog";
 import DeleteAccountDialog from "../domain/DeleteAccountDialog";
 import ResetPasswordDialog from "../domain/ResetPasswordDialog";
 import LanguageDialog from "../domain/LanguageDialog";
-
-import { MediaEditorPreview, MediaPreview } from "../components/MediaEditor";
 import ConfirmDialog from "../domain/ConfirmDialog";
+import widthBackButtonDialog from "../hocs/widthBackButtonDialog";
 
 export const LANGUAGE_DIALOG_TYPE = "language";
 
@@ -24,7 +24,7 @@ export const CREATE_MOOD_DIALOG_TYPE = "createMood";
 export const POST_MENU_DIALOG_TYPE = "postmenu";
 export const PAYMENT_DIALOG_TYPE = "payment";
 export const FOLLOW_DIALOG_TYPE = "follow";
-export const SHARE_DIALOG_TYPE = "share";
+export const SHARE_POST_DIALOG_TYPE = "share";
 export const RECEIPT_DIALOG_TYPE = "receipt";
 export const PURCHASES_DIALOG_TYPE = "purchases";
 export const SEND_TIP_DIALOG_TYPE = "sentTip";
@@ -75,9 +75,9 @@ export default {
     ...baseDialogProps,
     ...dialogProps,
   }),
-  [SHARE_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+  [SHARE_POST_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Share post",
-    content: <SocialList {...contentProps} />,
+    content: widthBackButtonDialog(contentProps)(SocialList),
     ...baseDialogProps,
     ...dialogProps,
   }),
@@ -140,7 +140,7 @@ export default {
   }),
   [FOLLOWERS_LIST_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Share List",
-    content: <ChatListDialog {...contentProps} />,
+    content: widthBackButtonDialog(contentProps)(SelectableList),
     mainBtnText: "Share",
     closeBtnText: "Cancel",
     ...baseDialogProps,

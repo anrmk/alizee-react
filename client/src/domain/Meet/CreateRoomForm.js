@@ -114,7 +114,7 @@ function CreateRoomForm({
     <Button
       size="large"
       variant="contained"
-      className="primary"
+      color="primary"
       form={FORM_ID}
       type="submit">
       {t("MeetCreateRoomFormJoinButtonLabel")}

@@ -28,7 +28,7 @@ const Post = React.memo((props) => {
   const { onLike, onFavorite, onSendTip, onBuyPost, onReceipt, onPurchase, onShare, onMenu } = props;
 
   const handleMenuClick = () => {
-    onMenu && onMenu({ id, userName: owner.UserName });
+    onMenu && onMenu({ postId: id, userName: owner.userName });
   };
 
   return (

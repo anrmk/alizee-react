@@ -6,10 +6,12 @@ import ApiContext from "../../context/ApiContext";
 import dialogs, { POST_MENU_DIALOG_TYPE } from "../../constants/dialogs";
 import * as postActions from "../../store/actions/post";
 import useDialog from "../useDialog";
+import useSharePostDialog from "./useSharePostDialog";
 
 export default function useMenuDialog() {
   const apiClient = useContext(ApiContext);
   const dialog = useDialog();
+  const postShareDialog = useSharePostDialog();
 
   const dispatch = useDispatch();
   const { isFetching } = useSelector((state) => ({
@@ -23,17 +25,12 @@ export default function useMenuDialog() {
 
   const handleDialogToggle = useCallback(
     async (data) => {
-      dialog.toggle(dialogs[POST_MENU_DIALOG_TYPE]({
-          //loading: true
-            //mainBtnProps: { type: "submit", form: FORM_ID },
-          },
-          {
-            //formId: FORM_ID,
-            //onSubmit: handleMenuCreate,
-            ...data,
-          }
-        )
-      );
+      dialog.toggleWithStack(dialogs[POST_MENU_DIALOG_TYPE](null,
+        {
+          onShareClick: postShareDialog.toggle,
+          ...data,
+        }
+      ), true);
     },
     []
   );

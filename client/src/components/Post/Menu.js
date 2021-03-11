@@ -10,9 +10,14 @@ function Menu({
   isOwner,
 
   onReport,
+  onShareClick
 }) {
    const handleReport = () => {
      onReport && onReport(userName);
+   };
+
+   const handleShareClick = () => {
+      onShareClick && onShareClick({ postId, userName });
    };
 
   return (
@@ -22,7 +27,7 @@ function Menu({
         <ListItemText primary="Report" />
       </ListItem>
 
-      <ListItem button>
+      <ListItem button onClick={handleShareClick}>
         <ListItemIcon><ShareIcon /></ListItemIcon>
         <ListItemText primary="Share to..." />
       </ListItem>

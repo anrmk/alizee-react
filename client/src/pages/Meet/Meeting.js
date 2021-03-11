@@ -52,7 +52,7 @@ function Meeting() {
 
           <Grid item container direction="row" alignItems="center" className={classes.meetingLinkBox} spacing={4}>
             <Grid item>
-              <Button size="large" variant="contained" className="primary" onClick={handleCreate}>
+              <Button size="large" variant="contained" color="primary" onClick={handleCreate}>
                 <VideocamOutlinedIcon />
                 {t("MeetMeetingNewMeetingButtonLabel")}
               </Button>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import ApiContext from "../context/ApiContext";
@@ -73,17 +73,18 @@ export default function useShareDialog({
     dialog[toggleType]({ open: false });
   }
 
-  const updateParams = () => {
+  const updateParams = useCallback(() => {
     dialog.setParams(dialogs[FOLLOWERS_LIST_DIALOG_TYPE]({
       loading: false,
       tempData: selectedChats,
       onMainClick: handleShareDialogBtnClick
     }, {
+      multiple: true,
       items: followersList,
       onItemSelect: (selected) => setSelectedChats(selected),
       onBackClick: type === SHARE_DIALOG_STORY_TYPE && dialog.back
     }));
-  }
+  }, [followersList, selectedChats])
 
   return {
     dialogShareOpenClick: handleOpenClick
