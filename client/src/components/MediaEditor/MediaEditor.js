@@ -13,13 +13,14 @@ import {
   TYPE_XPNG,
   TYPE_PNG,
   TYPE_MP4,
+  TYPE_MOV,
   TYPE_WEBM,
   TYPE_OGG,
 } from "../../constants/media_types";
 
 import useStyles from "./styles";
 
-const supportedInputMediaType = [TYPE_JPEG, TYPE_PJPEG, TYPE_GIF, TYPE_XPNG, TYPE_PNG, TYPE_MP4, TYPE_WEBM, TYPE_OGG];
+const supportedInputMediaType = [TYPE_JPEG, TYPE_PJPEG, TYPE_GIF, TYPE_XPNG, TYPE_PNG, TYPE_MP4,TYPE_MOV, TYPE_WEBM, TYPE_OGG];
 function MediaEditor({
   onSendMediaMessageClick
 }) {

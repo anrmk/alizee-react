@@ -15,6 +15,7 @@ export const TYPE_GIF = "image/gif";
 export const TYPE_XPNG = "image/x-png";
 export const TYPE_PNG = "image/png";
 export const TYPE_MP4 = "video/mp4";
+export const TYPE_MOV = "video/quicktime";
 export const TYPE_WEBM = "video/webm";
 export const TYPE_OGG = "video/ogg";
 
@@ -30,6 +31,7 @@ export const MEDIA_TYPE = {
   [TYPE_XPNG]: MEDIA_GROUP_TYPE.IMAGE,
   [TYPE_PNG]: MEDIA_GROUP_TYPE.IMAGE,
   [TYPE_MP4]: MEDIA_GROUP_TYPE.VIDEO,
+  [TYPE_MOV]: MEDIA_GROUP_TYPE.VIDEO,
   [TYPE_WEBM]: MEDIA_GROUP_TYPE.VIDEO,
   [TYPE_OGG]: MEDIA_GROUP_TYPE.VIDEO,
 };
