@@ -1,7 +1,7 @@
 import numeral from "numeral";
 
 import ENDPOINTS from '../constants/endpoints';
-import { MEDIA_IMAGE, MEDIA_VIDEO, MEDIA_STORY } from '../constants/media_types';
+import { MEDIA_IMAGE, MEDIA_VIDEO } from '../constants/media_types';
 import { EMAIL_REGEX, NUMBER_REGEX } from "../constants/regexs";
 import { USER_TOKEN } from "../constants/user";
 
@@ -119,8 +119,6 @@ export function getMediaType(type) {
         return MEDIA_VIDEO
       case "image":
         return MEDIA_IMAGE
-      case "story":
-        return MEDIA_STORY
       default:
         return undefined;
     }

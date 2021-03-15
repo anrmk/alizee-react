@@ -1,10 +1,10 @@
-export const MEDIA_STORY = 0;
 export const MEDIA_VIDEO = 1;
 export const MEDIA_IMAGE = 2;
 
 export const MEDIA_CONTENT = 0;
 export const MEDIA_AVATAR = 1;
 export const MEDIA_COVER = 2;
+export const MEDIA_STORY = 3;
 
 export const MAX_SIZE_VIDEO_MEDIA_FILE = 20000000;
 export const MAX_SIZE_IMAGE_MEDIA_FILE = 2000000;

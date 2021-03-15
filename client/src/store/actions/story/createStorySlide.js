@@ -1,4 +1,4 @@
-import { MEDIA_CONTENT } from "../../../constants/media_types";
+import { MEDIA_CONTENT, MEDIA_STORY } from "../../../constants/media_types";
 import { generateUrl, generateFileUrl, isEmptyObject } from "../../../helpers/functions";
 import { createMedia } from "../media";
 
@@ -47,7 +47,7 @@ export function createStorySlide(api, storyData) {
       const mediaData = storyData.medias;
       let media = [];
       if (mediaData.length > 0) {
-        await dispatch(createMedia(api, mediaData, MEDIA_CONTENT));
+        await dispatch(createMedia(api, mediaData, MEDIA_STORY));
 
         const mediaErrorMessage = getState().media.errorMessage;
         if (mediaErrorMessage) {
