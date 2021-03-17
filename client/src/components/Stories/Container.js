@@ -30,10 +30,13 @@ export default function Container() {
     isPaused,
     avatarUrl,
     fullName,
+    user,
     createdDate,
     onMoreClick,
     onCloseClick,
-    onChange
+    onChange,
+    onAllStoriesEnd,
+    onPrevious
   } = useContext(GlobalContext);
   const { storyOptions: { stories, muted }, setStoriesOptions } = useContext(StoriesContext);
   let mousedownId = useRef();
@@ -67,17 +70,19 @@ export default function Container() {
     if (stories.length <= 1) return;
     setCurrentIdWrapper(prev => prev > 0 ? prev - 1 : prev);
 
-    onChange && onChange(stories[currentId - 1 >= 0 ? currentId - 1 : 0], currentId);
+    currentId - 1 >= 0 && onChange && onChange(stories, user, currentId - 1);
   }
 
   const next = () => {
     if (loop) {
       updateNextStoryIdForLoop();
-    } else {
+    } else if (currentId + 1 < stories.length) {
       updateNextStoryId();
+      onChange && onChange(stories, user, currentId + 1);
+      return;
     }
 
-    onChange && onChange(stories[currentId + 1 < stories.length ? currentId + 1 : stories.length - 1], currentId);
+    toggleState("pause", true);
   };
 
   const updateNextStoryIdForLoop = () => {
@@ -102,6 +107,12 @@ export default function Container() {
   const handleMouseUp = (e, type) => {
     e.preventDefault()
     mousedownId.current && clearTimeout(mousedownId.current);
+
+    if (type === "previous" && currentId === 0) {
+      onPrevious && onPrevious(currentId, stories);
+    } else if (type === "next" && currentId === stories.length - 1) {
+      onAllStoriesEnd && onAllStoriesEnd(currentId, stories);
+    }
 
     if (pause && currentId === 0 && type === "previous" || 
       pause && currentId >= stories.length - 1 && type === "next" || 
@@ -159,7 +170,7 @@ export default function Container() {
             <Avatar src={avatarUrl} />
             <Box>
               {fullName && <Typography className={classes.headerText} variant="body1" noWrap>{fullName}</Typography>}
-              {createdDate && <Typography className={classes.headerText} variant="caption" noWrap>asdg{getDate(createdDate)}</Typography>}
+              {createdDate && <Typography className={classes.headerText} variant="caption" noWrap>{getDate(createdDate)}</Typography>}
             </Box>
           </Box>
           <Box className={classes.tools}>

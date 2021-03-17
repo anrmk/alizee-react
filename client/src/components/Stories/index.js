@@ -27,7 +27,7 @@ export default function({
         payload: { stories }
       });
     }
-  }, [stories.length]);
+  }, [stories]);
 
   return (
     <GlobalContext.Provider value={{ ...rest }}>

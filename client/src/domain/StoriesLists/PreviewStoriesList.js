@@ -37,6 +37,7 @@ const PreviewStoriesList = React.memo(({
       {loading || !flag ? renderSkeletons() : (
         <>
           <PreviewStoriesListItem
+            me
             key={userStory?.userId}
             id={userStory?.userId}
             username={userStory?.user?.userName}

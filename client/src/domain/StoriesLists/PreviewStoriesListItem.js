@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Box, ListItem, Typography } from "@material-ui/core";
 
 import AddIcon from "@material-ui/icons/AddRounded";
@@ -14,6 +14,7 @@ const PreviewStoryListItem = React.memo(({
   name,
   previewUrl,
   avatarUrl,
+  me = false,
   empty = false,
 
   onClick
@@ -22,8 +23,15 @@ const PreviewStoryListItem = React.memo(({
     previewUrl,
     empty
   });
-  const additionalProps = empty ? { } : { to: previewUrl ? STORIES_ROUTE(username) : "#", component: Link };
-  
+  const location = useLocation();
+  const additionalProps = empty ? null : { 
+    to: { 
+      pathname: previewUrl ? STORIES_ROUTE(username) : "#", 
+      state: { from: location.pathname, storyId: id, me }
+    }, 
+    component: Link 
+  };
+
   const handleItemClick = useCallback(() => {
     onClick && onClick(id);
   }, []);
@@ -33,12 +41,12 @@ const PreviewStoryListItem = React.memo(({
       button
       className={classes.previewStoryListItem}
       {...additionalProps}
-      onClick={handleItemClick}> 
+      onClick={handleItemClick}>
       {empty ? (
         <AddIcon className={classes.previewStoryListItemAddButton} />
       ) : (
         <Box className={classes.previewStoryItemUserInfo}>
-          <Avatar className={classes.previewStoryListItemAvatar} size="small" src={avatarUrl} /> 
+          <Avatar className={classes.previewStoryListItemAvatar} size="small" src={avatarUrl} />
           <Typography className={classes.previewStoryListItemName} variant="caption" noWrap>{name}</Typography>
         </Box>
       )}

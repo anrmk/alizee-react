@@ -1,6 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { connect } from "react-redux";
-import { useHistory, useParams, Redirect, useRouteMatch, generatePath } from "react-router-dom";
+import { useHistory, useParams, Redirect, useRouteMatch, generatePath, useLocation } from "react-router-dom";
 import { Box } from "@material-ui/core";
 
 import Stories from "../components/Stories";
@@ -9,20 +9,36 @@ import ApiContext from "../context/ApiContext";
 import * as storyActions from "../store/actions/story";
 import { DEFAULT_ROUTE, HOME_ROUTE } from "../constants/routes";
 import dialogs, { STORY_DIALOG_TYPE } from "../constants/dialogs";
+import { STORIES_LENGTH } from "../constants/feed";
 import useDialog from "../hooks/useDialog";
+import useStoriesSwitcher from "../hooks/useStoriesSwitcher";
 import useShareDialog, { SHARE_DIALOG_STORY_TYPE } from "../hooks/useShareDialog";
 
 function Story(props) {
   const history = useHistory();
-  const { username, storyId } = useParams();
+  const location = useLocation(HOME_ROUTE);
+  const { username, slideId } = useParams();
   const { path } = useRouteMatch();
   const apiClient = useContext(ApiContext);
   const dialog = useDialog();
-  const [currentSlideId, setCurrentSlideId] = useState(storyId);
-  const [storyIndex, setStoryIndex] = useState(0);
 
   const { story } = props;
-  const { getStory, resetStory } = props;
+  const { getStory, getFollowingStories, resetStory } = props;
+
+  const {
+    currentSlideId,
+    currentSlideIndex,
+    localSlides,
+    currentUser,
+    handlePreviousStory,
+    handleNextStory,
+    handleSlideChange
+  } = useStoriesSwitcher({ 
+    data: story.data.length ? story.data : story.current,
+    slideId,
+    storyId: location.state?.storyId,
+    onUpdatePath: handlePathUpdate
+  });
 
   const { dialogShareOpenClick } = useShareDialog({
     withStack: true,
@@ -32,7 +48,9 @@ function Story(props) {
   useEffect(() => {
     if (username) {
       (async () => {
-        await getStory(apiClient, { username, length: 10 });
+        location.state?.from === HOME_ROUTE && !location.state?.me ?
+          await getFollowingStories(apiClient, { length: STORIES_LENGTH }) :
+          await getStory(apiClient, { username, length: 10 });
       })();
     }
 
@@ -41,30 +59,12 @@ function Story(props) {
     }
   }, []);
 
-  useEffect(() => {
-    if (story.data.slides?.length) {
-      if (!storyId) {
-        setCurrentSlideId(story.data.slides[0].id);
-      }
-
-      if (storyId) {
-        const index = story.data.slides.findIndex(item => item.id === storyId);
-        if (index !== -1) {
-          setStoryIndex(index);
-        }
-      }
-    }
-  }, [story.data.slides]);
+  function handlePathUpdate(userName, slideId) {
+    history.replace({ pathname: generatePath(path, { username: userName, slideId }) });
+  }
 
   if (!username || story.errorMessage) {
     return <Redirect to={HOME_ROUTE} />;
-  }
-
-  const handleSlideChange = (slide) => {
-    if (slide) {
-      history.replace({ pathname: generatePath(path, { username, storyId: slide.id }) });
-      setCurrentSlideId(slide.id);
-    }
   }
 
   const handleDialogToggle = () => {
@@ -79,14 +79,16 @@ function Story(props) {
     <Box display="flex" justifyContent="center" height="100vh">
       <Stories
         defaultInterval={4000}
-        currentIndex={storyIndex}
-        user={story.data.user}
-        avatarUrl={story.data.user?.avatarUrl}
-        fullName={story.data.user?.name}
-        stories={story.data.slides}
+        currentIndex={currentSlideIndex}
+        user={currentUser}
+        avatarUrl={currentUser?.avatarUrl}
+        fullName={currentUser?.name}
+        stories={localSlides}
         onMoreClick={handleDialogToggle}
         onCloseClick={() => history.push(DEFAULT_ROUTE)}
-        onChange={handleSlideChange} />
+        onChange={handleSlideChange}
+        onAllStoriesEnd={handleNextStory}
+        onPrevious={handlePreviousStory} />
     </Box>
   );
 }
@@ -95,7 +97,8 @@ function mapStateToProps(state) {
   return {
     story: {
       isFetching: state.story.isFetching,
-      data: state.story.currentStory,
+      data: state.story.data,
+      current: state.story.currentStory,
       errorMessage: state.story.errorMessage,
       hasMore: state.story.hasMore
     }
@@ -106,6 +109,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getStory: (api, opts) => dispatch(storyActions.getStory(api, opts)),
     resetStory: () => dispatch(storyActions.resetStory()),
+    getFollowingStories: (api, opts) => dispatch(storyActions.getFollowingStories(api, opts))
   };
 }
 

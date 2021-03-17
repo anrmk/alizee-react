@@ -35,7 +35,7 @@ import { signOutUser } from "../../store/actions/signIn";
 import * as Routes from "../../constants/routes";
 
 import useNotification from "../../hooks/useNotificationHub";
-import useHideNavigation from "../../hooks/useHideNavigation";
+import useLocationHelper from "../../hooks/useLocationHelper";
 import { usePostDialog, useStoryDialog, useMoodDialog} from "../../hooks/post";
 
 import * as notificationAction from "../../store/actions/notification";
@@ -47,7 +47,7 @@ function Main(props) {
   const { signOut, setNotification } = props;
 
   const [open, setOpen] = useState(true);
-  const isNavigationHide = useHideNavigation(Routes.STORIES_DEFAULT_ROUTE);
+  const isNavigationHide = useLocationHelper(Routes.STORIES_DEFAULT_ROUTE);
   const classes = useStyles({ isAuthenticated, isNavigationHide });
   const history = useHistory();
 
