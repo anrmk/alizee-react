@@ -31,6 +31,10 @@ import {
   GET_ACCOUNT_INTERESTS_SUCCESS,
   GET_ACCOUNT_INTERESTS_FAILURE,
 
+  CREATE_ACCOUNT_INTERESTS_REQUEST,
+  CREATE_ACCOUNT_INTERESTS_SUCCESS,
+  CREATE_ACCOUNT_INTERESTS_FAILURE,
+
   GET_PERSONAL_REQUEST,
   GET_PERSONAL_SUCCESS,
   GET_PERSONAL_FAILURE,
@@ -220,6 +224,23 @@ export default function settings(state = {
         ...state,
         ...action.payload,
       };
+
+    // Create Account Interests
+    case CREATE_ACCOUNT_INTERESTS_REQUEST:
+      return {
+        ...state,
+        ...action.payload
+      }
+    case CREATE_ACCOUNT_INTERESTS_SUCCESS:
+      return {
+        ...state,
+        ...action.payload
+      }
+    case CREATE_ACCOUNT_INTERESTS_FAILURE:
+      return {
+        ...state,
+        ...action.payload
+      }
 
     //GET PERSONAL
     case GET_PERSONAL_REQUEST: {

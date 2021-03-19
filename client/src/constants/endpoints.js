@@ -94,7 +94,7 @@ export default {
     deleteAccount: "accountsetting/deleteaccount",
     getAccountPersonalized: "accountsetting/isaccountpersonalized",
     getAccountInterests: "accountsetting/interests",
-    createInterests: "accountsetting/interests",
+    createAccountInterests: "accountsetting/interests",
     getBlackList: "accountsetting/blacklist",
     deleteBlackList: "accountsetting/blacklist",
     createBlackList: "accountsetting/blacklist",
@@ -108,8 +108,8 @@ export default {
     getSubscription: "accountsetting/subscriptionsettings",
     updateSubscription: "accountsetting/subscriptionsettings",
 
-    // INTERESTS
-    getInterests: "interest/getinterests",
+    // HASH TAGS
+    getHashTags: "hashtag/gethashtags",
 
     //STREAM
     createStreamRoom: "stream/room",

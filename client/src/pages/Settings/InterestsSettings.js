@@ -6,7 +6,6 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 import ApiContext from "../../context/ApiContext";
 import * as settingsActions from "../../store/actions/settings";
-import * as interestsActions from "../../store/actions/interests";
 import InterestsList from "../../components/InterestsList";
 import useStyles from "./styles";
 
@@ -54,7 +53,7 @@ function mapStateToProps(state) {
       isFetching: state.settings.isFetching,
     },
     interests: {
-      isFetching: state.interests.isFetching
+      isFetching: state.hashTags.isFetching
     }
   };
 }
@@ -62,7 +61,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getAccountInterests: (api) => dispatch(settingsActions.getAccountInterests(api)),
-    createInterests: (api, ids) => dispatch(interestsActions.createInterests(api, ids)),
+    createInterests: (api, ids) => dispatch(settingsActions.createAccountInterests(api, ids)),
   };
 }
 

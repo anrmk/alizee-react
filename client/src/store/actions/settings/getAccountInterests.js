@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 
 import { generateUrl } from "../../../helpers/functions";
-import { getInterests } from "../interests";
+import { getHashTags } from "../hashTags";
 
 export const GET_ACCOUNT_INTERESTS_REQUEST = 'GET_ACCOUNT_INTERESTS_REQUEST';
 export const GET_ACCOUNT_INTERESTS_SUCCESS = 'GET_ACCOUNT_INTERESTS_SUCCESS';
@@ -44,8 +44,8 @@ export function getAccountInterests(api) {
 
     const url = generateUrl("getAccountInterests");
     try {
-      await dispatch(getInterests(api));
-      const interests = getState().interests.data;
+      await dispatch(getHashTags(api));
+      const interests = getState().hashTags.data;
 
       const { data } = await api.setMethod("GET").query(url);
 

@@ -12,7 +12,7 @@ import chat from "./chat";
 import chatMedia from "./chatMedia";
 import user from "./user";
 import settings from "./settings";
-import interests from "./interests";
+import hashTags from "./hashTags";
 import search from "./search";
 import story from "./story";
 import stream from "./stream";
@@ -34,7 +34,7 @@ const appReducer = combineReducers({
   media,
   user,
   settings,
-  interests,
+  hashTags,
   comment,
   search,
   story,
