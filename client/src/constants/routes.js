@@ -16,6 +16,9 @@ export const CHAT_USERNAME_ROUTE = '/chat/:username?';
 export const ROOM_ROUTE = "/room";
 export const ROOM_ID_DEFAULT_ROUTE = "/room/:roomId";
 export const ROOM_ID_ROUTE = roomId => `/room/${roomId}`;
+export const PEAR_TO_PEAR_DEFAULT_ROUTE = "/ptp/:userName?"
+export const PEAR_TO_PEAR_ID_ROUTE = username => `/ptp/${username}`;
+
 export const SIGN_IN_ROUTE = "/signIn";
 export const SIGN_UP_ROUTE = "/signUp";
 export const PRIVACY_POLICY_ROUTE = "/terms";

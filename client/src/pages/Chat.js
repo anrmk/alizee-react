@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { Container } from "@material-ui/core/";
 
@@ -14,6 +14,8 @@ import * as settings from "../store/actions/settings";
 import * as paymentActions from "../store/actions/payment";
 
 import { ESC_KEY_CODE } from "../constants/key_codes";
+import { PEAR_TO_PEAR_ID_ROUTE } from "../constants/routes";
+
 import useSlidingViews, { RIGHT_OPEN_TYPE } from "../hooks/useSlidingViews";
 import useDialog from "../hooks/useDialog";
 import useChatHub from "../hooks/useChatHub";
@@ -25,6 +27,7 @@ import dialogs, { CHAT_FOLLOWERS_TYPE } from "../constants/dialogs";
 
 function Chat(props) {
   const apiClient = useContext(ApiContext);
+  const history = useHistory();
 
   const { username } = useParams();
 
@@ -159,6 +162,10 @@ function Chat(props) {
     }
   };
 
+  const handleVideoStreem = (userName) => {
+    history.push(PEAR_TO_PEAR_ID_ROUTE(userName));
+  }
+
   const handleUserListBtnClick = async () => {
     dialog.toggle(dialogs[CHAT_FOLLOWERS_TYPE]({ loading: true }));
     await getFollowings(apiClient, user.username);
@@ -190,6 +197,7 @@ function Chat(props) {
           onRoomDelete={handleRoomDelete}
           onAccountBlock={handleAccountBlock}
           onMediaView={mediaViewDialog.toggle}
+          onVideoStreem={handleVideoStreem}
           onSendTip={sendTipDialog.toggle}
         />
       </SlidingViews>

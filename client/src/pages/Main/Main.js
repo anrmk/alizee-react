@@ -19,6 +19,8 @@ import PeopleSuggested from "../PeopleSuggested";
 import CreateRoom from "../Meet/CreateRoom";
 import Meeting from "../Meet/Meeting";
 import Room from "../Meet/Room";
+import PearToPear from "../Meet/PeerToPeer";
+
 import Profile from "../Profile";
 import PrivacyPolicy from "../PrivacyPolicy";
 import Followers from "../Followers";
@@ -47,11 +49,11 @@ function Main(props) {
   const { signOut, setNotification } = props;
 
   const [open, setOpen] = useState(true);
-  const isNavigationHide = useLocationHelper(Routes.STORIES_DEFAULT_ROUTE);
+  const isNavigationHide = useHideNavigation([Routes.STORIES_DEFAULT_ROUTE, Routes.PEAR_TO_PEAR_ID_ROUTE("")]);
   const classes = useStyles({ isAuthenticated, isNavigationHide });
   const history = useHistory();
 
-  const notification = useNotification({isAuth : isAuthenticated, onChange: setNotification});
+  //const notification = useNotification({isAuth : isAuthenticated, onChange: setNotification});
 
   const createPostDialog = usePostDialog();
   const createStoryDialog = useStoryDialog();
@@ -78,7 +80,7 @@ function Main(props) {
             newNotification={notifyData?.newNotification}
             open={open} 
 
-            onChange={notification.toggle}
+            //onChange={notification.toggle}
             onSignOut={signOut} />
 
           <Hidden smDown>
@@ -111,6 +113,8 @@ function Main(props) {
           <PrivateRoute path={Routes.MEET_ROUTE} component={Meeting} />
           <PrivateRoute path={Routes.CHAT_USERNAME_ROUTE} component={Chat} />
           <PrivateRoute path={Routes.ROOM_ID_DEFAULT_ROUTE} component={Room} />
+          <PrivateRoute path={Routes.PEAR_TO_PEAR_DEFAULT_ROUTE} component={PearToPear} />
+
           <PrivateRoute path={Routes.SUGESTED_PEOPLE} component={PeopleSuggested} />
           <PrivateRoute path={Routes.SEARCH_ROUTE} component={Search} />
           <PrivateRoute path={Routes.SETTINGS_TYPE_ROUTE} component={Settings} />

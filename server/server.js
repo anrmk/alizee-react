@@ -1,4 +1,3 @@
-require("dotenv").config();
 const express = require("express");
 const http = require("http");
 const app = express();
@@ -8,50 +7,37 @@ const io = socket(server);
 
 const users = {};
 
-const socketToRoom = {};
-
 io.on("connection", (socket) => {
-  socket.on("join room", (roomID) => {
-    if (users[roomID]) {
-      const length = users[roomID].length;
-      if (length === 4) {
-        socket.emit("room full");
-        return;
-      }
-      users[roomID].push(socket.id);
-    } else {
-      users[roomID] = [socket.id];
-    }
-    socketToRoom[socket.id] = roomID;
-    const usersInThisRoom = users[roomID].filter((id) => id !== socket.id);
+  console.log("Connection", socket.id, new Date())
+  const handshake = socket.handshake;
+  const userName = handshake.query["userName"].toLowerCase();
 
-    socket.emit("all users", usersInThisRoom);
-  });
+  users[userName] = socket.id;
 
-  socket.on("sending signal", (payload) => {
-    io.to(payload.userToSignal).emit("user joined", {
-      signal: payload.signal,
-      callerID: payload.callerID,
-    });
-  });
+  socket.emit("yourID", socket.id);
 
-  socket.on("returning signal", (payload) => {
-    io.to(payload.callerID).emit("receiving returned signal", {
-      signal: payload.signal,
-      id: socket.id,
-    });
-  });
+  io.sockets.emit("allUsers", users);
 
   socket.on("disconnect", () => {
-    const roomID = socketToRoom[socket.id];
-    let room = users[roomID];
-    if (room) {
-      room = room.filter((id) => id !== socket.id);
-      users[roomID] = room;
-    }
+    delete users[userName];
+  });
+
+  socket.on("callUser", (data) => {
+    io.to(users[data.to]).emit("ring", { signal: data.signal, from: data.from });
+  });
+
+  socket.on("cancelCall", (data) => {
+    io.to(users[data.to]).emit("cancel", { signal: data.signal, from: data.from });
+  })
+
+  socket.on("acceptCall", (data) => {
+    io.to(users[data.to]).emit("accept", data.signal);
+  });
+
+  socket.on("declineCall", (data) => {
+    console.log("Decline call", data.to);
+    io.to(users[data.to]).emit("decline", data.signal);
   });
 });
 
-server.listen(process.env.PORT || 8000, () =>
-  console.log("server is running on port 8000")
-);
+server.listen(8000, () => console.log("server is running on port 8000"));

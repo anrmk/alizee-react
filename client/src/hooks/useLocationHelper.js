@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-export default function useLocationHelper(route) {
+export default function useLocationHelper(routes) {
   const [isIncluded, setIsIncluded] = useState(false);
   const { pathname } = useLocation();
 
   useEffect(() => {
-    if (pathname.includes(route)) {
+    if (routes.find(item => pathname.includes(item.toString()))) {
       setIsIncluded(true);
     } else if (isIncluded) {
       setIsIncluded(false);

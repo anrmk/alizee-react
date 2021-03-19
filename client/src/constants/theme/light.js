@@ -13,12 +13,12 @@ export default createMuiTheme({
     },
 
     secondary: {
-      main: "#845DD7"
+      main: "#845DD7",
     },
 
     success: {
       main: "#58CD86",
-      contrast: "#44b700"
+      contrast: "#44b700",
     },
 
     warning: {
@@ -33,11 +33,12 @@ export default createMuiTheme({
       default: "#F5F7F8",
       paper: "#F0F2F6",
       mainGradient: "linear-gradient(141.21deg, #68D794 -16.59%, #6FCBFF 40.28%, #B88AE1 90.77%)",
-      secondaryGradient: "linear-gradient(141.21deg, rgba(136, 108, 169, 0.15) -16.6%, rgba(104, 215, 148, 0.15) -16.59%, rgba(111, 203, 255, 0.15) 40.28%, rgba(184, 138, 225, 0.15) 90.77%)"
+      secondaryGradient:
+        "linear-gradient(141.21deg, rgba(136, 108, 169, 0.15) -16.6%, rgba(104, 215, 148, 0.15) -16.59%, rgba(111, 203, 255, 0.15) 40.28%, rgba(184, 138, 225, 0.15) 90.77%)",
     },
-    
+
     common: {
-      gray: "#E4E6E7"
+      gray: "#E4E6E7",
     },
 
     divider: "rgba(26, 26, 26, 0.08)",
@@ -82,7 +83,8 @@ export default createMuiTheme({
       },
 
       containedSecondary: {
-        background: "linear-gradient(141.21deg, rgba(136, 108, 169, 0.15) -16.6%, rgba(104, 215, 148, 0.15) -16.59%, rgba(111, 203, 255, 0.15) 40.28%, rgba(184, 138, 225, 0.15) 90.77%)",
+        background:
+          "linear-gradient(141.21deg, rgba(136, 108, 169, 0.15) -16.6%, rgba(104, 215, 148, 0.15) -16.59%, rgba(111, 203, 255, 0.15) 40.28%, rgba(184, 138, 225, 0.15) 90.77%)",
         backgroundColor: "transparent",
         color: "#845DD7",
         borderRadius: "20px",
@@ -95,7 +97,22 @@ export default createMuiTheme({
 
     MuiIconButton: {
       root: {
-        padding: "8px"
+        padding: "8px",
+
+        "&.primary": {
+          background: "#35B1F6",
+          color: "white",
+        },
+
+        "&.danger": {
+          background: "#FE5F5F",
+          color: "white",
+        },
+
+        "&.success" : {
+          background: "#58CD86",
+          color: "white",
+        }
       },
     },
 
@@ -105,7 +122,7 @@ export default createMuiTheme({
       colorAction: {
         color: "#FEDB5F",
       },
-      
+
       // fontSizeLarge: {
       //   fontSize: "8rem",
       // },
@@ -113,14 +130,12 @@ export default createMuiTheme({
 
     MuiBottomNavigation: {
       root: {
-        borderRadius: "4px"
-      }
-    }
+        borderRadius: "4px",
+      },
+    },
   },
 
-  MuiBottomNavigationAction: {
-   
-  },
+  MuiBottomNavigationAction: {},
 
   MuiTypography: {
     caption: {

@@ -8,6 +8,7 @@ import { Divider, Card, CardActions, CardContent, CardHeader, IconButton, Hidden
 import SendOutlinedIcon from "@material-ui/icons/SendRounded";
 import MoreVertIcon from "@material-ui/icons/MoreVertRounded";
 import BackIcon from "@material-ui/icons/ArrowBackRounded";
+import VoiceChatIcon from "@material-ui/icons/VoiceChat";
 
 import Avatar from "../../components/Avatar";
 import { MessageSenderInput, MessagesList } from "../../components/Chat";
@@ -29,6 +30,7 @@ function Room({
   onRoomDelete,
   onAccountBlock,
   onMediaView,
+  onVideoStreem,
   onSendTip
 }) {
   const classes = useStyles();
@@ -75,6 +77,11 @@ function Room({
     onAccountBlock && onAccountBlock(data.id, data.followerId)
   }
 
+  const handleVideoClick = (e) => {
+    e.preventDefault();
+    onVideoStreem && onVideoStreem(data.username);
+  }
+
   const handleSendTipClick = useCallback(() => {
     onSendTip && onSendTip({name: data.name, userName: data.username, avatarUrl: data.avatarUrl});
   }, [data]);
@@ -95,6 +102,9 @@ function Room({
               <>
                 <IconButton onClick={onClose}>
                   <BackIcon />
+                </IconButton>
+                <IconButton onClick={handleVideoClick} >
+                  <VoiceChatIcon/>
                 </IconButton>
                 <IconButton
                   aria-label="settings"
