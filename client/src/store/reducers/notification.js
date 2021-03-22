@@ -1,4 +1,5 @@
 import {  
+  NOTIFY_CALL_SUCCESS, 
   SET_NOTIFICATION_SUCCESS, 
 } from "../actions/notification";
 
@@ -14,6 +15,13 @@ export default function notificationReducer(
 ) {
   switch (action.type) {
     case SET_NOTIFICATION_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case NOTIFY_CALL_SUCCESS: {
       return {
         ...state,
         ...action.payload,

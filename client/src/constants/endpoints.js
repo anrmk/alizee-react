@@ -124,6 +124,6 @@ export default {
 
     //NOTIFICATION
     notification: "/hubs/notification",
-    videoCall: ""
+    notifyCall: "notification/call"
   },
 };

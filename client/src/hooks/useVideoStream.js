@@ -5,7 +5,7 @@ import { getToken, wrapHttps } from "../helpers/functions";
 import API from "../constants/endpoints";
 import Peer from "simple-peer";
 
-export default function useVideoStream({ userName, onCallback }) {
+export default function useVideoStream({ userName, peerName, onHangup, onCallback }) {
   const url = wrapHttps(`${process.env.REACT_APP_DOMAIN}${API.endpoints["videoCall"]}`);
 
   const userVideo = useRef(); //reference for DOM element
@@ -13,7 +13,6 @@ export default function useVideoStream({ userName, onCallback }) {
 
   const [users, setUsers] = useState({}); //list of connected users
   const [caller, setCaller] = useState(null); // caller with the socket id
-  const [receiver, setReceiver] = useState(null);
   const [status, setStatus] = useState(null); //status of action
   const [calling, setCalling] = useState(false); //indicate calling or not
   const [callAccepted, setCallAccepted] = useState(false); //indicate to accept the call or not
@@ -46,8 +45,10 @@ export default function useVideoStream({ userName, onCallback }) {
   useEffect(() => {
     connect();
     return () => {
-      socket.disconnect();
-      setSocket(null);
+      if (socket) {
+        socket.disconnect();
+        setSocket(null);
+      }
     };
   }, []);
 
@@ -65,7 +66,7 @@ export default function useVideoStream({ userName, onCallback }) {
 
   const connect = () => {
     console.log("Connect socket");
-    const s = io.connect("http://194.67.93.7:8000", { query: `userName=${userName}` });
+    const s = io.connect(wrapHttps(process.env.REACT_APP_SS_DOMAIN, true), { query: `userName=${userName}` });
 
     setSocket(s);
   };
@@ -83,8 +84,13 @@ export default function useVideoStream({ userName, onCallback }) {
     });
     setMic(!micOn);
   };
+
   const handleFlip = () => {
     console.log("Flip clicking");
+  };
+
+  const handleHangup = () => {
+    onHangup && onHangup();
   };
 
   const connectToStream = () => {
@@ -124,17 +130,15 @@ export default function useVideoStream({ userName, onCallback }) {
       setCaller(data);
     });
 
-    socket.on("cancel", (data) => {
+    socket.on("cancel", () => {
       setStatus("Call ended");
       setCalling(false);
       setCaller(null);
+      handleHangup();
     });
   };
 
-  const callPeer = (peerName) => {
-    setReceiver(peerName);
-    setStatus(`Contacting to ${peerName}...`);
-
+  const callPeer = () => {
     const peer = new Peer({
       initiator: true,
       trickle: false,
@@ -147,20 +151,18 @@ export default function useVideoStream({ userName, onCallback }) {
           { url: "stun:stun.l.google.com:19302" },
           { url: "stun:stun.services.mozilla.com" },
           { url: "stun:stun.stunprotocol.org:3478" },
+          {
+            urls: "stun:numb.viagenie.ca",
+            username: "nutella.storch0720@outlook.com",
+            credential: "123qweAS1!",
+          },
+          {
+            urls: "turn:numb.viagenie.ca",
+            username: "nutella.storch0720@outlook.com",
+            credential: "123qweAS1!",
+          },
         ],
       },
-      // iceServers: [
-      //   {
-      //     urls: "stun:numb.viagenie.ca",
-      //     username: "nutella.storch0720@outlook.com",
-      //     credential: "123qweAS1!",
-      //   },
-      //   {
-      //     urls: "turn:numb.viagenie.ca",
-      //     username: "nutella.storch0720@outlook.com",
-      //     credential: "123qweAS1!",
-      //   },
-      // ],
     });
 
     peer.on("connect", () => {
@@ -170,7 +172,9 @@ export default function useVideoStream({ userName, onCallback }) {
     });
 
     peer.on("close", () => {
-      partnerVideo.current.srcObject = null;
+      if (partnerVideo.current) {
+        partnerVideo.current.srcObject = null;
+      }
     });
 
     peer.on("signal", (data) => {
@@ -205,9 +209,10 @@ export default function useVideoStream({ userName, onCallback }) {
       setCalling(false);
       setCaller(null);
 
-      //peer.removeStream(stream);
       peer.end();
       peer.destroy();
+
+      handleHangup();
     });
   };
 
@@ -225,7 +230,9 @@ export default function useVideoStream({ userName, onCallback }) {
     });
 
     peer.on("close", () => {
-      partnerVideo.current.srcObject = null;
+      if (partnerVideo.current) {
+        partnerVideo.current.srcObject = null;
+      }
     });
 
     peer.on("signal", (data) => {
@@ -255,9 +262,10 @@ export default function useVideoStream({ userName, onCallback }) {
       setCalling(false);
       setCaller(null);
 
-      //peer.removeStream(stream);
       peer.end();
       peer.destroy();
+
+      handleHangup();
     });
   };
 
@@ -270,18 +278,19 @@ export default function useVideoStream({ userName, onCallback }) {
 
     peer.on("signal", (data) => {
       if (callAccepted || !!caller) {
-        socket.emit("declineCall", { signal: data, to: caller?.from || receiver });
-       // peer.removeStream(stream);
+        socket.emit("declineCall", { signal: data, to: caller?.from || peerName });
         peer.end();
         peer.destroy();
       } else {
-        socket.emit("cancelCall", { signal: data, to: receiver });
+        socket.emit("cancelCall", { signal: data, to: peerName });
       }
 
       setStatus(`Call ended`);
       setCaller(null);
       setCalling(false);
       setCallAccepted(false);
+
+      handleHangup();
     });
   };
 

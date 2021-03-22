@@ -5,8 +5,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     background: theme.palette.background.mainGradient,
-    //background: "url('/card-wave.jpg') no-repeat",
-    //backgroundSize: "cover",
     border: "1px solid white",
     borderRadius: theme.shape.borderRadius * 2,
     color: theme.palette.common.white,

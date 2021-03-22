@@ -49,7 +49,7 @@ function Main(props) {
   const { signOut, setNotification } = props;
 
   const [open, setOpen] = useState(true);
-  const isNavigationHide = useLocationHelper([Routes.STORIES_DEFAULT_ROUTE, Routes.PEAR_TO_PEAR_ID_ROUTE("")]);
+  const isNavigationHide = useLocationHelper([Routes.STORIES_DEFAULT_ROUTE, "/ptp"]);
   const classes = useStyles({ isAuthenticated, isNavigationHide });
   const history = useHistory();
 

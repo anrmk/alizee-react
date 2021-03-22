@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
     
     width: "40%",
+    height: "25%",
     zIndex: 1
   },
 

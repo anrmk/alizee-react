@@ -1,4 +1,8 @@
-import { useState, useEffect, useContext, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { useHistory } from "react-router-dom";
+
+import { PEAR_TO_PEAR_ID_ROUTE } from "../constants/routes";
+
 import * as signalR from "@microsoft/signalr";
 
 import { getToken, wrapHttps } from "../helpers/functions";
@@ -7,6 +11,7 @@ import { useSnackbar } from "notistack";
 
 export default function useNotification({ isAuth, onChange }) {
   const url = API.endpoints["notification"];
+  const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
   const [connection, setConnection] = useState(null);
 
@@ -46,6 +51,10 @@ export default function useNotification({ isAuth, onChange }) {
         connection
           .start({ withCredentials: false })
           .then(() => {
+            connection.on("Calling", (data) => {
+              history.push(PEAR_TO_PEAR_ID_ROUTE(""));
+            });
+
             connection.on("NewMessage", () => {
               handleNotificationToggle({ newMessage: true });
             });

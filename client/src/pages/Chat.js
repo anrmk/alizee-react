@@ -75,6 +75,7 @@ function Chat(props) {
     document.addEventListener("keydown", handleModalCloseKeyPress, false);
     return () => {
       document.removeEventListener("keydown", handleModalCloseKeyPress, false);
+      resetCurrentRoom();
     };
   }, []);
 
@@ -173,6 +174,7 @@ function Chat(props) {
 
   return (
     <Container>
+      CurrentState {currentSlidingViewsState}
       <SlidingViews
         mobileOnly
         currentState={currentSlidingViewsState}
