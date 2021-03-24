@@ -174,7 +174,6 @@ function Chat(props) {
 
   return (
     <Container>
-      CurrentState {currentSlidingViewsState}
       <SlidingViews
         mobileOnly
         currentState={currentSlidingViewsState}

@@ -6,8 +6,6 @@ import API from "../constants/endpoints";
 import Peer from "simple-peer";
 
 export default function useVideoStream({ userName, peerName, onHangup, onCallback }) {
-  const url = wrapHttps(`${process.env.REACT_APP_DOMAIN}${API.endpoints["videoCall"]}`);
-
   const userVideo = useRef(); //reference for DOM element
   const partnerVideo = useRef(); //reference for DOM element
 
@@ -44,18 +42,19 @@ export default function useVideoStream({ userName, peerName, onHangup, onCallbac
 
   useEffect(() => {
     connect();
-    return () => {
-      if (socket) {
-        socket.disconnect();
-        setSocket(null);
-      }
-    };
   }, []);
 
   useEffect(() => {
     if (socket) {
       connectToStream();
     }
+
+    return () => {
+      if(socket) {
+        socket.disconnect();
+        setSocket(null);
+      }
+    };
   }, [socket]);
 
   useEffect(() => {
@@ -65,9 +64,7 @@ export default function useVideoStream({ userName, peerName, onHangup, onCallbac
   }, [stream, socket]);
 
   const connect = () => {
-    console.log("Connect socket");
     const s = io.connect(wrapHttps(process.env.REACT_APP_SS_DOMAIN, true), { query: `userName=${userName}` });
-
     setSocket(s);
   };
 
@@ -90,6 +87,11 @@ export default function useVideoStream({ userName, peerName, onHangup, onCallbac
   };
 
   const handleHangup = () => {
+    setStatus("Call ended");
+    setCaller(null);
+    setCalling(false);
+    setCallAccepted(false);
+
     onHangup && onHangup();
   };
 
@@ -120,8 +122,13 @@ export default function useVideoStream({ userName, peerName, onHangup, onCallbac
       setStatus("Trying to recconect");
     });
 
-    socket.on("allUsers", (users) => {
-      setUsers(users);
+    socket.on("allUsers", (data) => {
+      setUsers(data);
+      socket.data = data;
+    });
+
+    socket.on("disconnect", (data) => {
+      setStatus("Disconnect");
     });
 
     socket.on("ring", (data) => {
@@ -131,11 +138,12 @@ export default function useVideoStream({ userName, peerName, onHangup, onCallbac
     });
 
     socket.on("cancel", () => {
-      setStatus("Call ended");
-      setCalling(false);
-      setCaller(null);
       handleHangup();
     });
+  };
+
+  const sleep = (ms) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   };
 
   const callPeer = () => {
@@ -143,26 +151,26 @@ export default function useVideoStream({ userName, peerName, onHangup, onCallbac
       initiator: true,
       trickle: false,
       stream: stream,
-      config: {
-        iceServers: [
-          { urls: "stun:stun.l.google.com:19302" },
-          { urls: "stun:stun.services.mozilla.com" },
-          { urls: "stun:stun.stunprotocol.org:3478" },
-          { url: "stun:stun.l.google.com:19302" },
-          { url: "stun:stun.services.mozilla.com" },
-          { url: "stun:stun.stunprotocol.org:3478" },
-          {
-            urls: "stun:numb.viagenie.ca",
-            username: "nutella.storch0720@outlook.com",
-            credential: "123qweAS1!",
-          },
-          {
-            urls: "turn:numb.viagenie.ca",
-            username: "nutella.storch0720@outlook.com",
-            credential: "123qweAS1!",
-          },
-        ],
-      },
+      // config: {
+      //   iceServers: [
+      //     { urls: "stun:stun.l.google.com:19302" },
+      //     { urls: "stun:stun.services.mozilla.com" },
+      //     { urls: "stun:stun.stunprotocol.org:3478" },
+      //     { url: "stun:stun.l.google.com:19302" },
+      //     { url: "stun:stun.services.mozilla.com" },
+      //     { url: "stun:stun.stunprotocol.org:3478" },
+      //     {
+      //       urls: "stun:numb.viagenie.ca",
+      //       username: "nutella.storch0720@outlook.com",
+      //       credential: "123qweAS1!",
+      //     },
+      //     {
+      //       urls: "turn:numb.viagenie.ca",
+      //       username: "nutella.storch0720@outlook.com",
+      //       credential: "123qweAS1!",
+      //     },
+      //   ],
+      // },
     });
 
     peer.on("connect", () => {
@@ -177,10 +185,17 @@ export default function useVideoStream({ userName, peerName, onHangup, onCallbac
       }
     });
 
-    peer.on("signal", (data) => {
+    peer.on("signal", async (data) => {
       setStatus(`Ring to ${peerName}`);
       setCalling(true);
       setCallAccepted(false);
+
+      if (!socket.data || !socket.data[peerName.toLowerCase()]) {
+        await sleep(3000);
+        !socket.decline && callPeer();
+        return;
+      }
+
       socket.emit("callUser", { to: peerName, signal: data, from: userName });
     });
 
@@ -198,20 +213,12 @@ export default function useVideoStream({ userName, peerName, onHangup, onCallbac
     });
 
     socket.on("accept", (signal) => {
-      setStatus("Connecting");
+      setStatus("Connecting", signal);
       peer.signal(signal);
     });
 
-    //Decline the initiator
     socket.on("decline", (signal) => {
-      setStatus("Call ended");
-      setCallAccepted(false);
-      setCalling(false);
-      setCaller(null);
-
-      peer.end();
       peer.destroy();
-
       handleHangup();
     });
   };
@@ -255,16 +262,8 @@ export default function useVideoStream({ userName, peerName, onHangup, onCallbac
 
     peer.signal(caller.signal);
 
-    //Decline caller
     socket.on("decline", (signal) => {
-      setStatus("Call ended");
-      setCallAccepted(false);
-      setCalling(false);
-      setCaller(null);
-
-      peer.end();
       peer.destroy();
-
       handleHangup();
     });
   };
@@ -279,17 +278,12 @@ export default function useVideoStream({ userName, peerName, onHangup, onCallbac
     peer.on("signal", (data) => {
       if (callAccepted || !!caller) {
         socket.emit("declineCall", { signal: data, to: caller?.from || peerName });
-        peer.end();
-        peer.destroy();
       } else {
         socket.emit("cancelCall", { signal: data, to: peerName });
       }
 
-      setStatus(`Call ended`);
-      setCaller(null);
-      setCalling(false);
-      setCallAccepted(false);
-
+      peer.destroy();
+      socket.decline = true;
       handleHangup();
     });
   };
@@ -311,7 +305,7 @@ export default function useVideoStream({ userName, peerName, onHangup, onCallbac
 
     flipToggle: handleFlip,
 
-    users: users,
+    //users: users,
     call: callPeer,
     accept: acceptCall,
     hangup: declineCall,

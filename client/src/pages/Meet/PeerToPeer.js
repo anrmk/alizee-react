@@ -22,14 +22,14 @@ import useStyles from "./styles";
 function PeerToPeer({ user, call }) {
   const classes = useStyles();
   const history = useHistory();
-  const apiClient = useContext(ApiContext);
-
   const { userName } = useParams();
 
+  const apiClient = useContext(ApiContext);
+
   const handleStreamConnected = () => {
-    if(userName) {
-      call(apiClient, userName);
-      videoStream.call();
+    if (userName) {
+      call(apiClient, userName); // Signal to user about calling
+      videoStream.call(); // calling
     }
   };
 
@@ -37,11 +37,12 @@ function PeerToPeer({ user, call }) {
     history.goBack();
   };
 
-  const videoStream = useVideoStream({ 
-    userName: user.userName, 
-    peerName: userName, 
+  const videoStream = useVideoStream({
+    userName: user.userName,
+    peerName: userName,
     onHangup: handleHangup,
-    onCallback: handleStreamConnected });
+    onCallback: handleStreamConnected,
+  });
 
   const CustomIconButton = React.useMemo(() =>
     React.forwardRef((props, ref) => {
