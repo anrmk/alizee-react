@@ -1,18 +1,30 @@
 const express = require("express");
-const http = require("http");
+const https = require("https");
+const fs = require("fs");
 const app = express();
-const server = http.createServer(app);
+
+const credentials = {
+  key: fs.readFileSync("./certs/key-ss.key"),
+  cert: fs.readFileSync("./certs/cert-ss.crt"),
+};
+
+const server = https.createServer(credentials, app);
 const socket = require("socket.io");
 const io = socket(server);
 
 const users = {};
 
 io.on("connection", (socket) => {
-  console.log("Connection", socket.id, new Date())
   const handshake = socket.handshake;
-  const userName = handshake.query["userName"].toLowerCase();
+  const un = handshake.query["userName"];
+  if (!un) {
+    return;
+  }
 
+  const userName = un.toLowerCase();
   users[userName] = socket.id;
+
+  console.log("Connection", userName, socket.id, Object.keys(users).length);
 
   socket.emit("yourID", socket.id);
 
@@ -23,20 +35,23 @@ io.on("connection", (socket) => {
   });
 
   socket.on("callUser", (data) => {
-    io.to(users[data.to]).emit("ring", { signal: data.signal, from: data.from });
+    const peerName = data.to.toLowerCase();
+    io.to(users[peerName]).emit("ring", { signal: data.signal, from: data.from });
   });
 
   socket.on("cancelCall", (data) => {
-    io.to(users[data.to]).emit("cancel", { signal: data.signal, from: data.from });
-  })
+    const peerName = data.to.toLowerCase();
+    io.to(users[peerName]).emit("cancel", { signal: data.signal });
+  });
 
   socket.on("acceptCall", (data) => {
-    io.to(users[data.to]).emit("accept", data.signal);
+    const peerName = data.to.toLowerCase();
+    io.to(users[peerName]).emit("accept", data.signal);
   });
 
   socket.on("declineCall", (data) => {
-    console.log("Decline call", data.to);
-    io.to(users[data.to]).emit("decline", data.signal);
+    const peerName = data.to.toLowerCase();
+    io.to(users[peerName]).emit("decline", data.signal);
   });
 });
 
