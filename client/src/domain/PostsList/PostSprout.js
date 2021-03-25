@@ -1,24 +1,13 @@
 import React, { useState } from "react";
 
-import {
-  IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-} from "@material-ui/core";
+import { IconButton, Drawer, List, ListItem, ListItemText, ListItemIcon } from "@material-ui/core";
 
 import PhotoCameraIcon from "@material-ui/icons/PhotoCameraOutlined";
 import ControlPointIcon from "@material-ui/icons/ControlPointDuplicateOutlined";
 import MoodIcon from "@material-ui/icons/Mood";
 import AddCircleIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 
-function PostSprout({
-  onCreatePost,
-  onCreateStory,
-  onCreateMood,
-}) {
+function PostSprout({ onCreatePost, onCreateStory, onCreateMood }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const container = window !== undefined ? window.document.body : undefined;
@@ -34,22 +23,22 @@ function PostSprout({
   const handleCreateMood = () => {
     handleDrawerClose();
     onCreateMood && onCreateMood();
-  }
+  };
 
   const handleCreateStory = () => {
     handleDrawerClose();
     onCreateStory && onCreateStory();
-  }
+  };
 
   const handleCreatePost = () => {
     handleDrawerClose();
     onCreatePost && onCreatePost();
-  }
+  };
 
   return (
     <>
-      <IconButton onClick={handleDrawerOpen} color="primary">
-        <AddCircleIcon />
+      <IconButton onClick={handleDrawerOpen}>
+        <AddCircleIcon fontSize="large" />
       </IconButton>
 
       {/* TODO: create independent DrawerProvider and move out this logic */}
@@ -62,7 +51,7 @@ function PostSprout({
       >
         <List>
           <ListItem button onClick={handleCreateMood}>
-            <ListItemIcon >
+            <ListItemIcon>
               <MoodIcon color="action" />
             </ListItemIcon>
             <ListItemText primary="Mood" />

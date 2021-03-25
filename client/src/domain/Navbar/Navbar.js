@@ -49,9 +49,9 @@ function Navbar({
   };
 
   const handleMessage = () => {
-    onChange && onChange({newMessage: false})
+    onChange && onChange({ newMessage: false });
     history.push(CHAT_ROUTE(""));
-  }
+  };
 
   return (
     <AppBar position="fixed" className={classes.root}>
@@ -61,17 +61,19 @@ function Navbar({
 
           <Box className={classes.grow} />
 
-          <Box className={classes.grow} />
-
           <Box className={classes.controls}>
             <Hidden smDown>
-              <Tooltip title={t("SidebarSearchText")} >
-                <IconButton onClick={() => { history.push(SEARCH_ROUTE) }}>
+              <Tooltip title={t("SidebarSearchText")}>
+                <IconButton
+                  onClick={() => {
+                    history.push(SEARCH_ROUTE);
+                  }}
+                >
                   <SearchIcon />
                 </IconButton>
               </Tooltip>
 
-              <Tooltip title={t("SidebarNotificationText")} >
+              <Tooltip title={t("SidebarNotificationText")}>
                 <IconButton>
                   <Badge variant="dot" invisible={!newNotification} color="primary">
                     <NotificationsIcon />
@@ -80,8 +82,8 @@ function Navbar({
               </Tooltip>
             </Hidden>
 
-            <Tooltip title={t("SidebarChatText")} >
-              <IconButton onClick={handleMessage} >
+            <Tooltip title={t("SidebarChatText")}>
+              <IconButton onClick={handleMessage}>
                 <Badge variant="dot" invisible={!newMessage} color="primary">
                   <MailIcon />
                 </Badge>
@@ -96,10 +98,7 @@ function Navbar({
               aria-haspopup="true"
               onClick={handleMenuOpen}
             >
-              <Avatar src={avatarUrl} 
-                size="small" 
-                
-                borderColor={USER_RANKING[ranking]} />
+              <Avatar src={avatarUrl} size="small" borderColor={USER_RANKING[ranking]} />
             </IconButton>
 
             <Menu

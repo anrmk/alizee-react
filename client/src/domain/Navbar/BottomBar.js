@@ -1,15 +1,14 @@
 import React from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import clsx from "clsx";
 
-import { Container, AppBar, Toolbar, IconButton } from "@material-ui/core";
-
+import { AppBar, BottomNavigation, BottomNavigationAction } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
 import HomeIcon from "@material-ui/icons/HomeOutlined";
 import ExploreIcon from "@material-ui/icons/ExploreOutlined";
+import PersonOutlinedIcon from "@material-ui/icons/PersonOutlined";
 
 import { PostSprout } from "../PostsList";
-import Avatar from "../../components/Avatar";
 
 import { HOME_ROUTE, SEARCH_ROUTE, EXPLORE_ROUTE, PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 
@@ -23,43 +22,52 @@ function BottomBar({
   onCreateMood,
 }) {
   const classes = useStyles()();
-  const location = useLocation();
   const history = useHistory();
+
+  const [value, setValue] = React.useState("recents");
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    switch (newValue) {
+      case "home":
+        history.push(HOME_ROUTE);
+        break;
+      case "search":
+        history.push(SEARCH_ROUTE);
+        break;
+      case "explore":
+        history.push(EXPLORE_ROUTE);
+        break;
+      case "profile":
+        history.push(PROFILE_USERNAME_ROUTE(user.userName));
+        break;
+      default:
+        return;
+    }
+  };
 
   const handleCreateMoodClick = () => {
     onCreateMood && onCreateMood({ ...user, defaultValue: user.mood });
-  }
+  };
 
   return (
     <AppBar className={clsx(classes.root, "bottom")} component="footer">
-      <Container>
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            onClick={() => history.push(HOME_ROUTE)}
-            color={`${location.pathname.includes(HOME_ROUTE) ? "primary" : "default"}`}
-          >
-            <HomeIcon />
-          </IconButton>
-          <IconButton
-            onClick={() => history.push(SEARCH_ROUTE)}
-            color={`${location.pathname.includes(SEARCH_ROUTE) ? "primary" : "default"}`}
-          >
-            <SearchIcon />
-          </IconButton>
-
-          <PostSprout onCreatePost={onCreatePost} onCreateStory={onCreateStory} onCreateMood={handleCreateMoodClick} />
-
-          <IconButton
-            onClick={() => history.push(EXPLORE_ROUTE)}
-            color={`${location.pathname.includes(EXPLORE_ROUTE) ? "primary" : "default"}`}
-          >
-            <ExploreIcon />
-          </IconButton>
-          <IconButton onClick={() => history.push(PROFILE_USERNAME_ROUTE(user.userName))}>
-            <Avatar src={user.avatarUrl} size="small" borderColor="default" />
-          </IconButton>
-        </Toolbar>
-      </Container>
+      <BottomNavigation value={value} onChange={handleChange}>
+        <BottomNavigationAction value="home" label="Home" icon={<HomeIcon />} />
+        <BottomNavigationAction value="search" label="Search" icon={<SearchIcon />} />
+        <BottomNavigationAction
+          value="post"
+          icon={
+            <PostSprout
+              onCreatePost={onCreatePost}
+              onCreateStory={onCreateStory}
+              onCreateMood={handleCreateMoodClick}
+            />
+          }
+        />
+        <BottomNavigationAction value="explore" label="Explore" icon={<ExploreIcon />} />
+        <BottomNavigationAction value="profile" label="Me" icon={<PersonOutlinedIcon />} />
+      </BottomNavigation>
     </AppBar>
   );
 }
