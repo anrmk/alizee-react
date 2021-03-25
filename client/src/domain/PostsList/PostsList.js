@@ -35,9 +35,7 @@ const PostsList = React.memo(({
       scrollThreshold={1}
       dataLength={items.length}
       next={onFetchMore}
-      hasMore={hasMore}
-      loader={<Loader />}
-      endMessage={<EndMessage />}>
+      hasMore={hasMore}>
       {items.length > 0 &&
         items.map((item) => (
           <Post

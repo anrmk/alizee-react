@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
-import { GridList, GridListTile, GridListTileBar, Hidden, IconButton } from "@material-ui/core";
+import { GridList, GridListTile, GridListTileBar, Hidden, Box } from "@material-ui/core";
 
 import PlayArrowIcon from "@material-ui/icons/PlayArrowOutlined";
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibraryOutlined";
@@ -42,10 +42,10 @@ function GridGalleryPostList(props) {
                         root: classes.gridListTileBar,
                       }}
                       actionIcon={
-                        <IconButton aria-label={`star ${item.caption}`} className={classes.icon}>
+                        <Box className={classes.icon}>
                           {item.media[0].kind === MEDIA_VIDEO && <PlayArrowIcon />}
                           {item.media.length > 1 && item.media[0].kind === MEDIA_IMAGE && <PhotoLibraryIcon />}
-                        </IconButton>
+                        </Box>
                       }
                     />
                   </Hidden>

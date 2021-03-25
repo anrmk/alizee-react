@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { Container, Box, AppBar, Toolbar, Tooltip, IconButton, Badge, Hidden } from "@material-ui/core";
@@ -8,7 +8,7 @@ import NotificationsIcon from "@material-ui/icons/NotificationsActiveOutlined";
 import MailIcon from "@material-ui/icons/MailOutline";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
 
-import { CHAT_ROUTE, SEARCH_ROUTE } from "../../constants/routes";
+import { CHAT_ROUTE, HOME_ROUTE, SEARCH_ROUTE } from "../../constants/routes";
 import { USER_RANKING } from "../../constants/user";
 
 import Avatar from "../../components/Avatar";
@@ -57,7 +57,7 @@ function Navbar({
     <AppBar position="fixed" className={classes.root}>
       <Container>
         <Toolbar className={classes.toolbar}>
-          <Box className={classes.logo} ></Box>
+          <Box className={classes.logo} to={HOME_ROUTE} component={Link}></Box>
 
           <Box className={classes.grow} />
 

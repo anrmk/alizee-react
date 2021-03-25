@@ -5,7 +5,7 @@ import { SETTINGS_BLACK_LIST_ROUTE } from "../../constants/routes";
 
 const ACCOUNT_PRIVACY_HEADER = "Account Privacy";
 const ACCOUNT_PRIVACY_HELPER =
-  "When your account is private, only people you approve can see your photos and videos on Instagram. Your existing followers won't affected.";
+  "When your account is private, only people you approve can see your photos and videos on StudioXR. Your existing followers won't affected.";
 const ACTIVITY_STATUS_HEADER = "Activity Status";
 const ACTIVITY_STATUS_HELPER =
   "Allow accounts you follow and anyone you message to see when you were last active on Alizee apps. When this is turned off, you won't be able to see the activity status of other accounts.";
@@ -17,7 +17,7 @@ const BLOCKED_ACCOUNTS_HELPER =
   "They won't be able to find your profile, posts or story. System won't let them know you blocked them.";
 const DELETE_ACCOUNT_HEADER = "Delete Account";
 const DELETE_ACCOUNT_HELPER =
-  "If you want a break from us, you can temporarily disable your account instead of deleting it. Your profile won't appear on Instagram while you're away.";
+  "If you want a break from us, you can temporarily disable your account instead of deleting it. Your profile won't appear on StudioXR while you're away.";
 const RESET_PASSWORD_HEADER = "Reset Password";
 const RESET_PASSWORD_HELPER = "Resetting your password using your email address or phone number";
 

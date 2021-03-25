@@ -27,11 +27,15 @@ function ProfileUserInfo({
   const classes = useStyles();
 
   const handleSendTipClick = () => {
-    onSendTipClick && onSendTipClick(user)
+    onSendTipClick && onSendTipClick(user);
   }
 
   const handleSubscribeClick = () => {
-    onSubscribeClick && onSubscribeClick(user)
+    onSubscribeClick && onSubscribeClick(user);
+  }
+
+  const handleMoodUpdateClick = () => {
+    onMoodUpdateClick && onMoodUpdateClick({ ...user, defaultValue: user.mood });
   }
 
   return (
@@ -58,7 +62,7 @@ function ProfileUserInfo({
             </Typography>
             {isOwner && (
               <Tooltip title={user.mood ? "Change mood" : "Add mood"}>
-                <IconButton onClick={onMoodUpdateClick}>
+                <IconButton onClick={handleMoodUpdateClick}>
                   {user.mood ? <EditIcon /> : <AddIcon />}
                 </IconButton>
               </Tooltip>

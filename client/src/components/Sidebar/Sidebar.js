@@ -98,7 +98,7 @@ function Sidebar({
 
       {open && <Wallet deposit={user.deposit} />}
 
-      <List>
+      <List className={classes.pageList}>
         <Tooltip title={t("SidebarFeedText")} placement="right">
           <ListItem
             button
@@ -109,6 +109,19 @@ function Sidebar({
               <HomeIcon color="secondary" />
             </ListItemIcon>
             <ListItemText primary={t("SidebarFeedText")} />
+          </ListItem>
+        </Tooltip>
+
+        <Tooltip title={t("SidebarExploreText")} placement="right">
+          <ListItem
+            button
+            selected={location.pathname.includes(EXPLORE_ROUTE)}
+            to={EXPLORE_ROUTE}
+            component={Link}>
+            <ListItemIcon>
+              <ExploreIcon color="secondary" />
+            </ListItemIcon>
+            <ListItemText primary={t("SidebarExploreText")} />
           </ListItem>
         </Tooltip>
 
@@ -138,20 +151,7 @@ function Sidebar({
           </ListItem>
         </Tooltip>
 
-        <Tooltip title={t("SidebarExploreText")} placement="right">
-          <ListItem
-            button
-            selected={location.pathname.includes(EXPLORE_ROUTE)}
-            to={EXPLORE_ROUTE}
-            component={Link}>
-            <ListItemIcon>
-              <ExploreIcon color="secondary" />
-            </ListItemIcon>
-            <ListItemText primary={t("SidebarExploreText")} />
-          </ListItem>
-        </Tooltip>
-
-        <Tooltip title={t("SidebarActivityText")} placement="right">
+        {/* <Tooltip title={t("SidebarActivityText")} placement="right">
           <ListItem
             button
             selected={location.pathname.includes(ACTIVITY_ROUTE)}
@@ -162,7 +162,7 @@ function Sidebar({
             </ListItemIcon>
             <ListItemText primary={t("SidebarActivityText")} />
           </ListItem>
-        </Tooltip>
+        </Tooltip> */}
       </List>
 
       <Divider />

@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
     textDecoration: "none",
     color: theme.palette.text.primary,
     "& + &": {
-      marginLeft: theme.spacing(3)
+      marginLeft: theme.spacing(1)
     }
   },
   previewStoryItemUserInfo: {
@@ -67,7 +67,7 @@ const useStyles = makeStyles(theme => ({
     ...previewStoryListItemBase,
     borderRadius: theme.shape.borderRadius,
     "& + &": {
-      marginLeft: theme.spacing(3)
+      marginLeft: theme.spacing(1)
     }
   }
 }));

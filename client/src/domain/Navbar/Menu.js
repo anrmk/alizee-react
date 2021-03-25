@@ -84,9 +84,9 @@ export default function NavMenu({
 
       <MenuItem onClick={changeTheme} >
         <ListItemIcon>
-          {theme.palette.type === "light" ? <SunnyIcon /> : <NightIcon />}
+          {theme.palette.type === "light" ? <NightIcon /> : <SunnyIcon />}
         </ListItemIcon>
-        <ListItemText primary={theme.palette.type === "light" ? t("NavbarMenuItemLightMode") : t("NavbarMenuItemDarkMode")} />
+        <ListItemText primary={theme.palette.type === "light" ? t("NavbarMenuItemDarkMode") : t("NavbarMenuItemLightMode")} />
       </MenuItem>
 
       <MenuItem onClick={langDialog.toggle}>

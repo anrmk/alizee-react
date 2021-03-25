@@ -189,7 +189,7 @@ function Profile(props) {
         </Grid>
         <Hidden smDown>
           <Grid item xs={12} md={4}>
-            <Box position="sticky" top="4rem" paddingLeft="24px">
+            <Box position="sticky" top="4rem" paddingLeft="8px">
               <ProfileUserInfo
                 className={classes.userInfo}
                 user={user}

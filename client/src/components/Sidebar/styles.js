@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   navigation: {
-    margin: theme.spacing(2, 0),
+    marginTop: theme.spacing(1),
 
     "& .success": {
       color: theme.palette.success.main
@@ -92,6 +92,10 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.primary.main
     }
   },
+
+  pageList: {
+    padding: 0
+  }
 }));
 
 export default useStyles;

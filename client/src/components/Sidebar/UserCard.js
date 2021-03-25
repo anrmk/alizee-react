@@ -21,19 +21,17 @@ function UserCard(props) {
   const classes = useStyles({ open });
 
   return (
-    <Box p={1} >
-      <Box className={classes.card}>
-        <Avatar src={avatarUrl} size="large" borderColor={USER_RANKING[ranking]} live avatarBaseProps={{ component: Link, to: PROFILE_USERNAME_ROUTE(username) }} />
-        <br />
-        <Typography variant="h6">{name}</Typography>
-        <Typography variant="subtitle1">{username}</Typography>
+    <Box className={classes.card}>
+      <Avatar src={avatarUrl} size="large" borderColor={USER_RANKING[ranking]} live avatarBaseProps={{ component: Link, to: PROFILE_USERNAME_ROUTE(username) }} />
+      <br />
+      <Typography variant="h6">{name}</Typography>
+      <Typography variant="subtitle1">{username}</Typography>
 
-        <BottomNavigation showLabels className={classes.navigation} >
-          <BottomNavigationAction className="success" value="goLive" label="Go live" icon={<LiveTvIcon />} onClick={onCreateMeet} />
-          <BottomNavigationAction className="secondary" value="post" label="Photo" icon={<AddPhotoCameraIcon />} onClick={onCreatePost} />
-          <BottomNavigationAction className="primary" value="stories" label="Stories" icon={<ControlPointIcon />} onClick={onCreateStory} />
-        </BottomNavigation>
-      </Box>
+      <BottomNavigation showLabels className={classes.navigation} >
+        <BottomNavigationAction className="success" value="goLive" label="Go live" icon={<LiveTvIcon />} onClick={onCreateMeet} />
+        <BottomNavigationAction className="secondary" value="post" label="Photo" icon={<AddPhotoCameraIcon />} onClick={onCreatePost} />
+        <BottomNavigationAction className="primary" value="stories" label="Stories" icon={<ControlPointIcon />} onClick={onCreateStory} />
+      </BottomNavigation>
     </Box>
   );
 }

@@ -22,9 +22,7 @@ function GridGallery(props) {
           className={classes.root}
           dataLength={items.length}
           next={onFetchMore}
-          hasMore={hasMore}
-          endMessage="The end!"
-          loader={"Loading..."}>
+          hasMore={hasMore}>
           {isUserView ?
             <GridGalleryUserList items={items} onItemClick={onItemClick} /> : 
             <GridGalleryPostList items={items} onItemClick={onItemClick} />}

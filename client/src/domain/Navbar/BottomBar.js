@@ -26,6 +26,10 @@ function BottomBar({
   const location = useLocation();
   const history = useHistory();
 
+  const handleCreateMoodClick = () => {
+    onCreateMood && onCreateMood({ ...user, defaultValue: user.mood });
+  }
+
   return (
     <AppBar className={clsx(classes.root, "bottom")} component="footer">
       <Container>
@@ -43,7 +47,7 @@ function BottomBar({
             <SearchIcon />
           </IconButton>
 
-          <PostSprout onCreatePost={onCreatePost} onCreateStory={onCreateStory} onCreateMood={onCreateMood} />
+          <PostSprout onCreatePost={onCreatePost} onCreateStory={onCreateStory} onCreateMood={handleCreateMoodClick} />
 
           <IconButton
             onClick={() => history.push(EXPLORE_ROUTE)}

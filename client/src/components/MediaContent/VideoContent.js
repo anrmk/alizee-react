@@ -81,7 +81,7 @@ export default function VideoContent({
         style={{ opacity: styleOpacity }}
         onClick={handleMuteBtnClick}
       >
-        {!mute ? <VolumeUp /> : <VolumeOff />}
+        {mute ? <VolumeUp /> : <VolumeOff />}
       </div>
     );
   };
@@ -91,7 +91,7 @@ export default function VideoContent({
       {showControls && renderPlayBtn(showing, playing)}
       {showControls && renderMuteBtn(showing, muted, playing)}
       <VisibilitySensor partialVisibility onChange={(isVisible) => setIsVisible(isVisible)}>
-        <ReactPlayer className={clsx(classes.player, videoClassName)} width="100%" height="100%" playing={playing} muted={muted} url={url} {...videoPlayerProps} />
+        <ReactPlayer className={clsx(classes.player, videoClassName)} width="100%" height="100%" playing={playing} volume={muted ? 1 : 0} url={url} {...videoPlayerProps} />
       </VisibilitySensor>
     </Box>
   );

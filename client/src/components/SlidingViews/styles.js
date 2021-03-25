@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
       marginRight: "30px !important"
     },
     [theme.breakpoints.down("sm")]: {
-      height: `calc(100vh - ${(theme.mixins.toolbar.minHeight*2 + theme.spacing(3))}px)`,
+      minHeight: `calc(100vh - ${(theme.mixins.toolbar.minHeight*2 + theme.spacing(3))}px)`
     },
   })
 }));

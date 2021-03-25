@@ -32,7 +32,7 @@ function Wallet({ deposit }) {
   }
 
   return (
-    <Box p={1}>
+    <Box my={2} px={1}>
       <Card className={classes.root}>
         <CardHeader
           action={

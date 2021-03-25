@@ -27,8 +27,8 @@ export default function useMoodDialog() {
 
   const handleDialogToggle = useCallback(async (data) => {
     dialog.toggle(dialogs[CREATE_MOOD_DIALOG_TYPE]({ 
-      mainBtnProps: { type: "submit", form: FORM_ID },
-    }, { 
+      mainBtnProps: { type: "submit", form: FORM_ID }
+    }, {
       formId: FORM_ID,
       onSubmit: handleMoodCreate,
       ...data 

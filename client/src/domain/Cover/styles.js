@@ -8,9 +8,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: "relative",
     marginBottom: theme.spacing(1),
-    [theme.breakpoints.up("md")]: {
-      marginBottom: theme.spacing(3),
-    },
   },
   cover: {
     height: "220px",

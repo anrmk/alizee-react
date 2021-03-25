@@ -19,6 +19,7 @@ const schema = yup.object().shape({
 function CreateMood({
   formId,
   userName,
+  defaultValue = "",
 
   onSubmit
 }) {
@@ -26,7 +27,7 @@ function CreateMood({
   const { errors, control, handleSubmit } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      [MOOD_ID]: ""
+      [MOOD_ID]: defaultValue
     }
   });
 
