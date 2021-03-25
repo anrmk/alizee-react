@@ -7,70 +7,51 @@ import ControlPointIcon from "@material-ui/icons/ControlPointDuplicateOutlined";
 import MoodIcon from "@material-ui/icons/Mood";
 import AddCircleIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 
-function PostSprout({ onCreatePost, onCreateStory, onCreateMood }) {
-  const [drawerOpen, setDrawerOpen] = useState(false);
-
+function PostSprout({ isOpen, onClose, onCreatePost, onCreateStory, onCreateMood }) {
   const container = window !== undefined ? window.document.body : undefined;
 
-  const handleDrawerClose = () => {
-    setDrawerOpen(false);
-  };
-
-  const handleDrawerOpen = () => {
-    setDrawerOpen(true);
-  };
-
   const handleCreateMood = () => {
-    handleDrawerClose();
+    onClose();
     onCreateMood && onCreateMood();
   };
 
   const handleCreateStory = () => {
-    handleDrawerClose();
+    onClose();
     onCreateStory && onCreateStory();
   };
 
   const handleCreatePost = () => {
-    handleDrawerClose();
+    onClose();
     onCreatePost && onCreatePost();
   };
 
-  return (
-    <>
-      <IconButton onClick={handleDrawerOpen}>
-        <AddCircleIcon fontSize="large" />
-      </IconButton>
+  {
+    /* TODO: create independent DrawerProvider and move out this logic */
+  }
 
-      {/* TODO: create independent DrawerProvider and move out this logic */}
-      <Drawer
-        anchor="bottom"
-        open={drawerOpen}
-        onClose={handleDrawerClose}
-        container={container}
-        ModalProps={{ keepMounted: true }}
-      >
-        <List>
-          <ListItem button onClick={handleCreateMood}>
-            <ListItemIcon>
-              <MoodIcon color="action" />
-            </ListItemIcon>
-            <ListItemText primary="Mood" />
-          </ListItem>
-          <ListItem button onClick={handleCreateStory}>
-            <ListItemIcon>
-              <ControlPointIcon color="primary" />
-            </ListItemIcon>
-            <ListItemText primary="Story" />
-          </ListItem>
-          <ListItem button onClick={handleCreatePost}>
-            <ListItemIcon>
-              <PhotoCameraIcon color="secondary" />
-            </ListItemIcon>
-            <ListItemText primary="Post" />
-          </ListItem>
-        </List>
-      </Drawer>
-    </>
+  return (
+    <Drawer anchor="bottom" open={isOpen} onClose={onClose} container={container} ModalProps={{ keepMounted: true }}>
+      <List>
+        <ListItem button onClick={handleCreateMood}>
+          <ListItemIcon>
+            <MoodIcon color="action" />
+          </ListItemIcon>
+          <ListItemText primary="Mood" />
+        </ListItem>
+        <ListItem button onClick={handleCreateStory}>
+          <ListItemIcon>
+            <ControlPointIcon color="primary" />
+          </ListItemIcon>
+          <ListItemText primary="Story" />
+        </ListItem>
+        <ListItem button onClick={handleCreatePost}>
+          <ListItemIcon>
+            <PhotoCameraIcon color="secondary" />
+          </ListItemIcon>
+          <ListItemText primary="Post" />
+        </ListItem>
+      </List>
+    </Drawer>
   );
 }
 

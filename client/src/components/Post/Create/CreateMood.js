@@ -10,10 +10,7 @@ import useStyles from "./styles";
 const MOOD_ID = "mood";
 
 const schema = yup.object().shape({
-  [MOOD_ID]: yup
-    .string()
-    .max(128, "Must be no more than 128 characters")
-    .required("Is required field")
+  [MOOD_ID]: yup.string().max(128, "Must be no more than 128 characters").required("Is required field"),
 });
 
 function CreateMood({
@@ -21,14 +18,14 @@ function CreateMood({
   userName,
   defaultValue = "",
 
-  onSubmit
+  onSubmit,
 }) {
   const classes = useStyles();
   const { errors, control, handleSubmit } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      [MOOD_ID]: defaultValue
-    }
+      [MOOD_ID]: defaultValue || "",
+    },
   });
 
   const handleFormSubmit = (data) => {
@@ -54,7 +51,8 @@ function CreateMood({
               error={!!errors[MOOD_ID]}
               helperText={errors[MOOD_ID]?.message}
               inputProps={{ maxLength: 128 }}
-              margin="dense" />
+              margin="dense"
+            />
           )}
         />
       </FormControl>
