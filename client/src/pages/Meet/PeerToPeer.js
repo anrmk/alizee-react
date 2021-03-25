@@ -80,7 +80,7 @@ function PeerToPeer({ user, call }) {
       <Box p={2}></Box>
 
       <Box display="flex" justifyContent="center" flexDirection="column" zIndex={1} p={1}>
-        <Typography variant="h6" align="center" index>{videoStream.status}</Typography>
+        <Typography variant="h6" align="center">{videoStream.status}</Typography>
       </Box>
 
       <Box p={2}></Box>
