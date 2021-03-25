@@ -8,7 +8,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     textAlign: "center",
     wordBreak: "break-word",
-    paddingBottom: 0
+    paddingBottom: 0,
+    "& > .MuiCardHeader-content": {
+      width: "100%"
+    }
   },
   avatarHeader: {
     marginBottom: theme.spacing(2)

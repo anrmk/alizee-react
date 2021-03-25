@@ -148,7 +148,7 @@ function Feed(props) {
         </Grid>
         <Hidden smDown>
           <Grid item md={4}>
-            <Box position="sticky" top="4rem">
+            <Box position="sticky" top="4rem" paddingLeft="24px">
               {people.data && people.data.length > 0 && (
                 <Box>
                   <Box mb={1} display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap">
