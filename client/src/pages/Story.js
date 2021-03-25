@@ -13,6 +13,7 @@ import { STORIES_LENGTH } from "../constants/feed";
 import useDialog from "../hooks/useDialog";
 import useStoriesSwitcher from "../hooks/useStoriesSwitcher";
 import useShareDialog, { SHARE_DIALOG_STORY_TYPE } from "../hooks/useShareDialog";
+import useFullScreen from "../hooks/useFullScreen";
 
 function Story(props) {
   const history = useHistory();
@@ -21,6 +22,7 @@ function Story(props) {
   const { path } = useRouteMatch();
   const apiClient = useContext(ApiContext);
   const dialog = useDialog();
+  const fullScreen = useFullScreen("root");
 
   const { story } = props;
   const { getStory, getFollowingStories, resetStory } = props;
@@ -55,6 +57,7 @@ function Story(props) {
     }
 
     return () => {
+      fullScreen.toggle(false);
       resetStory();
     }
   }, []);
