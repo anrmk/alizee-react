@@ -19,7 +19,6 @@ function ProfileUserInfo({
   className,
   onSubscribeClick,
   onSendTipClick,
-  onMoodUpdateClick
 }) {
   const classes = useStyles();
 
@@ -71,19 +70,9 @@ function ProfileUserInfo({
           </>
         )}
         <Box display="flex" alignItems="center" marginTop={2}>
-          <ShowMoreText
-            className={classes.moodMobile}
-            lines={1}
-            more="Show more"
-            less="Show less"
-            expanded={false}>
+          <Typography variant="subtitle1" color="textSecondary">
             {user.mood}
-          </ShowMoreText>
-          {isOwner && (
-            <IconButton onClick={onMoodUpdateClick}>
-              <EditIcon />
-            </IconButton>
-          )}
+          </Typography>
         </Box>
         <Box marginTop={2}>
           <Typography variant="h6">

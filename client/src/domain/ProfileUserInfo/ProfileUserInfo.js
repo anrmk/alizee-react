@@ -24,7 +24,7 @@ function ProfileUserInfo({
   onSendTipClick,
   onMoodUpdateClick
 }) {
-  const classes = useStyles();
+  const classes = useStyles({ isOwner });
 
   const handleSendTipClick = () => {
     onSendTipClick && onSendTipClick(user);
@@ -47,7 +47,7 @@ function ProfileUserInfo({
             className={classes.avatarHeader}
             src={user.avatarUrl}
             online={isOwner || !user.offlineDate} 
-            live={user.live} // TODO: add a condition to check is not it me
+            live={user.live} // TODO: add a condition to check is not me
             size="huge"
             borderColor={USER_RANKING[user.ranking]}
             borderWidth="4px"
@@ -57,16 +57,11 @@ function ProfileUserInfo({
         title={user.name}
         subheader={
           <>
-            <Typography variant="subtitle1" color="textSecondary">
-              {user.mood}
+            <Typography variant="subtitle1" color="textSecondary" className={classes.mood} onClick={handleMoodUpdateClick}>
+              {user.mood ? 
+                user.mood : 
+                isOwner && "What's on your mind?"}
             </Typography>
-            {isOwner && (
-              <Tooltip title={user.mood ? "Change mood" : "Add mood"}>
-                <IconButton onClick={handleMoodUpdateClick}>
-                  {user.mood ? <EditIcon /> : <AddIcon />}
-                </IconButton>
-              </Tooltip>
-            )}
           </>
         } />
       <CardContent className={classes.content}>

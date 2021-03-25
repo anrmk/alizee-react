@@ -171,8 +171,7 @@ function Profile(props) {
           isFollow={user.isFollow}
           subscriptionPrice={user.subscriptionPrice}
           onSubscribeClick={followDialog.toggle}
-          onSendTipClick={sendTipDialog.toggle}
-          onMoodUpdateClick={createMoodDialog.toggle} />
+          onSendTipClick={sendTipDialog.toggle} />
       </Hidden>
 
       <Grid container>

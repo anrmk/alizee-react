@@ -40,6 +40,13 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(1)
     }
   },
+  mood: {
+    cursor: "pointer",
+    padding: ({ isOwner }) => isOwner && theme.spacing(0.5),
+    border: ({ isOwner }) => isOwner && "1px dashed",
+    borderColor: theme.palette.text.secondary,
+    borderRadius: theme.shape.borderRadius
+  },
   moodMobile: {
     ...theme.typography.body1,
     width: "100%",

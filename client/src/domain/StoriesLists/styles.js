@@ -22,6 +22,9 @@ const useStyles = makeStyles(theme => ({
     },
     [theme.breakpoints.up("md")]: {
       maxWidth: "814px"
+    },
+    [theme.breakpoints.down("sm")]: {
+      padding: theme.spacing(1)
     }
   },
   previewStoryListProgress: {

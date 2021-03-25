@@ -7,45 +7,39 @@ import {
   Grid,
   Typography,
   Hidden,
-  Link as MUILink,
+  Link as MUILink
 } from "@material-ui/core";
 
-import { PostsList } from "../domain/PostsList";
-import { HotStreamersItemList } from "../domain/Stream";
+import { PostsList } from "../../domain/PostsList";
+import { HotStreamersItemList } from "../../domain/Stream";
 
-import * as actionSuggestion from "../store/actions/suggestion";
+import * as actionSuggestion from "../../store/actions/suggestion";
 
-import * as postActions from "../store/actions/post";
-import * as settingsActions from "../store/actions/settings";
-import * as storyActions from "../store/actions/story";
-import * as streamActions from "../store/actions/stream";
+import * as postActions from "../../store/actions/post";
+import * as settingsActions from "../../store/actions/settings";
+import * as storyActions from "../../store/actions/story";
+import * as streamActions from "../../store/actions/stream";
 
-import * as relationshipActions from "../store/actions/relationship";
-import * as paymentActions from "../store/actions/payment";
+import * as relationshipActions from "../../store/actions/relationship";
+import * as paymentActions from "../../store/actions/payment";
 
-import { RelationshipList } from "../components/RelationshipList";
-import { PreviewStoriesList } from "../domain/StoriesLists";
+import { RelationshipList } from "../../components/RelationshipList";
+import { PreviewStoriesList } from "../../domain/StoriesLists";
 
-import ApiContext from "../context/ApiContext";
-import { STORIES_LENGTH } from "../constants/feed";
-import { SUGESTED_PEOPLE } from "../constants/routes";
+import ApiContext from "../../context/ApiContext";
+import { STORIES_LENGTH } from "../../constants/feed";
+import { SUGESTED_PEOPLE } from "../../constants/routes";
 
-import useProfileActions from "../hooks/useProfileActions";
-import useShareDialog, { SHARE_DIALOG_POST_TYPE } from "../hooks/useShareDialog";
-import { useLikeAction, useFavoriteAction, useStoryDialog, useMenuDialog } from "../hooks/post";
-import { useSendTipDialog, usePaymentDialog, usePurchaseDialog, useReceiptDialog } from "../hooks/payment";
+import useProfileActions from "../../hooks/useProfileActions";
+import useShareDialog, { SHARE_DIALOG_POST_TYPE } from "../../hooks/useShareDialog";
+import { useLikeAction, useFavoriteAction, useStoryDialog, useMenuDialog } from "../../hooks/post";
+import { useSendTipDialog, usePaymentDialog, usePurchaseDialog, useReceiptDialog } from "../../hooks/payment";
 
-// Spacing between grid item (Aziz)
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     [theme.breakpoints.down("sm")]: {
-//       padding: 0
-//     }
-//   }
-// }));
+import useStyles from "./styles";
+import useFullScreen from "../../hooks/useFullScreen";
 
 function Feed(props) {
-  // const classes = useStyles();
+  const classes = useStyles();
   const apiClient = useContext(ApiContext);
 
   const { userInfo } = props;
@@ -63,6 +57,7 @@ function Feed(props) {
   const favoriteAction = useFavoriteAction();
   const createStoryDialog = useStoryDialog();
   const postMenuDialog = useMenuDialog();
+  const fullScreen = useFullScreen("root");
 
   const { dialogShareOpenClick } = useShareDialog({ type: SHARE_DIALOG_POST_TYPE });
 
@@ -113,16 +108,20 @@ function Feed(props) {
     console.log("handleJoinStream");
   };
 
+  const handleStoryClick = () => {
+    fullScreen.toggle(true);
+  };
+
   return (
-    <Container>
-      <Grid container spacing={1}>
+    <Container className={classes.root}>
+      <Grid container className={classes.grid}>
         <Grid item xs={12} md={8}>
           <PreviewStoriesList
             loading={story.isFetching}
             userStory={story.data.mStories}
             items={story.data.fStories}
-            onCreateStoryClick={createStoryDialog.toggle}
-          />
+            onItemClick={handleStoryClick}
+            onCreateStoryClick={createStoryDialog.toggle} />
 
           <PostsList
             user={userInfo}
