@@ -1,39 +1,18 @@
-import React, { useContext, useEffect } from "react";
-import { connect } from "react-redux";
+import React from "react";
 import { useHistory } from "react-router-dom";
 
 import { Container, Box } from "@material-ui/core";
 
-import { POSTS_LENGTH } from "../constants/feed";
 import { POST_ID_ROUTE } from "../constants/routes";
 
-import * as actionSuggestion from "../store/actions/suggestion";
-import * as postActions from "../store/actions/post";
-import ApiContext from "../context/ApiContext";
-
 import GridGallery from "../domain/GridGallery";
+import SearchInput from "../domain/Search";
+import useSearch from "../hooks/useSearch";
+import { SEARCH_TAG_TYPE } from "../constants/search";
 
-function Explore(props) {
+function Explore() {
   const history = useHistory();
-  const apiClient = useContext(ApiContext);
-
-  const { posts, getPosts, getPeople, resetPosts } = props;
-
-  useEffect(() => {
-    (async () => {
-      await getPosts(apiClient, { length: POSTS_LENGTH });
-      await getPeople(apiClient);
-    })();
-    return () => {
-      resetPosts();
-    };
-  }, []);
-
-  const onFetchMore = (isLoading) => {
-    if (!isLoading) {
-      (async () => await getPosts(apiClient, { length: POSTS_LENGTH }))();
-    }
-  };
+  const search = useSearch({ type: SEARCH_TAG_TYPE });
 
   const onItemClick = (id) => {
     history.push(POST_ID_ROUTE(id));
@@ -42,25 +21,11 @@ function Explore(props) {
   return (
     <Container>
       <Box my={4}>
-        <GridGallery items={posts.data} hasMore={posts.hasMore} onFetchMore={onFetchMore} onItemClick={onItemClick}></GridGallery>
+        <SearchInput defaultValue={search.lastQuery} onSendQuery={search.onSearch} />
+        <GridGallery items={search.posts} hasMore={search.hasMore} onFetchMore={search.onFetchMore} onItemClick={onItemClick} />
       </Box>
     </Container>
   );
 }
 
-function mapStateToProps(state) {
-  return {
-    posts: state.posts,
-    people: state.users.data
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    getPeople: (api, count) => dispatch(actionSuggestion.getPeople(api, count)),
-    getPosts: (api, opts) => dispatch(actionSuggestion.getPosts(api, opts)),
-    resetPosts: () => dispatch(postActions.resetPosts())
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Explore);
+export default Explore;

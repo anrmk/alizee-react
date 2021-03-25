@@ -16,18 +16,18 @@ function GridGallery(props) {
   const classes = useStyle();
 
   return (
-     !items || items.length == 0 ?
-     !isUserView && <Typography className={classes.defaultLabel}>Start capturing and sharing your moments.</Typography>
+     !items || !items.length ?
+      !isUserView && <Typography className={classes.defaultLabel}>Start capturing and sharing your moments.</Typography>
       : <InfiniteScroll
-        className={classes.root}
-        dataLength={items.length}
-        next={onFetchMore}
-        hasMore={hasMore}
-        endMessage="The end!"
-        loader={items.length ? "Loading..." : undefined}
-      >
-        {isUserView ? <GridGalleryUserList items={items} onItemClick={onItemClick} />
-        : <GridGalleryPostList items={items} onItemClick={onItemClick} />}
+          className={classes.root}
+          dataLength={items.length}
+          next={onFetchMore}
+          hasMore={hasMore}
+          endMessage="The end!"
+          loader={"Loading..."}>
+          {isUserView ?
+            <GridGalleryUserList items={items} onItemClick={onItemClick} /> : 
+            <GridGalleryPostList items={items} onItemClick={onItemClick} />}
       </InfiniteScroll>
   );
 }

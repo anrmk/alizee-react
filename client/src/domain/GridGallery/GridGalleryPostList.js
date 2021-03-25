@@ -18,7 +18,7 @@ function GridGalleryPostList(props) {
   const [isLoading, setLoading] = useState(true);
 
   return (
-    <GridList spacing={12} cols={ 3} className={classes.gridList}>
+    <GridList spacing={12} cols={3} className={classes.gridList}>
       {items &&
         items.map(
           (item, index) =>
@@ -26,18 +26,15 @@ function GridGalleryPostList(props) {
               <GridListTile
                 key={item.id + index}
                 onClick={() => onItemClick(item.id)}
-                className={classes.gridListTile}
-              >
+                className={classes.gridListTile}>
                 <LazyLoadImage
                   className={classes.gridListTileImage}
                   effect={item && "blur"}
                   src={item.media[0].kind === MEDIA_VIDEO ? item.media[0].thumbnailUrl : item.media[0].url}
                   alt={item.title}
-                  afterLoad={() => setLoading(false)}
-                />
-
-                {!isLoading &&
-                  (<Hidden smDown>
+                  afterLoad={() => setLoading(false)} />
+                {!isLoading && (
+                  <Hidden smDown>
                     <GridListTileBar
                       titlePosition="top"
                       actionPosition="right"
@@ -51,7 +48,8 @@ function GridGalleryPostList(props) {
                         </IconButton>
                       }
                     />
-                  </Hidden>)}
+                  </Hidden>
+                )}
               </GridListTile>
             )
         )}

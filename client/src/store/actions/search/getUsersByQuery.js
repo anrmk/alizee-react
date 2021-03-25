@@ -1,12 +1,12 @@
 import { generateUrl, generateFileUrl } from "../../../helpers/functions";
 
-import { SEARCH_DEFAULT_OFFSET, SEARCH_OFFSET, SEARCH_USER_TYPE } from "../../../constants/search";
+import { SEARCH_DEFAULT_OFFSET, SEARCH_OFFSET, SEARCH_TAG_TYPE } from "../../../constants/search";
 
 export const GET_USERS_BY_QUERY_REQUEST = "GET_USERS_BY_QUERY_REQUEST";
 export const GET_USERS_BY_QUERY_SUCCESS = "GET_USERS_BY_QUERY_SUCCESS";
 export const GET_USERS_BY_QUERY_FAILURE = "GET_USERS_BY_QUERY_FAILURE";
 
-export const RESET_SEARCH_USERS_BY_QUERY = "RESET_SEARCH_USERS_BY_QUERY";
+export const RESET_SEARCH = "RESET_SEARCH";
 
 export const RESET_HAS_MORE = "RESET_HAS_MORE";
 
@@ -28,7 +28,7 @@ function receiveGetUsersByQuery(data, type, start, hasMore, query) {
       errorMessage: "",
       type,
       offset: start + SEARCH_OFFSET,
-      hasMore,
+      hasMore: data.length === SEARCH_OFFSET,
       data: data || [],
       query
     },
@@ -61,7 +61,7 @@ export function resetHasMore() {
 export function resetSearch() {
   return (dispatch) =>
     dispatch({
-      type: RESET_SEARCH_USERS_BY_QUERY,
+      type: RESET_SEARCH,
       payload: {
         isFetching: false,
         offset: SEARCH_DEFAULT_OFFSET,
@@ -87,7 +87,7 @@ export function getUsersByQuery(api, opts) {
       const { data } = await api
         .setMethod("GET")
         .setParams({
-          type: SEARCH_USER_TYPE,
+          type: opts.type,
           query: opts.query,
           start: currentOffset,
           length: SEARCH_OFFSET,
@@ -95,23 +95,24 @@ export function getUsersByQuery(api, opts) {
         .query(url);
 
         if (data.length) {
-          data.forEach((item, index) => {
-            data[index] = {
-              ...item,
-              avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, item.avatarUrl),
-            };
+          data.forEach((item) => {
+            if (opts.type === SEARCH_TAG_TYPE) {
+              item.media.forEach((media) => {
+                media.url = generateFileUrl(process.env.REACT_APP_DOMAIN, media.url);
+                media.thumbnailUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, media.thumbnailUrl);
+              });
+            }
+            item.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, item.avatarUrl);
           });
     
           dispatch(receiveGetUsersByQuery(
             [...getState().search.data, ...data],
-            SEARCH_USER_TYPE,
+            opts.type,
             currentOffset,
             true,
             opts.query
           ));
-        } else {
-          dispatch(resetHasMore());
-        }
+        } 
       
     } catch (e) {
       dispatch(errorGetUsersByQuery("Error: something went wrong:"));

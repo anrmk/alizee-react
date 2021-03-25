@@ -8,20 +8,26 @@ import { debounce } from "../../helpers/functions"
 import useStyles from "./styles";
 
 function SearchInput({
+  defaultValue = "",
   interval = 500,
 
   onSendQuery,
 }) {
   const classes = useStyles();
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(defaultValue);
+  const [onceDefaultChanged, setOnceDefaultChanged] = useState(false)
   const myDebounce = useCallback(debounce((query) => onSendQuery(query), interval), []);
 
   useEffect(() => {
-    myDebounce(value);
-  }, [value]);
+    if (!onceDefaultChanged && defaultValue) {
+      setValue(defaultValue);
+      setOnceDefaultChanged(true);
+    }
+  }, [defaultValue]);
 
   const handleChange = (e) => {
-    setValue(e.target.value.trimStart().trimEnd());
+    setValue(e.target.value);
+    myDebounce(e.target.value.trim());
   };
 
   return (

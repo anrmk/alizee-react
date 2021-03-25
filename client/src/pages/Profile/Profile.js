@@ -185,8 +185,7 @@ function Profile(props) {
             disabled={post.isFetching}
             onFetchMore={handleFetchPosts}
             onItemClick={handleItemClick}
-            onTabChange={handleTabChange}
-          />
+            onTabChange={handleTabChange} />
         </Grid>
         <Hidden smDown>
           <Grid item xs={12} md={4}>

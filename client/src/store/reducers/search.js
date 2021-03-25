@@ -3,7 +3,7 @@ import {
   GET_USERS_BY_QUERY_SUCCESS,
   GET_USERS_BY_QUERY_FAILURE,
 
-  RESET_SEARCH_USERS_BY_QUERY,
+  RESET_SEARCH,
   RESET_HAS_MORE,
 
 } from '../actions/search';
@@ -34,7 +34,7 @@ export default function search(state = {
         ...state,
         ...action.payload
       }
-    case RESET_SEARCH_USERS_BY_QUERY:
+    case RESET_SEARCH:
       return {
         ...state,
         ...action.payload

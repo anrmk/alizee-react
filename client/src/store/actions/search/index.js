@@ -3,9 +3,9 @@ export {
   GET_USERS_BY_QUERY_SUCCESS,
   GET_USERS_BY_QUERY_FAILURE,
 
-  RESET_SEARCH_USERS_BY_QUERY,
+  RESET_SEARCH,
   RESET_HAS_MORE,
 
   getUsersByQuery,
-  resetSearch,
+  resetSearch
 } from './getUsersByQuery';
