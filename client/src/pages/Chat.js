@@ -19,6 +19,7 @@ import { PEAR_TO_PEAR_ID_ROUTE } from "../constants/routes";
 import useSlidingViews, { RIGHT_OPEN_TYPE } from "../hooks/useSlidingViews";
 import useDialog from "../hooks/useDialog";
 import useChatHub from "../hooks/useChatHub";
+import useFullScreen from "../hooks/useFullScreen";
 
 import { useSendTipDialog } from "../hooks/payment";
 import { useMediaPreviewDialog } from "../hooks/media";
@@ -55,10 +56,11 @@ function Chat(props) {
   const { currentSlidingViewsState, toggleSlidingViewsState } = useSlidingViews(RIGHT_OPEN_TYPE);
   const dialog = useDialog();
   const mediaViewDialog = useMediaPreviewDialog();
+  const fullScreen = useFullScreen("root");
 
-  let chathub = useChatHub({
-    isAuth : isAuthenticated, 
-    onReceiveMessage: addMessage
+  useChatHub({
+    isAuth: isAuthenticated,
+    onReceiveMessage: addMessage,
   });
 
   const handleModalCloseKeyPress = (e) => {
@@ -163,7 +165,8 @@ function Chat(props) {
     }
   };
 
-  const handleVideoStreem = (userName) => {
+  const handleCallToPeer = (userName) => {
+    fullScreen.toggle(true);
     history.push(PEAR_TO_PEAR_ID_ROUTE(userName));
   }
 
@@ -198,7 +201,7 @@ function Chat(props) {
           onRoomDelete={handleRoomDelete}
           onAccountBlock={handleAccountBlock}
           onMediaView={mediaViewDialog.toggle}
-          onVideoStreem={handleVideoStreem}
+          onVideoStreem={handleCallToPeer}
           onSendTip={sendTipDialog.toggle}
         />
       </SlidingViews>

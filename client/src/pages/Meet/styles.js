@@ -11,11 +11,12 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: "flex-end",
     overflow: "hidden",
 
-    marginRight: theme.spacing(2),
-    
     width: "40%",
-    height: "25%",
-    zIndex: 1
+    zIndex: 1,
+
+    "& video" : {
+      width: "100%"
+    }
   },
 
   partner: {
@@ -33,11 +34,10 @@ const useStyles = makeStyles((theme) => ({
     }
   },
 
-  status: {
-    //top: theme.spacing(4),
-    textAlign: "center",
-    zIndex: 1
-  },
+  // status: {
+  //   textAlign: "center",
+  //   zIndex: 1
+  // },
   
   tools: {
     display: "flex",

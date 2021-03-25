@@ -102,17 +102,29 @@ export default createMuiTheme({
         "&.primary": {
           background: "#35B1F6",
           color: "white",
+
+          "&.transparent" : {
+            background: "rgb(53 177 246 / 80%)",
+          }
         },
 
         "&.danger": {
           background: "#FE5F5F",
           color: "white",
+
+          "&.transparent" : {
+            background: "rgb(254 95 95 / 80%)",
+          }
         },
 
         "&.success" : {
           background: "#58CD86",
           color: "white",
-        }
+
+          "&.transparent" : {
+            background: "rgb(88 205 134 / 80%)",
+          }
+        },
       },
     },
 
