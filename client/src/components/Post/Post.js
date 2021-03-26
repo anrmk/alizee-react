@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -15,12 +15,14 @@ import MoreVertIcon from "@material-ui/icons/MoreVertOutlined";
 
 import Tools from "./Tools";
 import MediaContent from "../../components/MediaContent";
+import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
+import useDoubleTap from "../../hooks/useDoubleTap";
 
 import useStyles from "./styles";
-import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 
 const Post = React.memo((props) => {
   const classes = useStyles();
+  const [isLikeAnimation, setIsLikeAnimation] = useState(false);
 
   const { id, user, owner, post } = props;
   const { likes, isLike, isFavorite } = props;
@@ -30,6 +32,15 @@ const Post = React.memo((props) => {
   const handleMenuClick = () => {
     onMenu && onMenu({ postId: id, userName: owner.userName });
   };
+
+  const doubleTap = useDoubleTap(() => {
+    if (!post.isPurchased && post.amount !== 0) return;
+
+    onLike && onLike(id);
+
+    setIsLikeAnimation(true);
+    setTimeout(() => setIsLikeAnimation(false), 400);
+  });
 
   return (
     <Card className={classes.root} variant="outlined">
@@ -48,12 +59,21 @@ const Post = React.memo((props) => {
         }
       />
 
-      <CardMedia>
-        <MediaContent className={classes.post} items={post.media} amount={post.amount} isPurchased={post.isPurchased} isOwner={user.id === owner.id} />
+      <CardMedia {...doubleTap}>
+        <MediaContent 
+          className={classes.post} 
+          id={id}
+          user={owner}
+          items={post.media} 
+          amount={post.amount} 
+          isPurchased={post.isPurchased} 
+          isOwner={user.id === owner.id}
+          isLiked={isLikeAnimation}
+          onPayClick={onBuyPost} />
       </CardMedia>
 
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography variant="body2" component="p">
           {post.description}
         </Typography>
       </CardContent>

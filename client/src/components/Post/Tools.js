@@ -91,10 +91,14 @@ const Tools = React.memo(({
 
   return (
     <>
-      <IconButton color="secondary" onClick={handleLikeClick} aria-label="add to favorites">
-        {isLike ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-      </IconButton>
-      <Typography>{likes > 0 && <strong>{likes}</strong>}</Typography>
+     {isPurchased || amount === 0 && (
+        <>
+          <IconButton color="secondary" onClick={handleLikeClick} aria-label="add to favorites">
+            {isLike ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          </IconButton>
+          <Typography>{likes > 0 && <strong>{likes}</strong>}</Typography>
+        </>
+     )}
 
       <IconButton aria-label="share" onClick={handleShareClick}>
         <SendIcon />

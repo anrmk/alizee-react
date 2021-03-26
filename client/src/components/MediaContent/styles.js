@@ -62,8 +62,22 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "8rem"
       },
     }
-    
   },
+
+  favoriteIcon: {
+    position: "absolute",
+    opacity: 0.5,
+    color: theme.palette.grey["100"],
+    zIndex: theme.zIndex.mobileStepper,
+    fontSize: "15rem",
+    left: "calc(50% - 7.6rem)",
+    top: "calc(50% - 7.6rem)",
+    [theme.breakpoints.down("sm")]: {
+      top: "calc(50% - 4rem)",
+      left: "calc(50% - 4rem)",
+      fontSize: "8rem",
+    }
+  }
 }));
 
 export default useStyles;
