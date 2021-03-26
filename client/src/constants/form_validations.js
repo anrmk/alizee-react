@@ -7,3 +7,4 @@ export const MIN_AMOUNT = (max) => `Must be at least ${max}$ USD`;
 export const MAX_AMOUNT = (max) => `Must be at most ${max}$ USD`;
 
 export const FULL_NAME_HELPER = "Fill in your legal name, address and attach your government issued picture ID."
+export const POST_AMOUNT_TEXT_HELPER = "You can't set amount if you didn't choose any media content."

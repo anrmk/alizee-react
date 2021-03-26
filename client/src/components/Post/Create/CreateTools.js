@@ -35,32 +35,31 @@ function CreateTools({
   const mediaRef = useRef();
 
   return (
-    <Box display="flex">
+    <Box display="flex" alignItems="flex-start">
       {!onlyMedia && (
         <>
-          <Box>
-            <Tooltip title="Set Post to Private">
-              <IconButton onClick={onChange} name={privateBtnName}>
-                {isPrivate ? (
-                  <LockOutlinedIcon fontSize="small" color="secondary" />
-                ) : (
-                  <LockOpenOutlinedIcon fontSize="small" />
-                )}
-              </IconButton>
-            </Tooltip>
+          <Tooltip title="Set Post to Private">
+            <IconButton onClick={onChange} name={privateBtnName}>
+              {isPrivate ? (
+                <LockOutlinedIcon fontSize="small" color="secondary" />
+              ) : (
+                <LockOpenOutlinedIcon fontSize="small" />
+              )}
+            </IconButton>
+          </Tooltip>
 
-            <Tooltip title="Turn off Commenting">
-              <IconButton onClick={onChange} name={commentBtnName}>
-                {isCommentable ? (
-                  <CommentOutlinedIcon fontSize="small" />
-                ) : (
-                  <CommentBlockOutlinedIcon fontSize="small" color="secondary" />
-                )}
-              </IconButton>
-            </Tooltip>
-          </Box>
+          <Tooltip title="Turn off Commenting">
+            <IconButton onClick={onChange} name={commentBtnName}>
+              {isCommentable ? (
+                <CommentOutlinedIcon fontSize="small" />
+              ) : (
+                <CommentBlockOutlinedIcon fontSize="small" color="secondary" />
+              )}
+            </IconButton>
+          </Tooltip>
         </>
       )}
+
       <Tooltip title="Share up to 10 photos and videos in one Post">
         <IconButton onClick={(e) => mediaRef.current.click()}>
           <PhotoLibraryIcon fontSize="small" />

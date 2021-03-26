@@ -4,9 +4,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import { Post } from "../../components/Post";
 
-import Loader from "./Loader";
-import EndMessage from "./EndMessage";
-
 const PostsList = React.memo(({
   user,
   items,

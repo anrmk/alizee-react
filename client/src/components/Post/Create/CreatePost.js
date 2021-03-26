@@ -14,6 +14,7 @@ import {
 } from "../../../constants/media_types";
 
 import useStyles from "./styles";
+import { POST_AMOUNT_TEXT_HELPER } from "../../../constants/form_validations";
 
 const MEDIA_ID = "medias";
 const DESCRIPTION_ID = "description";
@@ -24,7 +25,7 @@ const AMOUNT_ID = "amount";
 const schema = yup.object().shape({
   [MEDIA_ID]: yup
     .array()
-    .min(1, "Medias must be at list 1")
+    .min(0)
     .max(12)
     .required("Media is required"),
   [DESCRIPTION_ID]: yup
@@ -159,9 +160,10 @@ export default function CreatePost({
                 placeholder="Amount"
                 variant="outlined"
                 inputMode="numeric"
+                disabled={!mediaWatcher.length}
                 value={value}
                 error={!!errors[AMOUNT_ID]}
-                helperText={errors[AMOUNT_ID]?.message}
+                helperText={errors[AMOUNT_ID]?.message || POST_AMOUNT_TEXT_HELPER}
                 onBlur={onBlur}
                 onChange={onChange}
                 InputProps={{
