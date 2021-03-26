@@ -16,13 +16,15 @@ export default function useNotification({ isAuth, onChange }) {
   const [connection, setConnection] = useState(null);
 
   useEffect(() => {
-    if (!isAuth) {
-      connection && connection.stop();
-      setConnection(null);
-    } else {
-      connectToHub();
-    }
-  }, [isAuth]);
+    isAuth && !connection && connectToHub();
+
+    return () => {
+      if (connection) {
+        connection.stop();
+        setConnection(null);
+      }
+    };
+  }, [connection]);
 
   const connectToHub = () => {
     const token = getToken()?.access;
@@ -30,16 +32,25 @@ export default function useNotification({ isAuth, onChange }) {
       .withUrl(wrapHttps(`${process.env.REACT_APP_DOMAIN}${url}`, true), {
         accessTokenFactory: () => token,
       })
-      .withAutomaticReconnect()
+      .withAutomaticReconnect([5000])
       .configureLogging(signalR.LogLevel.Information)
       .build();
 
+    newConnection.on("Calling", (data) => {
+      history.push(PEAR_TO_PEAR_ID_ROUTE(""));
+    });
+
+    newConnection.on("NewMessage", () => {
+      handleNotificationToggle({ newMessage: true });
+    });
+
+    newConnection.on("NewNotification", (data) => {
+      handleNotificationToggle({ newNotification: true });
+      enqueueSnackbar(data, { variant: "info" });
+    });
+
     newConnection.onclose(() => {
-      if (newConnection.state === signalR.HubConnectionState.Disconnected) {
-        setTimeout(() => {
-          connectToHub();
-        }, 5000);
-      }
+      console.log("Notification hub disconnected");
     });
 
     setConnection(newConnection);
@@ -51,35 +62,18 @@ export default function useNotification({ isAuth, onChange }) {
         connection
           .start({ withCredentials: false })
           .then(() => {
-            connection.on("Calling", (data) => {
-              history.push(PEAR_TO_PEAR_ID_ROUTE(""));
-            });
-
-            connection.on("NewMessage", () => {
-              handleNotificationToggle({ newMessage: true });
-            });
-
-            connection.on("NewNotification", (data) => {
-              handleNotificationToggle({ newNotification: true });
-              enqueueSnackbar(data, { variant: "info" });
-            });
+            console.log("Notification hub connected");
           })
           .catch((err) => {
-            setTimeout(() => {
-              connectToHub();
-            }, 5000);
             console.log("Error connection notification hub: " + JSON.stringify(err));
           });
       }
     }
   }, [connection]);
 
-  const handleNotificationToggle = useCallback(
-    async (data) => {
-      await onChange(data);
-    },
-    [onChange]
-  );
+  const handleNotificationToggle = async (data) => {
+    await onChange(data);
+  };
 
   return {
     toggle: handleNotificationToggle,

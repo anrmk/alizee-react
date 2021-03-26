@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import * as signalR from "@microsoft/signalr";
 
 import { getToken, wrapHttps } from "../helpers/functions";
@@ -9,13 +9,15 @@ export default function useNotification({ isAuth, onReceiveMessage }) {
   const [connection, setConnection] = useState(null);
 
   useEffect(() => {
-    if (!isAuth) {
-      connection && connection.stop();
-      setConnection(null);
-    } else {
-      connectToHub();
-    }
-  }, [isAuth]);
+    isAuth && !connection && connectToHub();
+
+    return () => {
+      if (connection) {
+        connection.stop();
+        setConnection(null);
+      }
+    };
+  }, [connection]);
 
   const connectToHub = () => {
     const token = getToken()?.access;
@@ -23,17 +25,21 @@ export default function useNotification({ isAuth, onReceiveMessage }) {
       .withUrl(wrapHttps(`${process.env.REACT_APP_DOMAIN}${url}`, true), {
         accessTokenFactory: () => token,
       })
-      .withAutomaticReconnect()
+      .withAutomaticReconnect([5000])
       .configureLogging(signalR.LogLevel.Information)
       .build();
 
+    newConnection.on("ReceiveMessage", handleReceiveMessage);
     newConnection.onclose(() => {
-      if (newConnection.state === signalR.HubConnectionState.Disconnected) {
-        setTimeout(() => {
-          connectToHub();
-        }, 5000);
-      }
+      console.log("Chat hub disconnected");
     });
+    // newConnection.onclose(() => {
+    //   if (newConnection.state === signalR.HubConnectionState.Disconnected) {
+    //     setTimeout(() => {
+    //       connectToHub();
+    //     }, 5000);
+    //   }
+    // });
 
     setConnection(newConnection);
   };
@@ -44,21 +50,20 @@ export default function useNotification({ isAuth, onReceiveMessage }) {
         connection
           .start({ withCredentials: false })
           .then(() => {
-            connection.on("ReceiveMessage", handleReceiveMessage);
+            console.log("Chat hub connected");
           })
           .catch((err) => {
-            setTimeout(() => {
-              connectToHub();
-            }, 5000);
+            //connection.off("ReceiveMessage");
+            // setTimeout(() => {
+            //   connectToHub();
+            // }, 5000);
             console.log("Error connection notification hub: " + JSON.stringify(err));
           });
       }
     }
   }, [connection]);
 
-   const handleReceiveMessage = useCallback(
-     async (data) => {
-       await onReceiveMessage(data);
-     }, [onReceiveMessage]
-   )
+  const handleReceiveMessage = async (data) => {
+    await onReceiveMessage(data);
+  };
 }
