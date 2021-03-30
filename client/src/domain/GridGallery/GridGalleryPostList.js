@@ -27,12 +27,17 @@ function GridGalleryPostList(props) {
                 key={item.id + index}
                 onClick={() => onItemClick(item.id)}
                 className={classes.gridListTile}>
-                <LazyLoadImage
+                <img
+                  className={classes.gridListTileImage}
+                  loading="lazy"
+                  src={item.media[0].kind === MEDIA_VIDEO ? item.media[0].thumbnailUrl : item.media[0].url}
+                  alt={item.title} />
+                {/* <LazyLoadImage
                   className={classes.gridListTileImage}
                   effect={item && "blur"}
                   src={item.media[0].kind === MEDIA_VIDEO ? item.media[0].thumbnailUrl : item.media[0].url}
                   alt={item.title}
-                  afterLoad={() => setLoading(false)} />
+                  afterLoad={() => setLoading(false)} /> */}
                 {!isLoading && (
                   <Hidden smDown>
                     <GridListTileBar
