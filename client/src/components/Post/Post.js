@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -23,6 +23,7 @@ import useStyles from "./styles";
 const Post = React.memo((props) => {
   const classes = useStyles();
   const [isLikeAnimation, setIsLikeAnimation] = useState(false);
+  let timerLikeAnimation = useRef().current;
 
   const { id, user, owner, post } = props;
   const { likes, isLike, isFavorite } = props;
@@ -38,8 +39,10 @@ const Post = React.memo((props) => {
 
     onLike && onLike(id);
 
+    timerLikeAnimation && clearTimeout(timerLikeAnimation);
+
     setIsLikeAnimation(true);
-    setTimeout(() => setIsLikeAnimation(false), 400);
+    timerLikeAnimation = setTimeout(() => setIsLikeAnimation(false), 400);
   });
 
   return (

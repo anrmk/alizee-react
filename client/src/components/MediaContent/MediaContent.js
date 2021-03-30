@@ -32,7 +32,7 @@ function MediaContent({
   if (!items || !items.length) return <></>;
 
   return (
-    <Box position="relative">
+    <Box position="relative" height="100%">
       <Fade in={isLiked}>
         <FavoriteIcon className={classes.favoriteIcon} />
       </Fade>
