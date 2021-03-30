@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import ReactPlayer from "react-player";
-import VisibilitySensor from 'react-visibility-sensor';
+// import VisibilitySensor from 'react-visibility-sensor';
 
 import { Box } from "@material-ui/core";
 
@@ -26,17 +26,17 @@ export default function VideoContent({
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(false);
   const [showing, setShowing] = useState(true);
-  const [isVisible, setIsVisible] = useState(false);
+  // const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
-    if (isVisible) {
-      setPlaying(true);
-    } else {
-      if (playing) {
-        setPlaying(false);
-      }
-    }
-  }, [isVisible]);
+  // useEffect(() => {
+  //   if (isVisible) {
+  //     setPlaying(true);
+  //   } else {
+  //     if (playing) {
+  //       setPlaying(false);
+  //     }
+  //   }
+  // }, [isVisible]);
 
   const getControlsOpacity = (show, stop) => {
     if (stop && show) {
@@ -90,9 +90,10 @@ export default function VideoContent({
     <Box id={id} className={clsx(classes.videoContent, className)} onMouseEnter={() => setShowing(true)} onMouseLeave={() => setShowing(false)}>
       {showControls && renderPlayBtn(showing, playing)}
       {showControls && renderMuteBtn(showing, muted, playing)}
-      <VisibilitySensor partialVisibility onChange={(isVisible) => setIsVisible(isVisible)}>
-        <ReactPlayer className={clsx(classes.player, videoClassName)} width="100%" height="100%" playing={playing} volume={muted ? 1 : 0} url={url} {...videoPlayerProps} />
-      </VisibilitySensor>
+      {/* <VisibilitySensor partialVisibility onChange={(isVisible) => setIsVisible(isVisible)}> */}
+      <ReactPlayer className={clsx(classes.player, videoClassName)} width="100%" height="100%" playing={playing} volume={muted ? 1 : 0} url={url} />
+      {/* <ReactPlayer className={clsx(classes.player, videoClassName)} width="100%" height="100%" playing={playing} volume={muted ? 1 : 0} url={url} {...videoPlayerProps} /> */}
+      {/* </VisibilitySensor> */}
     </Box>
   );
 }
