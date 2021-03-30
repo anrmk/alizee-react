@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import { Container, Box, AppBar, Toolbar, Tooltip, IconButton, Badge, Hidden } from "@material-ui/core";
+import { Container, Box, AppBar, Toolbar, Tooltip, IconButton, Badge, Hidden, Typography } from "@material-ui/core";
 
 import NotificationsIcon from "@material-ui/icons/NotificationsActiveOutlined";
 import MailIcon from "@material-ui/icons/MailOutline";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
+import ArrowBackIcon from "@material-ui/icons/ArrowBackIosOutlined";
 
 import { CHAT_ROUTE, HOME_ROUTE, SEARCH_ROUTE } from "../../constants/routes";
 import { USER_RANKING } from "../../constants/user";
@@ -32,6 +33,7 @@ function Navbar({
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
+  const location = useLocation();
 
   const menuId = "navbar-menu";
   const isMenuOpen = Boolean(anchorEl);
@@ -56,7 +58,19 @@ function Navbar({
   return (
     <AppBar position="fixed" className={classes.root}>
       <Container>
-        <Toolbar className={classes.toolbar}>
+        <Toolbar disableGutters>
+          {!location.pathname.includes("/feed") && (
+            <>
+              <Box display="flex" alignItems="center">
+                <IconButton onClick={() => history.goBack()}>
+                  <ArrowBackIcon />
+                </IconButton>
+                <Typography>Back</Typography>
+              </Box>
+              <Box className={classes.grow} />
+            </>
+          )}
+
           <Box className={classes.logo} to={HOME_ROUTE} component={Link}></Box>
 
           <Box className={classes.grow} />
