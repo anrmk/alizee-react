@@ -1,6 +1,8 @@
 import { generateUrl, generateFileUrl } from '../../helpers/functions';
+import { SOCIAL_GOOGLE, SOCIAL_TWITTER } from '../../constants/social_types';
 import { socialAuth } from './socialAuth';
 import { USER_TOKEN } from '../../constants/user';
+import { oneTimeAuth } from './oneTimeAuth';
 
 export const SIGNIN_REQUEST = 'SIGNIN_REQUEST';
 export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS';
@@ -111,7 +113,11 @@ export function signInSocial(api, socialType, opts) {
     dispatch(requestSignIn());
 
     try {
-      await dispatch(socialAuth(api, socialType, opts));
+      if (socialType === SOCIAL_GOOGLE) {
+        await dispatch(socialAuth(api, socialType, opts));
+      } else if (socialType === SOCIAL_TWITTER) {
+        await dispatch(oneTimeAuth(api, opts));
+      }
 
       const { data, errorMessage } = getState().socialAuth;
 

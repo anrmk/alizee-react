@@ -9,6 +9,8 @@ export default {
     confirmEmail: "account/confirmemail",
     resendEmailVerification: "account/resendemailverification",
     getCurrentDeposit: "deposit/current",
+    signintwitter: "account/signintwitter",
+    onetimeauth: "account/onetimeauthenticate",
 
     // POSTS
     getPost: "post/getpost",
