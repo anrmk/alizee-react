@@ -7,8 +7,7 @@ import SearchIcon from "@material-ui/icons/SearchOutlined";
 import HomeIcon from "@material-ui/icons/HomeOutlined";
 import ExploreIcon from "@material-ui/icons/ExploreOutlined";
 import AddCircleIcon from "@material-ui/icons/AddCircleOutline";
-
-import PersonOutlinedIcon from "@material-ui/icons/PersonOutlined";
+import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
 
 import { PostSprout } from "../PostsList";
 
@@ -59,11 +58,11 @@ function BottomBar({
   return (
     <AppBar className={clsx(classes.root, "bottom")} component="footer">
       <BottomNavigation value={value} onChange={handleChange}>
-        <BottomNavigationAction value="home" label="Home" icon={<HomeIcon />} />
-        <BottomNavigationAction value="search" label="Search" icon={<SearchIcon />} />
-        <BottomNavigationAction value="post" icon={<AddCircleIcon fontSize="large" />} />
-        <BottomNavigationAction value="explore" label="Explore" icon={<ExploreIcon />} />
-        <BottomNavigationAction value="profile" label="Me" icon={<PersonOutlinedIcon />} />
+        <BottomNavigationAction value="home" label="" icon={<HomeIcon />} />
+        <BottomNavigationAction value="search" label="" icon={<SearchIcon />} />
+        <BottomNavigationAction value="post" label=" " icon={<AddCircleIcon fontSize="large" />} />
+        <BottomNavigationAction value="explore" label="" icon={<ExploreIcon />} />
+        <BottomNavigationAction value="profile" label="" icon={<AccountIcon />} />
       </BottomNavigation>
 
       <PostSprout

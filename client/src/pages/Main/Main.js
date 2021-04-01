@@ -80,7 +80,7 @@ function Main(props) {
             newNotification={notifyData?.newNotification}
             open={open} 
 
-            //onChange={notification.toggle}
+            onChange={notification.toggle}
             onSignOut={signOut} />
 
           <Hidden smDown>
