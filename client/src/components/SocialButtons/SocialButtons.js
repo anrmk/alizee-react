@@ -3,8 +3,9 @@ import { GoogleLogin } from "react-google-login";
 import PropTypes from "prop-types";
 import { Avatar, Box, IconButton } from "@material-ui/core";
 
-import { SOCIAL_GOOGLE } from "../../constants/social_types";
+import { SOCIAL_GOOGLE, SOCIAL_TWITTER } from "../../constants/social_types";
 import GoogleIcon from "../../assets/img/social-icons/google.svg";
+import TwitterIcon from "../../assets/img/social-icons/twitter.svg";
 
 import useStyles from "./styles";
 
@@ -31,6 +32,9 @@ function SocialButtons({
         onSuccess={(response) => onSuccess(response, SOCIAL_GOOGLE)}
         onFailure={onFailure}
       />
+      <IconButton onClick={() => onSuccess(null, SOCIAL_TWITTER)}>
+        <Avatar src={TwitterIcon} className={classes.googleIcon} />
+      </IconButton>
     </Box>
   );
 }

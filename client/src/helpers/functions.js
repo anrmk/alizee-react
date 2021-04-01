@@ -373,3 +373,9 @@ export function getBase64(file) {
     reader.onerror = error => reject(error);
   });
 }
+
+export function redirect(url) {
+  if (!url) return null;
+
+  window.location = url;
+}
