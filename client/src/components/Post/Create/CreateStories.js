@@ -1,15 +1,28 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import { GridList, GridListTile, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 
-import { CreateTools } from "../../../components/Post";
+import GridGalleryHorizontal from "../../GridGalleryHorizontal/GridGalleryHorizontal";
+
+import {
+  TYPE_JPEG,
+  TYPE_PJPEG,
+  TYPE_GIF,
+  TYPE_XPNG,
+  TYPE_PNG,
+  TYPE_MP4,
+  TYPE_MOV,
+  TYPE_WEBM,
+  TYPE_OGG,
+} from "../../../constants/media_types";
 
 import useStyles from "./styles";
 
 const MEDIA_ID = "medias";
+const supportedInputMediaType = [TYPE_JPEG, TYPE_PJPEG, TYPE_GIF, TYPE_XPNG, TYPE_PNG, TYPE_MP4, TYPE_MOV, TYPE_WEBM, TYPE_OGG];
 
 const schema = yup.object().shape({
   [MEDIA_ID]: yup
@@ -19,7 +32,7 @@ const schema = yup.object().shape({
     .required()
 });
 
-export default function CreateStories({ 
+export default function CreateStories({
   formId,
 
   onSubmit 
@@ -32,10 +45,12 @@ export default function CreateStories({
     }
   });
   const mediaWatcher = watch(MEDIA_ID, []);
+  const mediaRef = useRef();
 
   useEffect(() => {
     register({ name: MEDIA_ID });
 
+    mediaRef.current.click();
     return () => {
       mediaWatcher.forEach(file => URL.revokeObjectURL(file.previewUrl));
       setValue(MEDIA_ID, []);
@@ -58,9 +73,14 @@ export default function CreateStories({
 
   return (
     <form id={formId} className={classes.root} onSubmit={handleSubmit(handleFormSubmit)} autoComplete="off">
-      <CreateTools
-        onlyMedia
+      <input
+        type="file"
         multiple={false}
+        id={MEDIA_ID}
+        name={MEDIA_ID}
+        ref={mediaRef}
+        accept={supportedInputMediaType.join(", ")}
+        style={{ display: mediaWatcher.length ? "none" : "block" }}
         onChange={handleMediaChange}
       />
       
@@ -68,15 +88,7 @@ export default function CreateStories({
         {errors[MEDIA_ID]?.message}
       </Typography>
 
-      {mediaWatcher.length > 0 && (
-        <GridList cellHeight={120} cols={4} spacing={1}>
-          {mediaWatcher.map((item) => (
-            <GridListTile key={item.name} cols={1} rows={1}>
-              <img src={item.previewURL} alt={item.name} />
-            </GridListTile>
-          ))}
-        </GridList>
-      )}
+      <GridGalleryHorizontal items={mediaWatcher} tileCols={4} cellHeight={500} />
     </form>
   );
 }
