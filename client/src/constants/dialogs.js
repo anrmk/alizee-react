@@ -5,6 +5,8 @@ import { MediaEditorPreview, MediaPreview } from "../components/MediaEditor";
 import SelectableList from "../components/SelectableList/SelectableList";
 import { Receipt, Purchase, CreatePost, CreateStories, CreateMood, Menu as PostMenu } from "../components/Post";
 import { SendTip, Payment } from "../components/Payment";
+import { ReportPostDialog } from "../components/Report";
+
 import SocialList from "../domain/SocialList";
 import { FollowingDialog } from "../domain/Chat";
 import EditCoverDialog from "../domain/EditCoverDialog";
@@ -13,7 +15,6 @@ import DeleteAccountDialog from "../domain/DeleteAccountDialog";
 import ResetPasswordDialog from "../domain/ResetPasswordDialog";
 import LanguageDialog from "../domain/LanguageDialog";
 import ConfirmDialog from "../domain/ConfirmDialog";
-import widthBackButtonDialog from "../hocs/widthBackButtonDialog";
 
 export const LANGUAGE_DIALOG_TYPE = "language";
 
@@ -25,6 +26,7 @@ export const POST_MENU_DIALOG_TYPE = "postmenu";
 export const PAYMENT_DIALOG_TYPE = "payment";
 export const FOLLOW_DIALOG_TYPE = "follow";
 export const SHARE_POST_DIALOG_TYPE = "share";
+export const REPORT_POST_DIALOG_TYPE = "reportPost";
 export const RECEIPT_DIALOG_TYPE = "receipt";
 export const PURCHASES_DIALOG_TYPE = "purchases";
 export const SEND_TIP_DIALOG_TYPE = "sentTip";
@@ -61,6 +63,13 @@ export default {
     ...dialogProps,
   }),
 
+  [REPORT_POST_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+    title: "Report",
+    content: <ReportPostDialog {...contentProps} />,
+    ...baseDialogProps,
+    ...dialogProps,
+  }),
+
   [PAYMENT_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Payment",
     content: <Payment {...contentProps} />,
@@ -77,7 +86,7 @@ export default {
   }),
   [SHARE_POST_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Share post",
-    content: widthBackButtonDialog(contentProps)(SocialList),
+    content: <SocialList {...contentProps} />,
     ...baseDialogProps,
     ...dialogProps,
   }),
@@ -140,7 +149,7 @@ export default {
   }),
   [FOLLOWERS_LIST_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Share List",
-    content: widthBackButtonDialog(contentProps)(SelectableList),
+    content: <SelectableList {...contentProps} />,
     mainBtnText: "Share",
     closeBtnText: "Cancel",
     ...baseDialogProps,

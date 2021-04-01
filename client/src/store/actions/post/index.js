@@ -73,4 +73,12 @@ export {
   RECEIPT_POST_SUCCESS,
   RECEIPT_POST_FAILURE,
   getReceipt
-} from "./getReceipt"
+} from "./getReceipt";
+
+export { 
+  REPORT_POST_REQUEST,
+  REPORT_POST_SUCCESS,
+  REPORT_POST_FAILURE,
+
+  reportPost
+} from "./reportPost";

@@ -1,14 +1,7 @@
 import React, { useEffect, useContext, useCallback } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  Container,
-  Box,
-  Grid,
-  Typography,
-  Hidden,
-  Link as MUILink
-} from "@material-ui/core";
+import { Container, Box, Grid, Typography, Hidden, Link as MUILink } from "@material-ui/core";
 
 import { PostsList } from "../../domain/PostsList";
 import { HotStreamersItemList } from "../../domain/Stream";
@@ -30,7 +23,6 @@ import ApiContext from "../../context/ApiContext";
 import { STORIES_LENGTH } from "../../constants/feed";
 import { SUGESTED_PEOPLE } from "../../constants/routes";
 
-import useProfileActions from "../../hooks/useProfileActions";
 import useShareDialog, { SHARE_DIALOG_POST_TYPE } from "../../hooks/useShareDialog";
 import { useLikeAction, useFavoriteAction, useStoryDialog, useMenuDialog } from "../../hooks/post";
 import { useSendTipDialog, usePaymentDialog, usePurchaseDialog, useReceiptDialog } from "../../hooks/payment";
@@ -43,31 +35,23 @@ function Feed(props) {
   const apiClient = useContext(ApiContext);
 
   const { userInfo } = props;
-  const { blockUser, unblockUser, reportUser } = props;
+  const { blockUser, unblockUser } = props;
   const { people, getPeople, createFollow, deleteFollow } = props;
   const { posts, getPosts, resetPosts } = props;
   const { story, getStory, getFollowingStories, resetFollowingStories, resetStory } = props;
   const { hotStreamers, getHotStreamers } = props;
 
-  const sendTipDialog = useSendTipDialog();
-  const buyPostDialog = usePaymentDialog({isFetching: props.posts.isFetching, onPayment: props.buyPost }); //buy ticket
-  const purchaseDialog = usePurchaseDialog({isFetching: props.posts.isFetching, onPurchases: props.getPurchases });
-  const receiptDialog = useReceiptDialog({isFetching: props.posts.isFetching, onReceipt: props.getReceipt }); 
   const likeAction = useLikeAction();
   const favoriteAction = useFavoriteAction();
+  const sendTipDialog = useSendTipDialog();
+  const buyPostDialog = usePaymentDialog({ isFetching: props.posts.isFetching, onPayment: props.buyPost }); //buy ticket
+  const receiptDialog = useReceiptDialog({ isFetching: props.posts.isFetching, onReceipt: props.getReceipt });
+  const purchaseDialog = usePurchaseDialog({ isFetching: props.posts.isFetching, onPurchases: props.getPurchases });
   const createStoryDialog = useStoryDialog();
   const postMenuDialog = useMenuDialog();
   const fullScreen = useFullScreen("root");
 
   const { dialogShareOpenClick } = useShareDialog({ type: SHARE_DIALOG_POST_TYPE });
-
-  const profileAction = useProfileActions({
-    onFollow: createFollow,
-    onUnfollow: deleteFollow,
-    onBlock: blockUser,
-    onUnblock: unblockUser,
-    onReport: reportUser,
-  });
 
   useEffect(() => {
     (async () => {
@@ -121,28 +105,22 @@ function Feed(props) {
             userStory={story.data.mStories}
             items={story.data.fStories}
             onItemClick={handleStoryClick}
-            onCreateStoryClick={createStoryDialog.toggle} />
+            onCreateStoryClick={createStoryDialog.toggle}
+          />
 
           <PostsList
             user={userInfo}
             items={posts.data}
             hasMore={posts.hasMore}
             onFetchMore={handleFetchMore}
-            onFollow={profileAction.follow}
-            onUnfollow={profileAction.unfollow}
-            onBlock={profileAction.block}
-            onUnblock={profileAction.unblock}
-            onReport={profileAction.report}
-
             onLike={likeAction.toggle}
             onFavorite={favoriteAction.toggle}
             onSendTip={sendTipDialog.toggle}
             onBuyPost={buyPostDialog.toggle}
             onReceipt={receiptDialog.toggle}
             onPurchase={purchaseDialog.toggle}
-           
-            onMenu={postMenuDialog.toggle} //??
             onShare={dialogShareOpenClick} //??
+            onMenu={postMenuDialog.toggle} //??
           />
         </Grid>
         <Hidden smDown>
@@ -226,9 +204,6 @@ function mapDispatchToProps(dispatch) {
 
     blockUser: (api, userName) => dispatch(settingsActions.createBlackList(api, userName)),
     unblockUser: (api, userName) => dispatch(settingsActions.deleteBlackList(api, userName)),
-    reportUser: (api, userName) => {
-      console.log("Report user");
-    },
 
     buyPost: (api, id) => dispatch(paymentActions.buyPost(api, id)),
 

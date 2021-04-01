@@ -13,7 +13,7 @@ function Menu({
   onShareClick
 }) {
    const handleReport = () => {
-     onReport && onReport(userName);
+     onReport && onReport({postId, userName});
    };
 
    const handleShareClick = () => {

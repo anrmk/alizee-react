@@ -81,8 +81,7 @@ export default function useShareDialog({
     }, {
       multiple: true,
       items: followersList,
-      onItemSelect: (selected) => setSelectedChats(selected),
-      onBackClick: type === SHARE_DIALOG_STORY_TYPE && dialog.back
+      onItemSelect: (selected) => setSelectedChats(selected)
     }));
   }, [followersList, selectedChats])
 

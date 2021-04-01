@@ -27,7 +27,6 @@ const Post = React.memo((props) => {
 
   const { id, user, owner, post } = props;
   const { likes, isLike, isFavorite } = props;
-  const { onFollow, onUnfollow, onBlock, onUnblock, onReport, onShareToChatClick } = props;
   const { onLike, onFavorite, onSendTip, onBuyPost, onReceipt, onPurchase, onShare, onMenu } = props;
 
   const handleMenuClick = () => {
@@ -63,16 +62,17 @@ const Post = React.memo((props) => {
       />
 
       <CardMedia {...doubleTap}>
-        <MediaContent 
-          className={classes.post} 
+        <MediaContent
+          className={classes.post}
           id={id}
           user={owner}
-          items={post.media} 
-          amount={post.amount} 
-          isPurchased={post.isPurchased} 
+          items={post.media}
+          amount={post.amount}
+          isPurchased={post.isPurchased}
           isOwner={user.id === owner.id}
           isLiked={isLikeAnimation}
-          onPayClick={onBuyPost} />
+          onPayClick={onBuyPost}
+        />
       </CardMedia>
 
       <CardContent>

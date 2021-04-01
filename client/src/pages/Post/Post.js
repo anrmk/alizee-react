@@ -23,9 +23,7 @@ import { COMMENTS_POST_LENGTH } from "../../constants/feed";
 import { HOME_ROUTE } from "../../constants/routes";
 import useSlidingViews from "../../hooks/useSlidingViews";
 
-import useProfileActions from "../../hooks/useProfileActions";
-
-import useShareDialog, { SHARE_DIALOG_POST_TYPE, SHARE_DIALOG_PROFILE_TYPE } from "../../hooks/useShareDialog";
+import useShareDialog, { SHARE_DIALOG_POST_TYPE } from "../../hooks/useShareDialog";
 import { useLikeAction, useFavoriteAction, useMenuDialog } from "../../hooks/post";
 import { useSendTipDialog, usePaymentDialog, usePurchaseDialog, useReceiptDialog } from "../../hooks/payment";
 
@@ -40,25 +38,16 @@ function PostPage(props) {
 
   const { user, post, comment } = props;
   const { getPost, getComments, resetComments, createComment } = props;
-  const { createFollow, deleteFollow, blockUser, unblockUser, reportUser } = props;
 
-  const sendTipDialog = useSendTipDialog();
-  const buyPostDialog = usePaymentDialog({isFetching: props.post.isFetching, onPayment: props.buyPost });
-  const purchaseDialog = usePurchaseDialog({ isFetching: props.post.isFetching, onPurchases: props.getPurchases });
-  const receiptDialog = useReceiptDialog({ isFetching: props.post.isFetching, onReceipt: props.getReceipt });
   const likeAction = useLikeAction();
   const favoriteAction = useFavoriteAction();
-  const postMenuAction = useMenuDialog();
+  const sendTipDialog = useSendTipDialog();
+  const buyPostDialog = usePaymentDialog({isFetching: props.post.isFetching, onPayment: props.buyPost });
+  const receiptDialog = useReceiptDialog({ isFetching: props.post.isFetching, onReceipt: props.getReceipt });
+  const purchaseDialog = usePurchaseDialog({ isFetching: props.post.isFetching, onPurchases: props.getPurchases });
+  const postMenuDialog = useMenuDialog();
 
   const { dialogShareOpenClick } = useShareDialog({ type: SHARE_DIALOG_POST_TYPE });
-
-  const profileAction = useProfileActions({
-    onFollow: createFollow,
-    onUnfollow: deleteFollow,
-    onBlock: blockUser,
-    onUnblock: unblockUser,
-    onReport: reportUser,
-  })
 
   useEffect(() => {
     if (!postId) {
@@ -126,7 +115,7 @@ function PostPage(props) {
                 </IconButton>
               </Hidden>
 
-              <IconButton onClick={() => postMenuAction.toggle({ postId: post.data.id, userName: post.owner.userName })}>
+              <IconButton onClick={() => postMenuDialog.toggle({ postId: post.data.id, userName: post.owner.userName })}>
                 <MoreVertIcon />
               </IconButton>
             </>

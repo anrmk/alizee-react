@@ -153,12 +153,6 @@ export default function useVideoStream({ userName, peerName, onHangup, onCallbac
       stream: stream,
       config: {
         iceServers: [
-          { urls: "stun:stun.l.google.com:19302" },
-          { urls: "stun:stun.services.mozilla.com" },
-          { urls: "stun:stun.stunprotocol.org:3478" },
-          { url: "stun:stun.l.google.com:19302" },
-          { url: "stun:stun.services.mozilla.com" },
-          { url: "stun:stun.stunprotocol.org:3478" },
           {
             url: 'turn:192.158.29.39:3478?transport=udp',
             credential: 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
@@ -170,7 +164,7 @@ export default function useVideoStream({ userName, peerName, onHangup, onCallbac
 
     peer.on("connect", () => {
       setStatus("");
-      setCalling(false);
+      setCalling(false); 
       setCallAccepted(true);
     });
 
