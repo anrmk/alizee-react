@@ -28,10 +28,10 @@ const useStyles = makeStyles((theme) => ({
 
   messengerMessage: {
     width: "fit-content",
-    maxWidth: "80%",
+    maxWidth: "70%",
     minWidth: "100px",
-    margin: theme.spacing(1, 0),
-    padding: theme.spacing(1),
+    marginBottom: theme.spacing(0.5),
+    padding: theme.spacing(0.5),
     display: "flex",
     flexFlow: "nowrap",
     flexDirection: "column",
@@ -44,14 +44,11 @@ const useStyles = makeStyles((theme) => ({
   messengerMediaMessage: {
     maxWidth: "50%",
     width: "100%",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       maxWidth: "60%",
     },
-    [theme.breakpoints.down("sm")]: {
-      maxWidth: "70%",
-    },
     [theme.breakpoints.down("xs")]: {
-      maxWidth: "80%",
+      maxWidth: "70%",
     },
   },
 

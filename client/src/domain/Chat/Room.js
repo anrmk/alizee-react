@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback } from "react";
-import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -24,6 +23,7 @@ import useStyles from "./styles";
 function Room({
   userId,
   data,
+
   onClose,
   onMessageCreate,
   onMessageClear,
@@ -39,51 +39,52 @@ function Room({
   const [anchorEl, setAnchorEl] = useState(null);
   const [isSendMessage, setIsSendMessage] = useState(false);
   const isMenuOpen = Boolean(anchorEl);
+  const {id, userName, name, avatarUrl, showActivity, offlineDate, messages} = data || {};
 
   useEffect(() => {
-    if (data?.messages) {
+    if (messages) {
       setIsSendMessage(false);
     }
-  }, [data?.messages]);
+  }, [messages]);
 
-  const handleMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleMenuOpen = (e) => {
+    setAnchorEl(e.currentTarget);
   };
 
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
 
-  const handleMessageCreate = (data) => {
+  const handleMessageCreate = (d) => {
     setIsSendMessage(true);
-    onMessageCreate && onMessageCreate(data);
+    onMessageCreate && onMessageCreate(d);
   };
 
-  const handleMessageClear = (e) => {
+  const handleMessageClear = useCallback((e) => {
     e.preventDefault();
     handleMenuClose();
-    onMessageClear && onMessageClear(data.id);
-  };
+    onMessageClear && onMessageClear(id);
+  }, [id]);
 
-  const handleRoomDelete = (e) => {
+  const handleRoomDelete = useCallback((e) => {
     e.preventDefault();
     handleMenuClose();
-    onRoomDelete && onRoomDelete(data.id);
-  };
+    onRoomDelete && onRoomDelete(id);
+  }, [id]);
 
   const handleAccountBlock = (e) => {
     e.preventDefault();
     handleMenuClose();
-    onAccountBlock && onAccountBlock(data.id, data.followerId)
+    onAccountBlock && onAccountBlock(id, userName)
   }
 
   const handleVideoClick = (e) => {
     e.preventDefault();
-    onVideoStreem && onVideoStreem(data.username);
+    onVideoStreem && onVideoStreem(userName);
   }
 
   const handleSendTipClick = useCallback(() => {
-    onSendTip && onSendTip({name: data.name, userName: data.username, avatarUrl: data.avatarUrl});
+    onSendTip && onSendTip({ name, userName, avatarUrl});
   }, [data]);
 
   return (
@@ -92,12 +93,12 @@ function Room({
         <Card className={classes.card}>
           <CardHeader
             avatar={
-              <Link to={PROFILE_USERNAME_ROUTE(data.username)}>
-                <Avatar src={data.avatarUrl} />
+              <Link to={PROFILE_USERNAME_ROUTE(userName)}>
+                <Avatar src={avatarUrl} />
               </Link>
             }
-            title={data.name}
-            subheader={data.showActivity && (data.offlineDate ? formatDate(data.offlineDate) : "online")}
+            title={name}
+            subheader={showActivity && (offlineDate ? formatDate(offlineDate) : "online")}
             action={
               <>
                 <IconButton onClick={onClose}>
@@ -109,7 +110,7 @@ function Room({
                 <IconButton
                   aria-label="settings"
                   ref={anchorEl}
-                  aria-controls={data.id}
+                  aria-controls={id}
                   aria-haspopup="true"
                   onClick={handleMenuOpen}>
                   <MoreVertIcon />
@@ -119,8 +120,8 @@ function Room({
           />
 
           <RoomMenu
-            id={data.id}
-            userName={data.username}
+            id={id}
+            userName={userName}
             anchorEl={anchorEl}
             open={isMenuOpen}
             onClose={handleMenuClose}
@@ -131,7 +132,7 @@ function Room({
           <Divider />
 
           <CardContent className={classes.cardContent}>
-            <MessagesList isSendMessage={isSendMessage} userId={userId} items={data.messages} onMediaView={onMediaView}/>
+            <MessagesList isSendMessage={isSendMessage} userId={userId} items={messages} onMediaView={onMediaView}/>
           </CardContent>
           <CardActions className={classes.cardFooter}>
             <MessageSenderInput onSendMessageClick={handleMessageCreate} onSendTip={handleSendTipClick} />
@@ -149,26 +150,5 @@ function Room({
     </>
   );
 }
-
-Room.propTypes = {
-  userId: PropTypes.string,
-  data: PropTypes.any,
-
-  onClose: PropTypes.func,
-  onMessageCreate: PropTypes.func,
-  onMessageClear: PropTypes.func,
-  onRoomDelete: PropTypes.func,
-  onAccountBlock: PropTypes.func
-};
-
-Room.defaultProps = {
-  userId: "",
-
-  onClose: undefined,
-  onMessageCreate: undefined,
-  onMessageClear: undefined,
-  onRoomDelete: undefined,
-  onAccountBlock: undefined
-};
 
 export default Room;

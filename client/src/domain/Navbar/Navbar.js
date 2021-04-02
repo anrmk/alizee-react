@@ -56,7 +56,7 @@ function Navbar({
   };
 
   return (
-    <AppBar position="fixed" className={classes.root}>
+    <AppBar position="fixed" className={classes.root} >
       <Container>
         <Toolbar disableGutters>
           {!location.pathname.includes("/feed") && (
@@ -75,7 +75,7 @@ function Navbar({
 
           <Box className={classes.grow} />
 
-          <Box className={classes.controls}>
+          <Box display="inline" >
             <Hidden smDown>
               <Tooltip title={t("SidebarSearchText")}>
                 <IconButton
@@ -106,10 +106,7 @@ function Navbar({
 
             <IconButton
               ref={anchorEl}
-              edge="end"
-              aria-label="account of current user"
               aria-controls={menuId}
-              aria-haspopup="true"
               onClick={handleMenuOpen}
             >
               <Avatar src={avatarUrl} size="small" borderColor={USER_RANKING[ranking]} />

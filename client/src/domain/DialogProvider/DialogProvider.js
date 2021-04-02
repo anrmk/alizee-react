@@ -8,7 +8,10 @@ import {
   DialogActions,
   CircularProgress,
   IconButton,
+  useMediaQuery
 } from "@material-ui/core";
+import { useTheme } from "@material-ui/core/styles";
+
 import BackIcon from "@material-ui/icons/ArrowBackRounded";
 
 import DialogContext, {
@@ -19,6 +22,9 @@ import DialogContext, {
 } from "../../context/DialogContext";
 
 export default function DialogProvider({ children }) {
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [dialogOptions, dispatch] = useReducer((state, action) => {
     switch (action.type) {
       case UPDATE_MODAL:
@@ -74,6 +80,9 @@ export default function DialogProvider({ children }) {
       {children}
 
       <Dialog
+        fullWidth={true}
+        maxWidth={"sm"}
+        fullScreen={fullScreen}
         aria-labelledby="dialog-title"
         open={dialogOptions.open}
         onClose={handleCloseClick}

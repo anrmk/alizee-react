@@ -76,9 +76,10 @@ const Message = React.memo(({
     >
       <Box display="flex" flexDirection="row" justifyContent="flex-end">
         <Typography variant="body2">{message.message}</Typography>
-        <Typography className={classes.messengerMessageDate} variant="caption" component="small">
+        {message.media?.length === 0 && (<Typography className={classes.messengerMessageDate} variant="caption" component="small">
           {formatDate(message.createdDate)}
-        </Typography>
+        </Typography>)
+      }
       </Box>
       {message.media?.length > 0 && (
         <GridList

@@ -30,9 +30,6 @@ const useStyles = makeStyles((theme) => ({
   gridListPreviewItem: {
     marginRight: "auto !important",
     marginLeft: "auto !important",
-    height: "350px",
-    maxWidth: "300px",
-    width: "100%",
     overflow: "hidden",
     marginBottom: `${theme.spacing(2)}px !important`,
   },

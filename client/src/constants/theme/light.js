@@ -48,6 +48,7 @@ export default createMuiTheme({
     MuiAppBar: {
       colorPrimary: {
         backgroundColor: "#F5F7F8",
+        color: "rgba(0, 0, 0, 0.87)"
       },
     },
 

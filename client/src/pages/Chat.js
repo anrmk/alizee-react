@@ -45,17 +45,16 @@ function Chat(props) {
     deleteRoom,
     deleteRoomHistory,
     filterRooms,
-    createBlackList,
-    resetCurrentRoom
+    block,
+    resetCurrentRoom,
   } = props;
   const { createMessage } = props;
   const { addMessage } = props;
 
-  const sendTipDialog = useSendTipDialog({ onSendTip: props.sendTip})
-
+  const sendTipDialog = useSendTipDialog({ onSendTip: props.sendTip });
+  const mediaViewDialog = useMediaPreviewDialog();
   const { currentSlidingViewsState, toggleSlidingViewsState } = useSlidingViews(RIGHT_OPEN_TYPE);
   const dialog = useDialog();
-  const mediaViewDialog = useMediaPreviewDialog();
   const fullScreen = useFullScreen("root");
 
   useChatHub({
@@ -91,13 +90,18 @@ function Chat(props) {
 
   useEffect(() => {
     if (followings.data.length) {
-      dialog.setParams(dialogs[CHAT_FOLLOWERS_TYPE]({
-        loading: false
-      }, {
-        items: followings.data,
-        onItemClick: handleRoomCreate,
-        onSearchChange: handleFollowingsFilter
-      }));
+      dialog.setParams(
+        dialogs[CHAT_FOLLOWERS_TYPE](
+          {
+            loading: false,
+          },
+          {
+            items: followings.data,
+            onItemClick: handleRoomCreate,
+            onSearchChange: handleFollowingsFilter,
+          }
+        )
+      );
     }
   }, [followings.data]);
 
@@ -110,7 +114,7 @@ function Chat(props) {
   };
 
   const handleRoomGet = async (userName) => {
-    if (current?.username !== userName) {
+    if (current?.userName !== userName) {
       await getRoom(apiClient, userName);
       toggleSlidingViewsState();
     }
@@ -127,16 +131,16 @@ function Chat(props) {
     }
 
     await deleteRoom(apiClient, id);
-
     toggleSlidingViewsState();
   };
 
   const handleMessageCreate = async (data) => {
+    debugger
     if (data && (data.message.length || data.media.length)) {
       await createMessage(apiClient, {
         id: current.id,
         message: data.message,
-        mediaFiles: data.media
+        mediaFiles: data.media,
       });
     }
   };
@@ -148,15 +152,15 @@ function Chat(props) {
     await deleteRoomHistory(apiClient, id);
   };
 
-  const handleAccountBlock = async (id, userId) => {
+  const handleAccountBlock = async (id, userName) => {
     if (!window.confirm("Block this User? They won't be able to see your profile")) {
       return;
     }
 
-    await createBlackList(apiClient, userId);
+    await block(apiClient, userName);
     await removeRoom(id);
     resetCurrentRoom();
-  }
+  };
 
   const handleRoomClose = (data) => {
     if (data) {
@@ -168,7 +172,7 @@ function Chat(props) {
   const handleCallToPeer = (userName) => {
     fullScreen.toggle(true);
     history.push(PEAR_TO_PEAR_ID_ROUTE(userName));
-  }
+  };
 
   const handleUserListBtnClick = async () => {
     dialog.toggle(dialogs[CHAT_FOLLOWERS_TYPE]({ loading: true }));
@@ -177,11 +181,7 @@ function Chat(props) {
 
   return (
     <Container>
-      <SlidingViews
-        mobileOnly
-        currentState={currentSlidingViewsState}
-        firstSize={4}
-        secondSize={8}>
+      <SlidingViews mobileOnly currentState={currentSlidingViewsState} firstSize={4} secondSize={8}>
         <Sidebar
           isLoading={chat.isFetching}
           user={user}
@@ -191,7 +191,7 @@ function Chat(props) {
           onSearchChange={handleRoomsFilter}
           onUserListBtnClick={handleUserListBtnClick}
         />
-        
+
         <Room
           data={current}
           userId={user.id}
@@ -230,7 +230,7 @@ function mapStateToProps(state) {
       errorMessage: state.chat.errorMessage,
       keywords: state.keywords,
     },
-    current: state.chat?.current
+    current: state.chat?.current,
   };
 }
 
@@ -251,7 +251,7 @@ function mapDispatchToProps(dispatch) {
     deleteRoomHistory: (api, id) => dispatch(actionChat.deleteRoomHistory(api, id)),
     resetCurrentRoom: () => dispatch(actionChat.resetCurrentRoom()),
 
-    createBlackList: (api, id) => dispatch(settings.createBlackList(api, id)),
+    block: (api, id) => dispatch(settings.createBlackList(api, id)),
 
     createMessage: (api, id, message) => dispatch(actionChat.createMessage(api, id, message)),
 
