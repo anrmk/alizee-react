@@ -1,34 +1,55 @@
-import React, { useState } from "react";
+import React from "react";
 
-import { ListItemIcon, ListItemText,  List, ListItem } from "@material-ui/core";
+import { ListItemIcon, ListItemText, List, ListItem } from "@material-ui/core";
+import BlockIcon from "@material-ui/icons/BlockOutlined";
 import ShareIcon from "@material-ui/icons/ShareOutlined";
-import ReportOutlinedIcon from "@material-ui/icons/ReportOutlined";
+import ReportIcon from "@material-ui/icons/ReportOutlined";
 
 function Menu({
   postId,
   userName,
   isOwner,
 
+  onBlock,
   onReport,
-  onShareClick
+  onShare,
 }) {
-   const handleReport = () => {
-     onReport && onReport({postId, userName});
-   };
+  const handleBlockClick = () => {
+    onBlock && onBlock({ userName });
+  };
 
-   const handleShareClick = () => {
-      onShareClick && onShareClick({ postId, userName });
-   };
+  const handleReportClick = () => {
+    onReport && onReport({ postId, userName });
+  };
+
+  const handleShareClick = () => {
+    onShare && onShare({ postId, userName });
+  };
 
   return (
     <List>
-      <ListItem button onClick={handleReport}>
-        <ListItemIcon><ReportOutlinedIcon /></ListItemIcon>  
-        <ListItemText primary="Report" />
-      </ListItem>
+      {!isOwner && (
+        <ListItem button onClick={handleBlockClick}>
+          <ListItemIcon>
+            <BlockIcon />
+          </ListItemIcon>
+          <ListItemText primary="Block" />
+        </ListItem>
+      )}
+
+      {!isOwner && (
+        <ListItem button onClick={handleReportClick}>
+          <ListItemIcon>
+            <ReportIcon />
+          </ListItemIcon>
+          <ListItemText primary="Report" />
+        </ListItem>
+      )}
 
       <ListItem button onClick={handleShareClick}>
-        <ListItemIcon><ShareIcon /></ListItemIcon>
+        <ListItemIcon>
+          <ShareIcon />
+        </ListItemIcon>
         <ListItemText primary="Share to..." />
       </ListItem>
     </List>

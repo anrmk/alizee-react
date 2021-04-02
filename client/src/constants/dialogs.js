@@ -5,7 +5,7 @@ import { MediaEditorPreview, MediaPreview } from "../components/MediaEditor";
 import SelectableList from "../components/SelectableList/SelectableList";
 import { Receipt, Purchase, CreatePost, CreateStories, CreateMood, Menu as PostMenu } from "../components/Post";
 import { SendTip, Payment } from "../components/Payment";
-import { ReportPostDialog } from "../components/Report";
+import { ReportPost, BlockUser } from "../components/Report";
 
 import SocialList from "../domain/SocialList";
 import { FollowingDialog } from "../domain/Chat";
@@ -25,6 +25,7 @@ export const CREATE_MOOD_DIALOG_TYPE = "createMood";
 export const POST_MENU_DIALOG_TYPE = "postmenu";
 export const PAYMENT_DIALOG_TYPE = "payment";
 export const FOLLOW_DIALOG_TYPE = "follow";
+export const BLOCK_DIALOG_TYPE = "block";
 export const SHARE_POST_DIALOG_TYPE = "share";
 export const REPORT_POST_DIALOG_TYPE = "reportPost";
 export const RECEIPT_DIALOG_TYPE = "receipt";
@@ -65,7 +66,16 @@ export default {
 
   [REPORT_POST_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Report",
-    content: <ReportPostDialog {...contentProps} />,
+    content: <ReportPost {...contentProps} />,
+    mainBtnText: "Report",
+    ...baseDialogProps,
+    ...dialogProps,
+  }),
+
+  [BLOCK_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+    title: "Block",
+    content: <BlockUser {...contentProps} />,
+    mainBtnText: "Confirm",
     ...baseDialogProps,
     ...dialogProps,
   }),
@@ -77,6 +87,7 @@ export default {
     ...baseDialogProps,
     ...dialogProps,
   }),
+  
   [FOLLOW_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Follow",
     content: <Payment {...contentProps} />,

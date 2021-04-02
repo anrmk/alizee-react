@@ -1,1 +1,2 @@
-export { default as ReportPostDialog } from "./ReportPostDialog";
+export { default as ReportPost } from "./ReportPost";
+export { default as BlockUser } from "./BlockUser";

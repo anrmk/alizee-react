@@ -2,13 +2,13 @@ import React, { useState } from "react";
 
 import { Box, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from "@material-ui/core";
 
-function ReportPostDialog({
+function ReportPost({
   formId,
   postId,
 
   onReport,
 }) {
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState("0");
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -16,10 +16,7 @@ function ReportPostDialog({
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    
-    if(!value)
-      return;
-
+    if (!value) return;
     onReport && onReport({ postId, reportType: value });
   };
 
@@ -38,4 +35,4 @@ function ReportPostDialog({
   );
 }
 
-export default ReportPostDialog;
+export default ReportPost;

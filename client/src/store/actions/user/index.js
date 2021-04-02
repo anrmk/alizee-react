@@ -60,6 +60,16 @@ export {
 } from "./removeFavorite";
 
 export {
+  ADD_BLOCKED_SUCCESS,
+  addBlocked
+} from "./addBlocked";
+
+export {
+  REMOVE_BLOCKED_SUCCESS,
+  removeBlocked
+} from "./removeBlocked";
+
+export {
   UPDATE_MOOD_SUCCESS,
   updateMood
 } from "./updateMood";

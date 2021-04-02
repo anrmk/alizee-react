@@ -28,7 +28,15 @@ import {
   UNREJECT_FOLLOW_SUCCESS,
   UNREJECT_FOLLOW_FAILURE,
 
-  RESET_RELATIONSHIP
+  RESET_RELATIONSHIP,
+
+  BLOCK_USER_REQUEST,
+  BLOCK_USER_SUCCESS,
+  BLOCK_USER_FAILURE,
+
+  UNBLOCK_USER_REQUEST,
+  UNBLOCK_USER_SUCCESS,
+  UNBLOCK_USER_FAILURE
 } from "../actions/relationship";
 
 import {
@@ -282,6 +290,44 @@ export default function usersReducer(
       };
     }
 
+    //BLOCK/UNBLOCK
+    case BLOCK_USER_REQUEST:{
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case BLOCK_USER_SUCCESS:{
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+    case BLOCK_USER_FAILURE:{
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case UNBLOCK_USER_REQUEST:{
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case UNBLOCK_USER_SUCCESS:{
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+    case UNBLOCK_USER_FAILURE:{
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
 
     default:
       return state;

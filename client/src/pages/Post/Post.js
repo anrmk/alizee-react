@@ -23,6 +23,7 @@ import { COMMENTS_POST_LENGTH } from "../../constants/feed";
 import { HOME_ROUTE } from "../../constants/routes";
 import useSlidingViews from "../../hooks/useSlidingViews";
 
+import useBlockDialog from "../../hooks/useBlockDialog";
 import useShareDialog, { SHARE_DIALOG_POST_TYPE } from "../../hooks/useShareDialog";
 import { useLikeAction, useFavoriteAction, useMenuDialog } from "../../hooks/post";
 import { useSendTipDialog, usePaymentDialog, usePurchaseDialog, useReceiptDialog } from "../../hooks/payment";
@@ -96,6 +97,7 @@ function PostPage(props) {
             <MediaContent items={post.data.media} amount={post.data.amount} isPurchased={post.data.isPurchased} isOwner={user.id === post.owner?.id} />
           </CardMedia>
         </Card>
+ 
         <Comments
           isOwner={user.id === post.owner.id}
           user={post.owner}

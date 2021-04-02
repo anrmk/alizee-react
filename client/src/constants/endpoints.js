@@ -67,6 +67,8 @@ export default {
     deleteFollow: "relationship/follow",
     acceptFollow: "relationship/accept",
     rejectFollow: "relationship/reject",
+    createBlock: "relationship/block",
+    deleteBlock: "relationship/unblock",
 
     // SUGGESTIONS
     getPeopleSuggestions: "suggestion/people",
@@ -98,9 +100,12 @@ export default {
     getAccountPersonalized: "accountsetting/isaccountpersonalized",
     getAccountInterests: "accountsetting/interests",
     createAccountInterests: "accountsetting/interests",
+    //TODO: Remove-----
     getBlackList: "accountsetting/blacklist",
     deleteBlackList: "accountsetting/blacklist",
     createBlackList: "accountsetting/blacklist",
+    //------
+
     updateCover: "accountsetting/updatecover",
     getPersonal: "accountsetting/personal",
     updatePersonal: "accountsetting/personal",

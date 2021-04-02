@@ -19,6 +19,8 @@ import {
   REMOVE_FOLLOWER_SUCCESS,
   UPDATE_MOOD_SUCCESS,
   ADD_FAVORITE_SUCCESS,
+  ADD_BLOCKED_SUCCESS,
+  REMOVE_BLOCKED_SUCCESS,
   REMOVE_FAVORITE_SUCCESS,
 } from "../actions/user";
 
@@ -153,6 +155,20 @@ export default function user(
     }
 
     case REMOVE_FAVORITE_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case ADD_BLOCKED_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case REMOVE_BLOCKED_SUCCESS: {
       return {
         ...state,
         ...action.payload,
