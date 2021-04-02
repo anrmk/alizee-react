@@ -1,20 +1,16 @@
 import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
-import ReactPlayer from "react-player";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import { Typography, GridList, GridListTile, FormControl, TextField, InputAdornment, Box } from "@material-ui/core";
+import { Typography, FormControl, TextField, InputAdornment, Box } from "@material-ui/core";
 
-import { CreateTools } from "../../../components/Post";
+import CreateTools from "./CreateTools";
+import GridGalleryHorizontal from "../../GridGalleryHorizontal/GridGalleryHorizontal";
 
-import {
-  MEDIA_GROUP_TYPE,
-  MEDIA_TYPE,
-} from "../../../constants/media_types";
+import { POST_AMOUNT_TEXT_HELPER } from "../../../constants/form_validations";
 
 import useStyles from "./styles";
-import { POST_AMOUNT_TEXT_HELPER } from "../../../constants/form_validations";
 
 const MEDIA_ID = "medias";
 const DESCRIPTION_ID = "description";
@@ -99,31 +95,6 @@ export default function CreatePost({
     }
   };
 
-  const mediaTypeToKind = (type) => {
-    let localType;
-    if (MEDIA_TYPE[type] === MEDIA_GROUP_TYPE.IMAGE) {
-      localType = 2;
-    } else if (MEDIA_TYPE[type] === MEDIA_GROUP_TYPE.VIDEO) {
-      localType = 1;
-    }
-    return localType;
-  }
-
-  const renderMediaItem = (type, url) => {
-    if (type === 1) {
-      return (
-        <ReactPlayer
-          className={classes.video}
-          controls={true}
-          muted={true}
-          url={url}
-        />
-      );
-    } else if (type === 2) {
-      return <img src={url} />;
-    }
-  };
-
   return (
     <form id={formId} className={classes.root} onSubmit={handleSubmit(handleFormSubmit)} autoComplete="off">
       <FormControl variant="filled" fullWidth>
@@ -179,15 +150,7 @@ export default function CreatePost({
           onChange={handleToolsChange}
         />
       </Box>
-      {mediaWatcher.length > 0 && (
-        <GridList cellHeight={120} cols={4} spacing={1}>
-          {mediaWatcher.map((item) => (
-            <GridListTile key={item.name} cols={1} rows={1}>
-              {renderMediaItem(mediaTypeToKind(item.type), item.previewURL)}
-            </GridListTile>
-          ))}
-        </GridList>
-      )}
+      <GridGalleryHorizontal items={mediaWatcher} />
     </form>
   );
 }
