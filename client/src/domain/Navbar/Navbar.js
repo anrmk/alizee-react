@@ -59,10 +59,10 @@ function Navbar({
     <AppBar position="fixed" className={classes.root} >
       <Container>
         <Toolbar disableGutters>
-          {!location.pathname.includes("/feed") && (
+          {location.pathname !== HOME_ROUTE && (
             <>
-              <Box display="flex" alignItems="center">
-                <IconButton onClick={() => history.goBack()}>
+              <Box display="flex" alignItems="center" onClick={() => history.goBack()}>
+                <IconButton>
                   <ArrowBackIcon />
                 </IconButton>
                 <Typography>Back</Typography>

@@ -5,6 +5,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import ApiContext from "../context/ApiContext";
 import * as searchActions from "../store/actions/search";
 import * as actionSuggestion from "../store/actions/suggestion";
+import * as actionPost from "../store/actions/post";
 import { SEARCH_USER_TYPE, isUserType } from "../constants/search";
 import { POSTS_LENGTH } from "../constants/feed";
 
@@ -54,6 +55,10 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
         await dispatch(searchActions.getUsersByQuery(apiClient, { query: currentTags, type }));
       })();
       setCurrentQuery(currentTags);
+    }
+
+    return () => {
+      dispatch(actionPost.resetPosts());
     }
   }, []);
 

@@ -17,7 +17,7 @@ import useFullScreen from "../hooks/useFullScreen";
 
 function Story(props) {
   const history = useHistory();
-  const location = useLocation(HOME_ROUTE);
+  const location = useLocation(DEFAULT_ROUTE);
   const { username, slideId } = useParams();
   const { path } = useRouteMatch();
   const apiClient = useContext(ApiContext);

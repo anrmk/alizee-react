@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { createBrowserHistory as history } from "history";
-import { CssBaseline, Button } from "@material-ui/core";
+import { CssBaseline } from "@material-ui/core";
 
 import LinearDeterminate from "./components/LinearDeterminate";
 import ThemeProvider from "./domain/ThemeProvider";
@@ -22,7 +22,7 @@ function App() {
             <DialogProvider>
               <CssBaseline />
               <Router history={history}>
-                <Route path="/" component={Main} />
+                <Main />
               </Router>
             </DialogProvider>
           </SnackbarProvider>

@@ -12,16 +12,14 @@ import ProfileContent from "../../domain/ProfileContent";
 import * as postActions from "../../store/actions/post";
 import * as relationshipActions from "../../store/actions/relationship";
 import * as userActions from "../../store/actions/user";
-import * as moodActions from "../../store/actions/mood";
 import * as accountActions from "../../store/actions/account";
 import * as settingsActions from "../../store/actions/settings";
-import * as paymentActions from "../../store/actions/payment";
 
 import {
-  HOME_ROUTE,
   SETTINGS_ROUTE,
   POST_ID_ROUTE,
   SETTINGS_EDIT_PROFILE_ROUTE,
+  NOT_FOUND_ROUTE,
 } from "../../constants/routes";
 
 import useDialog from "../../hooks/useDialog";
@@ -93,7 +91,7 @@ function Profile(props) {
   }
 
   if (user.errorMessage) {
-    return <Redirect exact to={HOME_ROUTE} />;
+    return <Redirect exact to={NOT_FOUND_ROUTE} />;
   }
 
   const handleCoverSave = async (data) => {
@@ -140,11 +138,11 @@ function Profile(props) {
   };
 
   const handlePeopleFollowClick = (userName) => {
-    user.isFollow ? deleteFollow(apiClient, userName) : createFollow(apiClient, userName);
+    user.data.isFollow ? deleteFollow(apiClient, userName) : createFollow(apiClient, userName);
   };
 
   const handleFavoriteClick = (userName) => {
-    user.isFavorite ? deleteFavorites(apiClient, userName) : createFavorites(apiClient, userName);
+    user.data.isFavorite ? deleteFavorites(apiClient, userName) : createFavorites(apiClient, userName);
   };
 
   const handleItemClick = (id) => {
@@ -156,20 +154,20 @@ function Profile(props) {
   return (
     <Container className={classes.root} fixed>
       <Cover
-        user={user}
+        user={user.data}
         isOwner={username === me.userName}
         disabled={media.isFetching}
-        onFavoriteClick={() => handleFavoriteClick(user.userName)}
-        onFollowClick={() => handlePeopleFollowClick(user.userName)}
-        onSendGiftClick={() => handleGiftSendClick(user.userName)}
-        onShareClick={() => dialogShareOpenClick({ userName: user.userName })}
+        onFavoriteClick={() => handleFavoriteClick(user.data.userName)}
+        onFollowClick={() => handlePeopleFollowClick(user.data.userName)}
+        onSendGiftClick={() => handleGiftSendClick(user.data.userName)}
+        onShareClick={() => dialogShareOpenClick({ userName: user.data.userName })}
         onEditCover={handleCoverEditDialog} />
       <Hidden mdUp>
         <ProfileUserInfoMobile
-          user={user}
+          user={user.data}
           isOwner={username === me.userName}
-          isFollow={user.isFollow}
-          subscriptionPrice={user.subscriptionPrice}
+          isFollow={user.data.isFollow}
+          subscriptionPrice={user.data.subscriptionPrice}
           onSubscribeClick={followDialog.toggle}
           onSendTipClick={sendTipDialog.toggle} />
       </Hidden>
@@ -191,14 +189,14 @@ function Profile(props) {
             <Box position="sticky" top="4rem" paddingLeft="8px">
               <ProfileUserInfo
                 className={classes.userInfo}
-                user={user}
+                user={user.data}
                 isOwner={username === me.userName}
-                isFollow={user.isFollow}
-                subscriptionPrice={user.subscriptionPrice}
+                isFollow={user.data.isFollow}
+                subscriptionPrice={user.data.subscriptionPrice}
                 onSubscribeClick={followDialog.toggle}
                 onSendTipClick={sendTipDialog.toggle}
                 onMoodUpdateClick={createMoodDialog.toggle} />
-              {user.sites && <SocialControl urls={user.sites} />}
+              {user.data.sites && <SocialControl urls={user.data.sites} />}
             </Box>
           </Grid>
         </Hidden>
@@ -213,7 +211,10 @@ function mapStateToProps(state) {
       id: state.signIn?.userInfo?.id,
       userName: state.signIn?.userInfo?.userName,
     },
-    user: state.user?.data,
+    user: { 
+      data: state.user?.data,
+      errorMessage: state.user?.errorMessage
+    },
     post: {
       count: state.posts.count,
       isFetching: state.posts.isFetching || false,

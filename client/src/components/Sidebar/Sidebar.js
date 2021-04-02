@@ -102,7 +102,7 @@ function Sidebar({
         <Tooltip title={t("SidebarFeedText")} placement="right">
           <ListItem
             button
-            selected={location.pathname.includes(HOME_ROUTE)} 
+            selected={location.pathname === HOME_ROUTE} 
             to={HOME_ROUTE}
             component={Link}>
             <ListItemIcon>

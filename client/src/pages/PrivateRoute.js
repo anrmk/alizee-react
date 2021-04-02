@@ -2,11 +2,7 @@ import React from "react";
 import { Route, Redirect, useParams, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { 
-  DEFAULT_ROUTE, 
-  HOME_ROUTE, 
-  SIGN_IN_ROUTE, 
-} from "../constants/routes";
+import { DEFAULT_ROUTE, SIGN_IN_ROUTE } from "../constants/routes";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const { pathname } = useLocation();
@@ -15,11 +11,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   const { isAuthenticated } = rest;
 
   if (!isAuthenticated && pathname === DEFAULT_ROUTE && !username) {
-    return <Redirect to={{ pathname: SIGN_IN_ROUTE, state: { from: HOME_ROUTE } }} />;
-  }
-
-  if (isAuthenticated && pathname === DEFAULT_ROUTE && !username) {
-    return <Redirect to={{ pathname: HOME_ROUTE }} />;
+    return <Redirect to={{ pathname: SIGN_IN_ROUTE, state: { from: DEFAULT_ROUTE } }} />;
   }
 
   return (

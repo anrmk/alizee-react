@@ -1,5 +1,5 @@
 export const DEFAULT_ROUTE = "/";
-export const HOME_ROUTE = "/feed";
+export const HOME_ROUTE = "/";
 export const ABOUT_ROUTE = "";
 export const HELP_ROUTE = "/help";
 export const PRIVACY_ROUTE = "";
@@ -55,3 +55,5 @@ export const STORIES_ID_ROUTE = "/stories/:username/:slideId?";
 export const STORIES_DEFAULT_ROUTE = "/stories";
 
 export const STATISTICS_ROUTE = "/statistics";
+
+export const NOT_FOUND_ROUTE = "/not-found"
