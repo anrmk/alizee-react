@@ -46,6 +46,10 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
   },
 
+  gridListUserViewBorder: {
+    border: "2px solid " + theme.palette.background.paper
+  },
+
   gridListTileBarTitleUserView: {
     textAlign: "center",
     alignSelf: "start",

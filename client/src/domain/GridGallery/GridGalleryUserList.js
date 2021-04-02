@@ -28,7 +28,7 @@ function GridGalleryUserList(props) {
             >
               <LazyLoadImage
                 width={"100%"}
-                className={clsx(classes.gridListTileImage, classes.gridListTileImageUserView)}
+                className={clsx(classes.gridListTileImage, classes.gridListTileImageUserView, !item.avatarUrl && classes.gridListUserViewBorder)}
                 effect={item && "blur"}
                 src={item.avatarUrl ? item.avatarUrl : AvatarIcon}
                 alt={item.userName}
