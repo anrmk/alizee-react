@@ -21,6 +21,10 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(1),
     flexShrink: 0,
   },
+
+  followButton: {
+    minWidth: "110px"
+  }
 }));
 
 export default useStyles;

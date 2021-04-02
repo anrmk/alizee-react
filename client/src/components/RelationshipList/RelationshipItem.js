@@ -92,7 +92,7 @@ const RelationshipItem = React.memo((props) => {
         break;
       default: 
           return (<Button
-            className="primary"
+            className={classes.followButton}
             disableElevation
             disableRipple
             variant="contained"
