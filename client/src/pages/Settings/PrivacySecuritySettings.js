@@ -12,6 +12,7 @@ import useDialog from "../../hooks/useDialog";
 
 const DEFAULT_ALERT_SUCCESS_TEXT = "Settings have been updated";
 const DEFAULT_ALERT_ERROR_TEXT = "Settings have not been updated";
+const SET_PRIVATE_ALERT_ERROR_TEXT = "Subscription price should be zero (free) If you cannot update account visibility to public";
 const RESET_PASSWORD_ALERT_SUCCESS_TEXT = "The reset link has been sent to the mail, please check your mail";
 const RESET_PASSWORD_ALERT_ERROR_TEXT = "Something went wrong try again please";
 const DELETE_ACCOUNT_ALERT_SUCCESS_TEXT = "The account has been deleted";
@@ -23,7 +24,7 @@ function PrivacySecuritySettings(props) {
   const [alertSuccessText, setAlertSuccessText] = useState(DEFAULT_ALERT_SUCCESS_TEXT);
   const [alertErrorText, setAlertErrorText] = useState(DEFAULT_ALERT_ERROR_TEXT);
 
-  const { settings, user } = props;
+  const { privacySettings, user } = props;
   const {
     getPrivacy,
     updateActivityStatus,
@@ -41,28 +42,28 @@ function PrivacySecuritySettings(props) {
   }, [])
 
   const handleAccountPrivateChange = (status) => {
-    if (!settings.isFetching) {
+    if (!privacySettings.isFetching) {
       (async () => {
         await updatePrivateStatus(apiClient, status);
-        setAlertTextToDefault();
+        setAlertText(DEFAULT_ALERT_SUCCESS_TEXT, SET_PRIVATE_ALERT_ERROR_TEXT);
       })();
     }
   }
 
   const handleActivityStatusChange = (status) => {
-    if (!settings.isFetching) {
+    if (!privacySettings.isFetching) {
       (async () => {
         await updateActivityStatus(apiClient, status);
-        setAlertTextToDefault();
+        setAlertText();
       })();
     }
   }
 
   const handleOffensiveCommentsChange = (status) => {
-    if (!settings.isFetching) {
+    if (!privacySettings.isFetching) {
       (async () => {
         await updateOffensiveComments(apiClient, status);
-        setAlertTextToDefault();
+        setAlertText();
       })();
     }
   }
@@ -70,9 +71,7 @@ function PrivacySecuritySettings(props) {
   const handlePasswordResetConfirmClick = () => {
     (async () => {
       await getSettingsResetPasswordConfirm(apiClient);
-      setAlertSuccessText(RESET_PASSWORD_ALERT_SUCCESS_TEXT)
-      setAlertErrorText(RESET_PASSWORD_ALERT_ERROR_TEXT)
-      setAlertOpen(true);
+      setAlertText(RESET_PASSWORD_ALERT_SUCCESS_TEXT, RESET_PASSWORD_ALERT_ERROR_TEXT);
     })();
   }
 
@@ -83,9 +82,7 @@ function PrivacySecuritySettings(props) {
   const handleAccountDeleteConfirmClick = () => {
     (async () => {
       await deleteAccount(apiClient);
-      setAlertSuccessText(DELETE_ACCOUNT_ALERT_SUCCESS_TEXT);
-      setAlertErrorText(DELETE_ACCOUNT_ALERT_ERROR_TEXT);
-      setAlertOpen(true);
+      setAlertText(DELETE_ACCOUNT_ALERT_SUCCESS_TEXT, DELETE_ACCOUNT_ALERT_ERROR_TEXT);
     })();
   }
 
@@ -97,9 +94,9 @@ function PrivacySecuritySettings(props) {
     setAlertOpen(false)
   }
 
-  const setAlertTextToDefault = () => {
-    setAlertSuccessText(DEFAULT_ALERT_SUCCESS_TEXT)
-    setAlertErrorText(DEFAULT_ALERT_ERROR_TEXT);
+  const setAlertText = (success = DEFAULT_ALERT_SUCCESS_TEXT, error = DEFAULT_ALERT_ERROR_TEXT) => {
+    setAlertSuccessText(success)
+    setAlertErrorText(error);
     setAlertOpen(true)
   }
 
@@ -108,11 +105,11 @@ function PrivacySecuritySettings(props) {
       successAlert={alertSuccessText || DEFAULT_ALERT_SUCCESS_TEXT}
       errorAlert={alertErrorText || DEFAULT_ALERT_ERROR_TEXT}
       alertOpen={alertOpen}
-      error={user.error}
+      error={user.errorMessage || privacySettings.errorMessage}
       onAlertClose={handleAlertClose}>
       <PrivacyForm 
-        {...settings.privacy}
-        loading={settings.isFetching || user.isFetching}
+        {...privacySettings.data}
+        loading={privacySettings.isFetching || user.isFetching}
         onAccountPrivateUpdate={handleAccountPrivateChange}
         onActivityStatusUpdate={handleActivityStatusChange}
         onOffensiveCommentsUpdate={handleOffensiveCommentsChange}
@@ -124,16 +121,18 @@ function PrivacySecuritySettings(props) {
 
 function mapStateToProps(state) {
   return {
-    settings: {
-      privacy: { 
+    privacySettings: { 
+      isFetching: state.settings.isFetching,
+      data: {
         ...state.settings.data,
         email: state.signIn?.userInfo?.email,
         token: state.signIn?.userInfo?.token
-      }
+      },
+      errorMessage: state.settings.errorMessage,
     },
     user: {
       isFetching: state.user.isFetching,
-      error: state.user.errorMessage
+      errorMessage: state.user.errorMessage
     }
   }
 }

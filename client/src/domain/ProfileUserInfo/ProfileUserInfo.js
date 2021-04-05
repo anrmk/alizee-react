@@ -78,6 +78,7 @@ function ProfileUserInfo({
         ) : (
           <>
             <Button
+              className={classes.subscribeBtn}
               disableElevation
               size="large"
               color="primary"
@@ -88,7 +89,7 @@ function ProfileUserInfo({
                 `Follow ${user.subscriptionPrice ? `for $${user.subscriptionPrice}` : "for Free"}`
               )}
             </Button>
-            <Box display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap" my={1}>
+            <Box className={classes.btnsGroup}>
               <Button
                 disableElevation
                 size="large"

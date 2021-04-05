@@ -12,7 +12,10 @@ function receiveUserFollowerCountDecrement(data) {
 export function removeFollower() {
   return (dispatch, getState) => {
     var data = getState().user.data;
-    data.followersCount -= 1;
+
+    if (data.followersCount !== 0) {
+      data.followersCount -= 1;
+    }
     data.isFollow = false;
 
     dispatch(receiveUserFollowerCountDecrement(data));

@@ -19,7 +19,32 @@ const useStyles = makeStyles((theme) => ({
   content: {
     display: "flex",
     flexDirection: "column",
-    paddingTop: theme.spacing(1)
+    paddingTop: theme.spacing(1),
+  },
+  subscribeBtn: {
+    whiteSpace: "nowrap"
+  },
+  btnsGroup: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    [theme.breakpoints.up("lg")]: {
+      margin: theme.spacing(1, 0),
+      flexWrap: "nowrap !important",
+      "& > *": {
+        fontSize: theme.typography.button.fontSize,
+        width: "auto !important",
+      },
+    },
+    [theme.breakpoints.down("lg")]: {
+      margin: "0",
+      flexWrap: "wrap",
+      "& > *": {
+        width: "100%",
+        marginTop: theme.spacing(1),
+        whiteSpace: "nowrap"
+      }
+    }
   },
   bio: {
     ...theme.typography.body1,
