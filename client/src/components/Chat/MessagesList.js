@@ -1,83 +1,63 @@
 import React, { useEffect, useState, useRef } from "react";
-import PropTypes from "prop-types";
-import clsx from "clsx";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import { Box } from "@material-ui/core/";
+import { List } from "@material-ui/core/";
 
 import Message from "./Message";
 import useStyles from "./styles";
 
 const MessagesList = React.memo(({
-  isSendMessage,
   hasMore,
 
-  userId,
+  userName,
   items = [],
   liveChat = false,
-  className,
-  messageClassName,
 
   onFetchMore,
   onMediaView
 }) => {
   const classes = useStyles();
   const messagesContainer = useRef(null);
+  const [scrollHeight, setScrollHeight] = useState(0);
 
   useEffect(() => {
-    if (items.length > 0 && isSendMessage && messagesContainer.current.scrollTop < 0) {
-      messagesContainer.current.scrollTop = messagesContainer.current.scrollHeight;
-    }
+    setScrollHeight(messagesContainer.current.scrollHeight);
   }, [items]);
 
+   useEffect(() => {
+     messagesContainer.current.scrollTop = scrollHeight
+   }, [scrollHeight])
+
+   const handleMessageClick = (uN) => {
+     console.log(uN)
+   }
+
   return (
-    <Box id="messagerContainer" className={clsx(classes.messenger, className)} ref={messagesContainer}>
-     <InfiniteScroll
-        className={classes.infinite}
-        scrollableTarget="messagerContainer"
-        scrollThreshold={-0.8}
-        dataLength={items.length}
-        next={onFetchMore}
-        hasMore={hasMore}
-      >
-      {items && items.map((message) => (
-        <Message
-          key={message.id}
-          message={message}
-          isOwner={message.userId === userId}
-          liveChat={liveChat}
-          className={messageClassName}
-          onMediaView={onMediaView} />
-      ))}
-      </InfiniteScroll>
-    </Box>
+    <InfiniteScroll
+      //className={classes.infinite}
+      //style={{ display: 'flex', flexDirection: 'column-reverse' }}
+      scrollableTarget="messagerContainer"
+      scrollThreshold={-0.8}
+      dataLength={items.length}
+      next={onFetchMore}
+      hasMore={hasMore}
+      //inverse={true}
+    >
+      <List id="messagerContainer" className={classes.messenger} ref={messagesContainer}>
+        {items &&
+          items.map((message) => (
+            <Message
+              key={message.id}
+              message={message}
+              isOwner={message.userName === userName}
+              liveChat={liveChat}
+              onMediaView={onMediaView}
+              onMessageClick={handleMessageClick}
+            />
+          ))}
+      </List>
+    </InfiniteScroll>
   );
 });
-
-MessagesList.propTypes = {
-  hasMore: PropTypes.bool,
-
-  userId: PropTypes.string,
-  items: PropTypes.array,
-  liveChat: PropTypes.bool,
-
-  className:  PropTypes.any,
-  messageClassName: PropTypes.any,
-
-  onFetchMore: PropTypes.func
-}
-
-MessagesList.defaultProps = { 
-  hasMore: false,
-
-  userId: "",
-  items: [],
-  liveChat: false,
-
-  className: "",
-  messageClassName: "",
-
-  onFetchMore: undefined
-}
 
 export default MessagesList;

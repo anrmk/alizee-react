@@ -22,7 +22,7 @@ function Sidebar({
 
   onSearchChange,
   onItemClick,
-  onUserListBtnClick
+  onNewChatClick
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -31,14 +31,14 @@ function Sidebar({
     <Card className={classes.card}>
       <CardHeader
         avatar={
-          <Link to={PROFILE_USERNAME_ROUTE(user.username)}>
+          <Link to={PROFILE_USERNAME_ROUTE(user.userName)}>
             <Avatar src={user.avatarUrl} />
           </Link>
         }
         title={user.name}
-        subheader={user.username}
+        subheader={user.userName}
         action={
-          <IconButton aria-label="new chat" onClick={onUserListBtnClick}>
+          <IconButton aria-label="new chat" onClick={onNewChatClick}>
             <ChatIcon />
           </IconButton>
         }

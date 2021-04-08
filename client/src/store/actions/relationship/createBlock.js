@@ -42,7 +42,6 @@ export function createBlock(api, userName, type) {
 
     const url = generateUrl("createBlock");
     try {
-      debugger
       await api.setData({
         userName, 
         type: Number(type) || 0 

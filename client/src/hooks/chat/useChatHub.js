@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import * as signalR from "@microsoft/signalr";
 
-import { getToken, wrapHttps } from "../helpers/functions";
-import API from "../constants/endpoints";
+import { getToken, wrapHttps } from "../../helpers/functions";
+import API from "../../constants/endpoints";
 
 export default function useNotification({ isAuth, onReceiveMessage }) {
   const url = API.endpoints["chat"];

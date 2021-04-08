@@ -1,12 +1,8 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 
-import { List, CircularProgress } from "@material-ui/core";
-import ChatIcon from "@material-ui/icons/ChatOutlined";
-
+import { List, Typography } from "@material-ui/core";
 import SidebarListItem from "./SidebarListItem";
-import Empty from "../../components/Chat/Empty";
 
 import useStyles from "./styles";
 
@@ -21,43 +17,17 @@ function SidebarList({
   const { t } = useTranslation();
 
   return (
-    <List className={classes.sidebarList}>
-      {items && items.length ? (
-        items.map((item) => (
-          <SidebarListItem
-            item={item}
-            key={item.id}
-            selected={selectedItemId === item.id}
-            onItemClick={onItemClick}
-          />
-        ))
-      ) : isLoading ? (
-        <CircularProgress className={classes.progress} />
-      ) : (
-            <Empty
-              title={t("ChatChatListEmptyTitle")}
-              subTitle={t("ChatChatListEmptySubtitle")}
-              iconComponent={<ChatIcon fontSize="large" />}
-            />
-          )}
-    </List>
+    <>
+    {items && items.length ? (
+      <List className={classes.sidebarList} disabled>
+        {items.map((item) => (
+          <SidebarListItem item={item} key={item.id} selected={selectedItemId === item.id} onItemClick={onItemClick} />
+        ))}
+      </List>) : (
+        <Typography variant="subtitle2">{t("ChatChatListEmptySubtitle")}</Typography>
+      )}    
+    </>
   );
 }
-
-SidebarList.propTypes = {
-  isLoading: PropTypes.bool,
-  selectedItemId: PropTypes.string,
-  items: PropTypes.array,
-
-  onItemClick: PropTypes.func,
-};
-
-SidebarList.defaultProps = {
-  isLoading: false,
-  selectedItemId: undefined,
-  items: [],
-
-  onItemClick: undefined,
-};
 
 export default SidebarList;

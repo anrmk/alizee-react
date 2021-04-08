@@ -16,7 +16,7 @@ function SearchInput({
   const classes = useStyles();
   const [value, setValue] = useState(defaultValue);
   const [onceDefaultChanged, setOnceDefaultChanged] = useState(false)
-  const myDebounce = useCallback(debounce((query) => onSendQuery(query), interval), []);
+  const myDebounce = useCallback(debounce((query) => onSendQuery && onSendQuery(query), interval), []);
 
   useEffect(() => {
     if (!onceDefaultChanged && defaultValue) {
@@ -31,7 +31,7 @@ function SearchInput({
   };
 
   return (
-    <Box mb={2} ml={"auto"} mr={"auto"} className={classes.search}>
+    <Box mb={2} className={classes.search}>
       <Box className={classes.searchIcon}>
         <SearchIcon />
       </Box>

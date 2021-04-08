@@ -1,6 +1,7 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 
+import { ENTER_KEY_CODE } from "../../constants/key_codes";
 import { InputAdornment, IconButton, TextField } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/SendOutlined";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOnRounded";
@@ -15,6 +16,7 @@ function MessageSenderInput({
   hideMediaEditor,
   hideEmojiPicker,
   hidePayment,
+  disabled,
 
   onSendTip,
   onSendMessageClick,
@@ -24,6 +26,10 @@ function MessageSenderInput({
   const textFieldRef = useRef(null);
   const [closePickerModal, setClosePickerModal] = useState(false);
   const [value, setValue] = useState("");
+
+  useEffect(() => {
+    !disabled && inputRef.current.focus();
+  }, [disabled])
 
   const messageSend = () => {
     onSendMessageClick && onSendMessageClick({ media: [], message: value.trim() });
@@ -36,7 +42,7 @@ function MessageSenderInput({
   };
 
   const handleEnterKeyDown = (e) => {
-    if (e.key === "Enter") {
+    if (e.keyCode === ENTER_KEY_CODE) {
       messageSend();
     }
   };
@@ -55,7 +61,7 @@ function MessageSenderInput({
     <TextField
       ref={textFieldRef}
       inputRef={inputRef}
-      
+      disabled={disabled}
       variant="outlined"
       fullWidth
       placeholder={placeholder}

@@ -8,7 +8,7 @@ import { SendTip, Payment } from "../components/Payment";
 import { ReportPost, BlockUser } from "../components/Report";
 
 import SocialList from "../domain/SocialList";
-import { FollowingDialog } from "../domain/Chat";
+import { NewChatDialog, RoomMenuDialog } from "../domain/Chat";
 import EditCoverDialog from "../domain/EditCoverDialog";
 import StoryDialog from "../domain/StoryDialog";
 import DeleteAccountDialog from "../domain/DeleteAccountDialog";
@@ -32,10 +32,13 @@ export const RECEIPT_DIALOG_TYPE = "receipt";
 export const PURCHASES_DIALOG_TYPE = "purchases";
 export const SEND_TIP_DIALOG_TYPE = "sentTip";
 
-export const CHAT_FOLLOWERS_TYPE = "chatFollowers";
+export const CHAT_NEW_TYPE = "chatNew";
+export const ROOM_MENU_DIALOG_TYPE = "roomMenu";
+
 export const PROFILE_EDIT_COVER = "profileEditCover";
 export const STORY_DIALOG_TYPE = "story";
 export const FOLLOWERS_LIST_DIALOG_TYPE = "chatList";
+
 export const DELETE_ACCOUNT_DIALOG_TYPE = "deleteAccount";
 export const RESET_PWD_ACCOUNT_DIALOG_TYPE = "resetPasswordAccount";
 
@@ -140,12 +143,20 @@ export default {
     ...baseDialogProps,
     ...dialogProps,
   }),
-  [CHAT_FOLLOWERS_TYPE]: (dialogProps, contentProps) => ({
+  [CHAT_NEW_TYPE]: (dialogProps, contentProps) => ({
     title: "Chat Followers",
-    content: <FollowingDialog {...contentProps} />,
+    content: <NewChatDialog {...contentProps} />,
     onCloseClick: () => { },
     ...dialogProps,
   }),
+
+  [ROOM_MENU_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+    title: "Menu",
+    content: <RoomMenuDialog {...contentProps} />,
+    onCloseClick: () => { },
+    ...dialogProps,
+  }),
+
   [PROFILE_EDIT_COVER]: (dialogProps, contentProps) => ({
     title: "Edit Cover",
     content: <EditCoverDialog {...contentProps} />,

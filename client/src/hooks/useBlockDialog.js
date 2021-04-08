@@ -9,18 +9,19 @@ import useDialog from "./useDialog";
 
 const FORM_ID = "dialog-blockUser";
 
-export default function useBlockDialog() {
+export default function useBlockDialog(callback) {
   const apiClient = useContext(ApiContext);
   const dialog = useDialog();
   const dispatch = useDispatch();
-  
-  const handleBlockUser = useCallback(async ({ userName, blockType }) => {
+
+  const handleBlockUser = useCallback(async ({ userName, postId, blockType }) => {
     dialog.toggle({ open: false });
     await dispatch(relationshipActions.createBlock(apiClient, userName, blockType));
+    callback && callback({ userName, postId, blockType });
   }, []);
 
   const handleDialogToggle = useCallback(async (data) => {
-    dialog.toggle(
+    dialog.toggleWithStack(
       dialogs[BLOCK_DIALOG_TYPE](
         {
           mainBtnProps: { type: "submit", form: FORM_ID },

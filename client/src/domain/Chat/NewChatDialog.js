@@ -10,9 +10,9 @@ import {
   Typography,
 } from "@material-ui/core/";
 
-import Search from "../../components/Search";
+import Search from "../Search";
 
-function FollowingDialog({
+function NewChatDialog({
   items,
 
   onSearchChange,
@@ -22,7 +22,7 @@ function FollowingDialog({
 
   return (
     <Box display="flex" flexDirection="column" >
-      <Search placeholder={t("ChatFollowingDialogSearchInputLabel")} onChange={onSearchChange} />
+      <Search placeholder={t("ChatFollowingDialogSearchInputLabel")} onSendQuery={onSearchChange} />
       <List >
         {items && items.length ? items.map((follower) => (
           <ListItem button key={follower.id} onClick={() => onItemClick(follower.userName)}>
@@ -44,4 +44,4 @@ function FollowingDialog({
   )
 }
 
-export default FollowingDialog;
+export default NewChatDialog;

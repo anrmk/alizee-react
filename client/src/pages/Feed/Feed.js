@@ -35,7 +35,6 @@ function Feed(props) {
   const apiClient = useContext(ApiContext);
 
   const { userInfo } = props;
-  const { blockUser, unblockUser } = props;
   const { people, getPeople, createFollow, deleteFollow } = props;
   const { posts, getPosts, resetPosts } = props;
   const { story, getStory, getFollowingStories, resetFollowingStories, resetStory } = props;
@@ -202,8 +201,8 @@ function mapDispatchToProps(dispatch) {
     createFollow: (api, userName) => dispatch(relationshipActions.createFollow(api, userName)),
     deleteFollow: (api, userName) => dispatch(relationshipActions.deleteFollow(api, userName)),
 
-    blockUser: (api, userName) => dispatch(settingsActions.createBlackList(api, userName)),
-    unblockUser: (api, userName) => dispatch(settingsActions.deleteBlackList(api, userName)),
+    // blockUser: (api, userName) => dispatch(settingsActions.createBlackList(api, userName)),
+    // unblockUser: (api, userName) => dispatch(settingsActions.deleteBlackList(api, userName)),
 
     buyPost: (api, id) => dispatch(paymentActions.buyPost(api, id)),
 
