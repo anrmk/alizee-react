@@ -29,8 +29,8 @@ function UserCard(props) {
 
       <BottomNavigation showLabels className={classes.navigation} >
         <BottomNavigationAction className="success" value="goLive" label="Go live" icon={<LiveTvIcon />} onClick={onCreateMeet} />
-        <BottomNavigationAction className="secondary" value="post" label="Photo" icon={<AddPhotoCameraIcon />} onClick={onCreatePost} />
-        <BottomNavigationAction className="primary" value="stories" label="Stories" icon={<ControlPointIcon />} onClick={onCreateStory} />
+        <BottomNavigationAction className="secondary" value="post" label="Post" icon={<AddPhotoCameraIcon />} onClick={onCreatePost} />
+        <BottomNavigationAction className="primary" value="stories" label="Story" icon={<ControlPointIcon />} onClick={onCreateStory} />
       </BottomNavigation>
     </Box>
   );

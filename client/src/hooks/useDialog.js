@@ -37,7 +37,7 @@ export default function useDialog() {
         type: type,
         payload: {
           open: !gOpen ? !gOpen : gOpen,
-          ...opts,
+          ...opts
         },
       });
     },

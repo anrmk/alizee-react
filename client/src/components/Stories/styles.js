@@ -22,13 +22,25 @@ const getShadow = (theme) => ({
   zIndex: theme.zIndex.mobileStepper
 });
 
+const arrowIcons = (theme) => ({
+  color: theme.palette.grey["400"],
+  "&:hover": {
+    opacity: ".8"
+  }
+});
+
 const useStyles = makeStyles((theme) => ({
   container: {
-    width: 500,
+    width: "100%",
     display: "flex",
-    flexDirection: "column",
     background: theme.palette.common.black,
-    position: "relative"
+    justifyContent: "center"
+  },
+  content: {
+    width: "100%",
+    maxWidth: "500px",
+    position: "relative",
+    display: "flex"
   },
   header: {
     position: "absolute",
@@ -51,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     display: "flex",
     position: "absolute",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     padding: theme.spacing(2),
     zIndex: theme.zIndex.drawer
   },
@@ -140,6 +152,14 @@ const useStyles = makeStyles((theme) => ({
   loader: {
     position: "absolute",
     zIndex: theme.zIndex.appBar
+  },
+  arrowPreviousIcon: {
+    ...arrowIcons(theme),
+    transform: "rotate(-90deg)"
+  },
+  arrowNextIcon: {
+    ...arrowIcons(theme),
+    transform: "rotate(90deg)"
   }
 }));
 

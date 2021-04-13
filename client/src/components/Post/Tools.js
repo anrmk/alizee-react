@@ -12,7 +12,7 @@ import MonetizationOnIcon from "@material-ui/icons/MonetizationOnRounded";
 import BookmarkIcon from "@material-ui/icons/BookmarkOutlined";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorderOutlined";
 import SendIcon from "@material-ui/icons/SendOutlined";
-import VisibilityIcon from "@material-ui/icons/VisibilityOutlined";
+import CommentRoundedIcon from '@material-ui/icons/CommentRounded';
 
 import useStyles from "./styles";
 
@@ -28,6 +28,7 @@ const Tools = React.memo(({
   isFavorite,
   isPurchased,
   isOwner,
+  isCommentable,
 
   onLike,
   onFavorite,
@@ -96,6 +97,14 @@ const Tools = React.memo(({
       </IconButton>
       <Typography>{likes > 0 && likes}</Typography>
 
+      {!location.includes(POST_ID_ROUTE(id)) && isCommentable && (
+        <IconButton 
+          to={POST_ID_ROUTE(id)}
+          component={Link}>
+          <CommentRoundedIcon  />
+        </IconButton>
+      )}
+
       <IconButton aria-label="share" onClick={handleShareClick}>
         <SendIcon />
       </IconButton>
@@ -121,14 +130,6 @@ const Tools = React.memo(({
       </IconButton>
 
       {renderPurchase()}
-
-      {!location.includes(POST_ID_ROUTE(id)) && (
-        <IconButton 
-          to={POST_ID_ROUTE(id)}
-          component={Link}>
-          <VisibilityIcon  />
-        </IconButton>
-      )}
     </>
   )
 });

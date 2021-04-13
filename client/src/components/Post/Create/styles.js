@@ -8,12 +8,13 @@ const useStyles = makeStyles((theme) => ({
   inputText: {
     flex: "1 1 auto"
   },
-  video: {
+  media: {
     display: "block",
     width: "100% !important",
     height: "100% !important",
-    background: theme.palette.common.black,
-  },
+    objectFit: "cover",
+    background: theme.palette.common.black
+  }
 }));
 
 

@@ -91,6 +91,7 @@ const Post = React.memo((props) => {
           amount={post.amount}
           isPurchased={post.isPurchased}
           isOwner={user.id === owner.id}
+          isCommentable={post.isCommentable}
           onLike={onLike}
           onFavorite={onFavorite}
           onSendTip={onSendTip}

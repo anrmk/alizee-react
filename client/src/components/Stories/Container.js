@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { Box, Avatar, Typography, IconButton } from "@material-ui/core";
+import { Box, Avatar, Typography, IconButton, Hidden } from "@material-ui/core";
 
 import CloseIcon from "@material-ui/icons/CloseRounded";
 import PauseIcon from "@material-ui/icons/PauseRounded";
@@ -7,6 +7,7 @@ import PlayIcon from "@material-ui/icons/PlayArrowRounded";
 import VolumeUpIcon from "@material-ui/icons/VolumeUpRounded";
 import VolumeOffIcon from "@material-ui/icons/VolumeOffRounded";
 import MoreHorizIcon from "@material-ui/icons/MoreHorizRounded";
+import ArrowCircleIcon from '@material-ui/icons/ArrowDropDownCircleRounded';
 
 import GlobalContext from "./Context/GlobalContext";
 import StoriesContext, { UPDATE_STORY_DATA } from "./Context/StoriesContext";
@@ -155,68 +156,79 @@ export default function Container() {
 
   return (
     <Box className={classes.container}>
-      <Box className={classes.header}>
-        <ProgressContext.Provider value={{
-          bufferAction: bufferAction,
-          videoDuration: videoDuration,
-          currentId,
-          pause,
-          next
-        }}>
-          <ProgressList />
-        </ProgressContext.Provider>
-        <Box className={classes.headerInner}>
-          <Box className={classes.userInfo}>
-            <Avatar src={avatarUrl} />
-            <Box>
-              {fullName && <Typography className={classes.headerText} variant="body1" noWrap>{fullName}</Typography>}
-              {createdDate && <Typography className={classes.headerText} variant="caption" noWrap>{getDate(createdDate)}</Typography>}
+      <Hidden smDown>
+        <IconButton aria-label="previous-btn" disableRipple onClick={e => handleMouseUp(e, "previous")}>
+          <ArrowCircleIcon className={classes.arrowNextIcon} fontSize="large" />
+        </IconButton>
+      </Hidden>
+      <Box className={classes.content}>
+        <Box className={classes.header}>
+          <ProgressContext.Provider value={{
+            bufferAction: bufferAction,
+            videoDuration: videoDuration,
+            currentId,
+            pause,
+            next
+          }}>
+            <ProgressList />
+          </ProgressContext.Provider>
+          <Box className={classes.headerInner}>
+            <Box className={classes.userInfo}>
+              <Avatar src={avatarUrl} />
+              <Box>
+                {fullName && <Typography className={classes.headerText} variant="body1" noWrap>{fullName}</Typography>}
+                {createdDate && <Typography className={classes.headerText} variant="caption" noWrap>{getDate(createdDate)}</Typography>}
+              </Box>
+            </Box>
+            <Box className={classes.tools}>
+              <IconButton className={classes.btn} size="small" onClick={handleBtnPlayClick}>
+                {pause ? <PlayIcon /> : <PauseIcon />}
+              </IconButton>
+              {stories[currentId]?.media?.kind === MEDIA_VIDEO && (
+                <IconButton className={classes.btn} size="small" onClick={handleMuteClick}>
+                  {muted ? <VolumeOffIcon /> : <VolumeUpIcon />}
+                </IconButton>
+              )}
+              <IconButton className={classes.btn} size="small" onClick={onCloseClick}>
+                <CloseIcon />
+              </IconButton>
             </Box>
           </Box>
-          <Box className={classes.tools}>
-            <IconButton className={classes.btn} size="small" onClick={handleBtnPlayClick}>
-              {pause ? <PlayIcon /> : <PauseIcon />}
-            </IconButton>
-            {stories[currentId]?.media?.kind === MEDIA_VIDEO && (
-              <IconButton className={classes.btn} size="small" onClick={handleMuteClick}>
-                {muted ? <VolumeOffIcon /> : <VolumeUpIcon />}
-              </IconButton>
-            )}
-            <IconButton className={classes.btn} size="small" onClick={onCloseClick}>
-              <CloseIcon />
-            </IconButton>
-          </Box>
+        </Box>
+        <Box className={classes.headerShadow} />
+        <Story
+          action={toggleState}
+          bufferAction={bufferAction}
+          playState={pause}
+          url={stories[currentId]?.media.url}
+          kind={stories[currentId]?.media?.kind}
+          onVideoDuration={handleVideoDuration} />
+        <Box className={classes.footer}>
+          <IconButton className={classes.btn} size="small" onClick={handleMoreBtnClick}>
+            <MoreHorizIcon />
+          </IconButton>
+        </Box>
+        <Box className={classes.footerShadow} />
+        <Box className={classes.overlay}>
+          <Box
+            className={classes.controls}
+            onTouchStart={debouncePause}
+            onTouchEnd={e => handleMouseUp(e, "previous")}
+            onMouseDown={debouncePause}
+            onMouseUp={(e) => handleMouseUp(e, "previous")} />
+          <Box
+            className={classes.controls}
+            onTouchStart={debouncePause}
+            onTouchEnd={e => handleMouseUp(e, "next")}
+            onMouseDown={debouncePause}
+            onMouseUp={(e) => handleMouseUp(e, "next")} />
         </Box>
       </Box>
-      <Box className={classes.headerShadow} />
-      <Story
-        action={toggleState}
-        bufferAction={bufferAction}
-        playState={pause}
-        url={stories[currentId]?.media.url}
-        kind={stories[currentId]?.media?.kind}
-        onVideoDuration={handleVideoDuration} />
-      <Box className={classes.footer}>
-        <Box></Box>
-        <IconButton className={classes.btn} size="small" onClick={handleMoreBtnClick}>
-          <MoreHorizIcon />
+      <Hidden smDown>
+        <IconButton aria-label="next-btn" disableRipple onClick={e => handleMouseUp(e, "next")}>
+          <ArrowCircleIcon className={classes.arrowPreviousIcon} fontSize="large" />
         </IconButton>
-      </Box>
-      <Box className={classes.footerShadow} />
-      <Box className={classes.overlay}>
-        <Box
-          className={classes.controls}
-          onTouchStart={debouncePause}
-          onTouchEnd={e => handleMouseUp(e, "previous")}
-          onMouseDown={debouncePause}
-          onMouseUp={(e) => handleMouseUp(e, "previous")} />
-        <Box
-          className={classes.controls}
-          onTouchStart={debouncePause}
-          onTouchEnd={e => handleMouseUp(e, "next")}
-          onMouseDown={debouncePause}
-          onMouseUp={(e) => handleMouseUp(e, "next")} />
-      </Box>
+      </Hidden>
     </Box>
   );
 }

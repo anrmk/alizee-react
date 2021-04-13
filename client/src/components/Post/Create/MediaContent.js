@@ -24,10 +24,10 @@ export default function MediaContent({
 
   return mediaTypeToKind(type) === 1 ? (
     <ReactPlayer
-      className={classes.video}
+      className={classes.media}
       controls={true}
       muted={true}
       url={url}
     />
-  ) : <img loading="lazy" src={url} />;
+  ) : <img className={classes.media} loading="lazy" src={url} />;
 }
