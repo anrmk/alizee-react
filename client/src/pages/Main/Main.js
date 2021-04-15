@@ -41,20 +41,18 @@ import useNotification from "../../hooks/useNotificationHub";
 import useLocationHelper from "../../hooks/useLocationHelper";
 import { usePostDialog, useStoryDialog, useMoodDialog} from "../../hooks/post";
 
-import * as notificationAction from "../../store/actions/notification";
-
 import useStyles from "./styles";
 
 function Main(props) {
   const { user, notifyData, isAuthenticated } = props;
-  const { signOut, setNotification } = props;
+  const { signOut } = props;
 
   const [open, setOpen] = useState(true);
   const isNavigationHide = useLocationHelper([Routes.STORIES_DEFAULT_ROUTE, "/ptp"]);
   const classes = useStyles({ isAuthenticated, isNavigationHide });
   const history = useHistory();
 
-  const notification = useNotification({isAuth : isAuthenticated, onChange: setNotification});
+  const notification = useNotification();
 
   const createPostDialog = usePostDialog();
   const createStoryDialog = useStoryDialog();
@@ -153,8 +151,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    signOut: (api) => dispatch(signOutUser(api)),
-    setNotification: (data) => dispatch(notificationAction.setNotification(data))
+    signOut: (api) => dispatch(signOutUser(api))
   };
 }
 

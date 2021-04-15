@@ -4,7 +4,7 @@ import * as signalR from "@microsoft/signalr";
 import { getToken, wrapHttps } from "../../helpers/functions";
 import API from "../../constants/endpoints";
 
-export default function useNotification({ isAuth, onReceiveMessage }) {
+export default function useChatHub({ isAuth, onReceiveMessage }) {
   const url = API.endpoints["chat"];
   const [connection, setConnection] = useState(null);
 
