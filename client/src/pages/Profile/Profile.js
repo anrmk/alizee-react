@@ -216,7 +216,6 @@ function mapStateToProps(state) {
       errorMessage: state.user?.errorMessage
     },
     post: {
-      count: state.posts.count,
       isFetching: state.posts.isFetching || false,
       data: postActions.getGridGalleryPosts(state),
       errorMessage: state.posts.errorMessage,

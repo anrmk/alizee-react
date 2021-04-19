@@ -12,10 +12,10 @@ import { MediaEditor } from "../MediaEditor";
 import useStyles from "./styles";
 
 function MessageSenderInput({
-  placeholder = "Type a message...",
+  placeholder,
+  transparentBg = false,
   hideMediaEditor,
   hideEmojiPicker,
-  hidePayment,
   disabled,
 
   onSendTip,
@@ -68,6 +68,7 @@ function MessageSenderInput({
       type="text"
       value={value}
       InputProps={{
+        classes: { notchedOutline: transparentBg && classes.textField },
         startAdornment: (
           <InputAdornment position="start">
             {!hideMediaEditor && <MediaEditor onSendMediaMessageClick={handleMediaMessageSendClick} />}
@@ -80,10 +81,11 @@ function MessageSenderInput({
                 onChangeInputValue={handleChangeInputValue}
               />
             )}
-            {!hidePayment && (
-            <IconButton onClick={onSendTip}>
-              <MonetizationOnIcon />
-            </IconButton>)}
+            {onSendTip && (
+              <IconButton onClick={onSendTip}>
+                <MonetizationOnIcon />
+              </IconButton>
+            )}
             
           </InputAdornment>
         ),
@@ -102,21 +104,4 @@ function MessageSenderInput({
   );
 }
 
-MessageSenderInput.propTypes = {
-  placeholder: PropTypes.string,
-  hideMediaEditor: PropTypes.bool,
-  hideEmojiPicker: PropTypes.bool,
-  hidePayment: PropTypes.bool,
-
-  onSendMessageClick: PropTypes.func,
-};
-
-MessageSenderInput.defaultProps = {
-  placeholder: "",
-  hideMediaEditor: false,
-  hideEmojiPicker: false,
-  hidePayment: false,
-
-  onSendMessageClick: undefined,
-};
 export default MessageSenderInput;

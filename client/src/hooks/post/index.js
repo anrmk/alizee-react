@@ -7,3 +7,4 @@ export { default as usePostDialog } from "./usePostDialog";
 export { default as useStoryDialog } from "./useStoryDialog";
 export { default as useMenuDialog } from "./useMenuDialog";
 
+export { default as useCommentAction } from "./useCommentAction";

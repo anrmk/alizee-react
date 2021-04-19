@@ -13,15 +13,15 @@ import useStyles from "./styles";
 function Comments(props) {
   const { children, headerBackComponent } = props;
   const { hasMore } = props;
-  const { isOwner, user, description, items, isCommentable, isPurchased } = props;
-  const { onFetchMore, onSendMessageClick, onSendTip } = props;
+  const { postId, isOwner, user, description, items, isCommentable, isPurchased } = props;
+  const { onFetchMore, onCommentSendClick, onSendTip } = props;
 
   const classes = useStyles({ isPurchased });
   const [isSendMessage, setIsSendMessage] = useState(false);
 
-  const handleMessageCreate = (data) => {
+  const handleCommentSendClick = (data) => {
     setIsSendMessage(true);
-    onSendMessageClick && onSendMessageClick(data);
+    onCommentSendClick && onCommentSendClick({ ...data, postId });
   };
 
   useEffect(() => {
@@ -62,40 +62,11 @@ function Comments(props) {
 
       {isCommentable && isPurchased && (
         <CardActions className={classes.cardFooter}>
-          <MessageSenderInput hideMediaEditor={true} hidePayment={isOwner} onSendMessageClick={handleMessageCreate} onSendTip={handleSendTipClick} />
+          <MessageSenderInput hideMediaEditor hidePayment={isOwner} onSendMessageClick={handleCommentSendClick} onSendTip={handleSendTipClick} />
         </CardActions>
       )}
     </Card>
   );
 }
-
-Comments.propTypes = {
-  hasMore: PropTypes.bool,
-  isOwner: PropTypes.bool,
-
-  user: PropTypes.object,
-  items: PropTypes.array,
-  isCommentable: PropTypes.bool,
-
-  children: PropTypes.any,
-
-  onFetchMore: PropTypes.func,
-  onSendMessageClick: PropTypes.func,
-  onSendTip: PropTypes.func
-};
-
-Comments.defaultProps = {
-  hasMore: false,
-  isOwner: false,
-  user: {},
-  items: [],
-  isCommentable: false,
-
-  children: null,
-
-  onFetchMore: undefined,
-  onSendMessageClick: undefined,
-  onSendTip: undefined
-};
 
 export default Comments;

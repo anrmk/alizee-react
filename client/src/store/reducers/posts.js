@@ -38,7 +38,10 @@ import {
   PURCHASE_POST_REQUEST,
   PURCHASE_POST_SUCCESS,
   PURCHASE_POST_FAILURE,
-  
+
+  UPDATE_POST_COMMENTS_REQUEST,
+  UPDATE_POST_COMMENTS_SUCCESS,
+  UPDATE_POST_COMMENTS_FAILURE
 } from "../actions/post";
 
 import {
@@ -292,6 +295,28 @@ export default function post(
       return {
         ...state,
         ...action.payload,
+      };
+    }
+
+    // UPDATE POST COMMENTS
+    case UPDATE_POST_COMMENTS_REQUEST: {
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+
+    case UPDATE_POST_COMMENTS_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+
+    case UPDATE_POST_COMMENTS_FAILURE: {
+      return {
+        ...state,
+        ...action.payload
       };
     }
 

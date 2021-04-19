@@ -1,6 +1,6 @@
 import { generateUrl, generateFileUrl } from "../../../helpers/functions";
 
-import { SEARCH_DEFAULT_OFFSET, SEARCH_OFFSET, SEARCH_TAG_TYPE } from "../../../constants/search";
+import { SEARCH_DEFAULT_OFFSET, SEARCH_OFFSET, SEARCH_TAG_TYPE, SEARCH_LENGTH } from "../../../constants/search";
 
 export const GET_USERS_BY_QUERY_REQUEST = "GET_USERS_BY_QUERY_REQUEST";
 export const GET_USERS_BY_QUERY_SUCCESS = "GET_USERS_BY_QUERY_SUCCESS";
@@ -20,7 +20,7 @@ function requestGetUsersByQuery() {
   };
 }
 
-function receiveGetUsersByQuery(data, type, start, hasMore, query) {
+function receiveGetUsersByQuery(data, type, start, currentLength, query) {
   return {
     type: GET_USERS_BY_QUERY_SUCCESS,
     payload: {
@@ -28,7 +28,7 @@ function receiveGetUsersByQuery(data, type, start, hasMore, query) {
       errorMessage: "",
       type,
       offset: start + SEARCH_OFFSET,
-      hasMore: data.length === SEARCH_OFFSET,
+      hasMore: currentLength === SEARCH_LENGTH,
       data: data || [],
       query
     },
@@ -90,7 +90,7 @@ export function getUsersByQuery(api, opts) {
           type: opts.type,
           query: opts.query,
           start: currentOffset,
-          length: SEARCH_OFFSET,
+          length: SEARCH_LENGTH,
         })
         .query(url);
 
@@ -109,7 +109,7 @@ export function getUsersByQuery(api, opts) {
             [...getState().search.data, ...data],
             opts.type,
             currentOffset,
-            true,
+            data.length,
             opts.query
           ));
         } 

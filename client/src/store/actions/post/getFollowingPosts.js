@@ -1,4 +1,4 @@
-import { generateUrl, generateFileUrl, getOffset } from "../../../helpers/functions";
+import { generateUrl, generateFileUrl } from "../../../helpers/functions";
 import { POSTS_OFFSET, POSTS_LENGTH } from "../../../constants/feed";
 
 export const GET_FOLLOWING_POSTS_REQUEST = "GET_FOLLOWING_POSTS_REQUEST";
@@ -15,15 +15,15 @@ function requestGetFollowingPosts() {
   };
 }
 
-function receiveGetFollowingPosts(posts, total, start, hasMore) {
+function receiveGetFollowingPosts(data, currentLength, start) {
   return {
     type: GET_FOLLOWING_POSTS_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
-      offset: getOffset(start, total, POSTS_OFFSET),
-      hasMore,
-      data: posts || [],
+      offset: start + POSTS_OFFSET,
+      hasMore: currentLength === POSTS_LENGTH,
+      data: data || []
     },
   };
 }
@@ -39,7 +39,7 @@ function errorGetFollowingPosts(message) {
   };
 }
 
-export function getFollowingPosts(api, opts) {
+export function getFollowingPosts(api) {
   return async (dispatch, getState) => {
     dispatch(requestGetFollowingPosts());
 
@@ -55,7 +55,7 @@ export function getFollowingPosts(api, opts) {
         .query(url);
 
       // Extend relative path to absolute (to remote server)
-      data.data.forEach((item) => {
+      data.forEach((item) => {
         const avatarUrl = item.user.avatarUrl;
         item.user = {
           ...item.user,
@@ -69,10 +69,9 @@ export function getFollowingPosts(api, opts) {
 
       dispatch(
         receiveGetFollowingPosts(
-          [...getState().posts.data, ...data.data],
-          data.recordsTotal,
-          currentOffset,
-          !!data.data.length
+          [...getState().posts.data, ...data],
+          data.length,
+          currentOffset
         )
       );
     } catch (e) {

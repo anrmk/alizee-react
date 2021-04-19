@@ -82,3 +82,11 @@ export {
 
   reportPost
 } from "./reportPost";
+
+export { 
+  UPDATE_POST_COMMENTS_REQUEST,
+  UPDATE_POST_COMMENTS_SUCCESS,
+  UPDATE_POST_COMMENTS_FAILURE,
+
+  updatePostComments
+} from "./updatePostComments";

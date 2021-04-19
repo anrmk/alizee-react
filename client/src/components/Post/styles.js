@@ -48,14 +48,12 @@ const useStyles = makeStyles((theme) => ({
   },
 
   action: {
-    borderTopWidth: "1px",
-    borderTopStyle: "solid",
-    borderTopColor: theme.palette.divider,
+    flexDirection: "column",
 
     "& > .MuiIconButton-root, & > .MuiButton-root": {
       margin: theme.spacing(0, 0.5),
       padding: theme.spacing(1)
-    },
+    }
   },
 
   receipt: {
@@ -63,8 +61,47 @@ const useStyles = makeStyles((theme) => ({
   },
 
   grow: {
-    flexGrow: 1,
+    flexGrow: 1
   },
+
+  divider: {
+    width: "110%",
+    margin: theme.spacing(1, 0)
+  },
+
+  postCardContent: {
+    padding: theme.spacing(0.5, 2)
+  },
+
+  postDescriptionText: {
+    marginTop: theme.spacing(1)
+  },
+
+  toolsLikesText: {
+    fontWeight: theme.typography.fontWeightBold
+  },
+
+  commentsPreviewRoot: {
+    width: "100%",
+    padding: theme.spacing(0, 1)
+  },
+  commentsPreviewList: {
+    padding: 0
+  },
+  commentsPreviewItem: {
+    padding: 0
+  },
+  commentsPreviewUsername: {
+    textDecoration: "none",
+    color: theme.palette.text.primary,
+    fontWeight: theme.typography.fontWeightBold
+  },
+  commentsPreviewText: {
+    marginLeft: theme.spacing(1)
+  },
+  commentsPreviewDate: {
+    color: theme.palette.text.secondary
+  }
 }));
 
 export default useStyles;

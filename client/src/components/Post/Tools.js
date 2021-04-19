@@ -1,9 +1,6 @@
 import React, { useCallback } from "react";
 import { Link } from "react-router-dom";
-
-import { POST_ID_ROUTE } from "../../constants/routes";
-
-import { Chip, IconButton, Tooltip, Typography, Hidden } from "@material-ui/core";
+import { Box, Chip, IconButton, Tooltip, Typography, Hidden } from "@material-ui/core";
 
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import FavoriteIcon from "@material-ui/icons/FavoriteRounded";
@@ -13,6 +10,8 @@ import BookmarkIcon from "@material-ui/icons/BookmarkOutlined";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorderOutlined";
 import SendIcon from "@material-ui/icons/SendOutlined";
 import CommentRoundedIcon from '@material-ui/icons/CommentRounded';
+
+import { POST_ID_ROUTE } from "../../constants/routes";
 
 import useStyles from "./styles";
 
@@ -91,46 +90,53 @@ const Tools = React.memo(({
   };
 
   return (
-    <>
-      <IconButton color="secondary" disabled={!isPurchased && amount > 0} onClick={handleLikeClick} aria-label="add to favorites">
-        {isLike ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-      </IconButton>
-      <Typography>{likes > 0 && likes}</Typography>
-
-      {!location.includes(POST_ID_ROUTE(id)) && isCommentable && (
-        <IconButton 
-          to={POST_ID_ROUTE(id)}
-          component={Link}>
-          <CommentRoundedIcon  />
+    <Box width="100%">
+      <Box display="flex" alignItems="center">
+        <IconButton color="secondary" disabled={!isPurchased && amount > 0} onClick={handleLikeClick} aria-label="add to favorites">
+          {isLike ? <FavoriteIcon /> : <FavoriteBorderIcon />}
         </IconButton>
+
+        {!location.includes(POST_ID_ROUTE(id)) && isCommentable && (
+          <IconButton 
+            to={POST_ID_ROUTE(id)}
+            component={Link}>
+            <CommentRoundedIcon  />
+          </IconButton>
+        )}
+
+        <IconButton aria-label="share" onClick={handleShareClick}>
+          <SendIcon />
+        </IconButton>
+
+        {!isOwner && (
+          <>
+            <Hidden mdUp>
+              <IconButton aria-label="sendTip" onClick={handleSendTipClick}>
+                <MonetizationOnIcon />
+              </IconButton>
+            </Hidden>
+
+            <Hidden smDown>
+              <Chip icon={<MonetizationOnIcon />} onClick={handleSendTipClick} label="SEND TIP" variant="outlined" clickable />
+            </Hidden>
+          </>
+        )}
+
+        <div className={classes.grow}></div>
+
+        <IconButton  color="primary" aria-label="favorite" onClick={handleFavoriteClick}>
+          {isFavorite ? <BookmarkIcon /> : <BookmarkBorderIcon />}
+        </IconButton>
+
+        {renderPurchase()}
+      </Box>
+
+      {likes > 0 && (
+        <Box>
+          <Typography className={classes.toolsLikesText} variant="caption">{likes} likes</Typography>
+        </Box>
       )}
-
-      <IconButton aria-label="share" onClick={handleShareClick}>
-        <SendIcon />
-      </IconButton>
-
-      {!isOwner && (
-        <>
-          <Hidden mdUp>
-            <IconButton aria-label="sendTip" onClick={handleSendTipClick}>
-              <MonetizationOnIcon />
-            </IconButton>
-          </Hidden>
-
-          <Hidden smDown>
-            <Chip icon={<MonetizationOnIcon />} onClick={handleSendTipClick} label="SEND TIP" variant="outlined" clickable />
-          </Hidden>
-        </>
-      )}
-
-      <div className={classes.grow}></div>
-
-      <IconButton  color="primary" aria-label="favorite" onClick={handleFavoriteClick}>
-        {isFavorite ? <BookmarkIcon /> : <BookmarkBorderIcon />}
-      </IconButton>
-
-      {renderPurchase()}
-    </>
+    </Box>
   )
 });
 

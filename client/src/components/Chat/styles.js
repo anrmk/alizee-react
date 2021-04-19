@@ -1,6 +1,4 @@
 import { makeStyles } from "@material-ui/core";
-import { fade } from '@material-ui/core/styles/colorManipulator';
-
 
 const useStyles = makeStyles((theme) => ({
   messenger: {
@@ -39,6 +37,10 @@ const useStyles = makeStyles((theme) => ({
     "& input": {
       padding: theme.spacing(1.5),
     },
+  },
+
+  textField: {
+    border: 0,
   },
 
   gridListTileBar: {

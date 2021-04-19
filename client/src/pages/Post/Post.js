@@ -9,7 +9,7 @@ import CommentIcon from "@material-ui/icons/CommentRounded";
 import MoreVertIcon from "@material-ui/icons/MoreVertRounded";
 
 import ApiContext from "../../context/ApiContext";
-import { Tools, Menu, Comments } from "../../components/Post";
+import { Tools, Comments } from "../../components/Post";
 import MediaContent from "../../components/MediaContent";
 import SlidingViews from "../../components/SlidingViews";
 
@@ -25,7 +25,7 @@ import useSlidingViews from "../../hooks/useSlidingViews";
 
 import useBlockDialog from "../../hooks/useBlockDialog";
 import useShareDialog, { SHARE_DIALOG_POST_TYPE } from "../../hooks/useShareDialog";
-import { useLikeAction, useFavoriteAction, useMenuDialog } from "../../hooks/post";
+import { useLikeAction, useFavoriteAction, useMenuDialog, useCommentAction } from "../../hooks/post";
 import { useSendTipDialog, usePaymentDialog, usePurchaseDialog, useReceiptDialog } from "../../hooks/payment";
 
 import useStyles from "./styles";
@@ -47,6 +47,7 @@ function PostPage(props) {
   const receiptDialog = useReceiptDialog({ isFetching: props.post.isFetching, onReceipt: props.getReceipt });
   const purchaseDialog = usePurchaseDialog({ isFetching: props.post.isFetching, onPurchases: props.getPurchases });
   const postMenuDialog = useMenuDialog();
+  const { handleCommentSendClick } = useCommentAction();
 
   const { dialogShareOpenClick } = useShareDialog({ type: SHARE_DIALOG_POST_TYPE });
 
@@ -67,10 +68,6 @@ function PostPage(props) {
   const handleCommentMore = async () => {
     !comment.isFetching && await getComments(apiClient, { postId, length: COMMENTS_POST_LENGTH });
   };
-
-  const handleSendMessageClick = useCallback(async ({ media, message }) => {
-    !comment.isFetching && await createComment(apiClient, { postId, message });
-  }, []);
 
   if (post.errorMessage) {
     return <Redirect to={HOME_ROUTE} />
@@ -99,6 +96,7 @@ function PostPage(props) {
         </Card>
  
         <Comments
+          postId={post.data.id}
           isOwner={user.id === post.owner.id}
           user={post.owner}
           description={post.data.description}
@@ -107,7 +105,7 @@ function PostPage(props) {
           isCommentable={post.data.isCommentable}
           isPurchased={post.data.isPurchased || post.data.amount === 0}
           onFetchMore={handleCommentMore}
-          onSendMessageClick={handleSendMessageClick}
+          onCommentSendClick={handleCommentSendClick}
           onSendTip={sendTipDialog.toggle}
           headerBackComponent={
             <>

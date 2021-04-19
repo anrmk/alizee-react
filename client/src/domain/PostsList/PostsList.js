@@ -10,6 +10,7 @@ const PostsList = React.memo(
     items,
     hasMore,
 
+    onCommentSend,
     onFetchMore,
 
     onLike,
@@ -42,6 +43,7 @@ const PostsList = React.memo(
               onPurchase={onPurchase}
               onMenu={onMenu}
               onShare={onShare}
+              onCommentSend={onCommentSend}
             />
           ))}
       </InfiniteScroll>

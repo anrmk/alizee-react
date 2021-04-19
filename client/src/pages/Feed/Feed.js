@@ -24,11 +24,11 @@ import { STORIES_LENGTH } from "../../constants/feed";
 import { SUGESTED_PEOPLE } from "../../constants/routes";
 
 import useShareDialog, { SHARE_DIALOG_POST_TYPE } from "../../hooks/useShareDialog";
-import { useLikeAction, useFavoriteAction, useStoryDialog, useMenuDialog } from "../../hooks/post";
+import { useLikeAction, useFavoriteAction, useStoryDialog, useMenuDialog, useCommentAction } from "../../hooks/post";
 import { useSendTipDialog, usePaymentDialog, usePurchaseDialog, useReceiptDialog } from "../../hooks/payment";
+import useFullScreen from "../../hooks/useFullScreen";
 
 import useStyles from "./styles";
-import useFullScreen from "../../hooks/useFullScreen";
 
 function Feed(props) {
   const classes = useStyles();
@@ -49,6 +49,7 @@ function Feed(props) {
   const createStoryDialog = useStoryDialog();
   const postMenuDialog = useMenuDialog();
   const fullScreen = useFullScreen("root");
+  const { handleCommentSendClick } = useCommentAction();
 
   const { dialogShareOpenClick } = useShareDialog({ type: SHARE_DIALOG_POST_TYPE });
 
@@ -120,6 +121,7 @@ function Feed(props) {
             onPurchase={purchaseDialog.toggle}
             onShare={dialogShareOpenClick} //??
             onMenu={postMenuDialog.toggle} //??
+            onCommentSend={handleCommentSendClick}
           />
         </Grid>
         <Hidden smDown>
