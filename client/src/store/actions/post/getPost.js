@@ -1,4 +1,4 @@
-import { generateUrl, generateFileUrl } from "../../../helpers/functions";
+import { generateUrl } from "../../../helpers/functions";
 import { refreshPosts } from "./getPosts";
 
 export const GET_POST_REQUEST = "GET_POST_REQUEST";
@@ -44,18 +44,7 @@ export function getPost(api, id) {
     try {
       const { data } = await api.setMethod("GET").setParams({ id }).query(url);
 
-      // Extend relative path to absolute (to remote server)
-      data.user = {
-        ...data.user,
-        avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, data.user.avatarUrl),
-      };
-      data.media.forEach((item) => {
-        item.url = generateFileUrl(process.env.REACT_APP_DOMAIN, item.url);
-        item.thumbnailUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, item.thumbnailUrl);
-      });
-
       dispatch(receiveGetPost(data));
-
       await dispatch(refreshPosts(data));
     } catch {
       dispatch(errorGetPost("Error: something went wrong"));

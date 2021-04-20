@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 
-import { generateUrl, generateFileUrl, getOffset } from "../../../helpers/functions";
+import { generateUrl, getOffset } from "../../../helpers/functions";
 import { POSTS_OFFSET } from "../../../constants/feed";
 
 export const GET_POST_SUGGESTIONS_REQUEST = "GET_POST_SUGGESTIONS_REQUEST";
@@ -76,18 +76,6 @@ export function getPosts(api, opts) {
           type: opts.type,
         })
         .query(url);
-
-      data.data.forEach((item) => {
-        const avatarUrl = item.user.avatarUrl;
-        item.user = {
-          ...item.user,
-          avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, avatarUrl),
-        };
-        item.media.forEach((media) => {
-          media.url = generateFileUrl(process.env.REACT_APP_DOMAIN, media.url);
-          media.thumbnailUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, media.thumbnailUrl);
-        });
-      });
 
       dispatch(
         receiveGetPosts([...getState().posts.data, ...data.data], data.recordsTotal, currentOffset, !!data.data.length)

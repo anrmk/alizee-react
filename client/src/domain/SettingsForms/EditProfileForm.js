@@ -65,10 +65,10 @@ function EditProfileForm({
     resolver: yupResolver(schema),
     defaultValues: {
       avatarUrl,
-      fullName: name,
+      fullName: name || "",
       userName,
       email,
-      bio,
+      bio: bio || "",
       phoneNumber,
       birthday: getDate(birthday),
       sites,

@@ -1,4 +1,4 @@
-import { generateUrl, generateFileUrl } from "../../../helpers/functions";
+import { generateUrl } from "../../../helpers/functions";
 import { HOT_STREAMERS_LENGTH } from "../../../constants/stream";
 
 export const GET_HOT_STREAMERS_REQUEST = "GET_HOT_STREAMERS_REQUEST";
@@ -21,7 +21,7 @@ function receiveGetHotStreamers(data) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      hotStreamers: data
+      hotStreamers: data,
     },
   };
 }
@@ -36,18 +36,13 @@ function errorGetHotStreamers(message) {
   };
 }
 
-
 export function getHotStreamers(api) {
   return async (dispatch) => {
     dispatch(requestGetHotStreamers());
-    
+
     const url = generateUrl("getHotStreamers");
     try {
       const { data } = await api.setMethod("GET").setParams({ length: HOT_STREAMERS_LENGTH }).query(url);
-
-      data.forEach((item) => {
-        item.user.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, item.user.avatarUrl);
-      });
 
       dispatch(receiveGetHotStreamers(data));
     } catch (e) {

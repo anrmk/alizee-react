@@ -1,4 +1,4 @@
-import { generateUrl, generateFileUrl } from "../../../helpers/functions";
+import { generateUrl } from "../../../helpers/functions";
 
 import { SEARCH_DEFAULT_OFFSET, SEARCH_OFFSET, SEARCH_TAG_TYPE, SEARCH_LENGTH } from "../../../constants/search";
 
@@ -30,7 +30,7 @@ function receiveGetUsersByQuery(data, type, start, currentLength, query) {
       offset: start + SEARCH_OFFSET,
       hasMore: currentLength === SEARCH_LENGTH,
       data: data || [],
-      query
+      query,
     },
   };
 }
@@ -68,7 +68,7 @@ export function resetSearch() {
         hasMore: false,
         errorMessage: "",
         data: [],
-        type: null
+        type: null,
       },
     });
 }
@@ -94,26 +94,8 @@ export function getUsersByQuery(api, opts) {
         })
         .query(url);
 
-        if (data.length) {
-          data.forEach((item) => {
-            if (opts.type === SEARCH_TAG_TYPE) {
-              item.media.forEach((media) => {
-                media.url = generateFileUrl(process.env.REACT_APP_DOMAIN, media.url);
-                media.thumbnailUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, media.thumbnailUrl);
-              });
-            }
-            item.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, item.avatarUrl);
-          });
-    
-          dispatch(receiveGetUsersByQuery(
-            [...getState().search.data, ...data],
-            opts.type,
-            currentOffset,
-            data.length,
-            opts.query
-          ));
-        } 
-      
+      dispatch(receiveGetUsersByQuery([...getState().search.data, ...data], opts.type, currentOffset, data.length, opts.query)
+      );
     } catch (e) {
       dispatch(errorGetUsersByQuery("Error: something went wrong:"));
     }

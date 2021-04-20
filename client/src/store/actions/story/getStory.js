@@ -1,4 +1,4 @@
-import { generateUrl, generateFileUrl } from "../../../helpers/functions";
+import { generateUrl } from "../../../helpers/functions";
 
 export const GET_STORY_REQUEST = "GET_STORY_REQUEST";
 export const GET_STORY_SUCCESS = "GET_STORY_SUCCESS";
@@ -10,9 +10,9 @@ function requestGetStory() {
     type: GET_STORY_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: ""
-    }
-  }
+      errorMessage: "",
+    },
+  };
 }
 
 function receiveGetStory(story) {
@@ -21,9 +21,9 @@ function receiveGetStory(story) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      currentStory: story || {}
-    }
-  }
+      currentStory: story || {},
+    },
+  };
 }
 
 function errorGetStory(message) {
@@ -32,9 +32,9 @@ function errorGetStory(message) {
     payload: {
       isFetching: false,
       hasMore: false,
-      errorMessage: message
-    }
-  }
+      errorMessage: message,
+    },
+  };
 }
 
 function successResetStory() {
@@ -43,9 +43,9 @@ function successResetStory() {
     payload: {
       isFetching: false,
       errorMessage: "",
-      currentStory: {}
-    }
-  }
+      currentStory: {},
+    },
+  };
 }
 
 export function getStory(api, opts) {
@@ -61,28 +61,13 @@ export function getStory(api, opts) {
         })
         .query(url);
 
-      if (data) {
-        data.slides.forEach((slide) => {
-          slide.media = {
-            ...slide.media,
-            thumbnailUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, slide.media.thumbnailUrl),
-            url: generateFileUrl(process.env.REACT_APP_DOMAIN, slide.media.url)
-          }
-        });
-        data.thumbnailUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, data?.thumbnailUrl);
-        data.user = {
-          ...data?.user,
-          avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, data?.user.avatarUrl)
-        };
-      }
-
       dispatch(receiveGetStory(data));
     } catch (e) {
       dispatch(errorGetStory("Error: something went wrong:", e));
     }
-  }
+  };
 }
 
 export function resetStory() {
-  return dispatch => dispatch(successResetStory());
+  return (dispatch) => dispatch(successResetStory());
 }

@@ -1,5 +1,5 @@
-import { MEDIA_CONTENT, MEDIA_STORY } from "../../../constants/media_types";
-import { generateUrl, generateFileUrl, isEmptyObject } from "../../../helpers/functions";
+import { MEDIA_STORY } from "../../../constants/media_types";
+import { generateUrl, isEmptyObject } from "../../../helpers/functions";
 import { createMedia } from "../media";
 
 export const CREATE_STORY_SLIDE_REQUEST = "CREATE_STORY_SLIDE_REQUEST";
@@ -12,8 +12,8 @@ function requestCreateStory() {
     payload: {
       isFetching: true,
       errorMessage: "",
-    }
-  }
+    },
+  };
 }
 
 function receiveCreateStory(currentStory) {
@@ -22,9 +22,9 @@ function receiveCreateStory(currentStory) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      currentStory: currentStory || {}
-    }
-  }
+      currentStory: currentStory || {},
+    },
+  };
 }
 
 function errorCreateStory(message) {
@@ -32,9 +32,9 @@ function errorCreateStory(message) {
     type: CREATE_STORY_SLIDE_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message
-    }
-  }
+      errorMessage: message,
+    },
+  };
 }
 
 export function createStorySlide(api, storyData) {
@@ -42,7 +42,7 @@ export function createStorySlide(api, storyData) {
     dispatch(requestCreateStory());
 
     const url = generateUrl("createStorySlide");
-    
+
     try {
       const mediaData = storyData.medias;
       let media = [];
@@ -58,14 +58,11 @@ export function createStorySlide(api, storyData) {
       }
 
       const { data } = await api
-        .setData({ 
+        .setData({
           externalLink: storyData?.link || null,
-          mediaId: media[0].id
-         })
+          mediaId: media[0].id,
+        })
         .query(url);
-
-      data.media.url = generateFileUrl(process.env.REACT_APP_DOMAIN, data.media.url);
-      data.media.thumbnailUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, data.media.thumbnailUrl);
 
       const currentStoryState = getState().story.currentStory;
       const updatedCurrentStoryState = { ...currentStoryState };
@@ -75,8 +72,8 @@ export function createStorySlide(api, storyData) {
         updatedCurrentStoryState.user = {
           userName: signInState.userName,
           name: signInState.name,
-          avatarUrl: signInState.avatarUrl
-        }
+          avatarUrl: signInState.avatarUrl,
+        };
         updatedCurrentStoryState.userId = signInState.id;
       }
 
@@ -84,8 +81,8 @@ export function createStorySlide(api, storyData) {
       updatedCurrentStoryState.thumbnailUrl = data.media.thumbnailUrl;
 
       dispatch(receiveCreateStory(updatedCurrentStoryState));
-    } catch(e) {
+    } catch (e) {
       dispatch(errorCreateStory("Error: something went wrong"));
     }
-  }
+  };
 }

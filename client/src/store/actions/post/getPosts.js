@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 
-import { generateUrl, generateFileUrl, getOffset } from "../../../helpers/functions";
+import { generateUrl, getOffset } from "../../../helpers/functions";
 import { POSTS_OFFSET, POSTS_LENGTH } from "../../../constants/feed";
 
 export const GET_POSTS_REQUEST = "GET_POSTS_REQUEST";
@@ -63,7 +63,7 @@ export function refreshPosts(postData) {
     const posts = [...getState().posts.data];
     const postIndex = posts.findIndex((post) => post.id === postData.id);
     if (postIndex === -1) return;
-  
+
     posts[postIndex] = postData;
     dispatch({
       type: REFRESH_POSTS,
@@ -73,9 +73,8 @@ export function refreshPosts(postData) {
         data: posts,
       },
     });
-  }
+  };
 }
-
 
 export function getPosts(api, opts) {
   return async (dispatch, getState) => {
@@ -94,18 +93,6 @@ export function getPosts(api, opts) {
         })
         .query(url);
 
-      // Extend relative path to absolute (to remote server)
-      data.data.forEach((item) => {
-        const avatarUrl = item.user.avatarUrl;
-        item.user = {
-          ...item.user,
-          avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, avatarUrl),
-        };
-        item.media.forEach((media) => {
-          media.url = generateFileUrl(process.env.REACT_APP_DOMAIN, media.url);
-          media.thumbnailUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, media.thumbnailUrl);
-        });
-      });
       dispatch(
         receiveGetPosts(
           [...getState().posts.data, ...data.data],

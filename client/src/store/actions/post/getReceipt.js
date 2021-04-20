@@ -1,4 +1,4 @@
-import { generateFileUrl, generateUrl, isEmptyObject } from "../../../helpers/functions";
+import { generateUrl } from "../../../helpers/functions";
 
 export const RECEIPT_POST_REQUEST = "RECEIPT_POST_REQUEST";
 export const RECEIPT_POST_SUCCESS = "RECEIPT_POST_SUCCESS";
@@ -20,7 +20,7 @@ function receiveReceiptPost(receipt) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      receipt
+      receipt,
     },
   };
 }
@@ -38,11 +38,10 @@ function errorReceiptPost(message) {
 export function getReceipt(api, id, callback) {
   return async (dispatch, getState) => {
     dispatch(requestReceiptPost());
-    
+
     const url = generateUrl("getReceipt");
     try {
       const { data } = await api.setMethod("GET").setParams({ id }).query(url);
-      data.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, data.avatarUrl);
 
       dispatch(receiveReceiptPost(data));
       callback && callback(data); // TODO: refactor this, we can't directly pass data in callback

@@ -1,4 +1,4 @@
-import { generateUrl, generateFileUrl } from "../../../helpers/functions";
+import { generateUrl } from "../../../helpers/functions";
 import { POSTS_OFFSET, POSTS_LENGTH } from "../../../constants/feed";
 
 export const GET_FOLLOWING_POSTS_REQUEST = "GET_FOLLOWING_POSTS_REQUEST";
@@ -23,7 +23,7 @@ function receiveGetFollowingPosts(data, currentLength, start) {
       errorMessage: "",
       offset: start + POSTS_OFFSET,
       hasMore: currentLength === POSTS_LENGTH,
-      data: data || []
+      data: data || [],
     },
   };
 }
@@ -54,26 +54,7 @@ export function getFollowingPosts(api) {
         })
         .query(url);
 
-      // Extend relative path to absolute (to remote server)
-      data.forEach((item) => {
-        const avatarUrl = item.user.avatarUrl;
-        item.user = {
-          ...item.user,
-          avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, avatarUrl),
-        };
-        item.media.forEach((item) => {
-          item.url = generateFileUrl(process.env.REACT_APP_DOMAIN, item.url);
-          item.thumbnailUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, item.thumbnailUrl);
-        });
-      });
-
-      dispatch(
-        receiveGetFollowingPosts(
-          [...getState().posts.data, ...data],
-          data.length,
-          currentOffset
-        )
-      );
+      dispatch(receiveGetFollowingPosts([...getState().posts.data, ...data], data.length, currentOffset));
     } catch (e) {
       dispatch(errorGetFollowingPosts("Error: something went wrong:", e));
     }

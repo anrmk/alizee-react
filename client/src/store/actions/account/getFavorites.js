@@ -1,4 +1,4 @@
-import { generateUrl, generateFileUrl } from "../../../helpers/functions";
+import { generateUrl } from "../../../helpers/functions";
 
 export const GET_USER_FAVORITES_REQUEST = "GET_USER_FAVORITES_REQUEST";
 export const GET_USER_FAVORITES_SUCCESS = "GET_USER_FAVORITES_SUCCESS";
@@ -42,9 +42,6 @@ export function getFavorites(api, username) {
     const url = generateUrl("getAccountFavorites");
     try {
       const { data } = await api.setMethod("GET").query(url);
-      data.forEach((item) => {
-        item.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, item.avatarUrl);
-      });
 
       dispatch(receiveGetUserFavorites(data));
     } catch {

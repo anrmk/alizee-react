@@ -1,4 +1,4 @@
-import { generateFileUrl, generateUrl, isEmptyObject } from "../../../helpers/functions";
+import { generateUrl } from "../../../helpers/functions";
 
 export const PURCHASE_POST_REQUEST = "PURCHASE_POST_REQUEST";
 export const PURCHASE_POST_SUCCESS = "PURCHASE_POST_SUCCESS";
@@ -41,9 +41,6 @@ export function getPurchases(api, id, callback) {
     const url = generateUrl("getPurchases");
     try {
       const { data } = await api.setMethod("GET").setParams({ id }).query(url);
-      data.forEach((item) => {
-        item.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, item.avatarUrl);
-      });
 
       dispatch(receivePurchasePost(data));
       callback && callback(data); // TODO: refactor this, we can't directly pass data in callback

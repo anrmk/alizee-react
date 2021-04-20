@@ -1,4 +1,4 @@
-import { generateUrl, generateFileUrl, copyFlatObjectWithIgnore } from "../../../helpers/functions";
+import { generateUrl, copyFlatObjectWithIgnore } from "../../../helpers/functions";
 
 export const CREATE_ROOM_REQUEST = "CREATE_ROOM_REQUEST";
 export const CREATE_ROOM_SUCCESS = "CREATE_ROOM_SUCCESS";
@@ -46,7 +46,6 @@ export function createRoom(api, userName) {
 
       const transformedData = {
         ...copyFlatObjectWithIgnore(data, ["userName"]),
-        avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, data.avatarUrl),
         userName: data.userName
       };
 

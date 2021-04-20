@@ -21,6 +21,7 @@ import * as notificationAction from "../../store/actions/notification";
 import useStyles from "./styles";
 
 function PeerToPeer({ user, call }) {
+
   const classes = useStyles();
   const history = useHistory();
   const fullScreen = useFullScreen("root");

@@ -1,6 +1,6 @@
-import { MEDIA_COVER } from '../../../constants/media_types';
-import { generateUrl, generateFileUrl } from '../../../helpers/functions';
-import { createMedia } from '../media';
+import { MEDIA_COVER } from "../../../constants/media_types";
+import { generateUrl } from "../../../helpers/functions";
+import { createMedia } from "../media";
 
 export const UPDATE_COVER_REQUEST = "UPDATE_COVER_REQUEST";
 export const UPDATE_COVER_SUCCESS = "UPDATE_COVER_SUCCESS";
@@ -12,8 +12,8 @@ function requestUpdateCover() {
     payload: {
       isFetching: true,
       errorMessage: "",
-    }
-  }
+    },
+  };
 }
 
 function receiveUpdateCover(user) {
@@ -22,9 +22,9 @@ function receiveUpdateCover(user) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      data: user
-    }
-  }
+      data: user,
+    },
+  };
 }
 
 function errorUpdateCover(message) {
@@ -32,9 +32,9 @@ function errorUpdateCover(message) {
     type: UPDATE_COVER_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message
-    }
-  }
+      errorMessage: message,
+    },
+  };
 }
 
 export function updateCover(api, mediaData = []) {
@@ -64,18 +64,18 @@ export function updateCover(api, mediaData = []) {
       const updatedCoverMediaId = media[0].id;
 
       await api
-        .setMethod('PUT')
+        .setMethod("PUT")
         .setParams({
-          mediaId: updatedCoverMediaId
+          mediaId: updatedCoverMediaId,
         })
         .query(url);
 
       const user = getState().user.data;
-      user.coverUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, updatedCoverUrl);
+      user.coverUrl = updatedCoverUrl;
 
       dispatch(receiveUpdateCover(user));
     } catch {
       dispatch(errorUpdateCover("Error: something went wrong"));
     }
-  }
+  };
 }

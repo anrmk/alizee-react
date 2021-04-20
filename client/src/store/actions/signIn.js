@@ -1,18 +1,18 @@
-import { generateUrl, generateFileUrl } from '../../helpers/functions';
-import { SOCIAL_GOOGLE, SOCIAL_TWITTER } from '../../constants/social_types';
-import { socialAuth } from './socialAuth';
-import { USER_TOKEN } from '../../constants/user';
-import { oneTimeAuth } from './oneTimeAuth';
+import { generateUrl } from "../../helpers/functions";
+import { SOCIAL_GOOGLE, SOCIAL_TWITTER } from "../../constants/social_types";
+import { socialAuth } from "./socialAuth";
+import { USER_TOKEN } from "../../constants/user";
+import { oneTimeAuth } from "./oneTimeAuth";
 
-export const SIGNIN_REQUEST = 'SIGNIN_REQUEST';
-export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS';
-export const SIGNIN_FAILURE = 'SIGNIN_FAILURE';
-export const SIGNOUT_SUCCESS = 'SIGNOUT_SUCCESS';
+export const SIGNIN_REQUEST = "SIGNIN_REQUEST";
+export const SIGNIN_SUCCESS = "SIGNIN_SUCCESS";
+export const SIGNIN_FAILURE = "SIGNIN_FAILURE";
+export const SIGNOUT_SUCCESS = "SIGNOUT_SUCCESS";
 
-export const VERIFIED_SUCCESS = 'VERIFIED_SUCCESS';
-export const VERIFIED_FAILURE = 'VERIFIED_FAILURE';
+export const VERIFIED_SUCCESS = "VERIFIED_SUCCESS";
+export const VERIFIED_FAILURE = "VERIFIED_FAILURE";
 
-export const SIGN_IN_RESET = 'SIGN_IN_RESET';
+export const SIGN_IN_RESET = "SIGN_IN_RESET";
 
 function requestSignIn() {
   return {
@@ -22,9 +22,9 @@ function requestSignIn() {
       isAuthenticated: false,
       isVerified: false,
       isSocial: false,
-      errorMessage: ''
-    }
-  }
+      errorMessage: "",
+    },
+  };
 }
 
 function receiveSignIn(userInfo, isSocial = false) {
@@ -35,10 +35,10 @@ function receiveSignIn(userInfo, isSocial = false) {
       isAuthenticated: true,
       isVerified: true,
       isSocial,
-      errorMessage: '',
-      userInfo
-    }
-  }
+      errorMessage: "",
+      userInfo,
+    },
+  };
 }
 
 function errorSignIn(message, status) {
@@ -50,36 +50,37 @@ function errorSignIn(message, status) {
       isVerified: false,
       isSocial: false,
       errorMessage: message,
-      errorStatus: status
-    }
-  }
+      errorStatus: status,
+    },
+  };
 }
 
 function successSignOut() {
   return {
     type: SIGNOUT_SUCCESS,
     payload: {
-      isAuthenticated: false
-    }
-  }
+      isAuthenticated: false,
+    },
+  };
 }
 
 export function resetSignIn() {
-  return dispatch => dispatch({
-    type: SIGN_IN_RESET,
-    payload: {
-      isFetching: false,
-      isAuthenticated: false,
-      isVerified: false,
-      isSocial: false,
-      errorMessage: "",
-      errorStatus: ""
-    }
-  })
+  return (dispatch) =>
+    dispatch({
+      type: SIGN_IN_RESET,
+      payload: {
+        isFetching: false,
+        isAuthenticated: false,
+        isVerified: false,
+        isSocial: false,
+        errorMessage: "",
+        errorStatus: "",
+      },
+    });
 }
 
 export function signInUser(creds, api) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(requestSignIn());
     const url = generateUrl("signIn");
     try {
@@ -91,21 +92,19 @@ export function signInUser(creds, api) {
         })
         .query(url);
 
-      localStorage.setItem(USER_TOKEN, JSON.stringify({ 
-        access: data.accessToken, 
-        refresh: data.refreshToken 
-      }));
-
-      const avatarUrl = data?.avatarUrl;
-      if (avatarUrl) {
-        data.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, avatarUrl);
-      }
+      localStorage.setItem(
+        USER_TOKEN,
+        JSON.stringify({
+          access: data.accessToken,
+          refresh: data.refreshToken,
+        })
+      );
 
       dispatch(receiveSignIn(data));
-    } catch(e) {
+    } catch (e) {
       dispatch(errorSignIn(e.message, e.response?.status || 500));
     }
-  }
+  };
 }
 
 export function signInSocial(api, socialType, opts) {
@@ -125,26 +124,24 @@ export function signInSocial(api, socialType, opts) {
         throw errorMessage;
       }
 
-      localStorage.setItem(USER_TOKEN, JSON.stringify({
-        access: data.accessToken, 
-        refresh: data.refreshToken
-      }));
-
-      const avatarUrl = data?.avatarUrl;
-      if (avatarUrl) {
-        data.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, avatarUrl);
-      }
+      localStorage.setItem(
+        USER_TOKEN,
+        JSON.stringify({
+          access: data.accessToken,
+          refresh: data.refreshToken,
+        })
+      );
 
       dispatch(receiveSignIn(data, true));
     } catch (e) {
       dispatch(errorSignIn(e.message, e.response?.status || 500));
     }
-  }
+  };
 }
 
 export function signOutUser(api) {
-  return dispatch => {
+  return (dispatch) => {
     localStorage.removeItem(USER_TOKEN);
     dispatch(successSignOut());
-  }
+  };
 }

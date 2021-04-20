@@ -1,8 +1,8 @@
-import { generateUrl, generateFileUrl } from '../../../helpers/functions';
+import { generateUrl } from "../../../helpers/functions";
 
-export const GET_USER_REQUEST = 'GET_USER_REQUEST';
-export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
-export const GET_USER_FAILURE = 'GET_USER_FAILURE';
+export const GET_USER_REQUEST = "GET_USER_REQUEST";
+export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
+export const GET_USER_FAILURE = "GET_USER_FAILURE";
 
 export const RESET_USER = "RESET_USER";
 
@@ -11,9 +11,9 @@ function requestGetUser() {
     type: GET_USER_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: '',
-    }
-  }
+      errorMessage: "",
+    },
+  };
 }
 
 function receiveGetUser(user) {
@@ -21,10 +21,10 @@ function receiveGetUser(user) {
     type: GET_USER_SUCCESS,
     payload: {
       isFetching: false,
-      errorMessage: '',
-      data: user
-    }
-  }
+      errorMessage: "",
+      data: user,
+    },
+  };
 }
 
 function errorGetUser(message) {
@@ -32,9 +32,9 @@ function errorGetUser(message) {
     type: GET_USER_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message
-    }
-  }
+      errorMessage: message,
+    },
+  };
 }
 
 export function resetUser() {
@@ -50,25 +50,16 @@ export function resetUser() {
 }
 
 export function getUser(api, username) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(requestGetUser());
 
-    const url = generateUrl('getUser');
+    const url = generateUrl("getUser");
     try {
-      const { data } = await api
-        .setMethod('GET')
-        .setParams({ username })
-        .query(url);
+      const { data } = await api.setMethod("GET").setParams({ username }).query(url);
 
-      const dataExtendedUrl = { 
-        ...data, 
-        avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, data.avatarUrl),
-        coverUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, data.coverUrl)
-      };
-
-      dispatch(receiveGetUser(dataExtendedUrl));
+      dispatch(receiveGetUser(data));
     } catch {
       dispatch(errorGetUser("Error: something went wrong"));
     }
-  }
+  };
 }

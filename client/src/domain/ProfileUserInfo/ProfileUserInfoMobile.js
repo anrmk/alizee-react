@@ -6,7 +6,6 @@ import { Typography, Box, Button, IconButton } from "@material-ui/core/";
 
 import MessageIcon from "@material-ui/icons/MessageOutlined";
 import DollarIcon from "@material-ui/icons/MonetizationOnOutlined";
-import EditIcon from "@material-ui/icons/EditRounded";
 
 import { CHAT_ROUTE } from "../../constants/routes";
 

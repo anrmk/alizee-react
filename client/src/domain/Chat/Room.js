@@ -1,8 +1,8 @@
 import React, { useCallback } from "react";
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
 
-import { Divider, Card, CardActions, CardContent, CardHeader, IconButton, Hidden } from "@material-ui/core";
+import { Divider, Card, CardActions, CardContent, CardHeader, IconButton } from "@material-ui/core";
 
 import MoreVertIcon from "@material-ui/icons/MoreVertRounded";
 import BackIcon from "@material-ui/icons/ArrowBackRounded";
@@ -29,7 +29,7 @@ function Room({
   onSendTip
 }) {
   const classes = useStyles();
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   const {userName, name, avatarUrl, showActivity, offlineDate, messages} = current || {};
 

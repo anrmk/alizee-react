@@ -1,4 +1,4 @@
-import { generateUrl, generateFileUrl } from "../../../helpers/functions";
+import { generateUrl } from "../../../helpers/functions";
 
 export const GET_BLACK_LIST_REQUEST = "GET_BLACK_LIST_REQUEST";
 export const GET_BLACK_LIST_SUCCESS = "GET_BLACK_LIST_SUCCESS";
@@ -42,10 +42,6 @@ export function getBlackList(api) {
     const url = generateUrl("getBlackList");
     try {
       const { data } = await api.setMethod("GET").query(url);
-
-      data.forEach((item) => {
-        item.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, item.avatarUrl);
-      });
 
       dispatch(receiveGetBlackList(data));
     } catch (e) {

@@ -1,20 +1,20 @@
-import { generateUrl, generateFileUrl } from '../../../helpers/functions';
-import { POST_PRIVATE, POST_PUBLIC } from '../../../constants/feed';
-import { MEDIA_CONTENT } from '../../../constants/media_types';
-import { createMedia } from '../media';
+import { generateUrl } from "../../../helpers/functions";
+import { POST_PRIVATE, POST_PUBLIC } from "../../../constants/feed";
+import { MEDIA_CONTENT } from "../../../constants/media_types";
+import { createMedia } from "../media";
 
-export const CREATE_POST_REQUEST = 'CREATE_POST_REQUEST';
-export const CREATE_POST_SUCCESS = 'CREATE_POST_SUCCESS';
-export const CREATE_POST_FAILURE = 'CREATE_POST_FAILURE';
+export const CREATE_POST_REQUEST = "CREATE_POST_REQUEST";
+export const CREATE_POST_SUCCESS = "CREATE_POST_SUCCESS";
+export const CREATE_POST_FAILURE = "CREATE_POST_FAILURE";
 
 function requestCreatePost() {
   return {
     type: CREATE_POST_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: '',
-    }
-  }
+      errorMessage: "",
+    },
+  };
 }
 
 function receiveCreatePost(posts) {
@@ -22,10 +22,10 @@ function receiveCreatePost(posts) {
     type: CREATE_POST_SUCCESS,
     payload: {
       isFetching: false,
-      errorMessage: '',
-      data: posts
-    }
-  }
+      errorMessage: "",
+      data: posts,
+    },
+  };
 }
 
 function errorCreatePost(message) {
@@ -33,9 +33,9 @@ function errorCreatePost(message) {
     type: CREATE_POST_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message
-    }
-  }
+      errorMessage: message,
+    },
+  };
 }
 
 export function createPost(api, postData) {
@@ -59,13 +59,13 @@ export function createPost(api, postData) {
 
       const { data } = await api
         .setData({
-          amount: postData.amount && Number(postData.amount) || 0,
+          amount: (postData.amount && Number(postData.amount)) || 0,
           description: postData.description,
           isCommentable: postData.commentable,
           kind: postData.private ? POST_PRIVATE : POST_PUBLIC,
           latitude: postData?.latitude,
           longitude: postData?.longitude,
-          media: media
+          media: media,
         })
         .query(url);
 
@@ -79,14 +79,11 @@ export function createPost(api, postData) {
         if (avatarUrl) {
           data.user.avatarUrl = avatarUrl;
         }
-        data.media.forEach(item => {
-          item.url = generateFileUrl(process.env.REACT_APP_DOMAIN, item.url);
-        });
 
         dispatch(receiveCreatePost([data, ...posts]));
       }
     } catch (e) {
       dispatch(errorCreatePost("Error: something went wrong"));
     }
-  }
+  };
 }

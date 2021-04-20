@@ -818,7 +818,7 @@ function PrivacyPolicy() {
                     </p>
                     <p>
                       More information on how the Referral Programme works can be found at:{" "}
-                      <a href="https://Alizee.com/help/" target="_blank">
+                      <a href="https://Alizee.com/help/" target="_blank" rel="noopener noreferrer">
                         https://Alizee.com/help/
                       </a>
                     </p>

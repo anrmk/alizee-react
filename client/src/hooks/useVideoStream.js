@@ -1,8 +1,7 @@
-import { useState, useEffect, useContext, useCallback, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
 
-import { getToken, wrapHttps } from "../helpers/functions";
-import API from "../constants/endpoints";
+import { wrapHttps } from "../helpers/functions";
 import Peer from "simple-peer";
 
 export default function useVideoStream({ userName, peerName, onHangup, onCallback }) {
@@ -153,11 +152,14 @@ export default function useVideoStream({ userName, peerName, onHangup, onCallbac
       stream: stream,
       config: {
         iceServers: [
+          { url: "stun:144.126.211.184:3478" },
+          { url: "stun:stun.l.google.com:19302" },
+          { url: "stun:global.stun.twilio.com:3478" },
           {
-            url: 'turn:192.158.29.39:3478?transport=udp',
-            credential: 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
-            username: '28224511:1379330808'
-          }
+            url: "turn:144.126.211.184:3478?transport=tcp",
+            username: "root",
+            credential: "123qweAS1!",
+          },
         ],
       },
     });

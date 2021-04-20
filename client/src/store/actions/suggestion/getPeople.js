@@ -1,4 +1,4 @@
-import { generateUrl, generateFileUrl } from "../../../helpers/functions";
+import { generateUrl } from "../../../helpers/functions";
 
 export const GET_PEOPLE_SUGGESTIONS_REQUEST = "GET_PEOPLE_SUGGESTIONS_REQUEST";
 export const GET_PEOPLE_SUGGESTIONS_SUCCESS = "GET_PEOPLE_SUGGESTIONS_SUCCESS";
@@ -30,7 +30,7 @@ function errorGetPeople(message) {
     type: GET_PEOPLE_SUGGESTIONS_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message
+      errorMessage: message,
     },
   };
 }
@@ -41,15 +41,7 @@ export function getPeople(api, count) {
 
     try {
       const url = generateUrl("getPeopleSuggestions");
-
-      const { data } = await api
-        .setMethod("GET")
-        .setParams({ length: count })
-        .query(url);
-
-      data.forEach(item => {
-        item.avatarUrl = generateFileUrl(process.env.REACT_APP_DOMAIN, item.avatarUrl);
-      })
+      const { data } = await api.setMethod("GET").setParams({ length: count }).query(url);
 
       dispatch(receiveGetPeople(data));
     } catch (e) {

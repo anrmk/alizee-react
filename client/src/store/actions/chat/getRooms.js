@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 
-import { generateUrl, generateFileUrl } from "../../../helpers/functions";
+import { generateUrl } from "../../../helpers/functions";
 
 export const GET_ROOMS_REQUEST = "GET_ROOMS_REQUEST";
 export const GET_ROOMS_SUCCESS = "GET_ROOMS_SUCCESS";
@@ -57,12 +57,7 @@ export function getRooms(api) {
     try {
       const { data } = await api.setMethod("GET").query(url);
 
-      const transformedData = data.map((item) => ({
-        ...item,
-        avatarUrl: generateFileUrl(process.env.REACT_APP_DOMAIN, item.avatarUrl),
-      }));
-
-      dispatch(receiveGetRooms(transformedData));
+      dispatch(receiveGetRooms(data));
     } catch {
       return dispatch(errorGetRooms("Error: GetRooms"));
     }
@@ -81,7 +76,7 @@ export function removeRoom(roomId) {
     const updatedRooms = oldRooms.filter((room) => room.id !== roomId);
 
     dispatch(receiveGetRooms(updatedRooms));
-  }
+  };
 }
 
 // SELECTOR FILTER

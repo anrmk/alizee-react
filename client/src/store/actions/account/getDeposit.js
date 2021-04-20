@@ -1,4 +1,4 @@
-import { generateUrl, generateFileUrl } from "../../../helpers/functions";
+import { generateUrl } from "../../../helpers/functions";
 
 export const GET_USER_DEPOSIT_REQUEST = "GET_USER_DEPOSIT_REQUEST";
 export const GET_USER_DEPOSIT_SUCCESS = "GET_USER_DEPOSIT_SUCCESS";
