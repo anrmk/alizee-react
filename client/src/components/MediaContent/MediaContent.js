@@ -22,6 +22,7 @@ function MediaContent({
   isLiked = false,
 
   onPayClick,
+  onChangeIndex
 }) {
   const classes = useStyles();
 
@@ -36,16 +37,15 @@ function MediaContent({
       <Fade in={isLiked}>
         <FavoriteIcon className={classes.favoriteIcon} />
       </Fade>
-      <Gallery className={classes.root} amount={amount} isPurchased={isPurchased} onPayClick={handlePayPostClick} >
+      <Gallery className={classes.root} amount={amount} isPurchased={isPurchased} onPayClick={handlePayPostClick} onChangeIndex={onChangeIndex}>
         {items.length &&
           items.map((item) => {
             if ((item.kind === MEDIA_IMAGE) || (!isPurchased && !isOwner && amount > 0)) {
               const url = showThumbnail ? item.thumbnailUrl : item.url;
-              return <ImagesContent className={classes.mediaContent} wrapperClassName={classes.imageContentWrapper} key={item.id} url={url} amount={amount} />;
+              return <ImagesContent className={classes.mediaContent} wrapperClassName={classes.imageContentWrapper} key={item.id} url={url} />;
             } else if (item.kind === MEDIA_VIDEO) {
               return <VideoContent className={classes.mediaContent} key={item.id} url={item.url} showControls={amount === 0 || isPurchased} />
             }
-
             return null;
           })}
       </Gallery>

@@ -22,7 +22,8 @@ function ArrowButtons({
     }
   }, [currentIndex])
 
-  const handleIndexChange = (count) => {
+  const handleIndexChange = (e, count) => {
+    e.stopPropagation();
     let index;
     if (count >= 0 && count < length) {
       index = count;
@@ -37,8 +38,8 @@ function ArrowButtons({
 
   return (
     <Box className={classes.arrowButtonBox} px={2} display="inline-flex">
-      <IconButton onClick={() => handleIndexChange(localIndex - 1)}><ArrowBackIosRoundedIcon className={classes.arrowButton} fontSize="large" /></IconButton>
-      <IconButton onClick={() => handleIndexChange(localIndex + 1)}><ArrowForwardIosRoundedIcon className={classes.arrowButton} fontSize="large" /></IconButton>
+      <IconButton onClick={(e) => handleIndexChange(e, localIndex - 1)}><ArrowBackIosRoundedIcon className={classes.arrowButton} fontSize="large" /></IconButton>
+      <IconButton onClick={(e) => handleIndexChange(e, localIndex + 1)}><ArrowForwardIosRoundedIcon className={classes.arrowButton} fontSize="large" /></IconButton>
     </Box>
   );
 }

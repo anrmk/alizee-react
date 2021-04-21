@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
+import { getStyleByTheme } from "../../helpers/functions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,7 +34,10 @@ const useStyles = makeStyles((theme) => ({
 
   slide: {
     overflow: "hidden !important",
-    height: "100%"
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
   },
 
   pagination: {
@@ -95,12 +99,12 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     display: "flex",
     justifyContent: "space-between",
-    pointerEvents: "none",
+    pointerEvents: "none"
   },
 
   arrowButton: {
     color: theme.palette.grey["100"],
-    pointerEvents: "all",
+    pointerEvents: "all"
   }
 }));
 

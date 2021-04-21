@@ -23,7 +23,7 @@ function receiveGetFollowingPosts(data, currentLength, start) {
       errorMessage: "",
       offset: start + POSTS_OFFSET,
       hasMore: currentLength === POSTS_LENGTH,
-      data: data || [],
+      data: data || []
     },
   };
 }

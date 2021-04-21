@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import clsx from "clsx";
 import SwipeableViews from "react-swipeable-views";
 
@@ -17,6 +16,8 @@ function Gallery({
   amount, 
   isPurchased,
   className,
+  style,
+  pagination = true,
   
   onPayClick,
   onChangeIndex
@@ -29,11 +30,16 @@ function Gallery({
     onChangeIndex && onChangeIndex(index);
   };
 
+  const handlePayClick = (e) => {
+    e.stopPropagation();
+    onPayClick && onPayClick();
+  }
+
   return (
-    <Box className={clsx(classes.root, className)}>
+    <Box className={clsx(classes.root, className)} style={style}>
       {(amount !== 0 && !isPurchased) && (
         <Box className={classes.payableDescription}>
-          <IconButton onClick={onPayClick}><LockIcon fontSize="large" /></IconButton>
+          <IconButton onClick={handlePayClick}><LockIcon fontSize="large" /></IconButton>
           <Typography variant="h4">Unlock post for ${amount}</Typography>
         </Box>
       )}
@@ -49,38 +55,18 @@ function Gallery({
         <>
           {children.length > 1
             && <ArrowButtons length={children.length} currentIndex={localIndex} onChangeIndex={handleIndexChange} />}
-          <Pagination
-            className={classes.pagination}
-            dots={children.length}
-            currentIndex={localIndex}
-            onChangeIndex={handleIndexChange}
-          />
+          {pagination && (
+            <Pagination
+              className={classes.pagination}
+              dots={children.length}
+              currentIndex={localIndex}
+              onChangeIndex={handleIndexChange}
+            />
+          )}
         </>
       )}
     </Box>
   );
 }
-
-Gallery.propTypes = {
-  children: PropTypes.any,
-  currentIndex: PropTypes.number,
-  amount: PropTypes.number,
-  isPurchased: PropTypes.bool,
-  className: PropTypes.any,
-
-  onPayClick: PropTypes.func,
-  onChangeIndex: PropTypes.func,
-};
-
-Gallery.defaultProps = {
-  children: null,
-  currentIndex: 0,
-  amount: 0,
-  isPurchased: false,
-  className: null,
-
-  onPayClick: undefined,
-  onChangeIndex: undefined,
-};
 
 export default Gallery;

@@ -15,6 +15,7 @@ import DeleteAccountDialog from "../domain/DeleteAccountDialog";
 import ResetPasswordDialog from "../domain/ResetPasswordDialog";
 import LanguageDialog from "../domain/LanguageDialog";
 import ConfirmDialog from "../domain/ConfirmDialog";
+import LightboxModal from "../domain/LightboxModal";
 
 export const LANGUAGE_DIALOG_TYPE = "language";
 
@@ -47,6 +48,8 @@ export const UPLOAD_FILE_AMOUNT_ERROR_DIALOG_TYPE = "uploadFileAmountError";
 
 export const MEDIA_PREVIEW_DIALOG_TYPE = "mediaPreview";
 export const CONFIRM_DIALOG_TYPE = "confirmation";
+
+export const LIGHTBOX_MODAL_TYPE = "lightbox";
 
 const baseDialogProps = {
   dialogProps: { fullWidth: true },
@@ -224,6 +227,11 @@ export default {
     title: "Confirm",
     content: <ConfirmDialog {...contentProps} />,
     mainBtnText: "Agree",
+    ...baseDialogProps,
+    ...dialogProps,
+  }),
+  [LIGHTBOX_MODAL_TYPE]: (dialogProps, contentProps) => ({
+    content: <LightboxModal {...contentProps} />,
     ...baseDialogProps,
     ...dialogProps,
   })

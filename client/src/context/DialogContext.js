@@ -17,6 +17,7 @@ export const initialContext = {
 	closeBtnProps: null,
 	closeBtnText: "Close",
 	stack: [],
+	asModal: false,
 
 	onCloseClick: null,
 	onMainClick: null

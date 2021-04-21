@@ -56,6 +56,10 @@ const useStyles = makeStyles((theme) => ({
     }
   },
 
+  mediaContent: {
+    width: "100%"
+  },
+
   receipt: {
     textAlign: "center"
   },

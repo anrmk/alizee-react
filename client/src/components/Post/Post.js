@@ -27,11 +27,12 @@ import useStyles from "./styles";
 const Post = React.memo((props) => {
   const classes = useStyles();
   const [isLikeAnimation, setIsLikeAnimation] = useState(false);
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   let timerLikeAnimation = useRef().current;
 
   const { id, user, owner, post } = props;
   const { likes, isLike, isFavorite } = props;
-  const { onLike, onFavorite, onSendTip, onBuyPost, onReceipt, onPurchase, onShare, onMenu, onCommentSend } = props;
+  const { onLike, onFavorite, onSendTip, onBuyPost, onReceipt, onPurchase, onShare, onMenu, onCommentSend, onFullScreen } = props;
 
   const handleMenuClick = () => {
     onMenu && onMenu({ postId: id, userName: owner.userName });
@@ -39,6 +40,18 @@ const Post = React.memo((props) => {
 
   const handleCommentSendClick = (data) => {
     onCommentSend && onCommentSend({ ...data, postId: id });
+  }
+
+  const handleFullScreenClick = () => {
+    if (post.isPurchased || post.amount === 0) {
+      onFullScreen && onFullScreen({ post, startSlideIndex: currentSlideIndex });
+    }
+  }
+
+  const handleChangeSlideIndex = (index) => {
+    if (post?.media[index]) {
+      setCurrentSlideIndex(index);
+    }
   }
 
   const doubleTap = useDoubleTap(() => {
@@ -50,7 +63,7 @@ const Post = React.memo((props) => {
 
     setIsLikeAnimation(true);
     timerLikeAnimation = setTimeout(() => setIsLikeAnimation(false), 400);
-  }, 200);
+  }, 200, { onSingleTap: handleFullScreenClick });
 
   const renderDescription = (text, withGutter) => (
     <Typography
@@ -81,7 +94,7 @@ const Post = React.memo((props) => {
 
       <CardMedia {...doubleTap}>
         <MediaContent
-          className={classes.post}
+          className={classes.mediaContent}
           id={id}
           user={owner}
           items={post.media}
@@ -90,6 +103,7 @@ const Post = React.memo((props) => {
           isOwner={user.id === owner.id}
           isLiked={isLikeAnimation}
           onPayClick={onBuyPost}
+          onChangeIndex={handleChangeSlideIndex}
         />
       </CardMedia>
 

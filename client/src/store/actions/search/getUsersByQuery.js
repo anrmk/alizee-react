@@ -94,8 +94,7 @@ export function getUsersByQuery(api, opts) {
         })
         .query(url);
 
-      dispatch(receiveGetUsersByQuery([...getState().search.data, ...data], opts.type, currentOffset, data.length, opts.query)
-      );
+      dispatch(receiveGetUsersByQuery([...getState().search.data, ...data], opts.type, currentOffset, data.length, opts.query));
     } catch (e) {
       dispatch(errorGetUsersByQuery("Error: something went wrong:"));
     }

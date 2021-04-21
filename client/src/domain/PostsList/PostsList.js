@@ -12,6 +12,7 @@ const PostsList = React.memo(
 
     onCommentSend,
     onFetchMore,
+    onFullScreen,
 
     onLike,
     onFavorite,
@@ -44,6 +45,7 @@ const PostsList = React.memo(
               onMenu={onMenu}
               onShare={onShare}
               onCommentSend={onCommentSend}
+              onFullScreen={onFullScreen}
             />
           ))}
       </InfiniteScroll>

@@ -10,7 +10,8 @@ function Pagination({
 }) {
   if (dots <= 1) return null;
 
-  const handleDotClick = (index) => {
+  const handleDotClick = (e, index) => {
+    e.stopPropagation();
     onChangeIndex && onChangeIndex(index);
   };
 
@@ -19,7 +20,7 @@ function Pagination({
       <ol>
         {dots > 0 &&
           [...Array(dots)].map((_, i) => (
-            <li className={`${currentIndex === i ? "active" : ""}`} key={i} onClick={() => handleDotClick(i)} />
+            <li className={`${currentIndex === i ? "active" : ""}`} key={i} onClick={(e) => handleDotClick(e, i)} />
           ))}
       </ol>
     </div>

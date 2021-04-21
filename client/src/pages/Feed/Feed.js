@@ -27,6 +27,7 @@ import useShareDialog, { SHARE_DIALOG_POST_TYPE } from "../../hooks/useShareDial
 import { useLikeAction, useFavoriteAction, useStoryDialog, useMenuDialog, useCommentAction } from "../../hooks/post";
 import { useSendTipDialog, usePaymentDialog, usePurchaseDialog, useReceiptDialog } from "../../hooks/payment";
 import useFullScreen from "../../hooks/useFullScreen";
+import useLightboxModal from "../../hooks/useLightboxModal";
 
 import useStyles from "./styles";
 
@@ -50,6 +51,7 @@ function Feed(props) {
   const postMenuDialog = useMenuDialog();
   const fullScreen = useFullScreen("root");
   const { handleCommentSendClick } = useCommentAction();
+  const lightboxModal = useLightboxModal()
 
   const { dialogShareOpenClick } = useShareDialog({ type: SHARE_DIALOG_POST_TYPE });
 
@@ -122,6 +124,7 @@ function Feed(props) {
             onShare={dialogShareOpenClick} //??
             onMenu={postMenuDialog.toggle} //??
             onCommentSend={handleCommentSendClick}
+            onFullScreen={lightboxModal.toggle}
           />
         </Grid>
         <Hidden smDown>
