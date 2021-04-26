@@ -90,3 +90,11 @@ export {
 
   updatePostComments
 } from "./updatePostComments";
+
+export {
+  DELETE_POST_REQUEST,
+  DELETE_POST_SUCCESS,
+  DELETE_POST_FAILURE,
+
+  deletePost
+} from "./deletePost";

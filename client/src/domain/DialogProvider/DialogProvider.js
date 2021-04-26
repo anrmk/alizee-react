@@ -1,4 +1,5 @@
 import React, { useReducer } from "react";
+import clsx from "clsx";
 
 import {
   Button,
@@ -126,11 +127,11 @@ export default function DialogProvider({ children }) {
             </DialogTitle>
           )}
 
-          {dialogOptions.content && (
-            <DialogContent id="dialog-content">
-              {dialogOptions.loading ? <CircularProgress /> : dialogOptions.content}
-            </DialogContent>
-          )}
+        {dialogOptions.content && (
+          <DialogContent id="dialog-content" className={clsx(dialogOptions.loading && classes.loading)}>
+            {dialogOptions.loading ? <CircularProgress className={classes.progress} /> : dialogOptions.content}
+          </DialogContent>
+        )}
 
           {!dialogOptions.actionsComponent
             ? (dialogOptions.onCloseClick || dialogOptions.onMainClick) && (

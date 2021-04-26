@@ -17,13 +17,17 @@ export default {
     getPosts: "post/getposts",
     getReceipt: "post/receipt",
     getPurchases: "post/purchases",
+    getFollowingPosts: "post/getfollowingposts",
+    createPost: "post/createpost",
+    getFavoritePosts: "post/getfavouriteposts",
+    likePost: "post/like",
+    favoritePost: "post/favorite",
+    reportPost: "post/report",
+    deletePost: "post/deletepost",
 
     //PAYMENT
     buyPost: "payment/buyPost",
     sendTip: "payment/sendTip",
-
-    // FAVORITE POSTS
-    getFavoritePosts: "post/getfavouriteposts",
 
     // POST COMMENTS
     getCommentsPost: "comment/comments",
@@ -39,15 +43,8 @@ export default {
     createMood: "mood/createmood",
 
     // MEDIA
-    getFollowingPosts: "post/getfollowingposts",
-    createPost: "post/createpost",
     createMedia: "media/createmedia",
     createChatMedia: "media/createChatMedia",
-
-    // LIKES
-    likePost: "post/like",
-    favoritePost: "post/favorite",
-    reportPost: "post/report",
     
     // CHAT
     getRoom: "chat/getRoom",

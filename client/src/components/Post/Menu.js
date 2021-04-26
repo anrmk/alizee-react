@@ -4,15 +4,17 @@ import { ListItemIcon, ListItemText, List, ListItem } from "@material-ui/core";
 import BlockIcon from "@material-ui/icons/BlockOutlined";
 import ShareIcon from "@material-ui/icons/ShareOutlined";
 import ReportIcon from "@material-ui/icons/ReportOutlined";
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 function Menu({
   postId,
   userName,
-  isOwner,
+  isOwner = false,
 
   onBlock,
   onReport,
   onShare,
+  onDelete
 }) {
   const handleBlockClick = () => {
     onBlock && onBlock({ userName });
@@ -24,6 +26,10 @@ function Menu({
 
   const handleShareClick = () => {
     onShare && onShare({ postId, userName });
+  };
+
+  const handleDeleteClick = () => {
+    onDelete && onDelete({ postId, userName });
   };
 
   return (
@@ -52,6 +58,15 @@ function Menu({
         </ListItemIcon>
         <ListItemText primary="Share to..." />
       </ListItem>
+
+      {isOwner && (
+        <ListItem button onClick={handleDeleteClick}>
+          <ListItemIcon>
+            <DeleteForeverIcon />
+          </ListItemIcon>
+          <ListItemText primary="Delete post" />
+        </ListItem>
+      )}
     </List>
   );
 }

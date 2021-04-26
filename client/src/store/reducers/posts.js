@@ -41,7 +41,11 @@ import {
 
   UPDATE_POST_COMMENTS_REQUEST,
   UPDATE_POST_COMMENTS_SUCCESS,
-  UPDATE_POST_COMMENTS_FAILURE
+  UPDATE_POST_COMMENTS_FAILURE,
+
+  DELETE_POST_REQUEST,
+  DELETE_POST_SUCCESS,
+  DELETE_POST_FAILURE
 } from "../actions/post";
 
 import {
@@ -314,6 +318,28 @@ export default function post(
     }
 
     case UPDATE_POST_COMMENTS_FAILURE: {
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+
+    // DELETE POST
+    case DELETE_POST_REQUEST: {
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+
+    case DELETE_POST_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+
+    case DELETE_POST_FAILURE: {
       return {
         ...state,
         ...action.payload

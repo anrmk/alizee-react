@@ -115,7 +115,11 @@ function PostPage(props) {
                 </IconButton>
               </Hidden>
 
-              <IconButton onClick={() => postMenuDialog.toggle({ postId: post.data.id, userName: post.owner.userName })}>
+              <IconButton onClick={() => postMenuDialog.toggle({ 
+                  postId: post.data.id,
+                  userName: post.owner.userName,
+                  isOwner: user.id === post.owner.id
+                })}>
                 <MoreVertIcon />
               </IconButton>
             </>

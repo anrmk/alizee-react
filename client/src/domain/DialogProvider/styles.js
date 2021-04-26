@@ -12,6 +12,12 @@ const useStyles = makeStyles((theme) => ({
     right: theme.spacing(1),
     top: theme.spacing(1),
     zIndex: theme.zIndex.tooltip
+  },
+  loading: {
+    display: "flex"
+  },
+  progress: {
+    margin: "auto"
   }
 }));
 

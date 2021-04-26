@@ -35,7 +35,7 @@ const Post = React.memo((props) => {
   const { onLike, onFavorite, onSendTip, onBuyPost, onReceipt, onPurchase, onShare, onMenu, onCommentSend, onFullScreen } = props;
 
   const handleMenuClick = () => {
-    onMenu && onMenu({ postId: id, userName: owner.userName });
+    onMenu && onMenu({ postId: id, userName: owner.userName, isOwner: user.id === owner.id });
   };
 
   const handleCommentSendClick = (data) => {
