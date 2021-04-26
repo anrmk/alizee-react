@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useCallback } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { Container, Card, CardMedia, Hidden, IconButton } from "@material-ui/core/";
@@ -25,10 +25,11 @@ import useSlidingViews from "../../hooks/useSlidingViews";
 
 import useBlockDialog from "../../hooks/useBlockDialog";
 import useShareDialog, { SHARE_DIALOG_POST_TYPE } from "../../hooks/useShareDialog";
-import { useLikeAction, useFavoriteAction, useMenuDialog, useCommentAction } from "../../hooks/post";
+import { useLikeAction, useFavoriteAction, useMenuDialog, useCommentDialog, useCommentAction } from "../../hooks/post";
 import { useSendTipDialog, usePaymentDialog, usePurchaseDialog, useReceiptDialog } from "../../hooks/payment";
 
 import useStyles from "./styles";
+import useLightboxModal from "../../hooks/useLightboxModal";
 
 function PostPage(props) {
   const apiClient = useContext(ApiContext);
@@ -47,7 +48,9 @@ function PostPage(props) {
   const receiptDialog = useReceiptDialog({ isFetching: props.post.isFetching, onReceipt: props.getReceipt });
   const purchaseDialog = usePurchaseDialog({ isFetching: props.post.isFetching, onPurchases: props.getPurchases });
   const postMenuDialog = useMenuDialog();
+  const commentDialog = useCommentDialog();
   const { handleCommentSendClick } = useCommentAction();
+  const lightboxModal = useLightboxModal();
 
   const { dialogShareOpenClick } = useShareDialog({ type: SHARE_DIALOG_POST_TYPE });
 
@@ -65,13 +68,13 @@ function PostPage(props) {
     };
   }, []);
 
-  const handleCommentMore = async () => {
-    !comment.isFetching && await getComments(apiClient, { postId, length: COMMENTS_POST_LENGTH });
-  };
-
   if (post.errorMessage) {
     return <Redirect to={HOME_ROUTE} />
   }
+
+  const handleCommentMore = async () => {
+    !comment.isFetching && await getComments(apiClient, { postId, length: COMMENTS_POST_LENGTH });
+  };
 
   return (
     <Container className={classes.container}>
@@ -91,14 +94,20 @@ function PostPage(props) {
                 <CommentIcon />
               </IconButton>
             </Hidden>
-            <MediaContent items={post.data.media} amount={post.data.amount} isPurchased={post.data.isPurchased} isOwner={user.id === post.owner?.id} />
+            <MediaContent
+              items={post.data.media}
+              amount={post.data.amount}
+              isPurchased={post.data.isPurchased}
+              isOwner={user.userName === post.owner?.userName}
+              onClick={lightboxModal.toggle} />
           </CardMedia>
         </Card>
  
         <Comments
           postId={post.data.id}
-          isOwner={user.id === post.owner.id}
-          user={post.owner}
+          isOwner={user.userName === post.owner?.userName}
+          user={user}
+          owner={post.owner}
           description={post.data.description}
           items={comment.data}
           hasMore={comment.hasMore}
@@ -107,6 +116,7 @@ function PostPage(props) {
           onFetchMore={handleCommentMore}
           onCommentSendClick={handleCommentSendClick}
           onSendTip={sendTipDialog.toggle}
+          onDeleteMessage={commentDialog.toggle}
           headerBackComponent={
             <>
               <Hidden mdUp>
@@ -134,8 +144,8 @@ function PostPage(props) {
             isFavorite={post.data.isFavorite}
             amount={post.data.amount}
             isPurchased={post.data.isPurchased}
-            isOwner={user.id === post.owner?.id}
-          
+            isOwner={user.userName === post.owner?.userName}
+
             onLike={likeAction.toggle}
             onFavorite={favoriteAction.toggle}
             onSendTip={sendTipDialog.toggle}

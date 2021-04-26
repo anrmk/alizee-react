@@ -14,7 +14,8 @@ const MessagesList = React.memo(({
   liveChat = false,
 
   onFetchMore,
-  onMediaView
+  onMediaView,
+  onDeleteMessage
 }) => {
   const classes = useStyles();
   const messagesContainer = useRef(null);
@@ -53,6 +54,7 @@ const MessagesList = React.memo(({
               liveChat={liveChat}
               onMediaView={onMediaView}
               onMessageClick={handleMessageClick}
+              onDelete={onDeleteMessage}
             />
           ))}
       </List>

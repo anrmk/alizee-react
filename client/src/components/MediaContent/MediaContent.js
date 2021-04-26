@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Box, Fade } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/FavoriteRounded";
@@ -22,22 +22,35 @@ function MediaContent({
   isLiked = false,
 
   onPayClick,
-  onChangeIndex
+  onChangeIndex,
+  onClick
 }) {
   const classes = useStyles();
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
   const handlePayPostClick = () => {
     onPayClick && onPayClick({ id, amount, user });
   };
+  
+  const handleClick = () => {
+    onClick && onClick({ post: { media: items }, startSlideIndex: currentSlideIndex });
+  }
+
+  const handleChangeSlideIndex = (index) => {
+    if (items[index]) {
+      setCurrentSlideIndex(index);
+    }
+    onChangeIndex && onChangeIndex(index);
+  }
 
   if (!items || !items.length) return <></>;
 
   return (
-    <Box position="relative" height="100%">
+    <Box onClick={handleClick} position="relative" height="100%">
       <Fade in={isLiked}>
         <FavoriteIcon className={classes.favoriteIcon} />
       </Fade>
-      <Gallery className={classes.root} amount={amount} isPurchased={isPurchased} onPayClick={handlePayPostClick} onChangeIndex={onChangeIndex}>
+      <Gallery className={classes.root} amount={amount} isPurchased={isPurchased} onPayClick={handlePayPostClick} onChangeIndex={handleChangeSlideIndex}>
         {items.length &&
           items.map((item) => {
             if ((item.kind === MEDIA_IMAGE) || (!isPurchased && !isOwner && amount > 0)) {

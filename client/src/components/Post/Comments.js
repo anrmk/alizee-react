@@ -13,8 +13,8 @@ import useStyles from "./styles";
 function Comments(props) {
   const { children, headerBackComponent } = props;
   const { hasMore } = props;
-  const { postId, isOwner, user, description, items, isCommentable, isPurchased } = props;
-  const { onFetchMore, onCommentSendClick, onSendTip } = props;
+  const { postId, isOwner, user, owner, description, items, isCommentable, isPurchased } = props;
+  const { onFetchMore, onCommentSendClick, onSendTip, onDeleteMessage } = props;
 
   const classes = useStyles({ isPurchased });
   const [isSendMessage, setIsSendMessage] = useState(false);
@@ -31,19 +31,19 @@ function Comments(props) {
   }, [items]);
 
   const handleSendTipClick = useCallback(() => {
-    onSendTip && onSendTip(user);
-  }, [user]);
+    onSendTip && onSendTip(owner);
+  }, [owner]);
 
   return (
     <Card className={classes.card}>
       <CardHeader
         avatar={
-          <Link to={PROFILE_USERNAME_ROUTE(user.userName)}>
-            <Avatar src={user.avatarUrl} />
+          <Link to={PROFILE_USERNAME_ROUTE(owner.userName)}>
+            <Avatar src={owner.avatarUrl} />
           </Link>
         }
-        title={user.name}
-        subheader={user.userName}
+        title={owner.name}
+        subheader={owner.userName}
         action={headerBackComponent}
       />
       <CardContent>{description}</CardContent>
@@ -56,7 +56,13 @@ function Comments(props) {
 
       {isPurchased && (
         <CardContent className={classes.cardContent}>
-          {<MessagesList isSendMessage={isSendMessage} userId={user.id} items={items} onFetchMore={onFetchMore} hasMore={hasMore} />}
+          <MessagesList
+            isSendMessage={isSendMessage}
+            userName={user.userName}
+            items={items}
+            hasMore={hasMore}
+            onFetchMore={onFetchMore}
+            onDeleteMessage={onDeleteMessage}/>
         </CardContent>
       )}
 

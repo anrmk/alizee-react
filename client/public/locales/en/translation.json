@@ -102,5 +102,11 @@
   "NameOnCard": "Name on card",
   "AccountNumber": "Account Number", 
   "RoutingNumber": "Routing Number", 
-  "BankAccountType": "Type of Bank Account"
+  "BankAccountType": "Type of Bank Account",
+
+  "DeleteAccountDialogTitle": "Delete Account",
+  "DeleteAccountDialogDescription": "This account will be blocked for six months, and you can restore it at any time. After six months, your account will be permanently deleted.",
+
+  "DeleteCommentDialogTitle": "Delete Comment",
+  "DeleteCommentDialogDescription": "The comment will be deleted without ability to restore its."
 }

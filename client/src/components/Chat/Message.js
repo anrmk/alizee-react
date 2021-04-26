@@ -1,11 +1,11 @@
 import React from "react";
-import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 
 import {
   Box,
   ListItem,
   ListItemAvatar,
   ListItemText,
+  ListItemSecondaryAction,
   Avatar,
   GridList,
   GridListTile,
@@ -16,7 +16,9 @@ import {
 } from "@material-ui/core/";
 
 import PlayArrowIcon from "@material-ui/icons/PlayArrowOutlined";
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
+import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 import { formatDate } from "../../helpers/functions";
 
 import useStyles from "./styles";
@@ -25,13 +27,18 @@ const Message = React.memo(({
     message,
     isOwner,
 
-    onMediaView
+    onMediaView,
+    onDelete
   }) => {
     const classes = useStyles();
 
     const handleMediaPreviewClick = (file) => {
       onMediaView && onMediaView({ type: file.kind, url: file.url });
     };
+    
+    const handleDeleteClick = () => {
+      onDelete && onDelete(message?.id);
+    }
 
     const renderGridListTile = (file, cols = 1, rows = 1) => {
       return (
@@ -109,7 +116,18 @@ const Message = React.memo(({
             </Box>
           }
           secondary={<Typography variant="body2">{message.message}</Typography>}
-        ></ListItemText>
+        />
+
+        {onDelete && isOwner && (
+          <ListItemSecondaryAction>
+            <IconButton
+              edge="end"
+              aria-label="delete"
+              onClick={handleDeleteClick}>
+              <DeleteForeverIcon />
+            </IconButton>
+          </ListItemSecondaryAction>
+        )}
       </ListItem>
     );
   }

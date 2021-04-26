@@ -11,7 +11,7 @@ import SocialList from "../domain/SocialList";
 import { NewChatDialog, RoomMenuDialog } from "../domain/Chat";
 import EditCoverDialog from "../domain/EditCoverDialog";
 import StoryDialog from "../domain/StoryDialog";
-import DeleteAccountDialog from "../domain/DeleteAccountDialog";
+import AgreeDialog from "../domain/AgreeDialog";
 import ResetPasswordDialog from "../domain/ResetPasswordDialog";
 import LanguageDialog from "../domain/LanguageDialog";
 import ConfirmDialog from "../domain/ConfirmDialog";
@@ -40,7 +40,7 @@ export const PROFILE_EDIT_COVER = "profileEditCover";
 export const STORY_DIALOG_TYPE = "story";
 export const FOLLOWERS_LIST_DIALOG_TYPE = "chatList";
 
-export const DELETE_ACCOUNT_DIALOG_TYPE = "deleteAccount";
+export const AGREE_DIALOG_TYPE = "agree";
 export const RESET_PWD_ACCOUNT_DIALOG_TYPE = "resetPasswordAccount";
 
 export const MEDIA_EDITOR_DIALOG_TYPE = "uploadFileEdit";
@@ -180,9 +180,8 @@ export default {
     ...baseDialogProps,
     ...dialogProps,
   }),
-  [DELETE_ACCOUNT_DIALOG_TYPE]: (dialogProps, contentProps) => ({
-    title: "Delete Account",
-    content: <DeleteAccountDialog {...contentProps} />,
+  [AGREE_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+    content: <AgreeDialog {...contentProps} />,
     mainBtnText: "Confirm",
     closeBtnText: "Disagree",
     ...baseDialogProps,

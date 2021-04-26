@@ -157,9 +157,11 @@ export default function Container() {
   return (
     <Box className={classes.container}>
       <Hidden smDown>
-        <IconButton aria-label="previous-btn" disableRipple onClick={e => handleMouseUp(e, "previous")}>
-          <ArrowCircleIcon className={classes.arrowNextIcon} fontSize="large" />
-        </IconButton>
+        <Box display="flex" alignItems="center">
+          <IconButton aria-label="previous-btn" disableRipple onClick={e => handleMouseUp(e, "previous")}>
+            <ArrowCircleIcon className={classes.arrowNextIcon} fontSize="large" />
+          </IconButton>
+        </Box>
       </Hidden>
       <Box className={classes.content}>
         <Box className={classes.header}>
@@ -225,9 +227,11 @@ export default function Container() {
         </Box>
       </Box>
       <Hidden smDown>
-        <IconButton aria-label="next-btn" disableRipple onClick={e => handleMouseUp(e, "next")}>
-          <ArrowCircleIcon className={classes.arrowPreviousIcon} fontSize="large" />
-        </IconButton>
+        <Box display="flex" alignItems="center">
+          <IconButton aria-label="next-btn" disableRipple onClick={e => handleMouseUp(e, "next")}>
+            <ArrowCircleIcon className={classes.arrowPreviousIcon} fontSize="large" />
+          </IconButton>
+        </Box>
       </Hidden>
     </Box>
   );

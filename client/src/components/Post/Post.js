@@ -100,7 +100,7 @@ const Post = React.memo((props) => {
           items={post.media}
           amount={post.amount}
           isPurchased={post.isPurchased}
-          isOwner={user.id === owner.id}
+          isOwner={user.userName === owner.userName}
           isLiked={isLikeAnimation}
           onPayClick={onBuyPost}
           onChangeIndex={handleChangeSlideIndex}
@@ -117,7 +117,7 @@ const Post = React.memo((props) => {
           isFavorite={isFavorite}
           amount={post.amount}
           isPurchased={post.isPurchased}
-          isOwner={user.id === owner.id}
+          isOwner={user.userName === owner.userName}
           isCommentable={post.isCommentable}
           onLike={onLike}
           onFavorite={onFavorite}
@@ -132,7 +132,7 @@ const Post = React.memo((props) => {
 
       <CardActions className={classes.action} disableSpacing>
         {post.isCommentable &&
-          (post.amount === 0 || user.id === owner.id || post.isPurchased) && (
+          (post.amount === 0 || user.userName === owner.userName || post.isPurchased) && (
             <>
               {post.comments.length > 0 && <CommentsPreview items={post.comments} />}
               <Divider className={classes.divider} />

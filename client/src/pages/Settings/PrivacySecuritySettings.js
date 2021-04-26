@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { connect } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import AlertContainer from "../../components/AlertContainer"
 import { PrivacyForm } from '../../domain/SettingsForms';
@@ -7,7 +8,7 @@ import { PrivacyForm } from '../../domain/SettingsForms';
 import ApiContext from '../../context/ApiContext';
 import * as settingsActions from '../../store/actions/settings';
 import * as userActions from '../../store/actions/user';
-import dialogs, { DELETE_ACCOUNT_DIALOG_TYPE, RESET_PWD_ACCOUNT_DIALOG_TYPE } from "../../constants/dialogs";
+import dialogs, { AGREE_DIALOG_TYPE, RESET_PWD_ACCOUNT_DIALOG_TYPE } from "../../constants/dialogs";
 import useDialog from "../../hooks/useDialog";
 
 const DEFAULT_ALERT_SUCCESS_TEXT = "Settings have been updated";
@@ -20,6 +21,7 @@ const DELETE_ACCOUNT_ALERT_ERROR_TEXT = "The account has not been deleted";
 
 function PrivacySecuritySettings(props) {
   const apiClient = useContext(ApiContext);
+  const { t } = useTranslation();
   const [alertOpen, setAlertOpen] = useState(false);
   const [alertSuccessText, setAlertSuccessText] = useState(DEFAULT_ALERT_SUCCESS_TEXT);
   const [alertErrorText, setAlertErrorText] = useState(DEFAULT_ALERT_ERROR_TEXT);
@@ -87,7 +89,12 @@ function PrivacySecuritySettings(props) {
   }
 
   const handleAccountDeleteClick = () => {
-    dialog.toggle(dialogs[DELETE_ACCOUNT_DIALOG_TYPE]({ onMainClick: handleAccountDeleteConfirmClick }));
+    dialog.toggle(dialogs[AGREE_DIALOG_TYPE]({
+      title: t("DeleteAccountDialogTitle"),
+      onMainClick: handleAccountDeleteConfirmClick
+    }, {
+      content: t("DeleteAccountDialogDescription")
+    }));
   }
   
   const handleAlertClose = () => {

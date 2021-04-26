@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     width: ({ size }) => (SIZES[size] ? SIZES[size] : SIZES["medium"]),
     height: ({ size }) => (SIZES[size] ? SIZES[size] : SIZES["medium"]),
     boxShadow: ({ borderWidth, borderColor }) => getBorder(borderWidth, borderColor),
-    backgroundColor:  theme.palette.background.default,
+    backgroundColor:  theme.palette.grey["500"],
     overflow: "visible",
     "& > img.MuiAvatar-img": {
       borderRadius: "50%",

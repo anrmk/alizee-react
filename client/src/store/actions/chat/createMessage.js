@@ -49,7 +49,6 @@ function addMessageSuccess(room, rooms) {
 
 export function addMessage(data) {
   return (dispatch, getState) => {
-    debugger
     dispatch(receiveCreateMessage());
 
     const current = { ...getState().chat.current };

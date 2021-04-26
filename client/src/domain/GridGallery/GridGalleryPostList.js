@@ -30,7 +30,7 @@ function GridGalleryPostList(props) {
                 <img
                   className={classes.gridListTileImage}
                   loading="lazy"
-                  src={item.media[0].kind === MEDIA_VIDEO ? item.media[0].thumbnailUrl : item.media[0].url}
+                  src={item.media[0].thumbnailUrl}
                   alt={item.title} />
                 {/* <LazyLoadImage
                   className={classes.gridListTileImage}

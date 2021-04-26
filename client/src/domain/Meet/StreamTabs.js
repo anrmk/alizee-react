@@ -68,7 +68,7 @@ function StreamTabs({
           index={CHAT_TABS.chat}>
           <MessagesList
             className={classes.roomBoxTabChatMessageList}
-            userId={user.id}
+            userName={user.userName}
             items={data?.messages}
             liveChat={true} />
           <MessageSenderInput onSendMessageClick={onMessageCreate} />
