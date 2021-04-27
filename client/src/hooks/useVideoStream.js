@@ -8,7 +8,7 @@ export default function useVideoStream({ userName, peerName, onHangup, onCallbac
   const userVideo = useRef(); //reference for DOM element
   const partnerVideo = useRef(); //reference for DOM element
 
-  const [users, setUsers] = useState({}); //list of connected users
+  //const [users, setUsers] = useState({}); //list of connected users
   const [caller, setCaller] = useState(null); // caller with the socket id
   const [status, setStatus] = useState(null); //status of action
   const [calling, setCalling] = useState(false); //indicate calling or not
@@ -122,7 +122,7 @@ export default function useVideoStream({ userName, peerName, onHangup, onCallbac
     });
 
     socket.on("allUsers", (data) => {
-      setUsers(data);
+      //setUsers(data);
       socket.data = data;
     });
 

@@ -4,8 +4,8 @@ const fs = require("fs");
 const app = express();
 
 const credentials = {
-  key: fs.readFileSync("./certs/key-ss.key"),
-  cert: fs.readFileSync("./certs/cert-ss.crt"),
+  key: fs.readFileSync("/etc/nginx/ssl/76210a123a62e0db.pem"),
+  cert: fs.readFileSync("/etc/nginx/ssl/themembers.com.key"),
 };
 
 const server = https.createServer(credentials, app);

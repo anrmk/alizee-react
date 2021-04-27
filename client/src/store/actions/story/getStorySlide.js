@@ -43,8 +43,6 @@ export function getStorySlide(api, id) {
     try {
       const { data } = await api.setMethod("GET").setParams({ id }).query(url);
 
-      debugger
-
       dispatch(receiveGetStorySlide(data));
     } catch {
       dispatch(errorGetStorySlide("Error: something went wrong"));
