@@ -221,7 +221,6 @@ export function getAccountSnapshot(account) {
     name: account.name,
     birthday: account.birthday,
     phoneNumber: account.phoneNumber,
-    avatarUrl: account.avatarUrl,
     bio: account.bio,
     sites: account.sites
   })

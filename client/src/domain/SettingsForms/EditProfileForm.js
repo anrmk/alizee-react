@@ -1,9 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import InputMask from "react-input-mask";
-import { Grid, Button, FormGroup, TextField, Typography } from "@material-ui/core";
+import { Grid, Button, FormGroup, TextField } from "@material-ui/core";
 
 import Avatar from "../../components/Avatar";
 import ChipsInput from "../../components/ChipsInput";
@@ -14,8 +14,9 @@ import { EMPTY_VALUE_ERROR, BIRTHDAY_LESS_200_ERROR, BIRTHDAY_GREATER_18_ERROR, 
 import { getYearFromCurrentDate } from "../../helpers/functions";
 import { getDate } from "../../helpers/functions";
 import useStyles from "./styles";
+import Cover from "../../components/Cover";
 
-const FULL_NAME_ID = "fullName";
+const FULL_NAME_INPUT_ID = "name";
 const USERNAME_INPUT_ID = "userName";
 const EMAIL_INPUT_ID = "email";
 const SITES_INPUT_ID = "sites";
@@ -29,7 +30,7 @@ const FULL_NAME_HELPER =
   "Help people discover your account by using the name you're known by: either your full name, nickname, or business name. You can only change your name twice within 14 days.";
 
 const schema = yup.object().shape({
-  [FULL_NAME_ID]: yup.string().required(EMPTY_VALUE_ERROR).min(2, VALUE_MIN_LENGTH(2)).max(49, VALUE_MAX_LENGTH(49)),
+  [FULL_NAME_INPUT_ID]: yup.string().required(EMPTY_VALUE_ERROR).min(2, VALUE_MIN_LENGTH(2)).max(49, VALUE_MAX_LENGTH(49)),
   [USERNAME_INPUT_ID]: yup
     .string()
     .required(EMPTY_VALUE_ERROR)
@@ -48,6 +49,7 @@ const schema = yup.object().shape({
 
 function EditProfileForm({
   avatarUrl,
+  coverUrl,
   name,
   userName,
   email,
@@ -65,24 +67,28 @@ function EditProfileForm({
     resolver: yupResolver(schema),
     defaultValues: {
       avatarUrl,
-      fullName: name || "",
+      coverUrl,
+      [FULL_NAME_INPUT_ID]: name || "",
       userName,
       email,
-      bio: bio || "",
+      [BIO_INPUT_ID]: bio || "",
       phoneNumber,
-      birthday: getDate(birthday),
-      sites,
+      [BIRTHDAY_INPUT_ID]: getDate(birthday),
+      sites
     },
   });
 
   useEffect(() => {
     register({ name: "avatarUrl" });
     register({ name: "avatarFile" });
+    register({ name: "coverUrl" });
+    register({ name: "coverFile" });
     register({ name: "sites" });
   }, []);
 
   const watcherAvatarUrl = watch("avatarUrl", avatarUrl);
-  const fileInputEl = useRef(null);
+  const watcherCoverUrl = watch("coverUrl", coverUrl);
+
   const chipsInputFilters = [
     (val) => {
       return !SITE_REGEX.test(val) ? `${val} is not a valid address.` : false;
@@ -94,22 +100,43 @@ function EditProfileForm({
       if (watcherAvatarUrl) {
         URL.revokeObjectURL(watcherAvatarUrl);
       }
+      if (watcherCoverUrl) {
+        URL.revokeObjectURL(watcherCoverUrl);
+      }
     },
-    [watcherAvatarUrl, avatarUrl]
+    [watcherAvatarUrl, avatarUrl, watcherCoverUrl, coverUrl]
   );
 
   useEffect(() => {
     setValue("avatarUrl", avatarUrl);
   }, [avatarUrl]);
 
-  const handleAvatarUrlChange = () => {
-    const files = fileInputEl.current.files;
+  useEffect(() => {
+    setValue("coverUrl", coverUrl);
+  }, [coverUrl]);
 
-    if (files.length === 1) {
-      const fileURL = URL.createObjectURL(files[0]);
-      setValue("avatarFile", files[0]);
-      setValue("avatarUrl", fileURL);
-    }
+  const handleAvatarImageChange = (file) => {
+    const url = URL.createObjectURL(file);
+    setValue("avatarFile", file);
+    setValue("avatarUrl", url);
+  };
+
+  const handleCoverImageChange = (file) => {
+    const url = URL.createObjectURL(file);
+    setValue("coverFile", file);
+    setValue("coverUrl", url);
+  };
+
+  const handleDeleteAvatarImageClick = () => {
+    URL.revokeObjectURL(watcherAvatarUrl);
+    setValue("avatarUrl", null);
+    setValue("avatarFile", null);
+  };
+
+  const handleDeleteCoverImageClick = () => {
+    URL.revokeObjectURL(watcherCoverUrl);
+    setValue("coverUrl", null);
+    setValue("coverFile", null);
   };
 
   const handleSitesChange = (data) => {
@@ -118,33 +145,38 @@ function EditProfileForm({
 
   return (
     <Grid container direction="column" spacing={4} alignItems="center">
-      <Grid item>
-        <Avatar
-          className={classes.avatar}
-          src={watcherAvatarUrl}
-          size="large"
-          borderColor={USER_RANKING[ranking]}
-        />
-        <Typography component="label">
-          Change Profile Photo
-          <input hidden type="file" name="avatarUrl" ref={fileInputEl} onChange={handleAvatarUrlChange} />
-        </Typography>
+      <Grid className={classes.header} item>
+        <Cover
+          rootClassName={classes.cover}
+          showControls
+          src={watcherCoverUrl}
+          onFileInputChange={handleCoverImageChange}
+          onDeleteImageClick={handleDeleteCoverImageClick}>
+          <Avatar
+            className={classes.avatar}
+            src={watcherAvatarUrl}
+            showControls
+            size="huge"
+            borderColor={USER_RANKING[ranking]}
+            onFileInputChange={handleAvatarImageChange}
+            onDeleteImageClick={handleDeleteAvatarImageClick} />
+        </Cover>
       </Grid>
 
       <Grid item component="form" onSubmit={handleSubmit(onSubmit)} >
         <Controller
-          name={FULL_NAME_ID}
+          name={FULL_NAME_INPUT_ID}
           control={control}
           render={({ onChange, onBlur, value }) => (
             <TextField
               className={classes.formElementIndent}
               variant="outlined"
               fullWidth
-              id={FULL_NAME_ID}
+              id={FULL_NAME_INPUT_ID}
               label="Full Name"
               type="text"
               value={value}
-              error={!!errors[FULL_NAME_ID]}
+              error={!!errors[FULL_NAME_INPUT_ID]}
               helperText={FULL_NAME_HELPER}
               onBlur={onBlur}
               onChange={(e) => onChange(e.target.value)}

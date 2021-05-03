@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const baseMediaContent = () => ({
   width: "auto !important",
-  height: "100%",
+  height: "100vh",
   objectFit: "contain"
 });
 
@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
   imageContent: {
     ...baseMediaContent(),
     [theme.breakpoints.down("sm")]: {
-      height: "auto",
       width: "100% !important"
     }
   },

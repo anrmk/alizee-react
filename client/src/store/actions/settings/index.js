@@ -114,8 +114,11 @@ export {
   UPDATE_COVER_REQUEST,
   UPDATE_COVER_SUCCESS,
   UPDATE_COVER_FAILURE,
+  UPDATE_LOCAL_COVER_SUCCESS,
+  UPDATE_LOCAL_COVER_FAILURE,
 
-  updateCover
+  updateCover,
+  updateLocalCover
 } from "./updateCover";
 
 export {

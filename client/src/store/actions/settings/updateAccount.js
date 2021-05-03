@@ -1,11 +1,12 @@
-import { MEDIA_AVATAR } from "../../../constants/media_types";
 import { generateUrl, getAccountSnapshot } from "../../../helpers/functions";
-import { createMedia } from "../media";
+import { updateAvatar } from "../user";
+import { updateCover } from "./updateCover";
 import { updateUsername } from "./updateUsername";
 
 export const UPDATE_ACCOUNT_REQUEST = "UPDATE_ACCOUNT_REQUEST";
 export const UPDATE_ACCOUNT_SUCCESS = "UPDATE_ACCOUNT_SUCCESS";
 export const UPDATE_ACCOUNT_FAILURE = "UPDATE_ACCOUNT_FAILURE";
+export const UPDATE_ACCOUNT_RESET = "UPDATE_ACCOUNT_RESET";
 
 function requestUpdateAccount() {
   return {
@@ -38,27 +39,31 @@ function errorUpdateAccount(message) {
   };
 }
 
+function resetUpdateAccount() {
+  return {
+    type: UPDATE_ACCOUNT_RESET,
+    payload: {
+      isFetching: false,
+      errorMessage: "",
+    },
+  };
+}
+
 export function updateAccount(api, opts) {
   return async (dispatch, getState) => {
     dispatch(requestUpdateAccount());
 
     try {
       const signInState = getState().signIn;
-      const currentAvatarUrl = signInState?.userInfo.avatarUrl;
+      const currentAvatarUrl = signInState?.userInfo?.avatarUrl;
+      const currentCoverUrl = signInState?.userInfo?.coverUrl;
 
-      if (opts.avatarUrl && currentAvatarUrl !== opts.avatarUrl) {
-        await dispatch(createMedia(api, [opts.avatarFile], MEDIA_AVATAR));
+      if (currentAvatarUrl !== opts.avatarUrl) {
+        await dispatch(updateAvatar(api, { file: opts.avatarFile }));
+      }
 
-        const mediaErrorMessage = getState().media.errorMessage;
-        if (mediaErrorMessage) {
-          throw mediaErrorMessage;
-        }
-
-        const media = getState().media.data;
-        if (media.length) {
-          opts.avatarUrl = media[0]?.url;
-          opts.mediaId = media[0]?.id;
-        }
+      if (currentCoverUrl !== opts.coverUrl) {
+        await dispatch(updateCover(api, { file: opts.coverFile }));
       }
 
       const currentUsername = signInState?.userInfo.userName;
@@ -77,13 +82,12 @@ export function updateAccount(api, opts) {
 
       if (previousData !== currentData) {
         const url = generateUrl("updateAccount");
-        const { data } = await api
+        await api
           .setMethod("PUT")
           .setData({
             name: opts.fullName,
             birthday: opts.birthday || undefined,
             phoneNumber: opts.phoneNumber || undefined,
-            mediaId: opts.mediaId || undefined,
             bio: opts.bio || undefined,
             sites: opts.sites,
           })
@@ -95,12 +99,13 @@ export function updateAccount(api, opts) {
           userName: opts.userName,
           birthday: opts.birthday,
           phoneNumber: opts.phone,
-          avatarUrl: data.avatarUrl,
           bio: opts.bio,
           sites: opts.sites,
         };
 
         dispatch(receiveUpdateAccount({ ...oldUserInfo, ...updatedData }));
+      } else {
+        dispatch(resetUpdateAccount());
       }
     } catch (e) {
       dispatch(errorUpdateAccount("Error: something went wrong:", e));

@@ -65,6 +65,15 @@ const useStyles = makeStyles((theme) => ({
       opacity: 0,
     },
   },
+  controls: {
+    position: "absolute",
+    display: "flex",
+    justifyContent: "center",
+    zIndex: theme.zIndex.tooltip,
+    "& > .MuiIconButton-root": {
+      color: theme.palette.common.white
+    }
+  }
 }));
 
 export const StyledBadge = withStyles((theme) => ({

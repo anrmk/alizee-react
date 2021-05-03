@@ -6,7 +6,7 @@ import { Box, Container, Grid, Hidden } from "@material-ui/core/";
 
 import ApiContext from "../../context/ApiContext";
 import { SocialControl } from "../../components/Social";
-import Cover from "../../domain/Cover";
+import ProfileHeader from "../../domain/ProfileHeader";
 import ProfileContent from "../../domain/ProfileContent";
 
 import * as postActions from "../../store/actions/post";
@@ -45,11 +45,11 @@ function Profile(props) {
   const history = useHistory();
   const [postSettings, setPostSettings] = useState(initPostsSettings);
 
-  const { me, user, post, media } = props;
+  const { me, user, post, media, settings } = props;
   const { fetchUser, resetUser } = props;
   const { fetchPosts, resetPosts, getFavoritePosts } = props;
   const { createFollow, deleteFollow, createFavorites, deleteFavorites } = props;
-  const { updateCover } = props;
+  const { updateCover, updateAvatar } = props;
 
   const dialog = useDialog();
 
@@ -76,6 +76,8 @@ function Profile(props) {
     }
     return () => {
       resetUser();
+      URL.revokeObjectURL(user?.data?.avatarUrl);
+      URL.revokeObjectURL(user?.data?.coverUrl);
     };
   }, [username]);
 
@@ -94,22 +96,25 @@ function Profile(props) {
     return <Redirect exact to={NOT_FOUND_ROUTE} />;
   }
 
-  const handleCoverSave = async (data) => {
+  const handleCoverSave = async ({ file, coverUrl }) => {
     dialog.toggle({ open: false });
-    await updateCover(apiClient, [data.file]);
+    user.data.coverUrl = coverUrl;
+    !settings.isFetching && await updateCover(apiClient, { file });
   };
 
-  const handleCoverEditDialog = (data) => {
+  const handleCoverEditDialog = (file) => {
+    const coverUrl = URL.createObjectURL(file);
+
     dialog.toggle(
       dialogs[PROFILE_EDIT_COVER](
         {
           open: true,
           onMainClick: handleCoverSave,
-          tempData: data,
+          tempData: { file, coverUrl }
         },
         {
-          src: data.coverUrl,
-          alt: data.file?.name,
+          src: coverUrl,
+          alt: file?.name
         }
       )
     );
@@ -151,9 +156,28 @@ function Profile(props) {
 
   const handleGiftSendClick = (userName) => { };
 
+  const handleAvatarImageChange = (file) => {
+    !user.isFetching && updateAvatar(apiClient, { file });
+
+    const fileUrl = URL.createObjectURL(file);
+    user.data.avatarUrl = fileUrl;
+  };
+
+  const handleDeleteAvatarImageClick = () => {
+    !user.isFetching && updateAvatar(apiClient, { file: null, url: null });
+
+    user.data.avatarUrl = null;
+  };
+
+  const handleDeleteCoverImageClick = () => {
+    !settings.isFetching && updateCover(apiClient, { file: null, url: null });
+
+    user.data.coverUrl = null;
+  };
+
   return (
     <Container className={classes.root} fixed>
-      <Cover
+      <ProfileHeader
         user={user.data}
         isOwner={username === me.userName}
         disabled={media.isFetching}
@@ -161,7 +185,8 @@ function Profile(props) {
         onFollowClick={() => handlePeopleFollowClick(user.data.userName)}
         onSendGiftClick={() => handleGiftSendClick(user.data.userName)}
         onShareClick={() => dialogShareOpenClick({ userName: user.data.userName })}
-        onEditCover={handleCoverEditDialog} />
+        onCoverUrlChange={handleCoverEditDialog}
+        onDeleteCoverImageClick={handleDeleteCoverImageClick} />
       <Hidden mdUp>
         <ProfileUserInfoMobile
           user={user.data}
@@ -195,7 +220,9 @@ function Profile(props) {
                 subscriptionPrice={user.data.subscriptionPrice}
                 onSubscribeClick={followDialog.toggle}
                 onSendTipClick={sendTipDialog.toggle}
-                onMoodUpdateClick={createMoodDialog.toggle} />
+                onMoodUpdateClick={createMoodDialog.toggle}
+                onDeleteAvatarImageClick={handleDeleteAvatarImageClick}
+                onAvatarUrlChange={handleAvatarImageChange} />
               {user.data.sites && <SocialControl urls={user.data.sites} />}
             </Box>
           </Grid>
@@ -213,6 +240,7 @@ function mapStateToProps(state) {
     },
     user: { 
       data: state.user?.data,
+      isFetching: state.user.isFetching,
       errorMessage: state.user?.errorMessage
     },
     post: {
@@ -224,6 +252,9 @@ function mapStateToProps(state) {
     media: {
       isFetching: state.media.isFetching,
     },
+    settings: {
+      isFetching: state.settings.isFetching
+    }
   };
 }
 
@@ -242,7 +273,8 @@ function mapDispatchToProps(dispatch) {
     createFollow: (api, userName) => dispatch(relationshipActions.createFollow(api, userName)),
     deleteFollow: (api, userName) => dispatch(relationshipActions.deleteFollow(api, userName)),
 
-    updateCover: (api, coverUrl) => dispatch(settingsActions.updateCover(api, coverUrl)),
+    updateCover: (api, opts) => dispatch(settingsActions.updateCover(api, opts)),
+    updateAvatar: (api, opts) => dispatch(userActions.updateAvatar(api, opts))
   };
 }
 

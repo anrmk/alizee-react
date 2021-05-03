@@ -2,7 +2,7 @@ import {
   SIGNIN_REQUEST,
   SIGNIN_SUCCESS,
   SIGNIN_FAILURE,
-  SIGN_IN_RESET
+  SIGN_IN_RESET,
 } from '../actions/signIn';
 import {
   UPDATE_ACCOUNT_REQUEST,
@@ -13,18 +13,24 @@ import {
   UPDATE_USERNAME_SUCCESS,
   UPDATE_USERNAME_FAILURE,
 } from '../actions/settings';
-
 import { 
   CREATE_MOOD_REQUEST, 
   CREATE_MOOD_SUCCESS, 
   CREATE_MOOD_FAILURE 
 } from "../actions/mood";
-
 import {
   GET_USER_DEPOSIT_REQUEST,
   GET_USER_DEPOSIT_SUCCESS,
   GET_USER_DEPOSIT_FAILURE,
 } from "../actions/account"
+import {
+  UPDATE_LOCAL_AVATAR_SUCCESS,
+  UPDATE_LOCAL_AVATAR_FAILURE
+} from "../actions/user"
+import {
+  UPDATE_LOCAL_COVER_SUCCESS,
+  UPDATE_LOCAL_COVER_FAILURE
+} from "../actions/settings"
 
 import { USER_TOKEN } from '../../constants/user';
 
@@ -126,6 +132,34 @@ export default function signIn(state = {
     }
 
     case GET_USER_DEPOSIT_FAILURE :  {
+      return {
+        ...state,
+        ...action.payload
+      }
+    }
+
+    // Update avatar
+    case UPDATE_LOCAL_AVATAR_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload
+      }
+    }
+    case UPDATE_LOCAL_AVATAR_FAILURE: {
+      return {
+        ...state,
+        ...action.payload
+      }
+    }
+
+    // Update Cover
+    case UPDATE_LOCAL_COVER_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload
+      }
+    }
+    case UPDATE_LOCAL_COVER_FAILURE: {
       return {
         ...state,
         ...action.payload

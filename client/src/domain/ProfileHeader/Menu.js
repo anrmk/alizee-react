@@ -1,8 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
 
-import { Box, Chip, IconButton, Tooltip, Menu as MUIMenu, MenuItem, ListItemIcon, ListItemText, Divider } from "@material-ui/core";
-import { withWidth } from "@material-ui/core";
+import { Box, Menu as MUIMenu, MenuItem, ListItemIcon, ListItemText } from "@material-ui/core";
 
 import GiftIcon from "@material-ui/icons/RedeemOutlined";
 import StarBorderIcon from "@material-ui/icons/StarBorderOutlined";

@@ -17,6 +17,7 @@ function MessageSenderInput({
   hideMediaEditor,
   hideEmojiPicker,
   disabled,
+  currentFocus = true,
 
   onSendTip,
   onSendMessageClick,
@@ -28,7 +29,7 @@ function MessageSenderInput({
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    !disabled && inputRef.current.focus();
+    !disabled && currentFocus && inputRef.current.focus();
   }, [disabled])
 
   const messageSend = () => {

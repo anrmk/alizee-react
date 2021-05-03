@@ -2,12 +2,10 @@ import React from "react";
 import ShowMoreText from "react-show-more-text";
 import { Link } from "react-router-dom";
 
-import { Typography, Box, Card, CardHeader, CardContent, Button, IconButton, Tooltip } from "@material-ui/core/";
+import { Typography, Box, Card, CardHeader, CardContent, Button } from "@material-ui/core/";
 
 import MessageIcon from "@material-ui/icons/MessageOutlined";
 import DollarIcon from "@material-ui/icons/MonetizationOnOutlined";
-import EditIcon from "@material-ui/icons/EditRounded";
-import AddIcon from "@material-ui/icons/AddRounded";
 
 import { CHAT_ROUTE } from "../../constants/routes";
 import { USER_RANKING } from "../../constants/user";
@@ -22,7 +20,10 @@ function ProfileUserInfo({
   className,
   onSubscribeClick,
   onSendTipClick,
-  onMoodUpdateClick
+  onMoodUpdateClick,
+  onNewAvatarImageClick,
+  onDeleteAvatarImageClick,
+  onAvatarUrlChange
 }) {
   const classes = useStyles({ isOwner });
 
@@ -47,11 +48,15 @@ function ProfileUserInfo({
             className={classes.avatarHeader}
             src={user.avatarUrl}
             online={isOwner || !user.offlineDate} 
+            showControls={isOwner}
             live={user.live} // TODO: add a condition to check is not me
             size="huge"
             borderColor={USER_RANKING[user.ranking]}
             borderWidth="4px"
-            dotWidth="12px" />
+            dotWidth="12px"
+            onFileInputChange={onAvatarUrlChange}
+            onNewImageClick={onNewAvatarImageClick}
+            onDeleteImageClick={onDeleteAvatarImageClick} />
         }
         titleTypographyProps={{ variant: "h5" }}
         title={user.name}

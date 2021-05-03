@@ -1,9 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { getStyleByTheme } from "../../helpers/functions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     position: "relative",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
 
     "& img": {
       overflow: "hidden",
@@ -95,7 +97,6 @@ const useStyles = makeStyles((theme) => ({
 
   arrowButtonBox: {
     position: "absolute",
-    bottom: "47%",
     width: "100%",
     display: "flex",
     justifyContent: "space-between",

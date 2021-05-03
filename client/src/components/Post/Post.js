@@ -127,7 +127,7 @@ const Post = React.memo((props) => {
           onPurchase={onPurchase}
           onShare={onShare}
         />
-        {post.media.length > 0 && post.isPurchased && renderDescription(post.description)}
+        {post.media.length > 0 && post.isPurchased || post.amount === 0 && renderDescription(post.description)}
       </CardContent>
 
       <CardActions className={classes.action} disableSpacing>
@@ -136,7 +136,12 @@ const Post = React.memo((props) => {
             <>
               {post.comments.length > 0 && <CommentsPreview items={post.comments} />}
               <Divider className={classes.divider} />
-              <MessageSenderInput hideMediaEditor transparentBg placeholder="Add a comment..." onSendMessageClick={handleCommentSendClick} />
+              <MessageSenderInput 
+                hideMediaEditor 
+                transparentBg 
+                currentFocus={false} 
+                placeholder="Add a comment..." 
+                onSendMessageClick={handleCommentSendClick} />
             </>
           )}
       </CardActions>

@@ -73,3 +73,14 @@ export {
   UPDATE_MOOD_SUCCESS,
   updateMood
 } from "./updateMood";
+
+export { 
+  UPDATE_AVATAR_URL_REQUEST,
+  UPDATE_AVATAR_URL_SUCCESS,
+  UPDATE_AVATAR_URL_FAILURE,
+  UPDATE_LOCAL_AVATAR_SUCCESS,
+  UPDATE_LOCAL_AVATAR_FAILURE,
+
+  updateAvatar,
+  updateLocalAvatar
+} from './updateAvatar';

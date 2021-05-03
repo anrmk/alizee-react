@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core/";
 
 import PlayArrowIcon from "@material-ui/icons/PlayArrowOutlined";
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import ClearIcon from "@material-ui/icons/Clear"; 
 
 import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 import { formatDate } from "../../helpers/functions";
@@ -124,7 +124,7 @@ const Message = React.memo(({
               edge="end"
               aria-label="delete"
               onClick={handleDeleteClick}>
-              <DeleteForeverIcon />
+              <ClearIcon fontSize="small" />
             </IconButton>
           </ListItemSecondaryAction>
         )}

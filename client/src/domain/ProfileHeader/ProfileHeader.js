@@ -1,66 +1,47 @@
 import React, { useState } from "react";
-import { Box, Typography, IconButton, Hidden, Tooltip } from "@material-ui/core";
+import { Box, Typography, IconButton, Hidden } from "@material-ui/core";
 
-import ArrowBackIcon from "@material-ui/icons/ArrowBackRounded";
 import MoreVertIcon from "@material-ui/icons/MoreVertRounded";
 
-import EditIcon from "@material-ui/icons/Edit";
-import FileInput from "../../components/FileInput";
+import Cover from "../../components/Cover";
 import Avatar from "../../components/Avatar";
 import { USER_RANKING } from "../../constants/user";
 
-import { ProfileStatistics, ProfileStatisticsMobile } from "../../domain/ProfileStatistics";
+import { ProfileStatistics, ProfileStatisticsMobile } from "../ProfileStatistics";
 
 import Menu from "./Menu";
 
 import useStyles from "./styles";
-import { useHistory } from "react-router-dom";
 
-function Cover(props) {
+function ProfileHeader(props) {
   const { user } = props;
 
-  const history = useHistory();
-  const classes = useStyles({ imageUrl: user.coverUrl });
+  const classes = useStyles();
   const [menuAnchor, setMenuAnchor] = useState(false);
 
   const { isOwner } = props;
   const {
     onFavoriteClick,
     onSendGiftClick,
-    onEditCover,
     onShareClick,
-    onSubscribeClick
+    onSubscribeClick,
+    onNewCoverImageClick,
+    onDeleteCoverImageClick,
+    onCoverUrlChange
   } = props;
-
-  const handleCoverChange = (e) => {
-    const files = e.target.files;
-
-    if (files && files.length) {
-      const coverUrl = URL.createObjectURL(files[0]);
-      onEditCover && onEditCover({ coverUrl, file: files[0] });
-    }
-  };
 
   return (
     <Box className={classes.root}>
       <Hidden smDown>
-        <Box className={classes.cover}>
-          {isOwner && (
-            <FileInput onChange={handleCoverChange}>
-              <Tooltip title="Change cover image">
-                <IconButton className={classes.coverEditButton}>
-                  <EditIcon />
-                </IconButton>
-              </Tooltip>
-            </FileInput>
-          )}
-        </Box>
+        <Cover
+          showControls={isOwner}
+          src={user.coverUrl}
+          onFileInputChange={onCoverUrlChange}
+          onNewImageClick={onNewCoverImageClick}
+          onDeleteImageClick={onDeleteCoverImageClick} />
       </Hidden>
       <Box className={classes.topControls}>
         <Box display="flex" alignItems="center">
-          <IconButton className={classes.control} onClick={() => history.goBack()}>
-            <ArrowBackIcon />
-          </IconButton>
           <Hidden smDown>
             <ProfileStatistics
               className={classes.profileStatistics}
@@ -114,4 +95,4 @@ function Cover(props) {
   );
 }
 
-export default Cover;
+export default ProfileHeader;

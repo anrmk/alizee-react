@@ -90,6 +90,7 @@ export default {
     updateActivityStatus: "accountsetting/activitystatus",
     updatePrivateStatus: "accountsetting/privatestatus",
     updateOffensiveComments: "accountsetting/offensivecontentstatus",
+    updateAvatar: "accountsetting/updateavatar",
     getPrivacy: "accountsetting/privacysettings",
     getNotification: "accountsetting/notification",
     updateNotification: "accountsetting/notification",

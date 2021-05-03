@@ -46,7 +46,7 @@ function Comments(props) {
         subheader={owner.userName}
         action={headerBackComponent}
       />
-      <CardContent>{description}</CardContent>
+      {description && <CardContent>{description}</CardContent>}
 
       <CardActions className={classes.action} disableSpacing>
         {children}

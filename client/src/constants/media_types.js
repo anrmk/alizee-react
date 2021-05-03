@@ -6,8 +6,8 @@ export const MEDIA_AVATAR = 1;
 export const MEDIA_COVER = 2;
 export const MEDIA_STORY = 3;
 
-export const MAX_SIZE_VIDEO_MEDIA_FILE = 20000000;
-export const MAX_SIZE_IMAGE_MEDIA_FILE = 2000000;
+export const MAX_SIZE_VIDEO_MEDIA_FILE = 50000000;
+export const MAX_SIZE_IMAGE_MEDIA_FILE = 5000000;
 
 export const TYPE_JPEG = "image/jpeg";
 export const TYPE_PJPEG = "image/pjpeg";
