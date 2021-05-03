@@ -10,11 +10,12 @@ const tintedBg = (opacity) => `
 const previewStoryListItemBase = {
   minWidth: "114px",
   maxWidth: "114px",
-  height: "144px",
+  height: "174px",
 }
 
 const useStyles = makeStyles(theme => ({
   previewStoryList: {
+    position: "relative",
     width: "100%",
     display: "flex",
     "&::-webkit-scrollbar": {
@@ -46,6 +47,7 @@ const useStyles = makeStyles(theme => ({
     transition: "opacity .2s",
     textDecoration: "none",
     color: theme.palette.text.primary,
+    overflow: "hidden",
     "& + &": {
       marginLeft: theme.spacing(1)
     }
@@ -72,6 +74,33 @@ const useStyles = makeStyles(theme => ({
     "& + &": {
       marginLeft: theme.spacing(1)
     }
+  },
+  bottomContainer: {
+    width: "100%",
+    height: "60px",
+    position: "absolute",
+    display: "flex",
+    justifyContent: "center",
+    bottom: 0,
+    left: 0,
+    backgroundColor: theme.palette.common.white,
+    zIndex: theme.zIndex.tooltip,
+    pointerEvents: ""
+  },
+  createButton: {
+    position: "absolute",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    bottom: "36px",
+    backgroundColor: theme.palette.primary.main,
+    border: "4px solid " + theme.palette.common.white,
+    borderRadius: "50%"
+  },
+  createButtonText: {
+    position: "absolute",
+    bottom: "10px",
+    color: theme.palette.common.black
   }
 }));
 

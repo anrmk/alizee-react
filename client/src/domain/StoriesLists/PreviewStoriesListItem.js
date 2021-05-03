@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Box, ListItem, Typography } from "@material-ui/core";
+import { Box, IconButton, ListItem, Typography } from "@material-ui/core";
 
 import AddIcon from "@material-ui/icons/AddRounded";
 
@@ -17,7 +17,8 @@ const PreviewStoryListItem = React.memo(({
   me = false,
   empty = false,
 
-  onClick
+  onClick,
+  onCreateStoryClick
 }) => {
   const classes = useStyles({
     previewUrl,
@@ -36,20 +37,40 @@ const PreviewStoryListItem = React.memo(({
     onClick && onClick(id);
   }, []);
 
+  const handleCreateStoryClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation(); 
+
+    onCreateStoryClick && onCreateStoryClick();
+  }
+
+  const renderStory = (withButton = false) => (
+    <Box className={classes.previewStoryItemUserInfo}>
+      <Avatar className={classes.previewStoryListItemAvatar} size="small" src={avatarUrl} />
+      <Typography className={classes.previewStoryListItemName} variant="caption" noWrap>{name}</Typography>
+      {withButton && (
+        <Box className={classes.bottomContainer}>
+          <Box className={classes.createButton}>
+            <IconButton onClick={handleCreateStoryClick}>
+              <AddIcon />
+            </IconButton>
+          </Box>
+          <Typography className={classes.createButtonText}>Create Story</Typography>
+        </Box>
+      )}
+    </Box>
+  );
+
   return (
     <ListItem
       button
       className={classes.previewStoryListItem}
       {...additionalProps}
       onClick={handleItemClick}>
-      {empty ? (
-        <AddIcon className={classes.previewStoryListItemAddButton} />
-      ) : (
-        <Box className={classes.previewStoryItemUserInfo}>
-          <Avatar className={classes.previewStoryListItemAvatar} size="small" src={avatarUrl} />
-          <Typography className={classes.previewStoryListItemName} variant="caption" noWrap>{name}</Typography>
-        </Box>
-      )}
+      {me ? empty ? (
+          <AddIcon className={classes.previewStoryListItemAddButton} />
+        ) : renderStory(true) 
+        : renderStory()}
     </ListItem>
   )
 });
