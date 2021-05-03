@@ -108,7 +108,7 @@ const Post = React.memo((props) => {
       </CardMedia>
 
       <CardContent className={classes.postCardContent}>
-        {post.media.length === 0 && renderDescription(post.description, true)}
+        {post.media.length === 0 && post.description && renderDescription(post.description, true)}
         <Tools
           id={id}
           user={owner}
@@ -127,7 +127,7 @@ const Post = React.memo((props) => {
           onPurchase={onPurchase}
           onShare={onShare}
         />
-        {post.media.length > 0 && post.isPurchased || post.amount === 0 && renderDescription(post.description)}
+        {post.media.length > 0 && post.description && renderDescription(post.description)}
       </CardContent>
 
       <CardActions className={classes.action} disableSpacing>

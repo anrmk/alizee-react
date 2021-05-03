@@ -2,8 +2,8 @@ import React, { useState, useRef } from "react";
 import clsx from "clsx";
 import { Box, IconButton, Tooltip, Fade } from "@material-ui/core";
 
-import CameraIcon from '@material-ui/icons/PhotoCamera';
-import ClearIcon from '@material-ui/icons/Clear'; 
+import CameraIcon from "@material-ui/icons/PhotoCamera";
+import ClearIcon from "@material-ui/icons/Clear"; 
 
 import useStyles from "./styles";
 
