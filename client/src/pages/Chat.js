@@ -18,7 +18,7 @@ import useSlidingViews, { RIGHT_OPEN_TYPE } from "../hooks/useSlidingViews";
 import useDialog from "../hooks/useDialog";
 import useFullScreen from "../hooks/useFullScreen";
 import { useSendTipDialog } from "../hooks/payment";
-import { useMediaPreviewDialog } from "../hooks/media";
+import useLightboxModal from "../hooks/useLightboxModal";
 
 function Chat(props) {
   const apiClient = useContext(ApiContext);
@@ -36,7 +36,7 @@ function Chat(props) {
   const roomMenuDialog = useRoomMenuDialog((id) => {
     toggleSlidingViewsState();
   });
-  const mediaViewDialog = useMediaPreviewDialog();
+  const lightboxModal = useLightboxModal();
   const { currentSlidingViewsState, toggleSlidingViewsState } = useSlidingViews(RIGHT_OPEN_TYPE);
   const dialog = useDialog();
   const fullScreen = useFullScreen("root");
@@ -125,7 +125,7 @@ function Chat(props) {
             roomMenuDialog.toggle({ postId: current?.id, userName: current?.userName });
           }}
           onMessageCreate={handleMessageCreate}
-          onMediaView={mediaViewDialog.toggle}
+          onMediaView={lightboxModal.toggle}
           onVideoStreem={handleCallToPeer}
           onSendTip={sendTipDialog.toggle}
         />)}

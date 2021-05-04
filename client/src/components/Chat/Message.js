@@ -32,17 +32,17 @@ const Message = React.memo(({
   }) => {
     const classes = useStyles();
 
-    const handleMediaPreviewClick = (file) => {
-      onMediaView && onMediaView({ type: file.kind, url: file.url });
+    const handleMediaPreviewClick = (index) => {
+      onMediaView && onMediaView({ items: message.media, startSlideIndex: index });
     };
     
     const handleDeleteClick = () => {
       onDelete && onDelete(message?.id);
     }
 
-    const renderGridListTile = (file, cols = 1, rows = 1) => {
+    const renderGridListTile = (file, cols = 1, rows = 1, index = 0) => {
       return (
-        <GridListTile key={file.id} cols={cols} rows={rows} onClick={() => handleMediaPreviewClick(file)}>
+        <GridListTile key={file.id} cols={cols} rows={rows} onClick={() => handleMediaPreviewClick(index)}>
           <img src={file.thumbnailUrl} />
           {file.kind === 1 && (
             <GridListTileBar
@@ -63,23 +63,23 @@ const Message = React.memo(({
     const renderChatMediaItem = (mediaLength, file, index) => {
       switch (mediaLength) {
         case 1:
-          return renderGridListTile(file, 1, 2);
+          return renderGridListTile(file, 1, 2, index);
         case 2:
         case 4:
-          return renderGridListTile(file);
+          return renderGridListTile(file, 1, 1, index);
         case 3:
           if (index === 0) {
-            return renderGridListTile(file, 2);
+            return renderGridListTile(file, 2, 1, index);
           } else {
-            return renderGridListTile(file);
+            return renderGridListTile(file, 1, 1, index);
           }
         case 5:
           if (index === 0) {
-            return renderGridListTile(file, 3);
+            return renderGridListTile(file, 3, 1, index);
           } else if (index === 1 || index === 4) {
-            return renderGridListTile(file);
+            return renderGridListTile(file, 1, 1, index);
           } else {
-            return renderGridListTile(file, 2);
+            return renderGridListTile(file, 2, 1, index);
           }
         default:
           return;

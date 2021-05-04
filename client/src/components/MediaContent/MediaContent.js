@@ -33,7 +33,7 @@ function MediaContent({
   };
   
   const handleClick = () => {
-    onClick && onClick({ post: { media: items }, startSlideIndex: currentSlideIndex });
+    onClick && onClick({ items, startSlideIndex: currentSlideIndex });
   }
 
   const handleChangeSlideIndex = (index) => {

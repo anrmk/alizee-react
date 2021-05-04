@@ -84,7 +84,7 @@ const useStyles = makeStyles(theme => ({
     bottom: 0,
     left: 0,
     backgroundColor: theme.palette.common.white,
-    zIndex: theme.zIndex.tooltip,
+    zIndex: theme.zIndex.mobileStepper,
     pointerEvents: ""
   },
   createButton: {

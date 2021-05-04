@@ -44,7 +44,7 @@ const Post = React.memo((props) => {
 
   const handleFullScreenClick = () => {
     if (post.isPurchased || post.amount === 0) {
-      onFullScreen && onFullScreen({ post, startSlideIndex: currentSlideIndex });
+      onFullScreen && onFullScreen({ items: post?.media, startSlideIndex: currentSlideIndex });
     }
   }
 

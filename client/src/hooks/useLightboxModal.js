@@ -4,10 +4,10 @@ import useDialog from "./useDialog";
 export default function useLightboxModal() {
   const dialog = useDialog();
 
-  const handleDialogToggle = ({ post, startSlideIndex }) => {
+  const handleDialogToggle = ({ items, startSlideIndex = 0 }) => {
     dialog.toggle(dialogs[LIGHTBOX_MODAL_TYPE](
       { asModal: true },
-      { items: post?.media, startSlideIndex }));
+      { items, startSlideIndex }));
   };
 
   return {
