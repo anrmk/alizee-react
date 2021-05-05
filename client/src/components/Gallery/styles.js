@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
   slide: {
     overflow: "hidden !important",
+    minHeight: "150px",
     height: "100%",
     display: "flex",
     alignItems: "center",
@@ -105,7 +106,8 @@ const useStyles = makeStyles((theme) => ({
 
   arrowButton: {
     color: theme.palette.grey["100"],
-    pointerEvents: "all"
+    pointerEvents: "all",
+    filter: "drop-shadow(0 0 10px black)"
   }
 }));
 

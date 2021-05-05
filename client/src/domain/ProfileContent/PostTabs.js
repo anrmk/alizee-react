@@ -28,7 +28,7 @@ function PostTabs({
       <Tabs value={index} onChange={handleChange} variant="fullWidth" centered>
         <Tab label={t("ProfileProfileContentPostsTabLabel")} disabled={disabled} />
         <Tab label={t("ProfileProfileContentTaggedTabLabel")} disabled={disabled} />
-        {isOwner && <Tab label={t("ProfileProfileContentFavoritesTabLabel")} disabled={disabled} />}
+        {isOwner && <Tab label={t("ProfileProfileContentSavedTabLabel")} disabled={disabled} />}
       </Tabs>
     </Box>
   );
