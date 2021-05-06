@@ -9,9 +9,7 @@ function EditSubscriptionSettings({ data, getSubscription, updateSubscription })
   const apiClient = useContext(ApiContext);
 
   useEffect(() => {
-    (async () => {
-      await getSubscription(apiClient);
-    })();
+    getSubscription(apiClient);
   }, []);
 
   const handleEditProfileSubmit = async (data) => {

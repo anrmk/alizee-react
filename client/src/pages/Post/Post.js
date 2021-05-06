@@ -59,10 +59,8 @@ function PostPage(props) {
       return <Redirect to="/" />;
     }
 
-    (async () => {
-      await getPost(apiClient, postId);
-      await getComments(apiClient, { postId, length: COMMENTS_POST_LENGTH });
-    })();
+    getPost(apiClient, postId);
+    getComments(apiClient, { postId, length: COMMENTS_POST_LENGTH });
     return () => {
       resetComments();
     };

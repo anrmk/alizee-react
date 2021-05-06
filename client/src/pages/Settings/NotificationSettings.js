@@ -13,9 +13,7 @@ function NotificationSettings(props) {
   const apiClient = useContext(ApiContext);
 
   useEffect(() => {
-    (async () => {
-      await getNotification(apiClient);
-    })();
+    getNotification(apiClient);
   }, []);
 
   const handleNotificationSettingsChange = (formData) => {

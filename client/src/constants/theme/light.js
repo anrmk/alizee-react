@@ -64,6 +64,12 @@ export default createMuiTheme({
       },
     },
 
+    MuiBackdrop: {
+      root: {
+        backgroundColor: "rgba(0, 0, 0, 0.85)"
+      }
+    },
+
     MuiButton: {
       root: {},
 

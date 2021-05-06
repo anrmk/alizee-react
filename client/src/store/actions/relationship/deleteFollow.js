@@ -1,5 +1,6 @@
 import { generateUrl } from "../../../helpers/functions";
 import { removeFollower } from "../user";
+import { getDeposit } from "../account";
 
 export const DELETE_FOLLOW_REQUEST = "DELETE_FOLLOW_REQUEST";
 export const DELETE_FOLLOW_SUCCESS = "DELETE_FOLLOW_SUCCESS";
@@ -51,6 +52,7 @@ export function deleteFollow(api, userName) {
 
       dispatch(removeFollower());
       dispatch(receiveDeleteFollow(list));
+      dispatch(getDeposit(api));
     } catch (e) {
       return dispatch(errorDeleteFollow("When follow was deleting then something went wrong"));
     }

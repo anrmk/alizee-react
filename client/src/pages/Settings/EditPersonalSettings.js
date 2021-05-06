@@ -10,9 +10,7 @@ function EditPersonalSettings({data, isFetching, getPersonal, updatePersonal }) 
   const apiClient = useContext(ApiContext);
 
   useEffect(() => {
-    (async () => {
-      await getPersonal(apiClient);
-    })();
+    getPersonal(apiClient);
   }, []);
 
   const handleEditPersonalSubmit = (data) => {

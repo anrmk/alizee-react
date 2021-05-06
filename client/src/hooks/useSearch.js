@@ -35,9 +35,7 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
     const currentTags = new URLSearchParams(location.search).get("tags");
 
     if (!isUserType(type) && !currentTags?.length) {
-      (async () =>
-        await dispatch(actionSuggestion.getPosts(apiClient, { length: POSTS_LENGTH })
-      ))();
+      dispatch(actionSuggestion.getPosts(apiClient, { length: POSTS_LENGTH }));
     }
   }, [type]);
 

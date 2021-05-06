@@ -85,7 +85,7 @@ export function updateAccount(api, opts) {
         await api
           .setMethod("PUT")
           .setData({
-            name: opts.fullName,
+            name: opts.name,
             birthday: opts.birthday || undefined,
             phoneNumber: opts.phoneNumber || undefined,
             bio: opts.bio || undefined,
@@ -95,7 +95,7 @@ export function updateAccount(api, opts) {
 
         const oldUserInfo = signInState?.userInfo;
         const updatedData = {
-          name: opts.fullName,
+          name: opts.name,
           userName: opts.userName,
           birthday: opts.birthday,
           phoneNumber: opts.phone,

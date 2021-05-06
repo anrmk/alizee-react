@@ -9,9 +9,7 @@ function EditBankSettings({data, isFetching, getBank, updateBank }) {
   const apiClient = useContext(ApiContext);
 
   useEffect(() => {
-    (async () => {
-      await getBank(apiClient);
-    })();
+    getBank(apiClient);
   }, []);
 
   const handleEditBankSubmit = (data) => {

@@ -38,9 +38,7 @@ function PrivacySecuritySettings(props) {
   const dialog = useDialog();
 
   useEffect(() => {
-    (async () => {
-      await getPrivacy(apiClient);
-    })();
+    getPrivacy(apiClient);
   }, [])
 
   const handleAccountPrivateChange = (status) => {

@@ -126,9 +126,9 @@ function Profile(props) {
     }
 
     if (postSettings.index === 2) {
-      await getFavoritePosts(apiClient);
+      getFavoritePosts(apiClient);
     } else {
-      await fetchPosts(apiClient, {
+      fetchPosts(apiClient, {
         userName: username,
         tagged: postSettings.tagged,
       });

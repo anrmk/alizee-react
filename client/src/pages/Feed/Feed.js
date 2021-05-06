@@ -56,12 +56,10 @@ function Feed(props) {
   const { dialogShareOpenClick } = useShareDialog({ type: SHARE_DIALOG_POST_TYPE });
 
   useEffect(() => {
-    (async () => {
-      await getPosts(apiClient, { userId: userInfo.id });
-      await getStory(apiClient, { username: userInfo.userName, length: STORIES_LENGTH });
-      await getFollowingStories(apiClient, { length: STORIES_LENGTH });
-      await getHotStreamers(apiClient);
-    })();
+    getPosts(apiClient, { userId: userInfo.id });
+    getStory(apiClient, { username: userInfo.userName, length: STORIES_LENGTH });
+    getFollowingStories(apiClient, { length: STORIES_LENGTH });
+    getHotStreamers(apiClient);
 
     return () => {
       resetPosts();
@@ -72,17 +70,13 @@ function Feed(props) {
 
   useEffect(() => {
     if (userInfo.id) {
-      (async () => {
-        await getPeople(apiClient, 4);
-      })();
+      getPeople(apiClient, 4);
     }
   }, [userInfo.id]);
 
   const handleFetchMore = (isLoading) => {
     if (!isLoading) {
-      (async () => {
-        await getPosts(apiClient, { id: userInfo.id });
-      })();
+      getPosts(apiClient, { id: userInfo.id });
     }
   };
 

@@ -13,9 +13,7 @@ function BlackList(props) {
   const { getBlackList, deleteBlackList } = props;
 
   useEffect(() => {
-    (async () => {
-      await getBlackList(apiClient);
-    })();
+    getBlackList(apiClient);
   }, []);
 
   const handleDelete = (data) => {

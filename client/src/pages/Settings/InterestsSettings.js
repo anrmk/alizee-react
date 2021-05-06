@@ -23,9 +23,7 @@ function InterestsSettings({
   const interestsEl = useRef();
 
   useEffect(() => {
-    (async () => {
-      await getAccountInterests(apiClient);
-    })();
+    getAccountInterests(apiClient);
   }, []);
 
   const handleInterestSubmit = async () => {

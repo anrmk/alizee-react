@@ -9,9 +9,7 @@ function EditCardSettings({data, isFetching, getCard, updateCard }) {
   const apiClient = useContext(ApiContext);
 
   useEffect(() => {
-    (async () => {
-      await getCard(apiClient);
-    })();
+    getCard(apiClient);
   }, []);
 
   const handleEditCardSubmit = (data) => {

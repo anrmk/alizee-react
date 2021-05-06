@@ -3,16 +3,16 @@ import { Controller, useForm } from "react-hook-form";
 import { formatCurrency } from "../../helpers/functions";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
 import { Card, CardHeader, CardContent, Box, TextField, InputAdornment, FormHelperText } from "@material-ui/core";
+
 import Avatar from "../Avatar";
+import { TAX_PERCENTAGE } from "../../constants/payment";
 
 const AMOUNT_INPUT_ID = "amount";
 const MESSAGE_INPUT_ID = "message";
 const USER_ID = "userName";
 const EMPTY_VALUE_ERROR = "It is a required filed";
 const INVALID_AMOUNT_MAX_ERROR = "Maximum $200 USD";
-const TAX_VALUE = 0.07;
 
 const schema = yup.object().shape({
   [AMOUNT_INPUT_ID]: yup.number().required(EMPTY_VALUE_ERROR),
@@ -63,7 +63,7 @@ function SendTip({
                 InputProps={{
                   startAdornment: <InputAdornment position="start">$</InputAdornment>,
                   endAdornment: (
-                    <InputAdornment position="end">+ {value && formatCurrency(value * TAX_VALUE)} (GTS)</InputAdornment>
+                    <InputAdornment position="end">+ {value && formatCurrency(value * TAX_PERCENTAGE)} (GTS)</InputAdornment>
                   ),
                 }}
               />
@@ -72,7 +72,7 @@ function SendTip({
                   <FormHelperText>{INVALID_AMOUNT_MAX_ERROR}</FormHelperText>
                 </Box>
                 <Box>
-                  <FormHelperText>Total: {value && formatCurrency(value * 1 + value * TAX_VALUE)}</FormHelperText>
+                  <FormHelperText>Total: {value && formatCurrency(value * 1 + value * TAX_PERCENTAGE)}</FormHelperText>
                 </Box>
               </Box>
             </>
