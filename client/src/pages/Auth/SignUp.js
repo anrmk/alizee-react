@@ -3,9 +3,9 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
-import { Box, Container, Grid, Hidden } from "@material-ui/core";
-
-import { SignUpForm } from "../../domain/AuthForms";
+import { Container, Grid, Hidden } from "@material-ui/core";
+import { SignUpForm, Slider } from "../../domain/AuthForms";
+import Footer from "../../components/Footer";
 
 import * as signUpActions from "../../store/actions/signUp";
 import * as signInActions from "../../store/actions/signIn";
@@ -55,20 +55,29 @@ function SignUp(props) {
         reCaptchaKey={process.env.REACT_APP_RECAPTCHA_KEY}
         scriptProps={{ async: true, defer: true, appendTo: "body" }}
       >
-        <Grid container justify="center" alignItems="center" direction="row" className={classes.container}>
-          <Hidden smDown>
-            <Grid item sm={6}>
-              <Box className={classes.authImage} />
+        <Grid container direction="column">
+          <Grid item>
+            <Grid container justify="center" alignItems="center">
+              <Hidden smDown>
+                <Grid item sm={6}>
+                  <Slider />
+                </Grid>
+              </Hidden>
+
+              <Grid item md={4} sm={6} xs={12}>
+                <SignUpForm
+                  error={errorMessage}
+                  onSubmit={handleFormSubmit}
+                  onSocialRequest={handleSocialRequest}
+                  onSocialSuccess={handleSocialSuccess}
+                  onSocialFailure={handleSocialFailure}
+                />
+              </Grid>
             </Grid>
-          </Hidden>
-          <Grid item md={4} sm={6} xs={12}>
-            <SignUpForm
-              error={errorMessage}
-              onSubmit={handleFormSubmit}
-              onSocialRequest={handleSocialRequest}
-              onSocialSuccess={handleSocialSuccess}
-              onSocialFailure={handleSocialFailure}
-            />
+          </Grid>
+
+          <Grid item>
+            <Footer open={true} />
           </Grid>
         </Grid>
       </GoogleReCaptchaProvider>

@@ -5,12 +5,11 @@ import authIllustration from "../../../src/assets/img/auth_image.png";
 const useStyles = makeStyles((_theme) => {
   return ({
     container: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
       height: "100vh",
     },
-    authImage: {
-      height: "600px",
-      background: `center / contain no-repeat url(${authIllustration})`,
-    }
   })
 });
 

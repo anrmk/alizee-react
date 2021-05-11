@@ -1,11 +1,10 @@
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import PropTypes from "prop-types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
-import { TextField, Typography, Card, CardContent, Divider, Link } from "@material-ui/core";
+import { TextField, Typography, Box, Link } from "@material-ui/core";
 
 import { RESET_PASSWORD_ROUTE, SIGN_UP_ROUTE } from "../../constants/routes";
 import AuthBaseForm from "./AuthBaseForm";
@@ -50,104 +49,73 @@ function SignInForm({
       onSocialRequest={onSocialRequest}
       onSocialSuccess={onSocialSuccess}
       onSocialFailure={onSocialFailure}
-      formComponent={
-        <>
-          <Controller
-            name={EMAIL_INPUT_ID}
-            control={control}
-            render={({ onChange, onBlur, value }) => (
-              <TextField
-                variant="outlined"
-                fullWidth
-                className={classes.formElementIndent}
-                id={EMAIL_INPUT_ID}
-                name={EMAIL_INPUT_ID}
-                label={t("AuthFormsSingInFormEmailTextFieldLabel")}
-                type="text"
-                value={value}
-                error={!!errors[EMAIL_INPUT_ID]}
-                helperText={errors[EMAIL_INPUT_ID]?.message}
-                onBlur={onBlur}
-                onChange={(e) => onChange(e.target.value)}
-              />
-            )}
-          />
-          <Controller
-            name={PASSWORD_INPUT_ID}
-            control={control}
-            render={({ onChange, onBlur, value }) => (
-              <TextField
-                variant="outlined"
-                fullWidth
-                className={classes.formElementIndent}
-                id={PASSWORD_INPUT_ID}
-                name={PASSWORD_INPUT_ID}
-                label={t("AuthFormsSingInFormPasswordTextFieldLabel")}
-                type="password"
-                value={value}
-                error={!!errors[PASSWORD_INPUT_ID]}
-                helperText={errors[PASSWORD_INPUT_ID]?.message}
-                onBlur={onBlur}
-                onChange={(e) => onChange(e.target.value)}
-              />
-            )}
-          />
-        </>
-      }
       helpComponent={
-        <>
-          <Divider className={classes.formElementIndent} />
-          <Typography align="center">
-            <Link
-              className={classes.link}
-              color="primary"
-              variant="body1"
-              onClick={() => history.push(RESET_PASSWORD_ROUTE)}
-            >
-              Forgot password?
-            </Link>
-          </Typography>
-        </>
+        <Link variant="body1" display="block" onClick={() => history.push(RESET_PASSWORD_ROUTE)}>
+          Forgot password?
+        </Link>
       }
       endComponent={
-        <>
-          <Card>
-            <CardContent>
-              <Typography align="center">
-                Don't have an account? &nbsp;
-                <Link
-                  className={classes.link}
-                  color="primary"
-                  variant="body1"
-                  onClick={() => history.push(SIGN_UP_ROUTE)}
-                >
-                  Sign Up
-                </Link>
-              </Typography>
-            </CardContent>
-          </Card>
-        </>
+        <Typography align="center">
+          Don't have an account? &nbsp;
+          <Link className={classes.link} color="primary" variant="body1" onClick={() => history.push(SIGN_UP_ROUTE)}>
+            Sign Up
+          </Link>
+        </Typography>
       }
-    />
+    >
+      <Controller
+        name={EMAIL_INPUT_ID}
+        control={control}
+        render={({ onChange, onBlur, value }) => (
+          <TextField
+            variant="outlined"
+            fullWidth
+            id={EMAIL_INPUT_ID}
+            name={EMAIL_INPUT_ID}
+            label={t("AuthFormsSingInFormEmailTextFieldLabel")}
+            type="text"
+            value={value}
+            error={!!errors[EMAIL_INPUT_ID]}
+            helperText={errors[EMAIL_INPUT_ID]?.message}
+            onBlur={onBlur}
+            inputProps={{
+              autoComplete: "new-password",
+              form: {
+                autoComplete: "off",
+              },
+            }}
+            onChange={(e) => onChange(e.target.value)}
+          />
+        )}
+      />
+      <Box m={1} />
+      <Controller
+        name={PASSWORD_INPUT_ID}
+        control={control}
+        render={({ onChange, onBlur, value }) => (
+          <TextField
+            variant="outlined"
+            fullWidth
+            id={PASSWORD_INPUT_ID}
+            name={PASSWORD_INPUT_ID}
+            label={t("AuthFormsSingInFormPasswordTextFieldLabel")}
+            type="password"
+            value={value}
+            error={!!errors[PASSWORD_INPUT_ID]}
+            helperText={errors[PASSWORD_INPUT_ID]?.message}
+            onBlur={onBlur}
+            inputProps={{
+              autoComplete: "new-password",
+              form: {
+                autoComplete: "off",
+              },
+            }}
+            onChange={(e) => onChange(e.target.value)}
+          />
+        )}
+      />
+    </AuthBaseForm>
   );
 }
-
-SignInForm.propTypes = {
-  error: PropTypes.string,
-
-  onSubmit: PropTypes.func,
-  onSocialRequest: PropTypes.func,
-  onSocialSuccess: PropTypes.func,
-  onSocialFailure: PropTypes.func,
-};
-
-SignInForm.defaultProps = {
-  error: "",
-
-  onSubmit: undefined,
-  onSocialRequest: undefined,
-  onSocialSuccess: undefined,
-  onSocialFailure: undefined,
-};
 
 export default SignInForm;

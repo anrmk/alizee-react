@@ -53,7 +53,7 @@ const PreviewStoryListItem = React.memo(({
         </>
       )}
       {withButton && (
-        <Box className={classes.bottomContainer}>
+        <Box borderColor="grey.500" className={classes.bottomContainer}>
           <Box className={classes.createButton}>
             <IconButton onClick={handleCreateStoryClick}>
               <AddIcon />

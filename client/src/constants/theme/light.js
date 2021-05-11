@@ -95,6 +95,7 @@ export default createMuiTheme({
         backgroundColor: "transparent",
         color: "#845DD7",
         borderRadius: "20px",
+        boxShadow: "none",
         "&:hover": {
           opacity: ".8",
           backgroundColor: "transparent",

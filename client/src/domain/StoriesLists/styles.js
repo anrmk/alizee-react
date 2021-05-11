@@ -43,6 +43,9 @@ const useStyles = makeStyles(theme => ({
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundColor: theme.palette.background.paper,
+    borderColor:  theme.palette.grey[theme.palette.type === "dark" ? "800" : "200"],
+    borderWidth: "1px",
+    borderStyle: "solid",
     cursor: "pointer",
     transition: "opacity .2s",
     textDecoration: "none",
@@ -85,7 +88,7 @@ const useStyles = makeStyles(theme => ({
     left: 0,
     backgroundColor: theme.palette.common.white,
     zIndex: theme.zIndex.mobileStepper,
-    pointerEvents: ""
+    pointerEvents: "none",
   },
   createButton: {
     position: "absolute",

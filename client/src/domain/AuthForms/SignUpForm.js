@@ -1,20 +1,10 @@
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
-import {
-  Card,
-  CardContent,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  FormHelperText,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { Box, Checkbox, FormControl, FormControlLabel, FormHelperText, TextField, Typography } from "@material-ui/core";
 
 import { PRIVACY_POLICY_ROUTE, SIGN_IN_ROUTE } from "../../constants/routes";
 import CONTROLLERS from "../../constants/endpoints";
@@ -85,39 +75,14 @@ function SignUpForm({
       onSocialSuccess={onSocialSuccess}
       onSocialFailure={onSocialFailure}
       endComponent={
-        <>
-          <Card>
-            <CardContent>
-              <Typography align="center">
-                Already have an account? &nbsp;
-                <Link className={classes.link} color="primary" to={SIGN_IN_ROUTE}>
-                  Sign In
-                </Link>
-              </Typography>
-            </CardContent>
-          </Card>
-        </>
+        <Typography align="center">
+          Already have an account? &nbsp;
+          <Link className={classes.link} color="primary" to={SIGN_IN_ROUTE}>
+            Sign In
+          </Link>
+        </Typography>
       }
     >
-      <Controller
-        name={USERNAME_INPUT_ID}
-        control={control}
-        render={({ onChange, onBlur, value }) => (
-          <TextField
-            variant="outlined"
-            fullWidth
-            className={classes.formElementIndent}
-            id={USERNAME_INPUT_ID}
-            label="Username"
-            type="text"
-            value={value}
-            error={!!errors[USERNAME_INPUT_ID]}
-            helperText={errors[USERNAME_INPUT_ID]?.message}
-            onBlur={onBlur}
-            onChange={(e) => onChange(e.target.value)}
-          />
-        )}
-      />
       <Controller
         name={EMAIL_INPUT_ID}
         control={control}
@@ -125,7 +90,6 @@ function SignUpForm({
           <TextField
             variant="outlined"
             fullWidth
-            className={classes.formElementIndent}
             id={EMAIL_INPUT_ID}
             label="Email"
             type="text"
@@ -133,10 +97,44 @@ function SignUpForm({
             error={!!errors[EMAIL_INPUT_ID]}
             helperText={errors[EMAIL_INPUT_ID]?.message}
             onBlur={onBlur}
+            inputProps={{
+              autoComplete: "new-password",
+              form: {
+                autoComplete: "off",
+              },
+            }}
             onChange={(e) => onChange(e.target.value)}
           />
         )}
       />
+
+      <Box m={1} />
+
+      <Controller
+        name={USERNAME_INPUT_ID}
+        control={control}
+        render={({ onChange, onBlur, value }) => (
+          <TextField
+            variant="outlined"
+            fullWidth
+            id={USERNAME_INPUT_ID}
+            label="Username"
+            type="text"
+            value={value}
+            error={!!errors[USERNAME_INPUT_ID]}
+            helperText={errors[USERNAME_INPUT_ID]?.message}
+            onBlur={onBlur}
+            inputProps={{
+              autoComplete: "new-password",
+              form: {
+                autoComplete: "off",
+              },
+            }}
+            onChange={(e) => onChange(e.target.value)}
+          />
+        )}
+      />
+
       <Controller
         name={PRIVACY_POLICY_CHECKBOX_ID}
         control={control}
@@ -171,23 +169,5 @@ function SignUpForm({
     </AuthBaseForm>
   );
 }
-
-SignUpForm.propTypes = {
-  error: PropTypes.string,
-
-  onSubmit: PropTypes.func,
-  onSocialRequest: PropTypes.func,
-  onSocialSuccess: PropTypes.func,
-  onSocialFailure: PropTypes.func,
-};
-
-SignUpForm.defaultProps = {
-  error: "",
-
-  onSubmit: undefined,
-  onSocialRequest: undefined,
-  onSocialSuccess: undefined,
-  onSocialFailure: undefined,
-};
 
 export default SignUpForm;

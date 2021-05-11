@@ -1,9 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
 import clsx from "clsx";
-import { Box, Button, Card, CardContent, Typography } from "@material-ui/core";
+import { Box, Button, Card, CardContent, Typography, Divider, Grid } from "@material-ui/core";
 
 import SocialButtons from "../../components/SocialButtons/SocialButtons";
+import DividerWithText from "../../components/DividerWithText";
 
 import { GOOGLE_CLIENT_ID } from "../../constants/social_client_ids";
 
@@ -28,81 +28,75 @@ function AuthBaseForm({
   const classes = useStyles();
 
   return (
-    <Box textAlign="center">
-      <Card className={classes.formElementIndent}>
+    <Box>
+      <Card>
         <CardContent>
-          <Box className={clsx(classes.logoBox, classes.formElementIndent)}>
-            <Box className={classes.logoImage} />
-          </Box>
-          <form id={FORM_ID} onSubmit={onFormSubmit} autoComplete="off">
-            {formComponent || children}
-            {error && (
-              <Typography
-                className={clsx(classes.formElement, classes.formElementIndent)}
-                color="secondary"
-                variant="caption"
-                component="span"
+          <Grid container spacing={2} direction="column">
+            <Grid item>
+              <Box className={classes.logoImage} />
+              <Typography variant="body2" color="textSecondary" align="center">Sign up to make money and interact with your fans!</Typography>
+            </Grid>
+
+            <Grid item>
+              <SocialButtons
+                className={clsx(classes.formElement, helpComponent && classes.formElementIndent)}
+                googleClientId={GOOGLE_CLIENT_ID}
+                onRequest={onSocialRequest}
+                onSuccess={onSocialSuccess}
+                onFailure={onSocialFailure}
+              />
+            </Grid>
+
+            <Grid item>
+              <DividerWithText>or</DividerWithText>
+            </Grid>
+
+            <Grid item>
+              <form id={FORM_ID} onSubmit={onFormSubmit} autoComplete="off">
+                {formComponent || children}
+                {helpComponent}
+                {error && (
+                  <Typography color="secondary" variant="caption" component="span">
+                    {error}
+                  </Typography>
+                )}
+              </form>
+            </Grid>
+
+            <Grid item>
+              <Button
+                form={FORM_ID}
+                fullWidth
+                className={classes.formElementIndent}
+                disableElevation
+                type="submit"
+                variant="contained"
+                color="primary"
               >
-                {error}
+                {isSingUpForm ? "Sing Up" : "Sign In"}
+              </Button>
+            </Grid>
+
+            <Grid item>
+              <Typography variant="body2" color="textSecondary" align="center">
+                {isSingUpForm ? (
+                    "By signing up you agree to our Terms of Service and Privacy Policy, and confirm that you are at least 18 years old."
+                ) : (
+                    "Visit Help Center for additional help if you are unable to log in with your existing account"
+                )}
               </Typography>
-            )}
-          </form>
-          <Box>
-            <Button
-              form={FORM_ID}
-              fullWidth
-              className={classes.formElementIndent}
-              disableElevation
-              type="submit"
-              variant="contained"
-              color="primary"
-            >
-              {isSingUpForm ? "Sing Up" : "Sign In"}
-            </Button>
-            <SocialButtons
-              className={clsx(classes.formElement, helpComponent && classes.formElementIndent)}
-              googleClientId={GOOGLE_CLIENT_ID}
-              onRequest={onSocialRequest}
-              onSuccess={onSocialSuccess}
-              onFailure={onSocialFailure}
-            />
-          </Box>
-          {helpComponent}
+            </Grid>
+          </Grid>
         </CardContent>
       </Card>
-      {endComponent}
+
+      <Box m={2} />
+
+      <Card>
+        <CardContent>{endComponent}</CardContent>
+      </Card>
     </Box>
   );
 }
-
-AuthBaseForm.propTypes = {
-  isSingUpForm: PropTypes.bool,
-  error: PropTypes.string,
-
-  children: PropTypes.any,
-  formComponent: PropTypes.any,
-  helpComponent: PropTypes.any,
-  endComponent: PropTypes.any,
-
-  onFormSubmit: PropTypes.func,
-  onSocialRequest: PropTypes.func,
-  onSocialSuccess: PropTypes.func,
-  onSocialFailure: PropTypes.func,
-};
-
-AuthBaseForm.defaultProps = {
-  isSingUpForm: true,
-  error: "",
-
-  children: null,
-  formComponent: null,
-  helpComponent: null,
-  endComponent: null,
-
-  onFormSubmit: undefined,
-  onSocialRequest: undefined,
-  onSocialSuccess: undefined,
-  onSocialFailure: undefined,
-};
 
 export default AuthBaseForm;

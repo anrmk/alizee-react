@@ -2,16 +2,18 @@ import React, { useContext, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { Box, Container, Grid, Hidden } from "@material-ui/core";
-
-import { SignInForm } from "../../domain/AuthForms";
+import { Container, Grid, Hidden } from "@material-ui/core";
+import { SignInForm, Slider } from "../../domain/AuthForms";
+import Footer from "../../components/Footer";
 
 import * as signInActions from "../../store/actions/signIn";
 import * as socialAuthActions from "../../store/actions/socialAuth";
-import ApiContext from "../../context/ApiContext";
-import useStyles from "./styles";
 import { SOCIAL_TWITTER } from "../../constants/social_types";
 import { getUrlParams } from "../../helpers/functions";
+
+import ApiContext from "../../context/ApiContext";
+
+import useStyles from "./styles";
 
 function SignIn(props) {
   const apiClient = useContext(ApiContext);
@@ -65,22 +67,30 @@ function SignIn(props) {
   };
 
   return (
-    <Container>
-      <Grid container justify="center" alignItems="center" direction="row" className={classes.container}>
-        <Hidden smDown>
-          <Grid item sm={6}>
-            <Box className={classes.authImage} />
-          </Grid>
-        </Hidden>
+    <Container className={classes.container}>
+      <Grid container direction="column">
+        <Grid item>
+          <Grid container justify="center" alignItems="center">
+            <Hidden smDown>
+              <Grid item sm={6}>
+                <Slider />
+              </Grid>
+            </Hidden>
 
-        <Grid item md={4} sm={6} xs={12}>
-          <SignInForm
-            error={errorMessage}
-            onSubmit={handleFormSubmit}
-            onSocialRequest={handleSocialRequest}
-            onSocialSuccess={handleSocialSuccess}
-            onSocialFailure={handleSocialFailure}
-          />
+            <Grid item md={4} sm={6} xs={12}>
+              <SignInForm
+                error={errorMessage}
+                onSubmit={handleFormSubmit}
+                onSocialRequest={handleSocialRequest}
+                onSocialSuccess={handleSocialSuccess}
+                onSocialFailure={handleSocialFailure}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+
+        <Grid item>
+          <Footer open={true} />
         </Grid>
       </Grid>
     </Container>

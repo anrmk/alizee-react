@@ -3,7 +3,7 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography, Box } from "@material-ui/core";
 import { Drawer, Divider, Tooltip, Switch } from "@material-ui/core";
 import { List, ListItem, ListItemIcon, ListItemText, IconButton } from "@material-ui/core";
 
@@ -164,9 +164,6 @@ function Sidebar({
           </ListItem>
         </Tooltip> */}
       </List>
-
-      <Divider />
-      <Footer open={open} />
     </Drawer>
   );
 }
