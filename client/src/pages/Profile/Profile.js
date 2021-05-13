@@ -2,7 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { Redirect, useHistory, useParams, useRouteMatch } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { Box, Container, Grid, Hidden } from "@material-ui/core/";
+import { Box, Container, Grid, Hidden, Typography } from "@material-ui/core/";
+
+import BlockIcon from "@material-ui/icons/Block";
 
 import ApiContext from "../../context/ApiContext";
 import { SocialControl } from "../../components/Social";
@@ -174,6 +176,15 @@ function Profile(props) {
 
     user.data.coverUrl = null;
   };
+
+  if (user.data.isBlocked) {
+    return (
+      <Box width="100%" textAlign="center">
+        <BlockIcon fontSize="large" />
+        <Typography>You or user blocked you.</Typography>
+      </Box>
+    )
+  }
 
   return (
     <Container className={classes.root} fixed>

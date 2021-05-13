@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { Link } from "react-router-dom";
 // import { useTranslation } from "react-i18next";
 
-import { Divider, Card, CardActions, CardContent, CardHeader, IconButton } from "@material-ui/core";
+import { Box, Divider, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from "@material-ui/core";
 
 import MoreVertIcon from "@material-ui/icons/MoreVertRounded";
 import BackIcon from "@material-ui/icons/ArrowBackRounded";
@@ -82,7 +82,14 @@ function Room({
         />
       </CardContent>
       <CardActions className={classes.cardFooter}>
-        <MessageSenderInput disabled={isLoading} onSendMessageClick={handleMessageCreate} onSendTip={handleSendTipClick} />
+        {!current.isRestricted ? (
+            <MessageSenderInput disabled={isLoading} onSendMessageClick={handleMessageCreate} onSendTip={handleSendTipClick} />
+          ) : (
+            <Box width="100%" textAlign="center">
+              <Typography>You was restricted.</Typography>
+            </Box>
+          )
+        }
       </CardActions>
     </Card>
   );

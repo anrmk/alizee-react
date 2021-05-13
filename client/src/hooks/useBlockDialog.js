@@ -1,5 +1,5 @@
 import { useContext, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import ApiContext from "../context/ApiContext";
 import dialogs, { BLOCK_DIALOG_TYPE } from "../constants/dialogs";

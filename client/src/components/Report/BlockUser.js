@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { Box, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from "@material-ui/core";
+import { BLOCKED_TYPE, RESTRICTED_TYPE } from "../../constants/block_types";
 
 function BlockUser({
   formId,
@@ -9,7 +10,7 @@ function BlockUser({
 
   onSubmit,
 }) {
-  const [value, setValue] = useState("0");
+  const [value, setValue] = useState(BLOCKED_TYPE);
 
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -28,9 +29,9 @@ function BlockUser({
           @{userName} won't be able to find your profile, posts or story. We won't let them know you blocked them.
         </FormLabel>
         <RadioGroup value={value} onChange={handleChange}>
-          <FormControlLabel value="0" control={<Radio />} label="Block user from accessing your profile." />
+          <FormControlLabel value={BLOCKED_TYPE} control={<Radio />} label="Block user from accessing your profile." />
           <FormControlLabel
-            value="1"
+            value={RESTRICTED_TYPE}
             control={<Radio />}
             label="Restrict, user will not be able to send you direct messages or reply to your posts."
           />

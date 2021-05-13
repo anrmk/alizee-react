@@ -1,4 +1,5 @@
 import { generateUrl, getAccountSnapshot } from "../../../helpers/functions";
+import { signOutUser } from "../signIn";
 import { updateAvatar } from "../user";
 import { updateCover } from "./updateCover";
 import { updateUsername } from "./updateUsername";
@@ -66,17 +67,6 @@ export function updateAccount(api, opts) {
         await dispatch(updateCover(api, { file: opts.coverFile }));
       }
 
-      const currentUsername = signInState?.userInfo.userName;
-      if (opts.userName && currentUsername !== opts.userName) {
-        await dispatch(updateUsername(api, opts.userName));
-
-        const signInError = signInState.errorMessage;
-
-        if (signInError) {
-          throw signInError;
-        }
-      }
-
       const previousData = getAccountSnapshot(signInState?.userInfo);
       const currentData = getAccountSnapshot(opts);
 
@@ -89,7 +79,7 @@ export function updateAccount(api, opts) {
             birthday: opts.birthday || undefined,
             phoneNumber: opts.phoneNumber || undefined,
             bio: opts.bio || undefined,
-            sites: opts.sites,
+            sites: opts.sites
           })
           .query(url);
 
@@ -98,15 +88,29 @@ export function updateAccount(api, opts) {
           name: opts.name,
           userName: opts.userName,
           birthday: opts.birthday,
-          phoneNumber: opts.phone,
+          phoneNumber: opts.phoneNumber,
           bio: opts.bio,
-          sites: opts.sites,
+          sites: opts.sites
         };
 
         dispatch(receiveUpdateAccount({ ...oldUserInfo, ...updatedData }));
       } else {
         dispatch(resetUpdateAccount());
       }
+
+      const currentUsername = signInState?.userInfo.userName;
+      if (opts.userName && currentUsername !== opts.userName) {
+        await dispatch(updateUsername(api, opts.userName));
+
+        const signInError = signInState.errorMessage;
+
+        if (signInError) {
+          throw signInError;
+        }
+
+        await dispatch(signOutUser());
+      }
+
     } catch (e) {
       dispatch(errorUpdateAccount("Error: something went wrong:", e));
     }
