@@ -42,7 +42,6 @@ export function deleteBlock(api, userName) {
 
     const url = generateUrl("deleteBlock");
     try {
-      debugger
       await api.setMethod("DELETE").setParams({ userName }).query(url);
 
       const list = [...getState().users.data];

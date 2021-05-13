@@ -11,6 +11,7 @@ import * as relationshipActions from "../store/actions/relationship";
 import { PROFILE_USERNAME_ROUTE } from "../constants/routes";
 import { FOLLOW_PENDING, FOLLOW_ACCEPTED, FOLLOW_REJECTED } from "../constants/follow_types";
 import { RelationshipList } from "../components/RelationshipList";
+import { useFollowDialog } from "../hooks/payment";
 
 import { Container, Tabs, Tab, Card, CardHeader, Avatar } from "@material-ui/core";
 
@@ -18,9 +19,10 @@ function Followers(props) {
   const { username } = useParams();
   const apiClient = useContext(ApiContext);
   const history = useHistory();
+  const followDialog = useFollowDialog();
 
   const { user, me, followers } = props;
-  const { fetchUser, fetchFollowers, createFollow, acceptFollow, deleteFollow, rejectFollow, unrejectFollow } = props;
+  const { fetchUser, fetchFollowers, acceptFollow, rejectFollow, unrejectFollow } = props;
 
   const [status, setStatus] = useState(FOLLOW_ACCEPTED);
 
@@ -37,10 +39,6 @@ function Followers(props) {
       await fetchFollowers(apiClient, username, status);
     })();
   }, [status]);
-
-  const handleFollowClick = ({ userName, isFollow }) => {
-    !followers.isFetching && isFollow ? deleteFollow(apiClient, userName) : createFollow(apiClient, userName);
-  };
 
   const handleConfirmClick = ({ userName, status }) => {
     !followers.isFetching && acceptFollow(apiClient, userName);
@@ -64,7 +62,8 @@ function Followers(props) {
             </Link>
           }
           title={user.name}
-          subheader={`Followers [${followers.data?.length}]`} />
+          subheader={`Followers [${followers.data?.length}]`}
+        />
         {me.userName === user.userName && (
           <Tabs
             value={status}
@@ -85,7 +84,7 @@ function Followers(props) {
       <RelationshipList
         items={followers.data}
         currentUserName={me.userName}
-        onFollowClick={(item) => handleFollowClick(item)}
+        onSubscribeClick={followDialog.toggle}
         onConfirmClick={(item) => handleConfirmClick(item)}
         onRejectClick={(item) => handleRejectClick(item)}
         onUnrejectClick={(item) => handleUnrejectClick(item)}
@@ -111,8 +110,6 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchUser: (api, userName) => dispatch(userActions.getUser(api, userName)),
     fetchFollowers: (api, userName, status) => dispatch(relationshipActions.getFollowers(api, userName, status)),
-    createFollow: (api, userName) => dispatch(relationshipActions.createFollow(api, userName)),
-    deleteFollow: (api, userName) => dispatch(relationshipActions.deleteFollow(api, userName)),
     acceptFollow: (api, userName) => dispatch(relationshipActions.acceptFollow(api, userName)),
     rejectFollow: (api, userName) => dispatch(relationshipActions.rejectFollow(api, userName)),
     unrejectFollow: (api, userName) => dispatch(relationshipActions.unrejectFollow(api, userName)),

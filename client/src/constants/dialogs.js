@@ -95,7 +95,7 @@ export default {
   }),
   
   [FOLLOW_DIALOG_TYPE]: (dialogProps, contentProps) => ({
-    title: "Follow",
+    title: "Subscribe",
     content: <Payment {...contentProps} />,
     mainBtnText: "Pay",
     ...baseDialogProps,

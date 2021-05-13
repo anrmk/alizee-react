@@ -52,7 +52,7 @@ function Favorites(props) {
       <RelationshipList
         items={favorites.data}
         currentUserName={me.userName}
-        onFollowClick={(item) => handleFollowClick(item, favorites.isFetching)}
+        onSubscribeClick={(item) => handleFollowClick(item, favorites.isFetching)}
       />
     </Container>
   );

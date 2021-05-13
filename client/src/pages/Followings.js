@@ -11,6 +11,8 @@ import { RelationshipList } from "../components/RelationshipList";
 import * as userActions from "../store/actions/user";
 import * as relationshipActions from "../store/actions/relationship";
 
+import { useFollowDialog } from "../hooks/payment";
+
 import { Container, Card, CardHeader, Avatar } from "@material-ui/core";
 
 function Followings(props) {
@@ -19,8 +21,10 @@ function Followings(props) {
   const apiClient = useContext(ApiContext);
   const history = useHistory();
 
+  const followDialog = useFollowDialog();
+
   const { user, me, following } = props;
-  const { fetchUser, fetchFollowings, createFollow, deleteFollow } = props;
+  const { fetchUser, fetchFollowings } = props;
 
   useEffect(() => {
     if (username) {
@@ -30,10 +34,6 @@ function Followings(props) {
       })();
     }
   }, [username]);
-
-  const handleFollowClick = ({ userName, isFollow }) => {
-    !following.isFetching && isFollow ? deleteFollow(apiClient, userName) : createFollow(apiClient, userName);
-  };
 
   return (
     <Container maxWidth="sm">
@@ -48,11 +48,7 @@ function Followings(props) {
         ></CardHeader>
       </Card>
 
-      <RelationshipList
-        items={following.data}
-        currentUserName={me.userName}
-        onFollowClick={(item) => handleFollowClick(item, following.isFetching)}
-      />
+      <RelationshipList items={following.data} currentUserName={me.userName} onSubscribeClick={followDialog.toggle} />
     </Container>
   );
 }
@@ -60,13 +56,13 @@ function Followings(props) {
 function mapStateToProps(state) {
   return {
     me: {
-      userName: state.signIn?.userInfo.userName
+      userName: state.signIn?.userInfo.userName,
     },
     user: state.user.data,
     following: {
       isFetching: state.users.isFetching,
-      data: state.users.data
-    }
+      data: state.users.data,
+    },
   };
 }
 
@@ -74,8 +70,6 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchUser: (api, username) => dispatch(userActions.getUser(api, username)),
     fetchFollowings: (api, userName) => dispatch(relationshipActions.getFollowings(api, userName)),
-    createFollow: (api, userName) => dispatch(relationshipActions.createFollow(api, userName)),
-    deleteFollow: (api, userName) => dispatch(relationshipActions.deleteFollow(api, userName)),
   };
 }
 

@@ -13,7 +13,6 @@ import * as settingsActions from "../../store/actions/settings";
 import * as storyActions from "../../store/actions/story";
 import * as streamActions from "../../store/actions/stream";
 
-import * as relationshipActions from "../../store/actions/relationship";
 import * as paymentActions from "../../store/actions/payment";
 
 import { RelationshipList } from "../../components/RelationshipList";
@@ -25,7 +24,13 @@ import { SUGESTED_PEOPLE } from "../../constants/routes";
 
 import useShareDialog, { SHARE_DIALOG_POST_TYPE } from "../../hooks/useShareDialog";
 import { useLikeAction, useFavoriteAction, useStoryDialog, useMenuDialog, useCommentAction } from "../../hooks/post";
-import { useSendTipDialog, usePaymentDialog, usePurchaseDialog, useReceiptDialog } from "../../hooks/payment";
+import {
+  useSendTipDialog,
+  usePaymentDialog,
+  usePurchaseDialog,
+  useReceiptDialog,
+  useFollowDialog,
+} from "../../hooks/payment";
 import useFullScreen from "../../hooks/useFullScreen";
 import useLightboxModal from "../../hooks/useLightboxModal";
 
@@ -36,13 +41,14 @@ function Feed(props) {
   const apiClient = useContext(ApiContext);
 
   const { userInfo } = props;
-  const { people, getPeople, createFollow, deleteFollow } = props;
+  const { people, getPeople } = props;
   const { posts, getPosts, resetPosts } = props;
   const { story, getStory, getFollowingStories, resetFollowingStories, resetStory } = props;
   const { hotStreamers, getHotStreamers } = props;
 
   const likeAction = useLikeAction();
   const favoriteAction = useFavoriteAction();
+  const followDialog = useFollowDialog();
   const sendTipDialog = useSendTipDialog();
   const buyPostDialog = usePaymentDialog({ isFetching: props.posts.isFetching, onPayment: props.buyPost }); //buy ticket
   const receiptDialog = useReceiptDialog({ isFetching: props.posts.isFetching, onReceipt: props.getReceipt });
@@ -51,7 +57,7 @@ function Feed(props) {
   const postMenuDialog = useMenuDialog();
   const fullScreen = useFullScreen("root");
   const { handleCommentSendClick } = useCommentAction();
-  const lightboxModal = useLightboxModal()
+  const lightboxModal = useLightboxModal();
 
   const { dialogShareOpenClick } = useShareDialog({ type: SHARE_DIALOG_POST_TYPE });
 
@@ -79,10 +85,6 @@ function Feed(props) {
       getPosts(apiClient, { id: userInfo.id });
     }
   };
-
-  const handleFollowPeople = useCallback(async ({ userName, isFollow }) => {
-    !people.isFetching && isFollow ? await deleteFollow(apiClient, userName) : await createFollow(apiClient, userName);
-  }, []);
 
   const handleJoinStream = () => {
     console.log("handleJoinStream");
@@ -132,7 +134,7 @@ function Feed(props) {
                       See All
                     </MUILink>
                   </Box>
-                  <RelationshipList items={people.data} onFollowClick={handleFollowPeople} />
+                  <RelationshipList wide={true} items={people.data} onSubscribeClick={followDialog.toggle} />
                 </Box>
               )}
 
@@ -197,12 +199,6 @@ function mapDispatchToProps(dispatch) {
     resetPosts: () => dispatch(postActions.resetPosts()),
 
     getPeople: (api, count) => dispatch(actionSuggestion.getPeople(api, count)),
-    createFollow: (api, userName) => dispatch(relationshipActions.createFollow(api, userName)),
-    deleteFollow: (api, userName) => dispatch(relationshipActions.deleteFollow(api, userName)),
-
-    // blockUser: (api, userName) => dispatch(settingsActions.createBlackList(api, userName)),
-    // unblockUser: (api, userName) => dispatch(settingsActions.deleteBlackList(api, userName)),
-
     buyPost: (api, id) => dispatch(paymentActions.buyPost(api, id)),
 
     getStory: (api, opts) => dispatch(storyActions.getStory(api, opts)),

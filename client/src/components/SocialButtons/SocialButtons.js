@@ -26,6 +26,7 @@ function SocialButtons({
             {...props}
             variant="contained"
             color="secondary"
+            disableElevation
             fullWidth
             startIcon={<Avatar src={GoogleIcon} className={classes.googleIcon} />}
           >
@@ -40,6 +41,7 @@ function SocialButtons({
       <Button
         variant="contained"
         color="secondary"
+        disableElevation
         fullWidth
         onClick={() => onSuccess(null, SOCIAL_TWITTER)}
         startIcon={<Avatar src={TwitterIcon} className={classes.googleIcon} />}
