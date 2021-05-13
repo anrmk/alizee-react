@@ -4,7 +4,7 @@ import { Box, Typography } from "@material-ui/core";
 function ConfirmDialog({ contentText, helpText }) {
   return (
     <Box>
-      <Typography variant="body1">{contentText}</Typography>
+      {contentText}
       {helpText && <Typography variant="caption" color="textSecondary">{helpText}</Typography>}
     </Box>
   )

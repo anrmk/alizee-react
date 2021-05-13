@@ -51,6 +51,8 @@ export const CONFIRM_DIALOG_TYPE = "confirmation";
 
 export const LIGHTBOX_MODAL_TYPE = "lightbox";
 
+export const INDENTITY_DIALOG_TYPE = "identity";
+
 const baseDialogProps = {
   dialogProps: { fullWidth: true },
   onCloseClick: () => { },
@@ -223,7 +225,6 @@ export default {
     ...dialogProps,
   }),
   [CONFIRM_DIALOG_TYPE]: (dialogProps, contentProps) => ({
-    title: "Confirm",
     content: <ConfirmDialog {...contentProps} />,
     mainBtnText: "Agree",
     ...baseDialogProps,
@@ -233,5 +234,10 @@ export default {
     content: <LightboxModal {...contentProps} />,
     ...baseDialogProps,
     ...dialogProps,
-  })
+  }),
+  [INDENTITY_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+    content: <LightboxModal {...contentProps} />,
+    ...baseDialogProps,
+    ...dialogProps,
+  }),
 };
