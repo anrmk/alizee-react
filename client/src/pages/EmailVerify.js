@@ -1,13 +1,28 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { makeStyles } from "@material-ui/core";
 
 import ApiContext from "../context/ApiContext";
+import AlertContainer from "../components/AlertContainer"
 import { confirmEmail } from "../store/actions/confirmEmail";
 import StatusError from "../components/StatusError";
+import { ChangePasswordForm } from "../domain/PasswordForms";
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh"
+  }
+}))
 
 function EmailVerify({ signIn, confirmingEmail, confirmEmail }) {
+  const classes = useStyles();
   const apiClient = useContext(ApiContext);
+  const [alertOpen, setAlertOpen] = useState(false);
+
   if (signIn.isVerified) {
     return <Redirect to="/" />
   }
@@ -20,34 +35,48 @@ function EmailVerify({ signIn, confirmingEmail, confirmEmail }) {
     return <StatusError code={confirmingEmail.errorStatus} message={confirmingEmail.errorMessage} />;
   }
 
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const email = urlParams.get('email');
-  const token = urlParams.get('token');
+  const handleSubmit = async (password) => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const email = urlParams.get("email");
+    const token = urlParams.get("token");
 
-  if (email && 
-      token && 
-      !confirmingEmail.isFetching &&
-      !confirmingEmail.isConfirmed) {
-    confirmEmail(apiClient, {
-      email: email,
-      token: token
-    });
+    if (email && 
+        token && 
+        !confirmingEmail.isFetching &&
+        !confirmingEmail.isConfirmed && 
+        password) {
+      await confirmEmail(apiClient, {
+        password,
+        email,
+        token
+      });
+      setAlertOpen(true);
+    }
   }
 
-  // TODO: replace with an existing component
   return (
-    <div className="d-flex justify-content-center mt-3">
-      <div className="spinner-border text-primary" style={{ width: "3rem", height: "3rem" }} role="status">
-        <span className="sr-only">Loading...</span>
-      </div>
-    </div>
+    <AlertContainer 
+      successAlert="Reset link was sended to email. Check your email." 
+      errorAlert="Invalid email address"
+      className={classes.container}
+      alertOpen={alertOpen}
+      error={confirmingEmail.errorMessage}
+      onAlertClose={() => setAlertOpen(false)}>
+      <ChangePasswordForm 
+        title="Create new password"
+        helperText="In order to protect your account, make sure you think strong password."
+        btnText="Create Password"
+        loading={confirmingEmail.isFetching}
+        onSubmit={handleSubmit} />
+    </AlertContainer>
   );
 }
 
 function mapStateToProps(state) {
   return {
     signIn: {
+      isFetching: state.signIn.isFetching,
       isVerified: state.signIn.isVerified,
       errorMessage: state.signIn.errorMessage,
       errorStatus: state.signIn.errorStatus

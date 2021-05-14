@@ -47,6 +47,7 @@ export function confirmEmail(api, creds) {
       const { data } = await api
         .setMethod("GET")
         .setParams({
+          password: creds.password,
           email: creds.email,
           token: creds.token
         })

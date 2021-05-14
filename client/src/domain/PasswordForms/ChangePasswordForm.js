@@ -22,6 +22,9 @@ const PASSWORDS_DONT_MATCH_ERROR = "Password does not match";
 
 function ChangePasswordForm({
   loading,
+  title = "Change Password",
+  helperText = "In order to protect your account, make sure your password.",
+  btnText = "Change Password",
 
   onSubmit
 }) {
@@ -93,10 +96,9 @@ function ChangePasswordForm({
 
   return (
     <BaseForm
-      title="Change Password"
-      helperText="In order to protect your account,
-      make sure your password."
-      btnText="Change Password"
+      title={title}
+      helperText={helperText}
+      btnText={btnText}
       btnDisabled={btnDisabled}
       onSubmit={handleSubmit}
       icon={<LockIcon className={classes.icon} />}>
