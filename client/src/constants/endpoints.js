@@ -92,8 +92,17 @@ export default {
     updateOffensiveComments: "accountsetting/offensivecontentstatus",
     updateAvatar: "accountsetting/updateavatar",
     getPrivacy: "accountsetting/privacysettings",
-    getNotification: "accountsetting/notification",
-    updateNotification: "accountsetting/notification",
+
+    getPushNotification: "accountsetting/pushNotification",
+    getSiteNotification: "accountsetting/siteNotification",
+    getEmailNotification: "accountsetting/emailNotification",
+    getToastNotification: "accountsetting/toastNotification",
+
+    updatePushNotification: "accountsetting/pushNotification",
+    updateSiteNotification: "accountsetting/siteNotification",
+    updateEmailNotification: "accountsetting/emailNotification",
+    updateToastNotification: "accountsetting/toastNotification",
+
     deleteAccount: "accountsetting/deleteaccount",
     getAccountPersonalized: "accountsetting/isaccountpersonalized",
     getAccountInterests: "accountsetting/interests",

@@ -3,7 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import InputMask from "react-input-mask";
-import { Grid, Button, FormGroup, TextField } from "@material-ui/core";
+import {Card, CardHeader, CardContent, Grid, Button, FormGroup, TextField } from "@material-ui/core";
 
 import Avatar from "../../components/Avatar";
 import ChipsInput from "../../components/ChipsInput";
@@ -144,7 +144,9 @@ function EditProfileForm({
   };
 
   return (
-    <Grid container direction="column" spacing={4} alignItems="center">
+    <Card>
+      <CardHeader title="Personal Info"></CardHeader>
+      <CardContent><Grid container direction="column" spacing={4} alignItems="center">
       <Grid className={classes.header} item>
         <Cover
           rootClassName={classes.cover}
@@ -292,7 +294,9 @@ function EditProfileForm({
           Update
         </Button>
       </Grid>
-    </Grid>
+    </Grid></CardContent>
+      </Card>
+    
   );
 }
 

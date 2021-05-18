@@ -49,6 +49,7 @@ const RelationshipItem = React.memo((props) => {
               className={classes.itemButton}
               disableElevation
               disableRipple
+              size="small"
               variant="contained"
               color="primary"
               onClick={handleConfirmClick}
@@ -60,6 +61,7 @@ const RelationshipItem = React.memo((props) => {
               className={classes.itemButton}
               disableElevation
               disableRipple
+              size="small"
               color="secondary"
               onClick={handleRejectClick}
             >
@@ -73,6 +75,7 @@ const RelationshipItem = React.memo((props) => {
             className={classes.itemButton}
             disableElevation
             disableRipple
+            size="small"
             color="secondary"
             onClick={handleUnrejectClick}
           >
@@ -88,6 +91,7 @@ const RelationshipItem = React.memo((props) => {
             className={classes.itemButton}
             disableElevation
             disableRipple
+            size="small"
             variant="contained"
             color="primary"
             onClick={handleSubscribeClick}

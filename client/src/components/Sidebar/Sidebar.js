@@ -11,7 +11,7 @@ import useTheme from "@material-ui/core/styles/useTheme";
 
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import PersonOutlineIcon from '@material-ui/icons/PersonOutlineOutlined';
+import PersonOutlineIcon from "@material-ui/icons/PersonOutlineOutlined";
 import HomeIcon from "@material-ui/icons/HomeOutlined";
 import MailIcon from "@material-ui/icons/MailOutline";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorderOutlined";
@@ -22,7 +22,6 @@ import SunnyIcon from "@material-ui/icons/WbSunnyOutlined";
 import { HOME_ROUTE, CHAT_ROUTE, PROFILE_USERNAME_ROUTE, EXPLORE_ROUTE, ACTIVITY_ROUTE } from "../../constants/routes";
 import useChangeTheme from "../../hooks/useChangeTheme";
 import UserCard from "./UserCard";
-import Footer from "../Footer";
 import { Wallet } from "../Wallet";
 
 import useStyles from "./styles";
@@ -34,7 +33,7 @@ function Sidebar({
   onCreateMeet,
   onCreatePost,
   onCreateStory,
-  onDrawerToggle
+  onDrawerToggle,
 }) {
   const classes = useStyles({ open });
   const { t } = useTranslation();
@@ -85,10 +84,11 @@ function Sidebar({
 
       {open && (
         <UserCard
-          username={user.userName}
+          userName={user.userName}
           name={user.name}
           avatarUrl={user.avatarUrl}
           ranking={user.ranking}
+          identityVerified={user.identityVerified}
           open={open}
           onCreateMeet={onCreateMeet}
           onCreatePost={onCreatePost}
@@ -96,15 +96,11 @@ function Sidebar({
         />
       )}
 
-      {open && <Wallet deposit={user.deposit} />}
+      {open && user.identityVerified && <Wallet deposit={user.deposit} />}
 
       <List className={classes.pageList}>
         <Tooltip title={t("SidebarFeedText")} placement="right">
-          <ListItem
-            button
-            selected={location.pathname === HOME_ROUTE} 
-            to={HOME_ROUTE}
-            component={Link}>
+          <ListItem button selected={location.pathname === HOME_ROUTE} to={HOME_ROUTE} component={Link}>
             <ListItemIcon>
               <HomeIcon color="secondary" />
             </ListItemIcon>
@@ -113,11 +109,7 @@ function Sidebar({
         </Tooltip>
 
         <Tooltip title={t("SidebarExploreText")} placement="right">
-          <ListItem
-            button
-            selected={location.pathname.includes(EXPLORE_ROUTE)}
-            to={EXPLORE_ROUTE}
-            component={Link}>
+          <ListItem button selected={location.pathname.includes(EXPLORE_ROUTE)} to={EXPLORE_ROUTE} component={Link}>
             <ListItemIcon>
               <ExploreIcon color="secondary" />
             </ListItemIcon>
@@ -126,11 +118,12 @@ function Sidebar({
         </Tooltip>
 
         <Tooltip title={t("SidebarProfileText")} placement="right">
-          <ListItem 
+          <ListItem
             button
             selected={location.pathname.includes(PROFILE_USERNAME_ROUTE(user.userName))}
             to={PROFILE_USERNAME_ROUTE(user.userName)}
-            component={Link}>
+            component={Link}
+          >
             <ListItemIcon>
               <PersonOutlineIcon color="secondary" />
             </ListItemIcon>
@@ -139,11 +132,7 @@ function Sidebar({
         </Tooltip>
 
         <Tooltip title={t("SidebarChatText")} placement="right">
-          <ListItem
-            button
-            selected={location.pathname.includes(CHAT_ROUTE(""))}
-            to={CHAT_ROUTE("")}
-            component={Link}>
+          <ListItem button selected={location.pathname.includes(CHAT_ROUTE(""))} to={CHAT_ROUTE("")} component={Link}>
             <ListItemIcon>
               <MailIcon color="secondary" />
             </ListItemIcon>

@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core";
 
 import MoreVertIcon from "@material-ui/icons/MoreVertOutlined";
+import VerifiedUserIcon  from "@material-ui/icons/CheckCircleOutline";
 
 import Tools from "./Tools";
 import MediaContent from "../../components/MediaContent";
@@ -83,8 +84,8 @@ const Post = React.memo((props) => {
             <Avatar src={owner.avatarUrl} />
           </Link>
         }
-        title={owner.name}
-        subheader={owner.userName}
+        title= {<>{owner.name} <VerifiedUserIcon fontSize="small" /></>}
+        subheader={`@${owner.userName}`}
         action={
           <IconButton onClick={handleMenuClick}>
             <MoreVertIcon />

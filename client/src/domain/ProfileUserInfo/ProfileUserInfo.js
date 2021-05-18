@@ -62,6 +62,7 @@ function ProfileUserInfo({
         title={user.name}
         subheader={
           <>
+            <Typography variant="subtitle1">@{user.userName}</Typography>
             <Typography variant="subtitle1" color="textSecondary" className={classes.mood} onClick={handleMoodUpdateClick}>
               {user.mood ? 
                 user.mood : 

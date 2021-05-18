@@ -44,7 +44,13 @@ export const SETTINGS_PERSONAL_ROUTE = "/settings/personal-info";
 export const SETTINGS_CARD_ROUTE = "/settings/card"
 export const SETTINGS_BANK_ROUTE = "/settings/bank"
 export const SETTINGS_INTERESTS_ROUTE = "/settings/interests";
-export const SETTINGS_NOTIFICATION_ROUTE = "/settings/notification";
+
+export const SETTINGS_NOTIFICATIONS_ROUTE = "/settings/notifications";
+export const SETTINGS_NOTIFICATIONS_PUSH_ROUTE = "/settings/notifications/push";
+export const SETTINGS_NOTIFICATIONS_EMAIL_ROUTE = "/settings/notifications/email";
+export const SETTINGS_NOTIFICATIONS_SITE_ROUTE = "/settings/notifications/site";
+export const SETTINGS_NOTIFICATIONS_TOAST_ROUTE = "/settings/notifications/toast";
+
 export const SETTINGS_PRIVACY_SECURITY_ROUTE = "/settings/privacy-security";
 export const SETTINGS_SUBSCRIPTION_ROUTE = "/settings/subscription";
 export const SETTINGS_BLACK_LIST_ROUTE = "/settings/privacy-security/block-list";
