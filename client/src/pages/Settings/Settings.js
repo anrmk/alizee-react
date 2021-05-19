@@ -9,14 +9,13 @@ import {
   SETTINGS_EDIT_PROFILE_ROUTE,
   SETTINGS_CARD_ROUTE,
   SETTINGS_BANK_ROUTE,
-  SETTINGS_INTERESTS_ROUTE,
   SETTINGS_NOTIFICATIONS_ROUTE,
   SETTINGS_NOTIFICATIONS_PUSH_ROUTE,
   SETTINGS_NOTIFICATIONS_EMAIL_ROUTE,
   SETTINGS_NOTIFICATIONS_SITE_ROUTE,
   SETTINGS_NOTIFICATIONS_TOAST_ROUTE,
   SETTINGS_PRIVACY_SECURITY_ROUTE,
-  SETTINGS_PERSONAL_ROUTE,
+  SETTINGS_ACCOUNT_ROUTE,
   SETTINGS_SUBSCRIPTION_ROUTE,
 } from "../../constants/routes";
 import PrivateRoute from "../PrivateRoute";
@@ -24,11 +23,10 @@ import SlidingViews from "../../components/SlidingViews";
 
 import BlackList from "./BlackList";
 import EditProfileSettings from "./EditProfileSettings";
-import EditPersonalSettings from "./EditPersonalSettings";
+import EditAccountSettings from "./EditAccountSettings";
 import EditCardSettings from "./EditCardSettings";
 import EditSubscriptionSettings from "./EditSubscriptionSettings";
 import EditBankSettings from "./EditBankSettings";
-import InterestsSettings from "./InterestsSettings";
 import PrivacySecuritySettings from "./PrivacySecuritySettings";
 
 import {
@@ -52,9 +50,9 @@ import { resetSettings } from "../../store/actions/settings";
    },
    {
      index: 1,
-     name: "personal-info",
-     title: "Personal Info",
-     route: SETTINGS_PERSONAL_ROUTE,
+     name: "account",
+     title: "Account",
+     route: SETTINGS_ACCOUNT_ROUTE,
    },
    {
      index: 2,
@@ -70,24 +68,18 @@ import { resetSettings } from "../../store/actions/settings";
    },
    {
      index: 4,
-     name: "interests",
-     title: "Interests",
-     route: SETTINGS_INTERESTS_ROUTE,
-   },
-   {
-     index: 5,
      name: "subscription",
      title: "Subscription",
      route: SETTINGS_SUBSCRIPTION_ROUTE,
    },
    {
-     index: 6,
+     index: 5,
      name: "notifications",
      title: "Notifications",
      route: SETTINGS_NOTIFICATIONS_ROUTE,
    },
    {
-     index: 7,
+     index: 6,
      name: "privacy-security",
      title: "Privacy and Security",
      route: SETTINGS_PRIVACY_SECURITY_ROUTE,
@@ -137,10 +129,9 @@ function Settings() {
 
         <Box>
           <PrivateRoute exact path={SETTINGS_EDIT_PROFILE_ROUTE} component={EditProfileSettings} />
-          <PrivateRoute exact path={SETTINGS_PERSONAL_ROUTE} component={EditPersonalSettings} />
+          <PrivateRoute exact path={SETTINGS_ACCOUNT_ROUTE} component={EditAccountSettings} />
           <PrivateRoute exact path={SETTINGS_CARD_ROUTE} component={EditCardSettings} />
           <PrivateRoute exact path={SETTINGS_BANK_ROUTE} component={EditBankSettings} />
-          <PrivateRoute exact path={SETTINGS_INTERESTS_ROUTE} component={InterestsSettings} />
           <PrivateRoute exact path={SETTINGS_SUBSCRIPTION_ROUTE} component={EditSubscriptionSettings} />
 
           <PrivateRoute exact path={SETTINGS_NOTIFICATIONS_ROUTE} component={GeneralNotificationSettings} />

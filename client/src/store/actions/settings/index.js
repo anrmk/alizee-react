@@ -1,113 +1,58 @@
-export {
-  UPDATE_ACCOUNT_REQUEST,
-  UPDATE_ACCOUNT_SUCCESS,
-  UPDATE_ACCOUNT_FAILURE,
+export { UPDATE_ACCOUNT_REQUEST, UPDATE_ACCOUNT_SUCCESS, UPDATE_ACCOUNT_FAILURE, updateAccount } from "./updateAccount";
 
-  updateAccount
-} from "./updateAccount";
+export { UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE_FAILURE, updateProfile } from "./updateProfile";
 
-export {
-  GET_PERSONAL_REQUEST,
-  GET_PERSONAL_SUCCESS,
-  GET_PERSONAL_FAILURE,
-  getPersonal
-} from "./getPersonal";
+export { GET_PERSONAL_REQUEST, GET_PERSONAL_SUCCESS, GET_PERSONAL_FAILURE, getPersonal } from "./getPersonal";
 
-export {
-  UPDATE_PERSONAL_REQUEST,
-  UPDATE_PERSONAL_SUCCESS,
-  UPDATE_PERSONAL_FAILURE,
-  updatePersonal
-} from "./updatePersonal";
+export { UPDATE_PRIVACY_REQUEST, UPDATE_PRIVACY_SUCCESS, UPDATE_PRIVACY_FAILURE, updatePrivacy } from "./updatePrivacy";
 
-export {
-  UPDATE_USERNAME_REQUEST,
-  UPDATE_USERNAME_SUCCESS,
-  UPDATE_USERNAME_FAILURE,
+export { GET_PRIVACY_REQUEST, GET_PRIVACY_SUCCESS, GET_PRIVACY_FAILURE, getPrivacy } from "./getPrivacy";
 
-  updateUsername
-} from "./updateUsername";
-export {
-  UPDATE_PRIVACY_REQUEST,
-  UPDATE_PRIVACY_SUCCESS,
-  UPDATE_PRIVACY_FAILURE,
-
-  updatePrivacy
-} from "./updatePrivacy";
-export {
-  GET_PRIVACY_REQUEST,
-  GET_PRIVACY_SUCCESS,
-  GET_PRIVACY_FAILURE,
-
-  getPrivacy
-} from "./getPrivacy";
 export {
   UPDATE_ACTIVITY_STATUS_REQUEST,
   UPDATE_ACTIVITY_STATUS_SUCCESS,
   UPDATE_ACTIVITY_STATUS_FAILURE,
-
-  updateActivityStatus
+  updateActivityStatus,
 } from "./updateActivityStatus";
+
 export {
   UPDATE_PRIVATE_STATUS_REQUEST,
   UPDATE_PRIVATE_STATUS_SUCCESS,
   UPDATE_PRIVATE_STATUS_FAILURE,
-
-  updatePrivateStatus
+  updatePrivateStatus,
 } from "./updatePrivateStatus";
+
 export {
   UPDATE_OFFENSIVE_COMMENTS_REQUEST,
   UPDATE_OFFENSIVE_COMMENTS_SUCCESS,
   UPDATE_OFFENSIVE_COMMENTS_FAILURE,
-
-  updateOffensiveComments
+  updateOffensiveComments,
 } from "./updateOffensiveComments";
-export {
-  DELETE_ACCOUNT_REQUEST,
-  DELETE_ACCOUNT_SUCCESS,
-  DELETE_ACCOUNT_FAILURE,
 
-  deleteAccount
-} from "./deleteAccount";
+export { DELETE_ACCOUNT_REQUEST, DELETE_ACCOUNT_SUCCESS, DELETE_ACCOUNT_FAILURE, deleteAccount } from "./deleteAccount";
+
 export {
   GET_ACCOUNT_PERSONALIZED_REQUEST,
   GET_ACCOUNT_PERSONALIZED_SUCCESS,
   GET_ACCOUNT_PERSONALIZED_FAILURE,
-
   receiveGetAccountPersonalized,
-  getAccountPersonalized
+  getAccountPersonalized,
 } from "./getAccountPersonalized";
-export {
-  GET_ACCOUNT_INTERESTS_REQUEST,
-  GET_ACCOUNT_INTERESTS_SUCCESS,
-  GET_ACCOUNT_INTERESTS_FAILURE,
 
-  getAccountInterests,
-  getMergedInterests
-} from "./getAccountInterests";
-
-export {
-  GET_BLACK_LIST_REQUEST,
-  GET_BLACK_LIST_SUCCESS,
-  GET_BLACK_LIST_FAILURE,
-
-  getBlackList
-} from "./getBlackList";
+export { GET_BLACK_LIST_REQUEST, GET_BLACK_LIST_SUCCESS, GET_BLACK_LIST_FAILURE, getBlackList } from "./getBlackList";
 
 export {
   CREATE_BLACK_LIST_REQUEST,
   CREATE_BLACK_LIST_SUCCESS,
   CREATE_BLACK_LIST_FAILURE,
-
-  createBlackList
+  createBlackList,
 } from "./createBlackList";
 
 export {
   DELETE_BLACK_LIST_REQUEST,
   DELETE_BLACK_LIST_SUCCESS,
   DELETE_BLACK_LIST_FAILURE,
-
-  deleteBlackList
+  deleteBlackList,
 } from "./deleteBlackList";
 
 export {
@@ -116,9 +61,8 @@ export {
   UPDATE_COVER_FAILURE,
   UPDATE_LOCAL_COVER_SUCCESS,
   UPDATE_LOCAL_COVER_FAILURE,
-
   updateCover,
-  updateLocalCover
+  updateLocalCover,
 } from "./updateCover";
 
 export {
@@ -128,98 +72,54 @@ export {
   UPDATE_SITE_NOTIFICATION_REQUEST,
   UPDATE_SITE_NOTIFICATION_SUCCESS,
   UPDATE_SITE_NOTIFICATION_FAILURE,
-
   getSiteNotification,
   updateSiteNotification,
-
   GET_PUSH_NOTIFICATION_REQUEST,
   GET_PUSH_NOTIFICATION_SUCCESS,
   GET_PUSH_NOTIFICATION_FAILURE,
   UPDATE_PUSH_NOTIFICATION_REQUEST,
   UPDATE_PUSH_NOTIFICATION_SUCCESS,
   UPDATE_PUSH_NOTIFICATION_FAILURE,
-
   getPushNotification,
   updatePushNotification,
-
   GET_EMAIL_NOTIFICATION_REQUEST,
   GET_EMAIL_NOTIFICATION_SUCCESS,
   GET_EMAIL_NOTIFICATION_FAILURE,
   UPDATE_EMAIL_NOTIFICATION_REQUEST,
   UPDATE_EMAIL_NOTIFICATION_SUCCESS,
   UPDATE_EMAIL_NOTIFICATION_FAILURE,
-
   getEmailNotification,
   updateEmailNotification,
-
   GET_TOAST_NOTIFICATION_REQUEST,
   GET_TOAST_NOTIFICATION_SUCCESS,
   GET_TOAST_NOTIFICATION_FAILURE,
   UPDATE_TOAST_NOTIFICATION_REQUEST,
   UPDATE_TOAST_NOTIFICATION_SUCCESS,
   UPDATE_TOAST_NOTIFICATION_FAILURE,
-
   getToastNotification,
   updateToastNotification,
-} from "./notifications"
+} from "./notifications";
 
-export {
-  GET_CARD_REQUEST,
-  GET_CARD_SUCCESS,
-  GET_CARD_FAILURE,
+export { GET_CARD_REQUEST, GET_CARD_SUCCESS, GET_CARD_FAILURE, getCard } from "./getCard";
 
-  getCard
-} from "./getCard"
+export { UPDATE_CARD_REQUEST, UPDATE_CARD_SUCCESS, UPDATE_CARD_FAILURE, updateCard } from "./updateCard";
 
-export {
-  UPDATE_CARD_REQUEST,
-  UPDATE_CARD_SUCCESS,
-  UPDATE_CARD_FAILURE,
+export { GET_BANK_REQUEST, GET_BANK_SUCCESS, GET_BANK_FAILURE, getBank } from "./getBank";
 
-  updateCard
-} from "./updateCard"
-
-export {
-  GET_BANK_REQUEST,
-  GET_BANK_SUCCESS,
-  GET_BANK_FAILURE,
-
-  getBank
-} from "./getBank"
-
-export {
-  UPDATE_BANK_REQUEST,
-  UPDATE_BANK_SUCCESS,
-  UPDATE_BANK_FAILURE,
-
-  updateBank
-} from "./updateBank"
+export { UPDATE_BANK_REQUEST, UPDATE_BANK_SUCCESS, UPDATE_BANK_FAILURE, updateBank } from "./updateBank";
 
 export {
   GET_SUBSCRIPTION_REQUEST,
   GET_SUBSCRIPTION_SUCCESS,
   GET_SUBSCRIPTION_FAILURE,
-
-  getSubscription
-} from "./getSubscription"
+  getSubscription,
+} from "./getSubscription";
 
 export {
   UPDATE_SUBSCRIPTION_REQUEST,
   UPDATE_SUBSCRIPTION_SUCCESS,
   UPDATE_SUBSCRIPTION_FAILURE,
+  updateSubscription,
+} from "./updateSubscription";
 
-  updateSubscription
-} from "./updateSubscription"
-
-export { 
-  CREATE_ACCOUNT_INTERESTS_REQUEST,
-  CREATE_ACCOUNT_INTERESTS_SUCCESS,
-  CREATE_ACCOUNT_INTERESTS_FAILURE,
-
-  createAccountInterests,
-} from './createAccountInterests';
-
-export {
-  RESET_SETTINGS_REQUEST,
-  resetSettings
-} from "./resetSettings"
+export { RESET_SETTINGS_REQUEST, resetSettings } from "./resetSettings";

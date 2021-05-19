@@ -85,7 +85,8 @@ export default {
 
     // SETTINGS
     updateAccount: "accountsetting/updateaccount",
-    updateUsername: "accountsetting/updateusername",
+    updateProfile: "accountsetting/updateProfile",
+
     updatePrivacy: "accountsetting/privacysettings",
     updateActivityStatus: "accountsetting/activitystatus",
     updatePrivateStatus: "accountsetting/privatestatus",
@@ -115,7 +116,6 @@ export default {
 
     updateCover: "accountsetting/updatecover",
     getPersonal: "accountsetting/personal",
-    updatePersonal: "accountsetting/personal",
     getCard: "accountsetting/card",
     updateCard: "accountsetting/card",
     getBank: "accountsetting/bankAccount",

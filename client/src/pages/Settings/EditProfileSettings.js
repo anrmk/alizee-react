@@ -5,12 +5,12 @@ import ApiContext from "../../context/ApiContext";
 import * as settingsActions from "../../store/actions/settings";
 import { EditProfileForm } from "../../domain/SettingsForms";
 
-function EditProfileSettings({ user, updateAccount }) {
+function EditProfileSettings({ user, updateProfile }) {
   const apiClient = useContext(ApiContext);
 
   const handleEditProfileSubmit = (data) => {
     (async () => {
-      await updateAccount(apiClient, data);
+      await updateProfile(apiClient, data);
     })();
   };
 
@@ -20,12 +20,13 @@ function EditProfileSettings({ user, updateAccount }) {
 function mapStateToProps(state) {
   return {
     user: state.signIn.userInfo,
+    isFetching: state.signIn.isFetching,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    updateAccount: (api, data) => dispatch(settingsActions.updateAccount(api, data)),
+    updateProfile: (api, data) => dispatch(settingsActions.updateProfile(api, data)),
   };
 }
 

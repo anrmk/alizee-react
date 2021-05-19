@@ -14,24 +14,19 @@ import {
   GET_PRIVACY_REQUEST,
   GET_PRIVACY_SUCCESS,
   GET_PRIVACY_FAILURE,
+
   DELETE_ACCOUNT_REQUEST,
   DELETE_ACCOUNT_SUCCESS,
   DELETE_ACCOUNT_FAILURE,
+
   GET_ACCOUNT_PERSONALIZED_REQUEST,
   GET_ACCOUNT_PERSONALIZED_SUCCESS,
   GET_ACCOUNT_PERSONALIZED_FAILURE,
-  GET_ACCOUNT_INTERESTS_REQUEST,
-  GET_ACCOUNT_INTERESTS_SUCCESS,
-  GET_ACCOUNT_INTERESTS_FAILURE,
-  CREATE_ACCOUNT_INTERESTS_REQUEST,
-  CREATE_ACCOUNT_INTERESTS_SUCCESS,
-  CREATE_ACCOUNT_INTERESTS_FAILURE,
+
   GET_PERSONAL_REQUEST,
   GET_PERSONAL_SUCCESS,
   GET_PERSONAL_FAILURE,
-  UPDATE_PERSONAL_REQUEST,
-  UPDATE_PERSONAL_SUCCESS,
-  UPDATE_PERSONAL_FAILURE,
+
   GET_BLACK_LIST_REQUEST,
   GET_BLACK_LIST_SUCCESS,
   GET_BLACK_LIST_FAILURE,
@@ -212,38 +207,6 @@ export default function settings(
         ...action.payload,
       };
     // Get account settings
-    case GET_ACCOUNT_INTERESTS_REQUEST:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case GET_ACCOUNT_INTERESTS_SUCCESS:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case GET_ACCOUNT_INTERESTS_FAILURE:
-      return {
-        ...state,
-        ...action.payload,
-      };
-
-    // Create Account Interests
-    case CREATE_ACCOUNT_INTERESTS_REQUEST:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case CREATE_ACCOUNT_INTERESTS_SUCCESS:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case CREATE_ACCOUNT_INTERESTS_FAILURE:
-      return {
-        ...state,
-        ...action.payload,
-      };
 
     //GET PERSONAL
     case GET_PERSONAL_REQUEST: {
@@ -265,24 +228,7 @@ export default function settings(
       };
     }
 
-    case UPDATE_PERSONAL_REQUEST: {
-      return {
-        ...state,
-        ...action.payload,
-      };
-    }
-    case UPDATE_PERSONAL_SUCCESS: {
-      return {
-        ...state,
-        ...action.payload,
-      };
-    }
-    case UPDATE_PERSONAL_FAILURE: {
-      return {
-        ...state,
-        ...action.payload,
-      };
-    }
+    
 
     // Get black list
     case GET_BLACK_LIST_REQUEST:

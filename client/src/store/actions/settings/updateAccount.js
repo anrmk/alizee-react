@@ -1,8 +1,5 @@
-import { generateUrl, getAccountSnapshot } from "../../../helpers/functions";
-import { signOutUser } from "../signIn";
-import { updateAvatar } from "../user";
-import { updateCover } from "./updateCover";
-import { updateUsername } from "./updateUsername";
+import { generateUrl } from "../../../helpers/functions";
+import { USER_TOKEN } from "../../../constants/user";
 
 export const UPDATE_ACCOUNT_REQUEST = "UPDATE_ACCOUNT_REQUEST";
 export const UPDATE_ACCOUNT_SUCCESS = "UPDATE_ACCOUNT_SUCCESS";
@@ -40,77 +37,24 @@ function errorUpdateAccount(message) {
   };
 }
 
-function resetUpdateAccount() {
-  return {
-    type: UPDATE_ACCOUNT_RESET,
-    payload: {
-      isFetching: false,
-      errorMessage: "",
-    },
-  };
-}
-
 export function updateAccount(api, opts) {
   return async (dispatch, getState) => {
     dispatch(requestUpdateAccount());
 
     try {
-      const signInState = getState().signIn;
-      const currentAvatarUrl = signInState?.userInfo?.avatarUrl;
-      const currentCoverUrl = signInState?.userInfo?.coverUrl;
+      const url = generateUrl("updateAccount");
+      const { data } = await api.setMethod("PUT").setData(opts).query(url);
 
-      if (currentAvatarUrl !== opts.avatarUrl) {
-        await dispatch(updateAvatar(api, { file: opts.avatarFile }));
-      }
+      const oldUserInfo = getState().signIn?.userInfo;
+      dispatch(receiveUpdateAccount({ ...oldUserInfo, ...data }));
 
-      if (currentCoverUrl !== opts.coverUrl) {
-        await dispatch(updateCover(api, { file: opts.coverFile }));
-      }
-
-      const previousData = getAccountSnapshot(signInState?.userInfo);
-      const currentData = getAccountSnapshot(opts);
-
-      if (previousData !== currentData) {
-        const url = generateUrl("updateAccount");
-        await api
-          .setMethod("PUT")
-          .setData({
-            name: opts.name,
-            birthday: opts.birthday || undefined,
-            phoneNumber: opts.phoneNumber || undefined,
-            bio: opts.bio || undefined,
-            sites: opts.sites
-          })
-          .query(url);
-
-        const oldUserInfo = signInState?.userInfo;
-        const updatedData = {
-          name: opts.name,
-          userName: opts.userName,
-          birthday: opts.birthday,
-          phoneNumber: opts.phoneNumber,
-          bio: opts.bio,
-          sites: opts.sites
-        };
-
-        dispatch(receiveUpdateAccount({ ...oldUserInfo, ...updatedData }));
-      } else {
-        dispatch(resetUpdateAccount());
-      }
-
-      const currentUsername = signInState?.userInfo.userName;
-      if (opts.userName && currentUsername !== opts.userName) {
-        await dispatch(updateUsername(api, opts.userName));
-
-        const signInError = signInState.errorMessage;
-
-        if (signInError) {
-          throw signInError;
-        }
-
-        await dispatch(signOutUser());
-      }
-
+      localStorage.setItem(
+        USER_TOKEN,
+        JSON.stringify({
+          access: data.accessToken,
+          refresh: data.refreshToken,
+        })
+      );
     } catch (e) {
       dispatch(errorUpdateAccount("Error: something went wrong:", e));
     }

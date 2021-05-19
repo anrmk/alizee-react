@@ -211,18 +211,18 @@ export function getSnapshot(data) {
 
 /**
  * Get account snapshot
- * @param {account}
+ * @param {profile}
  * @return {string}
  */
-export function getAccountSnapshot(account) {
-  if (!account) return null;
+export function getProfileSnapshot(profile) {
+  if (!profile) return null;
 
   return getSnapshot({
-    name: account.name,
-    birthday: account.birthday,
-    phoneNumber: account.phoneNumber,
-    bio: account.bio,
-    sites: account.sites
+    name: profile.name,
+    bio: profile.bio,
+    sites: profile.sites,
+    location: profile.location,
+    wishList: profile.wishList
   })
 }
 
