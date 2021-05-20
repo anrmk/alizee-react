@@ -8,6 +8,7 @@ import DividerWithText from "../../components/DividerWithText";
 import { GOOGLE_CLIENT_ID } from "../../constants/social_client_ids";
 
 import useStyles from "./styles";
+import { Alert } from "@material-ui/lab";
 
 const FORM_ID = "sign";
 
@@ -33,7 +34,9 @@ function AuthBaseForm({
           <Grid container spacing={2} direction="column">
             <Grid item>
               <Box className={classes.logoImage} />
-              <Typography variant="body2" color="textSecondary" align="center">Sign up to make money and interact with your fans!</Typography>
+              <Typography variant="body2" color="textSecondary" align="center">
+                Sign up to make money and interact with your fans!
+              </Typography>
             </Grid>
 
             <Grid item>
@@ -50,15 +53,12 @@ function AuthBaseForm({
               <DividerWithText>or</DividerWithText>
             </Grid>
 
+            <Grid item component="form" id={FORM_ID} onSubmit={onFormSubmit}>
+              {children}
+            </Grid>
+            <Grid item>{helpComponent}</Grid>
+            <Grid item>{error && <Alert severity="error">{error}</Alert>}</Grid>
             <Grid item>
-              <Box component="form" id={FORM_ID} onSubmit={onFormSubmit}>
-                {children}
-                {helpComponent}
-                {error && (
-                  <Typography color="secondary" variant="caption" component="span">
-                    {error}
-                  </Typography>
-                )}
               <Button
                 form={FORM_ID}
                 fullWidth
@@ -70,16 +70,13 @@ function AuthBaseForm({
               >
                 {isSingUpForm ? "Sing Up" : "Sign In"}
               </Button>
-              </Box>
             </Grid>
 
             <Grid item>
               <Typography variant="body2" color="textSecondary" align="center">
-                {isSingUpForm ? (
-                    "By signing up you agree to our Terms of Service and Privacy Policy, and confirm that you are at least 18 years old."
-                ) : (
-                    "Visit Help Center for additional help if you are unable to log in with your existing account"
-                )}
+                {isSingUpForm
+                  ? "By signing up you agree to our Terms of Service and Privacy Policy, and confirm that you are at least 18 years old."
+                  : "Visit Help Center for additional help if you are unable to log in with your existing account"}
               </Typography>
             </Grid>
           </Grid>

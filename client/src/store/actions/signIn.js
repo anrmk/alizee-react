@@ -102,7 +102,7 @@ export function signInUser(creds, api) {
 
       dispatch(receiveSignIn(data));
     } catch (e) {
-      dispatch(errorSignIn(e.message, e.response?.status || 500));
+      dispatch(errorSignIn(e.response?.data || e.message, e.response?.status || 500));
     }
   };
 }
