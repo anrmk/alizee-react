@@ -10,7 +10,7 @@ import Footer from "../../components/Footer";
 import * as signUpActions from "../../store/actions/signUp";
 import * as signInActions from "../../store/actions/signIn";
 import * as socialAuthActions from "../../store/actions/socialAuth";
-import { HOME_ROUTE, EMAIL_CONFIRMATION } from "../../constants/routes";
+import { HOME_ROUTE, EMAIL_CONFIRMATION_ROUTE } from "../../constants/routes";
 import ApiContext from "../../context/ApiContext";
 
 import useStyles from "./styles";
@@ -27,7 +27,7 @@ function SignUp(props) {
   }
 
   if (isSignUp) {
-    return <Redirect to={EMAIL_CONFIRMATION} />;
+    return <Redirect to={EMAIL_CONFIRMATION_ROUTE} />;
   }
 
   const handleFormSubmit = async (formData) => {

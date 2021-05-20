@@ -86,6 +86,6 @@ export default function useShareDialog({
   }, [followersList, selectedChats])
 
   return {
-    dialogShareOpenClick: handleOpenClick
+    toggle: handleOpenClick
   };
 }

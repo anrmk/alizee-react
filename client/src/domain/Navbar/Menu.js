@@ -82,7 +82,7 @@ export default function NavMenu({
         <ListItemText primary={t("NavbarMenuItemHelpText")} />
       </MenuItem>
 
-      <MenuItem onClick={changeTheme} >
+      <MenuItem onClick={changeTheme.toggle} >
         <ListItemIcon>
           {theme.palette.type === "light" ? <NightIcon /> : <SunnyIcon />}
         </ListItemIcon>

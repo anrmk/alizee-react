@@ -9,14 +9,13 @@ import { GOOGLE_CLIENT_ID } from "../../constants/social_client_ids";
 
 import useStyles from "./styles";
 
-const FORM_ID = "signUp";
+const FORM_ID = "sign";
 
 function AuthBaseForm({
   isSingUpForm,
   error,
 
   children,
-  formComponent,
   helpComponent,
   endComponent,
 
@@ -52,18 +51,14 @@ function AuthBaseForm({
             </Grid>
 
             <Grid item>
-              <form id={FORM_ID} onSubmit={onFormSubmit} autoComplete="off">
-                {formComponent || children}
+              <Box component="form" id={FORM_ID} onSubmit={onFormSubmit}>
+                {children}
                 {helpComponent}
                 {error && (
                   <Typography color="secondary" variant="caption" component="span">
                     {error}
                   </Typography>
                 )}
-              </form>
-            </Grid>
-
-            <Grid item>
               <Button
                 form={FORM_ID}
                 fullWidth
@@ -75,6 +70,7 @@ function AuthBaseForm({
               >
                 {isSingUpForm ? "Sing Up" : "Sign In"}
               </Button>
+              </Box>
             </Grid>
 
             <Grid item>

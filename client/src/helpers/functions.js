@@ -3,6 +3,7 @@ import numeral from "numeral";
 import ENDPOINTS from '../constants/endpoints';
 import { MEDIA_IMAGE, MEDIA_VIDEO } from '../constants/media_types';
 import { EMAIL_REGEX, NUMBER_REGEX } from "../constants/regexs";
+import { EMAIL_CONFIRMATION_ROUTE, EMAIL_VERIFY_ROUTE, PASSWORD_CHANGE_ROUTE, RESET_PASSWORD_ROUTE, SIGN_IN_ROUTE, SIGN_UP_ROUTE } from "../constants/routes";
 import { USER_TOKEN } from "../constants/user";
 
 /**
@@ -242,6 +243,15 @@ export function initTheme(theme) {
   localStorage.setItem("CURRENT_THEME", theme);
 
   return theme;
+}
+
+export function isPublicRoute(route) {
+  return route.includes(SIGN_IN_ROUTE) ||
+    route.includes(SIGN_UP_ROUTE) ||
+    route.includes(RESET_PASSWORD_ROUTE) ||
+    route.includes(PASSWORD_CHANGE_ROUTE) ||
+    route.includes(EMAIL_VERIFY_ROUTE) ||
+    route.includes(EMAIL_CONFIRMATION_ROUTE)
 }
 
 /**

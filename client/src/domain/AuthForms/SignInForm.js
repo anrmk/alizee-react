@@ -78,12 +78,6 @@ function SignInForm({
             error={!!errors[EMAIL_INPUT_ID]}
             helperText={errors[EMAIL_INPUT_ID]?.message}
             onBlur={onBlur}
-            inputProps={{
-              autoComplete: "new-password",
-              form: {
-                autoComplete: "off",
-              },
-            }}
             onChange={(e) => onChange(e.target.value)}
           />
         )}
@@ -104,12 +98,6 @@ function SignInForm({
             error={!!errors[PASSWORD_INPUT_ID]}
             helperText={errors[PASSWORD_INPUT_ID]?.message}
             onBlur={onBlur}
-            inputProps={{
-              autoComplete: "new-password",
-              form: {
-                autoComplete: "off",
-              },
-            }}
             onChange={(e) => onChange(e.target.value)}
           />
         )}

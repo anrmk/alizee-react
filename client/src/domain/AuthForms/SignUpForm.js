@@ -97,12 +97,6 @@ function SignUpForm({
             error={!!errors[EMAIL_INPUT_ID]}
             helperText={errors[EMAIL_INPUT_ID]?.message}
             onBlur={onBlur}
-            inputProps={{
-              autoComplete: "new-password",
-              form: {
-                autoComplete: "off",
-              },
-            }}
             onChange={(e) => onChange(e.target.value)}
           />
         )}

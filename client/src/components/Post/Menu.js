@@ -5,15 +5,21 @@ import BlockIcon from "@material-ui/icons/BlockOutlined";
 import ShareIcon from "@material-ui/icons/ShareOutlined";
 import ReportIcon from "@material-ui/icons/ReportOutlined";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import SendIcon from "@material-ui/icons/SendOutlined";
+
+export const POST_TYPE = 0;
+export const PROFILE_TYPE = 1;
 
 function Menu({
   postId,
   userName,
   isOwner = false,
+  type = POST_TYPE,
 
   onBlock,
   onReport,
   onShare,
+  onChatShare,
   onDelete
 }) {
   const handleBlockClick = () => {
@@ -25,7 +31,11 @@ function Menu({
   };
 
   const handleShareClick = () => {
-    onShare && onShare({ postId, userName });
+    onShare && onShare({ postId, userName, type });
+  };
+
+  const handleChatShareClick = () => {
+    onChatShare && onChatShare({ postId, userName, type });
   };
 
   const handleDeleteClick = () => {
@@ -34,7 +44,7 @@ function Menu({
 
   return (
     <List>
-      {!isOwner && (
+      {!isOwner && onBlock && (
         <ListItem button onClick={handleBlockClick}>
           <ListItemIcon>
             <BlockIcon />
@@ -43,7 +53,7 @@ function Menu({
         </ListItem>
       )}
 
-      {!isOwner && (
+      {!isOwner && onReport && (
         <ListItem button onClick={handleReportClick}>
           <ListItemIcon>
             <ReportIcon />
@@ -52,14 +62,25 @@ function Menu({
         </ListItem>
       )}
 
-      <ListItem button onClick={handleShareClick}>
-        <ListItemIcon>
-          <ShareIcon />
-        </ListItemIcon>
-        <ListItemText primary="Share to..." />
-      </ListItem>
+      {onShare && (
+        <ListItem button onClick={handleShareClick}>
+          <ListItemIcon>
+            <ShareIcon />
+          </ListItemIcon>
+          <ListItemText primary="Share to..." />
+        </ListItem>
+      )}
 
-      {isOwner && (
+      {onChatShare && (
+        <ListItem button onClick={handleChatShareClick}>
+          <ListItemIcon>
+            <SendIcon />
+          </ListItemIcon>
+          <ListItemText primary="Share to..." />
+        </ListItem>
+      )}
+
+      {isOwner && onDelete && (
         <ListItem button onClick={handleDeleteClick}>
           <ListItemIcon>
             <DeleteForeverIcon />

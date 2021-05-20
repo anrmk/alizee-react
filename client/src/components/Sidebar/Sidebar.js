@@ -73,7 +73,7 @@ function Sidebar({
               name="gilad"
               checked={theme.palette.type === "light"}
               color="primary"
-              onChange={() => changeTheme()}
+              onChange={() => changeTheme.toggle()}
             />
           </Grid>
           <Grid item>

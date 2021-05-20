@@ -58,8 +58,7 @@ function Feed(props) {
   const fullScreen = useFullScreen("root");
   const { handleCommentSendClick } = useCommentAction();
   const lightboxModal = useLightboxModal();
-
-  const { dialogShareOpenClick } = useShareDialog({ type: SHARE_DIALOG_POST_TYPE });
+  const shareDialog = useShareDialog({ type: SHARE_DIALOG_POST_TYPE });
 
   useEffect(() => {
     getPosts(apiClient, { userId: userInfo.id });
@@ -117,7 +116,7 @@ function Feed(props) {
             onBuyPost={buyPostDialog.toggle}
             onReceipt={receiptDialog.toggle}
             onPurchase={purchaseDialog.toggle}
-            onShare={dialogShareOpenClick} //??
+            onShare={shareDialog.toggle} //??
             onMenu={postMenuDialog.toggle} //??
             onCommentSend={handleCommentSendClick}
             onFullScreen={lightboxModal.toggle}

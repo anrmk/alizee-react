@@ -26,11 +26,12 @@ import {
 
 import useDialog from "../../hooks/useDialog";
 import useShareDialog, { SHARE_DIALOG_PROFILE_TYPE } from "../../hooks/useShareDialog";
-import { useMoodDialog } from "../../hooks/post";
+import { useMenuDialog, useMoodDialog } from "../../hooks/post";
 import { useSendTipDialog } from "../../hooks/payment";
 import useFollowDialog from "../../hooks/payment/useFollowDialog";
 import dialogs, { PROFILE_EDIT_COVER } from "../../constants/dialogs";
 import { ProfileUserInfo, ProfileUserInfoMobile } from "../../domain/ProfileUserInfo";
+import { PROFILE_TYPE } from "../../components/Post/Menu";
 
 import useStyles from "./style";
 
@@ -55,14 +56,19 @@ function Profile(props) {
 
   const dialog = useDialog();
 
-  const { dialogShareOpenClick } = useShareDialog({
-    userName: username,
-    type: SHARE_DIALOG_PROFILE_TYPE,
+  const shareDialog = useShareDialog({
+    type: SHARE_DIALOG_PROFILE_TYPE
   });
 
   const followDialog = useFollowDialog();
   const sendTipDialog = useSendTipDialog();
   const createMoodDialog = useMoodDialog();
+  const postMenuDialog = useMenuDialog({
+    isDelete: false,
+    isReport: false,
+    isChatShare: true,
+    type: PROFILE_TYPE
+  });
 
   useEffect(() => {
     return () => {
@@ -195,9 +201,13 @@ function Profile(props) {
         onFavoriteClick={() => handleFavoriteClick(user.data.userName)}
         onFollowClick={() => handlePeopleFollowClick(user.data.userName)}
         onSendGiftClick={() => handleGiftSendClick(user.data.userName)}
-        onShareClick={() => dialogShareOpenClick({ userName: user.data.userName })}
+        onShareClick={() => shareDialog.toggle({ userName: user.data.userName })}
         onCoverUrlChange={handleCoverEditDialog}
-        onDeleteCoverImageClick={handleDeleteCoverImageClick} />
+        onDeleteCoverImageClick={handleDeleteCoverImageClick}
+        onMenuClick={() => postMenuDialog.toggle({ 
+          userName: user.data.userName,
+          isOwner: username === me.userName
+        })} />
       <Hidden mdUp>
         <ProfileUserInfoMobile
           user={user.data}

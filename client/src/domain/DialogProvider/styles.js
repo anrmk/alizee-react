@@ -11,7 +11,8 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     right: theme.spacing(1),
     top: theme.spacing(1),
-    zIndex: theme.zIndex.tooltip
+    zIndex: theme.zIndex.tooltip,
+    color: theme.palette.common.white
   },
   loading: {
     display: "flex"

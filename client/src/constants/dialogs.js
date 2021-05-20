@@ -175,7 +175,7 @@ export default {
     ...dialogProps,
   }),
   [FOLLOWERS_LIST_DIALOG_TYPE]: (dialogProps, contentProps) => ({
-    title: "Share List",
+    title: "Share To Chat",
     content: <SelectableList {...contentProps} />,
     mainBtnText: "Share",
     closeBtnText: "Cancel",

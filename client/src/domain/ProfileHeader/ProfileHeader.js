@@ -27,7 +27,8 @@ function ProfileHeader(props) {
     onSubscribeClick,
     onNewCoverImageClick,
     onDeleteCoverImageClick,
-    onCoverUrlChange
+    onCoverUrlChange,
+    onMenuClick
   } = props;
 
   return (
@@ -59,7 +60,7 @@ function ProfileHeader(props) {
           className={classes.control}
           aria-label="Profile menu"
           aria-haspopup="true"
-          onClick={(e) => setMenuAnchor(e.currentTarget)}>
+          onClick={onMenuClick}>
           <MoreVertIcon />
         </IconButton>
       </Box>
@@ -83,14 +84,14 @@ function ProfileHeader(props) {
             onSubscribeClick={onSubscribeClick} />
         </Box>
       </Hidden>
-      <Menu 
+      {/* <Menu 
         isOwner={isOwner}
         isFollow={user.isFollow}
         isFavorite={user.isFavorite}
         anchorEl={menuAnchor} 
         onFavoriteClick={onFavoriteClick}
         onShareClick={onShareClick}
-        onClose={() => setMenuAnchor(null)} />
+        onClose={() => setMenuAnchor(null)} /> */}
     </Box>
   );
 }

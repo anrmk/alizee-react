@@ -9,7 +9,7 @@ function Payment({ user, amount }) {
     <Card variant="outlined">
       <CardHeader avatar={<Avatar src={user.avatarUrl} />} title={user.name} subheader={user.userName} />
 
-      <CardContent>Please confirm you want to purchase {amount > 0 ? `for $${amount} + $${Math.round(amount * TAX_PERCENTAGE)}(tax)` : "for Free"}</CardContent>
+      <CardContent>Please confirm you want to {amount > 0 ? `purchase for $${amount} + $${Math.round(amount * TAX_PERCENTAGE)}(tax)` : " subscribe for free"}</CardContent>
     </Card>
   );
 }

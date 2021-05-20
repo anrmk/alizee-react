@@ -42,7 +42,7 @@ function Story(props) {
     onUpdatePath: handlePathUpdate
   });
 
-  const { dialogShareOpenClick } = useShareDialog({
+  const shareDialog = useShareDialog({
     withStack: true,
     type: SHARE_DIALOG_STORY_TYPE
   });
@@ -73,7 +73,7 @@ function Story(props) {
   const handleDialogToggle = () => {
     dialog.reset();
     dialog.toggleWithStack(dialogs[STORY_DIALOG_TYPE](null, {
-      onShareClick: () => dialogShareOpenClick({ id: currentSlideId, userName: username }),
+      onShareClick: () => shareDialog.toggle({ id: currentSlideId, userName: username }),
       onReportClick: () => dialog.toggle({ open: false }) // TODO: mocked
     }));
   }

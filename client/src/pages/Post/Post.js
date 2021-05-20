@@ -52,7 +52,7 @@ function PostPage(props) {
   const { handleCommentSendClick } = useCommentAction();
   const lightboxModal = useLightboxModal();
 
-  const { dialogShareOpenClick } = useShareDialog({ type: SHARE_DIALOG_POST_TYPE });
+  const shareDialog = useShareDialog({ type: SHARE_DIALOG_POST_TYPE });
 
   useEffect(() => {
     if (!postId) {
@@ -150,7 +150,7 @@ function PostPage(props) {
             onBuyPost={buyPostDialog.toggle}
             onReceipt={receiptDialog.toggle}
             onPurchase={purchaseDialog.toggle}
-            onShare={dialogShareOpenClick}
+            onShare={shareDialog.toggle}
             />
         </Comments>
       </SlidingViews>

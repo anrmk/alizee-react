@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Switch, Route, Redirect, useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Switch, Route, Redirect, useHistory, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { Box, Hidden } from "@material-ui/core";
 
@@ -40,6 +40,8 @@ import * as Routes from "../../constants/routes";
 import useNotification from "../../hooks/useNotificationHub";
 import useLocationHelper from "../../hooks/useLocationHelper";
 import { usePostDialog, useStoryDialog, useMoodDialog} from "../../hooks/post";
+import useChangeTheme from "../../hooks/useChangeTheme";
+import { isPublicRoute } from "../../helpers/functions";
 
 import useStyles from "./styles";
 
@@ -51,12 +53,22 @@ function Main(props) {
   const isNavigationHide = useLocationHelper([Routes.STORIES_DEFAULT_ROUTE, "/ptp"]);
   const classes = useStyles({ isAuthenticated, isNavigationHide });
   const history = useHistory();
+  const { pathname } = useLocation();
+  const theme = useChangeTheme(true);
 
   const notification = useNotification();
 
   const createPostDialog = usePostDialog();
   const createStoryDialog = useStoryDialog();
   const createMoodDialog = useMoodDialog();
+
+  useEffect(() => {
+    if (isPublicRoute(pathname)) {
+      theme.toggle("light");
+    } else {
+      theme.setupTheme();
+    }
+  }, [pathname]);
 
   const handleDrawerToggle = () => {
     setOpen(!open);
@@ -101,8 +113,8 @@ function Main(props) {
           <Route path={Routes.SIGN_UP_ROUTE} component={SignUp} />
           <Route path={Routes.SIGN_IN_ROUTE} component={SignIn} />
           <Route path={Routes.PRIVACY_POLICY_ROUTE} component={PrivacyPolicy} />
-          <Route path={Routes.EMAIL_CONFIRMATION} component={EmailConfirmation} />
-          <Route path={Routes.EMAIL_VERIFY} component={EmailVerify} />
+          <Route path={Routes.EMAIL_CONFIRMATION_ROUTE} component={EmailConfirmation} />
+          <Route path={Routes.EMAIL_VERIFY_ROUTE} component={EmailVerify} />
           <Route exact path={Routes.RESET_PASSWORD_ROUTE} component={ResetPassword} />
           <Route exact path={Routes.PASSWORD_CHANGE_ROUTE} component={ChangePassword} />
           <Route exact path={Routes.HELP_ROUTE} component={Help} />

@@ -2,7 +2,7 @@ import React from "react";
 import { createMuiTheme, ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 
 import { initTheme } from "../helpers/functions";
-import ThemeDispatchContext from "../context/ThemeDispatchContext";
+import ThemeDispatchContext, { CHANGE_THEME } from "../context/ThemeDispatchContext";
 
 const ThemeProvider = ({ children, theme }) => {
   const themeInitialOptions = {
@@ -11,7 +11,7 @@ const ThemeProvider = ({ children, theme }) => {
 
   const [themeOptions, dispatch] = React.useReducer((state, action) => {
     switch (action.type) {
-      case "changeTheme":
+      case CHANGE_THEME:
         return {
           ...state,
           paletteType: action.payload,

@@ -8,15 +8,28 @@ import useSharePostDialog from "./useSharePostDialog";
 import useReportDialog from "./useReportDialog";
 import useBlockDialog from "../useBlockDialog";
 import useDeleteAction from "./useDeleteAction";
+import useShareDialog, { SHARE_DIALOG_PROFILE_TYPE } from "../useShareDialog";
 import { DEFAULT_ROUTE } from "../../constants/routes";
+import { POST_TYPE } from "../../components/Post/Menu";
 
-export default function useMenuDialog() {
+const initProps = {
+  isBlock: true,
+  isReport: true,
+  isShare: true,
+  isChatShare: false,
+  isDelete: true,
+  type: POST_TYPE
+};
+
+export default function useMenuDialog(props) {
+  props = { ...initProps, ...props };
   const history = useHistory();
   const location = useLocation();
   const dialog = useDialog();
   const blockDialog = useBlockDialog();
   const reportDialog = useReportDialog();
   const postShareDialog = useSharePostDialog();
+  const chatShareDialog = useShareDialog({ stack: true, type: SHARE_DIALOG_PROFILE_TYPE });
   const { deletePostAction } = useDeleteAction();
 
   const handleDeleteClick = useCallback(async (id) => {
@@ -32,10 +45,12 @@ export default function useMenuDialog() {
   const handleDialogToggle = useCallback(async (data) => {
     dialog.toggleWithStack(
       dialogs[POST_MENU_DIALOG_TYPE](null, {
-        onBlock: blockDialog.toggle,
-        onReport: reportDialog.toggle,
-        onShare: postShareDialog.toggle,
-        onDelete: handleDeleteClick,
+        onBlock: props.isBlock && blockDialog.toggle,
+        onReport: props.isReport && reportDialog.toggle,
+        onShare: props.isShare && postShareDialog.toggle,
+        onChatShare: props.isChatShare && chatShareDialog.toggle,
+        onDelete: props.isDelete && handleDeleteClick,
+        type: props.type,
         ...data
       }),
       true
