@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Checkbox, FormGroup, FormControlLabel, Divider, Typography, Grid } from "@material-ui/core";
+import { Button, Checkbox, FormGroup, FormControlLabel, Divider, Typography, Grid, Card, CardHeader, CardContent } from "@material-ui/core";
 
 import { SETTINGS_BLACK_LIST_ROUTE } from "../../constants/routes";
 
@@ -68,100 +68,105 @@ function PrivacyForm({
   };
 
   return (
-    <Grid container direction="column" spacing={4}>
-      <Grid item>
-        <Typography variant="h6">{ACCOUNT_PRIVACY_HEADER}</Typography>
-        <Typography variant="subtitle2">{ACCOUNT_PRIVACY_HELPER}</Typography>
+    <Card>
+      <CardHeader title="Privacy and Safety" />
+      <CardContent>
+        <Grid container direction="column" spacing={4}>
+          <Grid item>
+            <Typography variant="h6">{ACCOUNT_PRIVACY_HEADER}</Typography>
+            <Typography variant="subtitle2">{ACCOUNT_PRIVACY_HELPER}</Typography>
 
-        <FormControlLabel
-          label="Private Account"
-          labelPlacement="end"
-          control={
-            <Checkbox
-              color="primary"
-              name="accountPrivate"
-              checked={lAccountPrivate}
-              onChange={handleAccountPrivateChange}
+            <FormControlLabel
+              label="Private Account"
+              labelPlacement="end"
+              control={
+                <Checkbox
+                  color="primary"
+                  name="accountPrivate"
+                  checked={lAccountPrivate}
+                  onChange={handleAccountPrivateChange}
+                />
+              }
             />
-          }
-        />
-      </Grid>
+          </Grid>
 
-      <Divider />
-      
-      <Grid item>
-        <Typography variant="h6">{ACTIVITY_STATUS_HEADER}</Typography>
-        <Typography variant="subtitle2">{ACTIVITY_STATUS_HELPER}</Typography>
+          <Divider />
 
-        <FormGroup>
-          <FormControlLabel
-            label="Show Activity Status"
-            labelPlacement="end"
-            control={
-              <Checkbox
-                color="primary"
-                name="showActivity"
-                checked={lActivityStatus}
-                onChange={handleActivityStatusChange}
+          <Grid item>
+            <Typography variant="h6">{ACTIVITY_STATUS_HEADER}</Typography>
+            <Typography variant="subtitle2">{ACTIVITY_STATUS_HELPER}</Typography>
+
+            <FormGroup>
+              <FormControlLabel
+                label="Show Activity Status"
+                labelPlacement="end"
+                control={
+                  <Checkbox
+                    color="primary"
+                    name="showActivity"
+                    checked={lActivityStatus}
+                    onChange={handleActivityStatusChange}
+                  />
+                }
               />
-            }
-          />
-        </FormGroup>
-      </Grid>
-      
-      <Divider />
-      
-      <Grid item>
-        <Typography variant="h6">{COMMENTS_FILTERING_HEADER}</Typography>
-        <Typography variant="subtitle2">{COMMENTS_FILTERING_HELPER}</Typography>
+            </FormGroup>
+          </Grid>
 
-        <FormGroup>
-          <FormControlLabel
-            label="Hide Offensive Comments"
-            labelPlacement="end"
-            control={
-              <Checkbox
-                color="primary"
-                name="offensiveCommentsHidden"
-                checked={lOffensiveComments}
-                onChange={handleOffensiveCommentsChange}
+          <Divider />
+
+          <Grid item>
+            <Typography variant="h6">{COMMENTS_FILTERING_HEADER}</Typography>
+            <Typography variant="subtitle2">{COMMENTS_FILTERING_HELPER}</Typography>
+
+            <FormGroup>
+              <FormControlLabel
+                label="Hide Offensive Comments"
+                labelPlacement="end"
+                control={
+                  <Checkbox
+                    color="primary"
+                    name="offensiveCommentsHidden"
+                    checked={lOffensiveComments}
+                    onChange={handleOffensiveCommentsChange}
+                  />
+                }
               />
-            }
-          />
-        </FormGroup>
-      </Grid>
-      
-      <Divider />
-      
-      <Grid item>
-        <Typography variant="h6">{BLOCKED_ACCOUNTS_HEADER}</Typography>
-        <Typography variant="subtitle2">{BLOCKED_ACCOUNTS_HELPER}</Typography>
+            </FormGroup>
+          </Grid>
 
-        <Button href={SETTINGS_BLACK_LIST_ROUTE}>Blocked Accounts</Button>
-      </Grid>
-      
-      <Divider />
-      
-      <Grid item>
-        <Typography variant="h6">{RESET_PASSWORD_HEADER}</Typography>
-        <Typography variant="subtitle2">{RESET_PASSWORD_HELPER}</Typography>
+          <Divider />
 
-        <Button color="secondary" disabled={loading} onClick={onPasswordReset}>
-          Reset Password
-        </Button>
-      </Grid>
-      
-      <Divider />
-      
-      <Grid item>
-        <Typography variant="h6">{DELETE_ACCOUNT_HEADER}</Typography>
-        <Typography variant="subtitle2">{DELETE_ACCOUNT_HELPER}</Typography>
+          <Grid item>
+            <Typography variant="h6">{BLOCKED_ACCOUNTS_HEADER}</Typography>
+            <Typography variant="subtitle2">{BLOCKED_ACCOUNTS_HELPER}</Typography>
 
-        <Button color="secondary" disabled={loading} onClick={onAccountDelete}>
-          Delete your Account
-        </Button>
-      </Grid>
-    </Grid>
+            <Button href={SETTINGS_BLACK_LIST_ROUTE}>Blocked Accounts</Button>
+          </Grid>
+
+          <Divider />
+
+          <Grid item>
+            <Typography variant="h6">{RESET_PASSWORD_HEADER}</Typography>
+            <Typography variant="subtitle2">{RESET_PASSWORD_HELPER}</Typography>
+
+            <Button color="secondary" disabled={loading} onClick={onPasswordReset}>
+              Reset Password
+            </Button>
+          </Grid>
+
+          <Divider />
+
+          <Grid item>
+            <Typography variant="h6">{DELETE_ACCOUNT_HEADER}</Typography>
+            <Typography variant="subtitle2">{DELETE_ACCOUNT_HELPER}</Typography>
+
+            <Button color="secondary" disabled={loading} onClick={onAccountDelete}>
+              Delete your Account
+            </Button>
+          </Grid>
+        </Grid>
+      </CardContent>
+    </Card>
   );
 }
 

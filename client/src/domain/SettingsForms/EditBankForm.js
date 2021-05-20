@@ -3,11 +3,11 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
 
-import { Grid, TextField, Box, Button, MenuItem } from "@material-ui/core";
+import { Grid, TextField, Box, Button, MenuItem, Card, CardContent, CardHeader } from "@material-ui/core";
 
 import * as yup from "yup";
 
-import { EMPTY_VALUE_ERROR, VALUE_MIN_LENGTH, VALUE_MAX_LENGTH } from "../../constants/form_validations";
+import { VALUE_MAX_LENGTH } from "../../constants/form_validations";
 
 const ACCTOUNT_NUMBER_INPUT_ID = "accountNumber";
 const ROUTING_NUMBER_INPUT_ID = "routingNumber";
@@ -16,17 +16,17 @@ const TYPE_INPUT_ID = "type";
 const schema = yup.object().shape({
   [ACCTOUNT_NUMBER_INPUT_ID]: yup
     .string()
-    .required(EMPTY_VALUE_ERROR)
-    .max(16, VALUE_MAX_LENGTH(16)),
+    .max(16, VALUE_MAX_LENGTH(16))
+    .required(),
 
   [ROUTING_NUMBER_INPUT_ID]: yup
     .string()
-    .required(EMPTY_VALUE_ERROR)
-    .max(16, VALUE_MAX_LENGTH(16)),
+    .max(16, VALUE_MAX_LENGTH(16))
+    .required(),
   
   [TYPE_INPUT_ID]: yup
     .number()
-    .required(EMPTY_VALUE_ERROR),
+    .required(),
 });
 
 function EditBankForm({
@@ -49,9 +49,10 @@ function EditBankForm({
   });
 
   return (
-    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-      <Box mb={3}>
-        <Grid container spacing={2} direction="column">
+    <Card>
+      <CardHeader title="Banking" />
+      <CardContent>
+        <Grid container component="form" spacing={2} direction="column" onSubmit={handleSubmit(onSubmit)}>
           <Grid item>
             <Controller
               name={ACCTOUNT_NUMBER_INPUT_ID}
@@ -128,13 +129,14 @@ function EditBankForm({
               )}
             />
           </Grid>
+          <Grid item>
+            <Button fullWidth type="submit" variant="contained" color="primary" disableElevation disabled={isFetching}>
+              Update
+            </Button>
+          </Grid>
         </Grid>
-      </Box>
-
-      <Button type="submit" variant="contained" color="primary" disableElevation disabled={isFetching}>
-        Update
-      </Button>
-    </Box>
+      </CardContent>
+    </Card>
   );
 }
 
