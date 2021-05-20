@@ -5,7 +5,7 @@ import ApiContext from "../../context/ApiContext";
 import * as settingsActions from "../../store/actions/settings";
 import { EditCardForm } from "../../domain/SettingsForms";
 
-function EditCardSettings({data, isFetching, getCard, updateCard }) {
+function EditCardSettings({ data, isFetching, getCard, updateCard }) {
   const apiClient = useContext(ApiContext);
 
   useEffect(() => {
@@ -17,20 +17,20 @@ function EditCardSettings({data, isFetching, getCard, updateCard }) {
       await updateCard(apiClient, data);
     })();
   };
-  return (!isFetching && <EditCardForm {...data} onSubmit={handleEditCardSubmit} /> );
+  return !isFetching && <EditCardForm {...data} onSubmit={handleEditCardSubmit} />;
 }
 
 function mapStateToProps(state) {
   return {
     data: state.settings.data,
-    isFetching: state.settings.isFetching
+    isFetching: state.settings.isFetching,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     getCard: (api) => dispatch(settingsActions.getCard(api)),
-    updateCard: (api, data) => dispatch(settingsActions.updateCard(api, data))
+    updateCard: (api, data) => dispatch(settingsActions.updateCard(api, data)),
   };
 }
 

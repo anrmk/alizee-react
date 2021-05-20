@@ -81,7 +81,7 @@ import { resetSettings } from "../../store/actions/settings";
    {
      index: 6,
      name: "privacy-security",
-     title: "Privacy and Security",
+     title: "Privacy and Safity",
      route: SETTINGS_PRIVACY_SECURITY_ROUTE,
    },
  ];
@@ -113,7 +113,7 @@ function Settings() {
 
   return (
     <Container>
-      <SlidingViews mobileOnly currentState={currentSlidingViewsState} firstSize={4} secondSize={8}>
+      <SlidingViews mobileOnly currentState={currentSlidingViewsState} firstSize={3} secondSize={9}>
         <Tabs
           orientation="vertical"
           variant="fullWidth"
