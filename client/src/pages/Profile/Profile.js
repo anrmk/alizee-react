@@ -118,7 +118,7 @@ function Profile(props) {
         {
           open: true,
           onMainClick: handleCoverSave,
-          tempData: { file, coverUrl }
+          state: { file, coverUrl }
         },
         {
           src: coverUrl,

@@ -17,7 +17,7 @@ export default function usePaymentDialog({ isFetching, onPayment }) {
   );
 
   const handleDialogToggle = useCallback(async (data) => {
-    dialog.toggle(dialogs[PAYMENT_DIALOG_TYPE]({ onMainClick: handlePayment, tempData: data }, data));
+    dialog.toggle(dialogs[PAYMENT_DIALOG_TYPE]({ onMainClick: handlePayment, state: data }, data));
   }, []);
 
   return {

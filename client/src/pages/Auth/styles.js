@@ -10,6 +10,9 @@ const useStyles = makeStyles((_theme) => {
       alignItems: "center",
       height: "100vh",
     },
+    grid: {
+      marginTop: "110px"
+    }
   })
 });
 

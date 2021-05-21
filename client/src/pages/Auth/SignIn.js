@@ -68,7 +68,7 @@ function SignIn(props) {
 
   return (
     <Container className={classes.container}>
-      <Grid container direction="column">
+      <Grid className={classes.grid} container direction="column">
         <Grid item>
           <Grid container justify="center" alignItems="center">
             <Hidden smDown>

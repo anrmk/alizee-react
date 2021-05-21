@@ -5,6 +5,7 @@ import LockOpenOutlinedIcon from "@material-ui/icons/LockOpenOutlined";
 import CommentOutlinedIcon from "@material-ui/icons/SpeakerNotesOutlined";
 import CommentBlockOutlinedIcon from "@material-ui/icons/SpeakerNotesOffOutlined";
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary";
+import TagPeopleIcon from '@material-ui/icons/GroupAdd';
 
 import { Box, IconButton, Tooltip } from "@material-ui/core";
 
@@ -27,8 +28,10 @@ function CreateTools({
   onlyMedia,
   isPrivate,
   isCommentable,
+  isTaggable,
   commentBtnName = "comment",
   privateBtnName = "private",
+  tagBtnName = "taggedUsers",
 
   onChange
 }) {
@@ -38,6 +41,13 @@ function CreateTools({
     <Box display="flex" alignItems="flex-start">
       {!onlyMedia && (
         <>
+          {isTaggable && (
+            <Tooltip title="Tag someone">
+              <IconButton onClick={onChange} name={tagBtnName}>
+                  <TagPeopleIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+          )}
           <Tooltip title="Set Post to Private">
             <IconButton onClick={onChange} name={privateBtnName}>
               {isPrivate ? (

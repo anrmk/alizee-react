@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 import clsx from "clsx";
 
 import {
@@ -24,6 +24,7 @@ import DialogContext, {
   TOGGLE_WITH_STACK_MODAL,
   UPDATE_MODAL,
   TOGGLE_MODAL,
+  STACK_BACK
 } from "../../context/DialogContext";
 
 import useStyle from "./styles";
@@ -45,17 +46,38 @@ export default function DialogProvider({ children }) {
           ...state,
           ...action.payload,
         };
-      case TOGGLE_WITH_STACK_MODAL:
+      case TOGGLE_WITH_STACK_MODAL: {
         const { stack } = state;
         return {
           ...state,
           ...action.payload,
           stack: [...stack, action.payload],
         };
+      }
+      case STACK_BACK: {
+        const { stack } = state;
+        if (!stack.length) return;
+        const prevDialogData = stack[stack.length - 2];
+
+        return {
+          ...state,
+          ...prevDialogData,
+          stack: stack.slice(0, stack.length - 1)
+        };
+      }
       default:
         return state;
     }
   }, initialContext);
+
+  useEffect(() => {
+    if (!dialogOptions.open) {
+      dispatch({
+        type: UPDATE_MODAL,
+        payload: { ...initialContext },
+      });
+    }
+  }, [dialogOptions.open]);
 
   const handleCloseClick = () => {
     dispatch({
@@ -65,22 +87,16 @@ export default function DialogProvider({ children }) {
     dialogOptions.onCloseClick && dialogOptions.onCloseClick();
   };
 
-  const handleMainClick = () => {
-    dialogOptions.onMainClick && dialogOptions.onMainClick(dialogOptions.tempData);
+  const handleMainClick = (e) => {
+    dialogOptions.onMainClick && dialogOptions.onMainClick(dialogOptions.state, e);
   };
 
-  const handleBackClick = () => {
-    const { stack } = dialogOptions;
-    if (!stack.length) return;
-    const prevDialogData = stack[stack.length - 2];
-
-    dispatch({
-      type: UPDATE_MODAL,
-      payload: {
-        ...prevDialogData,
-        stack: stack.slice(0, stack.length - 1),
-      },
-    });
+  const handleBackClick = (e) => {
+    if (dialogOptions.onBackClick) {
+      dialogOptions.onBackClick(dialogOptions.state, e);
+    } else {
+      dispatch({ type: STACK_BACK });
+    }
   };
 
   return (

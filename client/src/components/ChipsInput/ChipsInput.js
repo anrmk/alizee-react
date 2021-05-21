@@ -4,6 +4,8 @@ import { Box, Chip, TextField, Typography } from "@material-ui/core";
 
 import useStyles from "./styles";
 
+const BACKSPACE_KEY_CODE = 8;
+
 function ChipsInput({
   items = [],
   value = "",
@@ -27,7 +29,9 @@ function ChipsInput({
   }, [localItems]);
 
   useEffect(() => {
-    onError && onError(localError);
+    if (localError) {
+      onError && onError(localError);
+    }
   }, [localError]);
 
   const handleKeyDown = (evt) => {
@@ -40,6 +44,9 @@ function ChipsInput({
         setLocalItems([...localItems, val]);
         setLocalValue("");
       }
+    } else if (evt.keyCode === BACKSPACE_KEY_CODE && !rest?.inputProps?.readOnly) {
+      !localValue.length && localItems.length > 0 &&
+        setLocalItems(prev => prev.slice(0, prev.length-1));
     }
   };
 
@@ -84,7 +91,7 @@ function ChipsInput({
     return localItems.includes(email);
   };
 
-  const chipComponents = localItems.map((itemId) => (
+  const renderChips = localItems && localItems.map((itemId) => (
     <Chip
       className={clsx(classes.chip, classChipName)}
       key={itemId}
@@ -99,18 +106,19 @@ function ChipsInput({
         {...rest}
         variant="outlined"
         fullWidth
-        className={classes.textField}
         type="text"
         value={localValue}
         error={!!localError}
         helperText={localError}
         inputProps={{
           autoComplete: "off",
+          ...rest?.inputProps
         }}
         InputProps={{
-          startAdornment: <>{chipComponents}</>,
+          startAdornment: <>{renderChips}</>,
           className: classes.inputBase,
           classes: { input: classes.input },
+          ...rest?.InputProps
         }}
         onChange={handleChange}
         onKeyDown={handleKeyDown}

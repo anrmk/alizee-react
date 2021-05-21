@@ -3,13 +3,14 @@ import React from "react";
 export const UPDATE_MODAL = "UPDATE_MODAL";
 export const TOGGLE_MODAL = "TOGGLE_MODAL";
 export const TOGGLE_WITH_STACK_MODAL = "TOGGLE_WITH_STACK_MODAL";
+export const STACK_BACK = "STACK_BACK";
 
 export const initialContext = {
 	open: false,
 	title: null,
 	content: null,
 	actionsComponent: null,
-	tempData: null,
+	state: null,
 	loading: false,
 	dialogProps: null,
 	mainBtnProps: null,
@@ -20,7 +21,8 @@ export const initialContext = {
 	asModal: false,
 
 	onCloseClick: null,
-	onMainClick: null
+	onMainClick: null,
+	onBackClick: null
 };
 
 const DialogContext = React.createContext(initialContext);

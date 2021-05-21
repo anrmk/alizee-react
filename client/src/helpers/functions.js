@@ -357,6 +357,10 @@ export function isEmptyObject(obj) {
   return JSON.stringify(obj) === JSON.stringify({});
 }
 
+export function isSameObjects(obj1, obj2) {
+  return JSON.stringify(obj1) === JSON.stringify(obj2);
+}
+
 /**
  * To control how many times we allow a function to be executed over time
  * @fn {function}

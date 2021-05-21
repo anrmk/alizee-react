@@ -6,7 +6,8 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "20px"
   },
   inputText: {
-    flex: "1 1 auto"
+    width: "100%",
+    marginBottom: theme.spacing(1)
   },
   media: {
     display: "block",

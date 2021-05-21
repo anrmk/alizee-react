@@ -3,10 +3,11 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import { Typography, FormControl, TextField, InputAdornment, Box } from "@material-ui/core";
+import { Typography, FormControl, TextField, InputAdornment, Box, IconButton } from "@material-ui/core";
 
 import CreateTools from "./CreateTools";
 import GridGalleryHorizontal from "../../GridGalleryHorizontal/GridGalleryHorizontal";
+import ChipsInput from "../../ChipsInput";
 
 import { POST_AMOUNT_TEXT_HELPER } from "../../../constants/form_validations";
 
@@ -15,8 +16,9 @@ import useStyles from "./styles";
 const MEDIA_ID = "medias";
 const DESCRIPTION_ID = "description";
 const COMMENTABLE_ID = "commentable";
-const PRIVATE_ID = "private";
+const PRIVATE_ID = "mPrivate";
 const AMOUNT_ID = "amount";
+const TAGGED_USERS_ID = "taggedUsers";
 
 const schema = yup.object().shape({
   [MEDIA_ID]: yup
@@ -35,33 +37,49 @@ const schema = yup.object().shape({
     .number()
     .typeError("Must be a number")
     .min(0)
+    .notRequired(),
+  [TAGGED_USERS_ID]: yup
+    .array()
+    .nullable()
     .notRequired()
 });
 
 export default function CreatePost({
   formId,
+  medias = [],
+  description = "",
+  commentable = true,
+  mPrivate = false,
+  amount = 0,
+  taggedUsers = [],
 
+  onTagUsersClick,
   onSubmit
 }) {
   const classes = useStyles();
-  const { errors, register, setValue, watch, control, handleSubmit } = useForm({
+  const { errors, register, setValue, getValues, watch, control, handleSubmit } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      [MEDIA_ID]: [],
-      [DESCRIPTION_ID]: "",
-      [COMMENTABLE_ID]: true,
-      [PRIVATE_ID]: false,
-      [AMOUNT_ID]: 0
+      [MEDIA_ID]: medias,
+      [DESCRIPTION_ID]: description,
+      [COMMENTABLE_ID]: commentable,
+      [PRIVATE_ID]: mPrivate,
+      [AMOUNT_ID]: amount,
+      [TAGGED_USERS_ID]: taggedUsers
     }
   });
   const mediaWatcher = watch(MEDIA_ID, []);
   const commentableWatcher = watch(COMMENTABLE_ID);
   const privateWatcher = watch(PRIVATE_ID);
+  const taggedUsersWatcher = watch(TAGGED_USERS_ID);
+  
+  console.log("DATA", mPrivate)
 
   useEffect(() => {
     register({ name: MEDIA_ID });
     register({ name: COMMENTABLE_ID });
     register({ name: PRIVATE_ID });
+    register({ name: TAGGED_USERS_ID });
 
     return () => {
       mediaWatcher.forEach(file => URL.revokeObjectURL(file.previewUrl));
@@ -69,9 +87,19 @@ export default function CreatePost({
     }
   }, [])
 
+  const handleTagUsersClick = () => {
+    onTagUsersClick && onTagUsersClick(getValues());
+  }
+
   const handleFormSubmit = (data) => {
     onSubmit && onSubmit(data);
   };
+
+  const handleTagUsersChange = (data) => {
+    const mappedUsersNamesToKeys = taggedUsers.reduce((acc, curr) => ({ ...acc, [curr.name]: { ...curr } }), {});
+    const currentData = data.reduce((acc, curr) => ([...acc, { ...mappedUsersNamesToKeys[curr] }]), []);
+    setValue(TAGGED_USERS_ID, currentData);
+  }
 
   const handleToolsChange = (e) => {
     var target = e.currentTarget;
@@ -81,6 +109,8 @@ export default function CreatePost({
           setValue(target.name, !commentableWatcher);
         } else if (target.name === PRIVATE_ID) {
           setValue(target.name, !privateWatcher);
+        } else if (target.name === TAGGED_USERS_ID) {
+          handleTagUsersClick();
         }
         break;
       case "file":
@@ -94,6 +124,10 @@ export default function CreatePost({
         break;
     }
   };
+
+  const getTransformedItems = (items) => {
+    return items.map(item => typeof item === "string" ? item : item.name);
+  }
 
   return (
     <form id={formId} className={classes.root} onSubmit={handleSubmit(handleFormSubmit)} autoComplete="off">
@@ -127,7 +161,6 @@ export default function CreatePost({
             render={({ onChange, onBlur, value }) => (
               <TextField 
                 fullWidth
-                size="small"
                 placeholder="Amount"
                 variant="outlined"
                 inputMode="numeric"
@@ -142,7 +175,25 @@ export default function CreatePost({
                 }} />
             )} />
         </FormControl>
+
+        {taggedUsersWatcher.length > 0 && (
+          <FormControl className={classes.inputText} variant="filled">
+            <ChipsInput
+              fullWidth
+              inputProps={{ readOnly: true }}
+              placeholder="Tagged People"
+              id={TAGGED_USERS_ID}
+              name={TAGGED_USERS_ID}
+              max={3}
+              items={getTransformedItems(taggedUsersWatcher)}
+              // filters={chipsInputFilters}
+              onChange={handleTagUsersChange}
+            />
+          </FormControl>
+        )}
+
         <CreateTools
+          isTaggable
           privateBtnName={PRIVATE_ID}
           commentBtnName={COMMENTABLE_ID}
           isPrivate={privateWatcher}

@@ -27,12 +27,12 @@ export default function useFollowDialog() {
   const handleDialogToggle = useCallback((data) => {
     const { isFollow, subscriptionPrice } = data;
     if (!isFollow) {
-      dialog.toggle(dialogs[FOLLOW_DIALOG_TYPE]({ onMainClick: handleFollowBuy, tempData: { ...data }}, { user: data, amount: subscriptionPrice }));
+      dialog.toggle(dialogs[FOLLOW_DIALOG_TYPE]({ onMainClick: handleFollowBuy, state: { ...data }}, { user: data, amount: subscriptionPrice }));
     } else {
       const confirmText = "Are you sure that you want to unsubscribe from this modal?";
       dialog.toggle(dialogs[CONFIRM_DIALOG_TYPE]({
         onMainClick: handleFollowBuy,
-        tempData: { ...data },
+        state: { ...data },
         title: "Unfollow"
       },
       {

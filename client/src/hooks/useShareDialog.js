@@ -1,13 +1,13 @@
-import { useState, useEffect, useContext, useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useState, useContext } from "react";
+import { useDispatch } from "react-redux";
 
 import ApiContext from "../context/ApiContext";
 import * as actionChat from "../store/actions/chat";
 import { getUrlTo } from "../helpers/functions";
-import dialogs, { FOLLOWERS_LIST_DIALOG_TYPE } from "../constants/dialogs";
 import { POST_MESSAGE_TYPE, STORY_MESSAGE_TYPE, PROFILE_MESSAGE_TYPE } from "../constants/message_types";
 import { POST_ID_ROUTE, PROFILE_USERNAME_ROUTE, STORIES_ROUTE } from "../constants/routes";
 import useDialog from "./useDialog";
+import useFollowingsDialog from "./useFollowingsDialog";
 
 export const SHARE_DIALOG_STORY_TYPE = "story";
 export const SHARE_DIALOG_PROFILE_TYPE = "profile";
@@ -19,28 +19,16 @@ export default function useShareDialog({
 }) {
   const apiClient = useContext(ApiContext);
   const dispatch = useDispatch();
-  const { loading, followersList } = useSelector(state => ({ 
-    loading: state.chat.isFetching,
-    followersList: state.chat.data
-  }));
   const dialog = useDialog();
-  const [selectedChats, setSelectedChats] = useState([]);
   const [currentShareId, setCurrentShareId] = useState(null);
   const [currentShareUsername, setCurrentShareUsername] = useState(null);
   const [toggleType] = useState(withStack ? "toggleWithStack" : "toggle");
-
-  useEffect(() => {
-    if (followersList.length) {
-      updateParams();
-    }
-  }, [followersList, selectedChats]);
+  const followingsDialog = useFollowingsDialog();
 
   const handleOpenClick = async ({ id, userName }) => {
-    dialog[toggleType](dialogs[FOLLOWERS_LIST_DIALOG_TYPE]({
-      loading: true
-    }));
-
-    !loading && await dispatch(actionChat.getRooms(apiClient));
+    followingsDialog.toggle(toggleType, {
+      onMainClick: handleShareDialogBtnClick
+    });
 
     id && setCurrentShareId(id);
     userName && setCurrentShareUsername(userName);
@@ -64,26 +52,13 @@ export default function useShareDialog({
       messageType = POST_MESSAGE_TYPE;
     } else return;
 
-    !loading &&
-      await dispatch(actionChat.shareMessage(apiClient, {
-        followersUsernames,
-        message: url,
-        type: messageType
-      }));
+    await dispatch(actionChat.shareMessage(apiClient, {
+      followersUsernames,
+      message: url,
+      type: messageType
+    }));
     dialog[toggleType]({ open: false });
   }
-
-  const updateParams = useCallback(() => {
-    dialog.setParams(dialogs[FOLLOWERS_LIST_DIALOG_TYPE]({
-      loading: false,
-      tempData: selectedChats,
-      onMainClick: handleShareDialogBtnClick
-    }, {
-      multiple: true,
-      items: followersList,
-      onItemSelect: (selected) => setSelectedChats(selected)
-    }));
-  }, [followersList, selectedChats])
 
   return {
     toggle: handleOpenClick

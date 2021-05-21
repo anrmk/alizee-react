@@ -62,10 +62,11 @@ export function createPost(api, postData) {
           amount: (postData.amount && Number(postData.amount)) || 0,
           description: postData.description,
           isCommentable: postData.commentable,
-          kind: postData.private ? POST_PRIVATE : POST_PUBLIC,
+          kind: postData.mprivate ? POST_PRIVATE : POST_PUBLIC,
           latitude: postData?.latitude,
           longitude: postData?.longitude,
           media: media,
+          userTags: postData.taggedUsers
         })
         .query(url);
 

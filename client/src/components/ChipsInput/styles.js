@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     minWidth: "50px",
-    padding: ({ localItems }) => localItems.length === 0 ? "6px 14px 19px 0px" : "0 14px 12px 0",
+    padding: ({ localItems }) => localItems && localItems.length === 0 ? "6px 14px 19px 0px" : "0 14px 12px 0",
     display: "inline-block",
     textOverflow: "ellipsis",
     overflow: "hidden",

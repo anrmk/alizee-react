@@ -27,7 +27,7 @@ export default function useCommentDialog() {
     dialog.toggle(dialogs[AGREE_DIALOG_TYPE]({
       title: t("DeleteCommentDialogTitle"),
       onMainClick: handleDeleteConfirmClick,
-      tempData: { commentId }
+      state: { commentId }
     }, {
       content: t("DeleteCommentDialogDescription")
     }));

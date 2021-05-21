@@ -46,7 +46,7 @@ function SocialButtons({
         onClick={() => onSuccess(null, SOCIAL_TWITTER)}
         startIcon={<Avatar src={TwitterIcon} className={classes.googleIcon} />}
       >
-        SIGN IN WIWH TWITTER
+        SIGN IN WITH TWITTER
       </Button>
     </Box>
   );
