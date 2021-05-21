@@ -45,6 +45,7 @@ export default function usePostDialog() {
   const handleTagUsersClick = useCallback((data) => {
     formData = data;
     followingsDialog.toggle(true, {
+      title: "Tag people",
       mainBtnText: "Add",
       onMainClick: handleAddTaggedUsersClick,
       onBackClick: () => handleBackClick(formData.taggedUsers)

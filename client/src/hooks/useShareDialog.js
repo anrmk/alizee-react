@@ -27,7 +27,10 @@ export default function useShareDialog({
 
   const handleOpenClick = async ({ id, userName }) => {
     followingsDialog.toggle(toggleType, {
+      title: "Share To Chat",
       onMainClick: handleShareDialogBtnClick
+    }, {
+      preSelected: []
     });
 
     id && setCurrentShareId(id);
