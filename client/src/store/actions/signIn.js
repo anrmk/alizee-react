@@ -134,7 +134,7 @@ export function signInSocial(api, socialType, opts) {
 
       dispatch(receiveSignIn(data, true));
     } catch (e) {
-      dispatch(errorSignIn(e.message, e.response?.status || 500));
+      dispatch(errorSignIn(e.response?.data || e.message, e.response?.status || 500));
     }
   };
 }

@@ -1,12 +1,12 @@
-import { generateUrl } from '../../helpers/functions';
+import { generateUrl } from "../../helpers/functions";
 
-export const SIGNUP_REQUEST = 'SIGNUP_REQUEST';
-export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
-export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
+export const SIGNUP_REQUEST = "SIGNUP_REQUEST";
+export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
+export const SIGNUP_FAILURE = "SIGNUP_FAILURE";
 
-export const SIGNUP_SOCIAL_REQUEST = 'SIGNUP_SOCIAL_REQUEST';
-export const SIGNUP_SOCIAL_SUCCESS = 'SIGNUP_SOCIAL_SUCCESS';
-export const SIGNUP_SOCIAL_FAILURE = 'SIGNUP_SOCIAL_FAILURE';
+export const SIGNUP_SOCIAL_REQUEST = "SIGNUP_SOCIAL_REQUEST";
+export const SIGNUP_SOCIAL_SUCCESS = "SIGNUP_SOCIAL_SUCCESS";
+export const SIGNUP_SOCIAL_FAILURE = "SIGNUP_SOCIAL_FAILURE";
 
 function requestSignUp() {
   return {
@@ -14,9 +14,9 @@ function requestSignUp() {
     payload: {
       isFetching: true,
       isSignUp: false,
-      errorMessage: ''
-    }
-  }
+      errorMessage: "",
+    },
+  };
 }
 
 function receiveSignUp(userInfo) {
@@ -25,10 +25,10 @@ function receiveSignUp(userInfo) {
     payload: {
       isFetching: false,
       isSignUp: true,
-      errorMessage: '',
-      userInfo
-    }
-  }
+      errorMessage: "",
+      userInfo,
+    },
+  };
 }
 
 function errorSignUp(message) {
@@ -37,13 +37,13 @@ function errorSignUp(message) {
     payload: {
       isFetching: false,
       isSignUp: false,
-      errorMessage: message
-    }
-  }
+      errorMessage: message,
+    },
+  };
 }
 
 export function signUpUser(api, creds) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(requestSignUp(creds));
 
     const url = generateUrl("signUp");
@@ -61,7 +61,7 @@ export function signUpUser(api, creds) {
 
       dispatch(receiveSignUp(data));
     } catch (e) {
-      dispatch(errorSignUp(e.message, e.response?.status || 500));
+      dispatch(errorSignUp(e.response?.data || e.message, e.response?.status || 500));
     }
-  }
+  };
 }
