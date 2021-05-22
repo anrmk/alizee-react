@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core";
@@ -8,6 +8,9 @@ import AlertContainer from "../components/AlertContainer"
 import { confirmEmail } from "../store/actions/confirmEmail";
 import StatusError from "../components/StatusError";
 import { ChangePasswordForm } from "../domain/PasswordForms";
+import { signOutUser } from "../store/actions/signIn";
+import { getUrlParams } from "../helpers/functions";
+import { HOME_ROUTE } from "../constants/routes";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -18,13 +21,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function EmailVerify({ signIn, confirmingEmail, confirmEmail }) {
+function EmailVerify({ signIn, confirmingEmail, confirmEmail, signOutUser }) {
   const classes = useStyles();
   const apiClient = useContext(ApiContext);
   const [alertOpen, setAlertOpen] = useState(false);
+  const { token, email } = getUrlParams();
 
-  if (signIn.isVerified) {
-    return <Redirect to="/" />
+  useEffect(() => { signOutUser() }, []);
+
+  if (confirmingEmail.isConfirmed || !token || !email) {
+    return <Redirect to={HOME_ROUTE} />
   }
 
   if (signIn.errorMessage) {
@@ -36,11 +42,6 @@ function EmailVerify({ signIn, confirmingEmail, confirmEmail }) {
   }
 
   const handleSubmit = async (password) => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const email = urlParams.get("email");
-    const token = urlParams.get("token");
-
     if (email && 
         token && 
         !confirmingEmail.isFetching &&
@@ -92,7 +93,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    confirmEmail: (api, creds) => dispatch(confirmEmail(api, creds))
+    confirmEmail: (api, creds) => dispatch(confirmEmail(api, creds)),
+    signOutUser: () => dispatch(signOutUser())
   }
 }
 

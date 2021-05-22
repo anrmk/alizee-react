@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
-import { Container, Grid, Hidden } from "@material-ui/core";
+import { Container, Box, Grid, Hidden } from "@material-ui/core";
 import { SignUpForm, Slider } from "../../domain/AuthForms";
 import Footer from "../../components/Footer";
 
@@ -55,31 +55,27 @@ function SignUp(props) {
         reCaptchaKey={process.env.REACT_APP_RECAPTCHA_KEY}
         scriptProps={{ async: true, defer: true, appendTo: "body" }}
       >
-        <Grid container direction="column">
-          <Grid item>
-            <Grid container justify="center" alignItems="center">
-              <Hidden smDown>
-                <Grid item sm={6}>
-                  <Slider />
-                </Grid>
-              </Hidden>
-
-              <Grid item md={4} sm={6} xs={12}>
-                <SignUpForm
-                  error={errorMessage}
-                  onSubmit={handleFormSubmit}
-                  onSocialRequest={handleSocialRequest}
-                  onSocialSuccess={handleSocialSuccess}
-                  onSocialFailure={handleSocialFailure}
-                />
-              </Grid>
+        <Grid container className={classes.grid}>
+          <Hidden smDown>
+            <Grid item sm={6}>
+              <Slider />
             </Grid>
-          </Grid>
+          </Hidden>
 
-          <Grid item>
-            <Footer open={true} />
+          <Grid item md={4} sm={6} xs={12}>
+            <SignUpForm
+              error={errorMessage}
+              onSubmit={handleFormSubmit}
+              onSocialRequest={handleSocialRequest}
+              onSocialSuccess={handleSocialSuccess}
+              onSocialFailure={handleSocialFailure}
+            />
           </Grid>
         </Grid>
+
+      <Box marginTop="auto">
+        <Footer open={true} />
+      </Box>
       </GoogleReCaptchaProvider>
     </Container>
   );

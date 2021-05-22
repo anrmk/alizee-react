@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { SIGN_IN_ROUTE } from "../../constants/routes";
 
@@ -6,9 +6,21 @@ import { Box, Card, CardContent, Divider, Typography, Button, Grid } from "@mate
 import useStyles from "./styles";
 import MailIcon from "@material-ui/icons/Mail";
 
+const RESEND_BTN_DISABLE_TIME = 30000;
+
 function EmailCard({ onResendBtnClick }) {
   const classes = useStyles();
   const history = useHistory();
+  const [resendBtnDisable, setResendBtnDisable] = useState(false);
+
+  const handleResendBtnClick = (e) => {
+    if (resendBtnDisable) return;
+
+    setResendBtnDisable(true)
+    setTimeout(() => setResendBtnDisable(false), RESEND_BTN_DISABLE_TIME);
+
+    onResendBtnClick && onResendBtnClick(e);
+  }
 
   return (
     <Card>
@@ -33,13 +45,17 @@ function EmailCard({ onResendBtnClick }) {
             <Button
               fullWidth
               disableElevation
+              disabled={resendBtnDisable}
               size="large"
               color="primary"
               variant="contained"
-              onClick={onResendBtnClick}
+              onClick={handleResendBtnClick}
             >
               Resend confirmation link
             </Button>
+            <Box width="100%" textAlign="center">
+              {resendBtnDisable && <Typography variant="caption" color="textSecondary">You can resend the link in 30 seconds</Typography>}
+            </Box>
           </Grid>
           <Grid item>
             <Button

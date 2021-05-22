@@ -9,7 +9,7 @@ import useDialog from "./useDialog";
 export default function useFollowingsDialog() {
   const apiClient = useContext(ApiContext);
   const dispatch = useDispatch();
-  const { loading, followersList } = useSelector(state => ({ 
+  const { loading, followersList } = useSelector(state => ({
     loading: state.chat.isFetching,
     followersList: state.chat.data
   }));

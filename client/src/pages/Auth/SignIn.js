@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { Container, Grid, Hidden } from "@material-ui/core";
+import { Container, Grid, Box, Hidden } from "@material-ui/core";
 import { SignInForm, Slider } from "../../domain/AuthForms";
 import Footer from "../../components/Footer";
 
@@ -68,31 +68,27 @@ function SignIn(props) {
 
   return (
     <Container className={classes.container}>
-      <Grid className={classes.grid} container direction="column">
-        <Grid item>
-          <Grid container justify="center" alignItems="center">
-            <Hidden smDown>
-              <Grid item sm={6}>
-                <Slider />
-              </Grid>
-            </Hidden>
-
-            <Grid item md={4} sm={6} xs={12}>
-              <SignInForm
-                error={errorMessage}
-                onSubmit={handleFormSubmit}
-                onSocialRequest={handleSocialRequest}
-                onSocialSuccess={handleSocialSuccess}
-                onSocialFailure={handleSocialFailure}
-              />
-            </Grid>
+      <Grid container className={classes.grid}>
+        <Hidden smDown>
+          <Grid item sm={6}>
+            <Slider />
           </Grid>
-        </Grid>
+        </Hidden>
 
-        <Grid item>
-          <Footer open={true} />
+        <Grid item md={4} sm={6} xs={12}>
+          <SignInForm
+            error={errorMessage}
+            onSubmit={handleFormSubmit}
+            onSocialRequest={handleSocialRequest}
+            onSocialSuccess={handleSocialSuccess}
+            onSocialFailure={handleSocialFailure}
+          />
         </Grid>
       </Grid>
+
+      <Box marginTop="auto">
+        <Footer open={true} />
+      </Box>
     </Container>
   );
 }

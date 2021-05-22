@@ -1,17 +1,17 @@
 import { makeStyles } from "@material-ui/core";
 
-import authIllustration from "../../../src/assets/img/auth_image.png";
-
-const useStyles = makeStyles((_theme) => {
+const useStyles = makeStyles((theme) => {
   return ({
     container: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
       height: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      padding: theme.spacing(3),
     },
     grid: {
-      marginTop: "110px"
+      padding: theme.spacing(4),
+      justifyContent: "center",
+      alignItems: "center"
     }
   })
 });

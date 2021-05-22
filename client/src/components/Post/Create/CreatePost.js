@@ -73,8 +73,6 @@ export default function CreatePost({
   const privateWatcher = watch(PRIVATE_ID);
   const taggedUsersWatcher = watch(TAGGED_USERS_ID);
   
-  console.log("DATA", mPrivate)
-
   useEffect(() => {
     register({ name: MEDIA_ID });
     register({ name: COMMENTABLE_ID });
