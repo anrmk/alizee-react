@@ -8,8 +8,8 @@ import ReceiptIcon from "@material-ui/icons/ReceiptOutlined";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOnRounded";
 import BookmarkIcon from "@material-ui/icons/BookmarkOutlined";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorderOutlined";
-import SendIcon from "@material-ui/icons/SendOutlined";
 import CommentRoundedIcon from '@material-ui/icons/CommentRounded';
+import ReplyIcon from '@material-ui/icons/ReplyOutlined';
 
 import { POST_ID_ROUTE } from "../../constants/routes";
 
@@ -105,7 +105,7 @@ const Tools = React.memo(({
         )}
 
         <IconButton aria-label="share" onClick={handleShareClick}>
-          <SendIcon />
+          <ReplyIcon style={{transform: "scaleX(-1)"}} />
         </IconButton>
 
         {!isOwner && (

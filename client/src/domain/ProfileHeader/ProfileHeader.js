@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Typography, IconButton, Hidden } from "@material-ui/core";
 
 import MoreVertIcon from "@material-ui/icons/MoreVertRounded";
@@ -9,21 +9,15 @@ import { USER_RANKING } from "../../constants/user";
 
 import { ProfileStatistics, ProfileStatisticsMobile } from "../ProfileStatistics";
 
-import Menu from "./Menu";
-
 import useStyles from "./styles";
 
 function ProfileHeader(props) {
   const { user } = props;
 
   const classes = useStyles();
-  const [menuAnchor, setMenuAnchor] = useState(false);
 
   const { isOwner } = props;
   const {
-    onFavoriteClick,
-    onSendGiftClick,
-    onShareClick,
     onSubscribeClick,
     onNewCoverImageClick,
     onDeleteCoverImageClick,
@@ -84,14 +78,6 @@ function ProfileHeader(props) {
             onSubscribeClick={onSubscribeClick} />
         </Box>
       </Hidden>
-      {/* <Menu 
-        isOwner={isOwner}
-        isFollow={user.isFollow}
-        isFavorite={user.isFavorite}
-        anchorEl={menuAnchor} 
-        onFavoriteClick={onFavoriteClick}
-        onShareClick={onShareClick}
-        onClose={() => setMenuAnchor(null)} /> */}
     </Box>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { Container, Card, CardMedia, Hidden, IconButton } from "@material-ui/core/";
@@ -23,7 +23,6 @@ import { COMMENTS_POST_LENGTH } from "../../constants/feed";
 import { HOME_ROUTE } from "../../constants/routes";
 import useSlidingViews from "../../hooks/useSlidingViews";
 
-import useBlockDialog from "../../hooks/useBlockDialog";
 import useShareDialog, { SHARE_DIALOG_POST_TYPE } from "../../hooks/useShareDialog";
 import { useLikeAction, useFavoriteAction, useMenuDialog, useCommentDialog, useCommentAction } from "../../hooks/post";
 import { useSendTipDialog, usePaymentDialog, usePurchaseDialog, useReceiptDialog } from "../../hooks/payment";
@@ -181,11 +180,10 @@ function mapDispatchToProps(dispatch) {
     getPurchases: (api, id, callback) => dispatch(postActions.getPurchases(api, id, callback)),
     getReceipt: (api, id, callback) => dispatch(postActions.getReceipt(api, id, callback)),
 
-    createFollow: (api, id) => dispatch(relationshipActions.createFollow(api, id)),
-    deleteFollow: (api, id) => dispatch(relationshipActions.deleteFollow(api, id)),
-    blockUser: (api, id) => dispatch(settingsActions.createBlackList(api, id)),
-    unblockUser: (api, id) => dispatch(settingsActions.deleteBlackList(api, id)),
-    reportUser: (api, id) => { console.log("Report user") },
+    //createFollow: (api, id) => dispatch(relationshipActions.createFollow(api, id)),
+    //deleteFollow: (api, id) => dispatch(relationshipActions.deleteFollow(api, id)),
+    // blockUser: (api, id) => dispatch(settingsActions.createBlackList(api, id)),
+    // unblockUser: (api, id) => dispatch(settingsActions.deleteBlackList(api, id)),
 
     buyPost: (api, id) => dispatch(paymentActions.buyPost(api, id)),
 

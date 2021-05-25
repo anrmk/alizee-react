@@ -139,6 +139,9 @@ export default {
 
     //NOTIFICATION
     notification: "/hubs/notification",
-    notifyCall: "notification/call"
+    notifyCall: "notification/call",
+
+    //CHANGE LOG
+    getChangeLog: "changelog/getLogs"
   },
 };

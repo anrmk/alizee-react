@@ -32,6 +32,7 @@ import Search from "../Search"
 import Story from "../Story";
 import Statistics from "../Statistics";
 import Help from "../Help";
+import ChangeLog from "../ChangeLog";
 import NotFound from "../NotFound";
 
 import { signOutUser } from "../../store/actions/signIn";
@@ -118,6 +119,7 @@ function Main(props) {
           <Route exact path={Routes.RESET_PASSWORD_ROUTE} component={ResetPassword} />
           <Route exact path={Routes.PASSWORD_CHANGE_ROUTE} component={ChangePassword} />
           <Route exact path={Routes.HELP_ROUTE} component={Help} />
+          <Route exact path={Routes.CHANGE_LOG_ROUTE} component={ChangeLog} />
           <PrivateRoute path={Routes.EXPLORE_ROUTE} component={Explore} />
           <PrivateRoute path={Routes.POST_ROUTE} component={Post} />
           <PrivateRoute path={Routes.ACTIVITY_ROUTE} component={Activity} />

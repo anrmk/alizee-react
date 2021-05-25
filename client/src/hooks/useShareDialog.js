@@ -22,11 +22,10 @@ export default function useShareDialog({
   const dialog = useDialog();
   const [currentShareId, setCurrentShareId] = useState(null);
   const [currentShareUsername, setCurrentShareUsername] = useState(null);
-  const [toggleType] = useState(withStack ? "toggleWithStack" : "toggle");
   const followingsDialog = useFollowingsDialog();
 
   const handleOpenClick = async ({ id, userName }) => {
-    followingsDialog.toggle(toggleType, {
+    followingsDialog.toggle(withStack, {
       title: "Share To Chat",
       onMainClick: handleShareDialogBtnClick
     }, {
@@ -60,7 +59,7 @@ export default function useShareDialog({
       message: url,
       type: messageType
     }));
-    dialog[toggleType]({ open: false });
+    dialog.toggle({ open: false });
   }
 
   return {

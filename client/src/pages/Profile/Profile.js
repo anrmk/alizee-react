@@ -25,7 +25,6 @@ import {
 } from "../../constants/routes";
 
 import useDialog from "../../hooks/useDialog";
-import useShareDialog, { SHARE_DIALOG_PROFILE_TYPE } from "../../hooks/useShareDialog";
 import { useMenuDialog, useMoodDialog } from "../../hooks/post";
 import { useSendTipDialog } from "../../hooks/payment";
 import useFollowDialog from "../../hooks/payment/useFollowDialog";
@@ -55,10 +54,6 @@ function Profile(props) {
   const { updateCover, updateAvatar } = props;
 
   const dialog = useDialog();
-
-  const shareDialog = useShareDialog({
-    type: SHARE_DIALOG_PROFILE_TYPE
-  });
 
   const followDialog = useFollowDialog();
   const sendTipDialog = useSendTipDialog();
@@ -201,7 +196,6 @@ function Profile(props) {
         onFavoriteClick={() => handleFavoriteClick(user.data.userName)}
         onFollowClick={() => handlePeopleFollowClick(user.data.userName)}
         onSendGiftClick={() => handleGiftSendClick(user.data.userName)}
-        onShareClick={() => shareDialog.toggle({ userName: user.data.userName })}
         onCoverUrlChange={handleCoverEditDialog}
         onDeleteCoverImageClick={handleDeleteCoverImageClick}
         onMenuClick={() => postMenuDialog.toggle({ 

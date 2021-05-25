@@ -29,7 +29,7 @@ export default function useMenuDialog(props) {
   const blockDialog = useBlockDialog();
   const reportDialog = useReportDialog();
   const postShareDialog = useSharePostDialog();
-  const chatShareDialog = useShareDialog({ stack: true, type: SHARE_DIALOG_PROFILE_TYPE });
+  const chatShareDialog = useShareDialog({ withStack: true, type: SHARE_DIALOG_PROFILE_TYPE });
   const { deletePostAction } = useDeleteAction();
 
   const handleDeleteClick = useCallback(async (id) => {

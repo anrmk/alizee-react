@@ -14,9 +14,16 @@ import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorderOutlined";
 import HelpIcon from "@material-ui/icons/ContactSupportOutlined";
 import NightIcon from "@material-ui/icons/NightsStayOutlined";
 import SunnyIcon from "@material-ui/icons/WbSunnyOutlined";
-import LanguageIcon from '@material-ui/icons/LanguageOutlined';
+import LanguageIcon from "@material-ui/icons/LanguageOutlined";
+import AnnouncementIcon from "@material-ui/icons/AnnouncementOutlined";
 
-import { HELP_ROUTE, PROFILE_USERNAME_ROUTE, SEARCH_ROUTE, SETTINGS_EDIT_PROFILE_ROUTE } from "../../constants/routes";
+import {
+  HELP_ROUTE,
+  CHANGE_LOG_ROUTE,
+  PROFILE_USERNAME_ROUTE,
+  SEARCH_ROUTE,
+  SETTINGS_EDIT_PROFILE_ROUTE,
+} from "../../constants/routes";
 
 import useChangeTheme from "../../hooks/useChangeTheme";
 import useLanguageDialog from "../../hooks/useLanguageDialog";
@@ -34,7 +41,7 @@ export default function NavMenu({
   const theme = useTheme();
   const changeTheme = useChangeTheme();
   const langDialog = useLanguageDialog();
-  
+
   const history = useHistory();
 
   const handleMenuItemClick = (url) => {
@@ -82,11 +89,18 @@ export default function NavMenu({
         <ListItemText primary={t("NavbarMenuItemHelpText")} />
       </MenuItem>
 
-      <MenuItem onClick={changeTheme.toggle} >
+      <MenuItem onClick={() => handleMenuItemClick(CHANGE_LOG_ROUTE)}>
         <ListItemIcon>
-          {theme.palette.type === "light" ? <NightIcon /> : <SunnyIcon />}
+          <AnnouncementIcon />
         </ListItemIcon>
-        <ListItemText primary={theme.palette.type === "light" ? t("NavbarMenuItemDarkMode") : t("NavbarMenuItemLightMode")} />
+        <ListItemText primary={t("NavbarMenuItemChangeLogText")} />
+      </MenuItem>
+
+      <MenuItem onClick={changeTheme.toggle}>
+        <ListItemIcon>{theme.palette.type === "light" ? <NightIcon /> : <SunnyIcon />}</ListItemIcon>
+        <ListItemText
+          primary={theme.palette.type === "light" ? t("NavbarMenuItemDarkMode") : t("NavbarMenuItemLightMode")}
+        />
       </MenuItem>
 
       <MenuItem onClick={langDialog.toggle}>

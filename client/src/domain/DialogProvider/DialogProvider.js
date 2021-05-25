@@ -107,14 +107,14 @@ export default function DialogProvider({ children }) {
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
           className={classes.modal}
-          open={dialogOptions.open}
+          open={!!dialogOptions.open}
           onClose={handleCloseClick}
           closeAfterTransition
           BackdropComponent={Backdrop}
           BackdropProps={{
             timeout: 500
           }}>
-          <Fade in={dialogOptions.open}>
+          <Fade in={!!dialogOptions.open}>
             <>
               <IconButton className={classes.closeBtn} onClick={handleCloseClick}>
                 <CloseIcon />
@@ -129,12 +129,12 @@ export default function DialogProvider({ children }) {
           maxWidth={"sm"}
           fullScreen={fullScreen}
           aria-labelledby="dialog-title"
-          open={dialogOptions.open}
+          open={!!dialogOptions.open}
           onClose={handleCloseClick}
           {...dialogOptions.dialogProps}>
           {dialogOptions.title && (
             <DialogTitle id="dialog-title">
-              {dialogOptions.stack.length > 1 && (
+              {dialogOptions.stack?.length > 1 && (
                 <IconButton onClick={handleBackClick}>
                   <BackIcon />
                 </IconButton>

@@ -2,6 +2,7 @@ export const DEFAULT_ROUTE = "/";
 export const HOME_ROUTE = "/";
 export const ABOUT_ROUTE = "";
 export const HELP_ROUTE = "/help";
+export const CHANGE_LOG_ROUTE = "/changelog";
 export const PRIVACY_ROUTE = "";
 export const EXPLORE_ROUTE = "/explore";
 export const EXPLORE_BY_TAG_ROUTE = (tag) => `/explore?tag=${tag}`;

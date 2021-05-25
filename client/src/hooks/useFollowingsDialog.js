@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useCallback } from "react";
+import { useState, useEffect, useContext, useCallback , useRef} from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import ApiContext from "../context/ApiContext";
@@ -15,8 +15,9 @@ export default function useFollowingsDialog() {
   }));
   const dialog = useDialog();
   const [selectedChats, setSelectedChats] = useState([]);
-  const [dialogOptionsState, setDialogOptionsState] = useState({});
-  const [contentOptionsState, setContentOptionsState] = useState({});
+
+  let dialogOptionsState = useRef({}).current;
+  let contentOptionsState = useRef({}).current;
 
   useEffect(() => {
     if (followersList.length) {
@@ -26,8 +27,10 @@ export default function useFollowingsDialog() {
 
   const handleOpenClick = async (withStack = false, dialogOpts, contentOpts) => {
     const toggleType = withStack ? "toggleWithStack" : "toggle";
-    dialogOpts && setDialogOptionsState(dialogOpts);
-    contentOpts && setContentOptionsState(contentOpts);
+    
+    dialogOpts && (dialogOptionsState = dialogOpts);
+    contentOpts && (dialogOptionsState = contentOpts);
+    
     dialog[toggleType](dialogs[FOLLOWERS_LIST_DIALOG_TYPE]({
       loading: true,
       ...dialogOpts
@@ -36,7 +39,7 @@ export default function useFollowingsDialog() {
     !loading && await dispatch(actionChat.getRooms(apiClient));
   }
 
-  const updateParams = useCallback(() => {
+  const updateParams = () => {
     dialog.setParams(dialogs[FOLLOWERS_LIST_DIALOG_TYPE]({
       loading: false,
       state: selectedChats,
@@ -47,7 +50,7 @@ export default function useFollowingsDialog() {
       onItemSelect: (selected) => setSelectedChats(selected),
       ...contentOptionsState
     }));
-  }, [followersList, selectedChats])
+  };
 
   return {
     toggle: handleOpenClick,
