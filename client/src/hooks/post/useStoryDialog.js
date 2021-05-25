@@ -9,6 +9,7 @@ import useDialog from "../useDialog";
 import { SETTINGS_BANK_ROUTE } from "../../constants/routes";
 import { Link } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
+import { STORIES_LENGTH } from "../../constants/feed";
 
 const FORM_ID = "create-story-form";
 
@@ -23,9 +24,11 @@ export default function useStoryDialog() {
   }));
 
   const handleStoryCreate = useCallback(async (data) => {
-    dialog.toggle({ open: false });
+    dialog.setParams({ loading: true });
     !isFetching && (await dispatch(storyActions.createStorySlide(apiClient, data)));
-  }, []);
+    !isFetching && (await dispatch(storyActions.getFollowingStories(apiClient, { start: 0, length: STORIES_LENGTH })));
+    dialog.toggle({ open: false, loading: false });
+  }, [isFetching]);
 
   const handleDialogToggle = useCallback(
     async (data) => {
@@ -56,7 +59,7 @@ export default function useStoryDialog() {
         );
       }
     },
-    [handleStoryCreate]
+    [handleStoryCreate, identityVerified]
   );
 
   return {

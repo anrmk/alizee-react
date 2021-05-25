@@ -67,18 +67,18 @@ export function createStorySlide(api, storyData) {
       const currentStoryState = getState().story.currentStory;
       const updatedCurrentStoryState = { ...currentStoryState };
 
-      if (isEmptyObject(currentStoryState)) {
-        const signInState = getState().signIn.userInfo;
-        updatedCurrentStoryState.user = {
-          userName: signInState.userName,
-          name: signInState.name,
-          avatarUrl: signInState.avatarUrl,
-        };
-        updatedCurrentStoryState.userId = signInState.id;
-      }
+      // if (isEmptyObject(currentStoryState)) {
+      //   const signInState = getState().signIn.userInfo;
+      //   updatedCurrentStoryState.user = {
+      //     userName: signInState.userName,
+      //     name: signInState.name,
+      //     avatarUrl: signInState.avatarUrl,
+      //   };
+      //   updatedCurrentStoryState.userId = signInState.id;
+      // }
 
-      updatedCurrentStoryState.slides = [data, ...(updatedCurrentStoryState?.slides || [])];
-      updatedCurrentStoryState.thumbnailUrl = data.media.thumbnailUrl;
+      // updatedCurrentStoryState.slides = [data, ...(updatedCurrentStoryState?.slides || [])];
+      // updatedCurrentStoryState.thumbnailUrl = data.media.thumbnailUrl;
 
       dispatch(receiveCreateStory(updatedCurrentStoryState));
     } catch (e) {

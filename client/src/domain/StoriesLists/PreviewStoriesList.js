@@ -3,29 +3,23 @@ import ScrollContainer from "react-indiana-drag-scroll";
 import { List } from "@material-ui/core";
 import Skeleton from "@material-ui/lab/Skeleton";
 
-import { isEmptyObject } from "../../helpers/functions";
 import PreviewStoriesListItem from "./PreviewStoriesListItem";
 import useStyles from "./styles";
 
 const PreviewStoriesList = React.memo(({
   items,
-  userStory,
+  user,
   loading = false,
 
   onItemClick,
   onCreateStoryClick
 }) => {
   const classes = useStyles({ loading });
-  const [flag, setFlag] = useState(false);
-  const [isMyStoriesEmpty, setIsMyStoriesEmpty] = useState(false);
+  const [loadingFlag, setLoadingFlag] = useState(false);
 
   useEffect(() => {
-    setIsMyStoriesEmpty(isEmptyObject(userStory) || !userStory?.thumbnailUrl)
-  }, [userStory]);
-
-  useEffect(() => {
-    if (loading && !flag) {
-      setFlag(true);
+    if (loading && !loadingFlag) {
+      setLoadingFlag(true);
     }
   }, [loading]);
 
@@ -35,18 +29,15 @@ const PreviewStoriesList = React.memo(({
 
   return (
     <List className={classes.previewStoryList} component={ScrollContainer}>
-      {loading || !flag ? renderSkeletons() : (
+      {loading || !loadingFlag ? renderSkeletons() : (
         <>
           <PreviewStoriesListItem
             me
-            key={userStory?.userId}
-            id={userStory?.userId}
-            username={userStory?.user?.userName}
-            name={userStory?.user?.name}
-            previewUrl={userStory?.thumbnailUrl}
-            avatarUrl={userStory?.user?.avatarUrl}
-            empty={isMyStoriesEmpty}
-            onClick={isMyStoriesEmpty ? onCreateStoryClick : onItemClick}
+            id={user?.userId}
+            username={user?.userName}
+            name={user?.name}
+            previewUrl={user?.avatarUrl}
+            empty={!user?.avatarUrl}
             onCreateStoryClick={onCreateStoryClick} />
           {items.length > 0 && items.map(item => (
             <PreviewStoriesListItem

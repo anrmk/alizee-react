@@ -62,13 +62,11 @@ function Feed(props) {
 
   useEffect(() => {
     getPosts(apiClient, { userId: userInfo.id });
-    getStory(apiClient, { username: userInfo.userName, length: STORIES_LENGTH });
     getFollowingStories(apiClient, { length: STORIES_LENGTH });
     getHotStreamers(apiClient);
 
     return () => {
       resetPosts();
-      resetStory();
       resetFollowingStories();
     };
   }, []);
@@ -99,8 +97,8 @@ function Feed(props) {
         <Grid item xs={12} md={8}>
           <PreviewStoriesList
             loading={story.isFetching}
-            userStory={story.data.mStories}
-            items={story.data.fStories}
+            user={userInfo}
+            items={story.data}
             onItemClick={handleStoryClick}
             onCreateStoryClick={createStoryDialog.toggle}
           />
@@ -121,6 +119,7 @@ function Feed(props) {
             onCommentSend={handleCommentSendClick}
             onFullScreen={lightboxModal.toggle}
           />
+
         </Grid>
         <Hidden smDown>
           <Grid item md={4}>
@@ -159,7 +158,7 @@ function mapStateToProps(state) {
 
     posts: {
       isFetching: state.posts.isFetching,
-      data: state.posts?.data,
+      data: state.posts.data,
       errorMessage: state.posts.errorMessage,
       hasMore: state.posts.hasMore,
     },
@@ -177,7 +176,7 @@ function mapStateToProps(state) {
 
     story: {
       isFetching: state.story.isFetching,
-      data: storyActions.getFollowingsStoriesWithMyself(state),
+      data: state.story.data,
       errorMessage: state.story.errorMessage,
       hasMore: state.story.hasMore,
     },

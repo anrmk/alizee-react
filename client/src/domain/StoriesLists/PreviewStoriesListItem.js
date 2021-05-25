@@ -25,7 +25,7 @@ const PreviewStoryListItem = React.memo(({
     empty
   });
   const location = useLocation();
-  const additionalProps = empty ? null : { 
+  const additionalProps = empty || me ? null : { 
     to: { 
       pathname: previewUrl ? STORIES_ROUTE(username) : "#", 
       state: { from: location.pathname, storyId: id, me }
@@ -44,7 +44,7 @@ const PreviewStoryListItem = React.memo(({
     onCreateStoryClick && onCreateStoryClick();
   }
 
-  const renderStory = (withButton = false) => (
+  const renderContent = (withButton = false) => (
     <Box className={classes.previewStoryItemUserInfo}>
       {!withButton && (
         <>
@@ -72,11 +72,11 @@ const PreviewStoryListItem = React.memo(({
       {...additionalProps}
       onClick={handleItemClick}>
       {me ? empty ? (
-          <AddIcon className={classes.previewStoryListItemAddButton} />
-        ) : renderStory(true) 
-        : renderStory()}
+          <AddIcon className={classes.previewStoryListItemAddButton} onClick={handleCreateStoryClick} />
+        ) : renderContent(true) 
+        : renderContent()}
     </ListItem>
-  )
+  );
 });
 
 export default PreviewStoryListItem;

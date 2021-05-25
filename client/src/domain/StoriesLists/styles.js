@@ -42,6 +42,7 @@ const useStyles = makeStyles(theme => ({
     backgroundImage: ({ previewUrl }) => previewUrl && tintedBg(0.25) + `url("${previewUrl}")`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
+    backgroundPosition: "center",
     backgroundColor: theme.palette.background.paper,
     borderColor:  theme.palette.grey[theme.palette.type === "dark" ? "800" : "200"],
     borderWidth: "1px",
@@ -87,8 +88,7 @@ const useStyles = makeStyles(theme => ({
     bottom: 0,
     left: 0,
     backgroundColor: theme.palette.common.white,
-    zIndex: theme.zIndex.mobileStepper,
-    pointerEvents: "none",
+    zIndex: theme.zIndex.mobileStepper
   },
   createButton: {
     position: "absolute",

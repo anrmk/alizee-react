@@ -60,6 +60,12 @@ const useStyles = (open) =>
     hide: {
       display: "none",
     },
+
+    backBtn: {
+      display: "flex",
+      alignItems: "center",
+      cursor: "pointer"
+    }
   }));
 
 export default useStyles;

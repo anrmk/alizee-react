@@ -60,7 +60,7 @@ export function getFollowingStories(api, opts) {
     dispatch(requestGetFollowingStories());
 
     const url = generateUrl("getFollowingStories");
-    const currentOffset = getState().story.offset;
+    const currentOffset = opts.start !== undefined ? opts.start : getState().story.offset;
     try {
       const { data } = await api
         .setMethod("GET")
@@ -70,9 +70,16 @@ export function getFollowingStories(api, opts) {
         })
         .query(url);
 
+      let extendedList = [];
+      if (opts.start === 0) {
+        extendedList = [...data.data];
+      } else {
+        extendedList = [...getState().story.data, ...data.data];
+      }
+
       dispatch(
         receiveGetFollowingStories(
-          [...getState().story.data, ...data.data],
+          extendedList,
           data.recordsTotal,
           currentOffset,
           !!data.data.length
