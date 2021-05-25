@@ -153,6 +153,13 @@ export default createMuiTheme({
         borderRadius: "4px",
       },
     },
+
+    MuiListItem: {
+      secondaryAction: {
+        paddingRight: "96px"
+  
+      }
+    },
   },
 
   MuiBottomNavigationAction: {},

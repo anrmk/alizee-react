@@ -117,6 +117,15 @@ function PushNotificationSettings({ data, getNotification, updateNotification })
             </ListItemSecondaryAction>
           </ListItem>
 
+          <ListSubheader>New messages</ListSubheader>
+
+          <ListItem>
+            <ListItemText primary="Important Direct Messages" />
+            <ListItemSecondaryAction>
+              <Switch checked={settings.direct} disabled={!settings.isActive} name="direct" />
+            </ListItemSecondaryAction>
+          </ListItem>
+
           <ListItem>
             <ListItemText primary="New Messages" />
             <ListItemSecondaryAction>

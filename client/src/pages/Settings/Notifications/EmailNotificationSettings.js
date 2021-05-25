@@ -1,5 +1,8 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { connect } from "react-redux";
+import { Controller, useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import {
   Card,
@@ -10,29 +13,79 @@ import {
   ListItem,
   ListItemText,
   ListItemSecondaryAction,
-  Switch
+  Switch,
+  Select,
+  Divider,
+  Typography,
 } from "@material-ui/core";
 
 import ApiContext from "../../../context/ApiContext";
 import { isEmptyObject } from "../../../helpers/functions";
 import * as settingsActions from "../../../store/actions/settings";
 
-function EmailNotificationsSettings({ data, getNotification, updateNotification }) {
+const ISACTIVE_INPUT_ID = "isActive";
+const NEWSLETTER_INPUT_ID = "newsletter";
+const LIKE_INPUT_ID = "like";
+const LIKEFREQUENCY_INPUT_ID = "likeFrequency";
+const GOAL_INPUT_ID = "goal";
+const PURCHASE_INPUT_ID = "purchase";
+const REFERRAL_INPUT_ID = "referral";
+const SUBSCRIBER_INPUT_ID = "subscriber";
+const TIP_INPUT_ID = "tip";
+const RENEWAL_INPUT_ID = "renewal";
+const RETURNING_INPUT_ID = "returning";
+const POST_INPUT_ID = "post";
+const POSTFREQUENCY_INPUT_ID = "postFrequency";
+const STREAM_INPUT_ID = "stream";
+const UPCOMMINGSTREAM_INPUT_ID = "upcommingStream";
+const MESSAGES_INPUT_ID = "messages";
+const MESSAGESFREQUENCY_INPUT_ID = "messagesFrequency";
+
+const schema = yup.object().shape({
+  [ISACTIVE_INPUT_ID]: yup.bool().required(),
+  [NEWSLETTER_INPUT_ID]: yup.bool().required(),
+  [LIKE_INPUT_ID]: yup.bool().required(),
+  [LIKEFREQUENCY_INPUT_ID]: yup.number().required(),
+  [GOAL_INPUT_ID]: yup.bool().required(),
+  [PURCHASE_INPUT_ID]: yup.bool().required(),
+  [REFERRAL_INPUT_ID]: yup.bool().required(),
+  [SUBSCRIBER_INPUT_ID]: yup.bool().required(),
+  [TIP_INPUT_ID]: yup.bool().required(),
+  [RENEWAL_INPUT_ID]: yup.bool().required(),
+  [RETURNING_INPUT_ID]: yup.bool().required(),
+  [POST_INPUT_ID]: yup.bool().required(),
+  [POSTFREQUENCY_INPUT_ID]: yup.number().required(),
+  [STREAM_INPUT_ID]: yup.bool().required(),
+  [UPCOMMINGSTREAM_INPUT_ID]: yup.bool().required(),
+  [MESSAGES_INPUT_ID]: yup.bool().required(),
+  [MESSAGESFREQUENCY_INPUT_ID]: yup.number().required(),
+});
+
+function EmailNotificationsSettings({ isFetching, data, getNotification, updateNotification }) {
   const apiClient = useContext(ApiContext);
-  const [settings, setSettings] = useState({
-    isActive: false,
-    newsletter: false,
-    like: false,
-    goal: false,
-    purchase: false,
-    referral: false,
-    subscriber: false,
-    tip: false,
-    renewal: false,
-    returning: false,
-    post: false,
-    stream: false,
-    messages: false,
+
+  const { reset, watch, control, handleSubmit } = useForm({
+    resolver: yupResolver(schema),
+    mode: "onChange",
+    defaultValues: {
+      [ISACTIVE_INPUT_ID]: data?.isActive ?? false,
+      [NEWSLETTER_INPUT_ID]: data?.newsletter ?? false,
+      [LIKE_INPUT_ID]: data?.like ?? false,
+      [LIKEFREQUENCY_INPUT_ID]: data?.likeFrequency ?? 24,
+      [GOAL_INPUT_ID]: data?.goal ?? false,
+      [PURCHASE_INPUT_ID]: data?.purchase ?? false,
+      [REFERRAL_INPUT_ID]: data?.referral ?? false,
+      [SUBSCRIBER_INPUT_ID]: data?.subheader ?? false,
+      [TIP_INPUT_ID]: data?.tip ?? false,
+      [RENEWAL_INPUT_ID]: data?.renewal ?? false,
+      [RETURNING_INPUT_ID]: data?.returning ?? false,
+      [POST_INPUT_ID]: data?.post ?? false,
+      [POSTFREQUENCY_INPUT_ID]: data?.postFrequency ?? 24,
+      [STREAM_INPUT_ID]: data?.stream ?? false,
+      [UPCOMMINGSTREAM_INPUT_ID]: data?.upcommingStream ?? false,
+      [MESSAGES_INPUT_ID]: data?.messages ?? false,
+      [MESSAGESFREQUENCY_INPUT_ID]: data?.messagesFrequency ?? 24,
+    },
   });
 
   useEffect(() => {
@@ -41,20 +94,60 @@ function EmailNotificationsSettings({ data, getNotification, updateNotification 
 
   useEffect(() => {
     if (!isEmptyObject(data)) {
-      setSettings(data);
+      reset(data);
     }
   }, [data]);
 
-  const handleSettingsChange = (e) => {
-    var value = { ...settings };
-    value[e.target.name] = e.target.checked;
-    setSettings(value);
-
-    if (!settings.isFetching) {
+  const handleSettingsChange = (data) => {
+    if (!isFetching) {
       (async () => {
-        await updateNotification(apiClient, value);
+        await updateNotification(apiClient, data);
       })();
     }
+  };
+
+  const renderSwitchControl = (name, disabled) => {
+    return (
+      <Controller
+        name={name}
+        control={control}
+        render={({ onChange, onBlur, value }) => (
+          <Switch
+            checked={value}
+            id={name}
+            onBlur={onBlur}
+            disabled={disabled}
+            onChange={(e) => onChange(e.target.checked)}
+          />
+        )}
+      />
+    );
+  };
+
+  const renderSelectControl = (name, disabled) => {
+    return (
+      <Controller
+        name={name}
+        control={control}
+        render={({ onChange, onBlur, value }) => (
+          <Select
+            native
+            fullWidth
+            variant="outlined"
+            value={value}
+            disabled={disabled}
+            onBlur={onBlur}
+            onChange={onChange}
+          >
+            <option value={1}>Every hour</option>
+            <option value={3}>Every 3 hours</option>
+            <option value={6}>Every 6 hours</option>
+            <option value={12}>Every 12 hours</option>
+            <option value={24}>Every 24 hours</option>
+          </Select>
+        )}
+      />
+    );
   };
 
   return (
@@ -64,101 +157,120 @@ function EmailNotificationsSettings({ data, getNotification, updateNotification 
         subheader="Get emails to find out what’s going on when you’re not on site. You can turn them off anytime."
       />
       <CardContent>
-        <List disablePadding onChange={handleSettingsChange}>
+        <List disablePadding onChange={handleSubmit(handleSettingsChange)}>
           <ListItem>
             <ListItemText primary="Email Notifications" />
-            <ListItemSecondaryAction>
-              <Switch checked={settings.isActive} name="isActive" />
-            </ListItemSecondaryAction>
+            <ListItemSecondaryAction>{renderSwitchControl(ISACTIVE_INPUT_ID)}</ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
             <ListItemText primary="Monthly Newsletter" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.newsletter} name="newsletter" />
+              {renderSwitchControl(NEWSLETTER_INPUT_ID, !watch(ISACTIVE_INPUT_ID))}
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListSubheader>Related to you and your posts</ListSubheader>
 
           <ListItem>
-            <ListItemText primary="New Likes Summary" />
+            <ListItemText>
+              <Typography>New Likes Summary</Typography>
+              {renderSelectControl(LIKEFREQUENCY_INPUT_ID, !watch(LIKE_INPUT_ID) || !watch(ISACTIVE_INPUT_ID))}
+            </ListItemText>
             <ListItemSecondaryAction>
-              <Switch checked={settings.like} disabled={!settings.isActive} name="like" />
+              {renderSwitchControl(LIKE_INPUT_ID, !watch(ISACTIVE_INPUT_ID))}
             </ListItemSecondaryAction>
           </ListItem>
+
+          <Divider component="li" />
 
           <ListItem>
             <ListItemText primary="Campaign Goal Reached" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.goal} disabled={!settings.isActive} name="goal" />
+              {renderSwitchControl(GOAL_INPUT_ID, !watch(ISACTIVE_INPUT_ID))}
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
             <ListItemText primary="New Campaign Contribution" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.purchase} disabled={!settings.isActive} name="purchase" />
+              {renderSwitchControl(PURCHASE_INPUT_ID, !watch(ISACTIVE_INPUT_ID))}
             </ListItemSecondaryAction>
           </ListItem>
 
-          {/* <ListItem>
+          <ListItem>
             <ListItemText primary="New Referral" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.referral} disabled={settings.isActive} name="referral" />
+              {renderSwitchControl(REFERRAL_INPUT_ID, !watch(ISACTIVE_INPUT_ID))}
             </ListItemSecondaryAction>
-          </ListItem> */}
+          </ListItem>
 
           <ListItem>
             <ListItemText primary="New Subscriber" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.subscriber} disabled={!settings.isActive} name="subscriber" />
+              {renderSwitchControl(SUBSCRIBER_INPUT_ID, !watch(ISACTIVE_INPUT_ID))}
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
             <ListItemText primary="New Tips" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.tip} disabled={!settings.isActive} name="tip" />
+              {renderSwitchControl(TIP_INPUT_ID, !watch(ISACTIVE_INPUT_ID))}
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
             <ListItemText primary="Renewal" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.renewal} disabled={!settings.isActive} name="renewal" />
+              {renderSwitchControl(RENEWAL_INPUT_ID, !watch(ISACTIVE_INPUT_ID))}
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
             <ListItemText primary="Returning Subscriber" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.returning} disabled={!settings.isActive} name="returning" />
+              {renderSwitchControl(RETURNING_INPUT_ID, !watch(ISACTIVE_INPUT_ID))}
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListSubheader>Subscriptions and following</ListSubheader>
 
           <ListItem>
-            <ListItemText primary="New Posts Summary" />
+            <ListItemText>
+              <Typography>New Posts Summary</Typography>
+              {renderSelectControl(POSTFREQUENCY_INPUT_ID, !watch(POST_INPUT_ID) || !watch(ISACTIVE_INPUT_ID))}
+            </ListItemText>
             <ListItemSecondaryAction>
-              <Switch checked={settings.post} disabled={!settings.isActive} name="post" />
+              {renderSwitchControl(POST_INPUT_ID, !watch(ISACTIVE_INPUT_ID))}
             </ListItemSecondaryAction>
           </ListItem>
+
+          <Divider component="li" />
 
           <ListItem>
             <ListItemText primary="New Stream" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.stream} disabled={!settings.isActive} name="stream" />
+              {renderSwitchControl(STREAM_INPUT_ID, !watch(ISACTIVE_INPUT_ID))}
+            </ListItemSecondaryAction>
+          </ListItem>
+
+          <ListItem>
+            <ListItemText primary="Upcoming stream reminders" />
+            <ListItemSecondaryAction>
+              {renderSwitchControl(UPCOMMINGSTREAM_INPUT_ID, !watch(ISACTIVE_INPUT_ID))}
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListSubheader>New messages</ListSubheader>
 
           <ListItem>
-            <ListItemText primary="New Private Message Summary" />
+            <ListItemText>
+              <Typography>New Private Message Summary</Typography>
+              {renderSelectControl(MESSAGESFREQUENCY_INPUT_ID, !watch(MESSAGES_INPUT_ID) || !watch(ISACTIVE_INPUT_ID))}
+            </ListItemText>
+
             <ListItemSecondaryAction>
-              <Switch checked={settings.messages} disabled={!settings.isActive} name="messages" />
+              {renderSwitchControl(MESSAGES_INPUT_ID, !watch(ISACTIVE_INPUT_ID))}
             </ListItemSecondaryAction>
           </ListItem>
         </List>

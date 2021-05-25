@@ -167,7 +167,14 @@ export default createMuiTheme({
       root: {
         borderRadius: "4px"
       }
-    }
+    },
+
+    MuiListItem: {
+      secondaryAction: {
+        paddingRight: "96px"
+  
+      }
+    },
   },
 
   MuiBottomNavigationAction: {
@@ -179,6 +186,8 @@ export default createMuiTheme({
       opacity: "0.6",
     },
   },
+
+
 
   MuiDivider: {
     root: {
