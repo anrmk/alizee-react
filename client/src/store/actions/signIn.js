@@ -1,4 +1,4 @@
-import { generateUrl } from "../../helpers/functions";
+import { generateUrl, getUsernameFromJWT } from "../../helpers/functions";
 import { SOCIAL_GOOGLE, SOCIAL_TWITTER } from "../../constants/social_types";
 import { socialAuth } from "./socialAuth";
 import { USER_TOKEN } from "../../constants/user";
@@ -27,7 +27,7 @@ function requestSignIn() {
   };
 }
 
-function receiveSignIn(userInfo, isSocial = false) {
+export function receiveSignIn(userInfo, isSocial = false) {
   return {
     type: SIGNIN_SUCCESS,
     payload: {
@@ -100,7 +100,14 @@ export function signInUser(creds, api) {
         })
       );
 
-      dispatch(receiveSignIn(data));
+      const usernameFromToken = getUsernameFromJWT(data.accessToken);
+      if (!usernameFromToken) {
+        throw new Error("User doesn't have username");
+      }
+
+      dispatch(receiveSignIn({
+        userName: usernameFromToken
+      }, true));
     } catch (e) {
       dispatch(errorSignIn(e.response?.data || e.message, e.response?.status || 500));
     }
@@ -132,7 +139,14 @@ export function signInSocial(api, socialType, opts) {
         })
       );
 
-      dispatch(receiveSignIn(data, true));
+      const usernameFromToken = getUsernameFromJWT(data.accessToken);
+      if (!usernameFromToken) {
+        throw new Error("User doesn't have username");
+      }
+
+      dispatch(receiveSignIn({
+        userName: usernameFromToken
+      }, true));
     } catch (e) {
       dispatch(errorSignIn(e.response?.data || e.message, e.response?.status || 500));
     }

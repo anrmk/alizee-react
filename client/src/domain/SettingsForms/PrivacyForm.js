@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Button, Checkbox, FormGroup, FormControlLabel, Divider, Typography, Grid, Card, CardHeader, CardContent } from "@material-ui/core";
 
 import { SETTINGS_BLACK_LIST_ROUTE } from "../../constants/routes";
@@ -140,7 +141,7 @@ function PrivacyForm({
             <Typography variant="h6">{BLOCKED_ACCOUNTS_HEADER}</Typography>
             <Typography variant="subtitle2">{BLOCKED_ACCOUNTS_HELPER}</Typography>
 
-            <Button href={SETTINGS_BLACK_LIST_ROUTE}>Blocked Accounts</Button>
+            <Button to={SETTINGS_BLACK_LIST_ROUTE} component={Link}>Blocked Accounts</Button>
           </Grid>
 
           <Divider />

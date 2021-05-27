@@ -5,7 +5,6 @@ import i18n from "i18next";
 import { useTranslation } from "react-i18next";
 
 import { Menu, MenuItem, ListItemIcon, ListItemText, Divider } from "@material-ui/core";
-import useTheme from "@material-ui/core/styles/useTheme";
 
 import ExitToAppIcon from "@material-ui/icons/ExitToAppOutlined";
 import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
@@ -35,11 +34,10 @@ export default function NavMenu({
   anchorEl,
 
   onClose,
-  onLogout,
+  onLogout
 }) {
   const { t } = useTranslation();
-  const theme = useTheme();
-  const changeTheme = useChangeTheme();
+  const theme = useChangeTheme();
   const langDialog = useLanguageDialog();
 
   const history = useHistory();
@@ -96,10 +94,10 @@ export default function NavMenu({
         <ListItemText primary={t("NavbarMenuItemChangeLogText")} />
       </MenuItem>
 
-      <MenuItem onClick={changeTheme.toggle}>
-        <ListItemIcon>{theme.palette.type === "light" ? <NightIcon /> : <SunnyIcon />}</ListItemIcon>
+      <MenuItem onClick={() => theme.toggle()}>
+        <ListItemIcon>{theme.currentTheme === "light" ? <NightIcon /> : <SunnyIcon />}</ListItemIcon>
         <ListItemText
-          primary={theme.palette.type === "light" ? t("NavbarMenuItemDarkMode") : t("NavbarMenuItemLightMode")}
+          primary={theme.currentTheme === "light" ? t("NavbarMenuItemDarkMode") : t("NavbarMenuItemLightMode")}
         />
       </MenuItem>
 

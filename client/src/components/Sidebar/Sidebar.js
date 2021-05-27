@@ -1,20 +1,18 @@
 import React from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 
-import { Grid, Typography, Box } from "@material-ui/core";
-import { Drawer, Divider, Tooltip, Switch } from "@material-ui/core";
-import { List, ListItem, ListItemIcon, ListItemText, IconButton } from "@material-ui/core";
-
-import useTheme from "@material-ui/core/styles/useTheme";
+import {
+  Grid, Typography, Drawer, Tooltip, Switch, List, 
+  ListItem, ListItemIcon, ListItemText, IconButton
+} from "@material-ui/core";
 
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutlineOutlined";
 import HomeIcon from "@material-ui/icons/HomeOutlined";
 import MailIcon from "@material-ui/icons/MailOutline";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import ExploreIcon from "@material-ui/icons/ExploreOutlined";
 import NightIcon from "@material-ui/icons/NightsStayOutlined";
 import SunnyIcon from "@material-ui/icons/WbSunnyOutlined";
@@ -38,9 +36,7 @@ function Sidebar({
   const classes = useStyles({ open });
   const { t } = useTranslation();
   const location = useLocation();
-  const history = useHistory();
 
-  const theme = useTheme();
   const changeTheme = useChangeTheme();
 
   return (
@@ -71,7 +67,7 @@ function Sidebar({
           <Grid item>
             <Switch
               name="gilad"
-              checked={theme.palette.type === "light"}
+              checked={changeTheme.currentTheme === "light"}
               color="primary"
               onChange={() => changeTheme.toggle()}
             />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Switch, Route, Redirect, useHistory, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { Box, Hidden } from "@material-ui/core";
@@ -36,6 +36,7 @@ import ChangeLog from "../ChangeLog";
 import NotFound from "../NotFound";
 
 import { signOutUser } from "../../store/actions/signIn";
+import { getUser } from "../../store/actions/user";
 import * as Routes from "../../constants/routes";
 
 import useNotification from "../../hooks/useNotificationHub";
@@ -43,12 +44,15 @@ import useLocationHelper from "../../hooks/useLocationHelper";
 import { usePostDialog, useStoryDialog, useMoodDialog} from "../../hooks/post";
 import useChangeTheme from "../../hooks/useChangeTheme";
 import { isPublicRoute } from "../../helpers/functions";
+import ApiContext from "../../context/ApiContext";
 
 import useStyles from "./styles";
 
 function Main(props) {
-  const { user, notifyData, isAuthenticated } = props;
-  const { signOut } = props;
+  const apiClient = useContext(ApiContext);
+
+  const { user, notifyData, isAuthenticated, userName } = props;
+  const { signOut, getAccountInfo } = props;
 
   const [open, setOpen] = useState(true);
   const isNavigationHide = useLocationHelper([Routes.STORIES_DEFAULT_ROUTE, "/ptp"]);
@@ -62,6 +66,20 @@ function Main(props) {
   const createPostDialog = usePostDialog();
   const createStoryDialog = useStoryDialog();
   const createMoodDialog = useMoodDialog();
+
+  useEffect(() => {
+    if (!isPublicRoute(pathname)) {
+      theme.setupTheme();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      (async () => {
+        await getAccountInfo(apiClient, user.userName, true);
+      })();
+    }
+  }, [isAuthenticated]);
 
   useEffect(() => {
     if (isPublicRoute(pathname)) {
@@ -165,6 +183,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    getAccountInfo: (api, userName, me) => dispatch(getUser(api, userName, me)),
     signOut: (api) => dispatch(signOutUser(api))
   };
 }

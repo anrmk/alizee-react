@@ -1,4 +1,5 @@
 import { generateUrl } from "../../../helpers/functions";
+import { receiveSignIn } from "../signIn";
 
 export const GET_USER_REQUEST = "GET_USER_REQUEST";
 export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
@@ -49,7 +50,7 @@ export function resetUser() {
     });
 }
 
-export function getUser(api, username) {
+export function getUser(api, username, me = false) {
   return async (dispatch) => {
     dispatch(requestGetUser());
 
@@ -57,7 +58,11 @@ export function getUser(api, username) {
     try {
       const { data } = await api.setMethod("GET").setParams({ username }).query(url);
 
-      dispatch(receiveGetUser(data));
+      if (!me) {
+        dispatch(receiveGetUser(data));
+      } else {
+        dispatch(receiveSignIn(data));
+      }
     } catch {
       dispatch(errorGetUser("Error: something went wrong"));
     }
