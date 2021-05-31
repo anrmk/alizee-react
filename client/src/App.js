@@ -18,13 +18,13 @@ function App() {
     <Suspense fallback={<LinearDeterminate />}>
       <ViewportProvider>
         <ThemeProvider theme={theme}>
-          <SnackbarProvider maxSnack={3} >
-            <DialogProvider>
-              <CssBaseline />
-              <Router history={history}>
+          <SnackbarProvider maxSnack={3}>
+            <CssBaseline />
+            <Router history={history}>
+              <DialogProvider>
                 <Main />
-              </Router>
-            </DialogProvider>
+              </DialogProvider>
+            </Router>
           </SnackbarProvider>
         </ThemeProvider>
       </ViewportProvider>
