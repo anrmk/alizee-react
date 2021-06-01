@@ -92,63 +92,60 @@ function Feed(props) {
   };
 
   return (
-    <Container className={classes.root}>
-      <Grid container className={classes.grid}>
-        <Grid item xs={12} md={8}>
-          <PreviewStoriesList
-            loading={story.isFetching}
-            user={userInfo}
-            items={story.data}
-            onItemClick={handleStoryClick}
-            onCreateStoryClick={createStoryDialog.toggle}
-          />
+    <Grid container>
+      <Grid item sm={12} md={8} >
+        <PreviewStoriesList
+          loading={story.isFetching}
+          user={userInfo}
+          items={story.data}
+          onItemClick={handleStoryClick}
+          onCreateStoryClick={createStoryDialog.toggle}
+        />
 
-          <PostsList
-            user={userInfo}
-            items={posts.data}
-            hasMore={posts.hasMore}
-            onFetchMore={handleFetchMore}
-            onLike={likeAction.toggle}
-            onFavorite={favoriteAction.toggle}
-            onSendTip={sendTipDialog.toggle}
-            onBuyPost={buyPostDialog.toggle}
-            onReceipt={receiptDialog.toggle}
-            onPurchase={purchaseDialog.toggle}
-            onShare={shareDialog.toggle} //??
-            onMenu={postMenuDialog.toggle} //??
-            onCommentSend={handleCommentSendClick}
-            onFullScreen={lightboxModal.toggle}
-          />
+        <PostsList
+          user={userInfo}
+          items={posts.data}
+          hasMore={posts.hasMore}
+          onFetchMore={handleFetchMore}
+          onLike={likeAction.toggle}
+          onFavorite={favoriteAction.toggle}
+          onSendTip={sendTipDialog.toggle}
+          onBuyPost={buyPostDialog.toggle}
+          onReceipt={receiptDialog.toggle}
+          onPurchase={purchaseDialog.toggle}
+          onShare={shareDialog.toggle} //??
+          onMenu={postMenuDialog.toggle} //??
+          onCommentSend={handleCommentSendClick}
+          onFullScreen={lightboxModal.toggle}
+        />
 
-        </Grid>
-        <Hidden smDown>
-          <Grid item md={4}>
-            <Box position="sticky" top="4rem" paddingLeft="24px">
-              {people.data && people.data.length > 0 && (
-                <Box>
-                  <Box mb={1} display="flex" alignItems="center" justifyContent="space-between" flexWrap="wrap">
-                    <Typography variant="h6">Suggestions For You</Typography>
-                    <MUILink variant="caption" to={SUGESTED_PEOPLE} component={Link}>
-                      See All
-                    </MUILink>
-                  </Box>
-                  <RelationshipList wide={true} items={people.data} onSubscribeClick={followDialog.toggle} />
-                </Box>
-              )}
-
-              {hotStreamers.data && hotStreamers.data.length > 0 && (
-                <Box>
-                  <Typography variant="h6" gutterBottom>
-                    Hot Streamers
-                  </Typography>
-                  <HotStreamersItemList items={hotStreamers.data} onJoinStream={handleJoinStream} />
-                </Box>
-              )}
-            </Box>
-          </Grid>
-        </Hidden>
       </Grid>
-    </Container>
+      
+      <Hidden smDown>
+        <Grid item md={4} >
+          <Box position="sticky" top="4rem" p={3}>
+            {people.data && people.data.length > 0 && (
+              <Box mb={1}>
+                <Typography variant="h6">Suggestions For You</Typography>
+                <MUILink variant="caption" to={SUGESTED_PEOPLE} component={Link}>
+                  See All
+                </MUILink>
+                <RelationshipList wide={true} items={people.data} onSubscribeClick={followDialog.toggle} />
+              </Box>
+            )}
+
+            {hotStreamers.data && hotStreamers.data.length > 0 && (
+              <Box>
+                <Typography variant="h6" gutterBottom>
+                  Hot Streamers
+                </Typography>
+                <HotStreamersItemList items={hotStreamers.data} onJoinStream={handleJoinStream} />
+              </Box>
+            )}
+          </Box>
+        </Grid>
+      </Hidden>
+    </Grid>
   );
 }
 

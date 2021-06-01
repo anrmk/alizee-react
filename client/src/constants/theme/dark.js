@@ -10,20 +10,20 @@ export default createMuiTheme({
     type: "dark",
 
     action: {
-      main: "#FEDB5F" 
+      main: "#FEDB5F",
     },
 
     primary: {
-      main: "#35B1F6" //"#845DD7",
+      main: "#35B1F6", //"#845DD7",
     },
 
     secondary: {
-      main: "#845DD7" //"#8A2260",
+      main: "#845DD7", //"#8A2260",
     },
 
     success: {
-      main: "#58CD86",//"#18AA7E"
-      contrast: "#44b700"
+      main: "#58CD86", //"#18AA7E"
+      contrast: "#44b700",
     },
 
     warning: {
@@ -38,21 +38,28 @@ export default createMuiTheme({
       default: "#1F2128",
       paper: "#242731",
       mainGradient: "linear-gradient(141.21deg, #36704d -16.59%, #356078 40.28%, #70538a 90.77%)",
-      secondGradient: "linear-gradient(141.21deg, rgba(136, 108, 169, 0.15) -16.6%, rgba(104, 215, 148, 0.15) -16.59%, rgba(111, 203, 255, 0.15) 40.28%, rgba(184, 138, 225, 0.15) 90.77%)"
+      secondGradient:
+        "linear-gradient(141.21deg, rgba(136, 108, 169, 0.15) -16.6%, rgba(104, 215, 148, 0.15) -16.59%, rgba(111, 203, 255, 0.15) 40.28%, rgba(184, 138, 225, 0.15) 90.77%)",
     },
-    
+
     common: {
-      gray: "#E4E6E7"
+      gray: "#E4E6E7",
     },
 
     divider: "rgba(255, 255, 255, 0.08)",
   },
 
   overrides: {
+    MuiContainer: {
+      maxWidthXl: {
+        maxWidth: "1600px !important",
+      },
+    },
+
     MuiAppBar: {
       colorPrimary: {
         backgroundColor: "#1F2128",
-        color: "#fff"
+        color: "#fff",
       },
     },
 
@@ -82,8 +89,8 @@ export default createMuiTheme({
 
     MuiBackdrop: {
       root: {
-        backgroundColor: "rgba(0, 0, 0, 0.85)"
-      }
+        backgroundColor: "rgba(0, 0, 0, 0.85)",
+      },
     },
 
     MuiButton: {
@@ -106,7 +113,8 @@ export default createMuiTheme({
       },
 
       containedSecondary: {
-        background: "linear-gradient(141.21deg, rgba(136, 108, 169, 0.15) -16.6%, rgba(104, 215, 148, 0.15) -16.59%, rgba(111, 203, 255, 0.15) 40.28%, rgba(184, 138, 225, 0.15) 90.77%)",
+        background:
+          "linear-gradient(141.21deg, rgba(136, 108, 169, 0.15) -16.6%, rgba(104, 215, 148, 0.15) -16.59%, rgba(111, 203, 255, 0.15) 40.28%, rgba(184, 138, 225, 0.15) 90.77%)",
         backgroundColor: "transparent",
         color: "#845DD7",
         borderRadius: "20px",
@@ -126,27 +134,27 @@ export default createMuiTheme({
           background: "#35B1F6",
           color: "white",
 
-          "&.transparent" : {
+          "&.transparent": {
             background: "rgb(53 177 246 / 80%)",
-          }
+          },
         },
 
         "&.danger": {
           background: "#FE5F5F",
           color: "white",
 
-          "&.transparent" : {
+          "&.transparent": {
             background: "rgb(254 95 95 / 80%)",
-          }
+          },
         },
 
-        "&.success" : {
+        "&.success": {
           background: "#58CD86",
           color: "white",
 
-          "&.transparent" : {
+          "&.transparent": {
             background: "rgb(88 205 134 / 80%)",
-          }
+          },
         },
       },
     },
@@ -157,29 +165,35 @@ export default createMuiTheme({
       colorAction: {
         color: "#FEDB5F",
       },
-
-      // fontSizeLarge: {
-      //   fontSize: "8rem",
-      // },
     },
 
     MuiBottomNavigation: {
       root: {
-        borderRadius: "4px"
-      }
+        borderRadius: "4px",
+      },
+    },
+
+    MuiBottomNavigationAction: {
+      root: {
+        minWidth: "60px",
+      },
     },
 
     MuiListItem: {
+      root: {
+        borderRadius: "4px",
+        "&$selected": {
+          backgroundColor: "#35B1F616",
+        },
+      },
+
       secondaryAction: {
-        paddingRight: "96px"
-  
-      }
+        paddingRight: "96px",
+      },
     },
   },
 
-  MuiBottomNavigationAction: {
-   
-  },
+  MuiBottomNavigationAction: {},
 
   MuiTypography: {
     caption: {
@@ -187,11 +201,9 @@ export default createMuiTheme({
     },
   },
 
-
-
   MuiDivider: {
     root: {
-      background: "#1C1A1A"
-    }
-  }
+      background: "#1C1A1A",
+    },
+  },
 });

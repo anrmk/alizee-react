@@ -10,22 +10,20 @@ const useStyles = makeStyles((theme) => ({
     overflowY: "auto",
     left: 0,
     top: 0,
-    padding: theme.spacing(2),
     "&::-webkit-scrollbar": {
       display: "none",
     },
   },
 
-  // messengerMediaMessage: {
-  //   maxWidth: "50%",
-  //   width: "100%",
-  //   [theme.breakpoints.down("sm")]: {
-  //     maxWidth: "60%",
-  //   },
-  //   [theme.breakpoints.down("xs")]: {
-  //     maxWidth: "70%",
-  //   },
-  // },
+  media: {
+    borderRadius: theme.shape.borderRadius,
+    maxWidth: "60%",
+    width: "100%",
+    cursor: "pointer",
+    [theme.breakpoints.down("xs")]: {
+      maxWidth: "100%",
+    },
+  },
 
   input: {
     padding: theme.spacing(0.5),

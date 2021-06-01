@@ -12,33 +12,34 @@ import {
   GridListTileBar,
   Typography,
   IconButton,
-  Link
+  Link,
 } from "@material-ui/core/";
 
 import PlayArrowIcon from "@material-ui/icons/PlayArrowOutlined";
-import ClearIcon from "@material-ui/icons/Clear"; 
+import ClearIcon from "@material-ui/icons/Clear";
 
 import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 import { formatDate } from "../../helpers/functions";
 
 import useStyles from "./styles";
 
-const Message = React.memo(({
+const Message = React.memo(
+  ({
     message,
     isOwner,
 
     onMediaView,
-    onDelete
+    onDelete,
   }) => {
     const classes = useStyles();
 
     const handleMediaPreviewClick = (index) => {
       onMediaView && onMediaView({ items: message.media, startSlideIndex: index });
     };
-    
+
     const handleDeleteClick = () => {
       onDelete && onDelete(message?.id);
-    }
+    };
 
     const renderGridListTile = (file, cols = 1, rows = 1, index = 0) => {
       return (
@@ -107,7 +108,11 @@ const Message = React.memo(({
               </Box>
 
               {message.media?.length > 0 && (
-                <GridList cols={message.media.length === 2 ? 2 : Math.ceil(message.media.length / 2)}>
+                <GridList
+                  cols={message.media.length === 2 ? 2 : Math.ceil(message.media.length / 2)}
+                  className={classes.media}
+                  spacing={1}
+                >
                   {message.media.map((file, index) => {
                     return renderChatMediaItem(message.media.length, file, index);
                   })}
@@ -120,10 +125,7 @@ const Message = React.memo(({
 
         {onDelete && isOwner && (
           <ListItemSecondaryAction>
-            <IconButton
-              edge="end"
-              aria-label="delete"
-              onClick={handleDeleteClick}>
+            <IconButton edge="end" aria-label="delete" onClick={handleDeleteClick}>
               <ClearIcon fontSize="small" />
             </IconButton>
           </ListItemSecondaryAction>

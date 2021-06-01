@@ -104,19 +104,19 @@ function Chat(props) {
   };
 
   return (
-    <Container>
-      <SlidingViews mobileOnly currentState={currentSlidingViewsState} firstSize={4} secondSize={8}>
-        <Sidebar
-          isLoading={chat.isFetching}
-          user={user}
-          items={chat.data}
-          selectedItemId={current?.id}
-          onItemClick={handleRoomGet}
-          onSearchChange={handleRoomsFilter}
-          onNewChatClick={newChatDialog.toggle}
-        />
+    <SlidingViews mobileOnly currentState={currentSlidingViewsState} firstSize={4} secondSize={8}>
+      <Sidebar
+        isLoading={chat.isFetching}
+        user={user}
+        items={chat.data}
+        selectedItemId={current?.id}
+        onItemClick={handleRoomGet}
+        onSearchChange={handleRoomsFilter}
+        onNewChatClick={newChatDialog.toggle}
+      />
 
-        {current && (<Room
+      {current && (
+        <Room
           current={current}
           user={user}
           isLoading={chat.isFetching}
@@ -128,10 +128,9 @@ function Chat(props) {
           onMediaView={lightboxModal.toggle}
           onVideoStreem={handleCallToPeer}
           onSendTip={sendTipDialog.toggle}
-        />)}
-        
-      </SlidingViews>
-    </Container>
+        />
+      )}
+    </SlidingViews>
   );
 }
 

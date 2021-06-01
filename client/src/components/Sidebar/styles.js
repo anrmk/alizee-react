@@ -9,34 +9,10 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: "nowrap",
   },
 
-  drawer: {
-    width: theme.spacing(7),
-    overflow: "hidden",
-    flexShrink: 0,
-    whiteSpace: "nowrap",
-  },
-
   papper: {
     width: theme.spacing(7),
     overflow: "hidden",
   },
-
-  header: (props) => ({
-    display: "flex",
-    padding: theme.spacing(1),
-    alignItems: props.open ? "space-between" : "center",
-    flexDirection: props.open ? "row" : "column",
-    justifyContent: "center",
-
-    "& label": {
-      width: "auto",
-      flexWrap: "nowrap",
-    },
-
-    [theme.breakpoints.up("sm")]: {
-      justifyContent: "space-between",
-    },
-  }),
 
   drawerHeader: (props) => ({
     display: "none",
@@ -81,21 +57,21 @@ const useStyles = makeStyles((theme) => ({
 
   navigation: {
     marginTop: theme.spacing(1),
+    width: "100%",
 
     "& .success": {
-      color: theme.palette.success.main
+      color: theme.palette.success.main,
+      padding: theme.spacing(0.5)
     },
     "& .secondary": {
-      color: theme.palette.secondary.main
+      color: theme.palette.secondary.main,
+      padding: theme.spacing(0.5)
     },
     "& .primary": {
-      color: theme.palette.primary.main
+      color: theme.palette.primary.main,
+      padding: theme.spacing(0.5)
     }
   },
-
-  pageList: {
-    padding: 0
-  }
 }));
 
 export default useStyles;

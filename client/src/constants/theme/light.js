@@ -45,10 +45,16 @@ export default createMuiTheme({
   },
 
   overrides: {
+    MuiContainer: {
+      maxWidthXl: {
+        maxWidth: "1600px !important",
+      },
+    },
+
     MuiAppBar: {
       colorPrimary: {
         backgroundColor: "#F5F7F8",
-        color: "rgba(0, 0, 0, 0.87)"
+        color: "rgba(0, 0, 0, 0.87)",
       },
     },
 
@@ -66,8 +72,8 @@ export default createMuiTheme({
 
     MuiBackdrop: {
       root: {
-        backgroundColor: "rgba(0, 0, 0, 0.85)"
-      }
+        backgroundColor: "rgba(0, 0, 0, 0.85)",
+      },
     },
 
     MuiButton: {
@@ -111,27 +117,27 @@ export default createMuiTheme({
           background: "#35B1F6",
           color: "white",
 
-          "&.transparent" : {
+          "&.transparent": {
             background: "rgb(53 177 246 / 80%)",
-          }
+          },
         },
 
         "&.danger": {
           background: "#FE5F5F",
           color: "white",
 
-          "&.transparent" : {
+          "&.transparent": {
             background: "rgb(254 95 95 / 80%)",
-          }
+          },
         },
 
-        "&.success" : {
+        "&.success": {
           background: "#58CD86",
           color: "white",
 
-          "&.transparent" : {
+          "&.transparent": {
             background: "rgb(88 205 134 / 80%)",
-          }
+          },
         },
       },
     },
@@ -142,10 +148,6 @@ export default createMuiTheme({
       colorAction: {
         color: "#FEDB5F",
       },
-
-      // fontSizeLarge: {
-      //   fontSize: "8rem",
-      // },
     },
 
     MuiBottomNavigation: {
@@ -154,11 +156,22 @@ export default createMuiTheme({
       },
     },
 
+    MuiBottomNavigationAction: {
+      root: {
+        minWidth: "60px",
+      },
+    },
+
     MuiListItem: {
+      root: {
+        borderRadius: "4px",
+        "&$selected": {
+          backgroundColor: "#35B1F616",
+        },
+      },
       secondaryAction: {
-        paddingRight: "96px"
-  
-      }
+        paddingRight: "96px",
+      },
     },
   },
 

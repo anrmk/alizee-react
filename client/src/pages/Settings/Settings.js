@@ -112,39 +112,37 @@ function Settings() {
   useEffect(() => () => dispatch(resetSettings()), [currentTab]);
 
   return (
-    <Container>
-      <SlidingViews mobileOnly currentState={currentSlidingViewsState} firstSize={3} secondSize={9}>
-        <Tabs
-          orientation="vertical"
-          variant="fullWidth"
-          value={currentTab.index}
-          className={classes.tabs}
-          onChange={(_, value) => setCurrentTab(findTab(value))}
-        >
-          {TABS &&
-            TABS.map((tab) => (
-              <Tab key={tab.index} to={tab.route} component={Link} label={tab.title} {...a11yProps(tab.index)} />
-            ))}
-        </Tabs>
+    <SlidingViews mobileOnly currentState={currentSlidingViewsState} firstSize={4} secondSize={8}>
+      <Tabs
+        orientation="vertical"
+        variant="fullWidth"
+        value={currentTab.index}
+        className={classes.tabs}
+        onChange={(_, value) => setCurrentTab(findTab(value))}
+      >
+        {TABS &&
+          TABS.map((tab) => (
+            <Tab key={tab.index} to={tab.route} component={Link} label={tab.title} {...a11yProps(tab.index)} />
+          ))}
+      </Tabs>
 
-        <Box>
-          <PrivateRoute exact path={SETTINGS_EDIT_PROFILE_ROUTE} component={EditProfileSettings} />
-          <PrivateRoute exact path={SETTINGS_ACCOUNT_ROUTE} component={EditAccountSettings} />
-          <PrivateRoute exact path={SETTINGS_CARD_ROUTE} component={EditCardSettings} />
-          <PrivateRoute exact path={SETTINGS_BANK_ROUTE} component={EditBankSettings} />
-          <PrivateRoute exact path={SETTINGS_SUBSCRIPTION_ROUTE} component={EditSubscriptionSettings} />
+      <Box>
+        <PrivateRoute exact path={SETTINGS_EDIT_PROFILE_ROUTE} component={EditProfileSettings} />
+        <PrivateRoute exact path={SETTINGS_ACCOUNT_ROUTE} component={EditAccountSettings} />
+        <PrivateRoute exact path={SETTINGS_CARD_ROUTE} component={EditCardSettings} />
+        <PrivateRoute exact path={SETTINGS_BANK_ROUTE} component={EditBankSettings} />
+        <PrivateRoute exact path={SETTINGS_SUBSCRIPTION_ROUTE} component={EditSubscriptionSettings} />
 
-          <PrivateRoute exact path={SETTINGS_NOTIFICATIONS_ROUTE} component={GeneralNotificationSettings} />
-            <PrivateRoute exact path={SETTINGS_NOTIFICATIONS_PUSH_ROUTE} component={PushNotificationSettings} />
-            <PrivateRoute exact path={SETTINGS_NOTIFICATIONS_EMAIL_ROUTE} component={EmailNotificationSettings} />
-            <PrivateRoute exact path={SETTINGS_NOTIFICATIONS_SITE_ROUTE} component={SiteNotificationSettings} />
-            <PrivateRoute exact path={SETTINGS_NOTIFICATIONS_TOAST_ROUTE} component={ToastNotificationSettings} />
+        <PrivateRoute exact path={SETTINGS_NOTIFICATIONS_ROUTE} component={GeneralNotificationSettings} />
+        <PrivateRoute exact path={SETTINGS_NOTIFICATIONS_PUSH_ROUTE} component={PushNotificationSettings} />
+        <PrivateRoute exact path={SETTINGS_NOTIFICATIONS_EMAIL_ROUTE} component={EmailNotificationSettings} />
+        <PrivateRoute exact path={SETTINGS_NOTIFICATIONS_SITE_ROUTE} component={SiteNotificationSettings} />
+        <PrivateRoute exact path={SETTINGS_NOTIFICATIONS_TOAST_ROUTE} component={ToastNotificationSettings} />
 
-          <PrivateRoute exact path={SETTINGS_PRIVACY_SECURITY_ROUTE} component={PrivacySecuritySettings} />
-            <PrivateRoute exact path={SETTINGS_BLACK_LIST_ROUTE} component={BlackList} />
-        </Box>
-      </SlidingViews>
-    </Container>
+        <PrivateRoute exact path={SETTINGS_PRIVACY_SECURITY_ROUTE} component={PrivacySecuritySettings} />
+        <PrivateRoute exact path={SETTINGS_BLACK_LIST_ROUTE} component={BlackList} />
+      </Box>
+    </SlidingViews>
   );
 }
 

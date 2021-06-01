@@ -9,35 +9,32 @@ import ControlPointIcon from "@material-ui/icons/ControlPointDuplicateOutlined";
 import VerifiedUserIcon  from "@material-ui/icons/CheckCircleOutline";
 
 import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
-import { USER_RANKING } from "../../constants/user";
 
 import Avatar from "../Avatar";
 import useStyles from "./styles";
 
 function UserCard(props) {
   const { open } = props;
-  const { name, userName, avatarUrl, ranking, identityVerified } = props;
+  const { name, userName, avatarUrl, coverUrl, identityVerified } = props;
   const { onCreateMeet, onCreatePost, onCreateStory } = props;
 
   const classes = useStyles({ open });
 
   return (
-    <Box className={classes.card}>
-      <Avatar
-        src={avatarUrl}
-        size="large"
-        borderColor={USER_RANKING[ranking]}
-        live
-        avatarBaseProps={{ component: Link, to: PROFILE_USERNAME_ROUTE(userName) }}
-      />
-      <br />
-      <Typography variant="h5" component="span">
+    <Box>
+      <Box display="flex" justifyContent="center" position="relative">
+        <Avatar
+          src={avatarUrl}
+          size="big"
+          avatarBaseProps={{ component: Link, to: PROFILE_USERNAME_ROUTE(userName) }}
+        />
+      </Box>
+      <Typography variant="h6" component="h6" align="center">
         {name} {identityVerified && <VerifiedUserIcon fontSize="small" />}
       </Typography>
-      <Typography variant="subtitle1" color="textSecondary">
+      <Typography variant="subtitle2" color="textSecondary" align="center">
         @{userName}
       </Typography>
-
       <BottomNavigation showLabels className={classes.navigation}>
         <BottomNavigationAction
           className="success"
@@ -59,7 +56,7 @@ function UserCard(props) {
           label="Story"
           icon={<ControlPointIcon />}
           onClick={onCreateStory}
-        />
+        />{" "}
       </BottomNavigation>
     </Box>
   );

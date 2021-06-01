@@ -7,7 +7,7 @@ const getGradient = () => (
 const useStyles = makeStyles((theme) => ({
   root: {
     position: "relative",
-    marginBottom: theme.spacing(1),
+    marginBottom: theme.spacing(2),
   },
   cover: {
     height: "220px",

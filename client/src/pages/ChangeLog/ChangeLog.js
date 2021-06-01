@@ -4,7 +4,7 @@ import * as changeLogActions from "../../store/actions/changeLog";
 import ApiContext from "../../context/ApiContext";
 import { formatDate } from "../../helpers/functions";
 
-import { Container, List, ListItem, ListItemText, Divider, Card, CardContent, CardHeader, Typography, ListItemIcon } from "@material-ui/core/";
+import { List, ListItem, ListItemText, Card, CardContent, CardHeader, ListItemIcon } from "@material-ui/core/";
 import AnnouncementIcon from "@material-ui/icons/AnnouncementOutlined";
 
 function ChangeLog({ data, isFetching, getLogs, resetLogs }) {
@@ -18,21 +18,21 @@ function ChangeLog({ data, isFetching, getLogs, resetLogs }) {
   }, []);
 
   return (
-    <Container>
-      <Card>
-        <CardHeader title="What's News" />
-        <CardContent>
-          <List>
-            {data.map((log, index) => (
-              <ListItem key={index}>
-                <ListItemIcon><AnnouncementIcon /></ListItemIcon>
-                <ListItemText primary={formatDate(log.createdDate)} secondary={log.content} />
-              </ListItem>
-            ))}
-          </List>
-        </CardContent>
-      </Card>
-    </Container>
+    <Card>
+      <CardHeader title="What's News" />
+      <CardContent>
+        <List>
+          {data.map((log, index) => (
+            <ListItem key={index}>
+              <ListItemIcon>
+                <AnnouncementIcon />
+              </ListItemIcon>
+              <ListItemText primary={formatDate(log.createdDate)} secondary={log.content} />
+            </ListItem>
+          ))}
+        </List>
+      </CardContent>
+    </Card>
   );
 }
 

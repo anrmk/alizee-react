@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
   meetingImage: {
     width: "100%",
     height: "auto",
-    padding: theme.spacing(3),
+    padding: theme.spacing(0.5),
   },
 }));
 

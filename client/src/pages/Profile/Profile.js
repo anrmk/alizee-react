@@ -188,7 +188,7 @@ function Profile(props) {
   }
 
   return (
-    <Container className={classes.root} fixed>
+    <>
       <ProfileHeader
         user={user.data}
         isOwner={username === me.userName}
@@ -243,7 +243,7 @@ function Profile(props) {
           </Grid>
         </Hidden>
       </Grid>
-    </Container>
+    </>
   );
 }
 

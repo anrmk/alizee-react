@@ -40,7 +40,7 @@ function Meeting() {
   };
 
   return (
-    <Container className={classes.meetingContainer}>
+    <Container className={classes.meetingContainer} disableGutters>
       <Grid container direction="row" justify="center" spacing={2}>
         <Grid item container direction="column" justify="center" xs={10} md={6} className={classes.meetingLinkItem}>
           <Typography variant="h4" align="left" paragraph>

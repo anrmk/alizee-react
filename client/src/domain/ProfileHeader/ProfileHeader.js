@@ -59,7 +59,7 @@ function ProfileHeader(props) {
         </IconButton>
       </Box>
       <Hidden mdUp>
-        <Box display="flex" paddingX={2} marginBottom={2}>
+        <Box display="flex">
           <Avatar
             className={classes.avatarHeader}
             src={user.avatarUrl}
