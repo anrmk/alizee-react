@@ -3,9 +3,6 @@ import { useTranslation } from "react-i18next";
 
 import { Box, Tabs, Tab } from "@material-ui/core";
 
-// import GridIcon from "@material-ui/icons/GridOnOutlined";
-// import StarIcon from "@material-ui/icons/Star";
-// import TaggedIcon from "@material-ui/icons/LabelOutlined";
 
 import useStyles from "./styles";
 
@@ -25,10 +22,10 @@ function PostTabs({
 
   return (
     <Box marginBottom={1} className={classes.tabsWrapper}>
-      <Tabs value={index} onChange={handleChange} variant="fullWidth" centered>
-        <Tab label={t("ProfileProfileContentPostsTabLabel")} disabled={disabled} />
-        <Tab label={t("ProfileProfileContentTaggedTabLabel")} disabled={disabled} />
-        {isOwner && <Tab label={t("ProfileProfileContentSavedTabLabel")} disabled={disabled} />}
+      <Tabs value={index} onChange={handleChange} variant="fullWidth" centered >
+        <Tab label={t("ProfileProfileContentPostsTabLabel")} disabled={disabled} className={classes.tab}/>
+        <Tab label={t("ProfileProfileContentTaggedTabLabel")} disabled={disabled} className={classes.tab}/>
+        {isOwner && <Tab label={t("ProfileProfileContentSavedTabLabel")} disabled={disabled} className={classes.tab}/>}
       </Tabs>
     </Box>
   );

@@ -4,7 +4,7 @@ import { getStyleByTheme } from "../../helpers/functions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-
+	
   },
 
   tabsWrapper: {
@@ -19,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
 
   tabs: {
     marginBottom: "20px",
+  },
+
+  tab: {
+	minWidth: '140px'
   }
 }));
 

@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import {useHistory} from "react-router-dom"
+
 import { ListItem, ListItemAvatar, ListItemText, Typography } from "@material-ui/core";
 
 import Avatar from "../../components/Avatar";
@@ -15,10 +17,14 @@ function SidebarListItem({
 
   onItemClick,
 }) {
+  const history = useHistory()
+
   const classes = useStyles();
 
   const handleItemClick = () => {
     onItemClick && onItemClick(item.userName);
+	
+	history.push(item.userName)
   };
 
   return (
