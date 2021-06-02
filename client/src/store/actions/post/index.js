@@ -31,7 +31,9 @@ export {
   GET_POST_REQUEST,
   GET_POST_SUCCESS,
   GET_POST_FAILURE,
+  RESET_CURRENT_POST,
 
+  resetCurrentPost,
   getPost
 } from "./getPost";
 

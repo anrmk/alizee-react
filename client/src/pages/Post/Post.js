@@ -38,7 +38,7 @@ function PostPage(props) {
   const postId = props.match.params.id;
 
   const { user, post, comment } = props;
-  const { getPost, getComments, resetComments, createComment } = props;
+  const { getPost, getComments, resetComments, createComment, resetCurrentPost } = props;
 
   const likeAction = useLikeAction();
   const favoriteAction = useFavoriteAction();
@@ -62,6 +62,7 @@ function PostPage(props) {
     getComments(apiClient, { postId, length: COMMENTS_POST_LENGTH });
     return () => {
       resetComments();
+	  resetCurrentPost()
     };
   }, []);
 
@@ -179,6 +180,7 @@ function mapDispatchToProps(dispatch) {
     getPost: (api, id) => dispatch(postActions.getPost(api, id)),
     getPurchases: (api, id, callback) => dispatch(postActions.getPurchases(api, id, callback)),
     getReceipt: (api, id, callback) => dispatch(postActions.getReceipt(api, id, callback)),
+	resetCurrentPost: (api,id)=> dispatch(postActions.resetCurrentPost()),
 
     //createFollow: (api, id) => dispatch(relationshipActions.createFollow(api, id)),
     //deleteFollow: (api, id) => dispatch(relationshipActions.deleteFollow(api, id)),

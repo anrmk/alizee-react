@@ -4,6 +4,7 @@ import { refreshPosts } from "./getPosts";
 export const GET_POST_REQUEST = "GET_POST_REQUEST";
 export const GET_POST_SUCCESS = "GET_POST_SUCCESS";
 export const GET_POST_FAILURE = "GET_POST_FAILURE";
+export const RESET_CURRENT_POST = "RESET_CURRENT_POST"
 
 function requestGetPost() {
   return {
@@ -34,6 +35,15 @@ function errorGetPost(message) {
       errorMessage: message,
     },
   };
+}
+
+export function resetCurrentPost() {
+	return {
+		type: RESET_CURRENT_POST,
+		payload: {
+			currentPost: {}
+		}
+	}
 }
 
 export function getPost(api, id) {

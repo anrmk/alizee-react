@@ -2,6 +2,7 @@ import {
   GET_POST_REQUEST,
   GET_POST_SUCCESS,
   GET_POST_FAILURE,
+  RESET_CURRENT_POST,
 
   GET_POSTS_REQUEST,
   GET_POSTS_SUCCESS,
@@ -156,6 +157,12 @@ export default function post(
         ...action.payload,
       };
     }
+	case RESET_CURRENT_POST: {
+		return {
+		 ...state,
+		 ...action.payload,
+		}
+	}
 
     //SUGGESTION POSTS
     case GET_POST_SUGGESTIONS_REQUEST: {
