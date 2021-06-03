@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
+// Obsolete
 export default function useLocationHelper(routes) {
   const [isIncluded, setIsIncluded] = useState(false);
   const { pathname } = useLocation();

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import { Link, useParams } from "react-router-dom";
-import { Container, Tabs, Tab, Box } from "@material-ui/core";
+import { Switch, Link, useParams } from "react-router-dom";
+import { Tabs, Tab, Box } from "@material-ui/core";
 
 import {
   SETTINGS_BLACK_LIST_ROUTE,
@@ -127,20 +127,22 @@ function Settings() {
       </Tabs>
 
       <Box>
-        <PrivateRoute exact path={SETTINGS_EDIT_PROFILE_ROUTE} component={EditProfileSettings} />
-        <PrivateRoute exact path={SETTINGS_ACCOUNT_ROUTE} component={EditAccountSettings} />
-        <PrivateRoute exact path={SETTINGS_CARD_ROUTE} component={EditCardSettings} />
-        <PrivateRoute exact path={SETTINGS_BANK_ROUTE} component={EditBankSettings} />
-        <PrivateRoute exact path={SETTINGS_SUBSCRIPTION_ROUTE} component={EditSubscriptionSettings} />
+        <Switch>
+          <PrivateRoute exact path={SETTINGS_EDIT_PROFILE_ROUTE} component={EditProfileSettings} />
+          <PrivateRoute exact path={SETTINGS_ACCOUNT_ROUTE} component={EditAccountSettings} />
+          <PrivateRoute exact path={SETTINGS_CARD_ROUTE} component={EditCardSettings} />
+          <PrivateRoute exact path={SETTINGS_BANK_ROUTE} component={EditBankSettings} />
+          <PrivateRoute exact path={SETTINGS_SUBSCRIPTION_ROUTE} component={EditSubscriptionSettings} />
 
-        <PrivateRoute exact path={SETTINGS_NOTIFICATIONS_ROUTE} component={GeneralNotificationSettings} />
-        <PrivateRoute exact path={SETTINGS_NOTIFICATIONS_PUSH_ROUTE} component={PushNotificationSettings} />
-        <PrivateRoute exact path={SETTINGS_NOTIFICATIONS_EMAIL_ROUTE} component={EmailNotificationSettings} />
-        <PrivateRoute exact path={SETTINGS_NOTIFICATIONS_SITE_ROUTE} component={SiteNotificationSettings} />
-        <PrivateRoute exact path={SETTINGS_NOTIFICATIONS_TOAST_ROUTE} component={ToastNotificationSettings} />
+          <PrivateRoute exact path={SETTINGS_NOTIFICATIONS_ROUTE} component={GeneralNotificationSettings} />
+          <PrivateRoute exact path={SETTINGS_NOTIFICATIONS_PUSH_ROUTE} component={PushNotificationSettings} />
+          <PrivateRoute exact path={SETTINGS_NOTIFICATIONS_EMAIL_ROUTE} component={EmailNotificationSettings} />
+          <PrivateRoute exact path={SETTINGS_NOTIFICATIONS_SITE_ROUTE} component={SiteNotificationSettings} />
+          <PrivateRoute exact path={SETTINGS_NOTIFICATIONS_TOAST_ROUTE} component={ToastNotificationSettings} />
 
-        <PrivateRoute exact path={SETTINGS_PRIVACY_SECURITY_ROUTE} component={PrivacySecuritySettings} />
-        <PrivateRoute exact path={SETTINGS_BLACK_LIST_ROUTE} component={BlackList} />
+          <PrivateRoute exact path={SETTINGS_PRIVACY_SECURITY_ROUTE} component={PrivacySecuritySettings} />
+          <PrivateRoute exact path={SETTINGS_BLACK_LIST_ROUTE} component={BlackList} />
+        </Switch>
       </Box>
     </SlidingViews>
   );
