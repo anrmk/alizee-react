@@ -17,6 +17,7 @@ export function removeFollower() {
       data.followersCount -= 1;
     }
     data.isFollow = false;
+    data.followStatus = null;
 
     dispatch(receiveUserFollowerCountDecrement(data));
   };

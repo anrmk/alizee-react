@@ -11,6 +11,9 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: 0,
     "& > .MuiCardHeader-content": {
       width: "100%"
+    },
+    "& > .MuiCardHeader-avatar": {
+      marginRight: 0
     }
   },
   avatarHeader: {

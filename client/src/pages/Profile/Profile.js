@@ -89,7 +89,7 @@ function Profile(props) {
       resetPosts();
       handleFetchPosts();
     }
-  }, [postSettings]);
+  }, [postSettings, user.data?.isFollow]);
 
   if (url.includes(SETTINGS_ROUTE)) {
     return <Redirect to={SETTINGS_EDIT_PROFILE_ROUTE} />;
@@ -145,8 +145,13 @@ function Profile(props) {
     });
   };
 
-  const handlePeopleFollowClick = (userName) => {
-    user.data.isFollow ? deleteFollow(apiClient, userName) : createFollow(apiClient, userName);
+  const handlePeopleFollowClick = async (userName) => {
+    user.data.isFollow ? 
+      await deleteFollow(apiClient, userName) : 
+      await createFollow(apiClient, userName, user.data?.isPrivate);
+
+    resetPosts();
+    handleFetchPosts();
   };
 
   const handleFavoriteClick = (userName) => {
@@ -206,8 +211,9 @@ function Profile(props) {
         <ProfileUserInfoMobile
           user={user.data}
           isOwner={username === me.userName}
-          isFollow={user.data.isFollow}
-          subscriptionPrice={user.data.subscriptionPrice}
+          isFollow={user.data?.isFollow}
+          followStatus={user.data?.followStatus}
+          subscriptionPrice={user.data?.subscriptionPrice}
           onSubscribeClick={followDialog.toggle}
           onSendTipClick={sendTipDialog.toggle} />
       </Hidden>
@@ -231,8 +237,9 @@ function Profile(props) {
                 className={classes.userInfo}
                 user={user.data}
                 isOwner={username === me.userName}
-                isFollow={user.data.isFollow}
-                subscriptionPrice={user.data.subscriptionPrice}
+                isFollow={user.data?.isFollow}
+                followStatus={user.data?.followStatus}
+                subscriptionPrice={user.data?.subscriptionPrice}
                 onSubscribeClick={followDialog.toggle}
                 onSendTipClick={sendTipDialog.toggle}
                 onMoodUpdateClick={createMoodDialog.toggle}
@@ -285,7 +292,7 @@ function mapDispatchToProps(dispatch) {
 
     getFavoritePosts: (api, opts) => dispatch(postActions.getFavoritePosts(api, opts)),
 
-    createFollow: (api, userName) => dispatch(relationshipActions.createFollow(api, userName)),
+    createFollow: (api, userName, isPrivateAccount) => dispatch(relationshipActions.createFollow(api, userName, isPrivateAccount)),
     deleteFollow: (api, userName) => dispatch(relationshipActions.deleteFollow(api, userName)),
 
     updateCover: (api, opts) => dispatch(settingsActions.updateCover(api, opts)),

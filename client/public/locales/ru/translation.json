@@ -103,5 +103,11 @@
   "NameOnCard": "Имя на карте",
   "AccountNumber": "Номер счета", 
   "RoutingNumber": "Номер Routing банка", 
-  "BankAccountType": "Тип аккаунта"
+  "BankAccountType": "Тип аккаунта",
+
+  "ProfileUserInfoSubscribeBtnTextFollow": "Подписаться",
+  "ProfileUserInfoSubscribeBtnTextUnfollow": "Отписаться",
+  "ProfileUserInfoSubscribeBtnTextFollowForFree": "Подписаться бесплатно",
+  "ProfileUserInfoSubscribeBtnTextFollowForPrice": "Подписаться за",
+  "ProfileUserInfoSubscribeBtnTextAwaitConfirm": "Ожидание подтверждения"
 }

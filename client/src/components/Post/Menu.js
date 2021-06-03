@@ -76,7 +76,7 @@ function Menu({
           <ListItemIcon>
             <SendIcon />
           </ListItemIcon>
-          <ListItemText primary="Share to..." />
+          <ListItemText primary="Share to chat" />
         </ListItem>
       )}
 

@@ -37,7 +37,7 @@ function errorCreateFollow(message) {
   };
 }
 
-export function createFollow(api, userName) {
+export function createFollow(api, userName, isPrivateAccount) {
   return async (dispatch, getState) => {
     dispatch(requestCreateFollow());
 
@@ -51,7 +51,7 @@ export function createFollow(api, userName) {
         list[index]["isFollow"] = true;
       }
 
-      dispatch(addFollower());
+      dispatch(addFollower(isPrivateAccount));
       dispatch(receiveCreateFollow(list));
       dispatch(getDeposit(api));
     } catch {

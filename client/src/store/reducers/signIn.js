@@ -9,6 +9,12 @@ import {
   UPDATE_PROFILE_FAILURE,
 } from "../actions/settings";
 
+import {
+  GET_ME_REQUEST,
+  GET_ME_SUCCESS,
+  GET_ME_FAILURE
+} from "../actions/user";
+
 import { CREATE_MOOD_REQUEST, CREATE_MOOD_SUCCESS, CREATE_MOOD_FAILURE } from "../actions/mood";
 import { GET_USER_DEPOSIT_REQUEST, GET_USER_DEPOSIT_SUCCESS, GET_USER_DEPOSIT_FAILURE } from "../actions/account";
 import { UPDATE_LOCAL_AVATAR_SUCCESS, UPDATE_LOCAL_AVATAR_FAILURE } from "../actions/user";
@@ -150,6 +156,26 @@ export default function signIn(
       };
     }
     case UPDATE_LOCAL_COVER_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    // Get me
+    case GET_ME_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case GET_ME_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case GET_ME_FAILURE: {
       return {
         ...state,
         ...action.payload,

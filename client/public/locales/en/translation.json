@@ -109,5 +109,11 @@
   "DeleteAccountDialogDescription": "This account will be blocked for six months, and you can restore it at any time. After six months, your account will be permanently deleted.",
 
   "DeleteCommentDialogTitle": "Delete Comment",
-  "DeleteCommentDialogDescription": "The comment will be deleted without ability to restore its."
+  "DeleteCommentDialogDescription": "The comment will be deleted without ability to restore its.",
+
+  "ProfileUserInfoSubscribeBtnTextFollow": "Follow",
+  "ProfileUserInfoSubscribeBtnTextUnfollow": "Unfollow",
+  "ProfileUserInfoSubscribeBtnTextFollowForFree": "Follow for free",
+  "ProfileUserInfoSubscribeBtnTextFollowForPrice": "Follow for",
+  "ProfileUserInfoSubscribeBtnTextAwaitConfirm": "Awaiting confirmation"
 }

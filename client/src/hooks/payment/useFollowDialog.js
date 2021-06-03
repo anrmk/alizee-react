@@ -14,13 +14,13 @@ export default function useFollowDialog() {
   }));
   const dialog = useDialog();
 
-  const handleFollowBuy = async ({ userName, isFollow }) => {
+  const handleFollowBuy = async ({ userName, isFollow, isPrivate }) => {
     dialog.toggle({ open: false });
 
     if (!isFetching) {
       isFollow ?
         await dispatch(relationshipActions.deleteFollow(apiClient, userName)) :
-        await dispatch(relationshipActions.createFollow(apiClient, userName));
+        await dispatch(relationshipActions.createFollow(apiClient, userName, isPrivate));
     }
   }
 

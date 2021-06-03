@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import ShowMoreText from "react-show-more-text";
 import { Link } from "react-router-dom";
 
@@ -10,14 +11,19 @@ import DollarIcon from "@material-ui/icons/MonetizationOnOutlined";
 import { CHAT_ROUTE } from "../../constants/routes";
 import { USER_RANKING } from "../../constants/user";
 import Avatar from "../../components/Avatar";
+import { getSubscriptionBtnText, isAwaitingConfirmation } from "./utils";
 
 import useStyles from "./style";
 
 function ProfileUserInfo({
+  className,
+
   user,
   isOwner,
   isFollow,
-  className,
+  subscriptionPrice,
+  followStatus,
+
   onSubscribeClick,
   onSendTipClick,
   onMoodUpdateClick,
@@ -26,6 +32,7 @@ function ProfileUserInfo({
   onAvatarUrlChange
 }) {
   const classes = useStyles({ isOwner });
+  const { t } = useTranslation();
 
   const handleSendTipClick = () => {
     onSendTipClick && onSendTipClick(user);
@@ -90,14 +97,12 @@ function ProfileUserInfo({
               color="primary"
               variant="contained"
               onClick={handleSubscribeClick}>
-              {isFollow ? 
-                "Unfollow" : (
-                `Follow ${user.subscriptionPrice ? `for $${user.subscriptionPrice}` : "for Free"}`
-              )}
+              {getSubscriptionBtnText(followStatus, subscriptionPrice, t)}
             </Button>
             <Box className={classes.btnsGroup}>
               <Button
                 disableElevation
+                disabled={!isFollow || isAwaitingConfirmation(followStatus)}
                 size="large"
                 color="secondary"
                 variant="contained"

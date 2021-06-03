@@ -1,4 +1,3 @@
-
 export {
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
@@ -8,6 +7,7 @@ export {
   getUser,
   resetUser
 } from "./getUser";
+
 export {
   RESET_PASSWORD_CONFIRM_REQUEST,
   RESET_PASSWORD_CONFIRM_SUCCESS,
@@ -15,6 +15,7 @@ export {
 
   getPasswordConfirm
 } from "./getPasswordConfirm";
+
 export {
   GET_SETTINGS_RESET_PASSWORD_CONFIRM_REQUEST,
   GET_SETTINGS_RESET_PASSWORD_CONFIRM_SUCCESS,
@@ -84,3 +85,11 @@ export {
   updateAvatar,
   updateLocalAvatar
 } from './updateAvatar';
+
+export {
+  GET_ME_REQUEST,
+  GET_ME_SUCCESS,
+  GET_ME_FAILURE,
+
+  getMe
+} from "./getMe";

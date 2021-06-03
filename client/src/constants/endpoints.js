@@ -73,6 +73,7 @@ export default {
 
     // USER
     getUser: "account/getaccountbyusername",
+    getMe: "account/getme",
     getPasswordConfirm: "account/passwordresetconfirm",
     updatePassword: "account/resetpassword",
     getSettingsPasswordConfirm: "account/passwordchangeconfirm",
