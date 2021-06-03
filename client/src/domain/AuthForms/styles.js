@@ -27,10 +27,11 @@ const useStyles = makeStyles((theme) => {
     },
 
     logoImage: {
-      background: "url('/logo.png') no-repeat",
-      backgroundPosition: "top",
-      backgroundPositionY: theme.palette.type === "dark" ? "-58px" : "0",
-      height: "58px",
+      background: `url(${theme.palette.type === "light" ? "/logo-light.png": "/logo-dark.png"}) no-repeat`,
+      backgroundSize: "contain",
+      backgroundPosition: "center",
+      minHeight: "58px",
+      height: "auto",
     },
 
     authImage: {

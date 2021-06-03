@@ -15,17 +15,15 @@ const useStyles = (open) =>
     },
 
     logo: {
-      background: "url('/logo.png') no-repeat",
-      backgroundSize: "cover",
-      backgroundPositionY: theme.palette.type === "dark" ? "-48px" : "0",
-      height: "48px",
-      minWidth: "261px",
+      background: `url(${theme.palette.type === "light" ? "/logo-light.png": "/logo-dark.png"}) no-repeat`,
+      backgroundSize: "contain",
+      backgroundPosition: "center",
+      minHeight: "42px",
+      minWidth: "220px",
       marginRight: theme.spacing(1),
       marginLeft: theme.spacing(1),
 
       [theme.breakpoints.down("sm")]: {
-        backgroundPositionY: theme.palette.type === "dark" ? "-35px" : "0",
-        height: "35px",
         minWidth: "190px",
         marginLeft: theme.spacing(0),
       },
