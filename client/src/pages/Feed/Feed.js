@@ -126,10 +126,12 @@ function Feed(props) {
           <Box position="sticky" top="4rem" p={3}>
             {people.data && people.data.length > 0 && (
               <Box mb={1}>
-                <Typography variant="h6">Suggestions For You</Typography>
-                <MUILink variant="caption" to={SUGESTED_PEOPLE} component={Link}>
-                  See All
-                </MUILink>
+                <Box display="flex" flexWrap="wrap" alignItems="center" justifyContent="space-between">
+                  <Typography variant="h6">Suggestions For You</Typography>
+                  <MUILink variant="caption" to={SUGESTED_PEOPLE} component={Link}>
+                    See All
+                  </MUILink>
+                </Box>
                 <RelationshipList wide={true} items={people.data} onSubscribeClick={followDialog.toggle} />
               </Box>
             )}

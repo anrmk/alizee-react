@@ -92,7 +92,7 @@ function Navbar({
               </>
             )}
 
-            <Box className={classes.logo} to={HOME_ROUTE} component={Link}></Box>
+            {location.pathname !== HOME_ROUTE && <Box className={classes.logo} to={HOME_ROUTE} component={Link}></Box>}
 
             <Box className={classes.grow} />
 
