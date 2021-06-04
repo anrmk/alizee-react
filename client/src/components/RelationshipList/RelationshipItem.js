@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 
-import { Button, ListItem, ListItemText, ListItemAvatar, Typography } from "@material-ui/core";
+import { Button, ListItem, ListItemText, ListItemAvatar, Typography, Hidden } from "@material-ui/core";
 import { FOLLOW_ACCEPTED, FOLLOW_PENDING, FOLLOW_REJECTED } from "../../constants/follow_types";
 import { USER_RANKING } from "../../constants/user";
 
@@ -128,7 +128,9 @@ const RelationshipItem = React.memo((props) => {
         }
         onClick={onItemClick}
       />
-      {!isMe && renderActionButtons()}
+      <Hidden mdDown>
+        {!isMe && renderActionButtons()}
+      </Hidden>
     </ListItem>
   );
 });

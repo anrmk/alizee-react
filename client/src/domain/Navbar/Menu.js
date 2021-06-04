@@ -64,7 +64,7 @@ export default function NavMenu({
         <ListItemText primary={t("NavbarMenuItemProfileText")} />
       </MenuItem>
 
-      <MenuItem onClick={() => handleMenuItemClick(SEARCH_ROUTE)}>
+      <MenuItem onClick={() => handleMenuItemClick(PROFILE_USERNAME_ROUTE(userName))}>
         <ListItemIcon>
           <BookmarkBorderIcon />
         </ListItemIcon>

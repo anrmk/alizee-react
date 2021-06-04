@@ -54,7 +54,7 @@ function GridGalleryPostList(props) {
         arr.push(promiseWrapper(img, items[i]));
         arrImg.push(img);
         if (i === items.length - 1) {
-          setLastPostIndex(i);
+          setLastPostIndex(i+1);
           setImages((prev) => [...prev, ...arrImg]);
           return arr;
         }
