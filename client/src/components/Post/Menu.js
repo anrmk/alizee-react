@@ -6,6 +6,8 @@ import ShareIcon from "@material-ui/icons/ShareOutlined";
 import ReportIcon from "@material-ui/icons/ReportOutlined";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import SendIcon from "@material-ui/icons/SendOutlined";
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 export const POST_TYPE = 0;
 export const PROFILE_TYPE = 1;
@@ -13,14 +15,16 @@ export const PROFILE_TYPE = 1;
 function Menu({
   postId,
   userName,
-  isOwner = false,
+  isOwner,
+  isFavorite,
   type = POST_TYPE,
 
   onBlock,
   onReport,
   onShare,
   onChatShare,
-  onDelete
+  onDelete,
+  onFavorite
 }) {
   const handleBlockClick = () => {
     onBlock && onBlock({ userName });
@@ -41,6 +45,10 @@ function Menu({
   const handleDeleteClick = () => {
     onDelete && onDelete({ postId, userName });
   };
+
+  const handleFavoriteUserClick = () => {
+    onFavorite && onFavorite({ userName })
+  }
 
   return (
     <List>
@@ -77,6 +85,15 @@ function Menu({
             <SendIcon />
           </ListItemIcon>
           <ListItemText primary="Share to chat" />
+        </ListItem>
+      )}
+
+      {!isOwner && onFavorite && (
+        <ListItem button onClick={handleFavoriteUserClick}>
+          <ListItemIcon>
+            {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          </ListItemIcon>
+          <ListItemText primary="Add to favorites" />
         </ListItem>
       )}
 

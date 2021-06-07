@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -8,7 +8,7 @@ import ApiContext from "../context/ApiContext";
 import * as userActions from "../store/actions/user";
 import * as relationshipActions from "../store/actions/relationship";
 
-import { PROFILE_USERNAME_ROUTE } from "../constants/routes";
+import { NOT_FOUND_ROUTE, PROFILE_USERNAME_ROUTE } from "../constants/routes";
 import { FOLLOW_PENDING, FOLLOW_ACCEPTED, FOLLOW_REJECTED } from "../constants/follow_types";
 import { RelationshipList } from "../components/RelationshipList";
 import { useFollowDialog } from "../hooks/payment";
@@ -18,7 +18,6 @@ import { Container, Tabs, Tab, Card, CardHeader, Avatar } from "@material-ui/cor
 function Followers(props) {
   const { username } = useParams();
   const apiClient = useContext(ApiContext);
-  const history = useHistory();
   const followDialog = useFollowDialog();
 
   const { user, me, followers } = props;
@@ -40,6 +39,10 @@ function Followers(props) {
     })();
   }, [status]);
 
+  if (user.errorMessage) {
+    return <Redirect exact to={NOT_FOUND_ROUTE} />;
+  }
+
   const handleConfirmClick = ({ userName, status }) => {
     !followers.isFetching && acceptFollow(apiClient, userName);
   };
@@ -57,14 +60,14 @@ function Followers(props) {
       <Card>
         <CardHeader
           avatar={
-            <Link to={PROFILE_USERNAME_ROUTE(user.userName)}>
-              <Avatar src={user.avatarUrl} />
+            <Link to={PROFILE_USERNAME_ROUTE(user.data.userName)}>
+              <Avatar src={user.data.avatarUrl} />
             </Link>
           }
-          title={user.name}
+          title={user.data.name}
           subheader={`Followers [${followers.data?.length}]`}
         />
-        {me.userName === user.userName && (
+        {me.userName === user.data.userName && (
           <Tabs
             value={status}
             indicatorColor="primary"
@@ -98,7 +101,10 @@ function mapStateToProps(state) {
     me: {
       userName: state.signIn?.userInfo.userName,
     },
-    user: state.user.data,
+    user: {
+      data: state.user.data,
+      errorMessage: state.user?.errorMessage
+    },
     followers: {
       isFetching: state.users.isFetching,
       data: state.users.data,

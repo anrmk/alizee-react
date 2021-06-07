@@ -70,12 +70,12 @@ function SignIn(props) {
     <Container className={classes.container}>
       <Grid container className={classes.grid}>
         <Hidden smDown>
-          <Grid item sm={6}>
+          <Grid item sm={6} lg={8}>
             <Slider />
           </Grid>
         </Hidden>
 
-        <Grid item md={4} sm={6} xs={12}>
+        <Grid item md={4} sm={6} lg={4} xs={12}>
           <SignInForm
             error={errorMessage}
             onSubmit={handleFormSubmit}
@@ -86,7 +86,7 @@ function SignIn(props) {
         </Grid>
       </Grid>
 
-      <Box marginTop="auto">
+      <Box className={classes.footer}>
         <Footer open={true} />
       </Box>
     </Container>

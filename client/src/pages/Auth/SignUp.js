@@ -73,7 +73,7 @@ function SignUp(props) {
           </Grid>
         </Grid>
 
-      <Box marginTop="auto">
+      <Box className={classes.footer}>
         <Footer open={true} />
       </Box>
       </GoogleReCaptchaProvider>

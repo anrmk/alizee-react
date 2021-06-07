@@ -50,7 +50,7 @@ function Profile(props) {
   const { me, user, post, media, settings } = props;
   const { fetchUser, resetUser } = props;
   const { fetchPosts, resetPosts, getFavoritePosts } = props;
-  const { createFollow, deleteFollow, createFavorites, deleteFavorites } = props;
+  const { createFollow, deleteFollow } = props;
   const { updateCover, updateAvatar } = props;
 
   const dialog = useDialog();
@@ -62,6 +62,7 @@ function Profile(props) {
     isDelete: false,
     isReport: false,
     isChatShare: true,
+    isFavorite: true,
     type: PROFILE_TYPE
   });
 
@@ -154,10 +155,6 @@ function Profile(props) {
     handleFetchPosts();
   };
 
-  const handleFavoriteClick = (userName) => {
-    user.data.isFavorite ? deleteFavorites(apiClient, userName) : createFavorites(apiClient, userName);
-  };
-
   const handleItemClick = (id) => {
     history.push(POST_ID_ROUTE(id));
   };
@@ -198,7 +195,6 @@ function Profile(props) {
         user={user.data}
         isOwner={username === me.userName}
         disabled={media.isFetching}
-        onFavoriteClick={() => handleFavoriteClick(user.data.userName)}
         onFollowClick={() => handlePeopleFollowClick(user.data.userName)}
         onSendGiftClick={() => handleGiftSendClick(user.data.userName)}
         onCoverUrlChange={handleCoverEditDialog}
@@ -284,8 +280,6 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchUser: (api, userName) => dispatch(userActions.getUser(api, userName)),
     resetUser: () => dispatch(userActions.resetUser()),
-    createFavorites: (api, userName) => dispatch(accountActions.createFavorites(api, userName)),
-    deleteFavorites: (api, userName) => dispatch(accountActions.deleteFavorites(api, userName)),
 
     fetchPosts: (api, opts) => dispatch(postActions.getPosts(api, opts)),
     resetPosts: () => dispatch(postActions.resetPosts()),
