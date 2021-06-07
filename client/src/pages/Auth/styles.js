@@ -3,7 +3,8 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => {
   return ({
     container: {
-      height: "100vh",
+      height: `calc(100vh - ${(theme.spacing(3))}px)`,
+      justifyContent: "space-evenly",
       display: "flex",
       flexDirection: "column",
       padding: theme.spacing(3),
