@@ -123,7 +123,7 @@ function Feed(props) {
       
       <Hidden smDown>
         <Grid item md={4} >
-          <Box position="sticky" top={0}>
+          <Box position="sticky" top={12}>
             {people.data && people.data.length > 0 && (
               <Box mb={1}>
                 <Box display="flex" flexWrap="wrap" alignItems="center" justifyContent="space-between">

@@ -37,7 +37,7 @@ function Sidebar({
   const location = useLocation();
 
   return (
-    <Box position="sticky" top="0">
+    <Box position="sticky" top={12}>
       <Grid container direction="column" justify="space-between" alignItems="stretch">
         {/* <Grid item >
           <Grid container item alignItems="center" justify="flex-end" component="label">
