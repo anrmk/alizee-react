@@ -92,8 +92,8 @@ function Feed(props) {
   };
 
   return (
-    <Grid container>
-      <Grid item sm={12} md={8} >
+    <Grid container spacing={3}>
+      <Grid item xs={12} md={8} >
         <PreviewStoriesList
           loading={story.isFetching}
           user={userInfo}
@@ -123,11 +123,11 @@ function Feed(props) {
       
       <Hidden smDown>
         <Grid item md={4} >
-          <Box position="sticky" top="4rem" p={3}>
+          <Box position="sticky" top={0}>
             {people.data && people.data.length > 0 && (
               <Box mb={1}>
                 <Box display="flex" flexWrap="wrap" alignItems="center" justifyContent="space-between">
-                  <Typography variant="h6">Suggestions For You</Typography>
+                  <Typography variant="h6">Suggestions</Typography>
                   <MUILink variant="caption" to={SUGESTED_PEOPLE} component={Link}>
                     See All
                   </MUILink>

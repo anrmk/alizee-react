@@ -1,8 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import i18n from "i18next";
-import { useTranslation } from "react-i18next";
 
 import { Menu, MenuItem, ListItemIcon, ListItemText, Divider } from "@material-ui/core";
 
@@ -114,7 +114,7 @@ export default function NavMenu({
         <ListItemIcon>
           <ExitToAppIcon />
         </ListItemIcon>
-        <ListItemText primary={t("NavbarMenuItemSignOutText")} />
+        <ListItemText primary={t("SidebarSignOutText")} />
       </MenuItem>
     </Menu>
   );

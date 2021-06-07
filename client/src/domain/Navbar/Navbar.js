@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { Grid, Box, AppBar, Toolbar, IconButton, Badge, Hidden, Typography, Switch } from "@material-ui/core";
@@ -62,7 +62,7 @@ function Navbar({
       <Grid container>
         <Hidden smDown>
           <Grid container item md={3} lg={2} alignItems="center" justify="flex-end" component="label">
-            <Grid item>
+            {/* <Grid item>
               <NightIcon />
             </Grid>
             <Grid item>
@@ -75,7 +75,7 @@ function Navbar({
             </Grid>
             <Grid item>
               <SunnyIcon />
-            </Grid>
+            </Grid> */}
           </Grid>
         </Hidden>
         <Grid item xs={12} md={9} lg={10}>
@@ -92,7 +92,7 @@ function Navbar({
               </>
             )}
 
-            {location.pathname !== HOME_ROUTE && <Box className={classes.logo} to={HOME_ROUTE} component={Link}></Box>}
+            {/* {location.pathname !== HOME_ROUTE && <Box className={classes.logo} to={HOME_ROUTE} component={Link}></Box>} */}
 
             <Box className={classes.grow} />
 

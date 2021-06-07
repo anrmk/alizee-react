@@ -1,5 +1,6 @@
 export const DEFAULT_ROUTE = "/";
 export const HOME_ROUTE = "/";
+export const NOTIFICATION_ROUTE = "/notifications";
 export const ABOUT_ROUTE = "";
 export const HELP_ROUTE = "/help";
 export const CHANGE_LOG_ROUTE = "/changelog";

@@ -22,10 +22,14 @@ const useStyles = makeStyles((theme) => {
   return {
     card: {
       position: "relative",
-      height: `calc(100vh - ${(theme.mixins.toolbar.minHeight * 2 + theme.spacing(2))}px)`,
+      height: `calc(100vh - ${theme.spacing(3)}px)`,
       display: "flex",
       flexDirection: "column",
-      justifyContent: "space-between"
+      justifyContent: "space-between",
+
+      [theme.breakpoints.down("sm")]: {
+        height: `calc(100vh - ${(theme.mixins.toolbar.minHeight * 2 + theme.spacing(3))}px)`,
+      },
     },
 
     cardContent: {

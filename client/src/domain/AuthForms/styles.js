@@ -65,6 +65,10 @@ const useStyles = makeStyles((theme) => {
     slide3: {
       backgroundImage: `url(${img3})`,
     },
+
+    slide4: {
+      backgroundImage: `url(${img4})`,
+    },
   })
 });
 

@@ -6,9 +6,9 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     background: theme.palette.background.mainGradient,
     // border: "1px solid white",
-    borderRadius: theme.shape.borderRadius * 2,
+    borderRadius: theme.shape.borderRadius,
     color: theme.palette.common.white,
-    filter: getStyleByTheme(theme, "drop-shadow(10px 10px 15px rgba(174, 174, 192, 0.4))", "drop-shadow(10px 10px 15px rgba(0, 0, 0, 0.4))")
+    //filter: getStyleByTheme(theme, "drop-shadow(10px 10px 15px rgba(174, 174, 192, 0.4))", "drop-shadow(10px 10px 15px rgba(0, 0, 0, 0.4))")
   },
   btn: {
     color: theme.palette.common.white

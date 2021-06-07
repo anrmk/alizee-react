@@ -33,6 +33,7 @@ import Statistics from "../Statistics";
 import Help from "../Help";
 import ChangeLog from "../ChangeLog";
 import NotFound from "../NotFound";
+import Notifications from "../Notifications";
 
 import { signOutUser } from "../../store/actions/signIn";
 import { getMe } from "../../store/actions/user";
@@ -44,8 +45,11 @@ import useChangeTheme from "../../hooks/useChangeTheme";
 import { isPublicRoute } from "../../helpers/functions";
 import ApiContext from "../../context/ApiContext";
 
+import useStyles from "./styles";
+
 function Main(props) {
   const apiClient = useContext(ApiContext);
+  const classes = useStyles();
 
   const { user, notifyData, isAuthenticated } = props;
   const { signOut, getMe } = props;
@@ -91,7 +95,7 @@ function Main(props) {
   };
 
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" className={classes.root}>
       <Switch>
         <Route exact path={Routes.NOT_FOUND_ROUTE} component={NotFound} />
         <Route path={Routes.SIGN_UP_ROUTE} component={SignUp} />
@@ -106,16 +110,18 @@ function Main(props) {
         <PrivateRoute exact path={Routes.STORIES_ID_ROUTE} component={Story} />
         <PrivateRoute path={Routes.PEAR_TO_PEAR_DEFAULT_ROUTE} component={PearToPear} />
         <Route>
-          <Navbar
-            userName={user.userName}
-            ranking={user.ranking}
-            avatarUrl={user.avatarUrl}
-            newMessage={notifyData?.newMessage}
-            newNotification={notifyData?.newNotification}
-            open={open}
-            onChange={notification.toggle}
-            onSignOut={signOut}
-          />
+          <Hidden mdUp>
+            <Navbar
+              userName={user.userName}
+              ranking={user.ranking}
+              avatarUrl={user.avatarUrl}
+              newMessage={notifyData?.newMessage}
+              newNotification={notifyData?.newNotification}
+              open={open}
+              onChange={notification.toggle}
+              onSignOut={signOut}
+            />
+          </Hidden>
 
           <Grid container spacing={3}>
             <Hidden smDown>
@@ -123,6 +129,7 @@ function Main(props) {
                 <Sidebar
                   user={user}
                   open={open}
+                  onSignOut={signOut}
                   onCreateMeet={handleCreateMeet}
                   onCreatePost={createPostDialog.toggle}
                   onCreateStory={createStoryDialog.toggle}
@@ -133,6 +140,7 @@ function Main(props) {
             <Grid item xs={12} md={9} lg={10}>
               <Switch>
                 <PrivateRoute path={Routes.EXPLORE_ROUTE} component={Explore} />
+                <PrivateRoute path={Routes.NOTIFICATION_ROUTE} component={Notifications} />
                 <PrivateRoute path={Routes.POST_ROUTE} component={Post} />
                 <PrivateRoute path={Routes.ACTIVITY_ROUTE} component={Activity} />
                 <PrivateRoute path={Routes.MEET_ROUTE} component={Meeting} />

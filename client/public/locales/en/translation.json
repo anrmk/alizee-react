@@ -55,6 +55,7 @@
   "SidebarSearchText": "Search",
   "SidebarNotificationText": "Norification",
   "SidebarChatText": "Messages",
+  "SidebarSignOutText": "Sign Out",
 
   "ChatSidebarSearchInputLabel": "Search a chat",
   "ChatFollowingDialogTitle": "Start a new conversation",
@@ -76,7 +77,7 @@
   "NavbarMenuItemChangeLogText": "What's News",
   "NavbarMenuItemDarkMode": "Dark mode",
   "NavbarMenuItemLightMode": "Light mode",
-  "NavbarMenuItemSignOutText": "Sign Out",
+  
 
   "GoToProfile": "Go to profile",
   "ShareTo": "Share to...",

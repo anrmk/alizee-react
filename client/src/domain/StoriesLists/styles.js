@@ -13,16 +13,17 @@ const previewStoryListItemBase = {
   height: "174px",
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   previewStoryList: {
     position: "relative",
     width: "100%",
     display: "flex",
+    marginBottom: theme.spacing(2),
     "&::-webkit-scrollbar": {
-      display: "none"
+      display: "none",
     },
     [theme.breakpoints.up("md")]: {
-      maxWidth: "814px"
+     // maxWidth: "814px", //??
     },
     // [theme.breakpoints.down("sm")]: {
     //   padding: theme.spacing(1)
@@ -31,12 +32,12 @@ const useStyles = makeStyles(theme => ({
   previewStoryListProgress: {
     display: "block",
     marginLeft: "auto",
-    marginRight: "auto"
+    marginRight: "auto",
   },
   previewStoryListItem: {
     ...previewStoryListItemBase,
     display: "flex",
-    justifyContent: ({ empty }) => !empty ? "flex-start" : "center",
+    justifyContent: ({ empty }) => (!empty ? "flex-start" : "center"),
     padding: theme.spacing(2),
     borderRadius: theme.shape.borderRadius,
     backgroundImage: ({ previewUrl }) => previewUrl && tintedBg(0.25) + `url("${previewUrl}")`,
@@ -44,7 +45,7 @@ const useStyles = makeStyles(theme => ({
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundColor: theme.palette.background.paper,
-    borderColor:  theme.palette.grey[theme.palette.type === "dark" ? "800" : "200"],
+    borderColor: theme.palette.grey[theme.palette.type === "dark" ? "800" : "200"],
     borderWidth: "1px",
     borderStyle: "solid",
     cursor: "pointer",
@@ -53,31 +54,31 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.text.primary,
     overflow: "hidden",
     "& + &": {
-      marginLeft: theme.spacing(1)
-    }
+      marginLeft: theme.spacing(1),
+    },
   },
   previewStoryItemUserInfo: {
     alignItems: "center",
     display: "flex",
     width: "100%",
-    alignSelf: "flex-end"
+    alignSelf: "flex-end",
   },
   previewStoryListItemName: {
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
   },
   previewStoryListItemAvatar: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
   },
   previewStoryListItemAddButton: {
     fontSize: theme.typography.h3.fontSize,
-    color: theme.palette.primary.main 
+    color: theme.palette.primary.main,
   },
   previewStoryListItemSkeleton: {
     ...previewStoryListItemBase,
     borderRadius: theme.shape.borderRadius,
     "& + &": {
-      marginLeft: theme.spacing(1)
-    }
+      marginLeft: theme.spacing(1),
+    },
   },
   bottomContainer: {
     width: "100%",
@@ -88,7 +89,7 @@ const useStyles = makeStyles(theme => ({
     bottom: 0,
     left: 0,
     backgroundColor: theme.palette.common.white,
-    zIndex: theme.zIndex.mobileStepper
+    zIndex: theme.zIndex.mobileStepper,
   },
   createButton: {
     position: "absolute",
@@ -98,13 +99,13 @@ const useStyles = makeStyles(theme => ({
     bottom: "36px",
     backgroundColor: theme.palette.primary.main,
     border: "4px solid " + theme.palette.common.white,
-    borderRadius: "50%"
+    borderRadius: "50%",
   },
   createButtonText: {
     position: "absolute",
     bottom: "10px",
-    color: theme.palette.common.black
-  }
+    color: theme.palette.common.black,
+  },
 }));
 
 export const CustomLinearProgress = withStyles((theme) => ({

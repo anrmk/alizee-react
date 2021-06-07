@@ -2,25 +2,24 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import {
-  Grid,
-  Box,
-  Switch,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-} from "@material-ui/core";
+import { Grid, Box, List, ListItem, ListItemIcon, ListItemText, Typography, Divider } from "@material-ui/core";
 
 import PersonOutlineIcon from "@material-ui/icons/PersonOutlineOutlined";
 import HomeIcon from "@material-ui/icons/HomeOutlined";
+import NotificationsIcon from "@material-ui/icons/NotificationsOutlined";
 import MailIcon from "@material-ui/icons/MailOutline";
 import ExploreIcon from "@material-ui/icons/ExploreOutlined";
-import NightIcon from "@material-ui/icons/NightsStayOutlined";
-import SunnyIcon from "@material-ui/icons/WbSunnyOutlined";
+import SettingsIcon from "@material-ui/icons/Settings";
+import ExitToAppIcon from "@material-ui/icons/ExitToAppOutlined";
 
-import { HOME_ROUTE, CHAT_ROUTE, PROFILE_USERNAME_ROUTE, EXPLORE_ROUTE, ACTIVITY_ROUTE } from "../../constants/routes";
+import {
+  HOME_ROUTE,
+  NOTIFICATION_ROUTE,
+  CHAT_ROUTE,
+  PROFILE_USERNAME_ROUTE,
+  EXPLORE_ROUTE,
+  SETTINGS_EDIT_PROFILE_ROUTE,
+} from "../../constants/routes";
 
 import UserCard from "./UserCard";
 import { Wallet } from "../Wallet";
@@ -29,6 +28,7 @@ function Sidebar({
   user,
   open,
 
+  onSignOut,
   onCreateMeet,
   onCreatePost,
   onCreateStory,
@@ -37,8 +37,8 @@ function Sidebar({
   const location = useLocation();
 
   return (
-    <Box position="sticky" top="4rem">
-      <Grid container direction="column" >
+    <Box position="sticky" top="0">
+      <Grid container direction="column" justify="space-between" alignItems="stretch">
         {/* <Grid item >
           <Grid container item alignItems="center" justify="flex-end" component="label">
             <Grid item>
@@ -71,7 +71,13 @@ function Sidebar({
             onCreateStory={onCreateStory}
           />
         </Grid>
-        <Grid item>{open && user.identityVerified && <Wallet deposit={user.deposit} />}</Grid>
+
+        {open && user.identityVerified && (
+          <Grid item>
+            <Wallet deposit={user.deposit} />{" "}
+          </Grid>
+        )}
+
         <Grid item>
           <List component="nav" dense>
             <ListItem button selected={location.pathname === HOME_ROUTE} to={HOME_ROUTE} component={Link}>
@@ -94,15 +100,15 @@ function Sidebar({
 
             <ListItem
               button
-              selected={location.pathname.includes(PROFILE_USERNAME_ROUTE(user.userName))}
-              to={PROFILE_USERNAME_ROUTE(user.userName)}
+              selected={location.pathname.includes(NOTIFICATION_ROUTE)}
+              to={NOTIFICATION_ROUTE}
               component={Link}
             >
               <ListItemIcon>
-                <PersonOutlineIcon />
+                <NotificationsIcon />
               </ListItemIcon>
               <ListItemText>
-                <Typography variant="h6">{t("SidebarProfileText")}</Typography>
+                <Typography variant="h6">{t("SidebarNotificationText")}</Typography>
               </ListItemText>
             </ListItem>
 
@@ -115,18 +121,48 @@ function Sidebar({
               </ListItemText>
             </ListItem>
 
-            {/* <Tooltip title={t("SidebarActivityText")} placement="right">
-    <ListItem
-      button
-      selected={location.pathname.includes(ACTIVITY_ROUTE)}
-      to={ACTIVITY_ROUTE}
-      component={Link}>
-      <ListItemIcon>
-        <FavoriteBorderIcon  color="secondary" />
-      </ListItemIcon>
-      <ListItemText primary={t("SidebarActivityText")} />
-    </ListItem>
-  </Tooltip> */}
+            <ListItem
+              button
+              selected={location.pathname.includes(PROFILE_USERNAME_ROUTE(user.userName))}
+              to={PROFILE_USERNAME_ROUTE(user.userName)}
+              component={Link}
+            >
+              <ListItemIcon>
+                <PersonOutlineIcon />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography variant="h6">{t("SidebarProfileText")}</Typography>
+              </ListItemText>
+            </ListItem>
+          </List>
+        </Grid>
+
+        <Grid item>
+          <Divider variant="fullWidth" component="div" />
+
+          <List component="nav" dense>
+            <ListItem
+              button
+              selected={location.pathname.includes(SETTINGS_EDIT_PROFILE_ROUTE)}
+              to={SETTINGS_EDIT_PROFILE_ROUTE}
+              component={Link}
+            >
+              <ListItemIcon>
+                <SettingsIcon />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography variant="h6">Settings</Typography>
+              </ListItemText>
+            </ListItem>
+
+            <ListItem button onClick={onSignOut}>
+              <ListItemIcon>
+                <ExitToAppIcon />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography variant="h6">{t("SidebarSignOutText")}</Typography>
+              </ListItemText>
+            </ListItem>
           </List>
         </Grid>
       </Grid>

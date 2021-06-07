@@ -23,12 +23,12 @@ const PreviewStoriesList = React.memo(({
     }
   }, [loading]);
 
-  const renderSkeletons = () => [...Array(6)].map((_, index) => (
+  const renderSkeletons = () => [...Array(8)].map((_, index) => (
     <Skeleton key={`${index}-skeleton`} className={classes.previewStoryListItemSkeleton} variant="rect" animation="wave" />
   ));
 
   return (
-    <List className={classes.previewStoryList} component={ScrollContainer}>
+    <List className={classes.previewStoryList} component={ScrollContainer} disablePadding>
       {loading || !loadingFlag ? renderSkeletons() : (
         <>
           <PreviewStoriesListItem

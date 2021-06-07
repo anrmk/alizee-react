@@ -38,7 +38,6 @@ function Wallet({ deposit }) {
           action={
             <IconButton
               aria-controls={menuId}
-              className={classes.btn}
               aria-label="Wallet menu"
               aria-haspopup="true"
               onClick={(e) => setMenuAnchor(e.currentTarget)}>

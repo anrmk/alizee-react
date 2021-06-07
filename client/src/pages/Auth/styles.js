@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => {
     },
     grid: {
       padding: theme.spacing(4),
-      justifyContent: "center",
+      justifyContent: "space-evenly",
       alignItems: "center"
     }
   })

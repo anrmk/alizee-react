@@ -76,7 +76,7 @@
   "NavbarMenuItemChangeLogText": "Что нового?",
   "NavbarMenuItemDarkMode": "Dark mode",
   "NavbarMenuItemLightMode": "Light mode",
-  "NavbarMenuItemSignOutText": "Sign Out",
+  "SidebarSignOutText": "Sign Out",
 
   "GoToProfile": "Go to profile",
   "ShareTo": "Share to...",

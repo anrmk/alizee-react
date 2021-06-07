@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { connect } from "react-redux";
-import { Container } from "@material-ui/core/";
 
 import ApiContext from "../context/ApiContext";
 
