@@ -23,7 +23,15 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBackIosOutlined";
 import NightIcon from "@material-ui/icons/NightsStayOutlined";
 import SunnyIcon from "@material-ui/icons/WbSunnyOutlined";
 
-import { CHAT_ROUTE, HOME_ROUTE, SEARCH_ROUTE, SIGN_IN_ROUTE, SIGN_UP_ROUTE } from "../../constants/routes";
+import {
+  CHAT_ROUTE,
+  HOME_ROUTE,
+  SEARCH_ROUTE,
+  SIGN_IN_ROUTE,
+  SIGN_UP_ROUTE,
+  HELP_ROUTE,
+  CHANGE_LOG_ROUTE,
+} from "../../constants/routes";
 import { USER_RANKING } from "../../constants/user";
 import Avatar from "../../components/Avatar";
 import Menu from "./Menu";
@@ -41,7 +49,6 @@ function Navbar({
   open,
   isAuthenticated,
   showNotification,
-  showLogo,
 
   onChange,
   onSignOut,
@@ -79,25 +86,39 @@ function Navbar({
 
   return (
     <AppBar position="sticky" className={classes.root}>
-      <Grid container direction="row" justify="space-between" alignItems="center">
-        <Grid item xs={12} sm={4} lg={6}>
+      <Grid container justify="space-between" alignItems="center">
+        <Grid
+          item
+          xs={location.pathname === CHANGE_LOG_ROUTE || location.pathname === HELP_ROUTE ? false : 4}
+          sm={4}
+          lg={6}
+        >
           <Toolbar disableGutters component={Box} justifyContent="center">
-            {location.pathname !== HOME_ROUTE && !showLogo && (
-              <>
-                <Box className={classes.backBtn} onClick={() => history.goBack()}>
-                  <IconButton>
-                    <ArrowBackIcon />
-                  </IconButton>
-                  <Typography>Back</Typography>
-                </Box>
-                <Box className={classes.grow} />
-              </>
-            )}
+            {location.pathname !== HOME_ROUTE &&
+              location.pathname !== HELP_ROUTE &&
+              location.pathname !== CHANGE_LOG_ROUTE && (
+                <>
+                  <Box className={classes.backBtn} onClick={() => history.goBack()}>
+                    <IconButton>
+                      <ArrowBackIcon />
+                    </IconButton>
+                    <Typography>Back</Typography>
+                  </Box>
+                  <Box className={classes.grow} />
+                </>
+              )}
 
-            {showLogo && <Logo />}
+            {isAuthenticated && (location.pathname === CHANGE_LOG_ROUTE || location.pathname === HELP_ROUTE) && (
+              <Logo />
+            )}
           </Toolbar>
         </Grid>
-        <Grid item xs={12} sm={8} lg={6}>
+        <Grid
+          item
+          xs={location.pathname === CHANGE_LOG_ROUTE || location.pathname === HELP_ROUTE ? 12 : 8}
+          sm={8}
+          lg={6}
+        >
           <Toolbar component={Box} justifyContent="flex-end">
             {isAuthenticated ? (
               <Box display="inline">

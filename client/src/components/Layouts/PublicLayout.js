@@ -35,7 +35,6 @@ function Layout({ children }) {
         onSignOut={signOut}
         isAuthenticated={isAuthenticated}
         showNotification={false}
-        showLogo={true}
       />
 
       {children}
