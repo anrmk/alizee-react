@@ -4,10 +4,29 @@ import * as changeLogActions from "../../store/actions/changeLog";
 import ApiContext from "../../context/ApiContext";
 import { formatDate } from "../../helpers/functions";
 
-import { List, ListItem, ListItemText, Card, CardContent, CardHeader, ListItemIcon } from "@material-ui/core/";
-import AnnouncementIcon from "@material-ui/icons/AnnouncementOutlined";
+import {
+  Container,
+  List,
+  ListItem,
+  Card,
+  CardContent,
+  ListItemIcon,
+  Box,
+  Typography,
+  Hidden,
+  Divider,
+  CardHeader,
+  ListItemText,
+} from "@material-ui/core/";
+import InfoIcon from "@material-ui/icons/Info";
+
+import { PublicLayout } from "../../components/Layouts";
+
+import useStyles from "./styles";
 
 function ChangeLog({ data, isFetching, getLogs, resetLogs }) {
+  const classes = useStyles();
+
   const apiClient = useContext(ApiContext);
 
   useEffect(() => {
@@ -18,21 +37,29 @@ function ChangeLog({ data, isFetching, getLogs, resetLogs }) {
   }, []);
 
   return (
-    <Card>
-      <CardHeader title="What's News" />
-      <CardContent>
-        <List>
-          {data.map((log, index) => (
-            <ListItem key={index}>
-              <ListItemIcon>
-                <AnnouncementIcon />
-              </ListItemIcon>
-              <ListItemText primary={formatDate(log.createdDate)} secondary={log.content} />
-            </ListItem>
-          ))}
-        </List>
-      </CardContent>
-    </Card>
+    <PublicLayout>
+      <Container maxWidth="md" className={classes.section}>
+        <Card elevation={0}>
+          <CardHeader title="What's News" />
+
+          <CardContent>
+            <List>
+              {data.map((log, index) => (
+                <React.Fragment key={index}>
+                  <ListItem alignItems="flex-start">
+                    <ListItemIcon>
+                      <InfoIcon color="primary" />
+                    </ListItemIcon>
+                    <ListItemText primary={formatDate(log.createdDate)} secondary={log.content}></ListItemText>
+                  </ListItem>
+                  <Divider variant="inset" component="li" />
+                </React.Fragment>
+              ))}
+            </List>
+          </CardContent>
+        </Card>
+      </Container>
+    </PublicLayout>
   );
 }
 

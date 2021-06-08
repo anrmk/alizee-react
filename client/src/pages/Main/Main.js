@@ -120,6 +120,7 @@ function Main(props) {
               open={open}
               onChange={notification.toggle}
               onSignOut={signOut}
+              isAuthenticated={isAuthenticated}
             />
           </Hidden>
 
@@ -186,7 +187,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getMe: (api) => dispatch(getMe(api)),
-    signOut: (api) => dispatch(signOutUser(api))
+    signOut: (api) => dispatch(signOutUser(api)),
   };
 }
 
