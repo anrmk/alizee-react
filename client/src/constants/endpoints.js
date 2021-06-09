@@ -143,6 +143,11 @@ export default {
     notifyCall: "notification/call",
 
     //CHANGE LOG
-    getChangeLog: "changelog/getLogs"
+    getChangeLog: "changelog/getLogs",
+
+	//HELP
+    getHelp: "help/getgroups",
+	changeHelpRating: "help/vote",
+	getHelpDetails: "help/getarticle"
   },
 };

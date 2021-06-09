@@ -5,22 +5,19 @@ import ApiContext from "../../context/ApiContext";
 import { formatDate } from "../../helpers/functions";
 
 import {
-  Container,
   List,
   ListItem,
   Card,
   CardContent,
   ListItemIcon,
   Box,
-  Typography,
-  Hidden,
   Divider,
   CardHeader,
   ListItemText,
 } from "@material-ui/core/";
 import InfoIcon from "@material-ui/icons/Info";
 
-import { PublicLayout } from "../../components/Layouts";
+import ContainerLayout from "../Layouts/ContainerLayout";
 
 import useStyles from "./styles";
 
@@ -37,8 +34,8 @@ function ChangeLog({ data, isFetching, getLogs, resetLogs }) {
   }, []);
 
   return (
-    <PublicLayout>
-      <Container maxWidth="md" className={classes.section}>
+    <ContainerLayout>
+      <Box className={classes.section}>
         <Card elevation={0}>
           <CardHeader title="What's News" />
 
@@ -58,8 +55,8 @@ function ChangeLog({ data, isFetching, getLogs, resetLogs }) {
             </List>
           </CardContent>
         </Card>
-      </Container>
-    </PublicLayout>
+      </Box>
+    </ContainerLayout>
   );
 }
 

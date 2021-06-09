@@ -20,6 +20,7 @@ import payment from "./payment";
 import activity from "./activity";
 import notification from "./notification";
 import changeLog from "./changeLog";
+import help  from "./help"
 
 import { SIGNOUT_SUCCESS } from "../actions/signIn";
 
@@ -43,7 +44,8 @@ const appReducer = combineReducers({
   payment,
   activity,
   notification,
-  changeLog
+  changeLog,
+  help
 });
 
 export default function(state, action) {

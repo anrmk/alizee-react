@@ -26,9 +26,9 @@ import { ResetPassword, ChangePassword } from "../Password";
 import Search from "../Search";
 import Story from "../Story";
 import Statistics from "../Statistics";
-import Help from "../Help";
 import ChangeLog from "../ChangeLog";
 import NotFound from "../NotFound";
+import { Help, HelpDetails } from "../Help";
 import Notifications from "../Notifications";
 import { MainLayout } from "../Layouts";
 
@@ -82,6 +82,7 @@ function Main(props) {
         <Route exact path={Routes.RESET_PASSWORD_ROUTE} component={ResetPassword} />
         <Route exact path={Routes.PASSWORD_CHANGE_ROUTE} component={ChangePassword} />
         <Route exact path={Routes.HELP_ROUTE} component={Help} />
+		<Route exact path={Routes.HELP_DETAIL_ROUTE} component={HelpDetails}/>
         <Route exact path={Routes.CHANGE_LOG_ROUTE} component={ChangeLog} />
         <PrivateRoute exact path={Routes.STORIES_ID_ROUTE} component={Story} />
         <PrivateRoute path={Routes.PEAR_TO_PEAR_DEFAULT_ROUTE} component={PearToPear} />

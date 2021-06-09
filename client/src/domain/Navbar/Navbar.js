@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { Grid, Box, AppBar, Toolbar, IconButton, Badge, Typography, Button, Link } from "@material-ui/core";
@@ -17,6 +17,7 @@ import {
   SIGN_UP_ROUTE,
   HELP_ROUTE,
   CHANGE_LOG_ROUTE,
+  HELP_DETAIL_ROUTE,
 } from "../../constants/routes";
 import { USER_RANKING } from "../../constants/user";
 import Avatar from "../../components/Avatar";
@@ -43,6 +44,7 @@ function Navbar({
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
   const location = useLocation();
+  const match = useRouteMatch();
   const changeTheme = useChangeTheme();
 
   const menuId = "navbar-menu";
