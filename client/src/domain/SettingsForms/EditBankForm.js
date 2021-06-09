@@ -119,7 +119,7 @@ function EditBankForm({
         />
       </Grid>
       <Grid item>
-        <Button fullWidth type="submit" variant="contained" color="primary" disableElevation disabled={isFetching}>
+        <Button type="submit" variant="contained" color="primary" disableElevation disabled={isFetching}>
           Update
         </Button>
       </Grid>

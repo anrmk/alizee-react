@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Card, CardHeader, CardContent, Grid, Button, FormGroup, TextField, InputAdornment } from "@material-ui/core";
+import { Card, CardHeader, CardContent, Grid, Button, FormGroup, TextField, InputAdornment, Divider, IconButton } from "@material-ui/core";
 
 import Avatar from "../../components/Avatar";
 import ChipsInput from "../../components/ChipsInput";
@@ -145,7 +145,8 @@ function EditProfileForm({
 
   return (
     <Card>
-      <CardHeader title="Edit Profile"></CardHeader>
+      <CardHeader title="Edit Profile" />
+      <Divider />
       <CardContent>
         <Grid container direction="column" spacing={2} alignItems="center">
           <Grid item className={classes.header}>
@@ -157,11 +158,10 @@ function EditProfileForm({
               onDeleteImageClick={handleDeleteCoverImageClick}
             >
               <Avatar
-                className={classes.avatar}
                 src={watcherAvatarUrl}
                 showControls
                 size="huge"
-                //borderColor={USER_RANKING[ranking]}
+                borderColor="silver"
                 onFileInputChange={handleAvatarImageChange}
                 onDeleteImageClick={handleDeleteAvatarImageClick}
               />
@@ -296,10 +296,11 @@ function EditProfileForm({
                 )}
               />
             </Grid>
-
-            <Button type="submit" variant="contained" color="primary" disableElevation disabled={isFetching}>
-              Update
-            </Button>
+            <Grid item>
+              <Button type="submit" variant="contained" color="primary" disableElevation disabled={isFetching}>
+                Update
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
       </CardContent>

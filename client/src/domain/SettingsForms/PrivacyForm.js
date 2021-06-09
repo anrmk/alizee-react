@@ -1,6 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Checkbox, FormGroup, FormControlLabel, Divider, Typography, Grid, Card, CardHeader, CardContent } from "@material-ui/core";
+import {
+  Button,
+  Divider,
+  Typography,
+  Grid,
+  Card,
+  CardHeader,
+  CardContent,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction,
+  Switch,
+} from "@material-ui/core";
+import WarningIcon from "@material-ui/icons/Warning";
 
 import { SETTINGS_BLACK_LIST_ROUTE } from "../../constants/routes";
 
@@ -71,97 +85,94 @@ function PrivacyForm({
   return (
     <Card>
       <CardHeader title="Privacy and Safety" />
+
+      <Divider />
+
       <CardContent>
-        <Grid container direction="column" spacing={4}>
-          <Grid item>
-            <Typography variant="h6">{ACCOUNT_PRIVACY_HEADER}</Typography>
-            <Typography variant="subtitle2">{ACCOUNT_PRIVACY_HELPER}</Typography>
+        <List disablePadding>
+          <ListItem>
+            <ListItemText primary={ACCOUNT_PRIVACY_HEADER} secondary={ACCOUNT_PRIVACY_HELPER} />
+            <ListItemSecondaryAction>
+              <Switch checked={lAccountPrivate} name="accountPrivate" onChange={handleAccountPrivateChange} />
+            </ListItemSecondaryAction>
+          </ListItem>
 
-            <FormControlLabel
-              label="Private Account"
-              labelPlacement="end"
-              control={
-                <Checkbox
-                  color="primary"
-                  name="accountPrivate"
-                  checked={lAccountPrivate}
-                  onChange={handleAccountPrivateChange}
-                />
-              }
-            />
-          </Grid>
+          <ListItem>
+            <ListItemText primary={ACTIVITY_STATUS_HEADER} secondary={ACTIVITY_STATUS_HELPER} />
+            <ListItemSecondaryAction>
+              <Switch checked={lActivityStatus} name="showActivity" onChange={handleActivityStatusChange} />
+            </ListItemSecondaryAction>
+          </ListItem>
 
-          <Divider />
-
-          <Grid item>
-            <Typography variant="h6">{ACTIVITY_STATUS_HEADER}</Typography>
-            <Typography variant="subtitle2">{ACTIVITY_STATUS_HELPER}</Typography>
-
-            <FormGroup>
-              <FormControlLabel
-                label="Show Activity Status"
-                labelPlacement="end"
-                control={
-                  <Checkbox
-                    color="primary"
-                    name="showActivity"
-                    checked={lActivityStatus}
-                    onChange={handleActivityStatusChange}
-                  />
-                }
+          <ListItem>
+            <ListItemText primary={COMMENTS_FILTERING_HEADER} secondary={COMMENTS_FILTERING_HELPER} />
+            <ListItemSecondaryAction>
+              <Switch
+                checked={lOffensiveComments}
+                name="offensiveCommentsHidden"
+                onChange={handleOffensiveCommentsChange}
               />
-            </FormGroup>
-          </Grid>
+            </ListItemSecondaryAction>
+          </ListItem>
+        </List>
+      </CardContent>
 
-          <Divider />
+      <Divider />
 
-          <Grid item>
-            <Typography variant="h6">{COMMENTS_FILTERING_HEADER}</Typography>
-            <Typography variant="subtitle2">{COMMENTS_FILTERING_HELPER}</Typography>
-
-            <FormGroup>
-              <FormControlLabel
-                label="Hide Offensive Comments"
-                labelPlacement="end"
-                control={
-                  <Checkbox
-                    color="primary"
-                    name="offensiveCommentsHidden"
-                    checked={lOffensiveComments}
-                    onChange={handleOffensiveCommentsChange}
-                  />
-                }
-              />
-            </FormGroup>
-          </Grid>
-
-          <Divider />
-
+      <CardContent>
+        <Grid container direction="column" spacing={2}>
           <Grid item>
             <Typography variant="h6">{BLOCKED_ACCOUNTS_HEADER}</Typography>
             <Typography variant="subtitle2">{BLOCKED_ACCOUNTS_HELPER}</Typography>
-
-            <Button to={SETTINGS_BLACK_LIST_ROUTE} component={Link}>Blocked Accounts</Button>
           </Grid>
+          <Grid item>
+            <Button disableElevation variant="outlined" color="primary" to={SETTINGS_BLACK_LIST_ROUTE} component={Link}>
+              Blocked Accounts
+            </Button>
+          </Grid>
+        </Grid>
+      </CardContent>
 
-          <Divider />
+      <Divider />
 
+      <CardContent>
+        <Grid container direction="column" spacing={2}>
           <Grid item>
             <Typography variant="h6">{RESET_PASSWORD_HEADER}</Typography>
             <Typography variant="subtitle2">{RESET_PASSWORD_HELPER}</Typography>
-
-            <Button color="secondary" disabled={loading} onClick={onPasswordReset}>
+          </Grid>
+          <Grid item>
+            <Button
+              startIcon={<WarningIcon />}
+              disableElevation
+              variant="outlined"
+              color="secondary"
+              disabled={loading}
+              onClick={onPasswordReset}
+            >
               Reset Password
             </Button>
           </Grid>
+        </Grid>
+      </CardContent>
 
-          <Divider />
+      <Divider />
 
+      <CardContent>
+        <Grid container direction="column" spacing={2}>
           <Grid item>
             <Typography variant="h6">{DELETE_ACCOUNT_HEADER}</Typography>
             <Typography variant="subtitle2">{DELETE_ACCOUNT_HELPER}</Typography>
-
-            <Button color="secondary" disabled={loading} onClick={onAccountDelete}>
+          </Grid>
+          <Grid item>
+            <Button
+              startIcon={<WarningIcon />}
+              disableElevation
+              variant="outlined"
+              color="secondary"
+              disabled={loading}
+              onClick={onAccountDelete}
+            >
               Delete your Account
             </Button>
           </Grid>

@@ -1,6 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
-
 import {useHistory} from "react-router-dom"
 
 import { ListItem, ListItemAvatar, ListItemText, Typography } from "@material-ui/core";
@@ -55,19 +53,5 @@ function SidebarListItem({
     </ListItem>
   );
 }
-
-SidebarListItem.propTypes = {
-  item: PropTypes.object,
-  selected: PropTypes.bool,
-
-  onItemClick: PropTypes.func,
-};
-
-SidebarListItem.defaultProps = {
-  item: {},
-  selected: false,
-
-  onItemClick: undefined,
-};
 
 export default SidebarListItem;

@@ -15,7 +15,7 @@ const useStyles = (open) =>
     },
 
     logo: {
-      background: `url(${theme.palette.type === "light" ? "/logo-light.png": "/logo-dark.png"}) no-repeat`,
+      background: `url(${theme.palette.type === "light" ? "/logo-light.png" : "/logo-dark.png"}) no-repeat`,
       backgroundSize: "contain",
       backgroundPosition: "center",
       minHeight: "42px",
@@ -27,20 +27,6 @@ const useStyles = (open) =>
         minWidth: "190px",
         marginLeft: theme.spacing(0),
       },
-    },
-
-    grow: {
-      flexGrow: 1,
-    },
-
-    hide: {
-      display: "none",
-    },
-
-    backBtn: {
-      display: "flex",
-      alignItems: "center",
-      cursor: "pointer",
     },
   }));
 

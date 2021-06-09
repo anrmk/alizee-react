@@ -2,7 +2,17 @@ import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Box, Divider, Button, FormGroup, TextField, Typography, Card, CardHeader, CardContent } from "@material-ui/core";
+import {
+  Grid,
+  Divider,
+  Button,
+  FormGroup,
+  TextField,
+  Typography,
+  Card,
+  CardHeader,
+  CardContent,
+} from "@material-ui/core";
 
 import { EMPTY_VALUE_ERROR, MIN_AMOUNT, MAX_AMOUNT } from "../../constants/form_validations";
 
@@ -18,19 +28,19 @@ const schema = yup.object().shape({
     .number()
     .required(EMPTY_VALUE_ERROR)
     .min(MIN_VALUE, MIN_AMOUNT(MIN_VALUE))
-    .max(MAX_VALUE, MAX_AMOUNT(MAX_VALUE))
+    .max(MAX_VALUE, MAX_AMOUNT(MAX_VALUE)),
 });
 
 function EditSubscriptionForm({
   price = 0,
 
-  onSubmit
+  onSubmit,
 }) {
   const classes = useStyles();
   const { errors, setValue, control, handleSubmit } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      [SUBSCRIPTION_PRICE_INPUT_ID]: price
+      [SUBSCRIPTION_PRICE_INPUT_ID]: price,
     },
   });
 
@@ -40,10 +50,15 @@ function EditSubscriptionForm({
 
   return (
     <Card>
-      <CardHeader title="Subscription" subheader="Subscription price and bundles" />
+      <CardHeader title="Subscription" />
+      <Divider />
       <CardContent>
-        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-          <FormGroup className={classes.formElementIndent}>
+        <Grid container component="form" direction="column" spacing={2} onSubmit={handleSubmit(onSubmit)}>
+          <Grid item>
+            <Typography variant="h6">Subscription price and bundles</Typography>
+          </Grid>
+
+          <Grid item>
             <Controller
               name={SUBSCRIPTION_PRICE_INPUT_ID}
               control={control}
@@ -52,7 +67,6 @@ function EditSubscriptionForm({
                   fullWidth
                   id={SUBSCRIPTION_PRICE_INPUT_ID}
                   name={SUBSCRIPTION_PRICE_INPUT_ID}
-                  className={classes.formElementIndent}
                   variant="outlined"
                   label="Price per month"
                   type="number"
@@ -68,39 +82,58 @@ function EditSubscriptionForm({
                 />
               )}
             />
+          </Grid>
+
+          <Grid item>
             <Button
               disableElevation
               variant="contained"
               color="primary"
-              size="large"
               disabled={!!errors[SUBSCRIPTION_PRICE_INPUT_ID]}
               type="submit"
             >
-              Save
+              Update
             </Button>
-          </FormGroup>
+          </Grid>
+        </Grid>
+      </CardContent>
 
-          <FormGroup className={classes.formElementIndent}>
+      <Divider />
+
+      <CardContent>
+        <Grid container direction="column" spacing={2}>
+          <Grid item>
             <Typography variant="h6">Profile promotion campaign</Typography>
-            <Typography variant="caption" color="textSecondary">
+            <Typography variant="body2">
               Offer a free trial or a discounted subscription on your profile for a limited number of new or already
               expired subscribers
             </Typography>
-            <Button disableElevation size="large" variant="outlined" color="primary">
+          </Grid>
+          <Grid item>
+            <Button disableElevation variant="outlined" color="primary">
               Start Campaign
             </Button>
-          </FormGroup>
+          </Grid>
+        </Grid>
+      </CardContent>
 
-          <FormGroup className={classes.formElementIndent}>
+      <Divider />
+
+      <CardContent>
+        <Grid container direction="column" spacing={2}>
+          <Grid item>
             <Typography variant="h6">Following bundles</Typography>
             <Typography variant="caption" color="textSecondary">
               Offer several months of subscription as a discounted bundle
             </Typography>
-            <Button disableElevation size="large" variant="outlined" color="primary">
+          </Grid>
+
+          <Grid item>
+            <Button disableElevation variant="outlined" color="primary">
               Create Bundle
             </Button>
-          </FormGroup>
-        </Box>
+          </Grid>
+        </Grid>
       </CardContent>
     </Card>
   );

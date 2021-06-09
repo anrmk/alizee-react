@@ -64,3 +64,5 @@ export const STORIES_DEFAULT_ROUTE = "/stories";
 export const STATISTICS_ROUTE = "/statistics";
 
 export const NOT_FOUND_ROUTE = "/not-found"
+
+export const ONDATO_ROUTE = "https://sandbox-start.ondato.com/clients/themembers";

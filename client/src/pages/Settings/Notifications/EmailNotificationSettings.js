@@ -156,6 +156,9 @@ function EmailNotificationsSettings({ isFetching, data, getNotification, updateN
         title="Email Notifications"
         subheader="Get emails to find out what’s going on when you’re not on site. You can turn them off anytime."
       />
+      
+      <Divider />
+
       <CardContent>
         <List disablePadding onChange={handleSubmit(handleSettingsChange)}>
           <ListItem>

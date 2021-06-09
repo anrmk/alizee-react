@@ -11,6 +11,7 @@ import {
   ListItemText,
   ListItemSecondaryAction,
   Switch,
+  Divider
 } from "@material-ui/core";
 
 import ApiContext from "../../../context/ApiContext";
@@ -52,7 +53,8 @@ function ToastNotificationSettings({ data, getNotification, updateNotification }
 
   return (
     <Card>
-      <CardHeader title="Toast Notifications"></CardHeader>
+      <CardHeader title="Toast Notifications" />
+      <Divider />
       <CardContent>
         <List disablePadding onChange={handleSettingsChange}>
           <ListItem>

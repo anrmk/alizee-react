@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import { Switch, Link, useParams } from "react-router-dom";
-import { Tabs, Tab, Box } from "@material-ui/core";
+import { Switch, useParams, useHistory, useLocation } from "react-router-dom";
+import { List, ListItem, ListItemText, ListItemIcon, Card, Divider, Box } from "@material-ui/core";
+import ChevronRightIcon from "@material-ui/icons/ChevronRightOutlined";
 
 import {
   SETTINGS_BLACK_LIST_ROUTE,
@@ -18,9 +19,9 @@ import {
   SETTINGS_ACCOUNT_ROUTE,
   SETTINGS_SUBSCRIPTION_ROUTE,
 } from "../../constants/routes";
+
 import PrivateRoute from "../PrivateRoute";
 import SlidingViews from "../../components/SlidingViews";
-
 import BlackList from "./BlackList";
 import EditProfileSettings from "./EditProfileSettings";
 import EditAccountSettings from "./EditAccountSettings";
@@ -37,94 +38,89 @@ import {
   ToastNotificationSettings,
 } from "./Notifications";
 
-import useStyles from "./styles";
 import useSlidingViews, { RIGHT_OPEN_TYPE } from "../../hooks/useSlidingViews";
 import { resetSettings } from "../../store/actions/settings";
 
- const TABS = [
-   {
-     index: 0,
-     name: "edit-profile",
-     title: "Profile",
-     route: SETTINGS_EDIT_PROFILE_ROUTE,
-   },
-   {
-     index: 1,
-     name: "account",
-     title: "Account",
-     route: SETTINGS_ACCOUNT_ROUTE,
-   },
-   {
-     index: 2,
-     name: "card",
-     title: "Your Cards",
-     route: SETTINGS_CARD_ROUTE,
-   },
-   {
-     index: 3,
-     name: "bank",
-     title: "Banking",
-     route: SETTINGS_BANK_ROUTE,
-   },
-   {
-     index: 4,
-     name: "subscription",
-     title: "Subscription",
-     route: SETTINGS_SUBSCRIPTION_ROUTE,
-   },
-   {
-     index: 5,
-     name: "notifications",
-     title: "Notifications",
-     route: SETTINGS_NOTIFICATIONS_ROUTE,
-   },
-   {
-     index: 6,
-     name: "privacy-security",
-     title: "Privacy and Safity",
-     route: SETTINGS_PRIVACY_SECURITY_ROUTE,
-   },
- ];
- const findTab = (value) => {
-   return TABS.find((x) => x.name === value || x.index === value);
- };
- const a11yProps = (key) => {
-   return {
-     id: `vertical-tab-${key}`,
-     "aria-controls": `vertical-tabpanel-${key}`,
-   };
- };
+const TABS = [
+  {
+    index: 0,
+    name: "edit-profile",
+    title: "Profile",
+    route: SETTINGS_EDIT_PROFILE_ROUTE,
+  },
+  {
+    index: 1,
+    name: "account",
+    title: "Account",
+    route: SETTINGS_ACCOUNT_ROUTE,
+  },
+  {
+    index: 2,
+    name: "card",
+    title: "Your Cards",
+    route: SETTINGS_CARD_ROUTE,
+  },
+  {
+    index: 3,
+    name: "bank",
+    title: "Banking",
+    route: SETTINGS_BANK_ROUTE,
+  },
+  {
+    index: 4,
+    name: "subscription",
+    title: "Subscription",
+    route: SETTINGS_SUBSCRIPTION_ROUTE,
+  },
+  {
+    index: 5,
+    name: "notifications",
+    title: "Notifications",
+    route: SETTINGS_NOTIFICATIONS_ROUTE,
+  },
+  {
+    index: 6,
+    name: "privacy-security",
+    title: "Privacy and Safity",
+    route: SETTINGS_PRIVACY_SECURITY_ROUTE,
+  },
+];
 
 function Settings() {
   const { type } = useParams();
-  const [currentTab, setCurrentTab] = useState(findTab(type));
   const { currentSlidingViewsState, toggleSlidingViewsState } = useSlidingViews(RIGHT_OPEN_TYPE);
-  const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
 
-   useEffect(() => {
-     if (type) {
-       setCurrentTab(findTab(type));
-       toggleSlidingViewsState();
-     }
-   }, [type]);
+  useEffect(() => {
+    if (type) {
+      toggleSlidingViewsState();
+    }
+  }, [type]);
 
-  useEffect(() => () => dispatch(resetSettings()), [currentTab]);
+  useEffect(() => () => dispatch(resetSettings()), []);
 
   return (
     <SlidingViews mobileOnly currentState={currentSlidingViewsState} firstSize={4} secondSize={8}>
-      <Tabs
-        orientation="vertical"
-        variant="fullWidth"
-        value={currentTab.index}
-        className={classes.tabs}
-        onChange={(_, value) => setCurrentTab(findTab(value))}
-      >
-        {TABS &&
-          TABS.map((tab) => (
-            <Tab key={tab.index} to={tab.route} component={Link} label={tab.title} {...a11yProps(tab.index)} />
+      <Card>
+        <List disablePadding component="nav">
+          {TABS.map((tab) => (
+            <>
+            <ListItem
+              button
+              key={tab.index}
+              selected={location.pathname.includes(tab.route)}
+              onClick={() => history.push(tab.route)}
+            >
+              <ListItemText primary={tab.title} />
+              <ChevronRightIcon />
+            </ListItem>
+            <Divider />
+            </>
           ))}
-      </Tabs>
+        </List>
+      </Card>
 
       <Box>
         <Switch>

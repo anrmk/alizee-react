@@ -98,18 +98,22 @@ export default createMuiTheme({
 
       text: {},
 
-      outlinedPrimary: {
+      outlinedPrimary : {
+        borderRadius: "20px",
+      },
+
+      outlinedSecondary : {
         borderRadius: "20px",
       },
 
       containedPrimary: {
-        background: "linear-gradient(141.21deg, #36704d -16.59%, #356078 40.28%, #70538a 90.77%)",
-        backgroundColor: "#35B1F6",
-        color: "white",
-        borderRadius: "20px",
-        "&:hover": {
-          opacity: ".8",
-        },
+        // background: "linear-gradient(141.21deg, #36704d -16.59%, #356078 40.28%, #70538a 90.77%)",
+        // backgroundColor: "#35B1F6",
+        // color: "white",
+        // borderRadius: "20px",
+        // "&:hover": {
+        //   opacity: ".8",
+        // },
       },
 
       containedSecondary: {

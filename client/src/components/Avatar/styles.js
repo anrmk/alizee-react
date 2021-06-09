@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
       height: "100%",
       borderRadius: "50%",
-      boxShadow: ({ borderWidth, borderColor }) => getBorder(borderWidth, borderColor),
+      //boxShadow: ({ borderWidth, borderColor }) => getBorder(borderWidth, borderColor),
       animation: "$streamRipple 1.2s infinite ease-in-out",
       content: '""',
     },

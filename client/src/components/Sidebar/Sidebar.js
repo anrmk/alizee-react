@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import { Grid, Box, List, ListItem, ListItemIcon, ListItemText, Typography, Divider } from "@material-ui/core";
+import { Grid, Box, List, ListItem, ListItemIcon, ListItemText, Typography, Badge, Divider } from "@material-ui/core";
 
 import PersonOutlineIcon from "@material-ui/icons/PersonOutlineOutlined";
 import HomeIcon from "@material-ui/icons/HomeOutlined";
@@ -27,6 +27,9 @@ import { Wallet } from "../Wallet";
 function Sidebar({
   user,
   open,
+
+  newMessage,
+  newNotification,
 
   onSignOut,
   onCreateMeet,
@@ -105,7 +108,9 @@ function Sidebar({
               component={Link}
             >
               <ListItemIcon>
-                <NotificationsIcon />
+                <Badge variant="dot" invisible={!newNotification} color="primary">
+                  <NotificationsIcon />
+                </Badge>
               </ListItemIcon>
               <ListItemText>
                 <Typography variant="h6">{t("SidebarNotificationText")}</Typography>
@@ -114,7 +119,9 @@ function Sidebar({
 
             <ListItem button selected={location.pathname.includes(CHAT_ROUTE(""))} to={CHAT_ROUTE("")} component={Link}>
               <ListItemIcon>
-                <MailIcon />
+                <Badge variant="dot" invisible={!newMessage} color="primary">
+                  <MailIcon />
+                </Badge>
               </ListItemIcon>
               <ListItemText>
                 <Typography variant="h6">{t("SidebarChatText")}</Typography>

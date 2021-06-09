@@ -5,7 +5,7 @@ import InputMask from "react-input-mask";
 import * as yup from "yup";
 import { PHONE_REGEX } from "../../constants/regexs";
 
-import { Grid, TextField, Button, Card, CardContent, CardHeader } from "@material-ui/core";
+import { Grid, TextField, Button, Card, CardContent, CardHeader, Divider } from "@material-ui/core";
 import { EMPTY_VALUE_ERROR, VALUE_MIN_LENGTH, VALUE_MAX_LENGTH } from "../../constants/form_validations";
 
 const USERNAME_INPUT_ID = "userName";
@@ -41,6 +41,7 @@ function EditAccountForm({
   return (
     <Card>
       <CardHeader title="Account" />
+      <Divider />
       <CardContent>
         <Grid container component="form" direction="column" spacing={2} onSubmit={handleSubmit(onSubmit)}>
           <Grid item>
@@ -113,10 +114,11 @@ function EditAccountForm({
             />
           </Grid>
 
-          <Button type="submit" variant="contained" color="primary" disableElevation >
-            Update
-          </Button>
-
+          <Grid item>
+            <Button type="submit" variant="contained" color="primary" disableElevation>
+              Update
+            </Button>
+          </Grid>
         </Grid>
       </CardContent>
     </Card>

@@ -10,7 +10,7 @@ import {
   ListItem,
   ListItemText,
   ListItemSecondaryAction,
-  IconButton,
+  Divider,
   Switch
 } from "@material-ui/core";
 
@@ -62,6 +62,7 @@ function PushNotificationSettings({ data, getNotification, updateNotification })
         title="Push Notifications"
         subheader="Get push notifications to find out what’s going on when you’re not on site. You can turn them off anytime."
       />
+      <Divider />
       <CardContent>
         <List disablePadding onChange={handleSettingsChange}>
           <ListItem>

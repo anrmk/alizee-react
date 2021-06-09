@@ -23,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
     [theme.breakpoints.down("sm")]: {
-      padding: theme.spacing(1)
+      padding: theme.spacing(1),
+      marginBottom: theme.spacing(0),
     }
   },
   previewStoryListProgress: {

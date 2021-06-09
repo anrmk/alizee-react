@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
 import * as yup from "yup";
 import { getDate } from "../../helpers/functions";
-import { Card, CardHeader, CardContent, Grid, TextField, Button, Typography, Switch } from "@material-ui/core";
+import { Card, CardHeader, CardContent, Grid, TextField, Button, Typography, Switch, Divider } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 
 import { VALUE_MIN_LENGTH, VALUE_MAX_LENGTH } from "../../constants/form_validations";
@@ -95,6 +95,7 @@ function EditCardForm({
   return (
     <Card>
       <CardHeader title="Your Cards" />
+      <Divider />
       <CardContent>
         <Grid container component="form" spacing={2} onSubmit={handleSubmit(onSubmit)}>
           <Grid container item xs={12} sm={6} direction="column" spacing={2}>
@@ -317,7 +318,7 @@ function EditCardForm({
                       onBlur={onBlur}
                       onChange={(e) => onChange(e.target.checked)}
                     />
-                    <Typography component="span">
+                    <Typography component="span" variant="body2">
                       Tick here to confirm that you are at least 18 years old and the age of majority in your place of
                       residence
                     </Typography>
@@ -332,9 +333,11 @@ function EditCardForm({
             </Grid>
           </Grid>
 
-          <Button fullWidth type="submit" variant="contained" color="primary" disableElevation disabled={isFetching}>
-            Update
-          </Button>
+          <Grid item>
+            <Button fullWidth type="submit" variant="contained" color="primary" disableElevation disabled={isFetching}>
+              Update
+            </Button>
+          </Grid>
         </Grid>
       </CardContent>
       <CardContent>

@@ -8,7 +8,7 @@ import {
   SETTINGS_NOTIFICATIONS_TOAST_ROUTE,
 } from "../../../constants/routes";
 
-import { Card, CardContent, CardHeader, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import { Card, CardContent, CardHeader, Divider, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import WebIcon from "@material-ui/icons/WebOutlined";
 import EmailIcon from "@material-ui/icons/EmailOutlined";
 import LanguageIcon from "@material-ui/icons/LanguageOutlined";
@@ -20,7 +20,8 @@ function GeneralNotificationSettings() {
 
   return (
     <Card>
-      <CardHeader title="Notifications" />
+      <CardHeader title="Notifications Settings" />
+      <Divider />
       <CardContent>
         <List disablePadding>
           <ListItem button alignItems="flex-start" onClick={() => history.push(SETTINGS_NOTIFICATIONS_PUSH_ROUTE)}>

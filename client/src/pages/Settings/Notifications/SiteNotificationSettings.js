@@ -10,7 +10,8 @@ import {
   ListItem,
   ListItemText,
   ListItemSecondaryAction,
-  Switch
+  Switch,
+  Divider
 } from "@material-ui/core";
 
 import ApiContext from "../../../context/ApiContext";
@@ -56,7 +57,8 @@ function SiteNotificationSettings({ data, getNotification, updateNotification })
 
   return (
     <Card>
-      <CardHeader title="Site Notifications"></CardHeader>
+      <CardHeader title="Site Notifications" />
+      <Divider />
       <CardContent>
         <List disablePadding onChange={handleSettingsChange}>
           <ListItem>

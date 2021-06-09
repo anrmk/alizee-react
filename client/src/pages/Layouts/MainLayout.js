@@ -27,9 +27,10 @@ export default function MainLayout({
   const classes = useStyles();
   const notification = useNotification();
 
-  const { userInfo, notificationData } = useSelector(state => ({
+  const { userInfo, notificationData, isAuthenticated } = useSelector(state => ({
     userInfo: state.signIn.userInfo,
     notificationData: state.notification.data,
+    isAuthenticated: state.signIn.isAuthenticated
   }))
   const dispatch = useDispatch();
 
@@ -46,44 +47,53 @@ export default function MainLayout({
   }
 
   return (
-    <ContainerLayout 
+    <ContainerLayout
       isFullScreenHeight
       baseClassName={clsx(classes.mainBase, baseClassName)}
       className={clsx(classes.mainContainer, containerClassName)}
-      beforeChildren={(
+      containerProps={{ maxWidth: "xl" }}
+      beforeChildren={
         <Hidden mdUp>
-          <Container>
-            <Navbar
-              userName={userInfo.userName}
-              ranking={userInfo.ranking}
-              avatarUrl={userInfo.avatarUrl}
-              newMessage={notificationData?.newMessage}
-              newNotification={notificationData?.newNotification}
-              open
-              onChange={notification.toggle}
-              onSignOut={handleSignOut} />
-          </Container>
+          <Navbar
+            userName={userInfo.userName}
+            avatarUrl={userInfo.avatarUrl}
+            isAuthenticated={isAuthenticated}
+
+            newMessage={notificationData?.newMessage}
+            newNotification={notificationData?.newNotification}
+            open
+            
+            onChange={notification.toggle}
+            onSignOut={handleSignOut}
+          />
         </Hidden>
-      )}
-      afterChildren={(
+      }
+      afterChildren={
         <Hidden mdUp>
           <BottomBar
             user={userInfo}
             onCreatePost={createPostDialog.toggle}
             onCreateStory={createStoryDialog.toggle}
-            onCreateMood={createMoodDialog.toggle} />
+            onCreateMood={createMoodDialog.toggle}
+          />
         </Hidden>
-      )}>
+      }
+    >
       <Grid container spacing={(0, 3)} className={clsx(classes.mainInnerGrid, innerGridClassName)}>
         <Hidden smDown>
           <Grid item {...leftColProps}>
             <Sidebar
               open
               user={userInfo}
+              
+              newMessage={notificationData?.newMessage}
+              newNotification={notificationData?.newNotification}
+
               onSignOut={handleSignOut}
               onCreateMeet={handleCreateMeet}
               onCreatePost={createPostDialog.toggle}
-              onCreateStory={createStoryDialog.toggle} />
+              onCreateStory={createStoryDialog.toggle}
+            />
           </Grid>
         </Hidden>
         <Grid item {...rightColProps}>
@@ -91,5 +101,5 @@ export default function MainLayout({
         </Grid>
       </Grid>
     </ContainerLayout>
-  )
+  );
 }

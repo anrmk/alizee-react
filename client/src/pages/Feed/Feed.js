@@ -33,16 +33,16 @@ import {
 import useFullScreen from "../../hooks/useFullScreen";
 import useLightboxModal from "../../hooks/useLightboxModal";
 
-import useStyles from "./styles";
+// import useStyles from "./styles";
 
 function Feed(props) {
-  const classes = useStyles();
+  // const classes = useStyles();
   const apiClient = useContext(ApiContext);
 
   const { userInfo } = props;
   const { people, getPeople } = props;
   const { posts, getPosts, resetPosts } = props;
-  const { story, getStory, getFollowingStories, resetFollowingStories, resetStory } = props;
+  const { story, getFollowingStories, resetFollowingStories } = props;
   const { hotStreamers, getHotStreamers } = props;
 
   const likeAction = useLikeAction();
@@ -72,7 +72,7 @@ function Feed(props) {
 
   useEffect(() => {
     if (userInfo.id) {
-      getPeople(apiClient, 4);
+      getPeople(apiClient);
     }
   }, [userInfo.id]);
 
@@ -117,7 +117,6 @@ function Feed(props) {
           onCommentSend={handleCommentSendClick}
           onFullScreen={lightboxModal.toggle}
         />
-
       </Grid>
       
       <Hidden smDown>
@@ -194,7 +193,7 @@ function mapDispatchToProps(dispatch) {
     getReceipt: (api, id, callback) => dispatch(postActions.getReceipt(api, id, callback)),
     resetPosts: () => dispatch(postActions.resetPosts()),
 
-    getPeople: (api, count) => dispatch(actionSuggestion.getPeople(api, count)),
+    getPeople: (api) => dispatch(actionSuggestion.getPeople(api, 5)),
     buyPost: (api, id) => dispatch(paymentActions.buyPost(api, id)),
 
     getStory: (api, opts) => dispatch(storyActions.getStory(api, opts)),

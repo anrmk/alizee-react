@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { connect } from "react-redux";
-import { Card, CardHeader, CardContent, Typography } from "@material-ui/core";
+import { Card, CardHeader, CardContent, Divider } from "@material-ui/core";
 import AccountOutlinedIcon from "@material-ui/icons/AccountBalanceOutlined";
 
 import ApiContext from "../../context/ApiContext";
@@ -22,6 +22,7 @@ function EditBankSettings({ identityVerified, data, isFetching, getBank, updateB
   return (
     <Card>
       <CardHeader title="Banking" />
+      <Divider />
       <CardContent>
         {identityVerified ? !isFetching && <EditBankForm {...data} onSubmit={handleEditBankSubmit} /> : <OndatoForm />}
       </CardContent>

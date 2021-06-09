@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Redirect, useHistory, useParams, useRouteMatch } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { Box, Container, Grid, Hidden, Typography } from "@material-ui/core/";
+import { Box, Grid, Hidden, Typography } from "@material-ui/core/";
 
 import BlockIcon from "@material-ui/icons/Block";
 
@@ -14,7 +14,6 @@ import ProfileContent from "../../domain/ProfileContent";
 import * as postActions from "../../store/actions/post";
 import * as relationshipActions from "../../store/actions/relationship";
 import * as userActions from "../../store/actions/user";
-import * as accountActions from "../../store/actions/account";
 import * as settingsActions from "../../store/actions/settings";
 
 import {

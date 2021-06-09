@@ -12,10 +12,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center",
     justifyContent: "center"
   },
-  avatar: {
-    position: "absolute",
-    boxShadow: "box-shadow: 10px 5px 5px red;"
-  },
+
   header: {
     width: "100%"
   }
