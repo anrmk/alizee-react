@@ -2,9 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   container: {
-    [theme.breakpoints.up("md")]: {
-      height: `calc(100vh - ${(theme.mixins.toolbar.minHeight*2 + theme.spacing(2))}px)`,
-    }
+    height: "100%"
   },
   card: {
     height: "100%"

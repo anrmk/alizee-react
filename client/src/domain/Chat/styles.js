@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => {
   return {
     card: {
       position: "relative",
-      height: `calc(100vh - ${theme.spacing(3)}px)`,
+      height: "100%",
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",

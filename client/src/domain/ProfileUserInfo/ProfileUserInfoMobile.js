@@ -37,7 +37,7 @@ function ProfileUserInfo({
   }
 
   return (
-    <Box display="flex" flexDirection="column">
+    <Box display="flex" flexDirection="column" className={classes.root}>
         {isOwner ? (
           <Button
             disableElevation

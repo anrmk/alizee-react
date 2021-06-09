@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-import { Container, Box } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 
 import { POST_ID_ROUTE } from "../constants/routes";
 
@@ -19,12 +19,10 @@ function Explore() {
   };
 
   return (
-    <Container>
-      <Box my={4}>
-        <SearchInput defaultValue={search.lastQuery} onSendQuery={search.onSearch} />
-        <GridGallery items={search.posts} hasMore={search.hasMore} onFetchMore={search.onFetchMore} onItemClick={onItemClick} />
-      </Box>
-    </Container>
+    <Box my={4}>
+      <SearchInput defaultValue={search.lastQuery} onSendQuery={search.onSearch} />
+      <GridGallery items={search.posts} hasMore={search.hasMore} onFetchMore={search.onFetchMore} onItemClick={onItemClick} />
+    </Box>
   );
 }
 

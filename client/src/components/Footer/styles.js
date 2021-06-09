@@ -6,9 +6,13 @@ const useStyles = makeStyles((theme) => ({
     borderTopWidth: "1px",
     borderTopStyle: "solid",
     borderTopColor: grey[400],
-    paddingTop: theme.spacing(1),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
     display: !props.open ? "none" : "flex",
 
+    "& > *": {
+      listStyle: "none"
+    },
     "& a": {
       color: grey["400"],
       "&::after": {

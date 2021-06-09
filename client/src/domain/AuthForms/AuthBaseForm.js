@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { Box, Button, Card, CardContent, Typography, Divider, Grid } from "@material-ui/core";
+import { Box, Button, Card, CardContent, Typography } from "@material-ui/core";
 
 import SocialButtons from "../../components/SocialButtons/SocialButtons";
 import DividerWithText from "../../components/DividerWithText";
@@ -31,15 +31,15 @@ function AuthBaseForm({
     <Box>
       <Card>
         <CardContent>
-          <Grid container spacing={2} direction="column">
-            <Grid item>
+          <Box direction="column">
+            <Box marginBottom="16px">
               <Box className={classes.logoImage} />
               <Typography variant="body2" color="textSecondary" align="center">
                 Sign up to make money and interact with your fans!
               </Typography>
-            </Grid>
+            </Box>
 
-            <Grid item>
+            <Box marginBottom="16px">
               <SocialButtons
                 className={clsx(classes.formElement, helpComponent && classes.formElementIndent)}
                 googleClientId={GOOGLE_CLIENT_ID}
@@ -47,18 +47,18 @@ function AuthBaseForm({
                 onSuccess={onSocialSuccess}
                 onFailure={onSocialFailure}
               />
-            </Grid>
+            </Box>
 
-            <Grid item>
+            <Box marginBottom="16px">
               <DividerWithText>or</DividerWithText>
-            </Grid>
+            </Box>
 
-            <Grid item component="form" id={FORM_ID} onSubmit={onFormSubmit}>
+            <Box marginBottom="16px" component="form" id={FORM_ID} onSubmit={onFormSubmit}>
               {children}
-            </Grid>
-            <Grid item>{helpComponent}</Grid>
-            <Grid item>{error && <Alert severity="error">{error}</Alert>}</Grid>
-            <Grid item>
+            </Box>
+            <Box marginBottom="16px">{helpComponent}</Box>
+            <Box marginBottom="16px">{error && <Alert severity="error">{error}</Alert>}</Box>
+            <Box marginBottom="16px">
               <Button
                 form={FORM_ID}
                 fullWidth
@@ -70,16 +70,16 @@ function AuthBaseForm({
               >
                 {isSingUpForm ? "Sing Up" : "Sign In"}
               </Button>
-            </Grid>
+            </Box>
 
-            <Grid item>
+            <Box>
               <Typography variant="body2" color="textSecondary" align="center">
                 {isSingUpForm
                   ? "By signing up you agree to our Terms of Service and Privacy Policy, and confirm that you are at least 18 years old."
                   : "Visit Help Center for additional help if you are unable to log in with your existing account"}
               </Typography>
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
         </CardContent>
       </Card>
 

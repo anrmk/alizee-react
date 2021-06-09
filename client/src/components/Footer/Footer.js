@@ -2,10 +2,10 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { ABOUT_ROUTE, HELP_ROUTE, PRIVACY_ROUTE } from "../../constants/routes";
 
-import { Box, Grid, Typography, ListItem, Link, List } from "@material-ui/core";
+import { Grid, Link } from "@material-ui/core";
 import useStyles from "./styles";
 
-function Navbar({ open }) {
+function Footer({ open }) {
   const classes = useStyles({ open });
   const history = useHistory();
 
@@ -39,4 +39,4 @@ function Navbar({ open }) {
   );
 }
 
-export default Navbar;
+export default Footer;

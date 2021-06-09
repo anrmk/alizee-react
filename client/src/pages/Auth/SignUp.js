@@ -3,9 +3,9 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
-import { Container, Box, Grid, Hidden } from "@material-ui/core";
+import { Hidden } from "@material-ui/core";
 import { SignUpForm, Slider } from "../../domain/AuthForms";
-import Footer from "../../components/Footer";
+import { TwoColumnLayout } from "../Layouts";
 
 import * as signUpActions from "../../store/actions/signUp";
 import * as signInActions from "../../store/actions/signIn";
@@ -49,35 +49,24 @@ function SignUp(props) {
   };
 
   return (
-    <Container className={classes.container}>
-      <GoogleReCaptchaProvider
-        useRecaptchaNet
-        reCaptchaKey={process.env.REACT_APP_RECAPTCHA_KEY}
-        scriptProps={{ async: true, defer: true, appendTo: "body" }}
-      >
-        <Grid container className={classes.grid}>
-          <Hidden smDown>
-            <Grid item sm={6}>
-              <Slider />
-            </Grid>
-          </Hidden>
+    <GoogleReCaptchaProvider
+      useRecaptchaNet
+      reCaptchaKey={process.env.REACT_APP_RECAPTCHA_KEY}
+      scriptProps={{ async: true, defer: true, appendTo: "body" }}>
+      <TwoColumnLayout>
+        <Hidden smDown>
+          <Slider />
+        </Hidden>
 
-          <Grid item md={4} sm={6} xs={12}>
-            <SignUpForm
-              error={errorMessage}
-              onSubmit={handleFormSubmit}
-              onSocialRequest={handleSocialRequest}
-              onSocialSuccess={handleSocialSuccess}
-              onSocialFailure={handleSocialFailure}
-            />
-          </Grid>
-        </Grid>
-
-      <Box className={classes.footer}>
-        <Footer open={true} />
-      </Box>
-      </GoogleReCaptchaProvider>
-    </Container>
+        <SignUpForm
+          error={errorMessage}
+          onSubmit={handleFormSubmit}
+          onSocialRequest={handleSocialRequest}
+          onSocialSuccess={handleSocialSuccess}
+          onSocialFailure={handleSocialFailure}
+        />
+      </TwoColumnLayout>
+    </GoogleReCaptchaProvider>
   );
 }
 

@@ -2,9 +2,9 @@ import React, { useContext, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { Container, Grid, Box, Hidden } from "@material-ui/core";
+import { Hidden } from "@material-ui/core";
 import { SignInForm, Slider } from "../../domain/AuthForms";
-import Footer from "../../components/Footer";
+import { TwoColumnLayout } from "../Layouts";
 
 import * as signInActions from "../../store/actions/signIn";
 import * as socialAuthActions from "../../store/actions/socialAuth";
@@ -67,29 +67,18 @@ function SignIn(props) {
   };
 
   return (
-    <Container className={classes.container}>
-      <Grid container className={classes.grid}>
-        <Hidden smDown>
-          <Grid item sm={6} lg={8}>
-            <Slider />
-          </Grid>
-        </Hidden>
+    <TwoColumnLayout>
+      <Hidden smDown>
+        <Slider />
+      </Hidden>
 
-        <Grid item md={4} sm={6} lg={4} xs={12}>
-          <SignInForm
-            error={errorMessage}
-            onSubmit={handleFormSubmit}
-            onSocialRequest={handleSocialRequest}
-            onSocialSuccess={handleSocialSuccess}
-            onSocialFailure={handleSocialFailure}
-          />
-        </Grid>
-      </Grid>
-
-      <Box className={classes.footer}>
-        <Footer open={true} />
-      </Box>
-    </Container>
+      <SignInForm
+        error={errorMessage}
+        onSubmit={handleFormSubmit}
+        onSocialRequest={handleSocialRequest}
+        onSocialSuccess={handleSocialSuccess}
+        onSocialFailure={handleSocialFailure} />
+    </TwoColumnLayout>
   );
 }
 

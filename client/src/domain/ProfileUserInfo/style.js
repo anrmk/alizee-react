@@ -2,7 +2,10 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-
+    [theme.breakpoints.down("md")]: {
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2)
+    }
   },
   header: {
     flexDirection: "column",

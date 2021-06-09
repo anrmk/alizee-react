@@ -9,7 +9,6 @@ import { HotStreamersItemList } from "../../domain/Stream";
 import * as actionSuggestion from "../../store/actions/suggestion";
 
 import * as postActions from "../../store/actions/post";
-import * as settingsActions from "../../store/actions/settings";
 import * as storyActions from "../../store/actions/story";
 import * as streamActions from "../../store/actions/stream";
 
@@ -93,7 +92,7 @@ function Feed(props) {
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12} md={8} >
+      <Grid item xs={12} md={7} >
         <PreviewStoriesList
           loading={story.isFetching}
           user={userInfo}
@@ -122,7 +121,7 @@ function Feed(props) {
       </Grid>
       
       <Hidden smDown>
-        <Grid item md={4} >
+        <Grid item md={5} >
           <Box position="sticky" top={12}>
             {people.data && people.data.length > 0 && (
               <Box mb={1}>
