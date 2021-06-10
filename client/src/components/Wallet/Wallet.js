@@ -47,9 +47,10 @@ function Wallet({ deposit }) {
           title={<Typography variant="h6">Wallet balance</Typography>}
         ></CardHeader>
         <CardContent className={classes.content}>
-          <Typography variant="h4">{formatCurrency(deposit || 0)}</Typography>
+          <Typography variant="h5">{formatCurrency(deposit || 0)}</Typography>
         </CardContent>
       </Card>
+      
       <Menu
         keepMounted
         id={menuId}

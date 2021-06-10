@@ -4,7 +4,7 @@ import blueGrey from "@material-ui/core/colors/blueGrey";
 import grey from "@material-ui/core/colors/grey";
 
 const SIZES = {
-  small: "25px",
+  small: "26px",
   medium: "40px",
   large: "65px",
   big: "96px",

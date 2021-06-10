@@ -19,7 +19,6 @@ import {
   CHANGE_LOG_ROUTE,
   HELP_DETAIL_ROUTE,
 } from "../../constants/routes";
-import { USER_RANKING } from "../../constants/user";
 import Avatar from "../../components/Avatar";
 import Logo from "../../components/Logo";
 import Menu from "./Menu";
@@ -96,7 +95,7 @@ function Navbar({
         <Grid item></Grid>
 
         <Grid item>
-          <Toolbar>
+          <Toolbar disableGutters>
             {isAuthenticated ? (
               <>
                 <IconButton>
@@ -112,7 +111,7 @@ function Navbar({
                 </IconButton>
 
                 <IconButton ref={anchorEl} aria-controls={menuId} onClick={handleMenuOpen}>
-                  <Avatar src={avatarUrl} size="small" borderColor="silver" />
+                  <Avatar src={avatarUrl} size="small" />
                 </IconButton>
 
                 <Menu

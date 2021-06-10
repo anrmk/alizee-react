@@ -16,6 +16,7 @@ function Slider() {
         <div className={clsx(classes.slide, classes.slide1)}></div>
         <div className={clsx(classes.slide, classes.slide2)}></div>
         <div className={clsx(classes.slide, classes.slide3)}></div>
+        <div className={clsx(classes.slide, classes.slide4)}></div>
       </AutoPlaySwipeableViews>
     </Box>
   );

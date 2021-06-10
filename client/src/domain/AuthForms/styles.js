@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
-import authIllustration from "../../../src/assets/img/auth_image_3.png";
+//import authIllustration from "/phones.png";
 import img1 from "../../../src/assets/img/slides/img1.jpg";
 import img2 from "../../../src/assets/img/slides/img2.jpg";
 import img3 from "../../../src/assets/img/slides/img3.jpg";
@@ -45,30 +45,30 @@ const useStyles = makeStyles((theme) => {
     },
 
     logoImage: {
-      background: `url(${theme.palette.type === "light" ? "/logo-light.png": "/logo-dark.png"}) no-repeat`,
+      background: `url(${theme.palette.type === "light" ? "/logo-light.svg": "/logo-dark.svg"}) no-repeat`,
       backgroundSize: "contain",
       backgroundPosition: "center",
-      minHeight: "58px",
-      height: "auto",
+      minHeight: "80px",
     },
 
     authImage: {
       width: "440px",
       height: "720px",
       position: "relative",
-      backgroundImage: `url(${authIllustration})`,
+      backgroundImage: `url("/phones.png")`,
       backgroundRepeat: "no-repeat",
     },
 
     swipe: {
-      width: "307px",
+      width: "308px",
       position: "absolute",
-      margin: "81px 0 0 113px",
+      margin: "81px 0 0 112px",
     },
 
     slide: {
       height: "545px",
       backgroundRepeat: "no-repeat",
+      backgroundSize: "cover"
     },
 
     slide1: {
