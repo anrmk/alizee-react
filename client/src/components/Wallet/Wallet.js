@@ -41,7 +41,7 @@ function Wallet({ deposit }) {
               aria-label="Wallet menu"
               aria-haspopup="true"
               onClick={(e) => setMenuAnchor(e.currentTarget)}>
-              <MoreVertIcon />
+              <MoreVertIcon htmlColor="white" />
             </IconButton>
           }
           title={<Typography variant="h6">Wallet balance</Typography>}

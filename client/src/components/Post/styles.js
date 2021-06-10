@@ -21,6 +21,20 @@ const useStyles = makeStyles((theme) => ({
     }
   },
 
+  cardName: {
+    marginRight: theme.spacing(0.5),
+    // fontWeight: theme.typography.fontWeightMedium
+  },
+
+  cardUserName: {
+    color: "inherit",
+    textDecoration: "none",
+    "&:hover": {
+      textDecoration: "underline",
+      color: theme.palette.primary.light
+    }
+  },
+
   cardContent: {
     position: "relative",
     zIndex: "1",
@@ -37,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
     width: "100%"
   },
 
-  //obsolete
   media: {
     display: "flex",
     justifyContent: "center",

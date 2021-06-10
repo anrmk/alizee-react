@@ -125,7 +125,7 @@ function Feed(props) {
             {people.data && people.data.length > 0 && (
               <Box mb={1}>
                 <Box display="flex" flexWrap="wrap" alignItems="center" justifyContent="space-between">
-                  <Typography variant="h6">Suggestions</Typography>
+                  <Typography variant="h6" color="textSecondary">Suggestions</Typography>
                   <MUILink variant="caption" to={SUGESTED_PEOPLE} component={Link}>
                     See All
                   </MUILink>

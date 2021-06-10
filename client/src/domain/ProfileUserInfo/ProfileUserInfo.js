@@ -65,8 +65,7 @@ function ProfileUserInfo({
             onNewImageClick={onNewAvatarImageClick}
             onDeleteImageClick={onDeleteAvatarImageClick} />
         }
-        titleTypographyProps={{ variant: "h5" }}
-        title={user.name}
+        title={<Typography variant="h6">{user.name}</Typography>}
         subheader={
           <>
             <Typography variant="subtitle1">@{user.userName}</Typography>

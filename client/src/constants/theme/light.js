@@ -76,8 +76,18 @@ export default createMuiTheme({
       },
     },
 
+    MuiPaper: {
+      elevation1: {
+        boxShadow: "none"
+      }
+    },
+
     MuiButton: {
       root: {},
+
+      label: {
+        color: "white"
+      },
 
       text: {},
 

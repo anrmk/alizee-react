@@ -49,13 +49,13 @@ function Cover({
             <Box className={classes.controls}>
               <Tooltip title="Change cover image">
                 <IconButton onClick={handleNewImageClick}>
-                  <CameraIcon />
+                  <CameraIcon htmlColor="white" />
                 </IconButton>
               </Tooltip>
               {src && (
                 <Tooltip title="Delete cover image">
                   <IconButton onClick={onDeleteImageClick}>
-                    <ClearIcon />
+                    <ClearIcon htmlColor="white" />
                   </IconButton>
                 </Tooltip>
               )}

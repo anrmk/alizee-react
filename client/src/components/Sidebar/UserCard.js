@@ -6,7 +6,7 @@ import { Box, Typography, BottomNavigation, BottomNavigationAction } from "@mate
 import LiveTvIcon from "@material-ui/icons/LiveTvOutlined";
 import AddPhotoCameraIcon from "@material-ui/icons/AddAPhotoOutlined";
 import ControlPointIcon from "@material-ui/icons/ControlPointDuplicateOutlined";
-import VerifiedUserIcon  from "@material-ui/icons/CheckCircleOutline";
+import VerifiedIcon from "../Icons/VerifiedIcon";
 
 import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 
@@ -30,9 +30,13 @@ function UserCard(props) {
           avatarBaseProps={{ component: Link, to: PROFILE_USERNAME_ROUTE(userName) }}
         />
       </Box>
-      <Typography variant="h6" component="h6" align="center">
-        {name} {identityVerified && <VerifiedUserIcon fontSize="small" />}
-      </Typography>
+      
+      <Box display="flex" alignItems="center" justifyContent="center">
+        <Typography variant="h6" className={classes.cardName}>
+          {name} 
+        </Typography>
+        {identityVerified && <VerifiedIcon fontSize="small" color="primary" />}
+      </Box>
       <Typography variant="subtitle2" color="textSecondary" align="center">
         @{userName}
       </Typography>

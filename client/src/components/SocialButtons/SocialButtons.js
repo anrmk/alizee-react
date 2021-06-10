@@ -2,9 +2,10 @@ import React from "react";
 import { GoogleLogin } from "react-google-login";
 import { Avatar, Box, Button } from "@material-ui/core";
 
-import { SOCIAL_GOOGLE, SOCIAL_TWITTER } from "../../constants/social_types";
 import GoogleIcon from "../../assets/img/social-icons/google.svg";
-import TwitterIcon from "../../assets/img/social-icons/twitter.svg";
+
+import { SOCIAL_GOOGLE, SOCIAL_TWITTER } from "../../constants/social_types";
+import { TwitterIcon } from "../Icons";
 
 import useStyles from "./styles";
 
@@ -25,10 +26,10 @@ function SocialButtons({
           <Button
             {...props}
             variant="contained"
-            color="secondary"
+            color="primary"
             disableElevation
             fullWidth
-            startIcon={<Avatar src={GoogleIcon} className={classes.googleIcon} />}
+            startIcon={<Box className=""><Avatar src={GoogleIcon} className={classes.googleIcon} /></Box>}
           >
             SING IN WITH GOGGLE
           </Button>
@@ -44,7 +45,7 @@ function SocialButtons({
         disableElevation
         fullWidth
         onClick={() => onSuccess(null, SOCIAL_TWITTER)}
-        startIcon={<Avatar src={TwitterIcon} className={classes.googleIcon} />}
+        startIcon={<TwitterIcon />}
       >
         SIGN IN WITH TWITTER
       </Button>

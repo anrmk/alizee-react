@@ -46,9 +46,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
-   control: {
-     color: theme.palette.common.white
-   },
+  control: {
+    color: theme.palette.common.white
+  },
 
   coverEditButton: {
     position: "absolute",

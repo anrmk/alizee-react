@@ -55,6 +55,10 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
 
+  cardName: {
+    marginRight: theme.spacing(0.5)
+  },
+
   navigation: {
     marginTop: theme.spacing(1),
     width: "100%",

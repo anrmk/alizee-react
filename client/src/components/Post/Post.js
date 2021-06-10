@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
+  Box,
   Card,
   CardHeader,
   CardMedia,
@@ -13,7 +14,7 @@ import {
 } from "@material-ui/core";
 
 import MoreVertIcon from "@material-ui/icons/MoreVertOutlined";
-import VerifiedUserIcon  from "@material-ui/icons/CheckCircleOutline";
+import VerifiedIcon from "../Icons/VerifiedIcon";
 
 import Tools from "./Tools";
 import MediaContent from "../../components/MediaContent";
@@ -77,15 +78,26 @@ const Post = React.memo((props) => {
   );
 
   return (
-    <Card className={classes.root} variant="outlined">
+    <Card className={classes.root}>
       <CardHeader
         avatar={
           <Link to={PROFILE_USERNAME_ROUTE(owner.userName)}>
             <Avatar src={owner.avatarUrl} />
           </Link>
         }
-        title= {<>{owner.name} <VerifiedUserIcon fontSize="small" /></>}
-        subheader={`@${owner.userName}`}
+        title= {
+          <Box display="flex" alignItems="center">
+            <Typography variant="body1" className={classes.cardName}>
+              {owner.name}
+            </Typography>
+            {user.identityVerified && <VerifiedIcon fontSize="small" color="primary" />}
+          </Box>
+        }
+        subheader={
+          <Link to={PROFILE_USERNAME_ROUTE(owner.userName)} className={classes.cardUserName}>
+            {`@${owner.userName}`}
+          </Link>
+        }
         action={
           <IconButton onClick={handleMenuClick}>
             <MoreVertIcon />
