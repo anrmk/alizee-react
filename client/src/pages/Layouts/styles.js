@@ -34,7 +34,21 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   mainInnerGrid: {
-    height: "100%"
+    height: "100%",
+
+    "& > .MuiGrid-item" : { 
+      padding: theme.spacing(1.5),
+      [theme.breakpoints.down("sm")]: {
+        padding: theme.spacing(0)
+      }
+    }
+
+    // "&.MuiGrid-item + &.MuiGrid-item": {
+    //   padding: theme.spacing(0,3),
+    //   [theme.breakpoints.down("sm")]: {
+    //     padding: theme.spacing(0)
+    //   }
+    // }
   },
   mainContainer: {
     [theme.breakpoints.down("sm")]: {

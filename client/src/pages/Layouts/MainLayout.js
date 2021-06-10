@@ -79,7 +79,7 @@ export default function MainLayout({
         </Hidden>
       }
     >
-      <Grid container spacing={(0, 3)} className={clsx(classes.mainInnerGrid, innerGridClassName)}>
+      <Grid container className={clsx(classes.mainInnerGrid, innerGridClassName)}>
         <Hidden smDown>
           <Grid item {...leftColProps}>
             <Sidebar
