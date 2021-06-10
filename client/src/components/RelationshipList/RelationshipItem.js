@@ -112,7 +112,7 @@ const RelationshipItem = React.memo((props) => {
       {(!subscriptionPrice || subscriptionPrice === 0) && <Typography className={classes.label}>Free</Typography>}
 
       <ListItemAvatar className={classes.avatar}>
-        <Avatar borderColor={USER_RANKING[ranking]} size={wide && "large"} src={avatarUrl} />
+        <Avatar borderColor="silver" size={wide && "large"} src={avatarUrl} />
       </ListItemAvatar>
 
       <ListItemText

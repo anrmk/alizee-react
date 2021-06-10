@@ -1,6 +1,5 @@
 import { Badge, makeStyles, withStyles } from "@material-ui/core";
 import yellow from "@material-ui/core/colors/yellow";
-import blueGrey from "@material-ui/core/colors/blueGrey";
 import grey from "@material-ui/core/colors/grey";
 
 const SIZES = {
@@ -13,7 +12,7 @@ const SIZES = {
 
 const BORDER_COLORS = {
   gold: yellow["A700"],
-  silver: blueGrey["100"],
+  silver: grey["50"],
   blue: "#6FCBFF",
   black: grey["900"],
 };

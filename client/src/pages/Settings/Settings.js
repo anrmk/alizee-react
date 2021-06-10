@@ -106,10 +106,10 @@ function Settings() {
       <Card>
         <List disablePadding component="nav">
           {TABS.map((tab) => (
-            <>
+            <Box key={`settings_${tab.index}`}>
             <ListItem
               button
-              key={tab.index}
+              
               selected={location.pathname.includes(tab.route)}
               onClick={() => history.push(tab.route)}
             >
@@ -117,7 +117,7 @@ function Settings() {
               <ChevronRightIcon />
             </ListItem>
             <Divider />
-            </>
+            </Box>
           ))}
         </List>
       </Card>

@@ -26,6 +26,7 @@ function UserCard(props) {
         <Avatar
           src={avatarUrl}
           size="big"
+          borderColor="silver"
           avatarBaseProps={{ component: Link, to: PROFILE_USERNAME_ROUTE(userName) }}
         />
       </Box>
