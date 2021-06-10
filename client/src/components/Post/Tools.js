@@ -92,8 +92,8 @@ const Tools = React.memo(({
   return (
     <Box width="100%">
       <Box display="flex" alignItems="center">
-        <IconButton color="secondary" disabled={!isPurchased && amount > 0} onClick={handleLikeClick} aria-label="add to favorites">
-          {isLike ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+        <IconButton disabled={!isPurchased && amount > 0} onClick={handleLikeClick} aria-label="add to favorites" >
+          {isLike ? <FavoriteIcon htmlColor="red" /> : <FavoriteBorderIcon />}
         </IconButton>
 
         {!location.includes(POST_ID_ROUTE(id)) && isCommentable && (

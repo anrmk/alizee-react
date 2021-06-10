@@ -9,7 +9,8 @@ const RelationshipList = React.memo(
     const classes = useStyles();
 
     return (
-      <List dense className={classes.root}>
+      // <List dense className={classes.root}>
+      <>
         {items &&
           items.map((item) => (
             <RelationshipItem
@@ -24,6 +25,7 @@ const RelationshipList = React.memo(
               status={item.status}
               ranking={item.ranking}
               subscriptionPrice={item.subscriptionPrice}
+              identityVerified={item.identityVerified}
               isMe={item.userName === currentUserName}
               onSubscribeClick={onSubscribeClick}
               onConfirmClick={onConfirmClick}
@@ -31,7 +33,7 @@ const RelationshipList = React.memo(
               onUnrejectClick={onUnrejectClick}
             />
           ))}
-      </List>
+      </>
     );
   }
 );

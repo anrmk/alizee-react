@@ -1,21 +1,22 @@
 import React from "react";
-import clsx from "clsx";
+import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import { Button, ListItem, ListItemText, ListItemAvatar, Typography, Hidden } from "@material-ui/core";
+import { Button, Typography, Card, CardContent, CardActionArea, CardMedia } from "@material-ui/core";
 import { FOLLOW_ACCEPTED, FOLLOW_PENDING, FOLLOW_REJECTED } from "../../constants/follow_types";
 import { USER_RANKING } from "../../constants/user";
+import DisplayName from "../DisplayName";
 
 import Avatar from "../Avatar";
 
 import useStyles from "./styles";
-import { Link } from "react-router-dom";
 import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 
 const RelationshipItem = React.memo((props) => {
   const { t } = useTranslation();
+  const history = useHistory();
 
-  const { userName, wide, status, avatarUrl, coverUrl, name, subtitle, ranking, subscriptionPrice, isFollow, isMe } = props;
+  const { userName, wide, status, avatarUrl, coverUrl, name, subtitle, ranking, subscriptionPrice, isFollow, isMe, identityVerified } = props;
   const classes = useStyles({ url: coverUrl });
 
   const { onItemClick, onSubscribeClick, onConfirmClick, onRejectClick, onUnrejectClick } = props;
@@ -103,35 +104,50 @@ const RelationshipItem = React.memo((props) => {
   };
 
   return (
-    <ListItem
-      className={clsx(classes.item, wide && classes.wide)}
-      button
-      to={PROFILE_USERNAME_ROUTE(userName)}
-      component={Link}
-    >
-      {(!subscriptionPrice || subscriptionPrice === 0) && <Typography className={classes.label}>Free</Typography>}
+    // <ListItem
+    //   className={clsx(classes.item, wide && classes.wide)}
+    //   button
+    //   to={PROFILE_USERNAME_ROUTE(userName)}
+    //   component={Link}
+    // >
+    //   {(!subscriptionPrice || subscriptionPrice === 0) && <Typography className={classes.label}>Free</Typography>}
 
-      <ListItemAvatar className={classes.avatar}>
-        <Avatar borderColor="silver" size={wide && "large"} src={avatarUrl} />
-      </ListItemAvatar>
+    //   <ListItemAvatar className={classes.avatar}>
+    //     <Avatar borderColor="silver" size={wide && "large"} src={avatarUrl} />
+    //   </ListItemAvatar>
 
-      <ListItemText
-        primary={
-          <Typography noWrap variant="h6">
-            {name}
-          </Typography>
-        }
-        secondary={
-          <Typography noWrap variant="body2">
-            {subtitle}
-          </Typography>
-        }
-        onClick={onItemClick}
-      />
-      <Hidden mdDown>
-        {!isMe && renderActionButtons()}
-      </Hidden>
-    </ListItem>
+    //   <ListItemText
+    //     primary={
+    //       <Typography noWrap variant="h6">
+    //         {name}
+    //       </Typography>
+    //     }
+    //     secondary={
+    //       <Typography noWrap variant="body2">
+    //         {subtitle}
+    //       </Typography>
+    //     }
+    //     onClick={onItemClick}
+    //   />
+    //   {/* <Hidden mdDown>
+    //     {!isMe && renderActionButtons()}
+    //   </Hidden> */}
+    // </ListItem>
+    <Card className={classes.root} onClick={() => history.push(PROFILE_USERNAME_ROUTE(userName))}>
+      {/* {(!subscriptionPrice || subscriptionPrice === 0) && <Typography className={classes.label}>Free</Typography>} */}
+      <CardActionArea>
+        <CardMedia component="img" image={coverUrl} height="128" className={classes.media}></CardMedia>
+        <CardContent  className={classes.content}>
+          {/* <Typography variant="h6" component="h2" >{name} </Typography> */}
+          <DisplayName  name={name} identityVerified={identityVerified} />
+          <Typography variant="body1" component="p">{subtitle}</Typography>
+        </CardContent>
+        <Avatar borderColor="silver" size={wide && "big"} src={avatarUrl} className={classes.avatar} />
+
+      </CardActionArea>
+      
+    </Card>
+
   );
 });
 

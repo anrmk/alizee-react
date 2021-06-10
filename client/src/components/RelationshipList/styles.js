@@ -1,10 +1,35 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
+import DefaultCover from "../../assets/img/default-cover.png";
+
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: theme.spacing(2, 0),
-    padding: theme.spacing(0),
+    position: "relative",
+    marginBottom: theme.spacing(2),
+  },
+
+  content: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    padding: theme.spacing(0.5, 0.5, 0.5, 14),
+    backgroundColor: fade(theme.palette.common.black, .25),
+    color: theme.palette.common.white
+  },
+
+  media: {
+    backgroundImage: `url("${DefaultCover}")`,
+    backgroundColor: theme.palette.background.paper,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  },
+
+  avatar: {
+    position: "absolute",
+    left: theme.spacing(1.5),
+    top: theme.spacing(1),
   },
 
   header: {
@@ -26,9 +51,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: "cover",
   },
 
-  avatar: {
-    margin: theme.spacing(1)
-  },
+  
 
   label: {
     backgroundColor: theme.palette.primary.main,
