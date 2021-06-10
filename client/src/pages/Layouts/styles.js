@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: theme.spacing(3),
     },
     [theme.breakpoints.down("sm")]: {
-      overflow: "hidden",
       paddingBottom: theme.spacing(9)
     }
   },
