@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   base: {
-    minHeight: ({ isFullScreenHeight }) => isFullScreenHeight ? "100vh" : "100%"
+    height: ({ isFullScreenHeight }) => isFullScreenHeight ? "100vh" : "100%"
   },
   container: {
     display: "flex",
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
       paddingTop: theme.spacing(3),
       paddingBottom: theme.spacing(3),
     },
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       overflow: "hidden",
       paddingBottom: theme.spacing(9)
     }

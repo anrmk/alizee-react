@@ -1,10 +1,10 @@
 import { makeStyles } from "@material-ui/core";
 
 import authIllustration from "../../../src/assets/img/auth_image_3.png";
-import img1 from "../../../src/assets/img/img1.jpg";
-import img2 from "../../../src/assets/img/img2.jpg";
-import img3 from "../../../src/assets/img/img3.jpg";
-import img4 from "../../../src/assets/img/img4.jpg";
+import img1 from "../../../src/assets/img/slides/img1.jpg";
+import img2 from "../../../src/assets/img/slides/img2.jpg";
+import img3 from "../../../src/assets/img/slides/img3.jpg";
+import img4 from "../../../src/assets/img/slides/img4.jpg";
 
 const useStyles = makeStyles((theme) => {
   return ({
@@ -12,6 +12,26 @@ const useStyles = makeStyles((theme) => {
       height: "100vh",
       display: "flex",
       alignItems: "center"
+    },
+
+    rootCard: {
+      [theme.breakpoints.up("md")]: {
+        minHeight: "640px"
+      },
+      [theme.breakpoints.only("md")]: {
+        backgroundColor: "white"
+      },
+      [theme.breakpoints.down("sm")]: {
+        backgroundColor: "transparent",
+        boxShadow: "none"
+      }
+    },
+
+    helpCard: {
+      [theme.breakpoints.down("sm")]: {
+        backgroundColor: "transparent",
+        boxShadow: "none"
+      }
     },
 
     formElement: {
@@ -41,13 +61,13 @@ const useStyles = makeStyles((theme) => {
     },
 
     swipe: {
-      width: "240px",
+      width: "307px",
       position: "absolute",
-      margin: "99px 0 0 151px",
+      margin: "81px 0 0 113px",
     },
 
     slide: {
-      minHeight: 427,
+      height: "545px",
       backgroundRepeat: "no-repeat",
     },
 
