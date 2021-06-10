@@ -92,7 +92,7 @@ function Feed(props) {
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12} md={7} >
+      <Grid item xs={12} md={8} >
         <PreviewStoriesList
           loading={story.isFetching}
           user={userInfo}
@@ -120,7 +120,7 @@ function Feed(props) {
       </Grid>
       
       <Hidden smDown>
-        <Grid item md={5} >
+        <Grid item md={4} >
           <Box position="sticky" top={12}>
             {people.data && people.data.length > 0 && (
               <Box mb={1}>

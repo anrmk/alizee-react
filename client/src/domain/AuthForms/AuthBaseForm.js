@@ -29,7 +29,7 @@ function AuthBaseForm({
 
   return (
     <Box>
-      <Card>
+      <Card className={classes.rootCard}>
         <CardContent>
           <Box direction="column">
             <Box marginBottom="16px">
@@ -85,7 +85,7 @@ function AuthBaseForm({
 
       <Box m={2} />
 
-      <Card>
+      <Card className={classes.helpCard}>
         <CardContent>{endComponent}</CardContent>
       </Card>
     </Box>

@@ -19,8 +19,8 @@ export default function MainLayout({
   baseClassName,
   containerClassName,
   innerGridClassName,
-  leftColProps = { md: 3, lg: 3 },
-  rightColProps = { xs: 12, md: 9, lg: 9 },
+  leftColProps = { md: 3, lg: 2 },
+  rightColProps = { xs: 12, md: 9, lg: 10 },
   children
 }) {
   const history = useHistory();
