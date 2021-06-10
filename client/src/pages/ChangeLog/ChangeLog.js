@@ -17,12 +17,11 @@ import {
 } from "@material-ui/core/";
 import InfoIcon from "@material-ui/icons/Info";
 
-import ContainerLayout from "../Layouts/ContainerLayout";
+import { PublicLayout } from "../Layouts";
 
 import useStyles from "./styles";
 
 function ChangeLog({ data, isFetching, getLogs, resetLogs }) {
-  const classes = useStyles();
 
   const apiClient = useContext(ApiContext);
 
@@ -34,29 +33,27 @@ function ChangeLog({ data, isFetching, getLogs, resetLogs }) {
   }, []);
 
   return (
-    <ContainerLayout>
-      <Box className={classes.section}>
-        <Card elevation={0}>
-          <CardHeader title="What's News" />
+    <PublicLayout>
+      <Card elevation={0}>
+        <CardHeader title="What's News" />
 
-          <CardContent>
-            <List>
-              {data.map((log, index) => (
-                <React.Fragment key={index}>
-                  <ListItem alignItems="flex-start">
-                    <ListItemIcon>
-                      <InfoIcon color="primary" />
-                    </ListItemIcon>
-                    <ListItemText primary={formatDate(log.createdDate)} secondary={log.content}></ListItemText>
-                  </ListItem>
-                  <Divider variant="inset" component="li" />
-                </React.Fragment>
-              ))}
-            </List>
-          </CardContent>
-        </Card>
-      </Box>
-    </ContainerLayout>
+        <CardContent>
+          <List>
+            {data.map((log, index) => (
+              <React.Fragment key={index}>
+                <ListItem alignItems="flex-start">
+                  <ListItemIcon>
+                    <InfoIcon color="primary" />
+                  </ListItemIcon>
+                  <ListItemText primary={formatDate(log.createdDate)} secondary={log.content}></ListItemText>
+                </ListItem>
+                <Divider variant="inset" component="li" />
+              </React.Fragment>
+            ))}
+          </List>
+        </CardContent>
+      </Card>
+    </PublicLayout>
   );
 }
 

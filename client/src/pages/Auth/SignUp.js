@@ -17,7 +17,6 @@ import useStyles from "./styles";
 
 function SignUp(props) {
   const apiClient = useContext(ApiContext);
-  const classes = useStyles();
 
   const { isSignUp, isSocial, errorMessage } = props;
   const { signUp, signUpSocial, requestSignUpSocial, failSignUpSocial } = props;

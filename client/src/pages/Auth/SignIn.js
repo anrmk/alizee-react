@@ -17,7 +17,6 @@ import useStyles from "./styles";
 
 function SignIn(props) {
   const apiClient = useContext(ApiContext);
-  const classes = useStyles();
 
   const { isAuthenticated, errorMessage } = props;
   const { authSocial, signIn, signInSocial, requestSignInSocial, failSignInSocial, resetSignIn } = props;

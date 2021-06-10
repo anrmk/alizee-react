@@ -8,7 +8,7 @@ import { Sidebar, FaqDetails } from "../../domain/Help/index";
 
 import ApiContext from "../../context/ApiContext";
 
-import ContainerLayout from "../Layouts/ContainerLayout";
+import { PublicLayout } from "../Layouts";
 
 import { createHelpRating, getHelp, getHelpDetail, deleteHelpRating } from "../../store/actions/help";
 
@@ -46,28 +46,24 @@ function HelpDetails() {
   };
 
   return (
-    <ContainerLayout>
-      <Box className={classes.helpDetailSection} component="section">
-        <Box marginBottom={6}>
-          <Grid container spacing={4}>
-            <Hidden xsDown>
-              <Grid item md={5} lg={3} xs={12} md={4} sm={5}>
-                <Sidebar data={help?.data} />
-              </Grid>
-            </Hidden>
-            <Grid item md={7} lg={9} md={8} sm={7}>
-              <FaqDetails
-                {...helpDetails}
-                onVote={handleVote}
-                isVoted={help.isVoted}
-                data={help?.data}
-                currentQuestion={params.currentQuestion}
-              />
-            </Grid>
+    <PublicLayout>
+      <Grid container spacing={4}>
+        <Hidden xsDown>
+          <Grid item md={5} lg={3} xs={12} md={4} sm={5}>
+            <Sidebar data={help?.data} />
           </Grid>
-        </Box>
-      </Box>
-    </ContainerLayout>
+        </Hidden>
+        <Grid item md={7} lg={9} md={8} sm={7}>
+          <FaqDetails
+            {...helpDetails}
+            onVote={handleVote}
+            isVoted={help.isVoted}
+            data={help?.data}
+            currentQuestion={params.currentQuestion}
+          />
+        </Grid>
+      </Grid>
+    </PublicLayout>
   );
 }
 

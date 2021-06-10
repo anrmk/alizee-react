@@ -72,7 +72,12 @@ export default createMuiTheme({
     MuiCard: {
       root: {
         backgroundColor: "#242731", //"#2E2E3D"
+
+        "&.noborder": {
+          
+        }
       },
+      
     },
 
     MuiOutlinedInput: {

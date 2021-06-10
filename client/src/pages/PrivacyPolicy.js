@@ -1,17 +1,18 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-import { Container, IconButton } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 
 import ArrowBackOutlinedIcon from "@material-ui/icons/ArrowBackOutlined";
 
 import { SIGN_UP_ROUTE } from "../constants/routes";
+import {PublicLayout} from "../pages/Layouts";
 
 function PrivacyPolicy() {
   const history = useHistory();
 
   return (
-    <Container>
+    <PublicLayout>
       <div className="b-static-content">
         <IconButton color="primary" onClick={() => history.push(SIGN_UP_ROUTE)}>
           <ArrowBackOutlinedIcon  />
@@ -987,7 +988,7 @@ function PrivacyPolicy() {
           </li>
         </ol>
       </div>
-    </Container>
+    </PublicLayout>
   );
 }
 

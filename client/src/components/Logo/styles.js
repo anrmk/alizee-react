@@ -7,12 +7,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: "contain",
     backgroundPosition: "center",
     minHeight: "42px",
-    minWidth: "180px",
+    minWidth: "220px",
     marginRight: theme.spacing(1),
     marginLeft: theme.spacing(1),
 
     [theme.breakpoints.down("sm")]: {
-      minWidth: "190px",
+      minWidth: "180px",
     },
   },
 }));

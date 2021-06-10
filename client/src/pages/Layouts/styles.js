@@ -40,6 +40,18 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       padding: 0
     }
+  },
+  publicBase: {
+    display: "flex",
+    flexDirection: "column",
+    [theme.breakpoints.up("md")]: {
+      paddingTop: theme.spacing(3),
+      paddingBottom: theme.spacing(3),
+    },
+    [theme.breakpoints.down("md")]: {
+      overflow: "hidden",
+      paddingBottom: theme.spacing(9)
+    }
   }
 }));
 

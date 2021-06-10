@@ -17,6 +17,7 @@ export default function TwoColumnLayout({
   rightColProps = { sm: 6, md: 4, xs: 12 },
   children
 }) {
+  console.log(children)
   const classes = useStyles({ isFullScreenHeight });
 
   if (!children || children.length < 2 || !Array.isArray(children)) {

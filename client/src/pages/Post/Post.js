@@ -82,11 +82,11 @@ function PostPage(props) {
         secondSize={4}>
         <Card className={classes.card} variant="outlined">
           <CardMedia className={classes.cardMedia}>
-            <Hidden smDown>
+            {/* <Hidden smDown>
               <IconButton className={classes.iconToggle} onClick={toggleSlidingViewsState}>
                 {priorityViewSlidingViews === currentSlidingViewsState ? <FullscreenIcon /> : <FullscreenExitIcon />}
               </IconButton>
-            </Hidden>
+            </Hidden> */}
             <Hidden mdUp>
               <IconButton className={classes.iconToggle} onClick={toggleSlidingViewsState}>
                 <CommentIcon />
