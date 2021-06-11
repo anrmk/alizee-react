@@ -114,7 +114,7 @@ export default createMuiTheme({
         //   opacity: ".8",
         //   backgroundColor: "transparent",
         // },
-      //},
+      },
     },
 
     MuiIconButton: {
@@ -195,5 +195,5 @@ export default createMuiTheme({
     root: {
       background: "#1C1A1A",
     },
-  },
+  }
 });
