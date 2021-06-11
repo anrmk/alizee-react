@@ -14,6 +14,7 @@ import * as streamActions from "../../store/actions/stream";
 import * as paymentActions from "../../store/actions/payment";
 
 import { PreviewStoriesList } from "../../domain/StoriesLists";
+import ProfileCard from "../../components/ProfileCard/ProfileCard";
 
 import ApiContext from "../../context/ApiContext";
 import { STORIES_LENGTH } from "../../constants/feed";
@@ -30,9 +31,12 @@ import {
 } from "../../hooks/payment";
 import useFullScreen from "../../hooks/useFullScreen";
 import useLightboxModal from "../../hooks/useLightboxModal";
-import ProfileCard from "../../components/ProfileCard/ProfileCard";
+
+import useStyles from "./styles";
+
 
 function Feed(props) {
+  const classes = useStyles();
   const apiClient = useContext(ApiContext);
 
   const { userInfo } = props;
@@ -88,36 +92,36 @@ function Feed(props) {
 
   return (
     <Grid container >
-      <Grid item xs={12} md={8} >
-        <PreviewStoriesList
-          loading={story.isFetching}
-          user={userInfo}
-          items={story.data}
-          onItemClick={handleStoryClick}
-          onCreateStoryClick={createStoryDialog.toggle}
-        />
+      <Grid item xs={12} md={8} className={classes.mainBox}>
+          <PreviewStoriesList
+            loading={story.isFetching}
+            user={userInfo}
+            items={story.data}
+            onItemClick={handleStoryClick}
+            onCreateStoryClick={createStoryDialog.toggle}
+          />
 
-        <PostsList
-          user={userInfo}
-          items={posts.data}
-          hasMore={posts.hasMore}
-          onFetchMore={handleFetchMore}
-          onLike={likeAction.toggle}
-          onFavorite={favoriteAction.toggle}
-          onSendTip={sendTipDialog.toggle}
-          onBuyPost={buyPostDialog.toggle}
-          onReceipt={receiptDialog.toggle}
-          onPurchase={purchaseDialog.toggle}
-          onShare={shareDialog.toggle} //??
-          onMenu={postMenuDialog.toggle} //??
-          onCommentSend={handleCommentSendClick}
-          onFullScreen={lightboxModal.toggle}
-        />
+          <PostsList
+            user={userInfo}
+            items={posts.data}
+            hasMore={posts.hasMore}
+            onFetchMore={handleFetchMore}
+            onLike={likeAction.toggle}
+            onFavorite={favoriteAction.toggle}
+            onSendTip={sendTipDialog.toggle}
+            onBuyPost={buyPostDialog.toggle}
+            onReceipt={receiptDialog.toggle}
+            onPurchase={purchaseDialog.toggle}
+            onShare={shareDialog.toggle} //??
+            onMenu={postMenuDialog.toggle} //??
+            onCommentSend={handleCommentSendClick}
+            onFullScreen={lightboxModal.toggle}
+          />
       </Grid>
       
       <Hidden smDown>
         <Grid item md={4} >
-          <Box position="sticky" top={12} pl={3}>
+          <Box className={classes.suggestionList}>
             {people.data && people.data.length > 0 && (
               <Box mb={1}>
                 <Box display="flex" flexWrap="wrap" alignItems="center" justifyContent="space-between">

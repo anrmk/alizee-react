@@ -9,6 +9,17 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: "nowrap",
   },
 
+  rootBox: {
+    position: "sticky",
+    overflowY: "auto",
+    height: `calc(100vh - ${theme.spacing(4.5)}px)`,
+    top: theme.spacing(3),
+
+    "&::-webkit-scrollbar": {
+      display: "none"
+    }
+  },
+
   papper: {
     width: theme.spacing(7),
     overflow: "hidden",

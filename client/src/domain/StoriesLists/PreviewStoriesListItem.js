@@ -35,12 +35,11 @@ const PreviewStoryListItem = React.memo(({
 
   const handleItemClick = useCallback(() => {
     onClick && onClick(id);
+    me && !empty && 
+      onCreateStoryClick && onCreateStoryClick();
   }, []);
 
   const handleCreateStoryClick = (e) => {
-    e.preventDefault();
-    e.stopPropagation(); 
-
     onCreateStoryClick && onCreateStoryClick();
   }
 
@@ -53,9 +52,12 @@ const PreviewStoryListItem = React.memo(({
         </>
       )}
       {withButton && (
-        <Box borderColor="grey.500" className={classes.bottomContainer}>
+        <Box 
+          borderColor="grey.500" 
+          className={classes.bottomContainer} 
+          onClick={handleCreateStoryClick}>
           <Box className={classes.createButton}>
-            <IconButton onClick={handleCreateStoryClick}>
+            <IconButton>
               <AddIcon htmlColor="white" />
             </IconButton>
           </Box>
