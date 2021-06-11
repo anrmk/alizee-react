@@ -162,7 +162,7 @@ function mapDispatchToProps(dispatch) {
     resetCurrentRoom: () => dispatch(actionChat.resetCurrentRoom()),
 
     createMessage: (api, id, message) => dispatch(actionChat.createMessage(api, id, message)),
-    addMessage: (message) => dispatch(actionChat.addMessage(message)),
+    addMessage: (message,api) => dispatch(actionChat.addMessage(message,api)),
   };
 }
 

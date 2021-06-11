@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import * as signalR from "@microsoft/signalr";
+
+import apiContext from "../../context/ApiContext"
 
 import { getToken, wrapHttps } from "../../helpers/functions";
 import API from "../../constants/endpoints";
@@ -7,6 +9,8 @@ import API from "../../constants/endpoints";
 export default function useChatHub({ isAuth, onReceiveMessage }) {
   const url = API.endpoints["chat"];
   const [connection, setConnection] = useState(null);
+
+  const api = useContext(apiContext)
 
   useEffect(() => {
     isAuth && !connection && connectToHub();
@@ -64,6 +68,6 @@ export default function useChatHub({ isAuth, onReceiveMessage }) {
   }, [connection]);
 
   const handleReceiveMessage = async (data) => {
-    await onReceiveMessage(data);
+    await onReceiveMessage(data,api);
   };
 }
