@@ -34,7 +34,7 @@ export default function NavMenu({
   anchorEl,
 
   onClose,
-  onLogout
+  onLogout,
 }) {
   const { t } = useTranslation();
   const theme = useChangeTheme();
@@ -45,6 +45,13 @@ export default function NavMenu({
   const handleMenuItemClick = (url) => {
     history.push(url);
     onClose && onClose();
+  };
+
+  const handleSavedClick = (url) => {
+    history.push({
+      pathname: url,
+      hash: "#saved",
+    });
   };
 
   return (
@@ -64,7 +71,7 @@ export default function NavMenu({
         <ListItemText primary={t("NavbarMenuItemProfileText")} />
       </MenuItem>
 
-      <MenuItem onClick={() => handleMenuItemClick(PROFILE_USERNAME_ROUTE(userName))}>
+      <MenuItem onClick={() => handleSavedClick(PROFILE_USERNAME_ROUTE(userName))}>
         <ListItemIcon>
           <BookmarkBorderIcon />
         </ListItemIcon>
