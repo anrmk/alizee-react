@@ -85,12 +85,6 @@ export default createMuiTheme({
     MuiButton: {
       root: {},
 
-      label: {
-        color: "white"
-      },
-
-      text: {},
-
       outlinedPrimary: {
         borderRadius: "20px",
       },
@@ -100,6 +94,7 @@ export default createMuiTheme({
       },
 
       containedPrimary: {
+        color: "white"
         // background: "linear-gradient(141.21deg, #68D794 -16.59%, #6FCBFF 40.28%, #B88AE1 90.77%)",
         // backgroundColor: "#35B1F6",
         // borderRadius: "20px",
@@ -109,9 +104,8 @@ export default createMuiTheme({
         // },
       },
 
-      containedSecondary: {
-        // background:
-        //   "linear-gradient(141.21deg, rgba(136, 108, 169, 0.15) -16.6%, rgba(104, 215, 148, 0.15) -16.59%, rgba(111, 203, 255, 0.15) 40.28%, rgba(184, 138, 225, 0.15) 90.77%)",
+      //containedSecondary: {
+        // background: "linear-gradient(141.21deg, rgba(136, 108, 169, 0.15) -16.6%, rgba(104, 215, 148, 0.15) -16.59%, rgba(111, 203, 255, 0.15) 40.28%, rgba(184, 138, 225, 0.15) 90.77%)",
         // backgroundColor: "transparent",
         // color: "#845DD7",
         // borderRadius: "20px",
@@ -120,7 +114,7 @@ export default createMuiTheme({
         //   opacity: ".8",
         //   backgroundColor: "transparent",
         // },
-      },
+      //},
     },
 
     MuiIconButton: {

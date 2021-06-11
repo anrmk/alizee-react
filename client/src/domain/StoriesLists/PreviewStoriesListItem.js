@@ -48,7 +48,7 @@ const PreviewStoryListItem = React.memo(({
     <Box className={classes.previewStoryItemUserInfo}>
       {!withButton && (
         <>
-          <Avatar className={classes.previewStoryListItemAvatar} size="small" src={avatarUrl} />
+          <Avatar className={classes.previewStoryListItemAvatar} borderColor="silver" size="small" src={avatarUrl} />
           <Typography className={classes.previewStoryListItemName} variant="caption" noWrap>{name}</Typography>
         </>
       )}

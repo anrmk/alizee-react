@@ -31,7 +31,7 @@ function SocialButtons({
             fullWidth
             startIcon={<Box className=""><Avatar src={GoogleIcon} className={classes.googleIcon} /></Box>}
           >
-            SING IN WITH GOGGLE
+            SIGN IN WITH GOOGLE
           </Button>
         )}
         onRequest={onRequest}

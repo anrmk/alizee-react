@@ -2,20 +2,15 @@ import React from "react";
 
 import { List } from "@material-ui/core";
 import RelationshipItem from "./RelationshipItem";
-import useStyles from "./styles";
 
 const RelationshipList = React.memo(
-  ({ items, wide, currentUserName, onSubscribeClick, onConfirmClick, onRejectClick, onUnrejectClick }) => {
-    const classes = useStyles();
-
+  ({ items, currentUserName, onSubscribeClick, onConfirmClick, onRejectClick, onUnrejectClick }) => {
     return (
-      // <List dense className={classes.root}>
-      <>
+      <List dense>
         {items &&
           items.map((item) => (
             <RelationshipItem
               key={item.id}
-              wide={wide}
               name={item.name}
               userName={item.userName}
               avatarUrl={item.avatarUrl}
@@ -23,7 +18,6 @@ const RelationshipList = React.memo(
               subtitle={item.mood || `@${item.userName}`}
               isFollow={item.isFollow}
               status={item.status}
-              ranking={item.ranking}
               subscriptionPrice={item.subscriptionPrice}
               identityVerified={item.identityVerified}
               isMe={item.userName === currentUserName}
@@ -33,7 +27,7 @@ const RelationshipList = React.memo(
               onUnrejectClick={onUnrejectClick}
             />
           ))}
-      </>
+      </List>
     );
   }
 );

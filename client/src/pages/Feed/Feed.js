@@ -1,7 +1,7 @@
-import React, { useEffect, useContext, useCallback } from "react";
+import React, { useEffect, useContext } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Container, Box, Grid, Typography, Hidden, Link as MUILink } from "@material-ui/core";
+import { Box, Grid, Typography, Hidden, Link as MUILink } from "@material-ui/core";
 
 import { PostsList } from "../../domain/PostsList";
 import { HotStreamersItemList } from "../../domain/Stream";
@@ -11,10 +11,8 @@ import * as actionSuggestion from "../../store/actions/suggestion";
 import * as postActions from "../../store/actions/post";
 import * as storyActions from "../../store/actions/story";
 import * as streamActions from "../../store/actions/stream";
-
 import * as paymentActions from "../../store/actions/payment";
 
-import { RelationshipList } from "../../components/RelationshipList";
 import { PreviewStoriesList } from "../../domain/StoriesLists";
 
 import ApiContext from "../../context/ApiContext";
@@ -32,11 +30,9 @@ import {
 } from "../../hooks/payment";
 import useFullScreen from "../../hooks/useFullScreen";
 import useLightboxModal from "../../hooks/useLightboxModal";
-
-// import useStyles from "./styles";
+import ProfileCard from "../../components/ProfileCard/ProfileCard";
 
 function Feed(props) {
-  // const classes = useStyles();
   const apiClient = useContext(ApiContext);
 
   const { userInfo } = props;
@@ -125,12 +121,14 @@ function Feed(props) {
             {people.data && people.data.length > 0 && (
               <Box mb={1}>
                 <Box display="flex" flexWrap="wrap" alignItems="center" justifyContent="space-between">
-                  <Typography variant="h6" color="textSecondary">Suggestions</Typography>
+                  <Typography variant="h6">Suggestions</Typography>
                   <MUILink variant="caption" to={SUGESTED_PEOPLE} component={Link}>
                     See All
                   </MUILink>
                 </Box>
-                <RelationshipList wide={true} items={people.data} onSubscribeClick={followDialog.toggle} />
+                {people.data.map(item => (
+                  <ProfileCard {...item} key={`suggestion_${item.userName}`} />
+                ))}
               </Box>
             )}
 

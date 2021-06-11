@@ -3,11 +3,11 @@ import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { VerifiedIcon } from "./Icons";
 
-function DisplayName({ name, identityVerified }) {
+function DisplayName({ name, identityVerified, typographyProps = { variant: "h6" } }) {
   return (
     <Box display="flex" alignItems="center">
-      <Typography variant="body1" style={{marginRight: "4px"}}>
-        {name}
+      <Typography {...typographyProps} style={{ marginRight: "4px" }}>
+        {name ?? "No Name"}
       </Typography>
       {identityVerified && <VerifiedIcon fontSize="small" color="primary" />}
     </Box>
