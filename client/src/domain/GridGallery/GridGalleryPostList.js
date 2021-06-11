@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
@@ -65,6 +65,8 @@ function GridGalleryPostList(props) {
   };
 
   useEffect(() => {
+    let isMounted = true;
+
     if (items.length > 0) {
       Promise.allSettled(itemsPromise())
         .then((data) => {
@@ -76,9 +78,11 @@ function GridGalleryPostList(props) {
           }, []);
         })
         .then((data) => {
-          setGalleryItems((prev) => [...prev, ...data]);
+          isMounted && setGalleryItems((prev) => [...prev, ...data]);
         });
     }
+    
+    return () => { isMounted = false; }
   }, [items]);
 
   useEffect(() => {

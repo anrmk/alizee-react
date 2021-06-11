@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { Container, Card, CardMedia, Hidden, IconButton } from "@material-ui/core/";
-import FullscreenIcon from "@material-ui/icons/FullscreenRounded";
-import FullscreenExitIcon from "@material-ui/icons/FullscreenExitRounded";
+import { Box, Card, CardMedia, Hidden, IconButton } from "@material-ui/core/";
+// import FullscreenIcon from "@material-ui/icons/FullscreenRounded";
+// import FullscreenExitIcon from "@material-ui/icons/FullscreenExitRounded";
 import ImageIcon from "@material-ui/icons/ImageRounded";
 import CommentIcon from "@material-ui/icons/CommentRounded";
 import MoreVertIcon from "@material-ui/icons/MoreVertRounded";
@@ -14,8 +14,8 @@ import MediaContent from "../../components/MediaContent";
 import SlidingViews from "../../components/SlidingViews";
 
 import * as postActions from "../../store/actions/post";
-import * as settingsActions from "../../store/actions/settings";
-import * as relationshipActions from "../../store/actions/relationship";
+// import * as settingsActions from "../../store/actions/settings";
+// import * as relationshipActions from "../../store/actions/relationship";
 import * as commentActions from "../../store/actions/comment";
 import * as paymentActions from "../../store/actions/payment";
 
@@ -75,7 +75,7 @@ function PostPage(props) {
   };
 
   return (
-    <Container className={classes.container}>
+    <Box className={classes.container}>
       <SlidingViews
         currentState={currentSlidingViewsState}
         firstSize={8}
@@ -154,7 +154,7 @@ function PostPage(props) {
             />
         </Comments>
       </SlidingViews>
-    </Container>
+    </Box>
   );
 }
 

@@ -34,20 +34,14 @@ const useStyles = makeStyles((theme) => ({
   },
   mainInnerGrid: {
     height: "100%",
+    scrollbarWidth: "none",
 
     "& > .MuiGrid-item" : { 
-      padding: theme.spacing(1.5),
+      paddingLeft: theme.spacing(3),
       [theme.breakpoints.down("sm")]: {
-        padding: theme.spacing(0)
+        paddingLeft: theme.spacing(0)
       }
     }
-
-    // "&.MuiGrid-item + &.MuiGrid-item": {
-    //   padding: theme.spacing(0,3),
-    //   [theme.breakpoints.down("sm")]: {
-    //     padding: theme.spacing(0)
-    //   }
-    // }
   },
   mainContainer: {
     [theme.breakpoints.down("sm")]: {

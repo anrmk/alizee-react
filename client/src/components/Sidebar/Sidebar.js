@@ -24,6 +24,8 @@ import {
 import UserCard from "./UserCard";
 import { Wallet } from "../Wallet";
 
+import useStyles from "./styles";
+
 function Sidebar({
   user,
   open,
@@ -36,11 +38,12 @@ function Sidebar({
   onCreatePost,
   onCreateStory,
 }) {
+  const classes = useStyles();
   const { t } = useTranslation();
   const location = useLocation();
 
   return (
-    <Box position="sticky" top={12}>
+    <Box className={classes.rootBox}>
       <Grid container direction="column" justify="space-between" alignItems="stretch">
         {/* <Grid item >
           <Grid container item alignItems="center" justify="flex-end" component="label">

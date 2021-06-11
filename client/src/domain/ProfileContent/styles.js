@@ -1,6 +1,4 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { theme } from "@material-ui/core";
-import { getStyleByTheme } from "../../helpers/functions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -9,12 +7,9 @@ const useStyles = makeStyles((theme) => ({
 
   tabsWrapper: {
     position: "sticky",
-    top: "3rem",
+    top: "0",
     zIndex: theme.zIndex.appBar,
     backgroundColor: theme.palette.background.default,
-    [theme.breakpoints.up("md")]: {
-      top: "4rem"
-    },
   },
 
   tabs: {
@@ -22,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   tab: {
-	minWidth: '140px'
+    minWidth: '140px'
   }
 }));
 
