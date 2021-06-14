@@ -60,6 +60,12 @@ export function addMessage(data, api) {
       const index = rooms.findIndex((item) => item.id === data.roomId);
 
       if (index !== -1) {
+        const hasStateMessage = current.messages.some((item) => item.id === data.id);
+
+        if (hasStateMessage) {
+          return;
+        }
+
         rooms[index].lastMessageText = data.message;
 
         rooms[index].unreadMessageCount =
@@ -109,13 +115,15 @@ export function createMessage(api, opts) {
         });
       }
 
-      await api
+      const { data } = await api
         .setData({
           roomId: id,
           message,
           media: mediaList,
         })
         .query(url);
+
+      dispatch(addMessage(data, api));
     } catch (e) {
       return dispatch(errorCreateMessage(e));
     }
