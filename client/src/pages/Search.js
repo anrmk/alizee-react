@@ -1,9 +1,9 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-import { Box, Container } from "@material-ui/core";
+import { Box, Container, Avatar, Chip } from "@material-ui/core";
 
-import { PROFILE_USERNAME_ROUTE } from "../constants/routes";
+import { PROFILE_USERNAME_ROUTE, EXPLORE_ROUTE } from "../constants/routes";
 
 import useSearch from "../hooks/useSearch";
 
@@ -19,11 +19,29 @@ function Search() {
     history.push(PROFILE_USERNAME_ROUTE(id));
   };
 
+  const handleClick = () => {
+    history.push({
+      pathname: EXPLORE_ROUTE,
+      search: search.lastQuery && "?tags=" + search.lastQuery.replaceAll("#", ""),
+    });
+  };
+
   return (
     <Container>
       <Box my={4}>
         <SearchInput onSendQuery={search.onSearch} />
-        <GridGallery isUserView={true} items={search.posts} hasMore={search.hasMore} onFetchMore={search.onFetchMore} onItemClick={onItemClick} />
+      <Box marginBottom={3}>
+	  {search.tags.map((item) => (
+          <Chip avatar={<Avatar>#</Avatar>} onClick={handleClick} label={item.name} key={item.id} component={Box} marginRight={0.5}/>
+        ))}
+	  </Box>
+        <GridGallery
+          isUserView={true}
+          items={search.posts}
+          hasMore={search.hasMore}
+          onFetchMore={search.onFetchMore}
+          onItemClick={onItemClick}
+        />
       </Box>
     </Container>
   );

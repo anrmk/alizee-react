@@ -20,7 +20,7 @@ function requestGetUsersByQuery() {
   };
 }
 
-function receiveGetUsersByQuery(data, type, start, currentLength, query) {
+function receiveGetUsersByQuery(data, type, start, currentLength, query, tags) {
   return {
     type: GET_USERS_BY_QUERY_SUCCESS,
     payload: {
@@ -30,6 +30,7 @@ function receiveGetUsersByQuery(data, type, start, currentLength, query) {
       offset: start + SEARCH_OFFSET,
       hasMore: currentLength === SEARCH_LENGTH,
       data: data || [],
+      tags,
       query,
     },
   };
@@ -69,6 +70,7 @@ export function resetSearch() {
         errorMessage: "",
         data: [],
         type: null,
+        tags: [],
       },
     });
 }
@@ -94,7 +96,19 @@ export function getUsersByQuery(api, opts) {
         })
         .query(url);
 
-      dispatch(receiveGetUsersByQuery([...getState().search.data, ...data], opts.type, currentOffset, data.length, opts.query));
+      const users = data.data;
+      const tags = data.tags;
+
+      dispatch(
+        receiveGetUsersByQuery(
+          [...getState().search.data, ...users],
+          opts.type,
+          currentOffset,
+          users.length,
+          opts.query,
+          tags
+        )
+      );
     } catch (e) {
       dispatch(errorGetUsersByQuery("Error: something went wrong:"));
     }
