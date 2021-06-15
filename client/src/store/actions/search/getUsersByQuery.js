@@ -69,6 +69,7 @@ export function resetSearch() {
         data: [],
         tags: [],
         type: null,
+        tags: [],
       },
     });
 }

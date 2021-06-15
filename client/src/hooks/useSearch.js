@@ -8,6 +8,7 @@ import * as actionSuggestion from "../store/actions/suggestion";
 import * as actionPost from "../store/actions/post";
 import { SEARCH_USER_TYPE, isUserType } from "../constants/search";
 import { POSTS_LENGTH } from "../constants/feed";
+import search from "../store/reducers/search";
 
 export default function useSearch({ type = SEARCH_USER_TYPE }) {
   const apiClient = useContext(ApiContext);
@@ -22,14 +23,16 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
     searchedPosts: {
       data: state.search.data,
       isFetching: state.search.isFetching,
-      hasMore: state.search.hasMore
+      hasMore: state.search.hasMore,
     },
     suggestionPosts: {
       data: state.posts.data,
       isFetching: state.posts.isFetching,
-      hasMore: state.posts.hasMore
-    }
+      hasMore: state.posts.hasMore,
+    },
   }));
+
+  const tags = useSelector((state) => state.search.tags);
 
   useEffect(() => {
     const currentTags = new URLSearchParams(location.search).get("tags");
@@ -44,7 +47,7 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
     if (currentTags) {
       currentTags = currentTags
         .split(" ")
-        .map(tag => "#" + tag)
+        .map((tag) => "#" + tag)
         .join(" ");
     }
 
@@ -57,7 +60,7 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
 
     return () => {
       dispatch(actionPost.resetPosts());
-    }
+    };
   }, []);
 
   useEffect(() => {
@@ -99,15 +102,14 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
   };
 
   const handleSearch = async (query) => {
-    if (query.length) {
+    if (query.length > 2) {
       await dispatch(searchActions.getUsersByQuery(apiClient, { query: query, type }));
     } else {
       dispatch(searchActions.resetSearch());
-      !isUserType(type) && 
-        await dispatch(actionSuggestion.getPosts(apiClient, { length: POSTS_LENGTH }));
+      !isUserType(type) && (await dispatch(actionSuggestion.getPosts(apiClient, { length: POSTS_LENGTH })));
     }
     !isUserType(type) &&
-      history.push({ pathname: history.pathname, search: query && "?tags=" + query.replaceAll("#", "")});
+      history.push({ pathname: history.pathname, search: query && "?tags=" + query.replaceAll("#", "") });
     setCurrentQuery(query);
   };
 
@@ -116,6 +118,7 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
     posts: localPosts,
     hasMore: localHasMore,
     onFetchMore: handleFetchMore,
-    onSearch: handleSearch
+    onSearch: handleSearch,
+    tags,
   };
 }
