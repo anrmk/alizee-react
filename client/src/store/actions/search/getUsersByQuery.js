@@ -5,9 +5,7 @@ import { SEARCH_DEFAULT_OFFSET, SEARCH_OFFSET, SEARCH_TAG_TYPE, SEARCH_LENGTH } 
 export const GET_USERS_BY_QUERY_REQUEST = "GET_USERS_BY_QUERY_REQUEST";
 export const GET_USERS_BY_QUERY_SUCCESS = "GET_USERS_BY_QUERY_SUCCESS";
 export const GET_USERS_BY_QUERY_FAILURE = "GET_USERS_BY_QUERY_FAILURE";
-
 export const RESET_SEARCH = "RESET_SEARCH";
-
 export const RESET_HAS_MORE = "RESET_HAS_MORE";
 
 function requestGetUsersByQuery() {
@@ -20,7 +18,7 @@ function requestGetUsersByQuery() {
   };
 }
 
-function receiveGetUsersByQuery(data, type, start, currentLength, query) {
+function receiveGetUsersByQuery(data, type, start, currentLength, query, tags) {
   return {
     type: GET_USERS_BY_QUERY_SUCCESS,
     payload: {
@@ -30,6 +28,7 @@ function receiveGetUsersByQuery(data, type, start, currentLength, query) {
       offset: start + SEARCH_OFFSET,
       hasMore: currentLength === SEARCH_LENGTH,
       data: data || [],
+      tags,
       query,
     },
   };
@@ -68,6 +67,7 @@ export function resetSearch() {
         hasMore: false,
         errorMessage: "",
         data: [],
+        tags: [],
         type: null,
       },
     });
@@ -93,8 +93,10 @@ export function getUsersByQuery(api, opts) {
           length: SEARCH_LENGTH,
         })
         .query(url);
+      const tags = data.tags;
+      const users = data.data;
 
-      dispatch(receiveGetUsersByQuery([...getState().search.data, ...data], opts.type, currentOffset, data.length, opts.query));
+      dispatch(receiveGetUsersByQuery([...getState().search.data, ...users], opts.type, currentOffset, users.length, opts.query, tags));
     } catch (e) {
       dispatch(errorGetUsersByQuery("Error: something went wrong:"));
     }

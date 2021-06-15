@@ -25,7 +25,7 @@ import {
 } from "../../constants/routes";
 
 import useChangeTheme from "../../hooks/useChangeTheme";
-import useLanguageDialog from "../../hooks/useLanguageDialog";
+//import useLanguageDialog from "../../hooks/useLanguageDialog";
 
 export default function NavMenu({
   id,
@@ -38,7 +38,7 @@ export default function NavMenu({
 }) {
   const { t } = useTranslation();
   const theme = useChangeTheme();
-  const langDialog = useLanguageDialog();
+  //const langDialog = useLanguageDialog();
 
   const history = useHistory();
 
@@ -108,12 +108,12 @@ export default function NavMenu({
         />
       </MenuItem>
 
-      <MenuItem onClick={langDialog.toggle}>
+      {/* <MenuItem onClick={langDialog.toggle}>
         <ListItemIcon>
           <LanguageIcon />
         </ListItemIcon>
         <ListItemText primary={t(i18n.language)} />
-      </MenuItem>
+      </MenuItem> */}
 
       <Divider />
 

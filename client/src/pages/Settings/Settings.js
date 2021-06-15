@@ -1,9 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
+import i18n from "i18next";
 
 import { Switch, useParams, useHistory, useLocation } from "react-router-dom";
-import { List, ListItem, ListItemText, ListItemIcon, Card, Divider, Box } from "@material-ui/core";
+import { List, ListSubheader, ListItem, ListItemText, ListItemSecondaryAction, ListItemIcon,  Card, Divider, Box, Switch as SwitchButton } from "@material-ui/core";
 import ChevronRightIcon from "@material-ui/icons/ChevronRightOutlined";
+import NightIcon from "@material-ui/icons/NightsStayOutlined";
 
 import {
   SETTINGS_BLACK_LIST_ROUTE,
@@ -39,6 +42,7 @@ import {
 } from "./Notifications";
 
 import useSlidingViews, { RIGHT_OPEN_TYPE } from "../../hooks/useSlidingViews";
+import useChangeTheme from "../../hooks/useChangeTheme";
 import { resetSettings } from "../../store/actions/settings";
 
 const TABS = [
@@ -92,6 +96,8 @@ function Settings() {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
+  const { t } = useTranslation();
+  const theme = useChangeTheme();
 
   useEffect(() => {
     if (type) {
@@ -104,21 +110,31 @@ function Settings() {
   return (
     <SlidingViews mobileOnly currentState={currentSlidingViewsState} firstSize={4} secondSize={8}>
       <Card>
-        <List disablePadding component="nav">
+        <List disablePadding component="nav" subheader={<ListSubheader>Settings</ListSubheader>}>
           {TABS.map((tab) => (
             <Box key={`settings_${tab.index}`}>
-            <ListItem
-              button
-              
-              selected={location.pathname.includes(tab.route)}
-              onClick={() => history.push(tab.route)}
-            >
-              <ListItemText primary={tab.title} />
-              <ChevronRightIcon />
-            </ListItem>
-            <Divider />
+              <ListItem button selected={location.pathname.includes(tab.route)} onClick={() => history.push(tab.route)}>
+                <ListItemText primary={tab.title} />
+                <ChevronRightIcon />
+              </ListItem>
+              <Divider component="li" />
             </Box>
           ))}
+          <ListItem>
+            <ListItemIcon>
+              <NightIcon />
+            </ListItemIcon>
+            <ListItemText id="switch-theme-label" primary={t("NavbarMenuItemDarkMode")} />
+            <ListItemSecondaryAction>
+              <SwitchButton
+                edge="end"
+                onChange={() => theme.toggle()}
+                checked={theme.currentTheme === "dark"}
+                inputProps={{ "aria-labelledby": "switch-theme-label" }}
+              />
+            </ListItemSecondaryAction>
+          </ListItem>
+          <Divider component="li" />
         </List>
       </Card>
 

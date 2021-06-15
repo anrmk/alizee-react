@@ -45,24 +45,6 @@ function Sidebar({
   return (
     <Box className={classes.rootBox}>
       <Grid container direction="column" justify="space-between" alignItems="stretch">
-        {/* <Grid item >
-          <Grid container item alignItems="center" justify="flex-end" component="label">
-            <Grid item>
-              <NightIcon />
-            </Grid>
-            <Grid item>
-              <Switch
-                name="gilad"
-                checked={changeTheme.currentTheme === "light"}
-                color="primary"
-                onChange={() => changeTheme.toggle()}
-              />
-            </Grid>
-            <Grid item>
-              <SunnyIcon />
-            </Grid>
-          </Grid>
-        </Grid> */}
         <Grid item>
           <UserCard
             userName={user.userName}
@@ -91,7 +73,9 @@ function Sidebar({
                 <HomeIcon />
               </ListItemIcon>
               <ListItemText>
-                <Typography color={location.pathname === HOME_ROUTE ? "textPrimary" : "textSecondary"} variant="h6">{t("SidebarFeedText")}</Typography>
+                <Typography color={location.pathname === HOME_ROUTE ? "textPrimary" : "textSecondary"} variant="h6">
+                  {t("SidebarFeedText")}
+                </Typography>
               </ListItemText>
             </ListItem>
 
@@ -100,7 +84,9 @@ function Sidebar({
                 <ExploreIcon />
               </ListItemIcon>
               <ListItemText>
-                <Typography color={location.pathname === EXPLORE_ROUTE ? "textPrimary" : "textSecondary"} variant="h6">{t("SidebarExploreText")}</Typography>
+                <Typography color={location.pathname === EXPLORE_ROUTE ? "textPrimary" : "textSecondary"} variant="h6">
+                  {t("SidebarExploreText")}
+                </Typography>
               </ListItemText>
             </ListItem>
 
@@ -116,7 +102,12 @@ function Sidebar({
                 </Badge>
               </ListItemIcon>
               <ListItemText>
-                <Typography color={location.pathname === NOTIFICATION_ROUTE ? "textPrimary" : "textSecondary"} variant="h6">{t("SidebarNotificationText")}</Typography>
+                <Typography
+                  color={location.pathname === NOTIFICATION_ROUTE ? "textPrimary" : "textSecondary"}
+                  variant="h6"
+                >
+                  {t("SidebarNotificationText")}
+                </Typography>
               </ListItemText>
             </ListItem>
 
@@ -127,7 +118,12 @@ function Sidebar({
                 </Badge>
               </ListItemIcon>
               <ListItemText>
-                <Typography color={location.pathname.includes(CHAT_ROUTE("")) ? "textPrimary" : "textSecondary"} variant="h6">{t("SidebarChatText")}</Typography>
+                <Typography
+                  color={location.pathname.includes(CHAT_ROUTE("")) ? "textPrimary" : "textSecondary"}
+                  variant="h6"
+                >
+                  {t("SidebarChatText")}
+                </Typography>
               </ListItemText>
             </ListItem>
 
@@ -141,7 +137,14 @@ function Sidebar({
                 <PersonOutlineIcon />
               </ListItemIcon>
               <ListItemText>
-                <Typography color={location.pathname.includes(PROFILE_USERNAME_ROUTE(user.userName)) ? "textPrimary" : "textSecondary"} variant="h6">{t("SidebarProfileText")}</Typography>
+                <Typography
+                  color={
+                    location.pathname.includes(PROFILE_USERNAME_ROUTE(user.userName)) ? "textPrimary" : "textSecondary"
+                  }
+                  variant="h6"
+                >
+                  {t("SidebarProfileText")}
+                </Typography>
               </ListItemText>
             </ListItem>
           </List>
@@ -161,7 +164,12 @@ function Sidebar({
                 <SettingsIcon />
               </ListItemIcon>
               <ListItemText>
-                <Typography color={location.pathname.includes(SETTINGS_EDIT_PROFILE_ROUTE) ? "textPrimary" : "textSecondary"} variant="h6">Settings</Typography>
+                <Typography
+                  color={location.pathname.includes(SETTINGS_EDIT_PROFILE_ROUTE) ? "textPrimary" : "textSecondary"}
+                  variant="h6"
+                >
+                  Settings
+                </Typography>
               </ListItemText>
             </ListItem>
 
@@ -170,7 +178,9 @@ function Sidebar({
                 <ExitToAppIcon />
               </ListItemIcon>
               <ListItemText>
-                <Typography color="textSecondary" variant="h6">{t("SidebarSignOutText")}</Typography>
+                <Typography color="textSecondary" variant="h6">
+                  {t("SidebarSignOutText")}
+                </Typography>
               </ListItemText>
             </ListItem>
           </List>

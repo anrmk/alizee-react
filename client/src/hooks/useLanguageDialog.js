@@ -7,7 +7,7 @@ export default function useLanguageDialog() {
   const dialog = useDialog();
 
   const handleLanguageChange = (lang) => {
-    i18n.changeLanguage(lang);
+    i18n.changeLanguage("en"); //lang
     dialog.toggle({ open: false });
   };
 

@@ -198,7 +198,6 @@ export default createMuiTheme({
 
     MuiListItem: {
       root: {
-        borderRadius: "4px",
         "&$selected": {
           backgroundColor: "#35B1F616",
         },
