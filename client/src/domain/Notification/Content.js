@@ -10,9 +10,8 @@ import {
   Button,
   Typography,
   Divider,
-  Box,
 } from "@material-ui/core";
-import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
+//import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import ChevronRightIcon from "@material-ui/icons/ChevronRightOutlined";
 
 import Avatar from "../../components/Avatar";
@@ -22,13 +21,11 @@ import { POST_ID_ROUTE, PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 import { ACTIVITY_LOG_TYPE } from "../../constants/activity";
 import { formatDate } from "../../helpers/functions";
 
-import useStyles from "./styles";
-
 function Content({ data = [] }) {
   const history = useHistory();
 
   return (
-    <List dense>
+    <List dense disablePadding>
       {data.map((item) => (
         <React.Fragment key={item.id}>
           <ListItem button onClick={() => history.push(PROFILE_USERNAME_ROUTE(item.userName))}>
@@ -42,9 +39,8 @@ function Content({ data = [] }) {
               primary={
                 <>
                   <DisplayName name={item.name} userName={item.userName} identityVerified={true} />
-                  <Typography component="span" variant="body1">
-                    {ACTIVITY_LOG_TYPE[item.type]}
-                  </Typography>
+                  <Typography component="span" variant="body2" >{ACTIVITY_LOG_TYPE[item.type]}</Typography>
+                  {item.description && <Typography component="span" variant="body2">: {item.description}</Typography>}
                 </>
               }
               secondary={formatDate(item.createdDate)}

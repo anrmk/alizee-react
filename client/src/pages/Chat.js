@@ -157,7 +157,6 @@ function mapDispatchToProps(dispatch) {
     getRooms: (api) => dispatch(actionChat.getRooms(api)),
     filterRooms: (query) => dispatch(actionChat.filter(query)),
 
-    getRoom: (api, userName) => dispatch(actionChat.getRoom(api, userName)),
     setRoom: (api, userName) => dispatch(actionChat.setRoom(api, userName)),
     resetCurrentRoom: () => dispatch(actionChat.resetCurrentRoom()),
 

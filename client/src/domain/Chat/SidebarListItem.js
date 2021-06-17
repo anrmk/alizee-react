@@ -19,10 +19,11 @@ function SidebarListItem({
 
   const classes = useStyles();
 
-  const handleItemClick = () => {
+  const handleItemClick = (e) => {
+    e.preventDefault();
     onItemClick && onItemClick(item.userName);
 	
-	history.push(item.userName)
+	  history.push(item.userName)
   };
 
   return (

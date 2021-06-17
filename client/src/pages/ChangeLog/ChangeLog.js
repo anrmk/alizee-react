@@ -10,7 +10,6 @@ import {
   Card,
   CardContent,
   ListItemIcon,
-  Box,
   Divider,
   CardHeader,
   ListItemText,
@@ -18,8 +17,6 @@ import {
 import InfoIcon from "@material-ui/icons/Info";
 
 import { PublicLayout } from "../Layouts";
-
-import useStyles from "./styles";
 
 function ChangeLog({ data, isFetching, getLogs, resetLogs }) {
 

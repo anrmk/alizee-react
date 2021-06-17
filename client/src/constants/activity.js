@@ -7,7 +7,7 @@ export const ACTIVITY_LOG_TYPE = {
   5: "Liked your post",
   6: "Commented on your post",
   7: "NEWMESSAGE",
-  8: "Sent you a tip $",
+  8: "Sent you a tip",
   9: "Has purchased your post",
   10: "PROMOTIONS"
 }
