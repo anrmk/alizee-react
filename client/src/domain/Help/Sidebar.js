@@ -36,7 +36,7 @@ const Sidebar = function ({ data = [] }) {
           ))}
       </Box>
 
-      <Link
+      {/* <Link
         href="#"
         onClick={(e) => {
           e.preventDefault();
@@ -44,7 +44,7 @@ const Sidebar = function ({ data = [] }) {
         }}
       >
         Take me to support
-      </Link>
+      </Link> */}
     </Box>
   );
 };

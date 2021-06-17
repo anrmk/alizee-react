@@ -28,6 +28,11 @@ import Story from "../Story";
 import Statistics from "../Statistics";
 import ChangeLog from "../ChangeLog";
 import NotFound from "../NotFound";
+import About from "../About";
+import Contact from "../Contact";
+import Privacy from "../Privacy";
+import HowItWorks from "../HowItWorks";
+import Contract from "../Contract";
 import { Help, HelpDetails } from "../Help";
 import Notifications from "../Notifications";
 import { MainLayout } from "../Layouts";
@@ -83,6 +88,11 @@ function Main(props) {
       <Route exact path={Routes.HELP_ROUTE} component={Help} />
       <Route exact path={Routes.HELP_DETAIL_ROUTE} component={HelpDetails} />
       <Route exact path={Routes.CHANGE_LOG_ROUTE} component={ChangeLog} />
+      <Route exact path={Routes.ABOUT_ROUTE} component={About} />
+      <Route exact path={Routes.CONTACT_ROUTE} component={Contact} />
+      <Route exact path={Routes.PRIVACY_ROUTE} component={Privacy} />
+      <Route exact path={Routes.HOW_IT_WORKS_ROUTE} component={HowItWorks} />
+      <Route exact path={Routes.CONTRACT_ROUTE} component={Contract} />
       <PrivateRoute exact path={Routes.STORIES_ID_ROUTE} component={Story} />
       <PrivateRoute path={Routes.PEAR_TO_PEAR_DEFAULT_ROUTE} component={PearToPear} />
 
