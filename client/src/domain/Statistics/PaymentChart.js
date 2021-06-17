@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import clsx from "clsx";
-import { Bar } from "react-chartjs-2";
-import { useResizeDetector } from 'react-resize-detector';
+// import { Bar } from "react-chartjs-2";
+import { useResizeDetector } from "react-resize-detector";
 import { Box, Card, CardContent, Link, Typography } from "@material-ui/core/";
 
 import useStyles from "./styles";
@@ -40,43 +40,50 @@ function PaymentChart({ data, onDateClick }) {
         data: data.postsTotal,
         borderColor: "rgba(153, 102, 255, 1)",
         backgroundColor: "rgba(153, 102, 255, 0.2)",
-        borderWidth: 1
-      }
-    ]
+        borderWidth: 1,
+      },
+    ],
   };
 
   const chartOptions = {
     maintainAspectRatio: false,
     scales: {
-      yAxes: [{
-        ticks: {
-          callback: (value) => {
-            return "$" + value;
-          }
-        }
-      }]
+      yAxes: [
+        {
+          ticks: {
+            callback: (value) => {
+              return "$" + value;
+            },
+          },
+        },
+      ],
     },
-  }
+  };
 
   const handleDateClick = (type) => {
     setActiveDate(type);
     onDateClick && onDateClick(type);
-  }
+  };
 
   const renderBtn = (text, type) => (
     <Typography
       className={clsx(classes.dateBtn, type === activeDate && classes.active)}
       onClick={() => handleDateClick(type)}
-      component={Link}>
+      component={Link}
+    >
       {text}
     </Typography>
-  )
+  );
 
   return (
     <Card>
       <CardContent>
-        <Typography variant="h5" className={classes.title}>Payment</Typography>
-        <Typography variant="body2" color="textSecondary">Total Amount</Typography>
+        <Typography variant="h5" className={classes.title}>
+          Payment
+        </Typography>
+        <Typography variant="body2" color="textSecondary">
+          Total Amount
+        </Typography>
         <Typography variant="h5">$ {data.total || 0}</Typography>
         <Box display="flex" justifyContent="flex-end">
           {renderBtn("Today", FILTER_BY_TODAY)}
@@ -84,7 +91,7 @@ function PaymentChart({ data, onDateClick }) {
           {renderBtn("Month", FILTER_BY_MONTH)}
         </Box>
         <Box className={classes.content} ref={ref}>
-          <Bar redraw data={chartData} options={chartOptions} />
+          {/* <Bar redraw data={chartData} options={chartOptions} /> */}
         </Box>
       </CardContent>
     </Card>
