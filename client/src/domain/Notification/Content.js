@@ -1,88 +1,70 @@
-import React, { useEffect, useContext } from "react";
+import React from "react";
+import { useHistory } from "react-router";
 
-import { useHistory, useParams } from "react-router";
-import { useDispatch } from "react-redux";
-
-import ApiContext from "../../context/ApiContext";
-import { getNotificationsList, resetCurrentNotificationList } from "../../store/actions/notification";
-
-import { List, ListItem, ListItemAvatar, Avatar, ListItemText, Typography, Divider, Box } from "@material-ui/core";
-import ImageIcon from "@material-ui/icons/Image";
+import {
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  ListItemSecondaryAction,
+  Button,
+  Typography,
+  Divider,
+  Box,
+} from "@material-ui/core";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import ChevronRightIcon from "@material-ui/icons/ChevronRightOutlined";
 
+import Avatar from "../../components/Avatar";
+import DisplayName from "../../components/DisplayName";
+
 import { POST_ID_ROUTE, PROFILE_USERNAME_ROUTE } from "../../constants/routes";
+import { ACTIVITY_LOG_TYPE } from "../../constants/activity";
+import { formatDate } from "../../helpers/functions";
 
 import useStyles from "./styles";
 
-function Content({ data = [], onChangeType }) {
-  const classes = useStyles();
-
-  const apiClient = useContext(ApiContext);
-  const dispatch = useDispatch();
-
+function Content({ data = [] }) {
   const history = useHistory();
-  const params = useParams();
-
-  const handleChangeRoute = (params) => {
-    if (params.postId) {
-      history.push(POST_ID_ROUTE(params.postId));
-    } else {
-      history.push(PROFILE_USERNAME_ROUTE(params.userName));
-    }
-  };
-
-  useEffect(() => {
-    onChangeType(params.contentId);
-  }, [params.contentId]);
-
-  useEffect(() => {
-    dispatch(getNotificationsList(apiClient));
-    return () => {
-      dispatch(resetCurrentNotificationList());
-    };
-  }, [params.contentId]);
 
   return (
-    <Box className={classes.section}>
-      <List>
-        {data.map((item) => (
-          <React.Fragment key={item.id}>
-            <ListItem
-              className={classes.listItem}
-              alignItems="flex-start"
-              onClick={() => {
-                handleChangeRoute({ postId: item.postId, userId: item.userName });
-              }}
-            >
-              {!item?.status && <FiberManualRecordIcon color="primary" className={classes.icon} />}
+    <List dense>
+      {data.map((item) => (
+        <React.Fragment key={item.id}>
+          <ListItem button onClick={() => history.push(PROFILE_USERNAME_ROUTE(item.userName))}>
+            {/* {!!item.status !== true && <FiberManualRecordIcon color="primary" className={classes.icon} />} */}
 
-              <ListItemAvatar>
-                <Avatar>
-                  <ImageIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText
-                primary={
-                  <>
-                    <Typography variant="subtitle1" color="textPrimary">
-                      {item.name}
-                    </Typography>
-                    <Typography component="span" variant="body1">
-                      {item.description}
-                    </Typography>
-                  </>
-                }
-                secondary={item.createdDate}
-              />
+            <ListItemAvatar>
+              <Avatar src={item.avatarUrl} alt={item.name} borderColor="silver" />
+            </ListItemAvatar>
+
+            <ListItemText
+              primary={
+                <>
+                  <DisplayName name={item.name} userName={item.userName} identityVerified={true} />
+                  <Typography component="span" variant="body1">
+                    {ACTIVITY_LOG_TYPE[item.type]}
+                  </Typography>
+                </>
+              }
+              secondary={formatDate(item.createdDate)}
+            />
+
+            {item.relatedPostId ? (
+              <ListItemSecondaryAction>
+                <Button edge="end" variant="outlined" onClick={() => history.push(POST_ID_ROUTE(item.relatedPostId))}>
+                  Post
+                </Button>
+              </ListItemSecondaryAction>
+            ) : (
               <ChevronRightIcon />
-            </ListItem>
+            )}
+          </ListItem>
 
-            <Divider component="li" />
-          </React.Fragment>
-        ))}
-      </List>
-    </Box>
+          <Divider component="li" />
+        </React.Fragment>
+      ))}
+    </List>
   );
 }
 

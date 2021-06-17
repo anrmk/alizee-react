@@ -90,7 +90,7 @@ function Main(props) {
         <MainLayout>
           <Switch>
             <PrivateRoute path={Routes.EXPLORE_ROUTE} component={Explore} />
-            <PrivateRoute path={Routes.NOTIFICATION_ROUTE} component={Notifications} />
+            <PrivateRoute path={Routes.NOTIFICATION_ID_DEFAULT_ROUTE} component={Notifications} />
             <PrivateRoute path={Routes.POST_ROUTE} component={Post} />
             <PrivateRoute path={Routes.ACTIVITY_ROUTE} component={Activity} />
             <PrivateRoute path={Routes.MEET_ROUTE} component={Meeting} />

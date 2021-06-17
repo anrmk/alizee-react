@@ -73,11 +73,8 @@ export default createMuiTheme({
       root: {
         backgroundColor: "#242731", //"#2E2E3D"
 
-        "&.noborder": {
-          
-        }
+        "&.noborder": {},
       },
-      
     },
 
     MuiOutlinedInput: {
@@ -100,8 +97,8 @@ export default createMuiTheme({
 
     MuiPaper: {
       elevation1: {
-        boxShadow: "none"
-      }
+        boxShadow: "none",
+      },
     },
 
     MuiButton: {
@@ -109,16 +106,16 @@ export default createMuiTheme({
 
       text: {},
 
-      outlinedPrimary : {
+      outlinedPrimary: {
         borderRadius: "20px",
       },
 
-      outlinedSecondary : {
+      outlinedSecondary: {
         borderRadius: "20px",
       },
 
       containedPrimary: {
-        color: "white"
+        color: "white",
         // background: "linear-gradient(141.21deg, #36704d -16.59%, #356078 40.28%, #70538a 90.77%)",
         // backgroundColor: "#35B1F6",
         // color: "white",
@@ -187,6 +184,7 @@ export default createMuiTheme({
     MuiBottomNavigation: {
       root: {
         borderRadius: "4px",
+        backgroundColor: "none",
       },
     },
 

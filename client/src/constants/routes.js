@@ -1,8 +1,10 @@
 export const DEFAULT_ROUTE = "/";
 export const HOME_ROUTE = "/";
-export const NOTIFICATION_ROUTE = "/notifications"
-export const NOTIFICATION_ROUTE_CONTENT = "/notifications/:contentId";
+export const NOTIFICATION_ROUTE = "/notifications";
+export const NOTIFICATION_ID_DEFAULT_ROUTE = "/notifications/:type";
+export const NOTIFICATION_ID_ROUTE = (type) => `/notifications/${type}`;
 export const NOTIFICATION_ROUTE_ALL = "/notifications/all"
+
 export const ABOUT_ROUTE = "";
 export const HELP_ROUTE = "/help";
 export const HELP_DETAIL_ROUTE = "/help/:currentQuestion";

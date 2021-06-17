@@ -1,72 +1,56 @@
-import React, { useState } from "react";
-
-import { useSelector } from "react-redux";
-
-import { Route, Switch, Redirect } from "react-router-dom";
-
-import { NOTIFICATION_ROUTE_CONTENT, NOTIFICATION_ROUTE_ALL } from "../../constants/routes";
+import React, { useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
+import { connect } from "react-redux";
 
 import { Navbar, Content, SortContent } from "../../domain/Notification";
 
-import { Typography, Divider, Box, Link } from "@material-ui/core";
+import { Divider, Grid } from "@material-ui/core";
 
-function Notifications() {
-  const [type, setType] = useState("");
-  const [filter, setFilter] = useState("all");
+import ApiContext from "../../context/ApiContext";
+import * as notificationActions from "../../store/actions/notification";
 
-  const list = useSelector((state) => state.notification.list);
+function Notifications({ notification, getNotifications, resetNotifications }) {
+  const apiClient = useContext(ApiContext);
+  const { type } = useParams();
 
-  const filterList = () => {
-    switch (filter) {
-      case "all":
-        return list;
-      case "users":
-        return list.slice(0, list.length / 10);
-      case "posts":
-        return list;
-      case "unread":
-        return list;
-
-      default:
-        return list;
-    }
-  };
-
-  const changeType = (type) => {
-    setType(type);
-  };
-
-  const handleChangeFilter = (e) => {
-    setFilter(e.target.value);
-  };
+  // const [filter, setFilter] = useState("all");
+  useEffect(() => {
+    getNotifications(apiClient, { type });
+    return () => {
+      resetNotifications();
+    };
+  }, [type]);
 
   return (
-    <>
-      <Navbar type={type} />
-      <Divider />
-      <Box padding={2}>
-        <Typography variant="h5" color="textPrimary" gutterBottom={true}>
-          Notifications
-        </Typography>
-        <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Typography variant="body1" color="textSecondary" variantMapping={{ h6: "h6" }}>
-            {type.toUpperCase()}
-          </Typography>
-          <Box display="flex" justifyContent="space-between" alignItems="center" width="180px">
-            <Link href="#">Mark All as Read</Link>
-            <SortContent onChangeFilter={handleChangeFilter} filter={filter} />
-          </Box>
+    <Grid container direction="column">
+      <Grid item>
+        <Navbar type={type} />
+      </Grid>
+      <Divider component="div" />
+
+      {/* <Grid item>
+        <Box display="flex" justifyContent="flex-end" alignItems="center">
+          <SortContent onChangeFilter={handleChangeFilter} filter={filter} />
         </Box>
-      </Box>
-      <Divider />
-      <Switch>
-        <Route path={NOTIFICATION_ROUTE_CONTENT}>
-          <Content data={filterList()} onChangeType={changeType} />
-        </Route>
-        <Redirect to={NOTIFICATION_ROUTE_ALL} />
-      </Switch>
-    </>
+      </Grid> */}
+      <Grid item>
+        <Content data={notification.list} />
+      </Grid>
+    </Grid>
   );
 }
 
-export default Notifications;
+function mapStateToProps(state) {
+  return {
+    notification: state.notification,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getNotifications: (api, opts) => dispatch(notificationActions.getNotificationsList(api, opts)),
+    resetNotifications: (api) => dispatch(notificationActions.resetCurrentNotificationList(api)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Notifications);

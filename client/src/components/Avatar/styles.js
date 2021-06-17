@@ -7,7 +7,7 @@ const SIZES = {
   medium: "40px",
   large: "65px",
   big: "96px",
-  huge: "140px"
+  huge: "140px",
 };
 
 const BORDER_COLORS = {
@@ -19,15 +19,15 @@ const BORDER_COLORS = {
 
 const getBorder = (width, color) => {
   if (!color) return "none";
-  return `0px 0px 0px ${width ? width : "2px"} ${BORDER_COLORS[color] ? BORDER_COLORS[color] : BORDER_COLORS["blue"]}`;
+  return `0px 0px 4px ${width ? width : "1px"} ${BORDER_COLORS[color] ? BORDER_COLORS[color] : BORDER_COLORS["blue"]}`;
 };
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
     width: ({ size }) => (SIZES[size] ? SIZES[size] : SIZES["medium"]),
     height: ({ size }) => (SIZES[size] ? SIZES[size] : SIZES["medium"]),
-    boxShadow: ({ borderWidth, borderColor }) => getBorder(borderWidth, borderColor),
-    backgroundColor:  theme.palette.grey["500"],
+    backgroundColor: ({ borderWidth, borderColor }) => BORDER_COLORS[borderColor], // theme.palette.grey["500"],
+    padding: ({ borderWidth, borderColor }) => "2px",
     overflow: "visible",
     "& > img.MuiAvatar-img": {
       borderRadius: "50%",
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
       height: "100%",
       borderRadius: "50%",
-      //boxShadow: ({ borderWidth, borderColor }) => getBorder(borderWidth, borderColor),
+      boxShadow: ({ borderWidth, borderColor }) => getBorder(borderWidth, borderColor),
       animation: "$streamRipple 1.2s infinite ease-in-out",
       content: '""',
     },
@@ -70,9 +70,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     zIndex: theme.zIndex.tooltip,
     "& > .MuiIconButton-root": {
-      color: theme.palette.common.white
-    }
-  }
+      color: theme.palette.common.white,
+    },
+  },
 }));
 
 export const StyledBadge = withStyles((theme) => ({
@@ -93,9 +93,9 @@ export const StyledBadge = withStyles((theme) => ({
     },
   },
   dot: {
-    height: ({ dotWidth }) => dotWidth ? dotWidth : "8px",
-    width: ({ dotWidth }) => dotWidth ? dotWidth : "8px",
-    borderRadius: "50%"
+    height: ({ dotWidth }) => (dotWidth ? dotWidth : "8px"),
+    width: ({ dotWidth }) => (dotWidth ? dotWidth : "8px"),
+    borderRadius: "50%",
   },
   "@keyframes statusRipple": {
     "0%": {

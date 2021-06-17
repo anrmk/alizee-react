@@ -15,6 +15,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToAppOutlined";
 import {
   HOME_ROUTE,
   NOTIFICATION_ROUTE,
+  NOTIFICATION_ROUTE_ALL,
   CHAT_ROUTE,
   PROFILE_USERNAME_ROUTE,
   EXPLORE_ROUTE,
@@ -93,7 +94,7 @@ function Sidebar({
             <ListItem
               button
               selected={location.pathname.includes(NOTIFICATION_ROUTE)}
-              to={NOTIFICATION_ROUTE}
+              to={NOTIFICATION_ROUTE_ALL}
               component={Link}
             >
               <ListItemIcon>
@@ -103,7 +104,7 @@ function Sidebar({
               </ListItemIcon>
               <ListItemText>
                 <Typography
-                  color={location.pathname === NOTIFICATION_ROUTE ? "textPrimary" : "textSecondary"}
+                  color={location.pathname.includes(NOTIFICATION_ROUTE) ? "textPrimary" : "textSecondary"}
                   variant="h6"
                 >
                   {t("SidebarNotificationText")}

@@ -16,7 +16,7 @@ function requestGetNotificationList() {
   };
 }
 
-function receiveGetNotificationList(data, total = 20, start = 0, hasMore = false) {
+function receiveGetNotificationList(data, total, start, hasMore) {
   return {
     type: GET_NOTIFICATIONS_LIST_SUCCESS,
     payload: {
@@ -52,13 +52,20 @@ export function resetCurrentNotificationList() {
 }
 
 export function getNotificationsList(api, opts) {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     dispatch(requestGetNotificationList());
 
     const url = generateUrl("getNotification");
-
+    const currentOffset = getState().notification.offset;
     try {
-      const { data } = await api.setMethod("GET").query(url);
+      const { data } = await api
+        .setMethod("GET")
+        .setParams({
+          type: opts.type,
+          start: currentOffset,
+          length: NOTIFICATION_LENGTH,
+        })
+        .query(url);
 
       dispatch(receiveGetNotificationList(data));
     } catch {

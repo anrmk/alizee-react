@@ -1,14 +1,11 @@
 import React, { useState } from "react";
-import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { useHistory, useLocation } from "react-router-dom";
 
-import { Grid, Box, AppBar, Toolbar, IconButton, Badge, Typography, Button, Link } from "@material-ui/core";
+import { Grid, AppBar, Toolbar, IconButton, Badge, Button } from "@material-ui/core";
 
 import NotificationsIcon from "@material-ui/icons/NotificationsActiveOutlined";
 import MailIcon from "@material-ui/icons/MailOutline";
 import ArrowBackIcon from "@material-ui/icons/ArrowBackIosOutlined";
-// import NightIcon from "@material-ui/icons/NightsStayOutlined";
-// import SunnyIcon from "@material-ui/icons/WbSunnyOutlined";
 
 import {
   CHAT_ROUTE,
@@ -17,13 +14,12 @@ import {
   SIGN_UP_ROUTE,
   HELP_ROUTE,
   CHANGE_LOG_ROUTE,
-  HELP_DETAIL_ROUTE,
+  NOTIFICATION_ROUTE_ALL,
 } from "../../constants/routes";
 import Avatar from "../../components/Avatar";
 import Logo from "../../components/Logo";
 import Menu from "./Menu";
 
-import useChangeTheme from "../../hooks/useChangeTheme";
 import useStyles from "./styles";
 
 function Navbar({
@@ -39,12 +35,9 @@ function Navbar({
   onSignOut,
 }) {
   const classes = useStyles(open)();
-  const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
   const location = useLocation();
-  const match = useRouteMatch();
-  const changeTheme = useChangeTheme();
 
   const menuId = "navbar-menu";
   const isMenuOpen = Boolean(anchorEl);
@@ -98,7 +91,7 @@ function Navbar({
           <Toolbar disableGutters>
             {isAuthenticated ? (
               <>
-                <IconButton>
+                <IconButton onClick={() => history.push(NOTIFICATION_ROUTE_ALL)}>
                   <Badge variant="dot" invisible={!newNotification} color="primary">
                     <NotificationsIcon />
                   </Badge>
