@@ -9,7 +9,9 @@ export const ACTIVITY_LOG_TYPE = {
   7: "NEWMESSAGE",
   8: "Sent you a tip",
   9: "Has purchased your post",
-  10: "PROMOTIONS"
+  10: "PROMOTIONS",
+  11: "Calling you!",
+  12: "Added your profile as favorite."
 }
 
 //has purchased your post for $
