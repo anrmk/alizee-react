@@ -389,10 +389,10 @@ export function getBase64(file) {
   });
 }
 
-export function redirect(url) {
+export function redirect(url, target) {
   if (!url) return null;
 
-  window.location = url;
+  window.open(url, target ?? "_self")
 }
 
 export function getUsernameFromJWT(token) {
