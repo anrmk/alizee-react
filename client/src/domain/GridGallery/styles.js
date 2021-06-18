@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   gridListTile: {
     height: "auto !important",
     padding: theme.spacing(0.1, 0.5) + " !important",
-    // backgroundColor: theme.palette.background.paper
+    cursor: "pointer"
   },
 
   gridListTileImage: {

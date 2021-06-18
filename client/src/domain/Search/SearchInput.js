@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Box, InputBase } from "@material-ui/core";
+import { OutlinedInput, InputAdornment } from "@material-ui/core";
 
 import SearchIcon from "@material-ui/icons/SearchOutlined";
 
-import { debounce } from "../../helpers/functions"
+import { debounce } from "../../helpers/functions";
 
 import useStyles from "./styles";
 
@@ -15,8 +15,11 @@ function SearchInput({
 }) {
   const classes = useStyles();
   const [value, setValue] = useState(defaultValue);
-  const [onceDefaultChanged, setOnceDefaultChanged] = useState(false)
-  const myDebounce = useCallback(debounce((query) => onSendQuery && onSendQuery(query), interval), []);
+  const [onceDefaultChanged, setOnceDefaultChanged] = useState(false);
+  const myDebounce = useCallback(
+    debounce((query) => onSendQuery && onSendQuery(query), interval),
+    []
+  );
 
   useEffect(() => {
     if (!onceDefaultChanged && defaultValue) {
@@ -31,25 +34,20 @@ function SearchInput({
   };
 
   return (
-    <Box mb={2} className={classes.search}>
-      <Box className={classes.searchIcon}>
-        <SearchIcon />
-      </Box>
-      <Box>
-        <InputBase
-          fullWidth
-          type="text"
-          value={value}
-          placeholder="Search…"
-          classes={{
-            root: classes.inputRoot,
-            input: classes.inputInput,
-          }}
-          inputProps={{ "aria-label": "search" }}
-          onChange={handleChange}
-        />
-      </Box>
-    </Box>
+    <OutlinedInput
+      fullWidth
+      margin="dense"
+      size="small"
+      placeholder="Search…"
+      variant="filled"
+      value={value}
+      startAdornment={
+        <InputAdornment position="start">
+          <SearchIcon />
+        </InputAdornment>
+      }
+      onChange={handleChange}
+    />
   );
 }
 

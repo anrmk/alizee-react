@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import clsx from "clsx";
 
@@ -17,53 +16,50 @@ function GridGalleryUserList(props) {
   const [isLoading, setLoading] = useState(true);
 
   return (
-    <GridList spacing={12} cols={["xs", "sm"].includes(width) ? 3 : 6} className={clsx(classes.gridList, classes.userViewGridList)}>
+    <GridList
+      spacing={12}
+      cols={["xs", "sm"].includes(width) ? 3 : 6}
+      className={clsx(classes.gridList, classes.userViewGridList)}
+    >
       {items &&
-        items.map(
-          (item, index) =>
-            <GridListTile
-              key={item.id + index}
-              onClick={() => onItemClick(item.userName)}
-              className={classes.gridListTile}
-            >
-              <LazyLoadImage
-                width={"100%"}
-                className={clsx(classes.gridListTileImage, classes.gridListTileImageUserView, !item.avatarUrl && classes.gridListUserViewBorder)}
-                effect={item && "blur"}
-                src={item.avatarUrl ? item.avatarUrl : AvatarIcon}
-                alt={item.userName}
-                afterLoad={() => setLoading(false)}
-              />
+        items.map((item, index) => (
+          <GridListTile
+            key={item.id + index}
+            onClick={() => onItemClick(item.userName)}
+            className={classes.gridListTile}
+          >
+            <LazyLoadImage
+              width={"100%"}
+              className={clsx(
+                classes.gridListTileImage,
+                classes.gridListTileImageUserView,
+                !item.avatarUrl && classes.gridListUserViewBorder
+              )}
+              effect={item && "blur"}
+              src={item.avatarUrl ? item.avatarUrl : AvatarIcon}
+              alt={item.userName}
+              afterLoad={() => setLoading(false)}
+            />
 
-              {!isLoading &&
-                <GridListTileBar
-                  titlePosition="top"
-                  actionPosition="right"
-                  classes={{
-                    root: clsx(classes.gridListTileBar, item.userName && classes.gridListTileBarUserView),
-                    titleWrap: classes.gridListTileBarTitleUserView
-                  }}
-                  title={<Typography className={classes.gridListTileBarTitle} noWrap variant="body1">{item.userName}</Typography>}
-                />
-              }
-            </GridListTile>
-        )}
+            {!isLoading && (
+              <GridListTileBar
+                titlePosition="top"
+                actionPosition="right"
+                classes={{
+                  root: clsx(classes.gridListTileBar, item.userName && classes.gridListTileBarUserView),
+                  titleWrap: classes.gridListTileBarTitleUserView,
+                }}
+                title={
+                  <Typography className={classes.gridListTileBarTitle} noWrap variant="body1">
+                    {item.userName}
+                  </Typography>
+                }
+              />
+            )}
+          </GridListTile>
+        ))}
     </GridList>
   );
 }
-
-GridGalleryUserList.propTypes = {
-  item: PropTypes.object,
-  isUserView: PropTypes.bool,
-
-  onItemClick: PropTypes.func,
-};
-
-GridGalleryUserList.defaultProps = {
-  item: {},
-  isUserView: false,
-
-  onItemClick: undefined,
-};
 
 export default withWidth()(GridGalleryUserList);
