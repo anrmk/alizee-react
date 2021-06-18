@@ -155,6 +155,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getRooms: (api) => dispatch(actionChat.getRooms(api)),
+    getRoom: (api, userName) => dispatch(actionChat.getRooms(api, userName)),
     filterRooms: (query) => dispatch(actionChat.filter(query)),
 
     setRoom: (api, userName) => dispatch(actionChat.setRoom(api, userName)),

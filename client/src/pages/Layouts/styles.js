@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   base: {
-    height: ({ isFullScreenHeight }) => isFullScreenHeight ? "100vh" : "100%"
+    height: ({ isFullScreenHeight }) => isFullScreenHeight ? "100vh" : "100%",
   },
   container: {
     display: "flex",
@@ -29,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: theme.spacing(3),
     },
     [theme.breakpoints.down("sm")]: {
-      paddingBottom: theme.spacing(9)
+      height: "100% !important",
+      paddingBottom: theme.spacing(7)
     }
   },
   mainInnerGrid: {
