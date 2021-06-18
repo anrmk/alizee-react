@@ -15,7 +15,7 @@ function Avatar({
   className,
   badgeClassName,
   borderWidth,
-  borderColor,
+  borderColor: bordercolor,
   variant = DEFAULT_VARIANT,
   online,
   live,
@@ -32,7 +32,7 @@ function Avatar({
   const classes = useStyles({
     size,
     borderWidth,
-    borderColor,
+    borderColor: bordercolor,
     variant,
     online,
     live,

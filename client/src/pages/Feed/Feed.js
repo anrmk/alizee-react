@@ -34,7 +34,6 @@ import useLightboxModal from "../../hooks/useLightboxModal";
 
 import useStyles from "./styles";
 
-
 function Feed(props) {
   const classes = useStyles();
   const apiClient = useContext(ApiContext);

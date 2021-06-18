@@ -1,20 +1,21 @@
-import { useState, useEffect, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useSnackbar } from "notistack";
+
+import { Box } from "@material-ui/core";
 
 import ApiContext from "../context/ApiContext";
-import { PEAR_TO_PEAR_ID_ROUTE } from "../constants/routes";
 import * as notificationAction from "../store/actions/notification";
+import Snackbar from "../domain/Snackbar/Snackbar";
 
 import * as signalR from "@microsoft/signalr";
 
 import { getToken, wrapHttps } from "../helpers/functions";
 import API from "../constants/endpoints";
-import { useSnackbar } from "notistack";
+import { CALLING_NOTIFICATION_TYPE, NEW_FOLLOWING_NOTIFICATION_TYPE, NEW_MESSAGE_NOTIFICATION_TYPE } from "../constants/notifications";
 
 export default function useNotification() {
   const apiClient = useContext(ApiContext);
-  const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
   const [connection, setConnection] = useState(null);
 
@@ -44,17 +45,47 @@ export default function useNotification() {
       .configureLogging(signalR.LogLevel.Information)
       .build();
 
-    newConnection.on("Calling", (data) => {
-      history.push(PEAR_TO_PEAR_ID_ROUTE(""));
-    });
-
-    newConnection.on("NewMessage", () => {
-      handleNotificationToggle(null, { newMessage: true });
-    });
-
-    newConnection.on("NewNotification", (data) => {
-      handleNotificationToggle(apiClient, { newNotification: true, ...data });
-      enqueueSnackbar(data.description, { variant: "info" });
+    newConnection.on("Notification", (data) => {
+      switch (data?.type) {
+        case NEW_FOLLOWING_NOTIFICATION_TYPE:
+          handleNotificationToggle(apiClient, { newNotification: true, ...data });
+          enqueueSnackbar(null, {
+            variant: "info",
+            content: (key) => (
+              <Box>
+                <Snackbar 
+                  id={key} 
+                  avatarUrl={data.avatarUrl} 
+                  name={data.name} 
+                  userName={data.userName} 
+                  description={data.description} />
+              </Box>
+            )
+          });
+          break;
+        case CALLING_NOTIFICATION_TYPE:
+          enqueueSnackbar(null, {
+            variant: "info",
+            content: (key) => (
+              <Box>
+                <Snackbar 
+                  isCallable
+                  id={key} 
+                  avatarUrl={data.avatarUrl} 
+                  name={data.name} 
+                  userName={data.userName} 
+                  description={data.description} />
+              </Box>
+            )
+          });
+          break;
+        case NEW_MESSAGE_NOTIFICATION_TYPE:
+          handleNotificationToggle(null, { newMessage: true });
+          break;
+      
+        default:
+          break;
+      }
     });
 
     newConnection.onclose(() => {

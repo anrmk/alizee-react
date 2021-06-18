@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { useSnackbar } from "notistack";
 
-import AlertContainer from "../../components/AlertContainer"
 import { PrivacyForm } from '../../domain/SettingsForms';
 
 import ApiContext from '../../context/ApiContext';
@@ -22,9 +22,7 @@ const DELETE_ACCOUNT_ALERT_ERROR_TEXT = "The account has not been deleted";
 function PrivacySecuritySettings(props) {
   const apiClient = useContext(ApiContext);
   const { t } = useTranslation();
-  const [alertOpen, setAlertOpen] = useState(false);
-  const [alertSuccessText, setAlertSuccessText] = useState(DEFAULT_ALERT_SUCCESS_TEXT);
-  const [alertErrorText, setAlertErrorText] = useState(DEFAULT_ALERT_ERROR_TEXT);
+  const { enqueueSnackbar } = useSnackbar();
 
   const { privacySettings, user } = props;
   const {
@@ -94,33 +92,24 @@ function PrivacySecuritySettings(props) {
       content: t("DeleteAccountDialogDescription")
     }));
   }
-  
-  const handleAlertClose = () => {
-    setAlertOpen(false)
-  }
 
   const setAlertText = (success = DEFAULT_ALERT_SUCCESS_TEXT, error = DEFAULT_ALERT_ERROR_TEXT) => {
-    setAlertSuccessText(success)
-    setAlertErrorText(error);
-    setAlertOpen(true)
+    if (user.errorMessage || privacySettings.errorMessage) {
+      enqueueSnackbar(error, { variant: "error" });
+    } else {
+      enqueueSnackbar(success, { variant: "success" });
+    }
   }
 
   return (
-    <AlertContainer 
-      successAlert={alertSuccessText || DEFAULT_ALERT_SUCCESS_TEXT}
-      errorAlert={alertErrorText || DEFAULT_ALERT_ERROR_TEXT}
-      alertOpen={alertOpen}
-      error={user.errorMessage || privacySettings.errorMessage}
-      onAlertClose={handleAlertClose}>
-      <PrivacyForm 
-        {...privacySettings.data}
-        loading={privacySettings.isFetching || user.isFetching}
-        onAccountPrivateUpdate={handleAccountPrivateChange}
-        onActivityStatusUpdate={handleActivityStatusChange}
-        onOffensiveCommentsUpdate={handleOffensiveCommentsChange}
-        onPasswordReset={handlePasswordResetClick}
-        onAccountDelete={handleAccountDeleteClick} />
-    </AlertContainer>
+    <PrivacyForm 
+      {...privacySettings.data}
+      loading={privacySettings.isFetching || user.isFetching}
+      onAccountPrivateUpdate={handleAccountPrivateChange}
+      onActivityStatusUpdate={handleActivityStatusChange}
+      onOffensiveCommentsUpdate={handleOffensiveCommentsChange}
+      onPasswordReset={handlePasswordResetClick}
+      onAccountDelete={handleAccountDeleteClick} />
   )
 }
 
