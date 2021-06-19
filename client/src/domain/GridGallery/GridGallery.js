@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import { Typography } from "@material-ui/core";
@@ -12,7 +11,6 @@ import useStyle from "./styles";
 function GridGallery(props) {
   const { isUserView, items, hasMore } = props;
   const { onFetchMore, onItemClick } = props;
-
   const classes = useStyle();
 
   return (
@@ -29,25 +27,5 @@ function GridGallery(props) {
       </InfiniteScroll>
   );
 }
-
-GridGallery.propTypes = {
-  items: PropTypes.array,
-  isUserView: PropTypes.bool,
-  hasMore: PropTypes.bool,
-  width: PropTypes.string,
-
-  onFetchMore: PropTypes.func,
-  onItemClick: PropTypes.func,
-};
-
-GridGallery.defaultProps = {
-  items: [],
-  isUserView: false,
-  hasMore: false,
-  width: "",
-
-  onFetchMore: undefined,
-  onItemClick: undefined,
-};
 
 export default GridGallery;

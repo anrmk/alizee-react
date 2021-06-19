@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import clsx from "clsx";
 
 import { AppBar, BottomNavigation, BottomNavigationAction } from "@material-ui/core";
@@ -24,11 +24,12 @@ function BottomBar({
 }) {
   const classes = useStyles()();
   const history = useHistory();
+  const location = useLocation();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const [value, setValue] = React.useState("recents");
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (e, newValue) => {
     setValue(newValue);
     switch (newValue) {
       case "home":
@@ -57,12 +58,12 @@ function BottomBar({
 
   return (
     <AppBar className={clsx(classes.root, "bottom")} component="footer">
-      <BottomNavigation value={value} onChange={handleChange}>
-        <BottomNavigationAction value="home" label="" icon={<HomeIcon />} />
-        <BottomNavigationAction value="search" label="" icon={<SearchIcon />} />
-        <BottomNavigationAction value="post" label=" " icon={<AddCircleIcon fontSize="large" />} />
-        <BottomNavigationAction value="explore" label="" icon={<ExploreIcon />} />
-        <BottomNavigationAction value="profile" label="" icon={<AccountIcon />} />
+      <BottomNavigation value={value} onChange={handleChange} showLabels={false}>
+        <BottomNavigationAction value="home" icon={<HomeIcon />} />
+        <BottomNavigationAction value="search" icon={<SearchIcon />} />
+        <BottomNavigationAction value="post" icon={<AddCircleIcon fontSize="large" />} />
+        <BottomNavigationAction value="explore" icon={<ExploreIcon />} />
+        <BottomNavigationAction value="profile" icon={<AccountIcon />} />
       </BottomNavigation>
 
       <PostSprout

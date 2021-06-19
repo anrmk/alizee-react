@@ -45,7 +45,7 @@ export default {
     // MEDIA
     createMedia: "media/createmedia",
     createChatMedia: "media/createChatMedia",
-    
+
     // CHAT
     getRoom: "chat/getRoom",
     getRooms: "chat/getRooms",
@@ -78,6 +78,7 @@ export default {
     updatePassword: "account/resetpassword",
     getSettingsPasswordConfirm: "account/passwordchangeconfirm",
     getUserStatistics: "account/statistics",
+    verifyMe: "account/verify",
 
     // ACCOUNT FAVORITES
     getAccountFavorites: "account/favorites",
@@ -141,14 +142,14 @@ export default {
     //NOTIFICATION
     notification: "/hubs/notification",
     notifyCall: "notification/call",
-	  getNotification: "activity/notifications",
+    getNotification: "activity/notifications",
 
     //CHANGE LOG
     getChangeLog: "changelog/getLogs",
 
-	//HELP
+    //HELP
     getHelp: "help/getgroups",
-	changeHelpRating: "help/vote",
-	getHelpDetails: "help/getarticle"
+    changeHelpRating: "help/vote",
+    getHelpDetails: "help/getarticle",
   },
 };

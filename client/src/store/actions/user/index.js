@@ -93,3 +93,7 @@ export {
 
   getMe
 } from "./getMe";
+
+export {
+  verifyMe
+} from "./verify";

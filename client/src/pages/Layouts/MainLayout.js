@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import clsx from "clsx";
-import { Grid, Container, Hidden } from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
 
 import { BottomBar, Navbar } from "../../domain/Navbar";
 import Sidebar from "../../components/Sidebar";

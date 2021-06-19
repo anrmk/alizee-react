@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-import { Container, Avatar, Chip, Grid } from "@material-ui/core";
+import {Container, Avatar, Chip, Grid, Divider } from "@material-ui/core";
 
 import { PROFILE_USERNAME_ROUTE, EXPLORE_ROUTE } from "../constants/routes";
 import { SEARCH_USER_TYPE } from "../constants/search";
@@ -28,23 +28,26 @@ function Search() {
 
   return (
     <Container>
-      <Grid container direction="column" justify="flex-start" alignItems="stretch" spacing={2}>
+      <Grid container direction="column" spacing={2} style={{ flexGrow: 1 }}>
         <Grid item>
           <SearchInput onSendQuery={search.onSearch} />
         </Grid>
-        {search.tags.length > 0 && (<Grid item>
-          {search.tags.map((item) => (
-            <Chip
-              avatar={<Avatar>#</Avatar>}
-              onClick={() => handleClick(item.name)}
-              label={item.name}
-              key={item.id}
-              marginRight={0.5}
-              color="primary"
-              size="small"
-            />
-          ))}
-        </Grid>)}
+        <Divider component="div" />
+
+        {search.tags.length > 0 && (
+          <Grid item>
+            {search.tags.map((item) => (
+              <Chip
+                avatar={<Avatar>#</Avatar>}
+                onClick={() => handleClick(item.name)}
+                label={item.name}
+                key={item.id}
+                color="primary"
+                size="small"
+              />
+            ))}
+          </Grid>
+        )}
         <Grid item>
           <GridGallery
             isUserView={true}

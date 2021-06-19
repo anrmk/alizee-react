@@ -1,8 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-import { Container } from "@material-ui/core";
-
 import { POST_ID_ROUTE } from "../constants/routes";
 
 import GridGallery from "../domain/GridGallery";
@@ -18,14 +16,12 @@ function Explore() {
   };
 
   return (
-    <Container>
       <GridGallery
         items={search.posts}
         hasMore={search.hasMore}
         onFetchMore={search.onFetchMore}
         onItemClick={onItemClick}
       />
-    </Container>
   );
 }
 

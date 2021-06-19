@@ -8,7 +8,7 @@ import * as actionSuggestion from "../store/actions/suggestion";
 import * as actionPost from "../store/actions/post";
 import { SEARCH_USER_TYPE, isUserType } from "../constants/search";
 import { POSTS_LENGTH } from "../constants/feed";
-import search from "../store/reducers/search";
+//import search from "../store/reducers/search";
 
 export default function useSearch({ type = SEARCH_USER_TYPE }) {
   const apiClient = useContext(ApiContext);

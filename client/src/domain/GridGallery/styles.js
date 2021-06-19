@@ -12,36 +12,52 @@ const useStyles = makeStyles((theme) => ({
 
   gridList: {
     overflow: "hidden",
-    minWidth: 220,
+   // minWidth: 220,
   },
 
   userViewGridList: {
     margin: "0 !important",
   },
 
-  gridListTile: {
+  tile: {
     height: "auto !important",
-    padding: theme.spacing(0.1, 0.5) + " !important",
-    cursor: "pointer"
+   // padding: theme.spacing(0.5) + " !important",
+    cursor: "pointer",
+    // [theme.breakpoints.down("sm")]: {
+    //   padding: theme.spacing(0.1)+ " !important"
+    // }
   },
 
-  gridListTileImage: {
+  image: {
     width: "100%",
-    height: "auto !important"
+    height: "100%", //"auto !important",
+    overflow: "hidden"
   },
 
-  gridListTileImageUserView: {
+  userImage: {
     overflow: "hidden",
     borderRadius: "50%",
   },
 
-  gridListTileBar: {
+  tileBar: {
     background: "none",
   },
 
-  gridListTileBarTitle: {
-    color: theme.palette.text.primary,
+  userTileBar: {
+    position: "absolute",
+    //bottom: "0"
+    margin: 0
+    //olor: theme.
   },
+
+  icon: {
+    color: "white",
+    marginRight: theme.spacing(0.5)
+  },
+
+  // gridListTileBarTitle: {
+  //   color: theme.palette.text.primary,
+  // },
 
   gridListTileBarUserView: {
     position: "relative",
@@ -57,10 +73,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(0.5),
   },
 
-  icon: {
-    color: "white",
-    marginRight: theme.spacing(0.5)
-  },
+  
 }));
 
 export default useStyles;

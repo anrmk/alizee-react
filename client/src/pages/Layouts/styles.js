@@ -7,6 +7,11 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     flexDirection: "column",
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: theme.spacing(0.5),
+      paddingRight: theme.spacing(0.5),
+      paddingBottom: theme.spacing(8)
+    }
   },
   twoColumnGrid: {
     flex: "1",
@@ -44,9 +49,9 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   mainContainer: {
-    [theme.breakpoints.down("sm")]: {
-      padding: 0
-    }
+    // [theme.breakpoints.down("sm")]: {
+    //   padding: 0
+    // }
   },
   publicBase: {
     display: "flex",

@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-
-import { GridList, GridListTile, GridListTileBar, Hidden, Box} from "@material-ui/core";
+import { GridList, GridListTile, GridListTileBar, Hidden, Box } from "@material-ui/core";
 
 import PlayArrowIcon from "@material-ui/icons/PlayArrowOutlined";
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibraryOutlined";
@@ -54,7 +52,7 @@ function GridGalleryPostList(props) {
         arr.push(promiseWrapper(img, items[i]));
         arrImg.push(img);
         if (i === items.length - 1) {
-          setLastPostIndex(i+1);
+          setLastPostIndex(i + 1);
           setImages((prev) => [...prev, ...arrImg]);
           return arr;
         }
@@ -81,8 +79,10 @@ function GridGalleryPostList(props) {
           isMounted && setGalleryItems((prev) => [...prev, ...data]);
         });
     }
-    
-    return () => { isMounted = false; }
+
+    return () => {
+      isMounted = false;
+    };
   }, [items]);
 
   useEffect(() => {
@@ -95,50 +95,30 @@ function GridGalleryPostList(props) {
   }, [images]);
 
   return (
-    <GridList spacing={12} cols={3} className={classes.gridList}>
+    <GridList cols={3} className={classes.gridList}>
       {galleryItems.length > 0 &&
         galleryItems.map(
           (item, index) =>
             item.media.length > 0 && (
-              <GridListTile
-                key={item.id + index}
-                onClick={() => onItemClick(item.id)}
-                className={classes.gridListTile}
-              >
+              <GridListTile key={item.id + index} onClick={() => onItemClick(item.id)} className={classes.tile}>
                 <img
-                  className={classes.gridListTileImage}
+                  className={classes.image}
                   loading="lazy"
                   src={item.media[0].thumbnailUrl}
                   alt={item.title}
                 />
-                {/* <LazyLoadImage
-					className={classes.gridListTileImage}
-					effect={item && "blur"}
-					src={item.media[0].kind === MEDIA_VIDEO ? item.media[0].thumbnailUrl : item.media[0].url}
-					alt={item.title}
-					afterLoad={() => setLoading(false)} /> */}
-                {!isLoading && (
-                  <Hidden smDown>
-                    <GridListTileBar
-                      titlePosition="top"
-                      actionPosition="right"
-                      classes={{
-                        root: classes.gridListTileBar,
-                      }}
-                      actionIcon={
-                        <Box className={classes.icon}>
-                          {item.media[0].kind === MEDIA_VIDEO && (
-                            <PlayArrowIcon />
-                          )}
-                          {item.media.length > 1 &&
-                            item.media[0].kind === MEDIA_IMAGE && (
-                              <PhotoLibraryIcon />
-                            )}
-                        </Box>
-                      }
-                    />
-                  </Hidden>
-                )}
+
+                <GridListTileBar
+                  titlePosition="top"
+                  actionPosition="right"
+                  className = {classes.tileBar}
+                  actionIcon={
+                    <Box className={classes.icon}>
+                      {item.media[0].kind === MEDIA_VIDEO && <PlayArrowIcon />}
+                      {item.media.length > 1 && item.media[0].kind === MEDIA_IMAGE && <PhotoLibraryIcon />}
+                    </Box>
+                  }
+                />
               </GridListTile>
             )
         )}

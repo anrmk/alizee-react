@@ -77,7 +77,7 @@ function Chat(props) {
 
   const handleRoomGet = async (userName) => {
     if (current?.userName !== userName) {
-      await getRoom(apiClient, userName);
+      //await getRoom(apiClient, userName);
       toggleSlidingViewsState();
     }
   };
