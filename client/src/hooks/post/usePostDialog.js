@@ -23,7 +23,7 @@ export default function usePostDialog() {
   const location = useLocation();
 
   const [dialogBaseProps] = useState({
-    mainBtnProps: { type: "submit", form: FORM_ID },
+    mainBtnProps: { title: "Tag People",type: "submit", form: FORM_ID },
   });
   let formData = useRef().current;
 

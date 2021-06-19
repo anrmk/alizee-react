@@ -38,6 +38,11 @@ export default function Snackbar({
     onCall && onCall(e);
   }
 
+  const handleOpenClick = (e) => {
+    history.push(POST_ID_ROUTE(relatedPostId));
+    onOpen && onOpen(e);
+  }
+
   return (
     <Box className={classes.rootContainer}>
       <ListItem id={id}>
@@ -49,10 +54,10 @@ export default function Snackbar({
         <ListItemText 
           primary={(
             <Box display="flex">
-              <Typography variant="body1" className={classes.name}>
+              <Typography noWrap variant="body1" className={classes.name}>
                 {name}
               </Typography>
-              <Typography variant="body1" className={classes.userName}>
+              <Typography noWrap variant="body1" className={classes.userName}>
                 @{userName}
               </Typography>
             </Box>
@@ -61,9 +66,7 @@ export default function Snackbar({
               <Typography
                 noWrap
                 variant="body2"
-                className={classes.description}
-                to={POST_ID_ROUTE(relatedPostId)}
-                component={Link}>
+                className={classes.description}>
                 {description}
               </Typography>
             ) : (
@@ -76,7 +79,7 @@ export default function Snackbar({
               <Button
                 size="small"
                 variant="outlined"
-                onClick={onOpen}>
+                onClick={handleOpenClick}>
                 Open
               </Button>
             )}

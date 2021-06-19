@@ -20,6 +20,7 @@ import Tools from "./Tools";
 import MediaContent from "../../components/MediaContent";
 import { MessageSenderInput } from "../Chat";
 import CommentsPreview from "./CommentsPreview";
+import ProfileCard from "../../components/ProfileCard/ProfileCard";
 
 import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 import useDoubleTap from "../../hooks/useDoubleTap";
@@ -144,6 +145,9 @@ const Post = React.memo((props) => {
       </CardContent>
 
       <CardActions className={classes.action} disableSpacing>
+        {post?.userTags?.length > 0 && post?.userTags?.map(item => (
+          <ProfileCard {...item} key={`tagged_${item.userName}`} />
+        ))}
         {post.isCommentable &&
           (post.amount === 0 || user.userName === owner.userName || post.isPurchased) && (
             <>
