@@ -2,12 +2,13 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useSnackbar } from "notistack";
 
-import { Box, ListItem, ListItemAvatar, ListItemText, Avatar, Typography, IconButton, Button } from "@material-ui/core";
+import { Box, ListItem, ListItemAvatar, ListItemText, Typography, IconButton, Button } from "@material-ui/core";
+import Avatar from "../../components/Avatar";
 
 import CloseIcon from "@material-ui/icons/CloseRounded";
 import CallIcon from "@material-ui/icons/CallRounded";
 
-import { PEAR_TO_PEAR_ID_ROUTE, PROFILE_USERNAME_ROUTE } from "../../constants/routes";
+import { PEAR_TO_PEAR_ID_ROUTE, POST_ID_ROUTE, PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 
 import useStyles from "./style";
 
@@ -17,8 +18,8 @@ export default function Snackbar({
   userName,
   description,
   avatarUrl,
+  relatedPostId,
   isCallable,
-  isOpenable,
   onOpen,
   onCall,
   onClose
@@ -40,8 +41,10 @@ export default function Snackbar({
   return (
     <Box className={classes.rootContainer}>
       <ListItem id={id}>
-        <ListItemAvatar to={PROFILE_USERNAME_ROUTE(userName)} component={Link}>
-          <Avatar borderColor="silver" src={avatarUrl} />
+        <ListItemAvatar>
+          <Box to={PROFILE_USERNAME_ROUTE(userName)} component={Link}>
+            <Avatar borderColor="silver" src={avatarUrl} />
+          </Box>
         </ListItemAvatar>
         <ListItemText 
           primary={(
@@ -54,13 +57,22 @@ export default function Snackbar({
               </Typography>
             </Box>
           )}
-          secondary={(
-            <Typography variant="body2"noWrap className={classes.description}>
-              {description}
-            </Typography>
+          secondary={relatedPostId ? (
+              <Typography
+                noWrap
+                variant="body2"
+                className={classes.description}
+                to={POST_ID_ROUTE(relatedPostId)}
+                component={Link}>
+                {description}
+              </Typography>
+            ) : (
+              <Typography noWrap variant="body2" className={classes.description}>
+                {description}
+              </Typography>
           )} />
           <Box marginLeft={(2)} display="flex">
-            {isOpenable && (
+            {relatedPostId && (
               <Button
                 size="small"
                 variant="outlined"

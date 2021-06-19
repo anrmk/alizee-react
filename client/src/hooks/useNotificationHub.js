@@ -12,7 +12,7 @@ import * as signalR from "@microsoft/signalr";
 
 import { getToken, wrapHttps } from "../helpers/functions";
 import API from "../constants/endpoints";
-import { CALLING_NOTIFICATION_TYPE, NEW_FOLLOWING_NOTIFICATION_TYPE, NEW_MESSAGE_NOTIFICATION_TYPE } from "../constants/notifications";
+import { CALLING_NOTIFICATION_TYPE, NEW_MESSAGE_NOTIFICATION_TYPE } from "../constants/notifications";
 import { ACTIVITY_LOG_TYPE } from "../constants/activity";
 
 export default function useNotification() {
@@ -74,12 +74,14 @@ export default function useNotification() {
             variant: "info",
             content: (key) => (
               <Box>
-                <Snackbar 
-                  id={key} 
-                  avatarUrl={data.avatarUrl} 
-                  name={data.name} 
-                  userName={data.userName} 
-                  description={`${ACTIVITY_LOG_TYPE[data.type]} ${data.description}`}/>
+                <Snackbar
+                  isOpenable={!!data.relatedPostId}
+                  id={key}
+                  avatarUrl={data.avatarUrl}
+                  name={data.name}
+                  userName={data.userName}
+                  relatedPostId={data.relatedPostId}
+                  description={`${ACTIVITY_LOG_TYPE[data.type]} ${data.description}`} />
               </Box>
             )
           });

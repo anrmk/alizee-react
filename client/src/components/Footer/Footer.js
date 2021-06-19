@@ -47,10 +47,10 @@ function Footer({ open }) {
         <Link href="#" onClick={() => history.push(`${HELP_ROUTE}/referral-program`)}>
           Referrals
         </Link>
-        <Link href="#" onClick={() => history.push(PRIVACY_POLICY_ROUTE)}>
+        <Link href="#acceptable-use-policy" target="_blank" onClick={() => history.push(PRIVACY_POLICY_ROUTE)}>
           Acceptable Use Policy
         </Link>
-        <Link href="#" onClick={() => history.push(PRIVACY_POLICY_ROUTE)}>
+        <Link href="#complaints-policy" target="_blank" onClick={() => history.push(PRIVACY_POLICY_ROUTE)}>
           Complaints Policy
         </Link>
         <Link href="#" onClick={() => history.push(CONTRACT_ROUTE)}>
