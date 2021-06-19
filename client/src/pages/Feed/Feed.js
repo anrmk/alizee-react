@@ -33,7 +33,6 @@ import useFullScreen from "../../hooks/useFullScreen";
 import useLightboxModal from "../../hooks/useLightboxModal";
 
 import useStyles from "./styles";
-import Snackbar from "../../domain/Snackbar/Snackbar";
 
 function Feed(props) {
   const classes = useStyles();
@@ -100,12 +99,6 @@ function Feed(props) {
             onItemClick={handleStoryClick}
             onCreateStoryClick={createStoryDialog.toggle}
           />
-
-          <Snackbar
-            name={"Polyeawt Nestawe"}
-            userName={"nutellka"}
-            description={"Kjaksg jwakgj kawjg kawjg kawjg kawjg kawjg"}
-            relatedPostId={"23235312521355"} />
 
           <PostsList
             user={userInfo}

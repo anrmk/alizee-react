@@ -68,3 +68,7 @@ node_modules/
 # OTHER
 .TODO.md
 TODO.md
+
+
+# Mac temp files
+.DS_Store*
