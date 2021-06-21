@@ -161,9 +161,9 @@ function mapStateToProps(state) {
     },
 
     people: {
-      isFetching: state.users.isFetching,
-      data: state.users.data,
-      errorMessage: state.users.errorMessage,
+      isFetching: state.suggestionPeople.isFetching,
+      data: state.suggestionPeople.data,
+      errorMessage: state.suggestionPeople.errorMessage,
     },
 
     story: {

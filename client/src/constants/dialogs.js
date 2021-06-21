@@ -1,8 +1,8 @@
 import React from "react";
 
-import { Error } from "../components/ErrorDialog"
+import { Error } from "../components/ErrorDialog";
 import { MediaEditorPreview, MediaPreview } from "../components/MediaEditor";
-import SelectableList from "../components/SelectableList/SelectableList";
+import FollowingsDialog from "../domain/FollowingsDialog";
 import { Receipt, Purchase, CreatePost, CreateStories, CreateMood, Menu as PostMenu } from "../components/Post";
 import { SendTip, Payment } from "../components/Payment";
 import { ReportPost, BlockUser } from "../components/Report";
@@ -55,7 +55,7 @@ export const INDENTITY_DIALOG_TYPE = "identity";
 
 const baseDialogProps = {
   dialogProps: { fullWidth: true },
-  onCloseClick: () => { },
+  onCloseClick: () => {},
 };
 
 export default {
@@ -95,7 +95,7 @@ export default {
     ...baseDialogProps,
     ...dialogProps,
   }),
-  
+
   [FOLLOW_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Subscribe",
     content: <Payment {...contentProps} />,
@@ -151,14 +151,14 @@ export default {
   [CHAT_NEW_TYPE]: (dialogProps, contentProps) => ({
     title: "Chat Followers",
     content: <NewChatDialog {...contentProps} />,
-    onCloseClick: () => { },
+    onCloseClick: () => {},
     ...dialogProps,
   }),
 
   [ROOM_MENU_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Menu",
     content: <RoomMenuDialog {...contentProps} />,
-    onCloseClick: () => { },
+    onCloseClick: () => {},
     ...dialogProps,
   }),
 
@@ -174,14 +174,16 @@ export default {
     ...baseDialogProps,
     ...dialogProps,
   }),
-  [FOLLOWERS_LIST_DIALOG_TYPE]: (dialogProps, contentProps) => ({
-    title: "Share To Chat",
-    content: <SelectableList {...contentProps} />,
-    mainBtnText: "Share",
-    closeBtnText: "Cancel",
-    ...baseDialogProps,
-    ...dialogProps,
-  }),
+  [FOLLOWERS_LIST_DIALOG_TYPE]: (dialogProps, contentProps) => {
+    return {
+      title: "Share To Chat",
+      content: <FollowingsDialog {...contentProps} />,
+      mainBtnText: "Share",
+      closeBtnText: "Cancel",
+      ...baseDialogProps,
+      ...dialogProps,
+    };
+  },
   [AGREE_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     content: <AgreeDialog {...contentProps} />,
     mainBtnText: "Confirm",
@@ -199,17 +201,13 @@ export default {
   }),
   [UPLOAD_FILE_AMOUNT_ERROR_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Error",
-    content: (
-      <Error {...contentProps}/>
-    ),
+    content: <Error {...contentProps} />,
     ...baseDialogProps,
     ...dialogProps,
   }),
   [MEDIA_EDITOR_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Media Preview",
-    content: (
-      <MediaEditorPreview {...contentProps} />
-    ),
+    content: <MediaEditorPreview {...contentProps} />,
     mainBtnText: "Send",
     dialogProps: {
       disableBackdropClick: true,
@@ -218,9 +216,7 @@ export default {
     ...dialogProps,
   }),
   [MEDIA_PREVIEW_DIALOG_TYPE]: (dialogProps, contentProps) => ({
-    content: (
-      <MediaPreview {...contentProps} />
-    ),
+    content: <MediaPreview {...contentProps} />,
     ...baseDialogProps,
     ...dialogProps,
   }),

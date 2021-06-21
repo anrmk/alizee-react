@@ -6,6 +6,7 @@ export const GET_FOLLOWINGS_REQUEST = "GET_FOLLOWINGS_REQUEST";
 export const GET_FOLLOWINGS_SUCCESS = "GET_FOLLOWINGS_SUCCESS";
 export const GET_FOLLOWINGS_FAILURE = "GET_FOLLOWINGS_FAILURE";
 export const FILTER_FOLLOWINGS = "FILTER_FOLLOWINGS";
+export const RESET_FOLLOWINGS_FILTER = "RESET_FOLLOWINGS_FILTER";
 
 function requestGetFollowings() {
   return {
@@ -45,6 +46,18 @@ function filterQueryFollowings(query) {
       isFetching: false,
       errorMessage: "",
       query,
+    },
+  };
+}
+
+export function resetFollowingsFilter() {
+  return {
+    type: RESET_FOLLOWINGS_FILTER,
+    payload: {
+      isFetching: false,
+      data: [],
+      errorMessage: "",
+      query: "",
     },
   };
 }

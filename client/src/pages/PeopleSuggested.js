@@ -31,9 +31,9 @@ function PeopleSuggested({ people, getPeople }) {
 
 function mapStateToProps(state) {
   return {
-    isFetching: state.users.isFetching,
-    people: state.users.data,
-    errorMessage: state.users.errorMessage,
+    isFetching: state.suggestionPeople.isFetching,
+    people: state.suggestionPeople.data,
+    errorMessage: state.suggestionPeople.errorMessage,
   };
 }
 

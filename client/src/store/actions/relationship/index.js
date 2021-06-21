@@ -21,6 +21,8 @@ export {
   GET_FOLLOWINGS_SUCCESS,
   GET_FOLLOWINGS_FAILURE,
   FILTER_FOLLOWINGS,
+  RESET_FOLLOWINGS_FILTER,
+  resetFollowingsFilter,
   getFollowings,
   getFilteredFollowings,
   filterFollowings,

@@ -2,69 +2,58 @@ import {
   GET_FOLLOWERS_REQUEST,
   GET_FOLLOWERS_SUCCESS,
   GET_FOLLOWERS_FAILURE,
-
   GET_FOLLOWINGS_REQUEST,
   GET_FOLLOWINGS_SUCCESS,
   GET_FOLLOWINGS_FAILURE,
   FILTER_FOLLOWINGS,
-
+  RESET_FOLLOWINGS_FILTER,
   CREATE_FOLLOW_REQUEST,
   CREATE_FOLLOW_SUCCESS,
   CREATE_FOLLOW_FAILURE,
-
   DELETE_FOLLOW_REQUEST,
   DELETE_FOLLOW_SUCCESS,
   DELETE_FOLLOW_FAILURE,
-
   ACCEPT_FOLLOW_REQUEST,
   ACCEPT_FOLLOW_SUCCESS,
   ACCEPT_FOLLOW_FAILURE,
-
-  REJECT_FOLLOW_REQUEST, 
-  REJECT_FOLLOW_SUCCESS, 
+  REJECT_FOLLOW_REQUEST,
+  REJECT_FOLLOW_SUCCESS,
   REJECT_FOLLOW_FAILURE,
-
-  UNREJECT_FOLLOW_REQUEST, 
+  UNREJECT_FOLLOW_REQUEST,
   UNREJECT_FOLLOW_SUCCESS,
   UNREJECT_FOLLOW_FAILURE,
-
   RESET_RELATIONSHIP,
-
   BLOCK_USER_REQUEST,
   BLOCK_USER_SUCCESS,
   BLOCK_USER_FAILURE,
-
   UNBLOCK_USER_REQUEST,
   UNBLOCK_USER_SUCCESS,
-  UNBLOCK_USER_FAILURE
+  UNBLOCK_USER_FAILURE,
 } from "../actions/relationship";
 
 import {
   GET_PEOPLE_SUGGESTIONS_REQUEST,
   GET_PEOPLE_SUGGESTIONS_SUCCESS,
-  GET_PEOPLE_SUGGESTIONS_FAILURE
-} from "../actions/suggestion"
+  GET_PEOPLE_SUGGESTIONS_FAILURE,
+} from "../actions/suggestion";
 
-import { 
+import {
   GET_USER_FAVORITES_REQUEST,
   GET_USER_FAVORITES_SUCCESS,
   GET_USER_FAVORITES_FAILURE,
-
   CREATE_USER_FAVORITES_REQUEST,
   CREATE_USER_FAVORITES_SUCCESS,
   CREATE_USER_FAVORITES_FAILURE,
-  
   DELETE_USER_FAVORITES_REQUEST,
   DELETE_USER_FAVORITES_SUCCESS,
   DELETE_USER_FAVORITES_FAILURE,
- } from "../actions/account";
-
+} from "../actions/account";
 
 export default function usersReducer(
-  state = { 
+  state = {
     isFetching: false,
     data: [],
-    query: "" 
+    query: "",
   },
   action
 ) {
@@ -107,64 +96,69 @@ export default function usersReducer(
         ...state,
         ...action.payload,
       };
+    case RESET_FOLLOWINGS_FILTER:
+      return {
+        ...state,
+        ...action.payload,
+      };
     // Follow
     case CREATE_FOLLOW_REQUEST:
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
     case CREATE_FOLLOW_SUCCESS:
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
     case CREATE_FOLLOW_FAILURE:
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
     case RESET_RELATIONSHIP:
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
     // Unfollow
     case DELETE_FOLLOW_REQUEST:
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
     case DELETE_FOLLOW_SUCCESS:
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
     case DELETE_FOLLOW_FAILURE:
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
 
     //FAVORITES
     case GET_USER_FAVORITES_REQUEST: {
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     }
 
     case GET_USER_FAVORITES_SUCCESS: {
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     }
 
     case GET_USER_FAVORITES_FAILURE: {
       return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     }
 
     //FAVORITE
@@ -181,7 +175,7 @@ export default function usersReducer(
         ...action.payload,
       };
     }
-    
+
     case CREATE_USER_FAVORITES_FAILURE: {
       return {
         ...state,
@@ -210,40 +204,20 @@ export default function usersReducer(
       };
     }
 
-    //PEOPLE SUGGESTIONS
-    case GET_PEOPLE_SUGGESTIONS_REQUEST:{
-      return {
-        ...state,
-        ...action.payload,
-      };
-    }
-    case GET_PEOPLE_SUGGESTIONS_SUCCESS:{
-      return {
-        ...state,
-        ...action.payload
-      };
-    }
-    case GET_PEOPLE_SUGGESTIONS_FAILURE:{
-      return {
-        ...state,
-        ...action.payload,
-      };
-    }
-
     //ACCEPT
-    case ACCEPT_FOLLOW_REQUEST:{
+    case ACCEPT_FOLLOW_REQUEST: {
       return {
         ...state,
         ...action.payload,
       };
     }
-    case ACCEPT_FOLLOW_SUCCESS:{
+    case ACCEPT_FOLLOW_SUCCESS: {
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
     }
-    case ACCEPT_FOLLOW_FAILURE:{
+    case ACCEPT_FOLLOW_FAILURE: {
       return {
         ...state,
         ...action.payload,
@@ -251,39 +225,39 @@ export default function usersReducer(
     }
 
     // REJECT
-    case REJECT_FOLLOW_REQUEST:{
+    case REJECT_FOLLOW_REQUEST: {
       return {
         ...state,
         ...action.payload,
       };
     }
-    case REJECT_FOLLOW_SUCCESS:{
-      return {
-        ...state,
-        ...action.payload
-      };
-    }
-    case REJECT_FOLLOW_FAILURE:{
+    case REJECT_FOLLOW_SUCCESS: {
       return {
         ...state,
         ...action.payload,
       };
     }
-    
+    case REJECT_FOLLOW_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
     //UNREJECT
-    case UNREJECT_FOLLOW_REQUEST:{
+    case UNREJECT_FOLLOW_REQUEST: {
       return {
         ...state,
         ...action.payload,
       };
     }
-    case UNREJECT_FOLLOW_SUCCESS:{
+    case UNREJECT_FOLLOW_SUCCESS: {
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
     }
-    case UNREJECT_FOLLOW_FAILURE:{
+    case UNREJECT_FOLLOW_FAILURE: {
       return {
         ...state,
         ...action.payload,
@@ -291,38 +265,38 @@ export default function usersReducer(
     }
 
     //BLOCK/UNBLOCK
-    case BLOCK_USER_REQUEST:{
+    case BLOCK_USER_REQUEST: {
       return {
         ...state,
         ...action.payload,
       };
     }
-    case BLOCK_USER_SUCCESS:{
+    case BLOCK_USER_SUCCESS: {
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
     }
-    case BLOCK_USER_FAILURE:{
+    case BLOCK_USER_FAILURE: {
       return {
         ...state,
         ...action.payload,
       };
     }
 
-    case UNBLOCK_USER_REQUEST:{
+    case UNBLOCK_USER_REQUEST: {
       return {
         ...state,
         ...action.payload,
       };
     }
-    case UNBLOCK_USER_SUCCESS:{
+    case UNBLOCK_USER_SUCCESS: {
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
     }
-    case UNBLOCK_USER_FAILURE:{
+    case UNBLOCK_USER_FAILURE: {
       return {
         ...state,
         ...action.payload,

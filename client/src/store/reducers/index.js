@@ -3,9 +3,9 @@ import { combineReducers } from "redux";
 import signUp from "./signUp";
 import signIn from "./signIn";
 import socialAuth from "./socialAuth";
-import confirmEmail from './confirmEmail';
+import confirmEmail from "./confirmEmail";
 import posts from "./posts";
-import media from './media';
+import media from "./media";
 import comment from "./comment";
 import users from "./users";
 import chat from "./chat";
@@ -20,7 +20,8 @@ import payment from "./payment";
 import activity from "./activity";
 import notification from "./notification";
 import changeLog from "./changeLog";
-import help  from "./help"
+import help from "./help";
+import suggestionPeople from "./suggestionPeople";
 
 import { SIGNOUT_SUCCESS } from "../actions/signIn";
 
@@ -45,10 +46,11 @@ const appReducer = combineReducers({
   activity,
   notification,
   changeLog,
-  help
+  help,
+  suggestionPeople,
 });
 
-export default function(state, action) {
+export default function (state, action) {
   if (action.type === SIGNOUT_SUCCESS) {
     state = undefined;
   }

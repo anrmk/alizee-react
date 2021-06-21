@@ -1,18 +1,21 @@
-import { useState, useEffect, useContext, useCallback , useRef} from "react";
+import { useState, useEffect, useContext, useCallback, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import ApiContext from "../context/ApiContext";
-import * as actionChat from "../store/actions/chat";
+
+import * as actionRelationship from "../store/actions/relationship";
 import dialogs, { FOLLOWERS_LIST_DIALOG_TYPE } from "../constants/dialogs";
 import useDialog from "./useDialog";
 
 export default function useFollowingsDialog() {
   const apiClient = useContext(ApiContext);
   const dispatch = useDispatch();
-  const { loading, followersList } = useSelector(state => ({
-    loading: state.chat.isFetching,
-    followersList: state.chat.data
+  const { loading, followersList } = useSelector((state) => ({
+    loading: state.users.isFetching,
+    followersList: actionRelationship.getFilteredFollowings(state),
   }));
+  const { userName } = useSelector((state) => state.signIn.userInfo);
+
   const dialog = useDialog();
   const [selectedChats, setSelectedChats] = useState([]);
 
@@ -27,29 +30,39 @@ export default function useFollowingsDialog() {
 
   const handleOpenClick = async (withStack = false, dialogOpts, contentOpts) => {
     const toggleType = withStack ? "toggleWithStack" : "toggle";
-    
+
     dialogOpts && (dialogOptionsState = dialogOpts);
     contentOpts && (dialogOptionsState = contentOpts);
-    
-    dialog[toggleType](dialogs[FOLLOWERS_LIST_DIALOG_TYPE]({
-      loading: true,
-      ...dialogOpts
-    }, contentOpts));
 
-    !loading && await dispatch(actionChat.getRooms(apiClient));
-  }
+    dialog[toggleType](
+      dialogs[FOLLOWERS_LIST_DIALOG_TYPE](
+        {
+          loading: true,
+          ...dialogOpts,
+        },
+        contentOpts
+      )
+    );
+
+    !loading && (await dispatch(actionRelationship.getFollowings(apiClient, userName)));
+  };
 
   const updateParams = () => {
-    dialog.setParams(dialogs[FOLLOWERS_LIST_DIALOG_TYPE]({
-      loading: false,
-      state: selectedChats,
-      ...dialogOptionsState
-    }, {
-      multiple: true,
-      items: followersList,
-      onItemSelect: (selected) => setSelectedChats(selected),
-      ...contentOptionsState
-    }));
+    dialog.setParams(
+      dialogs[FOLLOWERS_LIST_DIALOG_TYPE](
+        {
+          loading: false,
+          state: selectedChats,
+          ...dialogOptionsState,
+        },
+        {
+          multiple: true,
+          items: followersList,
+          onItemSelect: (selected) => setSelectedChats(selected),
+          ...contentOptionsState,
+        }
+      )
+    );
   };
 
   return {
