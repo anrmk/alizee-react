@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import { Box, Grid, Typography, Hidden, Link as MUILink } from "@material-ui/core";
 
 import { PostsList } from "../../domain/PostsList";
-import { HotStreamersItemList } from "../../domain/Stream";
+// import { HotStreamersItemList } from "../../domain/Stream";
 
 import * as actionSuggestion from "../../store/actions/suggestion";
 
 import * as postActions from "../../store/actions/post";
 import * as storyActions from "../../store/actions/story";
-import * as streamActions from "../../store/actions/stream";
+// import * as streamActions from "../../store/actions/stream";
 import * as paymentActions from "../../store/actions/payment";
 
 import { PreviewStoriesList } from "../../domain/StoriesLists";
@@ -27,7 +27,7 @@ import {
   usePaymentDialog,
   usePurchaseDialog,
   useReceiptDialog,
-  useFollowDialog,
+  // useFollowDialog,
 } from "../../hooks/payment";
 import useFullScreen from "../../hooks/useFullScreen";
 import useLightboxModal from "../../hooks/useLightboxModal";
@@ -42,11 +42,11 @@ function Feed(props) {
   const { people, getPeople } = props;
   const { posts, getPosts, resetPosts } = props;
   const { story, getFollowingStories, resetFollowingStories } = props;
-  const { hotStreamers, getHotStreamers } = props;
+  // const { hotStreamers, getHotStreamers } = props;
 
   const likeAction = useLikeAction();
   const favoriteAction = useFavoriteAction();
-  const followDialog = useFollowDialog();
+  // const followDialog = useFollowDialog();
   const sendTipDialog = useSendTipDialog();
   const buyPostDialog = usePaymentDialog({ isFetching: props.posts.isFetching, onPayment: props.buyPost }); //buy ticket
   const receiptDialog = useReceiptDialog({ isFetching: props.posts.isFetching, onReceipt: props.getReceipt });
@@ -61,19 +61,13 @@ function Feed(props) {
   useEffect(() => {
     getPosts(apiClient, { userId: userInfo.id });
     getFollowingStories(apiClient, { length: STORIES_LENGTH });
-    getHotStreamers(apiClient);
+    getPeople(apiClient);
 
     return () => {
       resetPosts();
       resetFollowingStories();
     };
   }, []);
-
-  useEffect(() => {
-    if (userInfo.id) {
-      getPeople(apiClient);
-    }
-  }, [userInfo.id]);
 
   const handleFetchMore = (isLoading) => {
     if (!isLoading) {
@@ -135,14 +129,14 @@ function Feed(props) {
               </Box>
             )}
 
-            {hotStreamers.data && hotStreamers.data.length > 0 && (
+            {/* {hotStreamers.data && hotStreamers.data.length > 0 && (
               <Box>
                 <Typography variant="h6" gutterBottom>
                   Hot Streamers
                 </Typography>
                 <HotStreamersItemList items={hotStreamers.data} onJoinStream={handleJoinStream} />
               </Box>
-            )}
+            )} */}
           </Box>
         </Grid>
       </Hidden>
@@ -179,11 +173,11 @@ function mapStateToProps(state) {
       hasMore: state.story.hasMore,
     },
 
-    hotStreamers: {
-      isFetching: state.stream.isFetching,
-      data: state.stream?.hotStreamers,
-      errorMessage: state.stream.errorMessage,
-    },
+    // hotStreamers: {
+    //   isFetching: state.stream.isFetching,
+    //   data: state.stream?.hotStreamers,
+    //   errorMessage: state.stream.errorMessage,
+    // },
   };
 }
 
@@ -202,7 +196,7 @@ function mapDispatchToProps(dispatch) {
     resetFollowingStories: () => dispatch(storyActions.resetFollowingStories()),
     getFollowingStories: (api, opts) => dispatch(storyActions.getFollowingStories(api, opts)),
 
-    getHotStreamers: (api) => dispatch(streamActions.getHotStreamers(api)),
+    // getHotStreamers: (api) => dispatch(streamActions.getHotStreamers(api)),
   };
 }
 
