@@ -1,6 +1,6 @@
 import React from "react";
-
 import InfiniteScroll from "react-infinite-scroll-component";
+import { Box, Button, Typography } from "@material-ui/core";
 
 import { Post } from "../../components/Post";
 
@@ -21,34 +21,61 @@ const PostsList = React.memo(
     onReceipt,
     onPurchase,
     onShare,
-    onMenu
+    onMenu,
+    onRefresh
   }) => {
     return (
-      <InfiniteScroll scrollThreshold={1} dataLength={items.length} next={onFetchMore} hasMore={hasMore}>
-        {items.length > 0 &&
-          items.map((item) => (
-            <Post
-              key={`post-${item.id}`}
-              id={item.id}
-              user={user}
-              owner={item.user}
-              post={item}
-              likes={item.likes}
-              isLike={item.iLike}
-              isFavorite={item.isFavorite}
-              onLike={onLike}
-              onFavorite={onFavorite}
-              onSendTip={onSendTip}
-              onBuyPost={onBuyPost}
-              onReceipt={onReceipt}
-              onPurchase={onPurchase}
-              onMenu={onMenu}
-              onShare={onShare}
-              onCommentSend={onCommentSend}
-              onFullScreen={onFullScreen}
-            />
-          ))}
-      </InfiniteScroll>
+      <>
+        {/* <Box width="100%">
+          <Button style={{ width: "100%" }} disableElevation color="primary" variant="contained" onClick={onRefresh}>See new Posts</Button>
+        </Box> */}
+        <InfiniteScroll
+          scrollThreshold={1}
+          dataLength={items.length}
+          next={onFetchMore}
+          hasMore={hasMore}
+          refreshFunction={onRefresh}
+          pullDownToRefresh
+          pullDownToRefreshThreshold={50}
+          pullDownToRefreshContent={
+            <Box textAlign="center">
+              <Typography variant="h6" color="textSecondary">
+                &#8595; Pull down to refresh
+              </Typography>
+            </Box>
+          }
+          releaseToRefreshContent={
+            <Box textAlign="center">
+              <Typography variant="h6" color="textSecondary">
+                &#8593; Release to refresh
+              </Typography>
+            </Box>
+          }>
+          {items.length > 0 &&
+            items.map((item) => (
+              <Post
+                key={`post-${item.id}`}
+                id={item.id}
+                user={user}
+                owner={item.user}
+                post={item}
+                likes={item.likes}
+                isLike={item.iLike}
+                isFavorite={item.isFavorite}
+                onLike={onLike}
+                onFavorite={onFavorite}
+                onSendTip={onSendTip}
+                onBuyPost={onBuyPost}
+                onReceipt={onReceipt}
+                onPurchase={onPurchase}
+                onMenu={onMenu}
+                onShare={onShare}
+                onCommentSend={onCommentSend}
+                onFullScreen={onFullScreen}
+              />
+            ))}
+        </InfiniteScroll>
+      </>
     );
   }
 );

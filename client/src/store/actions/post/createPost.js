@@ -70,8 +70,7 @@ export function createPost(api, postData) {
         })
         .query(url);
 
-      // Extend relative path to absolute (to remote server)
-      const posts = getState().posts.data;
+      const posts = getState().followingPosts.data;
 
       if (getState().user.data?.userName && getState().signIn.userInfo.userName !== getState().user.data.userName) {
         dispatch(receiveCreatePost(posts));

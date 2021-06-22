@@ -29,7 +29,6 @@ function LightboxModal({ items, startSlideIndex = 0 }) {
   
   return (
     <Box style={{
-      width: !isVideo(currentMediaType) && "100%",
       height: isVideo(currentMediaType) && "100%" }}>
       <Gallery
         isPurchased 

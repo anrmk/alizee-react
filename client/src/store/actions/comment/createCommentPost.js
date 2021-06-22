@@ -1,4 +1,4 @@
-import { generateUrl, copyFlatObjectWithIgnore } from "../../../helpers/functions";
+import { generateUrl, copyFlatObjectWithIgnore, isEmptyObject } from "../../../helpers/functions";
 import { updatePostComments } from "../post/updatePostComments";
 
 export const CREATE_COMMENT_POST_REQUEST = "CREATE_COMMENT_POST_REQUEST";
@@ -52,10 +52,13 @@ export function createCommentPost(api, opts) {
         .query(url);
 
       data.userName = getState().signIn?.userInfo?.userName;
+      const followingPostsState = getState().followingPosts;
 
-      if (getState().posts.data.length > 0) {
+      if (followingPostsState.data.length > 0) {
         dispatch(updatePostComments(opts.postId, data));
-      } else {
+      } 
+
+      if (!isEmptyObject(followingPostsState.currentPost)) {
         const transformedComment = {
           ...copyFlatObjectWithIgnore(data, ["text"]),
           message: data.text

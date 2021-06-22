@@ -1169,7 +1169,7 @@ function PrivacyPolicy() {
                     accordance with the requirements set out{" "}
                     <a
                       href="https://themembers.com/help/account-approval-account-application-requirements"
-                      target="_blank"
+                      target="_blank" rel="noopener noreferrer"
                     >
                       here
                     </a>
@@ -1193,7 +1193,7 @@ function PrivacyPolicy() {
                   <li>
                     We may ask you for additional age or identity verification information at any time. We may reject
                     your application to set up a Creator account for any reason, including the reasons stated{" "}
-                    <a href="https://TheMembers.com/help/rejected-applications" target="_blank">
+                    <a href="https://TheMembers.com/help/rejected-applications" target="_blank" rel="noopener noreferrer">
                       here
                     </a>
                     .
@@ -1202,7 +1202,7 @@ function PrivacyPolicy() {
                     Once you have set up your account as a Creator account, then if you want to charge your Fans a
                     monthly subscription fee you will need to set your subscription price for your Fans within the range
                     allowed by TheMembers as set out{" "}
-                    <a href="https://TheMembers.com/help/subscription-prices" target="_blank">
+                    <a href="https://TheMembers.com/help/subscription-prices" target="_blank" rel="noopener noreferrer">
                       here
                     </a>
                     .
@@ -1591,7 +1591,7 @@ function PrivacyPolicy() {
                           </li>
                           <li>
                             You agree to use the TheMembers VAT invoice generator tool which can be found at:{" "}
-                            <a href="https://themembers.com/my/banking/vat/create-document" target="_blank">
+                            <a href="https://themembers.com/my/banking/vat/create-document" target="_blank" rel="noopener noreferrer">
                               https://themembers.com/my/banking/vat/create-document
                             </a>
                             to generate monthly VAT invoices, addressed to Fenix International Limited, in respect of
@@ -1608,7 +1608,7 @@ function PrivacyPolicy() {
                             <ol type="a">
                               <li>
                                 your VAT registration number by completing this form{" "}
-                                <a href="https://themembers.com/my/banking/vat" target="_blank">
+                                <a href="https://themembers.com/my/banking/vat" target="_blank" rel="noopener noreferrer">
                                   https://themembers.com/my/banking/vat
                                 </a>
                                 ;
@@ -1616,7 +1616,7 @@ function PrivacyPolicy() {
                               <li>
                                 a valid VAT invoice generated and submitted using the TheMembers VAT invoice generator
                                 tool and uploaded using{" "}
-                                <a href="https://themembers.com/my/banking/vat/add-documents" target="_blank">
+                                <a href="https://themembers.com/my/banking/vat/add-documents" target="_blank" rel="noopener noreferrer">
                                   https://themembers.com/my/banking/vat/add-documents
                                 </a>
                                 ; and
@@ -1625,7 +1625,7 @@ function PrivacyPolicy() {
                                 a VAT return made to HM Revenue &amp; Customs, including a value of taxable supplies
                                 equal to or greater than the aggregate value of your Creator Earnings (and Referral
                                 Payments, if any) for the relevant period. You can find the monthly earning details at{" "}
-                                <a href="https://themembers.com/my/stats/earnings" target="_blank">
+                                <a href="https://themembers.com/my/stats/earnings" target="_blank" rel="noopener noreferrer">
                                   https://themembers.com/my/stats/earnings
                                 </a>
                                 ;
@@ -1645,7 +1645,7 @@ function PrivacyPolicy() {
                         More information on who is required to register for VAT in the UK, and the VAT position for
                         Creators whose earnings are not above the earnings threshold or who are not VAT registered can
                         be found at{" "}
-                        <a href="https://TheMembers.com/help" target="_blank">
+                        <a href="https://TheMembers.com/help" target="_blank" rel="noopener noreferrer">
                           https://themembers.com/help
                         </a>{" "}
                       </li>

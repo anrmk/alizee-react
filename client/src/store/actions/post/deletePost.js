@@ -52,7 +52,7 @@ export function deletePost(api, postId) {
 
     const url = generateUrl("deletePost");
     try {
-      const postsState = getState().posts;
+      const postsState = getState().followingPosts;
 
       if (!postsState.data.length && isEmptyObject(postsState.currentPost)) {
         throw "There is no local data";

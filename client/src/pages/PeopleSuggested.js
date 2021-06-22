@@ -7,7 +7,7 @@ import { Container, Box, Typography, Divider } from "@material-ui/core";
 
 import { RelationshipList } from "../components/RelationshipList";
 import * as actionSuggestion from "../store/actions/suggestion";
-import * as relationshipActions from "../store/actions/relationship";
+// import * as relationshipActions from "../store/actions/relationship";
 import { useFollowDialog } from "../hooks/payment";
 
 function PeopleSuggested({ people, getPeople }) {

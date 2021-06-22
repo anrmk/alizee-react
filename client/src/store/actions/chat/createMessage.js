@@ -110,7 +110,7 @@ export function createMessage(api, opts) {
         if (media.errorMessage) {
           throw media.errorMessage;
         }
-        media.data.map((item) => {
+        media.data.forEach((item) => {
           mediaList.push({ id: item.id });
         });
       }

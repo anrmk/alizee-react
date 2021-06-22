@@ -29,7 +29,7 @@ export default function usePostDialog() {
 
   const dispatch = useDispatch();
   const { isFetching, identityVerified } = useSelector((state) => ({
-    isFetching: state.posts.isFetching,
+    isFetching: state.followingPosts.isFetching,
     identityVerified: state.signIn.userInfo.identityVerified,
   }));
   const followingsDialog = useFollowingsDialog();

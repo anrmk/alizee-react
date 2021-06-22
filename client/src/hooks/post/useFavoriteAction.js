@@ -9,12 +9,12 @@ export default function useFavoriteAction() {
 
   const dispatch = useDispatch();
   const { isFetching } = useSelector((state) => ({
-    isFetching: state.posts.isFetching,
+    isFetching: state.followingPosts.isFetching,
   }));
 
-  const handleFavorite = async (id) => {
+  const handleFavorite = useCallback(async (id) => {
     !isFetching && (await dispatch(postActions.favoritePost(apiClient, id)));
-  }
+  }, [isFetching])
 
   return {
     toggle: handleFavorite,

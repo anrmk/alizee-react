@@ -53,7 +53,7 @@ export function favoritePost(api, id) {
     
     const url = generateUrl("favoritePost");
     try {
-      const postsState = getState().posts;
+      const postsState = getState().followingPosts;
 
       if (!postsState.data.length && isEmptyObject(postsState.currentPost)) {
         throw "There is no local data";
@@ -79,7 +79,8 @@ export function favoritePost(api, id) {
       if (!isEmptyObject(postsState.currentPost)) {
         const currentPost = { ...postsState.currentPost };
 
-        await api.setMethod(currentPost.isFavorite ? "DELETE" : "POST").setParams({ id }).query(url);
+        !(postsState.data.length > 0) && 
+          await api.setMethod(currentPost.isFavorite ? "DELETE" : "POST").setParams({ id }).query(url);
 
         currentPost.isFavorite = !currentPost.isFavorite;
 

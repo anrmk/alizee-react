@@ -48,9 +48,9 @@ function Feed(props) {
   const favoriteAction = useFavoriteAction();
   // const followDialog = useFollowDialog();
   const sendTipDialog = useSendTipDialog();
-  const buyPostDialog = usePaymentDialog({ isFetching: props.posts.isFetching, onPayment: props.buyPost }); //buy ticket
-  const receiptDialog = useReceiptDialog({ isFetching: props.posts.isFetching, onReceipt: props.getReceipt });
-  const purchaseDialog = usePurchaseDialog({ isFetching: props.posts.isFetching, onPurchases: props.getPurchases });
+  const buyPostDialog = usePaymentDialog({ isFetching: posts.isFetching, onPayment: props.buyPost }); //buy ticket
+  const receiptDialog = useReceiptDialog({ isFetching: posts.isFetching, onReceipt: props.getReceipt });
+  const purchaseDialog = usePurchaseDialog({ isFetching: posts.isFetching, onPurchases: props.getPurchases });
   const createStoryDialog = useStoryDialog();
   const postMenuDialog = useMenuDialog();
   const fullScreen = useFullScreen("root");
@@ -59,18 +59,26 @@ function Feed(props) {
   const shareDialog = useShareDialog({ type: SHARE_DIALOG_POST_TYPE });
 
   useEffect(() => {
-    getPosts(apiClient, { userId: userInfo.id });
-    getFollowingStories(apiClient, { length: STORIES_LENGTH });
+    if (!posts.data.length) {
+      getPosts(apiClient, { userId: userInfo.id });
+    }
     getPeople(apiClient);
+    getFollowingStories(apiClient, { length: STORIES_LENGTH });
 
     return () => {
-      resetPosts();
       resetFollowingStories();
     };
   }, []);
 
   const handleFetchMore = (isLoading) => {
     if (!isLoading) {
+      getPosts(apiClient, { id: userInfo.id });
+    }
+  };
+
+  const handleRefresh = (isLoading) => {
+    if (!isLoading) {
+      resetPosts()
       getPosts(apiClient, { id: userInfo.id });
     }
   };
@@ -98,6 +106,7 @@ function Feed(props) {
             user={userInfo}
             items={posts.data}
             hasMore={posts.hasMore}
+            onRefresh={handleRefresh}
             onFetchMore={handleFetchMore}
             onLike={likeAction.toggle}
             onFavorite={favoriteAction.toggle}
@@ -111,7 +120,7 @@ function Feed(props) {
             onFullScreen={lightboxModal.toggle}
           />
       </Grid>
-      
+
       <Hidden smDown>
         <Grid item md={4} >
           <Box className={classes.suggestionList}>
@@ -149,10 +158,10 @@ function mapStateToProps(state) {
     userInfo: state.signIn?.userInfo,
 
     posts: {
-      isFetching: state.posts.isFetching,
-      data: state.posts.data,
-      errorMessage: state.posts.errorMessage,
-      hasMore: state.posts.hasMore,
+      isFetching: state.followingPosts.isFetching,
+      data: state.followingPosts.data,
+      errorMessage: state.followingPosts.errorMessage,
+      hasMore: state.followingPosts.hasMore,
     },
 
     media: {
@@ -186,7 +195,7 @@ function mapDispatchToProps(dispatch) {
     getPosts: (api, opts) => dispatch(postActions.getFollowingPosts(api, opts)),
     getPurchases: (api, id, callback) => dispatch(postActions.getPurchases(api, id, callback)),
     getReceipt: (api, id, callback) => dispatch(postActions.getReceipt(api, id, callback)),
-    resetPosts: () => dispatch(postActions.resetPosts()),
+    resetPosts: () => dispatch(postActions.resetFollowingPosts()),
 
     getPeople: (api) => dispatch(actionSuggestion.getPeople(api, 5)),
     buyPost: (api, id) => dispatch(paymentActions.buyPost(api, id)),

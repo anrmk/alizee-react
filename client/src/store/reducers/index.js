@@ -3,9 +3,11 @@ import { combineReducers } from "redux";
 import signUp from "./signUp";
 import signIn from "./signIn";
 import socialAuth from "./socialAuth";
-import confirmEmail from "./confirmEmail";
-import posts from "./posts";
-import media from "./media";
+import confirmEmail from './confirmEmail';
+import profilePosts from "./profilePosts";
+import followingPosts  from "./followingPosts";
+import suggestionPosts  from "./suggestionPosts";
+import media from './media';
 import comment from "./comment";
 import users from "./users";
 import chat from "./chat";
@@ -33,7 +35,9 @@ const appReducer = combineReducers({
   users,
   chat,
   chatMedia,
-  posts,
+  profilePosts,
+  followingPosts,
+  suggestionPosts,
   media,
   user,
   settings,

@@ -11,7 +11,7 @@ import { SocialControl } from "../../components/Social";
 import ProfileHeader from "../../domain/ProfileHeader";
 import ProfileContent from "../../domain/ProfileContent";
 
-import * as postActions from "../../store/actions/post";
+import * as profilePostsActions from "../../store/actions/post";
 import * as relationshipActions from "../../store/actions/relationship";
 import * as userActions from "../../store/actions/user";
 import * as settingsActions from "../../store/actions/settings";
@@ -261,10 +261,10 @@ function mapStateToProps(state) {
       errorMessage: state.user?.errorMessage
     },
     post: {
-      isFetching: state.posts.isFetching || false,
-      data: postActions.getGridGalleryPosts(state),
-      errorMessage: state.posts.errorMessage,
-      hasMore: state.posts.hasMore,
+      isFetching: state.profilePosts.isFetching || false,
+      data: profilePostsActions.getGridGalleryPosts(state),
+      errorMessage: state.profilePosts.errorMessage,
+      hasMore: state.profilePosts.hasMore,
     },
     media: {
       isFetching: state.media.isFetching,
@@ -280,10 +280,10 @@ function mapDispatchToProps(dispatch) {
     fetchUser: (api, userName) => dispatch(userActions.getUser(api, userName)),
     resetUser: () => dispatch(userActions.resetUser()),
 
-    fetchPosts: (api, opts) => dispatch(postActions.getPosts(api, opts)),
-    resetPosts: () => dispatch(postActions.resetPosts()),
+    fetchPosts: (api, opts) => dispatch(profilePostsActions.getPosts(api, opts)),
+    resetPosts: () => dispatch(profilePostsActions.resetPosts()),
 
-    getFavoritePosts: (api, opts) => dispatch(postActions.getFavoritePosts(api, opts)),
+    getFavoritePosts: (api, opts) => dispatch(profilePostsActions.getFavoritePosts(api, opts)),
 
     createFollow: (api, userName, isPrivateAccount) => dispatch(relationshipActions.createFollow(api, userName, isPrivateAccount)),
     deleteFollow: (api, userName) => dispatch(relationshipActions.deleteFollow(api, userName)),

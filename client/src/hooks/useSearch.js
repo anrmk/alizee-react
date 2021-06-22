@@ -5,7 +5,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import ApiContext from "../context/ApiContext";
 import * as searchActions from "../store/actions/search";
 import * as actionSuggestion from "../store/actions/suggestion";
-import * as actionPost from "../store/actions/post";
+// import * as actionPost from "../store/actions/post";
 import { SEARCH_USER_TYPE, isUserType } from "../constants/search";
 import { POSTS_LENGTH } from "../constants/feed";
 //import search from "../store/reducers/search";
@@ -26,9 +26,9 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
       hasMore: state.search.hasMore,
     },
     suggestionPosts: {
-      data: state.posts.data,
-      isFetching: state.posts.isFetching,
-      hasMore: state.posts.hasMore,
+      data: state.suggestionPosts.data,
+      isFetching: state.suggestionPosts.isFetching,
+      hasMore: state.suggestionPosts.hasMore,
     },
   }));
 
@@ -57,10 +57,6 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
       })();
       setCurrentQuery(currentTags);
     }
-
-    return () => {
-      dispatch(actionPost.resetPosts());
-    };
   }, []);
 
   useEffect(() => {

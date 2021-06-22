@@ -23,8 +23,10 @@ export {
   GET_FOLLOWING_POSTS_REQUEST,
   GET_FOLLOWING_POSTS_SUCCESS,
   GET_FOLLOWING_POSTS_FAILURE,
+  RESET_FOLLOWING_POSTS,
 
-  getFollowingPosts
+  getFollowingPosts,
+  resetFollowingPosts
 } from "./getFollowingPosts";
 
 export { 

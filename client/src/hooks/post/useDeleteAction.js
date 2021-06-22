@@ -9,7 +9,7 @@ export default function useDeleteAction() {
 
   const dispatch = useDispatch();
   const { isFetching } = useSelector((state) => ({
-    isFetching: state.posts.isFetching
+    isFetching: state.followingPosts.isFetching
   }));
 
   const handleDeleteClick = useCallback(async ({ postId }) => {

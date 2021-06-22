@@ -4,6 +4,7 @@ import { POSTS_OFFSET, POSTS_LENGTH } from "../../../constants/feed";
 export const GET_FOLLOWING_POSTS_REQUEST = "GET_FOLLOWING_POSTS_REQUEST";
 export const GET_FOLLOWING_POSTS_SUCCESS = "GET_FOLLOWING_POSTS_SUCCESS";
 export const GET_FOLLOWING_POSTS_FAILURE = "GET_FOLLOWING_POSTS_FAILURE";
+export const RESET_FOLLOWING_POSTS = "RESET_FOLLOWING_POSTS";
 
 function requestGetFollowingPosts() {
   return {
@@ -39,12 +40,26 @@ function errorGetFollowingPosts(message) {
   };
 }
 
+export function resetFollowingPosts() {
+  return (dispatch) =>
+    dispatch({
+      type: RESET_FOLLOWING_POSTS,
+      payload: {
+        isFetching: false,
+        offset: 0,
+        hasMore: false,
+        errorMessage: "",
+        data: []
+      }
+    });
+}
+
 export function getFollowingPosts(api) {
   return async (dispatch, getState) => {
     dispatch(requestGetFollowingPosts());
 
     const url = generateUrl("getFollowingPosts");
-    const currentOffset = getState().posts.offset;
+    const currentOffset = getState().followingPosts.offset;
     try {
       const { data } = await api
         .setMethod("GET")
@@ -54,7 +69,7 @@ export function getFollowingPosts(api) {
         })
         .query(url);
 
-      dispatch(receiveGetFollowingPosts([...getState().posts.data, ...data], data.length, currentOffset));
+      dispatch(receiveGetFollowingPosts([...getState().followingPosts.data, ...data], data.length, currentOffset));
     } catch (e) {
       dispatch(errorGetFollowingPosts("Error: something went wrong:", e));
     }

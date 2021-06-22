@@ -38,7 +38,7 @@ export function updatePostComments(postId, comment) {
     dispatch(requestUpdatePostComments());
 
     try {
-      const postsState = getState().posts;
+      const postsState = getState().followingPosts;
 
       if (!postsState.data.length) {
         throw "There is no local data";

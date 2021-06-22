@@ -9,14 +9,14 @@ export default function useLikeAction() {
 
   const dispatch = useDispatch();
   const { isFetching } = useSelector((state) => ({
-    isFetching: state.posts.isFetching,
+    isFetching: state.followingPosts.isFetching,
   }));
 
   const handleLike = useCallback(
     async (id) => {
       !isFetching && (await dispatch(postActions.likePost(apiClient, id)));
     },
-    []
+    [isFetching]
   );
 
   return {

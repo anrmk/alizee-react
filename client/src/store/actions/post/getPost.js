@@ -1,10 +1,9 @@
 import { generateUrl } from "../../../helpers/functions";
-import { refreshPosts } from "./getPosts";
 
 export const GET_POST_REQUEST = "GET_POST_REQUEST";
 export const GET_POST_SUCCESS = "GET_POST_SUCCESS";
 export const GET_POST_FAILURE = "GET_POST_FAILURE";
-export const RESET_CURRENT_POST = "RESET_CURRENT_POST"
+export const RESET_CURRENT_POST = "RESET_CURRENT_POST";
 
 function requestGetPost() {
   return {
@@ -55,7 +54,6 @@ export function getPost(api, id) {
       const { data } = await api.setMethod("GET").setParams({ id }).query(url);
 
       dispatch(receiveGetPost(data));
-      await dispatch(refreshPosts(data));
     } catch {
       dispatch(errorGetPost("Error: something went wrong"));
     }

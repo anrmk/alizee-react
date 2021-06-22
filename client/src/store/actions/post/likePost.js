@@ -53,7 +53,7 @@ export function likePost(api, id) {
 
     const url = generateUrl("likePost");
     try {
-      const postsState = getState().posts;
+      const postsState = getState().followingPosts;
 
       if (!postsState.data.length && isEmptyObject(postsState.currentPost)) {
         throw "There is no local data";
@@ -82,7 +82,8 @@ export function likePost(api, id) {
         const currentPost = { ...postsState.currentPost };
         const method = currentPost.iLike ? "DELETE" : "POST";
 
-        await api.setMethod(method).setParams({ id }).query(url);
+        !(postsState.data.length > 0) && 
+          await api.setMethod(method).setParams({ id }).query(url);
 
         currentPost.likes += currentPost.iLike ? -1 : 1;
         currentPost.iLike = !currentPost.iLike;

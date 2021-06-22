@@ -58,30 +58,12 @@ export function resetPosts() {
     });
 }
 
-export function refreshPosts(postData) {
-  return (dispatch, getState) => {
-    const posts = [...getState().posts.data];
-    const postIndex = posts.findIndex((post) => post.id === postData.id);
-    if (postIndex === -1) return;
-
-    posts[postIndex] = postData;
-    dispatch({
-      type: REFRESH_POSTS,
-      payload: {
-        isFetching: false,
-        errorMessage: "",
-        data: posts,
-      },
-    });
-  };
-}
-
 export function getPosts(api, opts) {
   return async (dispatch, getState) => {
     dispatch(requestGetPosts());
 
     const url = generateUrl("getPosts");
-    const currentOffset = getState().posts.offset;
+    const currentOffset = getState().profilePosts.offset;
     try {
       const { data } = await api
         .setMethod("GET")
@@ -95,7 +77,7 @@ export function getPosts(api, opts) {
 
       dispatch(
         receiveGetPosts(
-          [...getState().posts.data, ...data.data],
+          [...getState().profilePosts.data, ...data.data],
           data.recordsTotal,
           currentOffset,
           currentOffset + data.data.length < data.recordsTotal
@@ -108,7 +90,7 @@ export function getPosts(api, opts) {
 }
 
 // Selectors
-const gridGallerySelector = (state) => state.posts.data;
+const gridGallerySelector = (state) => state.profilePosts.data;
 
 export const getGridGalleryPosts = createSelector([gridGallerySelector], (data) => {
   return data.reduce(

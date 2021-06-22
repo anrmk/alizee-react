@@ -66,7 +66,7 @@ export function getPosts(api, opts) {
 
     try {
       const url = generateUrl("getPostsSuggestions");
-      const currentOffset = getState().posts.offset;
+      const currentOffset = getState().suggestionPosts.offset;
 
       const { data } = await api
         .setMethod("GET")
@@ -78,7 +78,7 @@ export function getPosts(api, opts) {
         .query(url);
 
       dispatch(
-        receiveGetPosts([...getState().posts.data, ...data.data], data.recordsTotal, currentOffset, !!data.data.length)
+        receiveGetPosts([...getState().suggestionPosts.data, ...data.data], data.recordsTotal, currentOffset, !!data.data.length)
       );
     } catch (e) {
       dispatch(errorGetPosts("Error: something went wrong:", e));
@@ -87,7 +87,7 @@ export function getPosts(api, opts) {
 }
 
 // Selectors
-const gridGallerySelector = (state) => state.posts.data;
+const gridGallerySelector = (state) => state.suggestionPosts.data;
 
 export const getGridGalleryPosts = createSelector([gridGallerySelector], (data) => {
   return data.reduce(

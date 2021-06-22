@@ -38,7 +38,7 @@ function PostPage(props) {
   const postId = props.match.params.id;
 
   const { user, post, comment } = props;
-  const { getPost, getComments, resetComments, createComment, resetCurrentPost } = props;
+  const { getPost, getComments, resetComments, resetCurrentPost } = props;
 
   const likeAction = useLikeAction();
   const favoriteAction = useFavoriteAction();
@@ -60,9 +60,10 @@ function PostPage(props) {
 
     getPost(apiClient, postId);
     getComments(apiClient, { postId, length: COMMENTS_POST_LENGTH });
+
     return () => {
       resetComments();
-	  resetCurrentPost()
+      resetCurrentPost()
     };
   }, []);
 
@@ -162,10 +163,10 @@ function mapStateToProps(state) {
   return {
     user: state.signIn?.userInfo,
     post: {
-      isFetching: state.posts.isFetching,
-      errorMessage: state.posts.errorMessage,
-      data: state.posts.currentPost,
-      owner: state.posts.currentPost.user || {}
+      isFetching: state.followingPosts.isFetching,
+      errorMessage: state.followingPosts.errorMessage,
+      data: state.followingPosts.currentPost,
+      owner: state.followingPosts.currentPost.user || {}
     },
     comment: {
       isFetching: state.comment.isFetching,
@@ -180,18 +181,12 @@ function mapDispatchToProps(dispatch) {
     getPost: (api, id) => dispatch(postActions.getPost(api, id)),
     getPurchases: (api, id, callback) => dispatch(postActions.getPurchases(api, id, callback)),
     getReceipt: (api, id, callback) => dispatch(postActions.getReceipt(api, id, callback)),
-	resetCurrentPost: (api,id)=> dispatch(postActions.resetCurrentPost()),
-
-    //createFollow: (api, id) => dispatch(relationshipActions.createFollow(api, id)),
-    //deleteFollow: (api, id) => dispatch(relationshipActions.deleteFollow(api, id)),
-    // blockUser: (api, id) => dispatch(settingsActions.createBlackList(api, id)),
-    // unblockUser: (api, id) => dispatch(settingsActions.deleteBlackList(api, id)),
+    resetCurrentPost: (api,id) => dispatch(postActions.resetCurrentPost()),
 
     buyPost: (api, id) => dispatch(paymentActions.buyPost(api, id)),
 
     getComments: (api, opts) => dispatch(commentActions.getCommentsPost(api, opts)),
     resetComments: () => dispatch(commentActions.resetCommentsPost()),
-    createComment: (api, opts) => dispatch(commentActions.createCommentPost(api, opts)),
   };
 }
 
