@@ -5,7 +5,7 @@ import ApiContext from "../../context/ApiContext";
 import * as settingsActions from "../../store/actions/settings";
 import { EditSubscriptionForm } from "../../domain/SettingsForms";
 
-function EditSubscriptionSettings({ data, getSubscription, updateSubscription }) {
+function EditSubscriptionSettings({ data, getSubscription, updateSubscription, onSetAlertText }) {
   const apiClient = useContext(ApiContext);
 
   useEffect(() => {
@@ -13,7 +13,8 @@ function EditSubscriptionSettings({ data, getSubscription, updateSubscription })
   }, []);
 
   const handleEditProfileSubmit = async (data) => {
-    await updateSubscription(apiClient, data);
+    const fulfilled = await updateSubscription(apiClient, data);
+    onSetAlertText(fulfilled);
   };
 
   return <EditSubscriptionForm price={data.price} onSubmit={handleEditProfileSubmit} />;
@@ -22,7 +23,7 @@ function EditSubscriptionSettings({ data, getSubscription, updateSubscription })
 function mapStateToProps(state) {
   return {
     data: state.settings.data,
-    isFetching: state.settings.isFetching
+    isFetching: state.settings.isFetching,
   };
 }
 

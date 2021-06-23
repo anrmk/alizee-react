@@ -46,8 +46,10 @@ export function deleteAccount(api) {
       dispatch(receiveDeleteAccount());
 
       dispatch(signOutUser());
+	  return true
   } catch (e) {
       dispatch(errorDeleteAccount("Error: something went wrong:", e));
+	  return false
     }
   }
 }

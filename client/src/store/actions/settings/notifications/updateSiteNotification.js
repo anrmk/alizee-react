@@ -44,8 +44,10 @@ export function updateSiteNotification(api, opts) {
       await api.setData(opts).query(url);
 
       dispatch(receiveUpdateSiteNotification(opts));
+      return true;
     } catch (e) {
       dispatch(errorUpdateSiteNotification("Error: something went wrong:", e));
+      return false;
     }
   };
 }

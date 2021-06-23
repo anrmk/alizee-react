@@ -10,9 +10,9 @@ function requestGetSettingsResetPasswordConfirm() {
     payload: {
       isFetching: true,
       passwordUpdated: false,
-      errorMessage: ""
-    }
-  }
+      errorMessage: "",
+    },
+  };
 }
 
 function receiveGetSettingsResetPasswordConfirm() {
@@ -20,9 +20,9 @@ function receiveGetSettingsResetPasswordConfirm() {
     type: GET_SETTINGS_RESET_PASSWORD_CONFIRM_SUCCESS,
     payload: {
       isFetching: false,
-      errorMessage: ""
-    }
-  }
+      errorMessage: "",
+    },
+  };
 }
 
 function errorGetSettingsResetPasswordConfirm(message) {
@@ -30,13 +30,13 @@ function errorGetSettingsResetPasswordConfirm(message) {
     type: GET_SETTINGS_RESET_PASSWORD_CONFIRM_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message
-    }
-  }
+      errorMessage: message,
+    },
+  };
 }
 
 export function getSettingsResetPasswordConfirm(api) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(requestGetSettingsResetPasswordConfirm());
 
     const url = generateUrl("getSettingsPasswordConfirm");
@@ -44,8 +44,10 @@ export function getSettingsResetPasswordConfirm(api) {
       await api.setMethod("POST").query(url);
 
       dispatch(receiveGetSettingsResetPasswordConfirm());
-    } catch(e) {
+      return true;
+    } catch (e) {
       dispatch(errorGetSettingsResetPasswordConfirm(e.message));
+      return false;
     }
-  }
+  };
 }

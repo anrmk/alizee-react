@@ -44,8 +44,10 @@ export function updateToastNotification(api, opts) {
       await api.setData(opts).query(url);
 
       dispatch(receiveUpdateToastNotification(opts));
+      return true;
     } catch (e) {
       dispatch(errorUpdateToastNotification("Error: something went wrong:", e));
+      return false;
     }
   };
 }

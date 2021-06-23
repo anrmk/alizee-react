@@ -10,7 +10,7 @@ import { EditBankForm, OndatoForm } from "../../domain/SettingsForms";
 
 import useAgreeDialog from "../../hooks/useAgreeDialog";
 
-function EditBankSettings({ identityVerified, data, isFetching, getBank, updateBank, veryfyMe }) {
+function EditBankSettings({ identityVerified, data, isFetching, getBank, updateBank, veryfyMe, onSetAlertText }) {
   const apiClient = useContext(ApiContext);
 
   const agreeDialog = useAgreeDialog((data) => {
@@ -23,7 +23,8 @@ function EditBankSettings({ identityVerified, data, isFetching, getBank, updateB
 
   const handleEditBankSubmit = (data) => {
     (async () => {
-      await updateBank(apiClient, data);
+      const fulfilled = await updateBank(apiClient, data);
+      onSetAlertText(fulfilled);
     })();
   };
 
@@ -32,7 +33,11 @@ function EditBankSettings({ identityVerified, data, isFetching, getBank, updateB
       <CardHeader title="Banking" />
       <Divider />
       <CardContent>
-        {identityVerified ? !isFetching && <EditBankForm {...data} onSubmit={handleEditBankSubmit} /> : <OndatoForm onSubmit={agreeDialog.toggle} />}
+        {identityVerified ? (
+          !isFetching && <EditBankForm {...data} onSubmit={handleEditBankSubmit} />
+        ) : (
+          <OndatoForm onSubmit={agreeDialog.toggle} />
+        )}
       </CardContent>
     </Card>
   );
@@ -50,7 +55,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getBank: (api) => dispatch(settingsActions.getBank(api)),
     updateBank: (api, data) => dispatch(settingsActions.updateBank(api, data)),
-    veryfyMe: (api) => dispatch(userActions.verifyMe(api))
+    veryfyMe: (api) => dispatch(userActions.verifyMe(api)),
   };
 }
 

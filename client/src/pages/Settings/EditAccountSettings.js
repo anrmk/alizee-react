@@ -5,12 +5,13 @@ import ApiContext from "../../context/ApiContext";
 import * as settingsActions from "../../store/actions/settings";
 import EditAccountForm from "../../domain/SettingsForms/EditAccountForm";
 
-function EditAccountSettings({ user, isFetching, updateAccount }) {
+function EditAccountSettings({ user, isFetching, updateAccount, onSetAlertText }) {
   const apiClient = useContext(ApiContext);
 
   const handleEditAccountSubmit = (data) => {
     (async () => {
-      await updateAccount(apiClient, data);
+      const fulfilled = await updateAccount(apiClient, data);
+      onSetAlertText(fulfilled);
     })();
   };
 

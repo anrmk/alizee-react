@@ -5,12 +5,13 @@ import ApiContext from "../../context/ApiContext";
 import * as settingsActions from "../../store/actions/settings";
 import { EditProfileForm } from "../../domain/SettingsForms";
 
-function EditProfileSettings({ user, updateProfile }) {
+function EditProfileSettings({ user, updateProfile, onSetAlertText }) {
   const apiClient = useContext(ApiContext);
 
   const handleEditProfileSubmit = (data) => {
     (async () => {
-      await updateProfile(apiClient, data);
+      const fulfilled = await updateProfile(apiClient, data);
+      onSetAlertText(fulfilled);
     })();
   };
 

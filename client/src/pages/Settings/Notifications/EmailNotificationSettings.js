@@ -61,7 +61,7 @@ const schema = yup.object().shape({
   [MESSAGESFREQUENCY_INPUT_ID]: yup.number().required(),
 });
 
-function EmailNotificationsSettings({ isFetching, data, getNotification, updateNotification }) {
+function EmailNotificationsSettings({ isFetching, data, getNotification, updateNotification, onSetAlertText }) {
   const apiClient = useContext(ApiContext);
 
   const { reset, watch, control, handleSubmit } = useForm({
@@ -101,7 +101,8 @@ function EmailNotificationsSettings({ isFetching, data, getNotification, updateN
   const handleSettingsChange = (data) => {
     if (!isFetching) {
       (async () => {
-        await updateNotification(apiClient, data);
+        const fulfilled = await updateNotification(apiClient, data);
+        onSetAlertText(fulfilled);
       })();
     }
   };
@@ -156,7 +157,7 @@ function EmailNotificationsSettings({ isFetching, data, getNotification, updateN
         title="Email Notifications"
         subheader="Get emails to find out what’s going on when you’re not on site. You can turn them off anytime."
       />
-      
+
       <Divider />
 
       <CardContent>

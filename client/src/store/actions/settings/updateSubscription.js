@@ -48,8 +48,10 @@ export function updateSubscription(api, opts) {
         .query(url);
 
       dispatch(receiveUpdateSubscription({ price }));
+	  return true
     } catch (e) {
       dispatch(errorUpdateSubscription("Error: something went wrong:", e));
+	  return false
     }
   };
 }

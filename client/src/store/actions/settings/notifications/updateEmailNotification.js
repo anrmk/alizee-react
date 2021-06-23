@@ -44,8 +44,10 @@ export function updateEmailNotification(api, opts) {
       await api.setData(opts).query(url);
 
       dispatch(receiveUpdateEmailNotification(opts));
+      return true;
     } catch (e) {
       dispatch(errorUpdateEmailNotification("Error: something went wrong:", e));
+      return false;
     }
   };
 }

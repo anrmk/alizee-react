@@ -10,7 +10,7 @@ function BlackList(props) {
 
   const { data } = props;
 
-  const { getBlackList, deleteBlackList } = props;
+  const { getBlackList, deleteBlackList, onSetAlertText } = props;
 
   useEffect(() => {
     getBlackList(apiClient);
@@ -18,7 +18,8 @@ function BlackList(props) {
 
   const handleDelete = (data) => {
     (async () => {
-      await deleteBlackList(apiClient, data);
+      const fulfilled = await deleteBlackList(apiClient, data);
+      onSetAlertText(fulfilled);
     })();
   };
 

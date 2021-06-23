@@ -48,8 +48,10 @@ export function deleteBlackList(api, userName) {
       const updatedBlackList = blackList.filter((item) => item.userName !== userName);
 
       dispatch(receiveDeleteBlackList(updatedBlackList));
+      return true;
     } catch (e) {
       dispatch(errorDeleteBlackList("Error: something went wrong:", e));
+      return false;
     }
   };
 }

@@ -55,8 +55,10 @@ export function updateAccount(api, opts) {
           refresh: data.refreshToken,
         })
       );
+      return true;
     } catch (e) {
       dispatch(errorUpdateAccount("Error: something went wrong:", e));
+      return false;
     }
   };
 }

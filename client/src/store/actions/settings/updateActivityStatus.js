@@ -1,17 +1,17 @@
 import { generateUrl } from "../../../helpers/functions";
 
-export const UPDATE_ACTIVITY_STATUS_REQUEST = 'UPDATE_ACTIVITY_STATUS_REQUEST';
-export const UPDATE_ACTIVITY_STATUS_SUCCESS = 'UPDATE_ACTIVITY_STATUS_SUCCESS';
-export const UPDATE_ACTIVITY_STATUS_FAILURE = 'UPDATE_ACTIVITY_STATUS_FAILURE';
+export const UPDATE_ACTIVITY_STATUS_REQUEST = "UPDATE_ACTIVITY_STATUS_REQUEST";
+export const UPDATE_ACTIVITY_STATUS_SUCCESS = "UPDATE_ACTIVITY_STATUS_SUCCESS";
+export const UPDATE_ACTIVITY_STATUS_FAILURE = "UPDATE_ACTIVITY_STATUS_FAILURE";
 
 function requestUpdateActivityStatus() {
   return {
     type: UPDATE_ACTIVITY_STATUS_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: ''
-    }
-  }
+      errorMessage: "",
+    },
+  };
 }
 
 function receiveUpdateActivityStatus(data) {
@@ -19,10 +19,10 @@ function receiveUpdateActivityStatus(data) {
     type: UPDATE_ACTIVITY_STATUS_SUCCESS,
     payload: {
       isFetching: false,
-      errorMessage: '',
-      data: data || {}
-    }
-  }
+      errorMessage: "",
+      data: data || {},
+    },
+  };
 }
 
 function errorUpdateActivityStatus(message) {
@@ -30,16 +30,16 @@ function errorUpdateActivityStatus(message) {
     type: UPDATE_ACTIVITY_STATUS_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message
-    }
-  }
+      errorMessage: message,
+    },
+  };
 }
 
 export function updateActivityStatus(api, status) {
   return async (dispatch, getState) => {
     dispatch(requestUpdateActivityStatus());
 
-    const url = generateUrl('updateActivityStatus');
+    const url = generateUrl("updateActivityStatus");
     try {
       await api
         .setParams({
@@ -47,14 +47,17 @@ export function updateActivityStatus(api, status) {
         })
         .query(url);
 
-      const updatedSettings = { 
+      const updatedSettings = {
         ...getState().settings.data,
-        showActivity: status
-      }
+        showActivity: status,
+      };
 
       dispatch(receiveUpdateActivityStatus(updatedSettings));
-  } catch (e) {
+
+      return true;
+    } catch (e) {
       dispatch(errorUpdateActivityStatus("Error: something went wrong:", e));
+      return false;
     }
-  }
+  };
 }

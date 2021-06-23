@@ -53,8 +53,10 @@ export function updatePrivateStatus(api, status) {
       }
 
       dispatch(receiveUpdatePrivateStatus(updatedSettings));
+	  return true
   } catch (e) {
       dispatch(errorUpdatePrivateStatus("Error: something went wrong:", e));
+	  return false
     }
   }
 }

@@ -11,14 +11,14 @@ import {
   ListItemText,
   ListItemSecondaryAction,
   Switch,
-  Divider
+  Divider,
 } from "@material-ui/core";
 
 import ApiContext from "../../../context/ApiContext";
 import { isEmptyObject } from "../../../helpers/functions";
 import * as settingsActions from "../../../store/actions/settings";
 
-function SiteNotificationSettings({ data, getNotification, updateNotification }) {
+function SiteNotificationSettings({ data, getNotification, updateNotification, onSetAlertText }) {
   const apiClient = useContext(ApiContext);
   const [settings, setSettings] = useState({
     isActive: false,
@@ -50,7 +50,8 @@ function SiteNotificationSettings({ data, getNotification, updateNotification })
 
     if (!settings.isFetching) {
       (async () => {
-        await updateNotification(apiClient, value);
+        const fulfilled = await updateNotification(apiClient, value);
+        onSetAlertText(fulfilled);
       })();
     }
   };

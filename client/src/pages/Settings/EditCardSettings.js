@@ -5,7 +5,7 @@ import ApiContext from "../../context/ApiContext";
 import * as settingsActions from "../../store/actions/settings";
 import { EditCardForm } from "../../domain/SettingsForms";
 
-function EditCardSettings({ data, isFetching, getCard, updateCard }) {
+function EditCardSettings({ data, isFetching, getCard, updateCard, onSetAlertText }) {
   const apiClient = useContext(ApiContext);
 
   useEffect(() => {
@@ -14,7 +14,8 @@ function EditCardSettings({ data, isFetching, getCard, updateCard }) {
 
   const handleEditCardSubmit = (data) => {
     (async () => {
-      await updateCard(apiClient, data);
+      const fulfilled = await updateCard(apiClient, data);
+      onSetAlertText(fulfilled);
     })();
   };
   return !isFetching && <EditCardForm {...data} onSubmit={handleEditCardSubmit} />;

@@ -11,14 +11,14 @@ import {
   ListItemText,
   ListItemSecondaryAction,
   Divider,
-  Switch
+  Switch,
 } from "@material-ui/core";
 
 import ApiContext from "../../../context/ApiContext";
 import { isEmptyObject } from "../../../helpers/functions";
 import * as settingsActions from "../../../store/actions/settings";
 
-function PushNotificationSettings({ data, getNotification, updateNotification }) {
+function PushNotificationSettings({ data, getNotification, updateNotification, onSetAlertText }) {
   const apiClient = useContext(ApiContext);
   const [settings, setSettings] = useState({
     isActive: false,
@@ -31,7 +31,7 @@ function PushNotificationSettings({ data, getNotification, updateNotification })
     purchase: false,
     stream: false,
     direct: false,
-    messages: false
+    messages: false,
   });
 
   useEffect(() => {
@@ -51,7 +51,8 @@ function PushNotificationSettings({ data, getNotification, updateNotification })
 
     if (!settings.isFetching) {
       (async () => {
-        await updateNotification(apiClient, value);
+        const fulfilled = await updateNotification(apiClient, value);
+        onSetAlertText(fulfilled);
       })();
     }
   };

@@ -44,8 +44,10 @@ export function updatePushNotification(api, opts) {
       await api.setData(opts).query(url);
 
       dispatch(receiveUpdatePushNotification(opts));
+	  return true
     } catch (e) {
       dispatch(errorUpdatePushNotification("Error: something went wrong:", e));
+	  return false
     }
   };
 }

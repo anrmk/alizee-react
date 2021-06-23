@@ -76,8 +76,11 @@ export function updateProfile(api, opts) {
       } else {
         dispatch(resetUpdateProfile());
       }
+
+      return true;
     } catch (e) {
       dispatch(errorUpdateProfile("Error: something went wrong:", e));
+      return false;
     }
   };
 }

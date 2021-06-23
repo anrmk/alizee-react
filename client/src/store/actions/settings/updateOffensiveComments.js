@@ -53,8 +53,10 @@ export function updateOffensiveComments(api, status) {
       }
 
       dispatch(receiveUpdateOffensiveComments(updatedSettings));
+	  return true
   } catch (e) {
       dispatch(errorUpdateOffensiveComments("Error: something went wrong:", e));
+	  return false
     }
   }
 }
