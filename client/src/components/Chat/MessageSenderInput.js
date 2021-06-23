@@ -33,7 +33,7 @@ function MessageSenderInput({
   }, [disabled])
 
   const messageSend = () => {
-    onSendMessageClick && onSendMessageClick({ media: [], message: value.trim() });
+    onSendMessageClick && onSendMessageClick({ media: [], text: value.trim() });
     setValue("");
     setClosePickerModal(true);
   };
@@ -54,7 +54,7 @@ function MessageSenderInput({
 
   const handleMediaMessageSendClick = (mediaFiles) => {
     if (mediaFiles.length) {
-      onSendMessageClick && onSendMessageClick({ media: mediaFiles, message: "" });
+      onSendMessageClick && onSendMessageClick({ media: mediaFiles, text: "" });
     }
   };
 

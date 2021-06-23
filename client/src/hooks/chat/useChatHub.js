@@ -68,6 +68,6 @@ export default function useChatHub({ isAuth, onReceiveMessage }) {
   }, [connection]);
 
   const handleReceiveMessage = async (data) => {
-    await onReceiveMessage(data,api);
+    await onReceiveMessage(api, data);
   };
 }

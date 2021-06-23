@@ -49,7 +49,7 @@ function addMessageSuccess(room, rooms) {
   };
 }
 
-export function addMessage(data, api) {
+export function addMessage(api, data) {
   return async (dispatch, getState) => {
     try {
       dispatch(receiveCreateMessage());
@@ -66,7 +66,7 @@ export function addMessage(data, api) {
           return;
         }
 
-        rooms[index].lastMessageText = data.message;
+        rooms[index].lastMessageText = data.text;
 
         rooms[index].unreadMessageCount =
           current && current.id === data.roomId ? 0 : rooms[index].unreadMessageCount + 1;
@@ -83,7 +83,7 @@ export function addMessage(data, api) {
 
         let current = { ...getState().chat.current };
 
-        current = { ...current, lastMessageText: data.message };
+        current = { ...current, lastMessageText: data.text };
         updatedRooms = [current, ...(rooms.filter((item) => item.id !== data.roomId) || [])];
 
         dispatch(addMessageSuccess(current, updatedRooms));
@@ -100,7 +100,7 @@ export function createMessage(api, opts) {
 
     const url = generateUrl("createMessage");
     try {
-      const { id, message, mediaFiles } = opts;
+      const { id, text, mediaFiles } = opts;
 
       const mediaList = [];
       if (mediaFiles.length) {
@@ -118,12 +118,12 @@ export function createMessage(api, opts) {
       const { data } = await api
         .setData({
           roomId: id,
-          message,
+          text,
           media: mediaList,
         })
         .query(url);
 
-      dispatch(addMessage(data, api));
+      dispatch(addMessage(api, data));
     } catch (e) {
       return dispatch(errorCreateMessage(e));
     }

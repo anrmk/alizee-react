@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { MessageSenderInput, MessagesList } from "../Chat";
 
 import { Avatar, Card, CardHeader, CardContent, CardActions, Divider } from "@material-ui/core";
+//import Avatar from "../Avatar";
 
 import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 
@@ -12,8 +13,7 @@ import useStyles from "./styles";
 
 function Comments(props) {
   const { children, headerBackComponent } = props;
-  const { hasMore } = props;
-  const { postId, isOwner, user, owner, description, items, isCommentable, isPurchased } = props;
+  const { postId, isOwner, user, owner, description, items, isCommentable, isPurchased, hasMore } = props;
   const { onFetchMore, onCommentSendClick, onSendTip, onDeleteMessage } = props;
 
   const classes = useStyles({ isPurchased });

@@ -35,14 +35,15 @@ const MessagesList = React.memo(
     };
 
     return (
-      <InfiniteScroll
-        scrollableTarget="messagerContainer"
-        scrollThreshold={-0.8}
-        dataLength={items.length}
-        next={onFetchMore}
-        hasMore={hasMore}
-      >
-        <List id="messagerContainer" className={classes.messenger} ref={messagesContainer}>
+      <List id="messagerContainer" className={classes.messenger} ref={messagesContainer} disablePadding component="div">
+        <InfiniteScroll
+          scrollableTarget="messagerContainer"
+          scrollThreshold={1}
+          dataLength={items.length}
+          next={onFetchMore}
+          hasMore={hasMore}
+          inverse
+        >
           {items &&
             items.map((message) => (
               <Message
@@ -55,8 +56,8 @@ const MessagesList = React.memo(
                 onDelete={onDeleteMessage}
               />
             ))}
-        </List>
-      </InfiniteScroll>
+        </InfiniteScroll>
+      </List>
     );
   }
 );

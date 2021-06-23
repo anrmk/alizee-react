@@ -15,13 +15,13 @@ function requestCreateCommentPost() {
   };
 }
 
-function receiveCreateCommentPost(comments) {
+function receiveCreateCommentPost(data) {
   return {
     type: CREATE_COMMENT_POST_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
-      data: comments,
+      data: data,
     },
   };
 }
@@ -40,18 +40,17 @@ export function createCommentPost(api, opts) {
   return async (dispatch, getState) => {
     dispatch(requestCreateCommentPost());
 
-    if (!opts?.postId || !opts?.message) throw "postId or message don't exist";
+    if (!opts?.postId || !opts?.text) throw "postId or message don't exist";
 
     const url = generateUrl("createCommentPost");
     try {
       const { data } = await api
         .setData({
-          text: opts.message,
+          text: opts.text,
           postId: opts.postId
         })
         .query(url);
 
-      data.userName = getState().signIn?.userInfo?.userName;
       const followingPostsState = getState().followingPosts;
 
       if (followingPostsState.data.length > 0) {
@@ -59,11 +58,7 @@ export function createCommentPost(api, opts) {
       } 
 
       if (!isEmptyObject(followingPostsState.currentPost)) {
-        const transformedComment = {
-          ...copyFlatObjectWithIgnore(data, ["text"]),
-          message: data.text
-        };
-        const comments = [...getState().comment.data, transformedComment];
+        const comments = [...getState().comment.data, data];
         dispatch(receiveCreateCommentPost(comments));
       }
     } catch (e) {

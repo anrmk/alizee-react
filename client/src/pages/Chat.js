@@ -27,8 +27,7 @@ function Chat(props) {
 
   const { user, isAuthenticated } = props;
   const { chat, current, getRoom, setRoom, getRooms, filterRooms, resetCurrentRoom } = props;
-  const { createMessage } = props;
-  const { addMessage } = props;
+  const { createMessage, addMessage } = props;
 
   const sendTipDialog = useSendTipDialog();
   const newChatDialog = useNewChatDialog();
@@ -88,10 +87,10 @@ function Chat(props) {
   };
 
   const handleMessageCreate = async (data) => {
-    if (data && (data.message.length || data.media.length)) {
+    if (data && (data.text.length || data.media.length)) {
       await createMessage(apiClient, {
         id: current.id,
-        message: data.message,
+        text: data.text,
         mediaFiles: data.media,
       });
     }
@@ -161,8 +160,8 @@ function mapDispatchToProps(dispatch) {
     setRoom: (api, userName) => dispatch(actionChat.setRoom(api, userName)),
     resetCurrentRoom: () => dispatch(actionChat.resetCurrentRoom()),
 
-    createMessage: (api, id, message) => dispatch(actionChat.createMessage(api, id, message)),
-    addMessage: (message,api) => dispatch(actionChat.addMessage(message,api)),
+    createMessage: (api, id, text) => dispatch(actionChat.createMessage(api, id, text)),
+    addMessage: (api, text) => dispatch(actionChat.addMessage(api, text)),
   };
 }
 

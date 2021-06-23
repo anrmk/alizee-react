@@ -12,9 +12,8 @@ export default function useCommentAction() {
     isFetching: state.comment.isFetching
   }));
 
-  const handleCommentSendClick = useCallback(async ({ postId, message }) => {
-    !isFetching && 
-      await dispatch(commentActions.createCommentPost(apiClient, { postId, message }));
+  const handleCommentSendClick = useCallback(async ({ postId, text }) => {
+    !isFetching && await dispatch(commentActions.createCommentPost(apiClient, { postId, text }));
   }, []);
 
   return {

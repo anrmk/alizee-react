@@ -79,7 +79,7 @@ const Post = React.memo((props) => {
   );
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} variant="outlined">
       <CardHeader
         avatar={
           <Link to={PROFILE_USERNAME_ROUTE(owner.userName)}>

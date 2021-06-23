@@ -6,7 +6,6 @@ import {
   ListItemAvatar,
   ListItemText,
   ListItemSecondaryAction,
-  Avatar,
   GridList,
   GridListTile,
   GridListTileBar,
@@ -14,6 +13,7 @@ import {
   IconButton,
   Link,
 } from "@material-ui/core/";
+import Avatar from "../Avatar";
 
 import PlayArrowIcon from "@material-ui/icons/PlayArrowOutlined";
 import ClearIcon from "@material-ui/icons/Clear";
@@ -88,24 +88,29 @@ const Message = React.memo(
     };
 
     return (
-      <ListItem dense>
+      <ListItem dense alignItems="flex-start">
         {message.avatarUrl && (
           <ListItemAvatar>
-            <Avatar alt={message.userName} src={message.avatarUrl} className={classes.avatar} />
+            <Avatar alt={message.name ?? message.userName} src={message.avatarUrl} borderColor="silver" />
           </ListItemAvatar>
         )}
 
         <ListItemText
           primary={
-            <Box>
-              <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Link color={isOwner ? "secondary" : "primary"} href={PROFILE_USERNAME_ROUTE(message.userName)}>
-                  @{message.userName}
-                </Link>
-                <Typography variant="caption" color="textSecondary">
-                  {formatDate(message.createdDate)}
+            <Link color={message.isOwner ? "primary" : "secondary"} href={PROFILE_USERNAME_ROUTE(message.userName)}>
+              {message.name ?? `@${message.userName}`}
+            </Link>
+          }
+          secondaryTypographyProps={{
+            component: "div",
+          }}
+          secondary={
+            <React.Fragment>
+              {message.text && (
+                <Typography variant="body2" component="span" color="textPrimary">
+                  {message.text}
                 </Typography>
-              </Box>
+              )}
 
               {message.media?.length > 0 && (
                 <GridList
@@ -118,15 +123,18 @@ const Message = React.memo(
                   })}
                 </GridList>
               )}
-            </Box>
+
+              <Typography variant="caption" color="textSecondary" display="block">
+                {formatDate(message.createdDate)}
+              </Typography>
+            </React.Fragment>
           }
-          secondary={<Typography variant="body2">{message.message}</Typography>}
         />
 
         {onDelete && isOwner && (
           <ListItemSecondaryAction>
             <IconButton edge="end" aria-label="delete" onClick={handleDeleteClick}>
-              <ClearIcon fontSize="small" />
+              <ClearIcon fontSize="small" color="error" />
             </IconButton>
           </ListItemSecondaryAction>
         )}

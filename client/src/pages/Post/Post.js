@@ -1,9 +1,8 @@
 import React, { useContext, useEffect } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { Box, Card, CardMedia, Hidden, IconButton } from "@material-ui/core/";
-// import FullscreenIcon from "@material-ui/icons/FullscreenRounded";
-// import FullscreenExitIcon from "@material-ui/icons/FullscreenExitRounded";
+
+import { Box, Card, CardMedia, Hidden, IconButton, Chip, Avatar } from "@material-ui/core/";
 import ImageIcon from "@material-ui/icons/ImageRounded";
 import CommentIcon from "@material-ui/icons/CommentRounded";
 import MoreVertIcon from "@material-ui/icons/MoreVertRounded";
@@ -14,26 +13,24 @@ import MediaContent from "../../components/MediaContent";
 import SlidingViews from "../../components/SlidingViews";
 
 import * as postActions from "../../store/actions/post";
-// import * as settingsActions from "../../store/actions/settings";
-// import * as relationshipActions from "../../store/actions/relationship";
 import * as commentActions from "../../store/actions/comment";
 import * as paymentActions from "../../store/actions/payment";
 
-import { COMMENTS_POST_LENGTH } from "../../constants/feed";
-import { HOME_ROUTE } from "../../constants/routes";
-import useSlidingViews from "../../hooks/useSlidingViews";
+import { HOME_ROUTE, PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 
+import useSlidingViews from "../../hooks/useSlidingViews";
 import useShareDialog, { SHARE_DIALOG_POST_TYPE } from "../../hooks/useShareDialog";
 import { useLikeAction, useFavoriteAction, useMenuDialog, useCommentDialog, useCommentAction } from "../../hooks/post";
 import { useSendTipDialog, usePaymentDialog, usePurchaseDialog, useReceiptDialog } from "../../hooks/payment";
+import useLightboxModal from "../../hooks/useLightboxModal";
 
 import useStyles from "./styles";
-import useLightboxModal from "../../hooks/useLightboxModal";
 
 function PostPage(props) {
   const apiClient = useContext(ApiContext);
   const classes = useStyles();
-  const { currentSlidingViewsState, toggleSlidingViewsState, priorityViewSlidingViews } = useSlidingViews();
+  const history = useHistory();
+  const { currentSlidingViewsState, toggleSlidingViewsState, } = useSlidingViews();
 
   const postId = props.match.params.id;
 
@@ -43,14 +40,13 @@ function PostPage(props) {
   const likeAction = useLikeAction();
   const favoriteAction = useFavoriteAction();
   const sendTipDialog = useSendTipDialog();
-  const buyPostDialog = usePaymentDialog({isFetching: props.post.isFetching, onPayment: props.buyPost });
+  const buyPostDialog = usePaymentDialog({ isFetching: props.post.isFetching, onPayment: props.buyPost });
   const receiptDialog = useReceiptDialog({ isFetching: props.post.isFetching, onReceipt: props.getReceipt });
   const purchaseDialog = usePurchaseDialog({ isFetching: props.post.isFetching, onPurchases: props.getPurchases });
   const postMenuDialog = useMenuDialog();
   const commentDialog = useCommentDialog();
   const { handleCommentSendClick } = useCommentAction();
   const lightboxModal = useLightboxModal();
-
   const shareDialog = useShareDialog({ type: SHARE_DIALOG_POST_TYPE });
 
   useEffect(() => {
@@ -59,35 +55,26 @@ function PostPage(props) {
     }
 
     getPost(apiClient, postId);
-    getComments(apiClient, { postId, length: COMMENTS_POST_LENGTH });
-
+    getComments(apiClient, { postId });
     return () => {
       resetComments();
-      resetCurrentPost()
+      resetCurrentPost();
     };
   }, []);
 
   if (post.errorMessage) {
-    return <Redirect to={HOME_ROUTE} />
+    return <Redirect to={HOME_ROUTE} />;
   }
 
   const handleCommentMore = async () => {
-    !comment.isFetching && await getComments(apiClient, { postId, length: COMMENTS_POST_LENGTH });
+    !comment.isFetching && (await getComments(apiClient, { postId }));
   };
 
   return (
     <Box className={classes.container}>
-      <SlidingViews
-        currentState={currentSlidingViewsState}
-        firstSize={8}
-        secondSize={4}>
-        <Card className={classes.card} variant="outlined">
+      <SlidingViews currentState={currentSlidingViewsState} firstSize={8} secondSize={4}>
+        <Card className={classes.card} variant="elevation">
           <CardMedia className={classes.cardMedia}>
-            {/* <Hidden smDown>
-              <IconButton className={classes.iconToggle} onClick={toggleSlidingViewsState}>
-                {priorityViewSlidingViews === currentSlidingViewsState ? <FullscreenIcon /> : <FullscreenExitIcon />}
-              </IconButton>
-            </Hidden> */}
             <Hidden mdUp>
               <IconButton className={classes.iconToggle} onClick={toggleSlidingViewsState}>
                 <CommentIcon />
@@ -98,10 +85,25 @@ function PostPage(props) {
               amount={post.data.amount}
               isPurchased={post.data.isPurchased}
               isOwner={user.userName === post.owner?.userName}
-              onClick={lightboxModal.toggle} />
+              onClick={lightboxModal.toggle}
+            />
+
+            {post.data.userTags && post.data.userTags.length > 0 && (
+              <Box className={classes.userTags}>
+                {post.data.userTags?.map((item) => (
+                  <Chip
+                    clickable
+                    avatar={<Avatar src={item.avatarUrl} />}
+                    key={`tagged_${item.name}`}
+                    label={item.name}
+                    onClick={() => history.push(PROFILE_USERNAME_ROUTE(item.userName))}
+                  />
+                ))}
+              </Box>
+            )}
           </CardMedia>
         </Card>
- 
+
         <Comments
           postId={post.data.id}
           isOwner={user.userName === post.owner?.userName}
@@ -124,27 +126,30 @@ function PostPage(props) {
                 </IconButton>
               </Hidden>
 
-              <IconButton onClick={() => postMenuDialog.toggle({ 
-                  postId: post.data.id,
-                  userName: post.owner.userName,
-                  isOwner: user.id === post.owner.id
-                })}>
+              <IconButton
+                onClick={() =>
+                  postMenuDialog.toggle({
+                    postId: post.data.id,
+                    userName: post.owner.userName,
+                    isOwner: user.id === post.owner.id,
+                  })
+                }
+              >
                 <MoreVertIcon />
               </IconButton>
             </>
-          }>
+          }
+        >
           <Tools
             id={post.data.id}
             user={post.owner}
             likes={post.data.likes}
             isLike={post.data.iLike}
-
             amount={post.data.amount}
             isFavorite={post.data.isFavorite}
             amount={post.data.amount}
             isPurchased={post.data.isPurchased}
-            isOwner={user.userName === post.owner?.userName}
-
+            isOwner={user.userName === post.owner.userName}
             onLike={likeAction.toggle}
             onFavorite={favoriteAction.toggle}
             onSendTip={sendTipDialog.toggle}
@@ -152,7 +157,7 @@ function PostPage(props) {
             onReceipt={receiptDialog.toggle}
             onPurchase={purchaseDialog.toggle}
             onShare={shareDialog.toggle}
-            />
+          />
         </Comments>
       </SlidingViews>
     </Box>
@@ -171,7 +176,7 @@ function mapStateToProps(state) {
     comment: {
       isFetching: state.comment.isFetching,
       data: state.comment.data,
-      hasMore: state.comment.hasMore
+      hasMore: state.comment.hasMore,
     },
   };
 }
@@ -187,6 +192,7 @@ function mapDispatchToProps(dispatch) {
 
     getComments: (api, opts) => dispatch(commentActions.getCommentsPost(api, opts)),
     resetComments: () => dispatch(commentActions.resetCommentsPost()),
+    //createComment: (api, opts) => dispatch(commentActions.createCommentPost(api, opts)),
   };
 }
 

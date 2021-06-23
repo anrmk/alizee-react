@@ -11,6 +11,15 @@ const useStyles = makeStyles(theme => ({
     position: "relative",
     height: "100%"
   },
+  userTags: {
+    position: "absolute",
+    bottom: theme.spacing(0),
+    padding: theme.spacing(1),
+
+    "& .MuiChip-root": {
+      marginRight: theme.spacing(0.5)
+    }
+  },
   iconToggle: {
     position: "absolute",
     right: "10px",
