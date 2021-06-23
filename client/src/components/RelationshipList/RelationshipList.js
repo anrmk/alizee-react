@@ -1,14 +1,16 @@
 import React from "react";
 
 import { List } from "@material-ui/core";
+
 import RelationshipItem from "./RelationshipItem";
 
 const RelationshipList = React.memo(
   ({ items, currentUserName, onSubscribeClick, onConfirmClick, onRejectClick, onUnrejectClick }) => {
     return (
-      <List dense>
-        {items &&
-          items.map((item) => (
+      items &&
+      items.length > 0 && (
+        <List dense>
+          {items.map((item) => (
             <RelationshipItem
               key={item.id}
               name={item.name}
@@ -27,7 +29,8 @@ const RelationshipList = React.memo(
               onUnrejectClick={onUnrejectClick}
             />
           ))}
-      </List>
+        </List>
+      )
     );
   }
 );

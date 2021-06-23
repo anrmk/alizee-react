@@ -1,22 +1,31 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-import {Container, Avatar, Chip, Grid, Divider } from "@material-ui/core";
+import { Container, Avatar, Chip, Grid, Divider, withWidth, GridList, GridListTile } from "@material-ui/core";
 
-import { PROFILE_USERNAME_ROUTE, EXPLORE_ROUTE } from "../constants/routes";
+import { EXPLORE_ROUTE } from "../constants/routes";
 import { SEARCH_USER_TYPE } from "../constants/search";
 
 import useSearch from "../hooks/useSearch";
 
-import GridGallery from "../domain/GridGallery";
 import SearchInput from "../domain/Search";
+import ProfileCard from "../components/ProfileCard/ProfileCard";
 
-function Search() {
+function Search({ width }) {
   const history = useHistory();
   const search = useSearch({ type: SEARCH_USER_TYPE });
 
-  const onItemClick = (id) => {
-    history.push(PROFILE_USERNAME_ROUTE(id));
+  const handleChangeBreakpoint = () => {
+    switch (width) {
+      case "xs":
+        return 1;
+      case "sm":
+	  case "md":
+        return 2;
+
+      default:
+        return 3;
+    }
   };
 
   const handleClick = (tag) => {
@@ -48,18 +57,26 @@ function Search() {
             ))}
           </Grid>
         )}
-        <Grid item>
-          <GridGallery
-            isUserView={true}
-            items={search.posts}
-            hasMore={search.hasMore}
-            onFetchMore={search.onFetchMore}
-            onItemClick={onItemClick}
-          />
-        </Grid>
+        {(search.suggestionPeople.length > 0 || search.posts.length > 0) && (
+          <Grid item>
+            <GridList cols={handleChangeBreakpoint()} cellHeight="auto">
+              {!search.currentQuery &&
+                search.suggestionPeople.map((item) => (
+                  <GridListTile key={item.id}>
+                    <ProfileCard {...item} />
+                  </GridListTile>
+                ))}
+              {search.posts.map((item) => (
+                <GridListTile key={item.id}>
+                  <ProfileCard {...item} />
+                </GridListTile>
+              ))}
+            </GridList>
+          </Grid>
+        )}
       </Grid>
     </Container>
   );
 }
 
-export default Search;
+export default withWidth()(Search);

@@ -8,6 +8,8 @@ export default function suggestionPeople(
   state = {
     isFetching: false,
     data: [],
+	hasMore:false, 
+	offset: 0,
     errorMessage: "",
   },
   action

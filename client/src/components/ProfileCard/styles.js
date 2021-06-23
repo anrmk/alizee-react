@@ -6,7 +6,6 @@ import DefaultCover from "../../assets/img/default-cover.png";
 const useStyles = makeStyles((theme) => ({
   root: {
     position: "relative",
-    marginBottom: theme.spacing(1.5),
     width: "100%"
   },
 

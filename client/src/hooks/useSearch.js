@@ -33,6 +33,15 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
   }));
 
   const tags = useSelector((state) => state.search.tags);
+  const { data: suggestionPeople } = useSelector((state) => state.suggestionPeople);
+
+  useEffect(() => {
+    if (suggestionPeople.length > 0) {
+      return;
+    }
+    //TODO: need paggination
+    dispatch(actionSuggestion.getPeople(apiClient));
+  }, []);
 
   useEffect(() => {
     const currentTags = new URLSearchParams(location.search).get("tags");
@@ -116,5 +125,7 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
     onFetchMore: handleFetchMore,
     onSearch: handleSearch,
     tags,
+    suggestionPeople,
+    currentQuery,
   };
 }

@@ -1,9 +1,10 @@
 import React, { useEffect, useContext } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { Box, Grid, Typography, Hidden, Link as MUILink } from "@material-ui/core";
+
+import { Box, Grid, Hidden, Link as MUILink } from "@material-ui/core";
 
 import { PostsList } from "../../domain/PostsList";
+import FeedSuggestionUsers from "./FeedSuggestionUsers";
 // import { HotStreamersItemList } from "../../domain/Stream";
 
 import * as actionSuggestion from "../../store/actions/suggestion";
@@ -14,11 +15,9 @@ import * as storyActions from "../../store/actions/story";
 import * as paymentActions from "../../store/actions/payment";
 
 import { PreviewStoriesList } from "../../domain/StoriesLists";
-import ProfileCard from "../../components/ProfileCard/ProfileCard";
 
 import ApiContext from "../../context/ApiContext";
 import { STORIES_LENGTH } from "../../constants/feed";
-import { SUGESTED_PEOPLE } from "../../constants/routes";
 
 import useShareDialog, { SHARE_DIALOG_POST_TYPE } from "../../hooks/useShareDialog";
 import { useLikeAction, useFavoriteAction, useStoryDialog, useMenuDialog, useCommentAction } from "../../hooks/post";
@@ -78,7 +77,7 @@ function Feed(props) {
 
   const handleRefresh = (isLoading) => {
     if (!isLoading) {
-      resetPosts()
+      resetPosts();
       getPosts(apiClient, { id: userInfo.id });
     }
   };
@@ -92,51 +91,39 @@ function Feed(props) {
   };
 
   return (
-    <Grid container >
+    <Grid container>
       <Grid item xs={12} md={8} className={classes.mainBox}>
-          <PreviewStoriesList
-            loading={story.isFetching}
-            user={userInfo}
-            items={story.data}
-            onItemClick={handleStoryClick}
-            onCreateStoryClick={createStoryDialog.toggle}
-          />
+        <PreviewStoriesList
+          loading={story.isFetching}
+          user={userInfo}
+          items={story.data}
+          onItemClick={handleStoryClick}
+          onCreateStoryClick={createStoryDialog.toggle}
+        />
 
-          <PostsList
-            user={userInfo}
-            items={posts.data}
-            hasMore={posts.hasMore}
-            onRefresh={handleRefresh}
-            onFetchMore={handleFetchMore}
-            onLike={likeAction.toggle}
-            onFavorite={favoriteAction.toggle}
-            onSendTip={sendTipDialog.toggle}
-            onBuyPost={buyPostDialog.toggle}
-            onReceipt={receiptDialog.toggle}
-            onPurchase={purchaseDialog.toggle}
-            onShare={shareDialog.toggle} //??
-            onMenu={postMenuDialog.toggle} //??
-            onCommentSend={handleCommentSendClick}
-            onFullScreen={lightboxModal.toggle}
-          />
+        <PostsList
+          user={userInfo}
+          items={posts.data}
+          hasMore={posts.hasMore}
+          onRefresh={handleRefresh}
+          onFetchMore={handleFetchMore}
+          onLike={likeAction.toggle}
+          onFavorite={favoriteAction.toggle}
+          onSendTip={sendTipDialog.toggle}
+          onBuyPost={buyPostDialog.toggle}
+          onReceipt={receiptDialog.toggle}
+          onPurchase={purchaseDialog.toggle}
+          onShare={shareDialog.toggle} //??
+          onMenu={postMenuDialog.toggle} //??
+          onCommentSend={handleCommentSendClick}
+          onFullScreen={lightboxModal.toggle}
+        />
       </Grid>
 
       <Hidden smDown>
-        <Grid item md={4} >
+        <Grid item md={4}>
           <Box className={classes.suggestionList}>
-            {people.data && people.data.length > 0 && (
-              <Box mb={1}>
-                <Box display="flex" flexWrap="wrap" alignItems="center" justifyContent="space-between">
-                  <Typography variant="h6">Suggestions</Typography>
-                  <MUILink variant="caption" to={SUGESTED_PEOPLE} component={Link}>
-                    See All
-                  </MUILink>
-                </Box>
-                {people.data.map(item => (
-                  <ProfileCard {...item} key={`suggestion_${item.userName}`} />
-                ))}
-              </Box>
-            )}
+            <FeedSuggestionUsers list={people.data} />
 
             {/* {hotStreamers.data && hotStreamers.data.length > 0 && (
               <Box>
