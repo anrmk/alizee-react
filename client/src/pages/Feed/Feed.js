@@ -129,6 +129,7 @@ function Feed(props) {
         <Grid item md={4}>
           <Box className={classes.suggestionList}>
             <SuggestionPeopleList
+              withTopbar
               items={people.data}
               limit={5}
               isLoading={people.isFetching}

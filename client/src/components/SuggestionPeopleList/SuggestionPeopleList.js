@@ -17,6 +17,7 @@ export default function SuggestionPeopleList({
   items = [],
   limit,
   isLoading,
+  withTopbar,
   onRefresh
 }) {
   const classes = useStyles();
@@ -32,21 +33,23 @@ export default function SuggestionPeopleList({
     <Box>
       {localItems && localItems.length > 0 && (
         <Box mb={1}>
-          <Box display="flex" flexWrap="wrap" alignItems="center" justifyContent="space-between">
-            <Typography variant="h6">Suggestions</Typography>
-            <Box display="flex" alignItems="center">
-              <MUILink variant="caption" to={SUGESTED_PEOPLE} component={Link}>
-                See All
-              </MUILink>
-              {onRefresh && (
-                <Box display="flex" justifyContent="flex-end">
-                  <IconButton onClick={onRefresh}>
-                    <RefreshIcon className={clsx(isLoading && classes.loadingBtn)} fontSize="small" />
-                  </IconButton>
-                </Box>
-              )}
+          {withTopbar && (
+            <Box display="flex" flexWrap="wrap" alignItems="center" justifyContent="space-between">
+              <Typography variant="h6">Suggestions</Typography>
+              <Box display="flex" alignItems="center">
+                <MUILink variant="caption" to={SUGESTED_PEOPLE} component={Link}>
+                  See All
+                </MUILink>
+                {onRefresh && (
+                  <Box display="flex" justifyContent="flex-end">
+                    <IconButton onClick={onRefresh}>
+                      <RefreshIcon className={clsx(isLoading && classes.loadingBtn)} fontSize="small" />
+                    </IconButton>
+                  </Box>
+                )}
+              </Box>
             </Box>
-          </Box>
+          )}
           <GridList cellHeight="auto" cols={1}>
             {localItems.map((item) => (
               <GridListTile key={`suggestion_${uuidv4()}`}>
