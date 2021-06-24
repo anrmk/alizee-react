@@ -7,15 +7,18 @@ import { Container, Box, Typography, Divider } from "@material-ui/core";
 
 import { RelationshipList } from "../components/RelationshipList";
 import * as actionSuggestion from "../store/actions/suggestion";
-// import * as relationshipActions from "../store/actions/relationship";
 import { useFollowDialog } from "../hooks/payment";
 
-function PeopleSuggested({ people, getPeople }) {
+function PeopleSuggested({ people, getPeople, resetPeople }) {
   const apiClient = useContext(ApiContext);
   const followDialog = useFollowDialog();
 
   useEffect(() => {
-    (async () => await getPeople(apiClient))();
+    getPeople(apiClient);
+
+    return () => {
+      resetPeople();
+    }
   }, []);
 
   return (
@@ -40,6 +43,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getPeople: (api) => dispatch(actionSuggestion.getPeople(api)),
+    resetPeople: () => dispatch(actionSuggestion.resetPeople())
   };
 }
 

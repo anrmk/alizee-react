@@ -47,7 +47,7 @@ export function getFavoritePosts(api, opts) {
     dispatch(requestGetFavoritePosts());
 
     const url = generateUrl("getFavoritePosts");
-    const currentOffset = getState().posts.offset;
+    const currentOffset = getState().profilePosts.offset;
     try {
       const { data } = await api
         .setMethod("GET")
@@ -59,7 +59,7 @@ export function getFavoritePosts(api, opts) {
 
       dispatch(
         receiveGetFavoritePosts(
-          [...getState().posts.data, ...data.data],
+          [...getState().profilePosts.data, ...data.data],
           data.recordsTotal,
           currentOffset,
           currentOffset + data.data.length < data.recordsTotal

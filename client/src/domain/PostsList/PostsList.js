@@ -1,6 +1,6 @@
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Box, Button, Typography } from "@material-ui/core";
+// import { Box, Button, Typography } from "@material-ui/core";
 
 import { Post } from "../../components/Post";
 
@@ -33,24 +33,7 @@ const PostsList = React.memo(
           scrollThreshold={1}
           dataLength={items.length}
           next={onFetchMore}
-          hasMore={hasMore}
-          refreshFunction={onRefresh}
-          pullDownToRefresh
-          pullDownToRefreshThreshold={50}
-          pullDownToRefreshContent={
-            <Box textAlign="center">
-              <Typography variant="h6" color="textSecondary">
-                &#8595; Pull down to refresh
-              </Typography>
-            </Box>
-          }
-          releaseToRefreshContent={
-            <Box textAlign="center">
-              <Typography variant="h6" color="textSecondary">
-                &#8593; Release to refresh
-              </Typography>
-            </Box>
-          }>
+          hasMore={hasMore}>
           {items.length > 0 &&
             items.map((item) => (
               <Post

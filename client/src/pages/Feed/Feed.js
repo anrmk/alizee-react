@@ -1,10 +1,8 @@
 import React, { useEffect, useContext } from "react";
 import { connect } from "react-redux";
-
-import { Box, Grid, Hidden, Link as MUILink } from "@material-ui/core";
+import { Box, Grid, Hidden } from "@material-ui/core";
 
 import { PostsList } from "../../domain/PostsList";
-import FeedSuggestionUsers from "./FeedSuggestionUsers";
 // import { HotStreamersItemList } from "../../domain/Stream";
 
 import * as actionSuggestion from "../../store/actions/suggestion";
@@ -15,6 +13,7 @@ import * as storyActions from "../../store/actions/story";
 import * as paymentActions from "../../store/actions/payment";
 
 import { PreviewStoriesList } from "../../domain/StoriesLists";
+import Nav from "./Nav";
 
 import ApiContext from "../../context/ApiContext";
 import { STORIES_LENGTH } from "../../constants/feed";
@@ -26,28 +25,27 @@ import {
   usePaymentDialog,
   usePurchaseDialog,
   useReceiptDialog,
-  // useFollowDialog,
 } from "../../hooks/payment";
 import useFullScreen from "../../hooks/useFullScreen";
 import useLightboxModal from "../../hooks/useLightboxModal";
 
 import useStyles from "./styles";
+import SuggestionPeopleList from "../../components/SuggestionPeopleList";
 
 function Feed(props) {
   const classes = useStyles();
   const apiClient = useContext(ApiContext);
 
   const { userInfo } = props;
-  const { people, getPeople } = props;
+  const { people, getPeople, resetPeople } = props;
   const { posts, getPosts, resetPosts } = props;
   const { story, getFollowingStories, resetFollowingStories } = props;
   // const { hotStreamers, getHotStreamers } = props;
 
   const likeAction = useLikeAction();
   const favoriteAction = useFavoriteAction();
-  // const followDialog = useFollowDialog();
   const sendTipDialog = useSendTipDialog();
-  const buyPostDialog = usePaymentDialog({ isFetching: posts.isFetching, onPayment: props.buyPost }); //buy ticket
+  const buyPostDialog = usePaymentDialog({ isFetching: posts.isFetching, onPayment: props.buyPost });
   const receiptDialog = useReceiptDialog({ isFetching: posts.isFetching, onReceipt: props.getReceipt });
   const purchaseDialog = usePurchaseDialog({ isFetching: posts.isFetching, onPurchases: props.getPurchases });
   const createStoryDialog = useStoryDialog();
@@ -66,6 +64,7 @@ function Feed(props) {
 
     return () => {
       resetFollowingStories();
+      resetPeople();
     };
   }, []);
 
@@ -90,9 +89,15 @@ function Feed(props) {
     fullScreen.toggle(true);
   };
 
+  const handlePeopleRefreshClick = () => {
+    getPeople(apiClient);
+  }
+
   return (
     <Grid container>
       <Grid item xs={12} md={8} className={classes.mainBox}>
+        <Nav />
+        
         <PreviewStoriesList
           loading={story.isFetching}
           user={userInfo}
@@ -113,8 +118,8 @@ function Feed(props) {
           onBuyPost={buyPostDialog.toggle}
           onReceipt={receiptDialog.toggle}
           onPurchase={purchaseDialog.toggle}
-          onShare={shareDialog.toggle} //??
-          onMenu={postMenuDialog.toggle} //??
+          onShare={shareDialog.toggle}
+          onMenu={postMenuDialog.toggle}
           onCommentSend={handleCommentSendClick}
           onFullScreen={lightboxModal.toggle}
         />
@@ -123,16 +128,11 @@ function Feed(props) {
       <Hidden smDown>
         <Grid item md={4}>
           <Box className={classes.suggestionList}>
-            <FeedSuggestionUsers list={people.data} />
-
-            {/* {hotStreamers.data && hotStreamers.data.length > 0 && (
-              <Box>
-                <Typography variant="h6" gutterBottom>
-                  Hot Streamers
-                </Typography>
-                <HotStreamersItemList items={hotStreamers.data} onJoinStream={handleJoinStream} />
-              </Box>
-            )} */}
+            <SuggestionPeopleList
+              items={people.data}
+              limit={5}
+              isLoading={people.isFetching}
+              onRefresh={handlePeopleRefreshClick} />
           </Box>
         </Grid>
       </Hidden>
@@ -185,6 +185,7 @@ function mapDispatchToProps(dispatch) {
     resetPosts: () => dispatch(postActions.resetFollowingPosts()),
 
     getPeople: (api) => dispatch(actionSuggestion.getPeople(api, 5)),
+    resetPeople: () => dispatch(actionSuggestion.resetPeople()),
     buyPost: (api, id) => dispatch(paymentActions.buyPost(api, id)),
 
     getStory: (api, opts) => dispatch(storyActions.getStory(api, opts)),

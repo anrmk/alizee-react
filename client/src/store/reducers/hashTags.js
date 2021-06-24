@@ -2,7 +2,7 @@ import {
   GET_HASH_TAGS_REQUEST,
   GET_HASH_TAGS_SUCCESS,
   GET_HASH_TAGS_FAILURE
-} from '../actions/hashTags';
+} from "../actions/hashTags";
 
 export default function interests(state = {
   isFetching: false,

@@ -49,13 +49,11 @@ export function resetPosts() {
     dispatch({
       type: RESET_POSTS_SUGGESTIONS,
       payload: {
-        posts: {
-          isFetching: false,
-          offset: 0,
-          hasMore: false,
-          errorMessage: "",
-          data: [],
-        },
+        isFetching: false,
+        offset: 0,
+        hasMore: false,
+        errorMessage: "",
+        data: [],
       },
     });
 }

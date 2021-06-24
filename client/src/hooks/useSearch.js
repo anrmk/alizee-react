@@ -4,7 +4,7 @@ import { useHistory, useLocation } from "react-router-dom";
 
 import ApiContext from "../context/ApiContext";
 import * as searchActions from "../store/actions/search";
-import * as actionSuggestion from "../store/actions/suggestion";
+import * as suggestionActions from "../store/actions/suggestion";
 // import * as actionPost from "../store/actions/post";
 import { SEARCH_USER_TYPE, isUserType } from "../constants/search";
 import { POSTS_LENGTH } from "../constants/feed";
@@ -40,16 +40,8 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
       return;
     }
     //TODO: need paggination
-    dispatch(actionSuggestion.getPeople(apiClient));
+    dispatch(suggestionActions.getPeople(apiClient));
   }, []);
-
-  useEffect(() => {
-    const currentTags = new URLSearchParams(location.search).get("tags");
-
-    if (!isUserType(type) && !currentTags?.length) {
-      dispatch(actionSuggestion.getPosts(apiClient, { length: POSTS_LENGTH }));
-    }
-  }, [type]);
 
   useEffect(() => {
     let currentTags = location.search && new URLSearchParams(location.search).get("tags");
@@ -66,7 +58,21 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
       })();
       setCurrentQuery(currentTags);
     }
+
+    return () => {
+      dispatch(suggestionActions.resetPosts());
+      dispatch(searchActions.resetSearch());
+    }
   }, []);
+
+  useEffect(() => {
+    const currentTags = new URLSearchParams(location.search).get("tags");
+
+    if (!isUserType(type) && !currentTags?.length) {
+      dispatch(suggestionActions.getPosts(apiClient, { length: POSTS_LENGTH }));
+    }
+    
+  }, [type]);
 
   useEffect(() => {
     setLocalHasMore(searchedPosts.hasMore);
@@ -99,7 +105,7 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
   const handleFetchMore = async () => {
     if (!searchedPosts.isFetching && !suggestionPosts.isFetching) {
       if (!currentQuery && !isUserType(type)) {
-        await dispatch(actionSuggestion.getPosts(apiClient, { length: POSTS_LENGTH }));
+        await dispatch(suggestionActions.getPosts(apiClient, { length: POSTS_LENGTH }));
       } else {
         await dispatch(searchActions.getUsersByQuery(apiClient, { query: currentQuery, type }));
       }
@@ -111,7 +117,7 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
       await dispatch(searchActions.getUsersByQuery(apiClient, { query: query, type }));
     } else {
       dispatch(searchActions.resetSearch());
-      !isUserType(type) && (await dispatch(actionSuggestion.getPosts(apiClient, { length: POSTS_LENGTH })));
+      !isUserType(type) && (await dispatch(suggestionActions.getPosts(apiClient, { length: POSTS_LENGTH })));
     }
     !isUserType(type) &&
       history.push({ pathname: history.pathname, search: query && "?tags=" + query.replaceAll("#", "") });

@@ -3,6 +3,7 @@ import { generateUrl } from "../../../helpers/functions";
 export const GET_PEOPLE_SUGGESTIONS_REQUEST = "GET_PEOPLE_SUGGESTIONS_REQUEST";
 export const GET_PEOPLE_SUGGESTIONS_SUCCESS = "GET_PEOPLE_SUGGESTIONS_SUCCESS";
 export const GET_PEOPLE_SUGGESTIONS_FAILURE = "GET_PEOPLE_SUGGESTIONS_FAILURE";
+export const RESET_PEOPLE_SUGGESTIONS = "RESET_PEOPLE_SUGGESTIONS";
 
 function requestGetPeople() {
   return {
@@ -33,6 +34,18 @@ function errorGetPeople(message) {
       errorMessage: message,
     },
   };
+}
+
+export function resetPeople() {
+  return (dispatch) =>
+    dispatch({
+      type: RESET_PEOPLE_SUGGESTIONS,
+      payload: {
+        isFetching: false,
+        data: [],
+        errorMessage: ""
+      },
+    });
 }
 
 export function getPeople(api, count) {

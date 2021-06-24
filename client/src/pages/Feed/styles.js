@@ -27,6 +27,18 @@ const useStyles = makeStyles((theme) => ({
     "&::-webkit-scrollbar": {
       display: "none"
     }
+  },
+  navRoot: {
+    position: "sticky",
+    top: 0,
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing(1, 0),
+    marginBottom: theme.spacing(1),
+    zIndex: theme.zIndex.appBar,
+    borderBottom: "1px solid " + theme.palette.grey["800"]
+  },
+  navDivider: {
+    marginBottom: theme.spacing(1)
   }
 }));
 

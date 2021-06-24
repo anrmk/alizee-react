@@ -3,7 +3,6 @@ import {
   GET_POSTS_SUCCESS,
   GET_POSTS_FAILURE,
   RESET_POSTS,
-  REFRESH_POSTS,
 } from "../actions/post";
 
 import { POSTS_DEFAULT_OFFSET } from "../../constants/feed";
@@ -31,13 +30,6 @@ export default function post(
       };
     }
     case GET_POSTS_FAILURE: {
-      return {
-        ...state,
-        ...action.payload,
-      };
-    }
-
-    case REFRESH_POSTS: {
       return {
         ...state,
         ...action.payload,

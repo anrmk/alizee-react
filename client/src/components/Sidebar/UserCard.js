@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { Box, Typography, BottomNavigation, BottomNavigationAction } from "@material-ui/core";
 
@@ -14,11 +15,11 @@ import Avatar from "../Avatar";
 import useStyles from "./styles";
 
 function UserCard(props) {
-  const { open } = props;
-  const { name, userName, avatarUrl, coverUrl, identityVerified } = props;
+  const { name, userName, avatarUrl, identityVerified } = props;
   const { onCreateMeet, onCreatePost, onCreateStory } = props;
+  const { t } = useTranslation();
 
-  const classes = useStyles({ open });
+  const classes = useStyles();
 
   return (
     <Box>
