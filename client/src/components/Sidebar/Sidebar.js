@@ -24,6 +24,7 @@ import {
 
 import UserCard from "./UserCard";
 import { Wallet } from "../Wallet";
+import Animate from "../Animate/Animate";
 
 import useStyles from "./styles";
 
@@ -69,85 +70,103 @@ function Sidebar({
 
         <Grid item>
           <List component="nav" dense>
-            <ListItem button selected={location.pathname === HOME_ROUTE} to={HOME_ROUTE} component={Link}>
-              <ListItemIcon>
-                <HomeIcon />
-              </ListItemIcon>
-              <ListItemText>
-                <Typography color={location.pathname === HOME_ROUTE ? "textPrimary" : "textSecondary"} variant="h6">
-                  {t("SidebarFeedText")}
-                </Typography>
-              </ListItemText>
-            </ListItem>
+            <Animate variant="rubberBand">
+              <ListItem button selected={location.pathname === HOME_ROUTE} to={HOME_ROUTE} component={Link}>
+                <ListItemIcon>
+                  <HomeIcon />
+                </ListItemIcon>
+                <ListItemText>
+                  <Typography color={location.pathname === HOME_ROUTE ? "textPrimary" : "textSecondary"} variant="h6">
+                    {t("SidebarFeedText")}
+                  </Typography>
+                </ListItemText>
+              </ListItem>
+            </Animate>
+            <Animate variant="rotate">
+              <ListItem button selected={location.pathname.includes(EXPLORE_ROUTE)} to={EXPLORE_ROUTE} component={Link}>
+                <ListItemIcon>
+                  <ExploreIcon />
+                </ListItemIcon>
+                <ListItemText>
+                  <Typography
+                    color={location.pathname === EXPLORE_ROUTE ? "textPrimary" : "textSecondary"}
+                    variant="h6"
+                  >
+                    {t("SidebarExploreText")}
+                  </Typography>
+                </ListItemText>
+              </ListItem>
+            </Animate>
 
-            <ListItem button selected={location.pathname.includes(EXPLORE_ROUTE)} to={EXPLORE_ROUTE} component={Link}>
-              <ListItemIcon>
-                <ExploreIcon />
-              </ListItemIcon>
-              <ListItemText>
-                <Typography color={location.pathname === EXPLORE_ROUTE ? "textPrimary" : "textSecondary"} variant="h6">
-                  {t("SidebarExploreText")}
-                </Typography>
-              </ListItemText>
-            </ListItem>
+            <Animate variant="swing">
+              <ListItem
+                button
+                selected={location.pathname.includes(NOTIFICATION_ROUTE)}
+                to={NOTIFICATION_ROUTE_ALL}
+                component={Link}
+              >
+                <ListItemIcon>
+                  <Badge variant="dot" invisible={!newNotification} color="primary">
+                    <NotificationsIcon />
+                  </Badge>
+                </ListItemIcon>
+                <ListItemText>
+                  <Typography
+                    color={location.pathname.includes(NOTIFICATION_ROUTE) ? "textPrimary" : "textSecondary"}
+                    variant="h6"
+                  >
+                    {t("SidebarNotificationText")}
+                  </Typography>
+                </ListItemText>
+              </ListItem>
+            </Animate>
+            <Animate variant="rubberBand">
+              <ListItem
+                button
+                selected={location.pathname.includes(CHAT_ROUTE(""))}
+                to={CHAT_ROUTE("")}
+                component={Link}
+              >
+                <ListItemIcon>
+                  <Badge variant="dot" invisible={!newMessage} color="primary">
+                    <MailIcon />
+                  </Badge>
+                </ListItemIcon>
+                <ListItemText>
+                  <Typography
+                    color={location.pathname.includes(CHAT_ROUTE("")) ? "textPrimary" : "textSecondary"}
+                    variant="h6"
+                  >
+                    {t("SidebarChatText")}
+                  </Typography>
+                </ListItemText>
+              </ListItem>
+            </Animate>
 
-            <ListItem
-              button
-              selected={location.pathname.includes(NOTIFICATION_ROUTE)}
-              to={NOTIFICATION_ROUTE_ALL}
-              component={Link}
-            >
-              <ListItemIcon>
-                <Badge variant="dot" invisible={!newNotification} color="primary">
-                  <NotificationsIcon />
-                </Badge>
-              </ListItemIcon>
-              <ListItemText>
-                <Typography
-                  color={location.pathname.includes(NOTIFICATION_ROUTE) ? "textPrimary" : "textSecondary"}
-                  variant="h6"
-                >
-                  {t("SidebarNotificationText")}
-                </Typography>
-              </ListItemText>
-            </ListItem>
-
-            <ListItem button selected={location.pathname.includes(CHAT_ROUTE(""))} to={CHAT_ROUTE("")} component={Link}>
-              <ListItemIcon>
-                <Badge variant="dot" invisible={!newMessage} color="primary">
-                  <MailIcon />
-                </Badge>
-              </ListItemIcon>
-              <ListItemText>
-                <Typography
-                  color={location.pathname.includes(CHAT_ROUTE("")) ? "textPrimary" : "textSecondary"}
-                  variant="h6"
-                >
-                  {t("SidebarChatText")}
-                </Typography>
-              </ListItemText>
-            </ListItem>
-
-            <ListItem
-              button
-              selected={location.pathname.includes(PROFILE_USERNAME_ROUTE(user.userName))}
-              to={PROFILE_USERNAME_ROUTE(user.userName)}
-              component={Link}
-            >
-              <ListItemIcon>
-                <PersonOutlineIcon />
-              </ListItemIcon>
-              <ListItemText>
-                <Typography
-                  color={
-                    location.pathname.includes(PROFILE_USERNAME_ROUTE(user.userName)) ? "textPrimary" : "textSecondary"
-                  }
-                  variant="h6"
-                >
-                  {t("SidebarProfileText")}
-                </Typography>
-              </ListItemText>
-            </ListItem>
+            <Animate variant="pulse">
+              <ListItem
+                button
+                selected={location.pathname.includes(PROFILE_USERNAME_ROUTE(user.userName))}
+                to={PROFILE_USERNAME_ROUTE(user.userName)}
+                component={Link}
+              >
+                <ListItemIcon>
+                  <PersonOutlineIcon />
+                </ListItemIcon>
+                <ListItemText>
+                  <Typography
+                    color={
+                      location.pathname.includes(PROFILE_USERNAME_ROUTE(user.userName))
+                        ? "textPrimary"
+                        : "textSecondary"
+                    }
+                    variant="h6"
+                  >
+                    {t("SidebarProfileText")}
+                  </Typography>
+                </ListItemText>
+              </ListItem>
+            </Animate>
           </List>
         </Grid>
 
@@ -155,35 +174,38 @@ function Sidebar({
           <Divider variant="fullWidth" component="div" />
 
           <List component="nav" dense>
-            <ListItem
-              button
-              selected={location.pathname.includes(SETTINGS_EDIT_PROFILE_ROUTE)}
-              to={SETTINGS_EDIT_PROFILE_ROUTE}
-              component={Link}
-            >
-              <ListItemIcon>
-                <SettingsIcon />
-              </ListItemIcon>
-              <ListItemText>
-                <Typography
-                  color={location.pathname.includes(SETTINGS_EDIT_PROFILE_ROUTE) ? "textPrimary" : "textSecondary"}
-                  variant="h6"
-                >
-                  Settings
-                </Typography>
-              </ListItemText>
-            </ListItem>
-
-            <ListItem button onClick={onSignOut}>
-              <ListItemIcon>
-                <ExitToAppIcon />
-              </ListItemIcon>
-              <ListItemText>
-                <Typography color="textSecondary" variant="h6">
-                  {t("SidebarSignOutText")}
-                </Typography>
-              </ListItemText>
-            </ListItem>
+            <Animate variant="rotate">
+              <ListItem
+                button
+                selected={location.pathname.includes(SETTINGS_EDIT_PROFILE_ROUTE)}
+                to={SETTINGS_EDIT_PROFILE_ROUTE}
+                component={Link}
+              >
+                <ListItemIcon>
+                  <SettingsIcon />
+                </ListItemIcon>
+                <ListItemText>
+                  <Typography
+                    color={location.pathname.includes(SETTINGS_EDIT_PROFILE_ROUTE) ? "textPrimary" : "textSecondary"}
+                    variant="h6"
+                  >
+                    Settings
+                  </Typography>
+                </ListItemText>
+              </ListItem>
+            </Animate>
+            <Animate variant="pulse">
+              <ListItem button onClick={onSignOut}>
+                <ListItemIcon>
+                  <ExitToAppIcon />
+                </ListItemIcon>
+                <ListItemText>
+                  <Typography color="textSecondary" variant="h6">
+                    {t("SidebarSignOutText")}
+                  </Typography>
+                </ListItemText>
+              </ListItem>
+            </Animate>
           </List>
         </Grid>
       </Grid>

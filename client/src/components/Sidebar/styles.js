@@ -16,8 +16,8 @@ const useStyles = makeStyles((theme) => ({
     top: theme.spacing(3),
 
     "&::-webkit-scrollbar": {
-      display: "none"
-    }
+      display: "none",
+    },
   },
 
   papper: {
@@ -42,9 +42,8 @@ const useStyles = makeStyles((theme) => ({
     }),
 
     overflowY: "auto",
-    "&::-webkit-scrollbar":
-    {
-      display: "none"
+    "&::-webkit-scrollbar": {
+      display: "none",
     },
 
     [theme.breakpoints.up("sm")]: {
@@ -67,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   cardName: {
-    marginRight: theme.spacing(0.5)
+    marginRight: theme.spacing(0.5),
   },
 
   navigation: {
@@ -76,16 +75,16 @@ const useStyles = makeStyles((theme) => ({
 
     "& .success": {
       color: theme.palette.success.main,
-      padding: theme.spacing(0.5)
+      padding: theme.spacing(0.5),
     },
     "& .secondary": {
       color: theme.palette.secondary.main,
-      padding: theme.spacing(0.5)
+      padding: theme.spacing(0.5),
     },
     "& .primary": {
       color: theme.palette.primary.main,
-      padding: theme.spacing(0.5)
-    }
+      padding: theme.spacing(0.5),
+    },
   },
 }));
 
