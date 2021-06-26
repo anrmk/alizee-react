@@ -58,7 +58,7 @@ function ProfileUserInfo({
             showControls={isOwner}
             live={user.live} // TODO: add a condition to check is not me
             size="huge"
-            borderColor={USER_RANKING[user.ranking]}
+            borderColor="silver"
             borderWidth="4px"
             dotWidth="12px"
             onFileInputChange={onAvatarUrlChange}

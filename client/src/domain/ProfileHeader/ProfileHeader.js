@@ -66,7 +66,7 @@ function ProfileHeader(props) {
             online={isOwner || !user.offlineDate}
             live={user.live} // TODO: add a condition to check is not it me
             size="large"
-            borderColor={USER_RANKING[user.ranking]}
+            borderColor="silver"
             borderWidth="4px" />
           <ProfileStatisticsMobile
             className={classes.profileStatistics}

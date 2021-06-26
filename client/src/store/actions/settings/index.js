@@ -1,3 +1,5 @@
+export { GET_ACCOUNT_REQUEST, GET_ACCOUNT_SUCCESS, GET_ACCOUNT_FAILURE, getAccount } from "./getAccount";
+
 export { UPDATE_ACCOUNT_REQUEST, UPDATE_ACCOUNT_SUCCESS, UPDATE_ACCOUNT_FAILURE, updateAccount } from "./updateAccount";
 
 export { UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE_FAILURE, updateProfile } from "./updateProfile";

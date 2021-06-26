@@ -5,8 +5,12 @@ import ApiContext from "../../context/ApiContext";
 import * as settingsActions from "../../store/actions/settings";
 import EditAccountForm from "../../domain/SettingsForms/EditAccountForm";
 
-function EditAccountSettings({ user, isFetching, updateAccount, onSetAlertText }) {
+function EditAccountSettings({ data, isFetching, getAccount, updateAccount, onSetAlertText }) {
   const apiClient = useContext(ApiContext);
+
+  useEffect(() => {
+    getAccount(apiClient);
+  }, []);
 
   const handleEditAccountSubmit = (data) => {
     (async () => {
@@ -14,19 +18,19 @@ function EditAccountSettings({ user, isFetching, updateAccount, onSetAlertText }
       onSetAlertText(fulfilled);
     })();
   };
-
-  return <EditAccountForm {...user} onSubmit={handleEditAccountSubmit} />;
+  return !isFetching && <EditAccountForm {...data} onSubmit={handleEditAccountSubmit} />;
 }
 
 function mapStateToProps(state) {
   return {
-    user: state.signIn.userInfo,
-    isFetching: state.signIn.isFetching,
+    data: state.settings.data,
+    isFetching: state.settings.isFetching,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    getAccount: (api) => dispatch(settingsActions.getAccount(api)),
     updateAccount: (api, data) => dispatch(settingsActions.updateAccount(api, data)),
   };
 }

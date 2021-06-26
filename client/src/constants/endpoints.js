@@ -86,6 +86,7 @@ export default {
     deleteAccountFavorites: "account/favorites",
 
     // SETTINGS
+    getAccount: "accountsetting/account",
     updateAccount: "accountsetting/updateaccount",
     updateProfile: "accountsetting/updateProfile",
 

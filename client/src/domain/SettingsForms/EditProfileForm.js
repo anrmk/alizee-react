@@ -54,7 +54,6 @@ function EditProfileForm({
   coverUrl,
   name,
   userName,
-  ranking,
   bio,
   sites,
   location,

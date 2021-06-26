@@ -53,7 +53,6 @@ function Sidebar({
             name={user.name}
             avatarUrl={user.avatarUrl}
             coverUrl={user.coverUrl}
-            ranking={user.ranking}
             identityVerified={user.identityVerified}
             open={open}
             onCreateMeet={onCreateMeet}

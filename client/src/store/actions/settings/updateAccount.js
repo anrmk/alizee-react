@@ -46,13 +46,13 @@ export function updateAccount(api, opts) {
       const { data } = await api.setMethod("PUT").setData(opts).query(url);
 
       const oldUserInfo = getState().signIn?.userInfo;
-      dispatch(receiveUpdateAccount({ ...oldUserInfo, ...data }));
+      dispatch(receiveUpdateAccount({ ...oldUserInfo, ...data.account }));
 
       localStorage.setItem(
         USER_TOKEN,
         JSON.stringify({
-          access: data.accessToken,
-          refresh: data.refreshToken,
+          access: data.token.accessToken,
+          refresh: data.token.refreshToken,
         })
       );
       return true;

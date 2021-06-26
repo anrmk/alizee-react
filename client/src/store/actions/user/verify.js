@@ -43,7 +43,7 @@ export function verifyMe(api) {
       const { data } = await api.query(url);
       dispatch(receiveVerifyMe());
 
-      return redirect(data.redirectUrl, "_blank");
+      return redirect(data, "_blank");
     } catch {
       dispatch(errorVerifyMe("Error: something went wrong"));
     }

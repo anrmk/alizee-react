@@ -1,4 +1,8 @@
 import {
+  GET_ACCOUNT_REQUEST, 
+  GET_ACCOUNT_SUCCESS, 
+  GET_ACCOUNT_FAILURE,
+
   UPDATE_PRIVACY_REQUEST,
   UPDATE_PRIVACY_SUCCESS,
   UPDATE_PRIVACY_FAILURE,
@@ -94,6 +98,27 @@ export default function settings(
   action
 ) {
   switch (action.type) {
+    // Update Account
+    case GET_ACCOUNT_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      }
+    }
+
+    case GET_ACCOUNT_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      }
+    }
+    case GET_ACCOUNT_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      }
+    }
+
     // Update privacy
     case UPDATE_PRIVACY_REQUEST:
       return {
