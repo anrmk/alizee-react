@@ -5,6 +5,7 @@ import {
   GET_FOLLOWINGS_REQUEST,
   GET_FOLLOWINGS_SUCCESS,
   GET_FOLLOWINGS_FAILURE,
+  GET_FOLLOWINGS_SHARE_SUCCESS,
   FILTER_FOLLOWINGS,
   RESET_FOLLOWINGS_FILTER,
   CREATE_FOLLOW_REQUEST,
@@ -32,10 +33,11 @@ import {
 } from "../actions/relationship";
 
 import {
-  GET_PEOPLE_SUGGESTIONS_REQUEST,
-  GET_PEOPLE_SUGGESTIONS_SUCCESS,
-  GET_PEOPLE_SUGGESTIONS_FAILURE,
-} from "../actions/suggestion";
+  GET_SUGGESTIONS_PEOPLE_REQUEST,
+  GET_SUGGESTIONS_PEOPLE_FAILURE,
+  GET_SUGGESTIONS_PEOPLE_SUCCESS,
+  RESET_SUGGESTIONS_PEOPLE,
+} from "../actions/relationship";
 
 import {
   GET_USER_FAVORITES_REQUEST,
@@ -53,7 +55,10 @@ export default function usersReducer(
   state = {
     isFetching: false,
     data: [],
+	share: [],
     query: "",
+    hasMore: false,
+    offset: 0,
   },
   action
 ) {
@@ -101,6 +106,12 @@ export default function usersReducer(
         ...state,
         ...action.payload,
       };
+	  case GET_FOLLOWINGS_SHARE_SUCCESS:
+      return {
+        ...state,
+        ...action.payload,
+      };
+	  
     // Follow
     case CREATE_FOLLOW_REQUEST:
       return {
@@ -302,6 +313,27 @@ export default function usersReducer(
         ...action.payload,
       };
     }
+    // Suggestion
+    case GET_SUGGESTIONS_PEOPLE_REQUEST:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case GET_SUGGESTIONS_PEOPLE_SUCCESS:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case GET_SUGGESTIONS_PEOPLE_FAILURE:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case RESET_SUGGESTIONS_PEOPLE:
+      return {
+        ...state,
+        ...action.payload,
+      };
 
     default:
       return state;

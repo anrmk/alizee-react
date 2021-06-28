@@ -10,9 +10,8 @@ import useDialog from "./useDialog";
 export default function useFollowingsDialog() {
   const apiClient = useContext(ApiContext);
   const dispatch = useDispatch();
-  const { loading, followersList } = useSelector((state) => ({
-    loading: state.users.isFetching,
-    followersList: actionRelationship.getFilteredFollowings(state),
+  const { followersList } = useSelector((state) => ({
+    followersList: actionRelationship.getFilteredShare(state),
   }));
   const { userName } = useSelector((state) => state.signIn.userInfo);
 
@@ -27,6 +26,13 @@ export default function useFollowingsDialog() {
       updateParams();
     }
   }, [followersList, selectedChats]);
+
+  const resetQuery = () => {
+    dispatch(actionRelationship.resetFollowingsFilter());
+  };
+  const handleFollowingsFilter = (query) => {
+    dispatch(actionRelationship.filterFollowings(query));
+  };
 
   const handleOpenClick = async (withStack = false, dialogOpts, contentOpts) => {
     const toggleType = withStack ? "toggleWithStack" : "toggle";
@@ -44,7 +50,7 @@ export default function useFollowingsDialog() {
       )
     );
 
-    !loading && (await dispatch(actionRelationship.getFollowings(apiClient, userName)));
+    await dispatch(actionRelationship.getShareFollowings(apiClient, userName));
   };
 
   const updateParams = () => {
@@ -59,6 +65,8 @@ export default function useFollowingsDialog() {
           multiple: true,
           items: followersList,
           onItemSelect: (selected) => setSelectedChats(selected),
+          onSendQuery: handleFollowingsFilter,
+          resetQuery: resetQuery,
           ...contentOptionsState,
         }
       )

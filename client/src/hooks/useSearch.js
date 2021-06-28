@@ -5,6 +5,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import ApiContext from "../context/ApiContext";
 import * as searchActions from "../store/actions/search";
 import * as suggestionActions from "../store/actions/suggestion";
+import * as relationshipActions from "../store/actions/relationship";
 // import * as actionPost from "../store/actions/post";
 import { SEARCH_USER_TYPE, isUserType } from "../constants/search";
 import { POSTS_LENGTH } from "../constants/feed";
@@ -15,15 +16,14 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
   const location = useLocation();
   const history = useHistory();
   const [currentQuery, setCurrentQuery] = useState("");
-  const [localPosts, setLocalPosts] = useState([]);
-  const [localHasMore, setLocalHasMore] = useState(false);
 
   const dispatch = useDispatch();
-  const { searchedPosts, suggestionPosts } = useSelector((state) => ({
-    searchedPosts: {
+  const { searchedUsers, suggestionPosts } = useSelector((state) => ({
+    searchedUsers: {
       data: state.search.data,
       isFetching: state.search.isFetching,
       hasMore: state.search.hasMore,
+      query: state.search.query,
     },
     suggestionPosts: {
       data: state.suggestionPosts.data,
@@ -33,14 +33,14 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
   }));
 
   const tags = useSelector((state) => state.search.tags);
-  const { data: suggestionPeople } = useSelector((state) => state.suggestionPeople);
+  const { data: suggestionPeople } = useSelector((state) => state.users);
 
   useEffect(() => {
     if (suggestionPeople.length > 0) {
       return;
     }
     //TODO: need paggination
-    dispatch(suggestionActions.getPeople(apiClient));
+    dispatch(relationshipActions.getSuggestionPeople(apiClient));
   }, []);
 
   useEffect(() => {
@@ -52,6 +52,7 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
         .join(" ");
     }
 
+    // TODO: change currentTag on backend from #tag to tag.
     if (currentTags) {
       (async () => {
         await dispatch(searchActions.getUsersByQuery(apiClient, { query: currentTags, type }));
@@ -62,7 +63,7 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
     return () => {
       dispatch(suggestionActions.resetPosts());
       dispatch(searchActions.resetSearch());
-    }
+    };
   }, []);
 
   useEffect(() => {
@@ -71,39 +72,10 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
     if (!isUserType(type) && !currentTags?.length) {
       dispatch(suggestionActions.getPosts(apiClient, { length: POSTS_LENGTH }));
     }
-    
   }, [type]);
 
-  useEffect(() => {
-    setLocalHasMore(searchedPosts.hasMore);
-  }, [searchedPosts.hasMore]);
-
-  useEffect(() => {
-    setLocalHasMore(suggestionPosts.hasMore);
-  }, [suggestionPosts.hasMore]);
-
-  useEffect(() => {
-    if (searchedPosts.data.length) {
-      setLocalPosts(searchedPosts.data);
-      setLocalHasMore(searchedPosts.hasMore);
-    } else {
-      setLocalPosts([]);
-      setLocalHasMore(false);
-    }
-  }, [searchedPosts.data]);
-
-  useEffect(() => {
-    if (suggestionPosts.data.length) {
-      setLocalPosts(suggestionPosts.data);
-      setLocalHasMore(suggestionPosts.hasMore);
-    } else {
-      setLocalPosts([]);
-      setLocalHasMore(false);
-    }
-  }, [suggestionPosts.data]);
-
   const handleFetchMore = async () => {
-    if (!searchedPosts.isFetching && !suggestionPosts.isFetching) {
+    if (!searchedUsers.isFetching && !suggestionPosts.isFetching) {
       if (!currentQuery && !isUserType(type)) {
         await dispatch(suggestionActions.getPosts(apiClient, { length: POSTS_LENGTH }));
       } else {
@@ -126,8 +98,8 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
 
   return {
     lastQuery: currentQuery,
-    posts: localPosts,
-    hasMore: localHasMore,
+    data: isUserType(type) || searchedUsers.query ? searchedUsers.data : suggestionPosts.data,
+    hasMore: isUserType(type) || searchedUsers.query ? searchedUsers.hasMore : suggestionPosts.hasMore,
     onFetchMore: handleFetchMore,
     onSearch: handleSearch,
     tags,

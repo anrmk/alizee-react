@@ -1,9 +1,5 @@
 import React, { useEffect } from "react";
 
-import { useDispatch } from "react-redux";
-
-import * as actionRelationship from "../store/actions/relationship";
-
 import SelectableList from "../components/SelectableList/SelectableList";
 import SearchInput from "./Search";
 
@@ -13,22 +9,18 @@ function FollowingsDialog({
   multiple = false,
 
   onItemSelect,
+  onSendQuery,
+  resetQuery,
 }) {
-  const dispatch = useDispatch();
-
-  const handleRoomsFilter = (query) => {
-    dispatch(actionRelationship.filterFollowings(query));
-  };
-
   useEffect(() => {
     return () => {
-      dispatch(actionRelationship.resetFollowingsFilter());
+      resetQuery();
     };
   }, []);
 
   return (
     <>
-      <SearchInput onSendQuery={handleRoomsFilter} />
+      <SearchInput onSendQuery={onSendQuery} />
       <SelectableList items={items} preSelected={preSelected} multiple={multiple} onItemSelect={onItemSelect} />
     </>
   );

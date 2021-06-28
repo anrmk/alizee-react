@@ -5,7 +5,7 @@ import { Box, Grid, Hidden } from "@material-ui/core";
 import { PostsList } from "../../domain/PostsList";
 // import { HotStreamersItemList } from "../../domain/Stream";
 
-import * as actionSuggestion from "../../store/actions/suggestion";
+import * as actionRelationship from "../../store/actions/relationship";
 
 import * as postActions from "../../store/actions/post";
 import * as storyActions from "../../store/actions/story";
@@ -158,9 +158,9 @@ function mapStateToProps(state) {
     },
 
     people: {
-      isFetching: state.suggestionPeople.isFetching,
-      data: state.suggestionPeople.data,
-      errorMessage: state.suggestionPeople.errorMessage,
+      isFetching: state.users.isFetching,
+      data: state.users.data,
+      errorMessage: state.users.errorMessage,
     },
 
     story: {
@@ -185,8 +185,8 @@ function mapDispatchToProps(dispatch) {
     getReceipt: (api, id, callback) => dispatch(postActions.getReceipt(api, id, callback)),
     resetPosts: () => dispatch(postActions.resetFollowingPosts()),
 
-    getPeople: (api) => dispatch(actionSuggestion.getPeople(api, 5)),
-    resetPeople: () => dispatch(actionSuggestion.resetPeople()),
+    getPeople: (api) => dispatch(actionRelationship.getSuggestionPeople(api, 5)),
+    resetPeople: () => dispatch(actionRelationship.resetSuggestionPeople()),
     buyPost: (api, id) => dispatch(paymentActions.buyPost(api, id)),
 
     getStory: (api, opts) => dispatch(storyActions.getStory(api, opts)),

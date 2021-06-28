@@ -24,7 +24,7 @@ function Followings(props) {
   const followDialog = useFollowDialog();
 
   const { user, me, following } = props;
-  const { fetchUser, fetchFollowings } = props;
+  const { fetchUser, fetchFollowings, resetFollowings } = props;
 
   useEffect(() => {
     if (username) {
@@ -34,6 +34,12 @@ function Followings(props) {
       })();
     }
   }, [username]);
+
+  useEffect(() => {
+    return () => {
+      resetFollowings();
+    };
+  }, []);
 
   return (
     <Container maxWidth="sm">
@@ -70,6 +76,7 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchUser: (api, username) => dispatch(userActions.getUser(api, username)),
     fetchFollowings: (api, userName) => dispatch(relationshipActions.getFollowings(api, userName)),
+    resetFollowings: () => dispatch(relationshipActions.resetRelationship()),
   };
 }
 

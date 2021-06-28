@@ -21,7 +21,7 @@ function Followers(props) {
   const followDialog = useFollowDialog();
 
   const { user, me, followers } = props;
-  const { fetchUser, fetchFollowers, acceptFollow, rejectFollow, unrejectFollow } = props;
+  const { fetchUser, fetchFollowers, acceptFollow, rejectFollow, unrejectFollow, resetFollowers } = props;
 
   const [status, setStatus] = useState(FOLLOW_ACCEPTED);
 
@@ -38,6 +38,12 @@ function Followers(props) {
       await fetchFollowers(apiClient, username, status);
     })();
   }, [status]);
+
+  useEffect(() => {
+    return () => {
+      resetFollowers();
+    };
+  }, []);
 
   if (user.errorMessage) {
     return <Redirect exact to={NOT_FOUND_ROUTE} />;
@@ -103,7 +109,7 @@ function mapStateToProps(state) {
     },
     user: {
       data: state.user.data,
-      errorMessage: state.user?.errorMessage
+      errorMessage: state.user?.errorMessage,
     },
     followers: {
       isFetching: state.users.isFetching,
@@ -119,6 +125,7 @@ function mapDispatchToProps(dispatch) {
     acceptFollow: (api, userName) => dispatch(relationshipActions.acceptFollow(api, userName)),
     rejectFollow: (api, userName) => dispatch(relationshipActions.rejectFollow(api, userName)),
     unrejectFollow: (api, userName) => dispatch(relationshipActions.unrejectFollow(api, userName)),
+    resetFollowers: () => dispatch(relationshipActions.resetRelationship()),
   };
 }
 

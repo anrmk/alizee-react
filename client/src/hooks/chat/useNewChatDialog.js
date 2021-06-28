@@ -13,25 +13,31 @@ export default function useNewChatDialog() {
 
   const { data, userName } = useSelector((state) => ({
     userName: state.signIn?.userInfo?.userName,
-    data: actionRelationship.getFilteredFollowings(state)
+    data: actionRelationship.getFilteredUsers(state),
   }));
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (data) {
       dialog.setParams(
-        dialogs[CHAT_NEW_TYPE]({
-          loading: false,
+        dialogs[CHAT_NEW_TYPE](
+          {
+            loading: false,
           },
           {
             items: data,
             onItemClick: handleRoomCreate,
             onSearchChange: handleFollowingsFilter,
+            resetQuery: resetQuery,
           }
         )
       );
     }
   }, [data]);
+
+  const resetQuery = () => {
+    dispatch(actionRelationship.resetFollowingsUsers());
+  };
 
   const handleFollowingsFilter = (value) => {
     dispatch(actionRelationship.filterFollowings(value));

@@ -10,6 +10,7 @@ import useSearch from "../hooks/useSearch";
 
 import SearchInput from "../domain/Search";
 import ProfileCard from "../components/ProfileCard/ProfileCard";
+import { Typography } from "@material-ui/core";
 
 function Search({ width }) {
   const history = useHistory();
@@ -20,7 +21,7 @@ function Search({ width }) {
       case "xs":
         return 1;
       case "sm":
-	  case "md":
+      case "md":
         return 2;
 
       default:
@@ -42,7 +43,6 @@ function Search({ width }) {
           <SearchInput onSendQuery={search.onSearch} />
         </Grid>
         <Divider component="div" />
-
         {search.tags.length > 0 && (
           <Grid item>
             {search.tags.map((item) => (
@@ -52,21 +52,33 @@ function Search({ width }) {
                 label={item.name}
                 key={item.id}
                 color="primary"
-                size="small"
               />
             ))}
           </Grid>
         )}
-        {(search.suggestionPeople.length > 0 || search.posts.length > 0) && (
-          <Grid item>
-            <GridList cols={handleChangeBreakpoint()} cellHeight="auto">
-              {!search.currentQuery &&
-                search.suggestionPeople.map((item) => (
+
+        {search.data.length > 0 && (
+          <>
+            <Grid item>
+              <GridList cols={handleChangeBreakpoint()} cellHeight="auto">
+                {search.data.map((item) => (
                   <GridListTile key={item.id}>
                     <ProfileCard {...item} />
                   </GridListTile>
                 ))}
-              {search.posts.map((item) => (
+              </GridList>
+            </Grid>
+            <Divider />
+          </>
+        )}
+        {search.suggestionPeople.length > 0 && (
+          <Grid item>
+            <Typography component="h6" color="textSecondary">
+              Suggestions
+            </Typography>
+
+            <GridList cols={handleChangeBreakpoint()} cellHeight="auto">
+              {search.suggestionPeople.map((item) => (
                 <GridListTile key={item.id}>
                   <ProfileCard {...item} />
                 </GridListTile>

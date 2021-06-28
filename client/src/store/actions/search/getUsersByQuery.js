@@ -69,7 +69,6 @@ export function resetSearch() {
         data: [],
         tags: [],
         type: null,
-        tags: [],
       },
     });
 }
@@ -97,7 +96,16 @@ export function getUsersByQuery(api, opts) {
       const tags = data.tags;
       const users = data.data;
 
-      dispatch(receiveGetUsersByQuery([...getState().search.data, ...users], opts.type, currentOffset, users.length, opts.query, tags));
+      dispatch(
+        receiveGetUsersByQuery(
+          [...getState().search.data, ...users],
+          opts.type,
+          currentOffset,
+          users.length,
+          opts.query,
+          tags
+        )
+      );
     } catch (e) {
       dispatch(errorGetUsersByQuery("Error: something went wrong:"));
     }

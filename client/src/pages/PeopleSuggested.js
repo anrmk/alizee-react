@@ -6,7 +6,7 @@ import ApiContext from "../context/ApiContext";
 import { Container, Box, Typography, Divider } from "@material-ui/core";
 
 import { RelationshipList } from "../components/RelationshipList";
-import * as actionSuggestion from "../store/actions/suggestion";
+import * as actionRelationship from "../store/actions/relationship";
 import { useFollowDialog } from "../hooks/payment";
 
 function PeopleSuggested({ people, getPeople, resetPeople }) {
@@ -18,7 +18,7 @@ function PeopleSuggested({ people, getPeople, resetPeople }) {
 
     return () => {
       resetPeople();
-    }
+    };
   }, []);
 
   return (
@@ -34,16 +34,16 @@ function PeopleSuggested({ people, getPeople, resetPeople }) {
 
 function mapStateToProps(state) {
   return {
-    isFetching: state.suggestionPeople.isFetching,
-    people: state.suggestionPeople.data,
-    errorMessage: state.suggestionPeople.errorMessage,
+    isFetching: state.users.isFetching,
+    people: state.users.data,
+    errorMessage: state.users.errorMessage,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getPeople: (api) => dispatch(actionSuggestion.getPeople(api)),
-    resetPeople: () => dispatch(actionSuggestion.resetPeople())
+    getPeople: (api) => dispatch(actionRelationship.getSuggestionPeople(api)),
+    resetPeople: () => dispatch(actionRelationship.resetSuggestionPeople()),
   };
 }
 

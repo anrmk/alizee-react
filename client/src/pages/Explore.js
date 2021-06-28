@@ -17,7 +17,7 @@ function Explore() {
 
   return (
       <GridGallery
-        items={search.posts}
+        items={search.data}
         hasMore={search.hasMore}
         onFetchMore={search.onFetchMore}
         onItemClick={onItemClick}

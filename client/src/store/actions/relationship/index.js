@@ -8,7 +8,12 @@ export { DELETE_FOLLOW_REQUEST, DELETE_FOLLOW_SUCCESS, DELETE_FOLLOW_FAILURE, de
 
 export { REJECT_FOLLOW_REQUEST, REJECT_FOLLOW_SUCCESS, REJECT_FOLLOW_FAILURE, rejectFollow } from "./rejectFollow";
 
-export { UNREJECT_FOLLOW_REQUEST, UNREJECT_FOLLOW_SUCCESS, UNREJECT_FOLLOW_FAILURE, unrejectFollow} from "./unrejectFollow";
+export {
+  UNREJECT_FOLLOW_REQUEST,
+  UNREJECT_FOLLOW_SUCCESS,
+  UNREJECT_FOLLOW_FAILURE,
+  unrejectFollow,
+} from "./unrejectFollow";
 
 export { GET_FOLLOWERS_REQUEST, GET_FOLLOWERS_SUCCESS, GET_FOLLOWERS_FAILURE, getFollowers } from "./getFollowers";
 
@@ -22,8 +27,21 @@ export {
   GET_FOLLOWINGS_FAILURE,
   FILTER_FOLLOWINGS,
   RESET_FOLLOWINGS_FILTER,
+  GET_FOLLOWINGS_SHARE_SUCCESS,
   resetFollowingsFilter,
+  resetFollowingsUsers,
   getFollowings,
-  getFilteredFollowings,
+  getFilteredShare,
+  getFilteredUsers,
   filterFollowings,
+  getShareFollowings,
 } from "./getFollowings";
+
+export {
+  GET_SUGGESTIONS_PEOPLE_REQUEST,
+  GET_SUGGESTIONS_PEOPLE_FAILURE,
+  GET_SUGGESTIONS_PEOPLE_SUCCESS,
+  RESET_SUGGESTIONS_PEOPLE,
+  getSuggestionPeople,
+  resetSuggestionPeople,
+} from "./getSuggestionPeople";
