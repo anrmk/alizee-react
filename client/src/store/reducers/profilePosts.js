@@ -3,6 +3,10 @@ import {
   GET_POSTS_SUCCESS,
   GET_POSTS_FAILURE,
   RESET_POSTS,
+  
+  GET_FAVORITE_POSTS_REQUEST,
+  GET_FAVORITE_POSTS_SUCCESS,
+  GET_FAVORITE_POSTS_FAILURE,
 } from "../actions/post";
 
 import { POSTS_DEFAULT_OFFSET } from "../../constants/feed";
@@ -23,7 +27,7 @@ export default function post(
         ...action.payload,
       };
     }
-    case GET_POSTS_SUCCESS:{
+    case GET_POSTS_SUCCESS: {
       return {
         ...state,
         ...action.payload,
@@ -41,7 +45,24 @@ export default function post(
         ...action.payload,
       };
     }
-
+    case GET_FAVORITE_POSTS_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case GET_FAVORITE_POSTS_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case GET_FAVORITE_POSTS_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
     default:
       return state;
   }
