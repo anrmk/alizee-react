@@ -8,8 +8,13 @@ import ReceiptIcon from "@material-ui/icons/ReceiptOutlined";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOnRounded";
 import BookmarkIcon from "@material-ui/icons/BookmarkOutlined";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorderOutlined";
+<<<<<<< Updated upstream
 import CommentIcon from "@material-ui/icons/CommentOutlined";
 import ReplyIcon from "@material-ui/icons/ReplyOutlined";
+=======
+import CommentIcon from '@material-ui/icons/CommentOutlined';
+import ReplyIcon from '@material-ui/icons/ReplyOutlined';
+>>>>>>> Stashed changes
 
 import { POST_ID_ROUTE } from "../../constants/routes";
 
@@ -92,6 +97,28 @@ const Tools = React.memo(
           );
         }
       }
+<<<<<<< Updated upstream
+=======
+    }
+
+    return null;
+  };
+
+  return (
+    <Box width="100%">
+      <Box display="flex" alignItems="center">
+        <IconButton disabled={!isPurchased && amount > 0} onClick={handleLikeClick} aria-label="add to favorites" >
+          {isLike ? <FavoriteIcon htmlColor="red" /> : <FavoriteBorderIcon />}
+        </IconButton>
+
+        {!location.includes(POST_ID_ROUTE(id)) && isCommentable && (
+          <IconButton 
+            to={POST_ID_ROUTE(id)}
+            component={Link}>
+            <CommentIcon  />
+          </IconButton>
+        )}
+>>>>>>> Stashed changes
 
       return null;
     };

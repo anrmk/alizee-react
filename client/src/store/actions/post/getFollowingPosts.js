@@ -16,14 +16,14 @@ function requestGetFollowingPosts() {
   };
 }
 
-function receiveGetFollowingPosts(data, currentLength, start) {
+function receiveGetFollowingPosts(data, length, start) {
   return {
     type: GET_FOLLOWING_POSTS_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
       offset: start + POSTS_OFFSET,
-      hasMore: currentLength === POSTS_LENGTH,
+      hasMore: length === POSTS_LENGTH,
       data: data || []
     },
   };

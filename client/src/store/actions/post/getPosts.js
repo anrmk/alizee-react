@@ -18,16 +18,15 @@ function requestGetPosts() {
   };
 }
 
-function receiveGetPosts(posts, total, start, hasMore) {
+function receiveGetPosts(data, length, start) {
   return {
     type: GET_POSTS_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
-      offset: getOffset(start, total, POSTS_OFFSET),
-      hasMore,
-      data: posts || [],
-      count: total,
+      offset: start + POSTS_OFFSET,
+      hasMore: length === POSTS_OFFSET,
+      data: data || []
     },
   };
 }
@@ -76,10 +75,9 @@ export function getPosts(api, opts) {
 
       dispatch(
         receiveGetPosts(
-          [...getState().profilePosts.data, ...data.data],
-          data.recordsTotal,
-          currentOffset,
-          currentOffset + data.data.length < data.recordsTotal
+          [...getState().profilePosts.data, ...data],
+          data.length,
+          currentOffset
         )
       );
     } catch (e) {
