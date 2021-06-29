@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useCallback } from "react";
 import { useDispatch } from "react-redux";
 
 import ApiContext from "../context/ApiContext";
@@ -24,7 +24,7 @@ export default function useShareDialog({
   const [currentShareUsername, setCurrentShareUsername] = useState(null);
   const followingsDialog = useFollowingsDialog();
 
-  const handleOpenClick = async ({ id, userName }) => {
+  const handleOpenClick = useCallback(async ({ id, userName }) => {
     followingsDialog.toggle(withStack, {
       title: "Share To Chat",
       onMainClick: handleShareDialogBtnClick
@@ -34,7 +34,7 @@ export default function useShareDialog({
 
     id && setCurrentShareId(id);
     userName && setCurrentShareUsername(userName);
-  }
+  }, []);
 
   const handleShareDialogBtnClick = async (items) => {
     if ((!items.length && !currentShareId) || (!items.length && !currentShareUsername)) return;
@@ -54,12 +54,13 @@ export default function useShareDialog({
       messageType = POST_MESSAGE_TYPE;
     } else return;
 
+    dialog.setParams({ loading: true });
     await dispatch(actionChat.shareMessage(apiClient, {
       followersUsernames,
       message: url,
       type: messageType
     }));
-    dialog.toggle({ open: false });
+    dialog.toggle({ open: false, loading: false });
   }
 
   return {

@@ -22,7 +22,7 @@ const PostsList = React.memo(
     onPurchase,
     onShare,
     onMenu,
-    onRefresh
+    // onRefresh
   }) => {
     return (
       <>
@@ -42,11 +42,14 @@ const PostsList = React.memo(
                 user={user}
                 owner={item.user}
                 post={item}
+                comments={item.comments}
                 likes={item.likes}
                 isLike={item.iLike}
                 isFavorite={item.isFavorite}
+                isUserFavorite={item.user?.isFavorite}
                 onLike={onLike}
                 onFavorite={onFavorite}
+                // TODO: doesn't optimized, after send tip happens all posts rerenders 
                 onSendTip={onSendTip}
                 onBuyPost={onBuyPost}
                 onReceipt={onReceipt}

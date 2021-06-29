@@ -1,5 +1,5 @@
 import { useContext, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import ApiContext from "../../context/ApiContext";
 import dialogs, { SEND_TIP_DIALOG_TYPE } from "../../constants/dialogs";
@@ -13,13 +13,11 @@ export default function useSendTipDialog() {
   const dialog = useDialog();
 
   const dispatch = useDispatch();
-  const { isFetching } = useSelector((state) => ({
-    isFetching: state.payment.isFetching,
-  }));
   
   const handleSendTip = useCallback(async ({ userName, amount, message }) => {
-    dialog.toggle({ open: false });
-    !isFetching && (await dispatch(paymentActions.sendTip(apiClient, userName, amount, message)));
+    dialog.setParams({ loading: true });
+    await dispatch(paymentActions.sendTip(apiClient, userName, amount, message));
+    dialog.toggle({ open: false, loading: false });
   }, []);
 
   const handleDialogToggle = useCallback(async (user) => {

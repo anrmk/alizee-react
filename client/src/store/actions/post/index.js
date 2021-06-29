@@ -101,3 +101,17 @@ export {
 
   deletePost
 } from "./deletePost";
+
+export {
+  ADD_POSTS_USER_FAVORITE_SUCCESS,
+  ADD_POST_USER_FAVORITE_SUCCESS,
+
+  addPostsUserFavorite
+} from "./addUserFavorite";
+
+export {
+  DELETE_POSTS_USER_FAVORITE_SUCCESS,
+  DELETE_POST_USER_FAVORITE_SUCCESS,
+
+  deletePostsUserFavorite
+} from "./deleteUserFavorite";

@@ -1,4 +1,4 @@
-import { generateUrl, copyFlatObjectWithIgnore, isEmptyObject } from "../../../helpers/functions";
+import { generateUrl, isEmptyObject } from "../../../helpers/functions";
 import { updatePostComments } from "../post/updatePostComments";
 
 export const CREATE_COMMENT_POST_REQUEST = "CREATE_COMMENT_POST_REQUEST";

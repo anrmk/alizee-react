@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { memo, useRef, useState } from "react";
+import isEqual from "react-fast-compare";
 import { Link } from "react-router-dom";
 import {
   Box,
@@ -27,18 +28,23 @@ import useDoubleTap from "../../hooks/useDoubleTap";
 
 import useStyles from "./styles";
 
-const Post = React.memo((props) => {
+function Post(props) {
   const classes = useStyles();
   const [isLikeAnimation, setIsLikeAnimation] = useState(false);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   let timerLikeAnimation = useRef().current;
 
-  const { id, user, owner, post } = props;
-  const { likes, isLike, isFavorite } = props;
+  const { id, user, owner, post, comments } = props;
+  const { likes, isLike, isFavorite, isUserFavorite } = props;
   const { onLike, onFavorite, onSendTip, onBuyPost, onReceipt, onPurchase, onShare, onMenu, onCommentSend, onFullScreen } = props;
 
   const handleMenuClick = () => {
-    onMenu && onMenu({ postId: id, userName: owner.userName, isOwner: user.id === owner.id });
+    onMenu && onMenu({
+      postId: id,
+      userName: owner.userName,
+      isOwner: user.userName === owner.userName,
+      isFavorite: owner.isFavorite
+     });
   };
 
   const handleCommentSendClick = (data) => {
@@ -149,7 +155,7 @@ const Post = React.memo((props) => {
         {post.isCommentable &&
           (post.amount === 0 || user.userName === owner.userName || post.isPurchased) && (
             <>
-              {post.comments.length > 0 && <CommentsPreview items={post.comments} />}
+              {comments.length > 0 && <CommentsPreview items={comments} />}
               <Divider className={classes.divider} />
               <MessageSenderInput 
                 hideMediaEditor 
@@ -162,6 +168,6 @@ const Post = React.memo((props) => {
       </CardActions>
     </Card>
   );
-});
+}
 
-export default Post;
+export default memo(Post, isEqual);

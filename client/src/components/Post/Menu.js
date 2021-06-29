@@ -47,7 +47,7 @@ function Menu({
   };
 
   const handleFavoriteUserClick = () => {
-    onFavorite && onFavorite({ userName })
+    onFavorite && onFavorite({ userName, isFavorite })
   }
 
   return (

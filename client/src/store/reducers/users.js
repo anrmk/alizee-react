@@ -46,12 +46,13 @@ import {
   GET_USER_FAVORITES_REQUEST,
   GET_USER_FAVORITES_SUCCESS,
   GET_USER_FAVORITES_FAILURE,
+
   CREATE_USER_FAVORITES_REQUEST,
   CREATE_USER_FAVORITES_SUCCESS,
   CREATE_USER_FAVORITES_FAILURE,
   DELETE_USER_FAVORITES_REQUEST,
   DELETE_USER_FAVORITES_SUCCESS,
-  DELETE_USER_FAVORITES_FAILURE,
+  DELETE_USER_FAVORITES_FAILURE
 } from "../actions/account";
 
 export default function usersReducer(
@@ -169,49 +170,6 @@ export default function usersReducer(
     }
 
     case GET_USER_FAVORITES_FAILURE: {
-      return {
-        ...state,
-        ...action.payload,
-      };
-    }
-
-    //FAVORITE
-    case CREATE_USER_FAVORITES_REQUEST: {
-      return {
-        ...state,
-        ...action.payload,
-      };
-    }
-
-    case CREATE_USER_FAVORITES_SUCCESS: {
-      return {
-        ...state,
-        ...action.payload,
-      };
-    }
-
-    case CREATE_USER_FAVORITES_FAILURE: {
-      return {
-        ...state,
-        ...action.payload,
-      };
-    }
-
-    case DELETE_USER_FAVORITES_REQUEST: {
-      return {
-        ...state,
-        ...action.payload,
-      };
-    }
-
-    case DELETE_USER_FAVORITES_SUCCESS: {
-      return {
-        ...state,
-        ...action.payload,
-      };
-    }
-
-    case DELETE_USER_FAVORITES_FAILURE: {
       return {
         ...state,
         ...action.payload,
@@ -355,6 +313,45 @@ export default function usersReducer(
         ...state,
         ...action.payload,
       };
+    
+    //FAVORITE
+    case CREATE_USER_FAVORITES_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case CREATE_USER_FAVORITES_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case CREATE_USER_FAVORITES_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case DELETE_USER_FAVORITES_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case DELETE_USER_FAVORITES_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case DELETE_USER_FAVORITES_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
 
     default:
       return state;

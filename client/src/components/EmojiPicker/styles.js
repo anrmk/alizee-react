@@ -9,6 +9,15 @@ const useStyles = makeStyles((theme) => {
   return {
     picker: {
       whiteSpace: "break-spaces",
+      "& .emoji-mart": {
+        position: "absolute",
+        width: "auto",
+        maxWidth: "355px",
+        bottom: "60px",
+        left: 0,
+        backgroundColor:
+          theme.palette.type === "light" ? theme.palette.common.white : theme.palette.background.paper,
+      },
       "& .emoji-mart-category-label span": {
         backgroundColor: pickerBackgroundColor,
       },

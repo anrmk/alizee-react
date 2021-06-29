@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { useHistory, useLocation } from "react-router";
 
 import dialogs, { POST_MENU_DIALOG_TYPE } from "../../constants/dialogs";
@@ -21,6 +21,7 @@ const initProps = {
   isChatShare: false,
   isDelete: true,
   isFavorite: true,
+  useFavoriteProps: null,
   type: POST_TYPE
 };
 
@@ -34,28 +35,34 @@ export default function useMenuDialog(props) {
   const postShareDialog = useSharePostDialog();
   const chatShareDialog = useShareDialog({ withStack: true, type: SHARE_DIALOG_PROFILE_TYPE });
   const { deletePostAction } = useDeleteAction();
-  const { favoriteUserAction } = useFavoriteUserAction();
-  const [localData, setLocalData] = useState({});
+  const { favoriteUserAction } = useFavoriteUserAction(props.favoriteProps);
+  const [localData, setLocalData] = useState(null);
   
-  const { isFavorite } = useSelector((state) => ({
+  const { isFavorite, followingPostsData } = useSelector((state) => ({
     isFavorite: state.user.data?.isFavorite,
+    followingPostsData: state.followingPosts.data,
   }));
 
+  // TODO: WIP
   useEffect(() => {
-    dialog.setParams(
-      dialogs[POST_MENU_DIALOG_TYPE](null, {
-        onBlock: props.isBlock && blockDialog.toggle,
-        onReport: props.isReport && reportDialog.toggle,
-        onShare: props.isShare && postShareDialog.toggle,
-        onChatShare: props.isChatShare && chatShareDialog.toggle,
-        onDelete: props.isDelete && handleDeleteClick,
-        onFavorite: props.isFavorite && handleFavoriteUserClick,
-        type: props.type,
-        isFavorite,
-        ...localData
-      }),
-    )
-  }, [isFavorite]);
+    if (localData) {
+      // const newFollowStatus = !localData.isFavorite;
+      dialog.setParams(
+        dialogs[POST_MENU_DIALOG_TYPE](null, {
+          onBlock: props.isBlock && blockDialog.toggle,
+          onReport: props.isReport && reportDialog.toggle,
+          onShare: props.isShare && postShareDialog.toggle,
+          onChatShare: props.isChatShare && chatShareDialog.toggle,
+          onDelete: props.isDelete && handleDeleteClick,
+          onFavorite: props.isFavorite && handleFavoriteUserClick,
+          type: props.type,
+          ...localData,
+        })
+      );
+      setLocalData(prev => ({ ...prev, isFavorite: !prev.isFavorite }));
+      // setLocalData({ ...localData, isFavorite: newFollowStatus });
+    }
+  }, [isFavorite, followingPostsData]);
 
   const handleDeleteClick = useCallback(async (id) => {
     dialog.setParams({ loading: true });
@@ -69,7 +76,7 @@ export default function useMenuDialog(props) {
 
   const handleFavoriteUserClick = useCallback(async (data) => {
     await favoriteUserAction(data);
-  }, [isFavorite]);
+  }, []);
 
   const handleDialogToggle = useCallback(async (data) => {
     setLocalData(data);
@@ -82,12 +89,11 @@ export default function useMenuDialog(props) {
         onDelete: props.isDelete && handleDeleteClick,
         onFavorite: props.isFavorite && handleFavoriteUserClick,
         type: props.type,
-        isFavorite,
         ...data
       }),
       true
     );
-  }, [isFavorite]);
+  }, []);
 
   return {
     toggle: handleDialogToggle,

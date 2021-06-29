@@ -1,4 +1,5 @@
-import { generateUrl } from "../../../helpers/functions";
+import { generateUrl, isEmptyObject } from "../../../helpers/functions";
+import { deletePostsUserFavorite } from "../post";
 import { removeFavorite } from "../user";
 
 export const DELETE_USER_FAVORITES_REQUEST = "DELETE_USER_FAVORITES_REQUEST";
@@ -44,15 +45,25 @@ export function deleteFavorites(api, userName) {
     try {
       await api.setMethod("DELETE").setParams({ userName }).query(url);
 
-      const list = [...getState().users.data];
-      const index = list.findIndex((item) => item.userName === userName);
-      if (index !== -1) {
-        list[index]["isFavorite"] = true;
+      if (getState().followingPosts.data.length) {
+        dispatch(deletePostsUserFavorite(userName));
       } 
 
-      dispatch(removeFavorite())
-      dispatch(receiveDeleteUserFavorite(list));
-    } catch {
+      if (!isEmptyObject(getState().user.data)) {
+        dispatch(removeFavorite())
+      }
+
+      if (getState().users.data) {
+        const list = [...getState().users.data];
+        const index = list.findIndex((item) => item.userName === userName);
+
+        if (index !== -1) {
+          list[index]["isFavorite"] = false;
+        }
+
+        dispatch(receiveDeleteUserFavorite(list));
+      }
+    } catch (error) {
       dispatch(errorDeleteUserFavorite("Error: something went wrong"));
     }
   };

@@ -1,13 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-const spinAnimation = `
-  @keyframes spin {
-    from {transform:rotate(0deg);}
-    to {transform:rotate(360deg);}
-  }
-`
-
 const useStyles = makeStyles((theme) => ({
+  rootList: {
+    "& > div + div": {
+      marginTop: theme.spacing(1)
+    }
+  },
   loadingBtn: {
     animation: "$spin 1.5s linear infinite"
   },

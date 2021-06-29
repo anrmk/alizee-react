@@ -68,24 +68,14 @@ function EmojiPicker({
   const renderEmojiPicker = () => {
     return (
       <Box className={classes.picker}>
-        <Picker
+        {emojiPickerIsOpen && <Picker
           tabIndex={0}
           set="google"
           showPreview={false}
           showSkinTones={false}
           theme={theme.palette.type === "light" ? "light" : "dark"}
-          style={{
-            position: "absolute",
-            width: "auto",
-            maxWidth: "355px",
-            bottom: "60px",
-            left: 0,
-            display: emojiPickerIsOpen ? null : "none",
-            backgroundColor:
-              theme.palette.type === "light" ? theme.palette.common.white : theme.palette.background.paper,
-          }}
           onClick={handleAddEmoji}
-        />
+        />}
       </Box>
     );
   };

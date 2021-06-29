@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import PropTypes from "prop-types";
 
 import { ENTER_KEY_CODE } from "../../constants/key_codes";
 import { InputAdornment, IconButton, TextField } from "@material-ui/core";

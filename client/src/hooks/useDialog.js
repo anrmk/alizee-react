@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 
 import DialogContext, {
@@ -22,7 +22,7 @@ export default function useDialog() {
     setParams();
   }, [stack]);
 
-  const setParams = React.useCallback(
+  const setParams = useCallback(
     (data) => {
       setData({
         type: UPDATE_MODAL,
@@ -45,7 +45,7 @@ export default function useDialog() {
     [setData, gOpen]
   );
 
-  const back = React.useCallback((params) => {
+  const back = useCallback((params) => {
     setData({ type: STACK_BACK });
     params && setParams(params);
   }, [setData]);
@@ -54,17 +54,17 @@ export default function useDialog() {
     setParams(initialContext);
   };
 
-  const toggle = (opts) => {
+  const toggle = useCallback((opts) => {
     reset();
     baseToggle(opts, TOGGLE_MODAL);
-  };
+  }, []);
 
-  const toggleWithStack = (opts, clearStack = false) => {
+  const toggleWithStack = useCallback((opts, clearStack = false) => {
     if (clearStack) {
       reset();
     }
     baseToggle(opts, TOGGLE_WITH_STACK_MODAL);
-  };
+  }, []);
 
   return {
     setParams,

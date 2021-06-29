@@ -1,4 +1,5 @@
-import { generateUrl } from "../../../helpers/functions";
+import { generateUrl, isEmptyObject } from "../../../helpers/functions";
+import { addPostsUserFavorite } from "../post";
 import { addFavorite } from "../user";
 
 export const CREATE_USER_FAVORITES_REQUEST = "CREATE_USER_FAVORITES_REQUEST";
@@ -44,14 +45,24 @@ export function createFavorites(api, userName) {
     try {
       await api.setParams({ userName }).query(url);
 
-      const list = [...getState().users.data];
-      const index = list.findIndex((item) => item.userName === userName);
-      if (index !== -1) {
-        list[index]["isFavorite"] = true;
+      if (getState().followingPosts.data.length) {
+        dispatch(addPostsUserFavorite(userName));
+      } 
+
+      if (!isEmptyObject(getState().user.data)) {
+        dispatch(addFavorite());
       }
 
-      dispatch(addFavorite());
-      dispatch(receiveCreateUserFavorite(list));
+      if (getState().users.data.length) {
+        const list = [...getState().users.data];
+        const index = list.findIndex((item) => item.userName === userName);
+
+        if (index !== -1) {
+          list[index]["isFavorite"] = true;
+        }
+
+        dispatch(receiveCreateUserFavorite(list));
+      }
     } catch {
       dispatch(errorCreateUserFavorite("Error: something went wrong"));
     }

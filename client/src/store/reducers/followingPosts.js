@@ -38,6 +38,11 @@ import {
   DELETE_POST_REQUEST,
   DELETE_POST_SUCCESS,
   DELETE_POST_FAILURE,
+
+  ADD_POSTS_USER_FAVORITE_SUCCESS,
+  ADD_POST_USER_FAVORITE_SUCCESS,
+  DELETE_POSTS_USER_FAVORITE_SUCCESS,
+  DELETE_POST_USER_FAVORITE_SUCCESS,
 } from "../actions/post";
 
 import { POSTS_DEFAULT_OFFSET } from "../../constants/feed";
@@ -238,6 +243,31 @@ export default function post(state = {
       };
     }
     case DELETE_POST_FAILURE: {
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+
+    case ADD_POSTS_USER_FAVORITE_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+    case ADD_POST_USER_FAVORITE_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+    case DELETE_POSTS_USER_FAVORITE_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+    case DELETE_POST_USER_FAVORITE_SUCCESS: {
       return {
         ...state,
         ...action.payload

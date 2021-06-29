@@ -131,7 +131,7 @@ function PostPage(props) {
                   postMenuDialog.toggle({
                     postId: post.data.id,
                     userName: post.owner.userName,
-                    isOwner: user.id === post.owner.id,
+                    isOwner: user.userName === post.owner.userName,
                   })
                 }
               >
