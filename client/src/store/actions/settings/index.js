@@ -41,22 +41,6 @@ export {
   getAccountPersonalized,
 } from "./getAccountPersonalized";
 
-export { GET_BLACK_LIST_REQUEST, GET_BLACK_LIST_SUCCESS, GET_BLACK_LIST_FAILURE, getBlackList } from "./getBlackList";
-
-export {
-  CREATE_BLACK_LIST_REQUEST,
-  CREATE_BLACK_LIST_SUCCESS,
-  CREATE_BLACK_LIST_FAILURE,
-  createBlackList,
-} from "./createBlackList";
-
-export {
-  DELETE_BLACK_LIST_REQUEST,
-  DELETE_BLACK_LIST_SUCCESS,
-  DELETE_BLACK_LIST_FAILURE,
-  deleteBlackList,
-} from "./deleteBlackList";
-
 export {
   UPDATE_COVER_REQUEST,
   UPDATE_COVER_SUCCESS,

@@ -24,6 +24,9 @@ import {
   UNREJECT_FOLLOW_SUCCESS,
   UNREJECT_FOLLOW_FAILURE,
   RESET_RELATIONSHIP,
+  GET_BLOCK_LIST_REQUEST,
+  GET_BLOCK_LIST_SUCCESS,
+  GET_BLOCK_LIST_FAILURE,
   BLOCK_USER_REQUEST,
   BLOCK_USER_SUCCESS,
   BLOCK_USER_FAILURE,
@@ -55,7 +58,7 @@ export default function usersReducer(
   state = {
     isFetching: false,
     data: [],
-	share: [],
+    share: [],
     query: "",
     hasMore: false,
     offset: 0,
@@ -106,12 +109,12 @@ export default function usersReducer(
         ...state,
         ...action.payload,
       };
-	  case GET_FOLLOWINGS_SHARE_SUCCESS:
+    case GET_FOLLOWINGS_SHARE_SUCCESS:
       return {
         ...state,
         ...action.payload,
       };
-	  
+
     // Follow
     case CREATE_FOLLOW_REQUEST:
       return {
@@ -276,6 +279,24 @@ export default function usersReducer(
     }
 
     //BLOCK/UNBLOCK
+    case GET_BLOCK_LIST_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case GET_BLOCK_LIST_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case GET_BLOCK_LIST_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
     case BLOCK_USER_REQUEST: {
       return {
         ...state,

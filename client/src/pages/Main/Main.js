@@ -20,6 +20,7 @@ import Profile from "../Profile";
 import PrivacyPolicy from "../PrivacyPolicy";
 import Followers from "../Followers";
 import Followings from "../Followings";
+import Blocked from "../Blocked";
 import Favorites from "../Favorites";
 import { Settings } from "../Settings";
 import { ResetPassword, ChangePassword } from "../Password";
@@ -109,6 +110,7 @@ function Main(props) {
             <PrivateRoute path={Routes.SEARCH_ROUTE} component={Search} />
             <PrivateRoute exact path={Routes.ROOM_ROUTE} component={CreateRoom} />
             <PrivateRoute exact path={Routes.FAVORITES_ROUTE} component={Favorites} />
+            <PrivateRoute exact path={Routes.BLOCKED_ROUTE} component={Blocked} />
             <PrivateRoute path={Routes.SETTINGS_TYPE_ROUTE} component={Settings} />
             <PrivateRoute path={Routes.SUGESTED_PEOPLE} component={PeopleSuggested} />
             <PrivateRoute path={Routes.STATISTICS_ROUTE} component={Statistics} />

@@ -1,8 +1,7 @@
 import {
-  GET_ACCOUNT_REQUEST, 
-  GET_ACCOUNT_SUCCESS, 
+  GET_ACCOUNT_REQUEST,
+  GET_ACCOUNT_SUCCESS,
   GET_ACCOUNT_FAILURE,
-
   UPDATE_PRIVACY_REQUEST,
   UPDATE_PRIVACY_SUCCESS,
   UPDATE_PRIVACY_FAILURE,
@@ -18,29 +17,18 @@ import {
   GET_PRIVACY_REQUEST,
   GET_PRIVACY_SUCCESS,
   GET_PRIVACY_FAILURE,
-
   DELETE_ACCOUNT_REQUEST,
   DELETE_ACCOUNT_SUCCESS,
   DELETE_ACCOUNT_FAILURE,
-
   GET_ACCOUNT_PERSONALIZED_REQUEST,
   GET_ACCOUNT_PERSONALIZED_SUCCESS,
   GET_ACCOUNT_PERSONALIZED_FAILURE,
-
   GET_PERSONAL_REQUEST,
   GET_PERSONAL_SUCCESS,
   GET_PERSONAL_FAILURE,
-
-  GET_BLACK_LIST_REQUEST,
-  GET_BLACK_LIST_SUCCESS,
-  GET_BLACK_LIST_FAILURE,
-  DELETE_BLACK_LIST_REQUEST,
-  DELETE_BLACK_LIST_SUCCESS,
-  DELETE_BLACK_LIST_FAILURE,
   UPDATE_COVER_REQUEST,
   UPDATE_COVER_SUCCESS,
   UPDATE_COVER_FAILURE,
-
   GET_SITE_NOTIFICATION_REQUEST,
   GET_SITE_NOTIFICATION_SUCCESS,
   GET_SITE_NOTIFICATION_FAILURE,
@@ -65,7 +53,6 @@ import {
   UPDATE_TOAST_NOTIFICATION_REQUEST,
   UPDATE_TOAST_NOTIFICATION_SUCCESS,
   UPDATE_TOAST_NOTIFICATION_FAILURE,
-
   GET_CARD_REQUEST,
   GET_CARD_SUCCESS,
   GET_CARD_FAILURE,
@@ -93,7 +80,6 @@ export default function settings(
     isAccountPersonalized: null,
     data: {},
     interests: [],
-    blackList: [],
   },
   action
 ) {
@@ -103,20 +89,20 @@ export default function settings(
       return {
         ...state,
         ...action.payload,
-      }
+      };
     }
 
     case GET_ACCOUNT_SUCCESS: {
       return {
         ...state,
         ...action.payload,
-      }
+      };
     }
     case GET_ACCOUNT_FAILURE: {
       return {
         ...state,
         ...action.payload,
-      }
+      };
     }
 
     // Update privacy
@@ -252,41 +238,6 @@ export default function settings(
         ...action.payload,
       };
     }
-
-    
-
-    // Get black list
-    case GET_BLACK_LIST_REQUEST:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case GET_BLACK_LIST_SUCCESS:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case GET_BLACK_LIST_FAILURE:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    // Delete black list user
-    case DELETE_BLACK_LIST_REQUEST:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case DELETE_BLACK_LIST_SUCCESS:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case DELETE_BLACK_LIST_FAILURE:
-      return {
-        ...state,
-        ...action.payload,
-      };
 
     case UPDATE_COVER_REQUEST:
       return {

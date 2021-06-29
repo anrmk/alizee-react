@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useParams } from "react-router-dom";
 import { connect } from "react-redux";
-import { useParams } from "react-router-dom";
 
 import ApiContext from "../context/ApiContext";
 

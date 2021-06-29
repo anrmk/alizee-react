@@ -47,6 +47,9 @@ export const PROFILE_ROUTE = "/:username";
 export const PROFILE_FOLLOWERS_ROUTE = "/:username/followers";
 export const PROFILE_FOLLOWINGS_ROUTE = "/:username/followings";
 
+export const BLOCKED_USERNAME_ROUTE = (username) => `/${username}/blocked`;
+export const BLOCKED_ROUTE = "/:username/blocked";
+
 export const SUGESTED_PEOPLE = "/people/suggested";
 export const SETTINGS_TYPE_ROUTE = "/settings/:type";
 export const SETTINGS_ROUTE = "/settings";
@@ -63,7 +66,6 @@ export const SETTINGS_NOTIFICATIONS_TOAST_ROUTE = "/settings/notifications/toast
 
 export const SETTINGS_PRIVACY_SECURITY_ROUTE = "/settings/privacy-security";
 export const SETTINGS_SUBSCRIPTION_ROUTE = "/settings/subscription";
-export const SETTINGS_BLACK_LIST_ROUTE = "/settings/privacy-security/block-list";
 export const RESET_PASSWORD_ROUTE = "/reset-password";
 export const PASSWORD_CHANGE_ROUTE = "/password-change";
 export const STORIES_ROUTE = (id, username) => (username ? `/stories/${username}/${id}` : `/stories/${id}`);

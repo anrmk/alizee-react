@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core";
 import WarningIcon from "@material-ui/icons/Warning";
 
-import { SETTINGS_BLACK_LIST_ROUTE } from "../../constants/routes";
+import { BLOCKED_USERNAME_ROUTE } from "../../constants/routes";
 
 const ACCOUNT_PRIVACY_HEADER = "Account Privacy";
 const ACCOUNT_PRIVACY_HELPER =
@@ -126,7 +126,7 @@ function PrivacyForm({
             <Typography variant="subtitle2">{BLOCKED_ACCOUNTS_HELPER}</Typography>
           </Grid>
           <Grid item>
-            <Button disableElevation variant="outlined" color="primary" to={SETTINGS_BLACK_LIST_ROUTE} component={Link}>
+            <Button disableElevation variant="outlined" color="primary" to={BLOCKED_USERNAME_ROUTE("userName")} component={Link}>
               Blocked Accounts
             </Button>
           </Grid>

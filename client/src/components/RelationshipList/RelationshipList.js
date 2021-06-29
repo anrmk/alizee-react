@@ -12,7 +12,7 @@ const RelationshipList = React.memo(
         <List dense>
           {items.map((item) => (
             <RelationshipItem
-              key={item.id}
+              key={item.userName}
               name={item.name}
               userName={item.userName}
               avatarUrl={item.avatarUrl}

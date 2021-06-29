@@ -21,7 +21,6 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRightOutlined";
 import NightIcon from "@material-ui/icons/NightsStayOutlined";
 
 import {
-  SETTINGS_BLACK_LIST_ROUTE,
   SETTINGS_EDIT_PROFILE_ROUTE,
   SETTINGS_CARD_ROUTE,
   SETTINGS_BANK_ROUTE,
@@ -37,7 +36,6 @@ import {
 
 import PrivateRoute from "../PrivateRoute";
 import SlidingViews from "../../components/SlidingViews";
-import BlackList from "./BlackList";
 import EditProfileSettings from "./EditProfileSettings";
 import EditAccountSettings from "./EditAccountSettings";
 import EditCardSettings from "./EditCardSettings";
@@ -242,14 +240,6 @@ function Settings() {
             exact
             path={SETTINGS_PRIVACY_SECURITY_ROUTE}
             component={PrivacySecuritySettings}
-            componentProps={{
-              onSetAlertText: handleSetAlertText,
-            }}
-          />
-          <PrivateRoute
-            exact
-            path={SETTINGS_BLACK_LIST_ROUTE}
-            component={BlackList}
             componentProps={{
               onSetAlertText: handleSetAlertText,
             }}
