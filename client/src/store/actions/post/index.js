@@ -115,3 +115,11 @@ export {
 
   deletePostsUserFavorite
 } from "./deleteUserFavorite";
+
+export {
+  UPDATE_POSTS_USER_BLOCK_SUCCESS,
+  UPDATE_POST_USER_BLOCK_SUCCESS,
+
+  addPostUserBlock,
+  removePostUserBlock
+} from "./updatePostUserBlock";

@@ -1,13 +1,15 @@
-import { generateUrl } from "../../../helpers/functions";
-import { addBlocked } from "../user";
+import { generateUrl, isEmptyObject } from "../../../helpers/functions";
+import { addUserBlock } from "../user";
+import { addPostUserBlock } from "../post";
 
-export const BLOCK_USER_REQUEST = "BLOCK_USER_REQUEST";
-export const BLOCK_USER_SUCCESS = "BLOCK_USER_SUCCESS";
-export const BLOCK_USER_FAILURE = "BLOCK_USER_FAILURE";
+export const CREATE_BLOCK_USER_REQUEST = "CREATE_BLOCK_USER_REQUEST";
+export const CREATE_BLOCK_USER_SUCCESS = "CREATE_BLOCK_USER_SUCCESS";
+export const CREATE_BLOCK_USER_FAILURE = "CREATE_BLOCK_USER_FAILURE";
+export const UPDATE_BLOCK_USER_SUCCESS = "UPDATE_BLOCK_USER_SUCCESS";
 
 function requestBlockUser() {
   return {
-    type: BLOCK_USER_REQUEST,
+    type: CREATE_BLOCK_USER_REQUEST,
     payload: {
       isFetching: true,
       errorMessage: "",
@@ -17,7 +19,7 @@ function requestBlockUser() {
 
 function receiveBlockUser(data) {
   return {
-    type: BLOCK_USER_SUCCESS,
+    type: CREATE_BLOCK_USER_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
@@ -28,10 +30,20 @@ function receiveBlockUser(data) {
 
 function errorBlockUser(message) {
   return {
-    type: BLOCK_USER_FAILURE,
+    type: CREATE_BLOCK_USER_FAILURE,
     payload: {
       isFetching: false,
       errorMessage: message,
+    },
+  };
+}
+
+function receiveUpdateBlockUser() {
+  return {
+    type: UPDATE_BLOCK_USER_SUCCESS,
+    payload: {
+      isFetching: false,
+      errorMessage: "",
     },
   };
 }
@@ -42,19 +54,33 @@ export function createBlock(api, userName, type) {
 
     const url = generateUrl("createBlock");
     try {
-      await api.setData({
-        userName, 
-        type: Number(type) || 0 
-      }).query(url);
+      await api
+        .setData({
+          userName,
+          type: Number(type) || 0,
+        })
+        .query(url);
 
-      const list = [...getState().users.data];
-      const index = list.findIndex((item) => item.userName === userName);
-      if (index !== -1) {
-        list[index]["isBlocked"] = true;
+      if (getState().followingPosts.data.length) {
+        dispatch(addPostUserBlock(userName));
+        dispatch(receiveUpdateBlockUser());
       }
 
-      dispatch(addBlocked());
-      dispatch(receiveBlockUser(list));
+      if (!isEmptyObject(getState().user.data)) {
+        dispatch(addUserBlock());
+        dispatch(receiveUpdateBlockUser());
+      }
+
+      if (getState().users.data.length) {
+        const list = [...getState().users.data];
+        const index = list.findIndex((item) => item.userName === userName);
+
+        if (index !== -1) {
+          list[index]["isBlocked"] = true;
+        }
+
+        dispatch(receiveBlockUser(list));
+      }
     } catch {
       dispatch(errorBlockUser("Error: something went wrong"));
     }

@@ -43,6 +43,9 @@ import {
   ADD_POST_USER_FAVORITE_SUCCESS,
   DELETE_POSTS_USER_FAVORITE_SUCCESS,
   DELETE_POST_USER_FAVORITE_SUCCESS,
+
+  UPDATE_POSTS_USER_BLOCK_SUCCESS,
+  UPDATE_POST_USER_BLOCK_SUCCESS 
 } from "../actions/post";
 
 import { POSTS_DEFAULT_OFFSET } from "../../constants/feed";
@@ -268,6 +271,19 @@ export default function post(state = {
       };
     }
     case DELETE_POST_USER_FAVORITE_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+    case UPDATE_POSTS_USER_BLOCK_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+
+    case UPDATE_POST_USER_BLOCK_SUCCESS: {
       return {
         ...state,
         ...action.payload

@@ -61,14 +61,10 @@ export {
 } from "./removeFavorite";
 
 export {
-  ADD_BLOCKED_SUCCESS,
-  addBlocked
-} from "./addBlocked";
-
-export {
-  REMOVE_BLOCKED_SUCCESS,
-  removeBlocked
-} from "./removeBlocked";
+  UPDATE_BLOCKED_SUCCESS,
+  addUserBlock,
+  removeUserBlock
+} from "./updateBlock";
 
 export {
   UPDATE_MOOD_SUCCESS,

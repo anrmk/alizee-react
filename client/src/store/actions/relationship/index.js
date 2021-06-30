@@ -18,7 +18,7 @@ export {
 export { GET_FOLLOWERS_REQUEST, GET_FOLLOWERS_SUCCESS, GET_FOLLOWERS_FAILURE, getFollowers } from "./getFollowers";
 
 export { GET_BLOCK_LIST_REQUEST, GET_BLOCK_LIST_SUCCESS, GET_BLOCK_LIST_FAILURE, getBlocked } from "./getBlocked";
-export { BLOCK_USER_REQUEST, BLOCK_USER_SUCCESS, BLOCK_USER_FAILURE, createBlock } from "./createBlock";
+export { CREATE_BLOCK_USER_REQUEST, CREATE_BLOCK_USER_SUCCESS, CREATE_BLOCK_USER_FAILURE, createBlock } from "./createBlock";
 export { UNBLOCK_USER_REQUEST, UNBLOCK_USER_SUCCESS, UNBLOCK_USER_FAILURE, deleteBlock } from "./deleteBlock";
 
 export {

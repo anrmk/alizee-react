@@ -1,22 +1,24 @@
 import React from "react";
 
-import { ListItemIcon, ListItemText, List, ListItem } from "@material-ui/core";
+import { ListItemIcon, ListItemText, List, ListItem, Divider } from "@material-ui/core";
 import BlockIcon from "@material-ui/icons/BlockOutlined";
 import ShareIcon from "@material-ui/icons/ShareOutlined";
 import ReportIcon from "@material-ui/icons/ReportOutlined";
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import SendIcon from "@material-ui/icons/SendOutlined";
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 export const POST_TYPE = 0;
 export const PROFILE_TYPE = 1;
 
 function Menu({
   postId,
+  name,
   userName,
   isOwner,
   isFavorite,
+  isBlocked,
   type = POST_TYPE,
 
   onBlock,
@@ -24,10 +26,10 @@ function Menu({
   onShare,
   onChatShare,
   onDelete,
-  onFavorite
+  onFavorite,
 }) {
   const handleBlockClick = () => {
-    onBlock && onBlock({ userName });
+    onBlock && onBlock({ userName, isBlocked: isBlocked });
   };
 
   const handleReportClick = () => {
@@ -47,19 +49,28 @@ function Menu({
   };
 
   const handleFavoriteUserClick = () => {
-    onFavorite && onFavorite({ userName, isFavorite })
-  }
+    onFavorite && onFavorite({ userName, isFavorite });
+  };
 
   return (
-    <List>
+    <List component="nav">
       {!isOwner && onBlock && (
         <ListItem button onClick={handleBlockClick}>
           <ListItemIcon>
             <BlockIcon />
           </ListItemIcon>
-          <ListItemText primary="Block" />
+          <ListItemText primary={isBlocked ? "Unblock this user" : "Block this user"} />
         </ListItem>
       )}
+
+      {!isOwner && onFavorite && (
+        <ListItem button onClick={handleFavoriteUserClick}>
+          <ListItemIcon>{isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}</ListItemIcon>
+          <ListItemText primary="Add to favorites" />
+        </ListItem>
+      )}
+
+      <Divider />
 
       {!isOwner && onReport && (
         <ListItem button onClick={handleReportClick}>
@@ -85,15 +96,6 @@ function Menu({
             <SendIcon />
           </ListItemIcon>
           <ListItemText primary="Share to chat" />
-        </ListItem>
-      )}
-
-      {!isOwner && onFavorite && (
-        <ListItem button onClick={handleFavoriteUserClick}>
-          <ListItemIcon>
-            {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-          </ListItemIcon>
-          <ListItemText primary="Add to favorites" />
         </ListItem>
       )}
 

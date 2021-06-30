@@ -49,8 +49,8 @@ function SuggestionPeopleList({
             </Box>
           )}
           <Box className={classes.rootList}>
-            {localItems.map((item) => (
-              <SuggestionPeopleItem key={`suggestion-${item.id}`} {...item} />
+            {localItems.map((item, index) => (
+              <SuggestionPeopleItem key={`suggestion-${index}`} {...item} />
             ))}
           </Box>
         </Box>

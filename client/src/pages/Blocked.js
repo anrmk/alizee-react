@@ -19,19 +19,15 @@ import {
 } from "@material-ui/core";
 import { PROFILE_USERNAME_ROUTE } from "../constants/routes";
 import { formatDate } from "../helpers/functions";
+import useBlockDialog from "../hooks/useBlockDialog";
 
-function BlackList({ me, blocked, fetchBlocked, deleteBlock }) {
+function BlackList({ me, blocked, fetchBlocked }) {
   const apiClient = useContext(ApiContext);
+  const blockDialog = useBlockDialog();
 
   useEffect(() => {
     fetchBlocked(apiClient);
   }, []);
-
-  const handleDelete = (data) => {
-    (async () => {
-      await deleteBlock(apiClient, data);
-    })();
-  };
 
   return (
     <Container maxWidth="sm">
@@ -56,8 +52,13 @@ function BlackList({ me, blocked, fetchBlocked, deleteBlock }) {
               </ListItemAvatar>
               <ListItemText primary={item.name} secondary={`${item.userName} - ${formatDate(item.createdDate)}`} />
               <ListItemSecondaryAction>
-                <Button size="small" variant="contained" color="primary" onClick={() => handleDelete(item.userName)}>
-                  Unblock
+                <Button
+                  size="small"
+                  variant="contained"
+                  color="primary"
+                  onClick={() => blockDialog.toggle({ userName: item.userName, isBlocked: item.isBlocked })}
+                >
+                  {item.isBlocked ? "Unblock" : "Block"}
                 </Button>
               </ListItemSecondaryAction>
             </ListItem>
@@ -84,7 +85,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchBlocked: (api) => dispatch(relationshipActions.getBlocked(api)),
-    deleteBlock: (api, data) => dispatch(relationshipActions.deleteBlock(api, data)),
   };
 }
 

@@ -5,7 +5,7 @@ import { MediaEditorPreview, MediaPreview } from "../components/MediaEditor";
 import FollowingsDialog from "../domain/FollowingsDialog";
 import { Receipt, Purchase, CreatePost, CreateStories, CreateMood, Menu as PostMenu } from "../components/Post";
 import { SendTip, Payment } from "../components/Payment";
-import { ReportPost, BlockUser } from "../components/Report";
+import { ReportPost, BlockUser, UnblockUser } from "../components/Report";
 
 import SocialList from "../domain/SocialList";
 import { NewChatDialog, RoomMenuDialog } from "../domain/Chat";
@@ -27,6 +27,7 @@ export const POST_MENU_DIALOG_TYPE = "postmenu";
 export const PAYMENT_DIALOG_TYPE = "payment";
 export const FOLLOW_DIALOG_TYPE = "follow";
 export const BLOCK_DIALOG_TYPE = "block";
+export const UNBLOCK_DIALOG_TYPE = "unblock";
 export const SHARE_POST_DIALOG_TYPE = "share";
 export const REPORT_POST_DIALOG_TYPE = "reportPost";
 export const RECEIPT_DIALOG_TYPE = "receipt";
@@ -83,6 +84,14 @@ export default {
   [BLOCK_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Block",
     content: <BlockUser {...contentProps} />,
+    mainBtnText: "Confirm",
+    ...baseDialogProps,
+    ...dialogProps,
+  }),
+
+  [UNBLOCK_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+    title: "Unblock",
+    content: <UnblockUser {...contentProps} />,
     mainBtnText: "Confirm",
     ...baseDialogProps,
     ...dialogProps,

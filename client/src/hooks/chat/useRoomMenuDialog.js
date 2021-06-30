@@ -15,12 +15,7 @@ export default function useRoomMenuDialog(callback) {
   const dispatch = useDispatch();
   const apiClient = useContext(ApiContext);
 
-  const blockDialog = useBlockDialog(async ({ userName, postId, blockType }) => {
-    if (blockType === BLOCKED_TYPE) {
-      await dispatch(actionChat.removeRoom(postId));
-      dispatch(actionChat.resetCurrentRoom());
-    }
-  });
+  const blockDialog = useBlockDialog();
 
   const handleDeleteRoom = useCallback(async (id) => {
     if (!window.confirm("Delete chat?\nDeleting removes the chat from your inbox, but no one else's inbox.")) {

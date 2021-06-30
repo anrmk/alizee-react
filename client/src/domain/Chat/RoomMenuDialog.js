@@ -3,7 +3,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import { List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import { List, ListItem, ListItemIcon, ListItemText, Divider } from "@material-ui/core";
 
 import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
 import DeleteIcon from "@material-ui/icons/DeleteOutline";
@@ -36,20 +36,15 @@ function RoomMenuDialog({
   };
 
   return (
-    <List>
-      <ListItem button onClick={() => history.push(PROFILE_USERNAME_ROUTE(userName))}>
-        <ListItemIcon>
-          <AccountIcon />
-        </ListItemIcon>
-        <ListItemText primary={t("ChatRoomMenuItemContactText")} />
-      </ListItem>
-
+    <List component="nav">
       <ListItem button onClick={handleBlockClick}>
         <ListItemIcon>
           <BlockIcon />
         </ListItemIcon>
         <ListItemText primary={t("ChatRoomMenuItemAddAccountToBlackListText")} />
       </ListItem>
+
+      <Divider />
 
       <ListItem button onClick={handleClearClick}>
         <ListItemIcon>

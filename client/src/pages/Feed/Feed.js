@@ -40,7 +40,6 @@ function Feed(props) {
   const { people, getPeople, resetPeople } = props;
   const { posts, getPosts, resetPosts } = props;
   const { story, getFollowingStories, resetFollowingStories } = props;
-  // const { hotStreamers, getHotStreamers } = props;
 
   const likeAction = useLikeAction();
   const favoriteAction = useFavoriteAction();

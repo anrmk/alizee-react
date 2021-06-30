@@ -11,6 +11,7 @@ export default {
     getCurrentDeposit: "deposit/current",
     signintwitter: "account/signintwitter",
     onetimeauth: "account/onetimeauthenticate",
+    createMood: "account/createmood",
 
     // POSTS
     getPost: "post/getpost",
@@ -39,8 +40,6 @@ export default {
     getStory: "story/story",
     getStorySlide: "story/slide",
     getFollowingStories: "story/followingstories",
-
-    createMood: "mood/createmood",
 
     // MEDIA
     createMedia: "media/createmedia",

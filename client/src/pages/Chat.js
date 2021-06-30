@@ -31,9 +31,7 @@ function Chat(props) {
 
   const sendTipDialog = useSendTipDialog();
   const newChatDialog = useNewChatDialog();
-  const roomMenuDialog = useRoomMenuDialog((id) => {
-    toggleSlidingViewsState();
-  });
+  const roomMenuDialog = useRoomMenuDialog();
   const lightboxModal = useLightboxModal();
   const { currentSlidingViewsState, toggleSlidingViewsState } = useSlidingViews(RIGHT_OPEN_TYPE);
   const dialog = useDialog();
@@ -120,7 +118,7 @@ function Chat(props) {
           isLoading={chat.isFetching}
           onClose={handleRoomClose}
           onMenuClick={() => {
-            roomMenuDialog.toggle({ postId: current?.id, userName: current?.userName });
+            roomMenuDialog.toggle({ postId: current?.id, userName: current?.userName, isBlocked: current.isBlocked });
           }}
           onMessageCreate={handleMessageCreate}
           onMediaView={lightboxModal.toggle}

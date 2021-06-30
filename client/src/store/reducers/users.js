@@ -27,9 +27,9 @@ import {
   GET_BLOCK_LIST_REQUEST,
   GET_BLOCK_LIST_SUCCESS,
   GET_BLOCK_LIST_FAILURE,
-  BLOCK_USER_REQUEST,
-  BLOCK_USER_SUCCESS,
-  BLOCK_USER_FAILURE,
+  CREATE_BLOCK_USER_REQUEST,
+  CREATE_BLOCK_USER_SUCCESS,
+  CREATE_BLOCK_USER_FAILURE,
   UNBLOCK_USER_REQUEST,
   UNBLOCK_USER_SUCCESS,
   UNBLOCK_USER_FAILURE,
@@ -255,19 +255,19 @@ export default function usersReducer(
         ...action.payload,
       };
     }
-    case BLOCK_USER_REQUEST: {
+    case CREATE_BLOCK_USER_REQUEST: {
       return {
         ...state,
         ...action.payload,
       };
     }
-    case BLOCK_USER_SUCCESS: {
+    case CREATE_BLOCK_USER_SUCCESS : {
       return {
         ...state,
         ...action.payload,
       };
     }
-    case BLOCK_USER_FAILURE: {
+    case CREATE_BLOCK_USER_FAILURE: {
       return {
         ...state,
         ...action.payload,

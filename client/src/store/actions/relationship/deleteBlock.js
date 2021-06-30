@@ -1,9 +1,11 @@
-import { generateUrl } from "../../../helpers/functions";
-import { removeBlocked } from "../user";
+import { generateUrl, isEmptyObject } from "../../../helpers/functions";
+import { removeUserBlock } from "../user";
+import { removePostUserBlock } from "../post";
 
 export const UNBLOCK_USER_REQUEST = "UNBLOCK_USER_REQUEST";
 export const UNBLOCK_USER_SUCCESS = "UNBLOCK_USER_SUCCESS";
 export const UNBLOCK_USER_FAILURE = "UNBLOCK_USER_FAILURE";
+export const UPDATE_UNBLOCK_USER_FAILURE = "UPDATE_UNBLOCK_USER_FAILURE";
 
 function requestUnblockUser() {
   return {
@@ -36,6 +38,16 @@ function errorUnblockUser(message) {
   };
 }
 
+function receiveUpdateBlockUser() {
+  return {
+    type: UPDATE_UNBLOCK_USER_FAILURE,
+    payload: {
+      isFetching: false,
+      errorMessage: "",
+    },
+  };
+}
+
 export function deleteBlock(api, userName) {
   return async (dispatch, getState) => {
     dispatch(requestUnblockUser());
@@ -44,14 +56,26 @@ export function deleteBlock(api, userName) {
     try {
       await api.setMethod("DELETE").setParams({ userName }).query(url);
 
-      const list = [...getState().users.data];
-      const index = list.findIndex((item) => item.userName === userName);
-      if (index !== -1) {
-        list[index]["isBlocked"] = false;
+      if (getState().followingPosts.data.length) {
+        dispatch(removePostUserBlock(userName));
+        dispatch(receiveUpdateBlockUser());
       }
 
-      dispatch(removeBlocked());
-      dispatch(receiveUnblockUser(list));
+      if (!isEmptyObject(getState().user.data)) {
+        dispatch(removeUserBlock());
+        dispatch(receiveUpdateBlockUser());
+      }
+
+      if (getState().users.data) {
+        const list = [...getState().users.data];
+        const index = list.findIndex((item) => item.userName === userName);
+        
+        if (index !== -1) {
+          list[index]["isBlocked"] = false;
+        }
+
+        dispatch(receiveUnblockUser(list));
+      }
     } catch {
       dispatch(errorUnblockUser("Error: something went wrong"));
     }

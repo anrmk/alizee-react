@@ -22,13 +22,12 @@ import {
 
   ADD_FOLLOWER_SUCCESS,
   REMOVE_FOLLOWER_SUCCESS,
-  UPDATE_MOOD_SUCCESS,
 
   ADD_FAVORITE_SUCCESS,
-  ADD_BLOCKED_SUCCESS,
-
-  REMOVE_BLOCKED_SUCCESS,
   REMOVE_FAVORITE_SUCCESS,
+
+  UPDATE_BLOCKED_SUCCESS,
+  UPDATE_MOOD_SUCCESS,
 
   UPDATE_AVATAR_URL_REQUEST,
   UPDATE_AVATAR_URL_SUCCESS,
@@ -172,14 +171,7 @@ export default function user(
       };
     }
 
-    case ADD_BLOCKED_SUCCESS: {
-      return {
-        ...state,
-        ...action.payload,
-      };
-    }
-
-    case REMOVE_BLOCKED_SUCCESS: {
+    case UPDATE_BLOCKED_SUCCESS: {
       return {
         ...state,
         ...action.payload,

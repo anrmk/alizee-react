@@ -42,6 +42,8 @@ function Post(props) {
     onMenu && onMenu({
       postId: id,
       userName: owner.userName,
+      name: owner.name,
+      isBlocked: owner.isBlocked,
       isOwner: user.userName === owner.userName,
       isFavorite: owner.isFavorite
      });
@@ -97,7 +99,7 @@ function Post(props) {
             <Typography variant="body1" className={classes.cardName}>
               {owner.name}
             </Typography>
-            {user.identityVerified && <VerifiedIcon fontSize="small" color="primary" />}
+            {owner.identityVerified && <VerifiedIcon fontSize="small" color="primary" />}
           </Box>
         }
         subheader={
