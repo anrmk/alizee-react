@@ -200,7 +200,8 @@ function Profile(props) {
         onDeleteCoverImageClick={handleDeleteCoverImageClick}
         onMenuClick={() => postMenuDialog.toggle({ 
           userName: user.data.userName,
-          isOwner: username === me.userName
+          isOwner: username === me.userName,
+          isFavorite: user.data.isFavorite
         })} />
       <Hidden mdUp>
         <ProfileUserInfoMobile

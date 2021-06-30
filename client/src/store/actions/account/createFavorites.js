@@ -27,6 +27,16 @@ function receiveCreateUserFavorite(data) {
   };
 }
 
+function receiveWihtouDataCreateUserFavorite() {
+  return {
+    type: CREATE_USER_FAVORITES_SUCCESS,
+    payload: {
+      isFetching: false,
+      errorMessage: ""
+    },
+  };
+}
+
 function errorCreateUserFavorite(message) {
   return {
     type: CREATE_USER_FAVORITES_FAILURE,
@@ -47,10 +57,12 @@ export function createFavorites(api, userName) {
 
       if (getState().followingPosts.data.length) {
         dispatch(addPostsUserFavorite(userName));
+        dispatch(receiveWihtouDataCreateUserFavorite());
       } 
 
       if (!isEmptyObject(getState().user.data)) {
         dispatch(addFavorite());
+        dispatch(receiveWihtouDataCreateUserFavorite());
       }
 
       if (getState().users.data.length) {

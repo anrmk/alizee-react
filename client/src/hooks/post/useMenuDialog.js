@@ -43,10 +43,9 @@ export default function useMenuDialog(props) {
     followingPostsData: state.followingPosts.data,
   }));
 
-  // TODO: WIP
   useEffect(() => {
     if (localData) {
-      // const newFollowStatus = !localData.isFavorite;
+      const newFollowStatus = !localData.isFavorite;
       dialog.setParams(
         dialogs[POST_MENU_DIALOG_TYPE](null, {
           onBlock: props.isBlock && blockDialog.toggle,
@@ -57,10 +56,10 @@ export default function useMenuDialog(props) {
           onFavorite: props.isFavorite && handleFavoriteUserClick,
           type: props.type,
           ...localData,
+          isFavorite: newFollowStatus
         })
       );
-      setLocalData(prev => ({ ...prev, isFavorite: !prev.isFavorite }));
-      // setLocalData({ ...localData, isFavorite: newFollowStatus });
+      setLocalData(prev => ({ ...prev, isFavorite: newFollowStatus }));
     }
   }, [isFavorite, followingPostsData]);
 
