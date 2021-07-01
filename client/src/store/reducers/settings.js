@@ -26,9 +26,6 @@ import {
   GET_PERSONAL_REQUEST,
   GET_PERSONAL_SUCCESS,
   GET_PERSONAL_FAILURE,
-  UPDATE_COVER_REQUEST,
-  UPDATE_COVER_SUCCESS,
-  UPDATE_COVER_FAILURE,
   GET_SITE_NOTIFICATION_REQUEST,
   GET_SITE_NOTIFICATION_SUCCESS,
   GET_SITE_NOTIFICATION_FAILURE,
@@ -238,22 +235,6 @@ export default function settings(
         ...action.payload,
       };
     }
-
-    case UPDATE_COVER_REQUEST:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case UPDATE_COVER_SUCCESS:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case UPDATE_COVER_FAILURE:
-      return {
-        ...state,
-        ...action.payload,
-      };
 
     //NOTIFICATION SETTINGS
     case GET_SITE_NOTIFICATION_REQUEST: {

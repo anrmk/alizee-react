@@ -28,15 +28,9 @@ import {
 
   UPDATE_BLOCKED_SUCCESS,
   UPDATE_MOOD_SUCCESS,
-
-  UPDATE_AVATAR_URL_REQUEST,
-  UPDATE_AVATAR_URL_SUCCESS,
-  UPDATE_AVATAR_URL_FAILURE
+  CHANGE_AVATAR_SUCCESS,
+  CHANGE_COVER_SUCCESS
 } from "../actions/user";
-
-// import {
-
-// } from "../actions/account"
 
 export default function user(
   state = {
@@ -178,21 +172,19 @@ export default function user(
       };
     }
 
-    case UPDATE_AVATAR_URL_REQUEST:
+    case CHANGE_AVATAR_SUCCESS: {
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
-    case UPDATE_AVATAR_URL_SUCCESS:
+    }
+
+    case CHANGE_COVER_SUCCESS: {
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
-    case UPDATE_AVATAR_URL_FAILURE:
-      return {
-        ...state,
-        ...action.payload
-      };
+    }
 
     default:
       return state;

@@ -41,15 +41,8 @@ export {
   getAccountPersonalized,
 } from "./getAccountPersonalized";
 
-export {
-  UPDATE_COVER_REQUEST,
-  UPDATE_COVER_SUCCESS,
-  UPDATE_COVER_FAILURE,
-  UPDATE_LOCAL_COVER_SUCCESS,
-  UPDATE_LOCAL_COVER_FAILURE,
-  updateCover,
-  updateLocalCover,
-} from "./updateCover";
+export { UPDATE_COVER_REQUEST, UPDATE_COVER_SUCCESS, UPDATE_COVER_FAILURE, updateCover } from "./updateCover";
+export { UPDATE_AVATAR_REQUEST, UPDATE_AVATAR_SUCCESS, UPDATE_AVATAR_FAILURE, updateAvatar } from "./updateAvatar";
 
 export {
   GET_SITE_NOTIFICATION_REQUEST,

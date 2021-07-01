@@ -1,5 +1,5 @@
 import { generateUrl, getProfileSnapshot } from "../../../helpers/functions";
-import { updateAvatar } from "../user";
+import { updateAvatar } from "../settings";
 import { updateCover } from "./updateCover";
 
 export const UPDATE_PROFILE_REQUEST = "UPDATE_PROFILE_REQUEST";
@@ -58,10 +58,12 @@ export function updateProfile(api, opts) {
       const currentCoverUrl = signInState?.userInfo?.coverUrl;
 
       if (currentAvatarUrl !== opts.avatarUrl) {
+        delete opts["avatarUrl"];
         await dispatch(updateAvatar(api, { file: opts.avatarFile }));
       }
 
       if (currentCoverUrl !== opts.coverUrl) {
+        delete opts["coverUrl"];
         await dispatch(updateCover(api, { file: opts.coverFile }));
       }
 

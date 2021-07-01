@@ -7,6 +7,14 @@ import {
   UPDATE_PROFILE_REQUEST,
   UPDATE_PROFILE_SUCCESS,
   UPDATE_PROFILE_FAILURE,
+
+  UPDATE_AVATAR_REQUEST,
+  UPDATE_AVATAR_SUCCESS,
+  UPDATE_AVATAR_FAILURE,
+
+  UPDATE_COVER_REQUEST,
+  UPDATE_COVER_SUCCESS,
+  UPDATE_COVER_FAILURE
 } from "../actions/settings";
 
 import {
@@ -17,8 +25,6 @@ import {
 
 import { CREATE_MOOD_REQUEST, CREATE_MOOD_SUCCESS, CREATE_MOOD_FAILURE } from "../actions/mood";
 import { GET_USER_DEPOSIT_REQUEST, GET_USER_DEPOSIT_SUCCESS, GET_USER_DEPOSIT_FAILURE } from "../actions/account";
-import { UPDATE_LOCAL_AVATAR_SUCCESS, UPDATE_LOCAL_AVATAR_FAILURE } from "../actions/user";
-import { UPDATE_LOCAL_COVER_SUCCESS, UPDATE_LOCAL_COVER_FAILURE } from "../actions/settings";
 
 import { USER_TOKEN } from "../../constants/user";
 
@@ -135,13 +141,21 @@ export default function signIn(
     }
 
     // Update avatar
-    case UPDATE_LOCAL_AVATAR_SUCCESS: {
+    case UPDATE_AVATAR_REQUEST: {
       return {
         ...state,
         ...action.payload,
       };
     }
-    case UPDATE_LOCAL_AVATAR_FAILURE: {
+
+    case UPDATE_AVATAR_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case UPDATE_AVATAR_FAILURE: {
       return {
         ...state,
         ...action.payload,
@@ -149,13 +163,21 @@ export default function signIn(
     }
 
     // Update Cover
-    case UPDATE_LOCAL_COVER_SUCCESS: {
+    case UPDATE_COVER_REQUEST: {
       return {
         ...state,
         ...action.payload,
       };
     }
-    case UPDATE_LOCAL_COVER_FAILURE: {
+
+    case UPDATE_COVER_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case UPDATE_COVER_FAILURE: {
       return {
         ...state,
         ...action.payload,

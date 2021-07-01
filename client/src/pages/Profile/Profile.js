@@ -290,7 +290,7 @@ function mapDispatchToProps(dispatch) {
     deleteFollow: (api, userName) => dispatch(relationshipActions.deleteFollow(api, userName)),
 
     updateCover: (api, opts) => dispatch(settingsActions.updateCover(api, opts)),
-    updateAvatar: (api, opts) => dispatch(userActions.updateAvatar(api, opts))
+    updateAvatar: (api, opts) => dispatch(settingsActions.updateAvatar(api, opts))
   };
 }
 

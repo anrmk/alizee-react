@@ -71,16 +71,15 @@ export {
   updateMood
 } from "./updateMood";
 
-export { 
-  UPDATE_AVATAR_URL_REQUEST,
-  UPDATE_AVATAR_URL_SUCCESS,
-  UPDATE_AVATAR_URL_FAILURE,
-  UPDATE_LOCAL_AVATAR_SUCCESS,
-  UPDATE_LOCAL_AVATAR_FAILURE,
+export {
+  CHANGE_AVATAR_SUCCESS,
+  changeAvatar
+} from "./changeAvatar";
 
-  updateAvatar,
-  updateLocalAvatar
-} from './updateAvatar';
+export {
+  CHANGE_COVER_SUCCESS,
+  changeCover
+} from "./changeCover";
 
 export {
   GET_ME_REQUEST,

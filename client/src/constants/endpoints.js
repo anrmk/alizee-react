@@ -95,6 +95,7 @@ export default {
     updatePrivateStatus: "accountsetting/privatestatus",
     updateOffensiveComments: "accountsetting/offensivecontentstatus",
     updateAvatar: "accountsetting/updateavatar",
+    updateCover: "accountsetting/updatecover",
     getPrivacy: "accountsetting/privacysettings",
 
     getPushNotification: "accountsetting/pushNotification",
@@ -112,7 +113,7 @@ export default {
     getAccountInterests: "accountsetting/interests",
     createAccountInterests: "accountsetting/interests",
 
-    updateCover: "accountsetting/updatecover",
+    
     getPersonal: "accountsetting/personal",
     getCard: "accountsetting/card",
     updateCard: "accountsetting/card",
