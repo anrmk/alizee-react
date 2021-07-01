@@ -245,7 +245,7 @@ function Profile(props) {
         </Grid>
         <Hidden smDown>
           <Grid item xs={12} md={4}>
-            <Box position="sticky" top="4rem" paddingLeft="8px">
+            <Box position="sticky" top="24px" paddingLeft="8px">
               <ProfileUserInfo
                 user={user.data}
                 isOwner={username === me.userName}

@@ -15,7 +15,7 @@ function SuggestionPeopleList({
   items = [],
   limit,
   isLoading,
-  topBar,
+  withTopbar,
   onRefresh
 }) {
   const classes = useStyles();
@@ -31,7 +31,7 @@ function SuggestionPeopleList({
     <Box width="100%">
       {localItems && localItems.length > 0 && (
         <Box mb={1}>
-          {topBar && (
+          {withTopbar && (
             <Box display="flex" flexWrap="wrap" alignItems="center" justifyContent="space-between">
               <Typography variant="h6">Suggestions</Typography>
               <Box display="flex" alignItems="center">

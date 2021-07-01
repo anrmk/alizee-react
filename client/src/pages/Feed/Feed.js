@@ -95,7 +95,9 @@ function Feed(props) {
   return (
     <Grid container>
       <Grid item xs={12} md={8} className={classes.mainBox}>
-        <Nav />
+        <Hidden smDown>
+          <Nav />
+        </Hidden>
         
         <PreviewStoriesList
           loading={story.isFetching}
