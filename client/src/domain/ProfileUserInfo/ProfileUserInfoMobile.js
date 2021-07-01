@@ -1,9 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import ShowMoreText from "react-show-more-text";
 import { Link } from "react-router-dom";
 
-import { Typography, Box, Button, IconButton } from "@material-ui/core/";
+import { Typography, Box, Button, IconButton, CardHeader } from "@material-ui/core/";
 
 import MessageIcon from "@material-ui/icons/MessageOutlined";
 import DollarIcon from "@material-ui/icons/MonetizationOnOutlined";
@@ -14,8 +13,6 @@ import { getSubscriptionBtnText, isAwaitingConfirmation } from "./utils";
 import useStyles from "./style";
 
 function ProfileUserInfo({
-  className,
-
   user,
   isOwner,
   isFollow,
@@ -25,75 +22,66 @@ function ProfileUserInfo({
   onSubscribeClick,
   onSendTipClick,
 }) {
-  const classes = useStyles();
+  const classes = useStyles({ isOwner });
   const { t } = useTranslation();
 
   const handleSendTipClick = () => {
-    onSendTipClick && onSendTipClick(user)
-  }
+    onSendTipClick && onSendTipClick(user);
+  };
 
   const handleSubscribeClick = () => {
-    onSubscribeClick && onSubscribeClick(user)
-  }
+    onSubscribeClick && onSubscribeClick(user);
+  };
 
   return (
-    <Box display="flex" flexDirection="column" className={classes.root}>
-        {isOwner ? (
-          <Button
-            disableElevation
-            color="primary"
-            variant="contained"
-            to="statistics"
-            component={Link}>
-            Statistics
-          </Button>
-        ) : (
-          <>
-            <Box className={classes.btnsGroupMobile}>
-              <Button
-                fullWidth
-                disableElevation
-                color="primary"
-                variant="contained"
-                onClick={handleSubscribeClick}>
-                {getSubscriptionBtnText(followStatus, subscriptionPrice, t)}
-              </Button>
-              <IconButton
-                className={classes.btnMobile}
-                disabled={!isFollow || isAwaitingConfirmation(followStatus)}
-                to={CHAT_ROUTE(user.userName)}
-                component={Link}>
-                <MessageIcon />
-              </IconButton>
-              <IconButton
-                className={classes.btnMobile}
-                onClick={handleSendTipClick}>
-                <DollarIcon />
-              </IconButton>
-            </Box>
-          </>
-        )}
-        <Box display="flex" alignItems="center" marginTop={2}>
-          <Typography variant="subtitle1" color="textSecondary">
+    <Box display="flex" flexDirection="column" padding={1}>
+      {isOwner ? (
+        <Button disableElevation color="primary" variant="contained" to="statistics" component={Link}>
+          Statistics
+        </Button>
+      ) : (
+        <>
+          <Box className={classes.btnsGroupMobile}>
+            <Button fullWidth disableElevation color="primary" variant="contained" onClick={handleSubscribeClick}>
+              {getSubscriptionBtnText(followStatus, subscriptionPrice, t)}
+            </Button>
+            <IconButton
+              color="primary"
+              disabled={!isFollow || isAwaitingConfirmation(followStatus)}
+              to={CHAT_ROUTE(user.userName)}
+              component={Link}
+            >
+              <MessageIcon />
+            </IconButton>
+            <IconButton color="primary" onClick={handleSendTipClick}>
+              <DollarIcon />
+            </IconButton>
+          </Box>
+        </>
+      )}
+
+      {user.mood && (
+        <Box marginTop={2}>
+          <Typography
+            variant="caption"
+            color="textSecondary"
+            align="justify"
+            className={classes.breakText}
+            component="p"
+          >
             {user.mood}
           </Typography>
         </Box>
+      )}
+      {user.bio && (
         <Box marginTop={2}>
-          <Typography variant="h6">
-            Bio
-          </Typography>
-          <ShowMoreText
-            className={classes.bio}
-            lines={2}
-            more="Show more"
-            less="Show less"
-            expanded={false}>
+          <Typography variant="body1" align="justify">
             {user.bio}
-          </ShowMoreText>
+          </Typography>
         </Box>
+      )}
     </Box>
   );
 }
 
 export default ProfileUserInfo;
-

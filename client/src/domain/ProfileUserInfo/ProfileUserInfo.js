@@ -1,81 +1,139 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import ShowMoreText from "react-show-more-text";
 import { Link } from "react-router-dom";
 
-import { Typography, Box, Card, CardHeader, CardContent, Button } from "@material-ui/core/";
+import {
+  Typography,
+  Card,
+  CardHeader,
+  CardContent,
+  CardMedia,
+  CardActions,
+  CardActionArea,
+  Button,
+  Divider,
+  Box,
+} from "@material-ui/core/";
 
 import MessageIcon from "@material-ui/icons/MessageOutlined";
 import DollarIcon from "@material-ui/icons/MonetizationOnOutlined";
 
 import { CHAT_ROUTE } from "../../constants/routes";
 import { USER_RANKING } from "../../constants/user";
-import Avatar from "../../components/Avatar";
+import { SocialControl } from "../../components/Social";
 import { getSubscriptionBtnText, isAwaitingConfirmation } from "./utils";
+import DisplayName from "../../components/DisplayName";
 
 import useStyles from "./style";
 
 function ProfileUserInfo({
-  className,
-
   user,
   isOwner,
   isFollow,
   subscriptionPrice,
   followStatus,
+  sites,
 
   onSubscribeClick,
   onSendTipClick,
   onMoodUpdateClick,
   onNewAvatarImageClick,
   onDeleteAvatarImageClick,
-  onAvatarUrlChange
+  onAvatarUrlChange,
+  onClick,
 }) {
+  const fileInputEl = useRef(null);
   const classes = useStyles({ isOwner });
   const { t } = useTranslation();
 
   const handleSendTipClick = () => {
     onSendTipClick && onSendTipClick(user);
-  }
+  };
 
   const handleSubscribeClick = () => {
     onSubscribeClick && onSubscribeClick(user);
-  }
+  };
 
-  const handleMoodUpdateClick = () => {
-    onMoodUpdateClick && onMoodUpdateClick({ ...user, defaultValue: user.mood });
-  }
+  const handleNewImageClick = () => {
+    fileInputEl.current.click();
+
+    onNewAvatarImageClick && onNewAvatarImageClick();
+  };
+
+  const handleAvatarUrlChange = () => {
+    const files = fileInputEl.current.files;
+
+    if (files.length === 1) {
+      onAvatarUrlChange && onAvatarUrlChange(files[0]);
+    }
+  };
+
+  const renderFileInput = () => (
+    <input hidden type="file" name="avatarUrl" ref={fileInputEl} onChange={handleAvatarUrlChange} />
+  );
+
+  const renderChangeImg = () => {
+    if (isOwner) {
+      return user.avatarUrl ? (
+        <CardActionArea onClick={handleNewImageClick}>
+          <CardMedia component="img" alt={user.name} image={user.avatarUrl} title={user.name} />
+          {renderFileInput()}
+        </CardActionArea>
+      ) : (
+        <Box display="flex" justifyContent="center" marginTop={2}>
+          <Button disableElevation size="large" color="secondary" variant="contained" onClick={handleNewImageClick}>
+            Load avatar
+            {renderFileInput()}
+          </Button>
+        </Box>
+      );
+    } else {
+      return user.avatarUrl ? (
+        <CardMedia component="img" alt={user.name} image={user.avatarUrl} title={user.name} />
+      ) : null;
+    }
+  };
 
   return (
     <Card>
+      {renderChangeImg()}
       <CardHeader
-        className={classes.header}
-        avatar={
-          <Avatar
-            className={classes.avatarHeader}
-            src={user.avatarUrl}
-            online={isOwner || !user.offlineDate} 
-            showControls={isOwner}
-            live={user.live} // TODO: add a condition to check is not me
-            size="huge"
-            borderColor="silver"
-            borderWidth="4px"
-            dotWidth="12px"
-            onFileInputChange={onAvatarUrlChange}
-            onNewImageClick={onNewAvatarImageClick}
-            onDeleteImageClick={onDeleteAvatarImageClick} />
+        title={
+          <DisplayName
+            name={user.name}
+            userName={user.userName}
+            identityVerified={user.identityVerified}
+            noWrap={false}
+          />
         }
-        title={<Typography variant="h6">{user.name}</Typography>}
         subheader={
-          <>
-            <Typography variant="subtitle1">@{user.userName}</Typography>
-            <Typography variant="subtitle1" color="textSecondary" className={classes.mood} onClick={handleMoodUpdateClick}>
-              {user.mood ? 
-                user.mood : 
-                isOwner && "What's on your mind?"}
+          isOwner ? (
+            <Typography
+              variant="subtitle1"
+              color="textSecondary"
+              className={classes.mood}
+              onClick={onMoodUpdateClick}
+              align="justify"
+            >
+              {user.mood ? user.mood : isOwner && "What's on your mind?"}
             </Typography>
-          </>
-        } />
+          ) : (
+            user.mood && (
+              <Typography
+                variant="subtitle1"
+                color="textSecondary"
+                align="justify"
+                className={classes.breakText}
+                component="p"
+              >
+                {user.mood}
+              </Typography>
+            )
+          )
+        }
+      />
+
+      <Divider />
       <CardContent className={classes.content}>
         {isOwner ? (
           <Button
@@ -84,7 +142,9 @@ function ProfileUserInfo({
             color="primary"
             variant="contained"
             to="statistics"
-            component={Link}>
+            component={Link}
+            className={classes.btnMargin}
+          >
             Statistics
           </Button>
         ) : (
@@ -95,11 +155,13 @@ function ProfileUserInfo({
               size="large"
               color="primary"
               variant="contained"
-              onClick={handleSubscribeClick}>
+              onClick={handleSubscribeClick}
+            >
               {getSubscriptionBtnText(followStatus, subscriptionPrice, t)}
             </Button>
-            <Box className={classes.btnsGroup}>
+            <Box width="100%" display="flex" marginTop={2} marginBottom={2} flexDirection="column">
               <Button
+                fullWidth
                 disableElevation
                 disabled={!isFollow || isAwaitingConfirmation(followStatus)}
                 size="large"
@@ -107,33 +169,37 @@ function ProfileUserInfo({
                 variant="contained"
                 endIcon={<MessageIcon />}
                 to={CHAT_ROUTE(user.userName)}
-                component={Link}>
+                component={Link}
+                className={classes.btnMargin}
+              >
                 Message
               </Button>
               <Button
+                fullWidth
                 disableElevation
                 size="large"
                 color="secondary"
                 variant="contained"
                 endIcon={<DollarIcon />}
-                onClick={handleSendTipClick}>
+                onClick={handleSendTipClick}
+              >
                 Send Tip
               </Button>
             </Box>
           </>
         )}
-        <Typography className={classes.bioHeader} variant="h6">
-          Bio
-        </Typography>
-        <ShowMoreText
-          className={classes.bio}
-          lines={2}
-          more="Show more"
-          less="Show less"
-          expanded={false}>
+        <Typography variant="body1" align="justify">
           {user.bio}
-        </ShowMoreText>
+        </Typography>
       </CardContent>
+      {sites?.length > 0 && (
+        <>
+          <Divider />
+          <CardActions>
+            <SocialControl urls={sites} onClick={onClick} />
+          </CardActions>
+        </>
+      )}
     </Card>
   );
 }

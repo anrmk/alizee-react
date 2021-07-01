@@ -6,48 +6,50 @@ const textBase = (theme) => ({
   textDecoration: "none",
   [theme.breakpoints.up("md")]: {
     color: theme.palette.common.white,
-  }
+  },
 });
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "space-around",
+    margin: theme.spacing(2, 0),
   },
   itemMobile: {
     textAlign: "center",
     textDecoration: "none",
-    "& + &": {
-      marginLeft: theme.spacing(1),
-      [theme.breakpoints.up("sm")]: {
-        marginLeft: theme.spacing(3)
-      },
-    }
   },
   text: {
     ...textBase(theme),
-    fontSize: theme.typography.subtitle2.fontSize,
+    fontSize: theme.typography.subtitle1.fontSize,
     "&:hover": {
-      color: theme.palette.grey["300"]
+      color: theme.palette.grey["300"],
     },
+  },
+  mood: {
+    cursor: "pointer",
+    padding: ({ isOwner }) => isOwner && theme.spacing(0.5),
+    border: ({ isOwner }) => isOwner && "1px dashed",
+    borderColor: theme.palette.text.secondary,
+    borderRadius: theme.shape.borderRadius,
   },
   textMobile: {
     ...textBase(theme),
-    fontSize: theme.typography.subtitle2.fontSize,
+    fontSize: theme.typography.subtitle1.fontSize,
     fontWeight: theme.typography.fontWeightBold,
   },
   textCaptionMobile: {
     ...textBase(theme),
-    fontSize: theme.typography.caption.fontSize,
+    fontSize: theme.typography.subtitle1.fontSize,
   },
   divider: {
     width: "1px",
     height: "24px",
     alignSelf: "auto",
     backgroundColor: theme.palette.common.white,
-    margin: theme.spacing(0, 1)
-  }
+    margin: theme.spacing(0, 1),
+  },
 }));
 
 export default useStyles;

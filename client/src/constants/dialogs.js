@@ -14,7 +14,7 @@ import StoryDialog from "../domain/StoryDialog";
 import AgreeDialog from "../domain/AgreeDialog";
 import ResetPasswordDialog from "../domain/ResetPasswordDialog";
 import LanguageDialog from "../domain/LanguageDialog";
-import ConfirmDialog from "../domain/ConfirmDialog";
+import ConfirmDialog from "../domain/ConfirmationDialog.js/ConfirmDialog";
 import LightboxModal from "../domain/LightboxModal";
 
 export const LANGUAGE_DIALOG_TYPE = "language";

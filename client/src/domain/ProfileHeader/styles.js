@@ -1,17 +1,15 @@
 import { makeStyles } from "@material-ui/core";
 
-const getGradient = () => (
-  "linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.3) 15%, rgba(0, 0, 0, 0) 30%),"
-);
+const getGradient = () =>
+  "linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.3) 15%, rgba(0, 0, 0, 0) 30%),";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     position: "relative",
-    marginBottom: theme.spacing(2),
-    [theme.breakpoints.down("sm")]: {
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2)
-    }
+
+    [theme.breakpoints.up("md")]: {
+      marginBottom: theme.spacing(2),
+    },
   },
   cover: {
     height: "220px",
@@ -27,13 +25,14 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     display: "flex",
     justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: theme.spacing(1),
     padding: 0,
 
     [theme.breakpoints.up("md")]: {
       padding: theme.spacing(1),
       position: "absolute",
-      top: 0
+      top: 0,
     },
   },
 
@@ -47,14 +46,14 @@ const useStyles = makeStyles((theme) => ({
   },
 
   control: {
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
   },
 
   coverEditButton: {
     position: "absolute",
     right: theme.spacing(1),
     bottom: theme.spacing(1),
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
   },
 
   coverInputField: {
@@ -71,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       margin: theme.spacing(0, 1),
     },
-  }
+  },
 }));
 
 export default useStyles;

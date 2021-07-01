@@ -7,7 +7,6 @@ import { Box, Grid, Hidden, Typography } from "@material-ui/core/";
 import BlockIcon from "@material-ui/icons/Block";
 
 import ApiContext from "../../context/ApiContext";
-import { SocialControl } from "../../components/Social";
 import ProfileHeader from "../../domain/ProfileHeader";
 import ProfileContent from "../../domain/ProfileContent";
 
@@ -16,13 +15,9 @@ import * as relationshipActions from "../../store/actions/relationship";
 import * as userActions from "../../store/actions/user";
 import * as settingsActions from "../../store/actions/settings";
 
-import {
-  SETTINGS_ROUTE,
-  POST_ID_ROUTE,
-  SETTINGS_EDIT_PROFILE_ROUTE,
-  NOT_FOUND_ROUTE,
-} from "../../constants/routes";
+import { SETTINGS_ROUTE, POST_ID_ROUTE, SETTINGS_EDIT_PROFILE_ROUTE, NOT_FOUND_ROUTE } from "../../constants/routes";
 
+import useConfirmationDialog from "../../hooks/useConfirmationDialog";
 import useDialog from "../../hooks/useDialog";
 import { useMenuDialog, useMoodDialog } from "../../hooks/post";
 import { useSendTipDialog } from "../../hooks/payment";
@@ -30,6 +25,7 @@ import useFollowDialog from "../../hooks/payment/useFollowDialog";
 import dialogs, { PROFILE_EDIT_COVER } from "../../constants/dialogs";
 import { ProfileUserInfo, ProfileUserInfoMobile } from "../../domain/ProfileUserInfo";
 import { PROFILE_TYPE } from "../../components/Post/Menu";
+import { RedirectContent } from "../../domain/ConfirmationDialog.js";
 
 import useStyles from "./style";
 
@@ -54,6 +50,7 @@ function Profile(props) {
 
   const dialog = useDialog();
 
+  const confirmationDialog = useConfirmationDialog();
   const followDialog = useFollowDialog();
   const sendTipDialog = useSendTipDialog();
   const createMoodDialog = useMoodDialog();
@@ -62,7 +59,7 @@ function Profile(props) {
     isReport: false,
     isChatShare: true,
     isFavorite: true,
-    type: PROFILE_TYPE
+    type: PROFILE_TYPE,
   });
 
   useEffect(() => {
@@ -102,7 +99,7 @@ function Profile(props) {
   const handleCoverSave = async ({ file, coverUrl }) => {
     dialog.toggle({ open: false });
     user.data.coverUrl = coverUrl;
-    !settings.isFetching && await updateCover(apiClient, { file });
+    !settings.isFetching && (await updateCover(apiClient, { file }));
   };
 
   const handleCoverEditDialog = (file) => {
@@ -113,17 +110,17 @@ function Profile(props) {
         {
           open: true,
           onMainClick: handleCoverSave,
-          state: { file, coverUrl }
+          state: { file, coverUrl },
         },
         {
           src: coverUrl,
-          alt: file?.name
+          alt: file?.name,
         }
       )
     );
   };
 
-  const handleFetchPosts = async () => {
+  async function handleFetchPosts() {
     if (post.isFetching) {
       return;
     }
@@ -146,9 +143,9 @@ function Profile(props) {
   };
 
   const handlePeopleFollowClick = async (userName) => {
-    user.data.isFollow ? 
-      await deleteFollow(apiClient, userName) : 
-      await createFollow(apiClient, userName, user.data?.isPrivate);
+    user.data.isFollow
+      ? await deleteFollow(apiClient, userName)
+      : await createFollow(apiClient, userName, user.data?.isPrivate);
 
     resetPosts();
     handleFetchPosts();
@@ -158,7 +155,7 @@ function Profile(props) {
     history.push(POST_ID_ROUTE(id));
   };
 
-  const handleGiftSendClick = (userName) => { };
+  const handleGiftSendClick = (userName) => {};
 
   const handleAvatarImageChange = (file) => {
     !user.isFetching && updateAvatar(apiClient, { file });
@@ -179,13 +176,26 @@ function Profile(props) {
     user.data.coverUrl = null;
   };
 
+  const handleMoodUpdateClick = () => {
+    createMoodDialog.toggle && createMoodDialog.toggle({ ...user.data, defaultValue: user.data.mood });
+  };
+
+  const handleGoToSocialClick = (link) => {
+    confirmationDialog.toggle({
+      mainBtnText: "Link",
+      title: "Leaving TheMembers",
+      contentText: () => <RedirectContent link={link} />,
+      callback: () => window.open(link, "_blank"),
+    });
+  };
+
   if (user.data.isBlocked) {
     return (
       <Box width="100%" textAlign="center">
         <BlockIcon fontSize="large" />
         <Typography>You or user blocked you.</Typography>
       </Box>
-    )
+    );
   }
 
   return (
@@ -198,11 +208,14 @@ function Profile(props) {
         onSendGiftClick={() => handleGiftSendClick(user.data.userName)}
         onCoverUrlChange={handleCoverEditDialog}
         onDeleteCoverImageClick={handleDeleteCoverImageClick}
-        onMenuClick={() => postMenuDialog.toggle({ 
-          userName: user.data.userName,
-          isOwner: username === me.userName,
-          isFavorite: user.data.isFavorite
-        })} />
+        onMenuClick={() =>
+          postMenuDialog.toggle({
+            userName: user.data.userName,
+            isOwner: username === me.userName,
+            isFavorite: user.data.isFavorite,
+          })
+        }
+      />
       <Hidden mdUp>
         <ProfileUserInfoMobile
           user={user.data}
@@ -211,12 +224,15 @@ function Profile(props) {
           followStatus={user.data?.followStatus}
           subscriptionPrice={user.data?.subscriptionPrice}
           onSubscribeClick={followDialog.toggle}
-          onSendTipClick={sendTipDialog.toggle} />
+          onSendTipClick={sendTipDialog.toggle}
+          onMoodUpdateClick={handleMoodUpdateClick}
+        />
       </Hidden>
 
       <Grid container>
         <Grid item xs={12} md={8}>
           <ProfileContent
+            user={user.data}
             isOwner={username === me.userName}
             tabIndex={postSettings.index}
             items={post.data}
@@ -224,13 +240,13 @@ function Profile(props) {
             disabled={post.isFetching}
             onFetchMore={handleFetchPosts}
             onItemClick={handleItemClick}
-            onTabChange={handleTabChange} />
+            onTabChange={handleTabChange}
+          />
         </Grid>
         <Hidden smDown>
           <Grid item xs={12} md={4}>
             <Box position="sticky" top="4rem" paddingLeft="8px">
               <ProfileUserInfo
-                className={classes.userInfo}
                 user={user.data}
                 isOwner={username === me.userName}
                 isFollow={user.data?.isFollow}
@@ -238,10 +254,12 @@ function Profile(props) {
                 subscriptionPrice={user.data?.subscriptionPrice}
                 onSubscribeClick={followDialog.toggle}
                 onSendTipClick={sendTipDialog.toggle}
-                onMoodUpdateClick={createMoodDialog.toggle}
+                onMoodUpdateClick={handleMoodUpdateClick}
                 onDeleteAvatarImageClick={handleDeleteAvatarImageClick}
-                onAvatarUrlChange={handleAvatarImageChange} />
-              {user.data.sites && <SocialControl urls={user.data.sites} />}
+                onAvatarUrlChange={handleAvatarImageChange}
+                sites={user.data.sites}
+                onClick={handleGoToSocialClick}
+              />
             </Box>
           </Grid>
         </Hidden>
@@ -256,10 +274,10 @@ function mapStateToProps(state) {
       id: state.signIn?.userInfo?.id,
       userName: state.signIn?.userInfo?.userName,
     },
-    user: { 
+    user: {
       data: state.user?.data,
       isFetching: state.user.isFetching,
-      errorMessage: state.user?.errorMessage
+      errorMessage: state.user?.errorMessage,
     },
     post: {
       isFetching: state.profilePosts.isFetching || false,
@@ -271,8 +289,8 @@ function mapStateToProps(state) {
       isFetching: state.media.isFetching,
     },
     settings: {
-      isFetching: state.settings.isFetching
-    }
+      isFetching: state.settings.isFetching,
+    },
   };
 }
 
@@ -286,11 +304,12 @@ function mapDispatchToProps(dispatch) {
 
     getFavoritePosts: (api, opts) => dispatch(profilePostsActions.getFavoritePosts(api, opts)),
 
-    createFollow: (api, userName, isPrivateAccount) => dispatch(relationshipActions.createFollow(api, userName, isPrivateAccount)),
+    createFollow: (api, userName, isPrivateAccount) =>
+      dispatch(relationshipActions.createFollow(api, userName, isPrivateAccount)),
     deleteFollow: (api, userName) => dispatch(relationshipActions.deleteFollow(api, userName)),
 
     updateCover: (api, opts) => dispatch(settingsActions.updateCover(api, opts)),
-    updateAvatar: (api, opts) => dispatch(settingsActions.updateAvatar(api, opts))
+    updateAvatar: (api, opts) => dispatch(settingsActions.updateAvatar(api, opts)),
   };
 }
 

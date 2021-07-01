@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   tab: {
-    minWidth: '140px'
+    minWidth: '100px'
   }
 }));
 
