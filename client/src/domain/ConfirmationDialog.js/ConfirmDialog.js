@@ -3,10 +3,6 @@ import { Box, Typography } from "@material-ui/core";
 
 function ConfirmDialog({ contentText, helpText }) {
   const renderContent = () => {
-    if (typeof contentText === "string") {
-      return contentText;
-    }
-
     return contentText;
   };
   return (
