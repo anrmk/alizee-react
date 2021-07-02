@@ -37,7 +37,6 @@ const PreviewStoriesList = React.memo(({
             username={user?.userName}
             name={user?.name}
             previewUrl={user?.avatarUrl}
-            empty={!user?.avatarUrl}
             onCreateStoryClick={onCreateStoryClick} />
           {items.length > 0 && items.map(item => (
             <PreviewStoriesListItem

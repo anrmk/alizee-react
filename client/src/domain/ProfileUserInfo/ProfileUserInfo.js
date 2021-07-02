@@ -18,7 +18,7 @@ import {
 import MessageIcon from "@material-ui/icons/MessageOutlined";
 import DollarIcon from "@material-ui/icons/MonetizationOnOutlined";
 
-import { CHAT_ROUTE } from "../../constants/routes";
+import { CHAT_USERNAME_ROUTE } from "../../constants/routes";
 import { USER_RANKING } from "../../constants/user";
 import { SocialControl } from "../../components/Social";
 import { getSubscriptionBtnText, isAwaitingConfirmation } from "./utils";
@@ -168,10 +168,9 @@ function ProfileUserInfo({
                 color="secondary"
                 variant="contained"
                 endIcon={<MessageIcon />}
-                to={CHAT_ROUTE(user.userName)}
+                to={CHAT_USERNAME_ROUTE(user.userName)}
                 component={Link}
-                className={classes.btnMargin}
-              >
+                className={classes.btnMargin}>
                 Message
               </Button>
               <Button

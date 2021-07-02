@@ -8,7 +8,7 @@ import MailIcon from "@material-ui/icons/MailOutline";
 import ArrowBackIcon from "@material-ui/icons/ArrowBackIosOutlined";
 
 import {
-  CHAT_ROUTE,
+  CHAT_USERNAME_ROUTE,
   HOME_ROUTE,
   SIGN_IN_ROUTE,
   SIGN_UP_ROUTE,
@@ -56,7 +56,7 @@ function Navbar({
 
   const handleMessage = () => {
     onChange && onChange({ newMessage: false });
-    history.push(CHAT_ROUTE(""));
+    history.push(CHAT_USERNAME_ROUTE(""));
   };
 
   const handleChangeRoute = (route) => {

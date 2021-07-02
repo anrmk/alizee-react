@@ -1,11 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 import { MessageSenderInput, MessagesList } from "../Chat";
 
 import { Avatar, Card, CardHeader, CardContent, CardActions, Divider } from "@material-ui/core";
-//import Avatar from "../Avatar";
 
 import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 
@@ -13,7 +11,7 @@ import useStyles from "./styles";
 
 function Comments(props) {
   const { children, headerBackComponent } = props;
-  const { postId, isOwner, user, owner, description, items, isCommentable, isPurchased, hasMore } = props;
+  const { postId, isOwner, user, owner, description, items, isCommentable, isPurchased, isFollowed, hasMore } = props;
   const { onFetchMore, onCommentSendClick, onSendTip, onDeleteMessage } = props;
 
   const classes = useStyles({ isPurchased });
@@ -66,7 +64,7 @@ function Comments(props) {
         </CardContent>
       )}
 
-      {isCommentable && isPurchased && (
+      {isCommentable && isPurchased && isFollowed && (
         <CardActions className={classes.cardFooter}>
           <MessageSenderInput hideMediaEditor hidePayment={isOwner} onSendMessageClick={handleCommentSendClick} onSendTip={handleSendTipClick} />
         </CardActions>

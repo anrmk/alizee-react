@@ -16,7 +16,7 @@ import {
   HOME_ROUTE,
   NOTIFICATION_ROUTE,
   NOTIFICATION_ROUTE_ALL,
-  CHAT_ROUTE,
+  CHAT_USERNAME_ROUTE,
   PROFILE_USERNAME_ROUTE,
   EXPLORE_ROUTE,
   SETTINGS_EDIT_PROFILE_ROUTE,
@@ -122,8 +122,8 @@ function Sidebar({
             <Animate variant="rubberBand">
               <ListItem
                 button
-                selected={location.pathname.includes(CHAT_ROUTE(""))}
-                to={CHAT_ROUTE("")}
+                selected={location.pathname.includes(CHAT_USERNAME_ROUTE(""))}
+                to={CHAT_USERNAME_ROUTE("")}
                 component={Link}
               >
                 <ListItemIcon>
@@ -133,7 +133,7 @@ function Sidebar({
                 </ListItemIcon>
                 <ListItemText>
                   <Typography
-                    color={location.pathname.includes(CHAT_ROUTE("")) ? "textPrimary" : "textSecondary"}
+                    color={location.pathname.includes(CHAT_USERNAME_ROUTE("")) ? "textPrimary" : "textSecondary"}
                     variant="h6"
                   >
                     {t("SidebarChatText")}

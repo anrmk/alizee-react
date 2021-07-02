@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core";
+import { getStyleByTheme } from "../../helpers/functions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1, 0),
     marginBottom: theme.spacing(1),
     zIndex: theme.zIndex.appBar,
-    borderBottom: "1px solid " + theme.palette.grey["800"]
+    borderBottom: "1px solid " + getStyleByTheme(theme, theme.palette.grey["200"], theme.palette.grey["800"])
   },
   navDivider: {
     marginBottom: theme.spacing(1)

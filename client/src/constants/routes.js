@@ -20,12 +20,12 @@ export const ACTIVITY_ROUTE = "/activity";
 export const POST_ID_ROUTE = (id) => `/posts/${id}`;
 export const POST_ROUTE = "/posts/:id";
 export const MEET_ROUTE = "/meet";
-//export const CHAT_ROUTE = "/chat";
-export const CHAT_ROUTE = (username) => `/chat/${username}`;
-export const CHAT_USERNAME_ROUTE = "/chat/:username?";
+export const CHAT_ROUTE = "/chat/";
+export const CHAT_USERNAME_ROUTE = (username) => `/chat/${username}`;
+export const CHAT_DEFAULT_ROUTE = "/chat/:username?";
 
 export const ROOM_ROUTE = "/room";
-export const ROOM_ID_DEFAULT_ROUTE = "/room/:roomId";
+export const ROOM_DEFAULT_ROUTE = "/room/:roomId";
 export const ROOM_ID_ROUTE = (roomId) => `/room/${roomId}`;
 export const PEAR_TO_PEAR_DEFAULT_ROUTE = "/ptp/:userName?";
 export const PEAR_TO_PEAR_ID_ROUTE = (username) => `/ptp/${username}`;
@@ -51,7 +51,7 @@ export const BLOCKED_USERNAME_ROUTE = (username) => `/${username}/blocked`;
 export const BLOCKED_ROUTE = "/:username/blocked";
 
 export const SUGESTED_PEOPLE = "/people/suggested";
-export const SETTINGS_TYPE_ROUTE = "/settings/:type";
+export const SETTINGS_DEFAULT_ROUTE = "/settings/:type?";
 export const SETTINGS_ROUTE = "/settings";
 export const SETTINGS_EDIT_PROFILE_ROUTE = "/settings/edit-profile";
 export const SETTINGS_ACCOUNT_ROUTE = "/settings/account";

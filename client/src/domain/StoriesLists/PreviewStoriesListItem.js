@@ -15,17 +15,15 @@ const PreviewStoryListItem = React.memo(({
   previewUrl,
   avatarUrl,
   me = false,
-  empty = false,
 
   onClick,
   onCreateStoryClick
 }) => {
   const classes = useStyles({
-    previewUrl,
-    empty
+    previewUrl
   });
   const location = useLocation();
-  const additionalProps = empty || me ? null : { 
+  const additionalProps = me ? null : { 
     to: { 
       pathname: previewUrl ? STORIES_ROUTE(username) : "#", 
       state: { from: location.pathname, storyId: id, me }
@@ -35,8 +33,6 @@ const PreviewStoryListItem = React.memo(({
 
   const handleItemClick = useCallback(() => {
     onClick && onClick(id);
-    me && !empty && 
-      onCreateStoryClick && onCreateStoryClick();
   }, []);
 
   const handleCreateStoryClick = (e) => {
@@ -54,8 +50,7 @@ const PreviewStoryListItem = React.memo(({
       {withButton && (
         <Box 
           borderColor="grey.500" 
-          className={classes.bottomContainer} 
-          onClick={handleCreateStoryClick}>
+          className={classes.bottomContainer}>
           <Box className={classes.createButton}>
             <IconButton>
               <AddIcon htmlColor="white" />
@@ -72,11 +67,8 @@ const PreviewStoryListItem = React.memo(({
       button
       className={classes.previewStoryListItem}
       {...additionalProps}
-      onClick={handleItemClick}>
-      {me ? empty ? (
-          <AddIcon className={classes.previewStoryListItemAddButton} onClick={handleCreateStoryClick} />
-        ) : renderContent(true) 
-        : renderContent()}
+      onClick={me ? handleCreateStoryClick : handleItemClick}>
+      {me ? renderContent(true) : renderContent()}
     </ListItem>
   );
 });

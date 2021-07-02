@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   previewStoryListItem: {
     ...previewStoryListItemBase,
     display: "flex",
-    justifyContent: ({ empty }) => (!empty ? "flex-start" : "center"),
+    justifyContent: "flex-start",
     padding: theme.spacing(1.5),
     borderRadius: theme.shape.borderRadius,
     backgroundImage: ({ previewUrl }) => previewUrl && tintedBg(0.25) + `url("${previewUrl}")`,

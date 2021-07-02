@@ -152,14 +152,14 @@ export default function DialogProvider({ children }) {
           {!dialogOptions.actionsComponent
             ? (dialogOptions.onCloseClick || dialogOptions.onMainClick) && (
                 <DialogActions>
-                  {(dialogOptions.onMainClick || dialogOptions.mainBtnProps) && (
-                    <Button disabled={dialogOptions.loading} {...dialogOptions.mainBtnProps} onClick={handleMainClick}>
-                      {dialogOptions.mainBtnText}
+                  {(dialogOptions.onCloseClick || dialogOptions.closeBtnProps) && (
+                    <Button disabled={dialogOptions.loading} variant="outlined" {...dialogOptions.closeBtnProps} onClick={handleCloseClick}>
+                      {dialogOptions.closeBtnText}
                     </Button>
                   )}
-                  {(dialogOptions.onCloseClick || dialogOptions.closeBtnProps) && (
-                    <Button disabled={dialogOptions.loading} {...dialogOptions.closeBtnProps} onClick={handleCloseClick}>
-                      {dialogOptions.closeBtnText}
+                  {(dialogOptions.onMainClick || dialogOptions.mainBtnProps) && (
+                    <Button disabled={dialogOptions.loading} variant="contained" {...dialogOptions.mainBtnProps} onClick={handleMainClick}>
+                      {dialogOptions.mainBtnText}
                     </Button>
                   )}
                 </DialogActions>

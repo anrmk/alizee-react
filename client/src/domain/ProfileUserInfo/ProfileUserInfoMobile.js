@@ -7,7 +7,7 @@ import { Typography, Box, Button, IconButton, CardHeader } from "@material-ui/co
 import MessageIcon from "@material-ui/icons/MessageOutlined";
 import DollarIcon from "@material-ui/icons/MonetizationOnOutlined";
 
-import { CHAT_ROUTE } from "../../constants/routes";
+import { CHAT_USERNAME_ROUTE } from "../../constants/routes";
 import { getSubscriptionBtnText, isAwaitingConfirmation } from "./utils";
 
 import useStyles from "./style";
@@ -48,7 +48,7 @@ function ProfileUserInfo({
             <IconButton
               color="primary"
               disabled={!isFollow || isAwaitingConfirmation(followStatus)}
-              to={CHAT_ROUTE(user.userName)}
+              to={CHAT_USERNAME_ROUTE(user.userName)}
               component={Link}
             >
               <MessageIcon />
