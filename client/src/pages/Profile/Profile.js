@@ -133,7 +133,7 @@ function Profile(props) {
         tagged: postSettings.tagged,
       });
     }
-  };
+  }
 
   const handleTabChange = (index) => {
     setPostSettings({
@@ -184,7 +184,7 @@ function Profile(props) {
     confirmationDialog.toggle({
       mainBtnText: "Link",
       title: "Leaving TheMembers",
-      contentText: () => <RedirectContent link={link} />,
+      contentText: <RedirectContent link={link} />,
       callback: () => window.open(link, "_blank"),
     });
   };

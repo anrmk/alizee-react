@@ -6,8 +6,8 @@ function ConfirmDialog({ contentText, helpText }) {
     if (typeof contentText === "string") {
       return contentText;
     }
-    const ContentText = contentText;
-    return <ContentText />;
+
+    return contentText;
   };
   return (
     <Box>

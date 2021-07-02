@@ -61,8 +61,8 @@ function Search({ width }) {
           <>
             <Grid item>
               <GridList cols={handleChangeBreakpoint()} cellHeight="auto">
-                {search.data.map((item) => (
-                  <GridListTile key={item.id}>
+                {search.data.map((item, idx) => (
+                  <GridListTile key={idx}>
                     <ProfileCard {...item} />
                   </GridListTile>
                 ))}
@@ -78,8 +78,8 @@ function Search({ width }) {
             </Typography>
 
             <GridList cols={handleChangeBreakpoint()} cellHeight="auto">
-              {search.suggestionPeople.map((item) => (
-                <GridListTile key={item.id}>
+              {search.suggestionPeople.map((item, idx) => (
+                <GridListTile key={idx}>
                   <ProfileCard {...item} />
                 </GridListTile>
               ))}
