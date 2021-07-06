@@ -82,6 +82,7 @@ export default function SelectableList({
         <SelectableListItem 
           key={ITEM_NAME + index} 
           name={item.name}
+		  userName={item.userName}
           avatarUrl={item.avatarUrl}
           index={index}
           active={isSelectedItem(index)}

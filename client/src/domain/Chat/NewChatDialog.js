@@ -29,7 +29,7 @@ function NewChatDialog({
               <ListItemAvatar>
                 <Avatar src={follower.avatarUrl} />
               </ListItemAvatar>
-              <ListItemText primary={follower.name} />
+              <ListItemText primary={follower.name} secondary={`@${follower.userName}`}/>
             </ListItem>
           ))
         ) : (
