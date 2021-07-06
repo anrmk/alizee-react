@@ -1,7 +1,7 @@
 import {
-  GET_USERS_BY_QUERY_REQUEST,
-  GET_USERS_BY_QUERY_SUCCESS,
-  GET_USERS_BY_QUERY_FAILURE,
+  GET_DATA_BY_QUERY_REQUEST,
+  GET_DATA_BY_QUERY_SUCCESS,
+  GET_DATA_BY_QUERY_FAILURE,
   RESET_SEARCH,
   RESET_HAS_MORE,
 } from "../actions/search";
@@ -20,18 +20,18 @@ export default function search(
   action
 ) {
   switch (action.type) {
-    // Get users by query
-    case GET_USERS_BY_QUERY_REQUEST:
+    // Get data (posts, users) by query
+    case GET_DATA_BY_QUERY_REQUEST:
       return {
         ...state,
         ...action.payload,
       };
-    case GET_USERS_BY_QUERY_SUCCESS:
+    case GET_DATA_BY_QUERY_SUCCESS:
       return {
         ...state,
         ...action.payload,
       };
-    case GET_USERS_BY_QUERY_FAILURE:
+    case GET_DATA_BY_QUERY_FAILURE:
       return {
         ...state,
         ...action.payload,

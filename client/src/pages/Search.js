@@ -1,7 +1,17 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-import { Container, Avatar, Chip, Grid, Divider, withWidth, GridList, GridListTile } from "@material-ui/core";
+import {
+  Container,
+  Avatar,
+  Chip,
+  Grid,
+  Divider,
+  withWidth,
+  GridList,
+  GridListTile,
+  Typography,
+} from "@material-ui/core";
 
 import { EXPLORE_ROUTE } from "../constants/routes";
 import { SEARCH_USER_TYPE } from "../constants/search";
@@ -10,7 +20,6 @@ import useSearch from "../hooks/useSearch";
 
 import SearchInput from "../domain/Search";
 import ProfileCard from "../components/ProfileCard/ProfileCard";
-import { Typography } from "@material-ui/core";
 
 function Search({ width }) {
   const history = useHistory();
@@ -30,10 +39,13 @@ function Search({ width }) {
   };
 
   const handleClick = (tag) => {
-    history.push({
-      pathname: EXPLORE_ROUTE,
-      search: search.lastQuery && "?tags=" + tag.replaceAll("#", ""),
-    });
+    const ttag = tag.replaceAll("#", "");
+    if (ttag?.length > 0) {
+      history.push({
+        pathname: EXPLORE_ROUTE,
+        search: search.currentQuery && "?tags=" + ttag,
+      });
+    }
   };
 
   return (

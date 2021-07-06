@@ -46,7 +46,7 @@ function GridGalleryPostList(props) {
     const arrImg = [];
 
     for (let i = lastPostIndex; i < items.length; i++) {
-      if (items[i].media.length > 0) {
+      if (items[i].media?.length > 0) {
         const img = new Image();
         img.src = items[i].media[0].thumbnailUrl;
         arr.push(promiseWrapper(img, items[i]));
@@ -65,7 +65,7 @@ function GridGalleryPostList(props) {
   useEffect(() => {
     let isMounted = true;
 
-    if (items.length > 0) {
+    if (items?.length > 0) {
       Promise.allSettled(itemsPromise())
         .then((data) => {
           return data.reduce((acc, data) => {

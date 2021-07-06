@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, IconButton, Divider } from "@material-ui
 
 import ChatIcon from "@material-ui/icons/ChatOutlined";
 
-import Search from "../../components/Search";
+import { Search } from "../../components/Search";
 import Avatar from "../../components/Avatar";
 
 import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";

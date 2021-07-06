@@ -1,3 +1,4 @@
-import Search from './Search';
+import Search from "./Search";
+import NoResult from "./NoResult";
 
-export default Search;
+export { Search, NoResult };

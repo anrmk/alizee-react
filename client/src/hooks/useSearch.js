@@ -4,12 +4,8 @@ import { useHistory, useLocation } from "react-router-dom";
 
 import ApiContext from "../context/ApiContext";
 import * as searchActions from "../store/actions/search";
-import * as suggestionActions from "../store/actions/suggestion";
 import * as relationshipActions from "../store/actions/relationship";
-// import * as actionPost from "../store/actions/post";
 import { SEARCH_USER_TYPE, isUserType } from "../constants/search";
-import { POSTS_LENGTH } from "../constants/feed";
-//import search from "../store/reducers/search";
 
 export default function useSearch({ type = SEARCH_USER_TYPE }) {
   const apiClient = useContext(ApiContext);
@@ -18,17 +14,12 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
   const [currentQuery, setCurrentQuery] = useState("");
 
   const dispatch = useDispatch();
-  const { searchedUsers, suggestionPosts } = useSelector((state) => ({
-    searchedUsers: {
+  const { search } = useSelector((state) => ({
+    search: {
       data: state.search.data,
       isFetching: state.search.isFetching,
       hasMore: state.search.hasMore,
       query: state.search.query,
-    },
-    suggestionPosts: {
-      data: state.suggestionPosts.data,
-      isFetching: state.suggestionPosts.isFetching,
-      hasMore: state.suggestionPosts.hasMore,
     },
   }));
 
@@ -36,13 +27,12 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
   const { data: suggestionPeople } = useSelector((state) => state.users);
 
   useEffect(() => {
-    if (suggestionPeople.length > 0) {
+    if (suggestionPeople.length > 0 || SEARCH_USER_TYPE !== type) {
       return;
     }
     //TODO: need paggination
     dispatch(relationshipActions.getSuggestionPeople(apiClient));
   }, []);
-
   useEffect(() => {
     let currentTags = location.search && new URLSearchParams(location.search).get("tags");
     if (currentTags) {
@@ -55,41 +45,31 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
     // TODO: change currentTag on backend from #tag to tag.
     if (currentTags) {
       (async () => {
-        await dispatch(searchActions.getUsersByQuery(apiClient, { query: currentTags, type }));
+        await dispatch(searchActions.getDataByQuery(apiClient, { query: currentTags, type }));
       })();
       setCurrentQuery(currentTags);
     }
-
-    return () => {
-      dispatch(suggestionActions.resetPosts());
-      dispatch(searchActions.resetSearch());
-    };
   }, []);
 
-  useEffect(() => {
-    const currentTags = new URLSearchParams(location.search).get("tags");
-
-    if (!isUserType(type) && !currentTags?.length) {
-      dispatch(suggestionActions.getPosts(apiClient, { length: POSTS_LENGTH }));
-    }
-  }, [type]);
+  useEffect(
+    () => () => {
+      dispatch(searchActions.resetSearch());
+    },
+    []
+  );
 
   const handleFetchMore = async () => {
-    if (!searchedUsers.isFetching && !suggestionPosts.isFetching) {
-      if (!currentQuery && !isUserType(type)) {
-        await dispatch(suggestionActions.getPosts(apiClient, { length: POSTS_LENGTH }));
-      } else {
-        await dispatch(searchActions.getUsersByQuery(apiClient, { query: currentQuery, type }));
-      }
+    //  TODO: func calls one more time when we firstly go to search page => find chip with many posts => explore + #tag => feed page => explore page.
+    if (!search.isFetching) {
+      await dispatch(searchActions.getDataByQuery(apiClient, { query: currentQuery, type }));
     }
   };
 
   const handleSearch = async (query) => {
     if (query.length > 2) {
-      await dispatch(searchActions.getUsersByQuery(apiClient, { query: query, type }));
+      await dispatch(searchActions.getDataByQuery(apiClient, { query: query, type }));
     } else {
       dispatch(searchActions.resetSearch());
-      !isUserType(type) && (await dispatch(suggestionActions.getPosts(apiClient, { length: POSTS_LENGTH })));
     }
     !isUserType(type) &&
       history.push({ pathname: history.pathname, search: query && "?tags=" + query.replaceAll("#", "") });
@@ -98,8 +78,8 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
 
   return {
     lastQuery: currentQuery,
-    data: isUserType(type) || searchedUsers.query ? searchedUsers.data : suggestionPosts.data,
-    hasMore: isUserType(type) || searchedUsers.query ? searchedUsers.hasMore : suggestionPosts.hasMore,
+    data: search.data,
+    hasMore: search.hasMore,
     onFetchMore: handleFetchMore,
     onSearch: handleSearch,
     tags,

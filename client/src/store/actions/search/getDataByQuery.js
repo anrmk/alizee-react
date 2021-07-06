@@ -2,15 +2,15 @@ import { generateUrl } from "../../../helpers/functions";
 
 import { SEARCH_DEFAULT_OFFSET, SEARCH_OFFSET, SEARCH_TAG_TYPE, SEARCH_LENGTH } from "../../../constants/search";
 
-export const GET_USERS_BY_QUERY_REQUEST = "GET_USERS_BY_QUERY_REQUEST";
-export const GET_USERS_BY_QUERY_SUCCESS = "GET_USERS_BY_QUERY_SUCCESS";
-export const GET_USERS_BY_QUERY_FAILURE = "GET_USERS_BY_QUERY_FAILURE";
+export const GET_DATA_BY_QUERY_REQUEST = "GET_DATA_BY_QUERY_REQUEST";
+export const GET_DATA_BY_QUERY_SUCCESS = "GET_DATA_BY_QUERY_SUCCESS";
+export const GET_DATA_BY_QUERY_FAILURE = "GET_DATA_BY_QUERY_FAILURE";
 export const RESET_SEARCH = "RESET_SEARCH";
 export const RESET_HAS_MORE = "RESET_HAS_MORE";
 
-function requestGetUsersByQuery() {
+function requestGetDataByQuery() {
   return {
-    type: GET_USERS_BY_QUERY_REQUEST,
+    type: GET_DATA_BY_QUERY_REQUEST,
     payload: {
       isFetching: true,
       errorMessage: "",
@@ -18,9 +18,9 @@ function requestGetUsersByQuery() {
   };
 }
 
-function receiveGetUsersByQuery(data, type, start, currentLength, query, tags) {
+function receiveGetDataByQuery(data, type, start, currentLength, query, tags) {
   return {
-    type: GET_USERS_BY_QUERY_SUCCESS,
+    type: GET_DATA_BY_QUERY_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
@@ -34,9 +34,9 @@ function receiveGetUsersByQuery(data, type, start, currentLength, query, tags) {
   };
 }
 
-function errorGetUsersByQuery(message) {
+function errorGetDataByQuery(message) {
   return {
-    type: GET_USERS_BY_QUERY_FAILURE,
+    type: GET_DATA_BY_QUERY_FAILURE,
     payload: {
       isFetching: false,
       hasMore: false,
@@ -69,18 +69,19 @@ export function resetSearch() {
         data: [],
         tags: [],
         type: null,
+		query: "",
       },
     });
 }
 
-export function getUsersByQuery(api, opts) {
+export function getDataByQuery(api, opts) {
   return async (dispatch, getState) => {
-    dispatch(requestGetUsersByQuery());
-
-    const url = generateUrl("getSearchData");
     if (getState().search.query !== opts.query) {
       dispatch(resetSearch());
     }
+    dispatch(requestGetDataByQuery());
+
+    const url = generateUrl("getSearchData");
 
     const currentOffset = getState().search.offset;
     try {
@@ -96,8 +97,8 @@ export function getUsersByQuery(api, opts) {
       const tags = data.tags;
       const users = data.data;
 
-      dispatch(
-        receiveGetUsersByQuery(
+      await dispatch(
+        receiveGetDataByQuery(
           [...getState().search.data, ...users],
           opts.type,
           currentOffset,
@@ -107,7 +108,7 @@ export function getUsersByQuery(api, opts) {
         )
       );
     } catch (e) {
-      dispatch(errorGetUsersByQuery("Error: something went wrong:"));
+      dispatch(errorGetDataByQuery("Error: something went wrong:"));
     }
   };
 }
