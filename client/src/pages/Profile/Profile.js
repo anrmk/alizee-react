@@ -181,12 +181,16 @@ function Profile(props) {
   };
 
   const handleGoToSocialClick = (link) => {
-    confirmationDialog.toggle({
-      mainBtnText: "Link",
-      title: "Leaving TheMembers",
-      contentText: <RedirectContent link={link} />,
-      callback: () => window.open(link, "_blank"),
-    });
+    confirmationDialog.toggle(
+      {
+        mainBtnText: "Link",
+        title: "Leaving TheMembers",
+        onMainClick: () => window.open(link, "_blank"),
+      },
+      {
+        contentText: <RedirectContent link={link} />,
+      }
+    );
   };
 
   if (user.data.isBlocked) {

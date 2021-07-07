@@ -6,6 +6,7 @@ import ApiContext from "../context/ApiContext";
 import * as actionRelationship from "../store/actions/relationship";
 import dialogs, { FOLLOWERS_LIST_DIALOG_TYPE } from "../constants/dialogs";
 import useDialog from "./useDialog";
+import { getDialogToggleType } from "../helpers/functions";
 
 export default function useFollowingsDialog() {
   const apiClient = useContext(ApiContext);
@@ -35,7 +36,7 @@ export default function useFollowingsDialog() {
   };
 
   const handleOpenClick = async (withStack = false, dialogOpts, contentOpts) => {
-    const toggleType = withStack ? "toggleWithStack" : "toggle";
+	const toggleType = getDialogToggleType(withStack)
 
     dialogOpts && (dialogOptionsState = dialogOpts);
     contentOpts && (dialogOptionsState = contentOpts);

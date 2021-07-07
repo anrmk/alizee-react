@@ -405,3 +405,7 @@ export function getUsernameFromJWT(token) {
 
   return decodedToken[USERNAME_KEY];
 }
+
+export function getDialogToggleType(withStack) {
+return withStack ? "toggleWithStack" : "toggle";
+}

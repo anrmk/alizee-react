@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
 
-function ConfirmDialog({ contentText, helpText }) {
+function ConfirmDialog({ contentText, helpText, textProp={variant:"caption", color:"textSecondary"} }) {
   const renderContent = () => {
     return contentText;
   };
@@ -9,7 +9,7 @@ function ConfirmDialog({ contentText, helpText }) {
     <Box>
       {renderContent()}
       {helpText && (
-        <Typography variant="caption" color="textSecondary">
+        <Typography {...textProp}>
           {helpText}
         </Typography>
       )}

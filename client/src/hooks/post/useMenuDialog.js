@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { useHistory, useLocation } from "react-router";
 
 import dialogs, { POST_MENU_DIALOG_TYPE } from "../../constants/dialogs";
@@ -7,12 +7,14 @@ import useDialog from "../useDialog";
 import useSharePostDialog from "./useSharePostDialog";
 import useReportDialog from "./useReportDialog";
 import useBlockDialog from "../useBlockDialog";
+import useConfirmationDialog from "../useConfirmationDialog";
 import useShareDialog, { SHARE_DIALOG_PROFILE_TYPE } from "../useShareDialog";
 import useDeleteAction from "./useDeleteAction";
 import useFavoriteUserAction from "../useFavoriteUserAction";
 import { DEFAULT_ROUTE } from "../../constants/routes";
 import { POST_TYPE } from "../../components/Post/Menu";
 import { useSelector } from "react-redux";
+import { ConfirmDialog } from "../../domain/ConfirmationDialog.js";
 
 const initProps = {
   isBlock: true,
@@ -22,7 +24,7 @@ const initProps = {
   isDelete: true,
   isFavorite: true,
   useFavoriteProps: null,
-  type: POST_TYPE
+  type: POST_TYPE,
 };
 
 export default function useMenuDialog(props) {
@@ -33,11 +35,12 @@ export default function useMenuDialog(props) {
   const blockDialog = useBlockDialog();
   const reportDialog = useReportDialog();
   const postShareDialog = useSharePostDialog();
+  const confirmationDialog = useConfirmationDialog();
   const chatShareDialog = useShareDialog({ withStack: true, type: SHARE_DIALOG_PROFILE_TYPE });
   const { deletePostAction } = useDeleteAction();
   const { favoriteUserAction } = useFavoriteUserAction(props.favoriteProps);
   const [localData, setLocalData] = useState(null);
-  
+
   const { isFavorite, followingPostsData } = useSelector((state) => ({
     isFavorite: state.user.data?.isFavorite,
     followingPostsData: state.followingPosts.data,
@@ -56,14 +59,14 @@ export default function useMenuDialog(props) {
           onFavorite: props.isFavorite && handleFavoriteUserClick,
           type: props.type,
           ...localData,
-          isFavorite: newFollowStatus
+          isFavorite: newFollowStatus,
         })
       );
-      setLocalData(prev => ({ ...prev, isFavorite: newFollowStatus }));
+      setLocalData((prev) => ({ ...prev, isFavorite: newFollowStatus }));
     }
   }, [isFavorite, followingPostsData]);
 
-  const handleDeleteClick = useCallback(async (id) => {
+  const handleDeleteConfirm = useCallback(async (id) => {
     dialog.setParams({ loading: true });
     await deletePostAction(id);
     dialog.toggle({ open: false, loading: false });
@@ -71,6 +74,26 @@ export default function useMenuDialog(props) {
     if (location.pathname !== DEFAULT_ROUTE) {
       history.push(DEFAULT_ROUTE);
     }
+  }, []);
+
+  const handleDeleteClick = useCallback(async (id) => {
+    confirmationDialog.toggle(
+      {
+        mainBtnText: "Confirm",
+        title: "Delete Post",
+        state: id,
+        onMainClick: handleDeleteConfirm,
+      },
+      {
+        contentText: (
+          <ConfirmDialog
+            helpText="Do you really want to delete the post?"
+            textProp={{ variant: "subtitle1", align: "center" }}
+          />
+        ),
+      },
+      true
+    );
   }, []);
 
   const handleFavoriteUserClick = useCallback(async (data) => {
@@ -88,7 +111,7 @@ export default function useMenuDialog(props) {
         onDelete: props.isDelete && handleDeleteClick,
         onFavorite: props.isFavorite && handleFavoriteUserClick,
         type: props.type,
-        ...data
+        ...data,
       }),
       true
     );
