@@ -4,6 +4,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     display: "flex",
     flexDirection: "column",
+    width: "100%",
   },
   subscribeBtn: {
     whiteSpace: "nowrap",
@@ -28,7 +29,14 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: theme.shape.borderRadius,
     width: "100%",
     marginTop: theme.spacing(2),
+    wordBreak: "break-all",
   },
+  cardHeader: {
+    "& > div": {
+      width: "100%",
+    },
+  },
+
   moodMobile: {
     ...theme.typography.body1,
     width: "100%",

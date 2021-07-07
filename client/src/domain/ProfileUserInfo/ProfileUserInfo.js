@@ -98,6 +98,7 @@ function ProfileUserInfo({
     <Card>
       {renderChangeImg()}
       <CardHeader
+        className={classes.cardHeader}
         title={
           <DisplayName
             name={user.name}

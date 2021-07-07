@@ -63,7 +63,14 @@ function ProfileHeader(props) {
               <MoreVertIcon htmlColor="white" />
             </IconButton>
           </Box>
-          <Box display="flex" width="max-content" alignItems="flex-end" position="relative" top="24px" left="8px">
+          <Box
+            display="flex"
+            width="100%"
+            alignItems="flex-end"
+            position="relative"
+            top="24px"
+            paddingLeft={1}
+          >
             <Avatar
               className={classes.avatarHeader}
               src={user.avatarUrl}
@@ -73,13 +80,14 @@ function ProfileHeader(props) {
               borderColor="silver"
               borderWidth="4px"
             />
-            <Box marginLeft={1}>
+            <Box marginLeft={1} width="calc(100% - 124px)">
               {
                 <DisplayName
                   name={user.name}
                   userName={user.userName}
                   identityVerified={user.identityVerified}
                   noWrap={false}
+                  alignItems="flex-start"
                 />
               }
             </Box>

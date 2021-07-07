@@ -3,7 +3,12 @@ import clsx from "clsx";
 import { Link } from "react-router-dom";
 
 import { Typography, Box, Divider } from "@material-ui/core/";
-import { FOLLOWERS_ROUTE, FOLLOWINGS_ROUTE, FAVORITES_USERNAME_ROUTE } from "../../constants/routes";
+import {
+  FOLLOWERS_ROUTE,
+  FOLLOWINGS_ROUTE,
+  FAVORITES_USERNAME_ROUTE,
+  BLOCKED_USERNAME_ROUTE,
+} from "../../constants/routes";
 
 import useStyles from "./style";
 
@@ -14,6 +19,7 @@ function ProfileStatistics({
   followingsCount,
   favoritesCount,
   postsCount,
+  blockedCount,
   className,
 }) {
   const classes = useStyles();
@@ -32,6 +38,10 @@ function ProfileStatistics({
           <Divider className={classes.divider} orientation="vertical" flexItem />
           <Typography className={classes.text} to={FAVORITES_USERNAME_ROUTE(userName)} component={Link}>
             {favoritesCount || "0"} favorites
+          </Typography>
+          <Divider className={classes.divider} orientation="vertical" flexItem />
+          <Typography className={classes.text} to={BLOCKED_USERNAME_ROUTE(userName)} component={Link}>
+            {blockedCount || "0"} blocked
           </Typography>
         </>
       ) : (
