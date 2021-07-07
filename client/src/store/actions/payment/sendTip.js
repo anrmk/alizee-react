@@ -52,8 +52,10 @@ export function sendTip(api, userName, amount, message) {
 
       dispatch(receiveSendTip());
       dispatch(getDeposit(api));
+	  return true
     } catch (e) {
       dispatch(errorSendTip("Error: something went wrong"));
+	  return false
     }
   };
 }

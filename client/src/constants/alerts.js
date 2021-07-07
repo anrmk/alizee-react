@@ -5,3 +5,5 @@ export const RESET_PASSWORD_ALERT_SUCCESS_TEXT = "The reset link has been sent t
 export const RESET_PASSWORD_ALERT_ERROR_TEXT = "Something went wrong try again please";
 export const DELETE_ACCOUNT_ALERT_SUCCESS_TEXT = "The account has been deleted";
 export const DELETE_ACCOUNT_ALERT_ERROR_TEXT = "The account has not been deleted";
+export const SEND_TIP_ALERT_SUCCESS_TEXT = "The tip was sent successfully"
+export const SEND_TIP_ALERT_ERROR_TEXT = "You were unable to send the tip"
