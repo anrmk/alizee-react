@@ -19,37 +19,38 @@ function LightboxModal({ items, startSlideIndex = 0 }) {
 
   const handleChangeIndex = (index) => {
     if (items.length && items[index]) {
-      setCurrentMediaType(items[index].kind)
+      setCurrentMediaType(items[index].kind);
     }
-  }
+  };
 
   const isVideo = (type) => {
     return type === MEDIA_VIDEO;
-  }
-  
+  };
+
   return (
-    <Box style={{
-      height: isVideo(currentMediaType) && "100%" }}>
+    <Box
+      width="100%"
+      style={{
+        height: isVideo(currentMediaType) && "100%",
+      }}
+    >
       <Gallery
-        isPurchased 
-        className={classes.root} 
-        style={{ height: isVideo(currentMediaType) && "100%" }} 
-        pagination={false} 
+        isPurchased
+        className={classes.root}
+        style={{ height: isVideo(currentMediaType) && "100%" }}
+        pagination={false}
         currentIndex={startSlideIndex}
-        onChangeIndex={handleChangeIndex}>
+        onChangeIndex={handleChangeIndex}
+      >
         {items.length &&
           items.map((item) => {
             if (item.kind === MEDIA_IMAGE) {
-              return <img 
-                loading="lazy"
-                className={classes.imageContent}
-                key={item.id}
-                src={item.url} />;
+              return <img loading="lazy" className={classes.imageContent} key={item.id} src={item.url} />;
             } else if (item.kind === MEDIA_VIDEO) {
-              return <VideoContent className={classes.videoContent} key={item.id} url={item.url} showControls />
+              return <VideoContent className={classes.videoContent} key={item.id} url={item.url} showControls />;
             }
             return null;
-        })}
+          })}
       </Gallery>
     </Box>
   );

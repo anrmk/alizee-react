@@ -37,7 +37,7 @@ function ArrowButtons({
   };
 
   return (
-    <Box className={classes.arrowButtonBox} px={2} display="inline-flex">
+    <Box className={classes.arrowButtonBox} px={2} display="flex">
       <IconButton onClick={(e) => handleIndexChange(e, localIndex - 1)}><ArrowBackIosRoundedIcon className={classes.arrowButton} fontSize="large" /></IconButton>
       <IconButton onClick={(e) => handleIndexChange(e, localIndex + 1)}><ArrowForwardIosRoundedIcon className={classes.arrowButton} fontSize="large" /></IconButton>
     </Box>
