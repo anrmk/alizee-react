@@ -11,7 +11,6 @@ import media from './media';
 import comment from "./comment";
 import users from "./users";
 import chat from "./chat";
-import chatMedia from "./chatMedia";
 import user from "./user";
 import settings from "./settings";
 import hashTags from "./hashTags";
@@ -33,7 +32,6 @@ const appReducer = combineReducers({
   confirmEmail,
   users,
   chat,
-  chatMedia,
   profilePosts,
   followingPosts,
   suggestionPosts,

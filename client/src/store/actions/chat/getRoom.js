@@ -1,4 +1,4 @@
-import { generateUrl } from "../../../helpers/functions";
+import { generateUrl, isEmptyObject } from "../../../helpers/functions";
 
 export const GET_ROOM_REQUEST = "GET_ROOM_REQUEST";
 export const GET_ROOM_SUCCESS = "GET_ROOM_SUCCESS";
@@ -45,12 +45,12 @@ export function getRoom(api, userName) {
       const { data } = await api.setMethod("GET").setParams({ userName }).query(url);
 
       const chatState = getState().chat;
-      const rooms = [...chatState.data];
-      const roomIndex = rooms.findIndex((room) => room.id === data.id);
+      const roomIndex = chatState.data.findIndex((room) => room.id === data.id);
+      const rooms = roomIndex !== -1 || !data ? [...chatState.data] : [...chatState.data, { ...data }];
 
       if (roomIndex !== -1) {
         rooms[roomIndex].unreadMessageCount = 0;
-      }
+      } 
 
       dispatch(receiveGetRoom(rooms, data));
     } catch (e) {

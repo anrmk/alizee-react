@@ -37,11 +37,11 @@ function ProfileStatistics({
           </Typography>
           <Divider className={classes.divider} orientation="vertical" flexItem />
           <Typography className={classes.text} to={FAVORITES_USERNAME_ROUTE(userName)} component={Link}>
-            {favoritesCount || "0"} favorites
+            {favoritesCount} favorites
           </Typography>
           <Divider className={classes.divider} orientation="vertical" flexItem />
           <Typography className={classes.text} to={BLOCKED_USERNAME_ROUTE(userName)} component={Link}>
-            {blockedCount || "0"} blocked
+            {blockedCount} blocked
           </Typography>
         </>
       ) : (

@@ -78,18 +78,17 @@ function Room({
           userName={user.userName}
           items={messages}
           onMediaView={onMediaView}
-          onFetchMore={(e) => { console.log("Fetch more")}}
+          onFetchMore={(e) => {
+            console.log("Fetch more");
+          }}
         />
       </CardContent>
       <CardActions className={classes.cardFooter}>
-        {!current.isRestricted ? (
-            <MessageSenderInput disabled={isLoading} onSendMessageClick={handleMessageCreate} onSendTip={handleSendTipClick} />
-          ) : (
-            <Box width="100%" textAlign="center">
-              <Typography>You was restricted.</Typography>
-            </Box>
-          )
-        }
+        <MessageSenderInput
+          disabled={isLoading}
+          onSendMessageClick={handleMessageCreate}
+          onSendTip={handleSendTipClick}
+        />
       </CardActions>
     </Card>
   );

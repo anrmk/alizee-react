@@ -1,10 +1,7 @@
 import React from "react";
-import {useHistory} from "react-router-dom"
-
 import { ListItem, ListItemAvatar, ListItemText, Typography } from "@material-ui/core";
 
 import Avatar from "../../components/Avatar";
-
 import { formatDate } from "../../helpers/functions";
 
 import useStyles, { StyledBadge } from "./styles";
@@ -15,15 +12,11 @@ function SidebarListItem({
 
   onItemClick,
 }) {
-  const history = useHistory()
-
   const classes = useStyles();
 
   const handleItemClick = (e) => {
     e.preventDefault();
     onItemClick && onItemClick(item.userName);
-	
-	  history.push(item.userName)
   };
 
   return (

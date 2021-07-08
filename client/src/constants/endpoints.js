@@ -43,8 +43,7 @@ export default {
 
     // MEDIA
     createMedia: "media/createmedia",
-    createChatMedia: "media/createChatMedia",
-
+ 
     // CHAT
     getRoom: "chat/getRoom",
     getRooms: "chat/getRooms",

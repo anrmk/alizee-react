@@ -25,7 +25,7 @@ function NewChatDialog({
       <List>
         {items && items.length ? (
           items.map((follower) => (
-            <ListItem button key={follower.id} onClick={() => onItemClick(follower.userName)}>
+            <ListItem button key={`newchat_${follower.userName}`} onClick={() => onItemClick(follower.userName)}>
               <ListItemAvatar>
                 <Avatar src={follower.avatarUrl} />
               </ListItemAvatar>

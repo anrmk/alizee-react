@@ -91,7 +91,7 @@ const Message = React.memo(
       <ListItem dense alignItems="flex-start">
         {message.avatarUrl && (
           <ListItemAvatar>
-            <Avatar alt={message.name ?? message.userName} src={message.avatarUrl} borderColor="silver" />
+            <Avatar alt={message.name ?? message.userName} src={message.avatarUrl} />
           </ListItemAvatar>
         )}
 

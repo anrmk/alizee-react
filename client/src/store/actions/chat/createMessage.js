@@ -1,6 +1,4 @@
 import { generateUrl } from "../../../helpers/functions";
-import { MEDIA_CONTENT } from "../../../constants/media_types";
-import { createChatMedia } from "./createChatMedia";
 
 import { getRoom } from "./index";
 
@@ -52,7 +50,7 @@ function addMessageSuccess(room, rooms) {
 export function addMessage(api, data) {
   return async (dispatch, getState) => {
     try {
-      dispatch(receiveCreateMessage());
+      
 
       const current = { ...getState().chat.current };
       const rooms = [...getState().chat.data];
@@ -100,30 +98,23 @@ export function createMessage(api, opts) {
 
     const url = generateUrl("createMessage");
     try {
-      const { id, text, mediaFiles } = opts;
+      const { id, text, mediaFiles, userName } = opts;
 
-      const mediaList = [];
-      if (mediaFiles.length) {
-        await dispatch(createChatMedia(api, mediaFiles, MEDIA_CONTENT));
+      const formData = new FormData();
+      mediaFiles.forEach((file) => {
+        formData.append("files", file);
+      });
 
-        const media = getState().chatMedia;
-        if (media.errorMessage) {
-          throw media.errorMessage;
-        }
-        media.data.forEach((item) => {
-          mediaList.push({ id: item.id });
-        });
+      formData.append("roomId", id);
+      formData.append("userName", userName);
+      formData.append("text", text);
+
+      const { data } = await api.setData(formData).query(url);
+
+      if(!!data) {
+        dispatch(addMessage(api, data));
       }
-
-      const { data } = await api
-        .setData({
-          roomId: id,
-          text,
-          media: mediaList,
-        })
-        .query(url);
-
-      dispatch(addMessage(api, data));
+      dispatch(receiveCreateMessage());
     } catch (e) {
       return dispatch(errorCreateMessage(e));
     }

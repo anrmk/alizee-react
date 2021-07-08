@@ -26,7 +26,7 @@ export default function useNewChatDialog() {
           },
           {
             items: data,
-            onItemClick: handleRoomCreate,
+            onItemClick: handleGetRoom,
             onSearchChange: handleFollowingsFilter,
             resetQuery: resetQuery,
           }
@@ -43,8 +43,8 @@ export default function useNewChatDialog() {
     dispatch(actionRelationship.filterFollowings(value));
   };
 
-  const handleRoomCreate = async (userName) => {
-    await dispatch(actionChat.createRoom(apiClient, userName));
+  const handleGetRoom = async (userName) => {
+    await dispatch(actionChat.getRoom(apiClient, userName));
     dialog.toggle({ open: false });
   };
 

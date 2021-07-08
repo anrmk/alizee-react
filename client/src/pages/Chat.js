@@ -4,13 +4,13 @@ import { connect } from "react-redux";
 
 import ApiContext from "../context/ApiContext";
 
-import { Room, Sidebar } from "../domain/Chat";
+import { Room, Sidebar, NoRoom } from "../domain/Chat";
 import SlidingViews from "../components/SlidingViews";
 
 import * as actionChat from "../store/actions/chat";
 
 import { ESC_KEY_CODE } from "../constants/key_codes";
-import { PEAR_TO_PEAR_ID_ROUTE } from "../constants/routes";
+import { CHAT_USERNAME_ROUTE, PEAR_TO_PEAR_ID_ROUTE } from "../constants/routes";
 
 import { useNewChatDialog, useRoomMenuDialog, useChatHub } from "../hooks/chat";
 import useSlidingViews, { RIGHT_OPEN_TYPE } from "../hooks/useSlidingViews";
@@ -26,7 +26,7 @@ function Chat(props) {
   const { username } = useParams();
 
   const { user, isAuthenticated } = props;
-  const { chat, current, getRoom, setRoom, getRooms, filterRooms, resetCurrentRoom } = props;
+  const { chat, current, getRoom, getRooms, filterRooms, resetCurrentRoom } = props;
   const { createMessage, addMessage } = props;
 
   const sendTipDialog = useSendTipDialog();
@@ -63,7 +63,8 @@ function Chat(props) {
   useEffect(() => {
     if (username) {
       (async () => {
-        await setRoom(apiClient, username);
+        await getRoom(apiClient, username);
+        toggleSlidingViewsState();
       })();
     }
   }, [username]);
@@ -74,8 +75,7 @@ function Chat(props) {
 
   const handleRoomGet = async (userName) => {
     if (current?.userName !== userName) {
-      //await getRoom(apiClient, userName);
-      toggleSlidingViewsState();
+      history.push(CHAT_USERNAME_ROUTE(userName));
     }
   };
 
@@ -111,7 +111,7 @@ function Chat(props) {
         onNewChatClick={newChatDialog.toggle}
       />
 
-      {current && (
+      {current ? (
         <Room
           current={current}
           user={user}
@@ -125,7 +125,7 @@ function Chat(props) {
           onVideoStreem={handleCallToPeer}
           onSendTip={sendTipDialog.toggle}
         />
-      )}
+      ) : (<NoRoom />)}
     </SlidingViews>
   );
 }
@@ -152,13 +152,11 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getRooms: (api) => dispatch(actionChat.getRooms(api)),
-    getRoom: (api, userName) => dispatch(actionChat.getRooms(api, userName)),
+    getRoom: (api, userName) => dispatch(actionChat.getRoom(api, userName)),
     filterRooms: (query) => dispatch(actionChat.filter(query)),
-
-    setRoom: (api, userName) => dispatch(actionChat.setRoom(api, userName)),
     resetCurrentRoom: () => dispatch(actionChat.resetCurrentRoom()),
 
-    createMessage: (api, id, text) => dispatch(actionChat.createMessage(api, id, text)),
+    createMessage: (api, data) => dispatch(actionChat.createMessage(api, data)),
     addMessage: (api, text) => dispatch(actionChat.addMessage(api, text)),
   };
 }
