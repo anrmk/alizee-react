@@ -62,8 +62,7 @@ const Tools = React.memo(
     };
 
     const handleShareClick = useCallback(() => {
-      const userName = user.userName;
-      onShare && onShare({ id, userName });
+      onShare && onShare({ id, userName: user.userName });
     }, []);
 
     const handleSendTipClick = useCallback(() => {

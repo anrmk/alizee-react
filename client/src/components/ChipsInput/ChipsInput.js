@@ -25,6 +25,12 @@ function ChipsInput({
   const classes = useStyles({localItems});
 
   useEffect(() => {
+    if (max > 0) {
+      setLocalItems(items.slice(0, max));
+    }
+  }, []);
+
+  useEffect(() => {
     onChange && onChange(localItems);
   }, [localItems]);
 

@@ -70,7 +70,7 @@ function Menu({
         </ListItem>
       )}
 
-      <Divider />
+      {!isOwner && <Divider />}
 
       {!isOwner && onReport && (
         <ListItem button onClick={handleReportClick}>

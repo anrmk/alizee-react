@@ -64,7 +64,7 @@ function Comments(props) {
         </CardContent>
       )}
 
-      {isCommentable && isPurchased && isFollowed && (
+      {((isCommentable && isPurchased && isFollowed) || isOwner) && (
         <CardActions className={classes.cardFooter}>
           <MessageSenderInput hideMediaEditor hidePayment={isOwner} onSendMessageClick={handleCommentSendClick} onSendTip={handleSendTipClick} />
         </CardActions>

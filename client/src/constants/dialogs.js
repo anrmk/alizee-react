@@ -2,7 +2,7 @@ import React from "react";
 
 import { Error } from "../components/ErrorDialog";
 import { MediaEditorPreview, MediaPreview } from "../components/MediaEditor";
-import FollowingsDialog from "../domain/FollowingsDialog";
+import UsersDialog from "../domain/UsersDialog";
 import { Receipt, Purchase, CreatePost, CreateStories, CreateMood, Menu as PostMenu } from "../components/Post";
 import { SendTip, Payment } from "../components/Payment";
 import { ReportPost, BlockUser, UnblockUser } from "../components/Report";
@@ -40,6 +40,7 @@ export const ROOM_MENU_DIALOG_TYPE = "roomMenu";
 export const PROFILE_EDIT_COVER = "profileEditCover";
 export const STORY_DIALOG_TYPE = "story";
 export const FOLLOWERS_LIST_DIALOG_TYPE = "chatList";
+export const USERS_LIST_DIALOG_TYPE = "usersList";
 
 export const AGREE_DIALOG_TYPE = "agree";
 export const RESET_PWD_ACCOUNT_DIALOG_TYPE = "resetPasswordAccount";
@@ -183,16 +184,14 @@ export default {
     ...baseDialogProps,
     ...dialogProps,
   }),
-  [FOLLOWERS_LIST_DIALOG_TYPE]: (dialogProps, contentProps) => {
-    return {
-      title: "Share To Chat",
-      content: <FollowingsDialog {...contentProps} />,
-      mainBtnText: "Share",
+  [USERS_LIST_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+      title: "Users List",
+      content: <UsersDialog {...contentProps} />,
+      mainBtnText: "Add",
       closeBtnText: "Cancel",
       ...baseDialogProps,
       ...dialogProps,
-    };
-  },
+  }),
   [AGREE_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     content: <AgreeDialog {...contentProps} />,
     mainBtnText: "Confirm",

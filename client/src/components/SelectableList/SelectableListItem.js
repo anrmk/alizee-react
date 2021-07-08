@@ -8,12 +8,11 @@ export default function SelectableListItem({
   userName,
   avatarUrl,
   active,
-  index,
 
   onClick,
 }) {
   return (
-    <ListItem button data-key={index} onClick={onClick}>
+    <ListItem button data-key={userName} onClick={onClick}>
       <ListItemAvatar>
         {active ? <CheckCircleIcon color="primary" fontSize="large" /> : <Avatar src={avatarUrl} />}
       </ListItemAvatar>

@@ -65,6 +65,7 @@ export default {
     rejectFollow: "relationship/reject",
     createBlock: "relationship/block",
     deleteBlock: "relationship/unblock",
+    getFollowingsSearch: "relationship/followingssearch",
 
     // SUGGESTIONS
     getPeopleSuggestions: "suggestion/people",

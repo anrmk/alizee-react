@@ -40,7 +40,7 @@ export default function useNewChatDialog() {
   };
 
   const handleFollowingsFilter = (value) => {
-    dispatch(actionRelationship.filterFollowings(value));
+    dispatch(actionRelationship.filterFollowingsByQuery(value));
   };
 
   const handleGetRoom = async (userName) => {

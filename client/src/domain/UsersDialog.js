@@ -1,0 +1,45 @@
+import React, { useEffect, useState } from "react";
+import { Box, CircularProgress, Typography } from "@material-ui/core";
+
+import SelectableList from "../components/SelectableList/SelectableList";
+import SearchInput from "./Search";
+
+function UsersDialog({
+  items,
+  preSelected = [],
+  multiple = false,
+  selectionLimit = 3,
+  loading,
+
+  onItemSelect,
+  onSendQuery,
+  onResetQuery,
+}) {
+  const [selectedLength, setSelectedLength] = useState(preSelected.length);
+
+  useEffect(() => {
+    return () => {
+      onResetQuery && onResetQuery();
+    };
+  }, []);
+
+  const handleItemSelect = (items) => {
+    setSelectedLength(items.length);
+
+    onItemSelect && onItemSelect(items);
+  }
+
+  return (
+    <>
+      <SearchInput onSendQuery={onSendQuery} />
+      <Typography align="right">{selectedLength}/{selectionLimit}</Typography>
+
+      {loading ? 
+        <Box display="flex" alignItems="center" justifyContent="center"><CircularProgress/></Box> : 
+        <SelectableList items={items} preSelected={preSelected} multiple={multiple} maxSelections={selectionLimit} onItemSelect={handleItemSelect} />
+      }
+    </>
+  );
+}
+
+export default UsersDialog;

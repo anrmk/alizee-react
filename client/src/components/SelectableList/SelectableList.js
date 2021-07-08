@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { List, Typography } from "@material-ui/core/";
 
-import { copyFlatObjectWithIgnore } from "../../helpers/functions";
+import { arrayToObject, copyFlatObjectWithIgnore } from "../../helpers/functions";
 import SelectableListItem from "./SelectableListItem";
 
 const ITEM_NAME = "list-item-";
@@ -10,49 +10,41 @@ export default function SelectableList({
   items,
   preSelected = [],
   multiple = false,
+  maxSelections = 0,
 
   onItemSelect
 }) {
   const [selected, setSelected] = useState({});
+  const [transformedItems, setTransformedItems] = useState({});
 
   useEffect(() => {
     if (items && 
-        items.length && 
-        preSelected.length && 
-        preSelected.length <= items.length) {
+        items.length) {
       setSelected(fillPreSelected(items, preSelected, multiple));
     }
-  }, preSelected);
+  }, []);
 
   const fillPreSelected = (pItems, pPreSelected, pMultiple) => {
-    const tempSelected = {};
-    const tempIndexSelected = [];
-    const mapWithNamesToIndex = pItems.reduce((acc, curr, i) => ({ ...acc, [curr.name]: i }), {});
+    const newSelected = {};
+    const mapWithNamesToIndex = arrayToObject(pItems, "userName");
+    setTransformedItems(mapWithNamesToIndex);
 
     if (pMultiple) {
-      pPreSelected.forEach(value => {
-        if (typeof value === "string") {
-          value = mapWithNamesToIndex[value];
-          if (value && value === -1) return;
-        }
+      pPreSelected.forEach(key => {
+        if (typeof key !== "string" || mapWithNamesToIndex[key] === undefined) return;
 
-        if (value >= pItems.length) {
-          console.warn(`The ${value} index out of range of items`);
-        } else {
-          tempSelected[value] = pItems[value];
-          tempIndexSelected.push(value);
-        }
+        newSelected[key] = mapWithNamesToIndex[key];
       });
     } else {
-      const firstIndex = pPreSelected[0];
-      tempSelected[firstIndex] = pItems[firstIndex];
+      const key = pPreSelected[0].userName;
+      newSelected[key] = mapWithNamesToIndex[key];
     }
 
-    return tempSelected;
+    return newSelected;
   }
 
-  const isSelectedItem = (value) => {
-    return !!selected[value];
+  const isSelectedItem = (key) => {
+    return !!selected[key];
   }
 
   const handleItemClick = (e) => {
@@ -66,9 +58,11 @@ export default function SelectableList({
         newSelected = filteredSelected :
         newSelected = {};
     } else {
+      if (maxSelections > 0 && Object.values(selected).length >= maxSelections) return;
+
       multiple ?
-        newSelected = { ...selected, [currentKey]: items[currentKey] } :
-        newSelected = { [currentKey]: items[currentKey] };
+        newSelected = { ...selected, [currentKey]: transformedItems[currentKey] } :
+        newSelected = { [currentKey]: transformedItems[currentKey] };
     }
 
     setSelected(newSelected);
@@ -78,14 +72,14 @@ export default function SelectableList({
 
   return (
     <List>
-      {items && items.length ? items.map((item, index) => (
+      {items && items.length ? items.map((item) => (
         <SelectableListItem 
-          key={ITEM_NAME + index} 
+          key={ITEM_NAME + item.userName} 
           name={item.name}
 		  userName={item.userName}
           avatarUrl={item.avatarUrl}
-          index={index}
-          active={isSelectedItem(index)}
+          userName={item.userName}
+          active={isSelectedItem(item.userName)}
           onClick={handleItemClick} />
       )) : (
           <Typography

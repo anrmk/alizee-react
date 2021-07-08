@@ -1,4 +1,4 @@
-import { useState, useContext, useCallback } from "react";
+import { useContext, useCallback, useRef } from "react";
 import { useDispatch } from "react-redux";
 
 import ApiContext from "../context/ApiContext";
@@ -7,7 +7,7 @@ import { getUrlTo } from "../helpers/functions";
 import { POST_MESSAGE_TYPE, STORY_MESSAGE_TYPE, PROFILE_MESSAGE_TYPE } from "../constants/message_types";
 import { POST_ID_ROUTE, PROFILE_USERNAME_ROUTE, STORIES_ROUTE } from "../constants/routes";
 import useDialog from "./useDialog";
-import useFollowingsDialog from "./useFollowingsDialog";
+import useUsersDialog from "./useUsersDialog";
 
 export const SHARE_DIALOG_STORY_TYPE = "story";
 export const SHARE_DIALOG_PROFILE_TYPE = "profile";
@@ -20,23 +20,28 @@ export default function useShareDialog({
   const apiClient = useContext(ApiContext);
   const dispatch = useDispatch();
   const dialog = useDialog();
-  const [currentShareId, setCurrentShareId] = useState(null);
-  const [currentShareUsername, setCurrentShareUsername] = useState(null);
-  const followingsDialog = useFollowingsDialog();
+  const usersDialog = useUsersDialog();
+  let currentShareId = useRef(null).current;
+  let currentShareUsername = useRef(null).current;
 
-  const handleOpenClick = useCallback(async ({ id, userName }) => {
-    followingsDialog.toggle(withStack, {
-      title: "Share To Chat",
-      onMainClick: handleShareDialogBtnClick
-    }, {
-      preSelected: []
-    });
+  const handleOpenClick = useCallback(async (data) => {
+    const { id, userName } = data;
 
-    id && setCurrentShareId(id);
-    userName && setCurrentShareUsername(userName);
+    usersDialog.toggle(
+        {
+          title: "Share To Chat",
+          mainBtnText: "Share",
+          onMainClick: handleShareDialogBtnClick
+        },
+        null,
+        withStack
+    );
+
+    currentShareId = id;
+    currentShareUsername = userName;
   }, []);
 
-  const handleShareDialogBtnClick = async (items) => {
+  const handleShareDialogBtnClick = useCallback(async (items) => {
     if ((!items.length && !currentShareId) || (!items.length && !currentShareUsername)) return;
 
     const followersUsernames = items.map(item => item.userName);
@@ -61,7 +66,7 @@ export default function useShareDialog({
       type: messageType
     }));
     dialog.toggle({ open: false, loading: false });
-  }
+  }, []);
 
   return {
     toggle: handleOpenClick

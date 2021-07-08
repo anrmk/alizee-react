@@ -76,15 +76,16 @@ export function resetSearch() {
 
 export function getDataByQuery(api, opts) {
   return async (dispatch, getState) => {
-    if (getState().search.query !== opts.query) {
-      dispatch(resetSearch());
-    }
     dispatch(requestGetDataByQuery());
 
     const url = generateUrl("getSearchData");
-
-    const currentOffset = getState().search.offset;
     try {
+      if (getState().search.query !== opts.query) {
+        dispatch(resetSearch());
+      }
+
+      const currentOffset = getState().search.offset;
+
       const { data } = await api
         .setMethod("GET")
         .setParams({

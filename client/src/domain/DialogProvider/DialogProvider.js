@@ -158,7 +158,12 @@ export default function DialogProvider({ children }) {
                     </Button>
                   )}
                   {(dialogOptions.onMainClick || dialogOptions.mainBtnProps) && (
-                    <Button disabled={dialogOptions.loading} variant="contained" {...dialogOptions.mainBtnProps} onClick={handleMainClick}>
+                    <Button
+                      disableElevation
+                      disabled={dialogOptions.loading}
+                      variant="contained"
+                      {...dialogOptions.mainBtnProps}
+                      onClick={handleMainClick}>
                       {dialogOptions.mainBtnText}
                     </Button>
                   )}

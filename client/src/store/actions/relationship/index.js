@@ -26,6 +26,7 @@ export {
   GET_FOLLOWINGS_SUCCESS,
   GET_FOLLOWINGS_FAILURE,
   FILTER_FOLLOWINGS,
+  RESET_FOLLOWINGS_USERS,
   RESET_FOLLOWINGS_FILTER,
   GET_FOLLOWINGS_SHARE_SUCCESS,
   resetFollowingsFilter,
@@ -33,7 +34,7 @@ export {
   getFollowings,
   getFilteredShare,
   getFilteredUsers,
-  filterFollowings,
+  filterFollowingsByQuery,
   getShareFollowings,
 } from "./getFollowings";
 
@@ -45,3 +46,11 @@ export {
   getSuggestionPeople,
   resetSuggestionPeople,
 } from "./getSuggestionPeople";
+
+export {
+  GET_FOLLOWINGS_BY_QUERY_REQUEST,
+  GET_FOLLOWINGS_BY_QUERY_SUCCESS,
+  GET_FOLLOWINGS_BY_QUERY_FAILURE,
+
+  getFollowingsByQuery,
+} from "./getFollowingsByQuery";

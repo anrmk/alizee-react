@@ -27,9 +27,8 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
   const { data: suggestionPeople } = useSelector((state) => state.users);
 
   useEffect(() => {
-    if (suggestionPeople.length > 0 || SEARCH_USER_TYPE !== type) {
-      return;
-    }
+    if (suggestionPeople?.length > 0 || SEARCH_USER_TYPE !== type) return;
+
     //TODO: need paggination
     dispatch(relationshipActions.getSuggestionPeople(apiClient));
   }, []);

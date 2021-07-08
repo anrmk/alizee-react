@@ -9,10 +9,10 @@ import ApiContext from "../../context/ApiContext";
 import dialogs, { CREATE_POST_DIALOG_TYPE, CONFIRM_DIALOG_TYPE } from "../../constants/dialogs";
 import * as postActions from "../../store/actions/post";
 import useDialog from "../useDialog";
-import useFollowingsDialog from "../useFollowingsDialog";
 
 import { HOME_ROUTE, SETTINGS_BANK_ROUTE } from "../../constants/routes";
 import { isSameObjects } from "../../helpers/functions";
+import useUsersDialog from "../useUsersDialog";
 
 const FORM_ID = "create-post-form";
 
@@ -32,7 +32,7 @@ export default function usePostDialog() {
     isFetching: state.followingPosts.isFetching,
     identityVerified: state.signIn.userInfo.identityVerified,
   }));
-  const followingsDialog = useFollowingsDialog();
+  const usersDialog = useUsersDialog();
 
   const handlePostCreate = useCallback(async (data) => {
     dialog.setParams({ loading: true });
@@ -44,15 +44,16 @@ export default function usePostDialog() {
 
   const handleTagUsersClick = useCallback((data) => {
     formData = data;
-    followingsDialog.toggle(true, {
+    usersDialog.toggle({
       title: "Tag People",
       mainBtnText: "Add",
       onMainClick: handleAddTaggedUsersClick,
       onBackClick: () => handleBackClick(formData.taggedUsers)
     }, {
-      preSelected: data.taggedUsers.map(item => item.name)
-    });
-  }, [])
+      preSelected: data.taggedUsers?.map(item => item.userName)
+    }, 
+    true);
+  }, []);
 
   const handleAddTaggedUsersClick = useCallback((data, e) => {
     e.preventDefault();
@@ -60,7 +61,7 @@ export default function usePostDialog() {
   }, [])
 
   const handleBackClick = useCallback((currentTaggedUsernames) => {
-    let newTaggedUsers = formData.taggedUsers;
+    let newTaggedUsers = formData?.taggedUsers;
 
     if (!isSameObjects(currentTaggedUsernames, newTaggedUsers)) {
       newTaggedUsers = currentTaggedUsernames;

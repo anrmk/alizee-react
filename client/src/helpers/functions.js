@@ -406,6 +406,12 @@ export function getUsernameFromJWT(token) {
   return decodedToken[USERNAME_KEY];
 }
 
+export function arrayToObject(arr, property) {
+  if (!arr || !arr?.length) return null;
+
+  return arr.reduce((acc, curr, i) => ({ ...acc, [curr[property]]: { ...curr, index: i } }), {}); 
+}
+
 export function getDialogToggleType(withStack) {
-return withStack ? "toggleWithStack" : "toggle";
+  return withStack ? "toggleWithStack" : "toggle";
 }

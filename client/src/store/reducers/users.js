@@ -2,44 +2,59 @@ import {
   GET_FOLLOWERS_REQUEST,
   GET_FOLLOWERS_SUCCESS,
   GET_FOLLOWERS_FAILURE,
+
   GET_FOLLOWINGS_REQUEST,
   GET_FOLLOWINGS_SUCCESS,
   GET_FOLLOWINGS_FAILURE,
+
   GET_FOLLOWINGS_SHARE_SUCCESS,
+
   FILTER_FOLLOWINGS,
+
+  RESET_FOLLOWINGS_USERS,
   RESET_FOLLOWINGS_FILTER,
+  RESET_RELATIONSHIP,
+
   CREATE_FOLLOW_REQUEST,
   CREATE_FOLLOW_SUCCESS,
   CREATE_FOLLOW_FAILURE,
+
   DELETE_FOLLOW_REQUEST,
   DELETE_FOLLOW_SUCCESS,
   DELETE_FOLLOW_FAILURE,
+
   ACCEPT_FOLLOW_REQUEST,
   ACCEPT_FOLLOW_SUCCESS,
   ACCEPT_FOLLOW_FAILURE,
+
   REJECT_FOLLOW_REQUEST,
   REJECT_FOLLOW_SUCCESS,
   REJECT_FOLLOW_FAILURE,
+
   UNREJECT_FOLLOW_REQUEST,
   UNREJECT_FOLLOW_SUCCESS,
   UNREJECT_FOLLOW_FAILURE,
-  RESET_RELATIONSHIP,
+
   GET_BLOCK_LIST_REQUEST,
   GET_BLOCK_LIST_SUCCESS,
   GET_BLOCK_LIST_FAILURE,
+
   CREATE_BLOCK_USER_REQUEST,
   CREATE_BLOCK_USER_SUCCESS,
   CREATE_BLOCK_USER_FAILURE,
+
   UNBLOCK_USER_REQUEST,
   UNBLOCK_USER_SUCCESS,
   UNBLOCK_USER_FAILURE,
-} from "../actions/relationship";
 
-import {
   GET_SUGGESTIONS_PEOPLE_REQUEST,
   GET_SUGGESTIONS_PEOPLE_FAILURE,
   GET_SUGGESTIONS_PEOPLE_SUCCESS,
   RESET_SUGGESTIONS_PEOPLE,
+
+  GET_FOLLOWINGS_BY_QUERY_REQUEST,
+  GET_FOLLOWINGS_BY_QUERY_SUCCESS,
+  GET_FOLLOWINGS_BY_QUERY_FAILURE,
 } from "../actions/relationship";
 
 import {
@@ -54,15 +69,16 @@ import {
   DELETE_USER_FAVORITES_SUCCESS,
   DELETE_USER_FAVORITES_FAILURE
 } from "../actions/account";
+import { SEARCH_DEFAULT_OFFSET } from "../../constants/search";
 
 export default function usersReducer(
   state = {
     isFetching: false,
-    data: [],
-    share: [],
+    data: null,
+    share: null,
     query: "",
     hasMore: false,
-    offset: 0,
+    offset: SEARCH_DEFAULT_OFFSET,
   },
   action
 ) {
@@ -101,6 +117,11 @@ export default function usersReducer(
         ...action.payload,
       };
     case FILTER_FOLLOWINGS:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case RESET_FOLLOWINGS_USERS:
       return {
         ...state,
         ...action.payload,
@@ -347,6 +368,25 @@ export default function usersReducer(
       };
     }
     case DELETE_USER_FAVORITES_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case GET_FOLLOWINGS_BY_QUERY_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case GET_FOLLOWINGS_BY_QUERY_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case GET_FOLLOWINGS_BY_QUERY_FAILURE: {
       return {
         ...state,
         ...action.payload,

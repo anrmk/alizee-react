@@ -6,6 +6,7 @@ export const GET_FOLLOWINGS_REQUEST = "GET_FOLLOWINGS_REQUEST";
 export const GET_FOLLOWINGS_SUCCESS = "GET_FOLLOWINGS_SUCCESS";
 export const GET_FOLLOWINGS_FAILURE = "GET_FOLLOWINGS_FAILURE";
 export const FILTER_FOLLOWINGS = "FILTER_FOLLOWINGS";
+export const RESET_FOLLOWINGS_USERS = "RESET_FOLLOWINGS_USERS";
 export const RESET_FOLLOWINGS_FILTER = "RESET_FOLLOWINGS_FILTER";
 export const GET_FOLLOWINGS_SHARE_SUCCESS = "GET_FOLLOWINGS_SHARE_SUCCESS";
 
@@ -40,7 +41,7 @@ function errorGetFollowings(message) {
   };
 }
 
-function filterQueryFollowings(query) {
+export function filterFollowingsByQuery(query) {
   return {
     type: FILTER_FOLLOWINGS,
     payload: {
@@ -57,7 +58,7 @@ export function resetFollowingsFilter() {
     payload: {
       isFetching: false,
       errorMessage: "",
-      share: [],
+      share: null,
       query: "",
     },
   };
@@ -65,7 +66,7 @@ export function resetFollowingsFilter() {
 
 export function resetFollowingsUsers() {
   return {
-    type: RESET_FOLLOWINGS_FILTER,
+    type: RESET_FOLLOWINGS_USERS,
     payload: {
       isFetching: false,
       errorMessage: "",
@@ -113,12 +114,6 @@ export function getShareFollowings(api, userName) {
     } catch {
       dispatch(errorGetFollowings("Error: GetFollowings"));
     }
-  };
-}
-
-export function filterFollowings(query) {
-  return async (dispatch) => {
-    dispatch(filterQueryFollowings(query));
   };
 }
 
