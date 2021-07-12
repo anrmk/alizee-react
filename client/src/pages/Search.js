@@ -83,7 +83,7 @@ function Search({ width }) {
             <Divider />
           </>
         )}
-        {search.suggestionPeople.length > 0 && (
+        {search.suggestionPeople?.length > 0 && (
           <Grid item>
             <Typography component="h6" color="textSecondary">
               Suggestions
