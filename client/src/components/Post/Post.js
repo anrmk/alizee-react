@@ -137,6 +137,7 @@ function Post(props) {
           likes={likes}
           isLike={isLike}
           isFavorite={isFavorite}
+          isVerified={owner.identityVerified}
           amount={post.amount}
           isPurchased={post.isPurchased}
           isOwner={user.userName === owner.userName}

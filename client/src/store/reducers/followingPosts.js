@@ -8,6 +8,7 @@ import {
   GET_FOLLOWING_POSTS_SUCCESS,
   GET_FOLLOWING_POSTS_FAILURE,
   RESET_FOLLOWING_POSTS,
+  REFRESH_POST,
 
   CREATE_POST_REQUEST,
   CREATE_POST_SUCCESS,
@@ -77,6 +78,11 @@ export default function post(state = {
         ...action.payload,
       };
     case RESET_FOLLOWING_POSTS:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case REFRESH_POST:
       return {
         ...state,
         ...action.payload,

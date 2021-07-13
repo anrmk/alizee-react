@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { Typography, Box, Button, IconButton, CardHeader } from "@material-ui/core/";
+import { Typography, Box, Button, IconButton } from "@material-ui/core/";
 
 import MessageIcon from "@material-ui/icons/MessageOutlined";
 import DollarIcon from "@material-ui/icons/MonetizationOnOutlined";
@@ -15,6 +15,7 @@ import useStyles from "./style";
 function ProfileUserInfo({
   user,
   isOwner,
+  isVerified,
   isFollow,
   subscriptionPrice,
   followStatus,
@@ -53,9 +54,11 @@ function ProfileUserInfo({
             >
               <MessageIcon />
             </IconButton>
-            <IconButton color="primary" onClick={handleSendTipClick}>
-              <DollarIcon />
-            </IconButton>
+            {isVerified && 
+              <IconButton color="primary" onClick={handleSendTipClick}>
+                <DollarIcon />
+              </IconButton>
+            }
           </Box>
         </>
       )}

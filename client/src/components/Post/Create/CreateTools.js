@@ -1,11 +1,11 @@
 import React, { useRef } from "react";
 
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import LockOpenOutlinedIcon from "@material-ui/icons/LockOpenOutlined";
 import CommentOutlinedIcon from "@material-ui/icons/SpeakerNotesOutlined";
 import CommentBlockOutlinedIcon from "@material-ui/icons/SpeakerNotesOffOutlined";
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary";
 import TagPeopleIcon from '@material-ui/icons/GroupAdd';
+import PublicIcon from '@material-ui/icons/Public';
+import VpnLockIcon from '@material-ui/icons/VpnLock';
 
 import { Box, IconButton, Tooltip } from "@material-ui/core";
 
@@ -48,17 +48,17 @@ function CreateTools({
               </IconButton>
             </Tooltip>
           )}
-          <Tooltip title="Set Post to Private">
+          <Tooltip title={`Set Post to ${isPrivate ? "Public" : "Private"}`}>
             <IconButton onClick={onChange} name={privateBtnName}>
               {isPrivate ? (
-                <LockOutlinedIcon fontSize="small" color="secondary" />
+                <VpnLockIcon fontSize="small" color="secondary" />
               ) : (
-                <LockOpenOutlinedIcon fontSize="small" />
+                <PublicIcon fontSize="small" />
               )}
             </IconButton>
           </Tooltip>
 
-          <Tooltip title="Turn off Commenting">
+          <Tooltip title={`Turn ${isCommentable ? "off" : "on"} Commenting`}>
             <IconButton onClick={onChange} name={commentBtnName}>
               {isCommentable ? (
                 <CommentOutlinedIcon fontSize="small" />

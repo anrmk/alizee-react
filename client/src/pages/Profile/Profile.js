@@ -225,6 +225,7 @@ function Profile(props) {
           user={user.data}
           isOwner={username === me.userName}
           isFollow={user.data?.isFollow}
+          isVerified={user.data?.identityVerified}
           followStatus={user.data?.followStatus}
           subscriptionPrice={user.data?.subscriptionPrice}
           onSubscribeClick={followDialog.toggle}
@@ -254,6 +255,7 @@ function Profile(props) {
                 user={user.data}
                 isOwner={username === me.userName}
                 isFollow={user.data?.isFollow}
+                isVerified={user.data?.identityVerified}
                 followStatus={user.data?.followStatus}
                 subscriptionPrice={user.data?.subscriptionPrice}
                 onSubscribeClick={followDialog.toggle}

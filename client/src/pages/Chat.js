@@ -115,6 +115,7 @@ function Chat(props) {
         <Room
           current={current}
           user={user}
+          isVerified={user.identityVerified}
           isLoading={chat.isFetching}
           onClose={handleRoomClose}
           onMenuClick={() => {
@@ -137,6 +138,7 @@ function mapStateToProps(state) {
       userName: state.signIn?.userInfo?.userName,
       name: state.signIn?.userInfo?.name,
       avatarUrl: state.signIn?.userInfo?.avatarUrl,
+      identityVerified: state.signIn?.userInfo?.identityVerified
     },
     isAuthenticated: state.signIn.isAuthenticated,
     chat: {

@@ -3,6 +3,7 @@ export {
   GET_POSTS_SUCCESS,
   GET_POSTS_FAILURE,
   RESET_POSTS,
+  REFRESH_POST,
 
   getPosts,
   resetPosts,

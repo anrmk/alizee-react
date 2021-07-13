@@ -20,6 +20,7 @@ function Room({
   user,
   current,
   isLoading,
+  isVerified,
 
   onClose,
   onMenuClick,
@@ -61,9 +62,11 @@ function Room({
             <IconButton onClick={onClose}>
               <BackIcon />
             </IconButton>
-            <IconButton onClick={handleVideoClick}>
-              <VoiceChatIcon />
-            </IconButton>
+            {isVerified && 
+              <IconButton onClick={handleVideoClick}>
+                <VoiceChatIcon />
+              </IconButton>
+            }
             <IconButton onClick={onMenuClick}>
               <MoreVertIcon />
             </IconButton>

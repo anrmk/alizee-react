@@ -148,6 +148,7 @@ function PostPage(props) {
             isLike={post.data.iLike}
             amount={post.data.amount}
             isFavorite={post.data.isFavorite}
+            isVerified={post.owner.identityVerified}
             amount={post.data.amount}
             isPurchased={post.data.isPurchased}
             isOwner={user.userName === post.owner.userName}

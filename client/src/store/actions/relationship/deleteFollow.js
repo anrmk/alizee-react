@@ -1,6 +1,7 @@
 import { generateUrl } from "../../../helpers/functions";
 import { removeFollower } from "../user";
 import { getDeposit } from "../account";
+import { toggleFollowStatus } from "./createFollow";
 
 export const DELETE_FOLLOW_REQUEST = "DELETE_FOLLOW_REQUEST";
 export const DELETE_FOLLOW_SUCCESS = "DELETE_FOLLOW_SUCCESS";
@@ -44,14 +45,10 @@ export function deleteFollow(api, userName) {
       const url = generateUrl("deleteFollow");
       await api.setMethod("DELETE").setParams({ userName: userName }).query(url);
 
-      const list = [...getState().users.data];
-      const index = list.findIndex((item) => item.userName === userName);
-      if (index !== -1) {
-        list[index]["isFollow"] = false;
-      }
+      const updatedData = toggleFollowStatus(getState().users.data);
 
       dispatch(removeFollower());
-      dispatch(receiveDeleteFollow(list));
+      dispatch(receiveDeleteFollow(updatedData));
       dispatch(getDeposit(api));
     } catch (e) {
       return dispatch(errorDeleteFollow("When follow was deleting then something went wrong"));

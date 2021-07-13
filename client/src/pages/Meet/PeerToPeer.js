@@ -17,17 +17,24 @@ import FlipCameraIcon from "@material-ui/icons/FlipCameraIosOutlined";
 
 import ApiContext from "../../context/ApiContext";
 import * as notificationAction from "../../store/actions/notification";
+import OnlyModalCard from "./OnlyModalCard";
 
 import useStyles from "./styles";
 
 function PeerToPeer({ user, call }) {
-
+  const apiClient = useContext(ApiContext);
   const classes = useStyles();
   const history = useHistory();
-  const fullScreen = useFullScreen("root");
-
   const { userName } = useParams();
-  const apiClient = useContext(ApiContext);
+
+  const fullScreen = useFullScreen("root");
+  const videoStream = useVideoStream({
+    userName: user.userName,
+    peerName: userName,
+    isVerified: user.identityVerified,
+    onHangup: handleHangup,
+    onCallback: handleConnected,
+  });
 
   useEffect(() => {
     return () => {
@@ -35,24 +42,17 @@ function PeerToPeer({ user, call }) {
     };
   }, []);
 
-  const handleConnected = () => {
+  var handleConnected = () => {
     if (userName) {
       call(apiClient, userName); // Signal to user about calling
       videoStream.call(); // calling
     }
   };
 
-  const handleHangup = () => {
+  var handleHangup = () => {
     fullScreen.toggle(false);
     history.goBack();
   };
-
-  const videoStream = useVideoStream({
-    userName: user.userName,
-    peerName: userName,
-    onHangup: handleHangup,
-    onCallback: handleConnected,
-  });
 
   const CustomIconButton = React.useMemo(() =>
     React.forwardRef((props, ref) => {
@@ -63,6 +63,12 @@ function PeerToPeer({ user, call }) {
         </Box>
       );
     })
+  );
+
+  if (!user.identityVerified || !userName) return (
+    <Box height="100vh" display="flex" alignItems="center" justifyContent="center">
+      <OnlyModalCard textContent={userName ? "Only verified user can call" : "Unknown username"} />
+    </Box>
   );
 
   return (
@@ -123,6 +129,7 @@ function mapStateToProps(state) {
   return {
     user: {
       userName: state.signIn?.userInfo?.userName,
+      identityVerified: state.signIn?.userInfo?.identityVerified
     },
   };
 }

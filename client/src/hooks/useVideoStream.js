@@ -4,7 +4,7 @@ import io from "socket.io-client";
 import { wrapHttps } from "../helpers/functions";
 import Peer from "simple-peer";
 
-export default function useVideoStream({ userName, peerName, onHangup, onCallback }) {
+export default function useVideoStream({ userName, peerName, isVerified, onHangup, onCallback }) {
   const userVideo = useRef(); //reference for DOM element
   const partnerVideo = useRef(); //reference for DOM element
 
@@ -40,7 +40,9 @@ export default function useVideoStream({ userName, peerName, onHangup, onCallbac
   // }, []);
 
   useEffect(() => {
-    connect();
+    if (isVerified) {
+      connect();
+    }
   }, []);
 
   useEffect(() => {

@@ -1,4 +1,5 @@
 import { generateUrl } from "../../../helpers/functions";
+import { refreshPost } from "./getPosts";
 
 export const GET_POST_REQUEST = "GET_POST_REQUEST";
 export const GET_POST_SUCCESS = "GET_POST_SUCCESS";
@@ -46,12 +47,16 @@ export function resetCurrentPost() {
 }
 
 export function getPost(api, id) {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     dispatch(requestGetPost());
 
     const url = generateUrl("getPost");
     try {
       const { data } = await api.setMethod("GET").setParams({ id }).query(url);
+
+      if (getState().followingPosts.data.length) {
+        dispatch(refreshPost(data));
+      }
 
       dispatch(receiveGetPost(data));
     } catch {

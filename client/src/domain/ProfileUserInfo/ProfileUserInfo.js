@@ -19,7 +19,6 @@ import MessageIcon from "@material-ui/icons/MessageOutlined";
 import DollarIcon from "@material-ui/icons/MonetizationOnOutlined";
 
 import { CHAT_USERNAME_ROUTE } from "../../constants/routes";
-import { USER_RANKING } from "../../constants/user";
 import { SocialControl } from "../../components/Social";
 import { getSubscriptionBtnText, isAwaitingConfirmation } from "./utils";
 import DisplayName from "../../components/DisplayName";
@@ -30,6 +29,7 @@ function ProfileUserInfo({
   user,
   isOwner,
   isFollow,
+  isVerified,
   subscriptionPrice,
   followStatus,
   sites,
@@ -174,17 +174,19 @@ function ProfileUserInfo({
                 className={classes.btnMargin}>
                 Message
               </Button>
-              <Button
-                fullWidth
-                disableElevation
-                size="large"
-                color="secondary"
-                variant="contained"
-                endIcon={<DollarIcon />}
-                onClick={handleSendTipClick}
-              >
-                Send Tip
-              </Button>
+              {isVerified && 
+                <Button
+                  fullWidth
+                  disableElevation
+                  size="large"
+                  color="secondary"
+                  variant="contained"
+                  endIcon={<DollarIcon />}
+                  onClick={handleSendTipClick}
+                >
+                  Send Tip
+                </Button>
+              }
             </Box>
           </>
         )}

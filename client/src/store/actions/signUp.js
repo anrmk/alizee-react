@@ -19,14 +19,13 @@ function requestSignUp() {
   };
 }
 
-function receiveSignUp(userInfo) {
+function receiveSignUp() {
   return {
     type: SIGNUP_SUCCESS,
     payload: {
       isFetching: false,
       isSignUp: true,
       errorMessage: "",
-      userInfo,
     },
   };
 }
@@ -59,7 +58,7 @@ export function signUpUser(api, creds) {
         return dispatch(errorSignUp(data.message));
       }
 
-      dispatch(receiveSignUp(data));
+      dispatch(receiveSignUp());
     } catch (e) {
       dispatch(errorSignUp(e.response?.data || e.message, e.response?.status || 500));
     }

@@ -90,6 +90,21 @@ const useStyles = makeStyles((theme) => ({
     height: "auto",
     padding: theme.spacing(0.5),
   },
+  
+  onlyModalRoot: {
+    padding: theme.spacing(8, 2),
+  },
+  onlyModalContent: {
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  onlyModalIcon: {
+    fontSize: theme.typography.h1.fontSize,
+    color: theme.palette.type === "light" ? theme.palette.primary.light : theme.palette.grey["200"]
+  }
 }));
 
 export default useStyles;
