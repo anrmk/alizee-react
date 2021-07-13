@@ -53,12 +53,12 @@ export function createCommentPost(api, opts) {
 
       const followingPostsState = getState().followingPosts;
 
-      if (followingPostsState.data.length > 0) {
+      if (data && followingPostsState.data.length > 0) {
         dispatch(updatePostComments(opts.postId, data));
       } 
 
       if (!isEmptyObject(followingPostsState.currentPost)) {
-        const comments = [...getState().comment.data, data];
+        const comments = data ? [...getState().comment.data, data] : getState().comment.data;
         dispatch(receiveCreateCommentPost(comments));
       }
     } catch (e) {

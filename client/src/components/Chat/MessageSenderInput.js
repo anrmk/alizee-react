@@ -37,7 +37,8 @@ function MessageSenderInput({
     setClosePickerModal(true);
   };
 
-  const handleMessageSendClick = () => {
+  const handleMessageSendClick = (e) => {
+    e.preventDefault();
     messageSend();
   };
 
