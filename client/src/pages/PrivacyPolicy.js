@@ -23,9 +23,9 @@ function PrivacyPolicy() {
             <li>
               <a href="#acceptable-use-policy">Acceptable Use Policy</a>
             </li>
-            <li>
+            {/* <li>
               <a href="#referral-program-terms">Referral Program Terms</a>
-            </li>
+            </li> */}
             <li>
               <a href="#complaints-policy">Complaints Policy</a>
             </li>
@@ -43,7 +43,7 @@ function PrivacyPolicy() {
             <ol>
               <li>
                 <strong>Introduction:</strong>
-                These Terms of Use for all Users govern your use of TheMembers and your agreement with us.
+                These Terms of Use for all Users govern your use of "The Members" and your agreement with us.
               </li>
               <li>
                 <p>
@@ -52,22 +52,22 @@ function PrivacyPolicy() {
                 </p>
                 <ol type="a">
                   <li>
-                    we refer to our website as "<strong>TheMembers</strong>", including when accessed via the URL
+                    we refer to our website as "<strong>The Members</strong>", including when accessed via the URL
                     www.themembers.com or via any web browser;
                   </li>
                   <li>
                     references to "<strong>we</strong>", "<strong>our</strong>", "<strong>us</strong>" are references to
-                    Fenix International Limited, the operator of TheMembers;
+                    _____________________, the operator of "The Members";
                   </li>
                   <li>
-                    "<strong>Content</strong>" means any material uploaded to TheMembers by any User (whether a Creator
+                    "<strong>Content</strong>" means any material uploaded to "The Members" by any User (whether a Creator
                     or a Fan), including any photos, videos, audio (for example music and other sounds), livestream
                     material, data, text (such as comments and hashtags), metadata, images, interactive features,
                     emojis, GIFs, memes, and any other material whatsoever;
                   </li>
                   <li>
-                    "<strong>Creator</strong>" means a User who has set up their TheMembers account as a Creator account
-                    to post Content on TheMembers to be viewed by other Users;
+                    "<strong>Creator</strong>" means a User who has set up their "The Members" account as a Creator account
+                    to post Content on "The Members" to be viewed by other Users;
                   </li>
                   <li>
                     "<strong>Fan</strong>" means a User who follows a Creator and is able to view the Creator's Content;
@@ -78,91 +78,84 @@ function PrivacyPolicy() {
                     from the Creator, to subscribe to the Creator's account, to use the fan interaction function on the
                     Creator's account, and any tips paid by a Fan to the Creator;
                   </li>
-                  <li>
-                    "<strong>Referring User</strong>" means a User who participates in the TheMembers Referral Program;
-                  </li>
+                  {/* <li>
+                    "<strong>Referring User</strong>" means a User who participates in the "The Members" Referral Program;
+                  </li> */}
                   <li>
                     "<strong>Standard Contract between Fan and Creator</strong>" means the terms which govern each
-                    transaction between a Fan and a Creator on TheMembers, which can be found{" "}
+                    transaction between a Fan and a Creator on "The Members", which can be found&nbsp;
                     <a href="/contract">here</a>;
                   </li>
                   <li>
                     "<strong>Terms of Service</strong>" (also called "<strong>your agreement with us</strong>") means
-                    the legally binding agreement between you and us which consists of: (i) these{" "}
-                    <a href="#terms-use-all-users">Terms of Use for all Users</a>, (ii){" "}
+                    the legally binding agreement between you and us which consists of: (i) these&nbsp;
+                    <a href="#terms-use-all-users">Terms of Use for all Users</a>, (ii)&nbsp;
                     <a href="#terms-use-fans">Terms of Use for Fans</a>, (iii)
                     <a href="#terms-use-creators">Terms of Use for Creators</a>, (iv)
-                    <a href="/privacy">Privacy Policy</a>, (v){" "}
-                    <a href="#acceptable-use-policy">Acceptable Use Policy</a>, (vi){" "}
-                    <a href="#referral-program-terms">Referral Program Terms</a>, (vii){" "}
-                    <a href="#complaints-policy">Complaints Policy</a>, and (viii){" "}
+                    <a href="/privacy">Privacy Policy</a>, (v)&nbsp;
+                    <a href="#acceptable-use-policy">Acceptable Use Policy</a>, (vi)&nbsp;
+                    {/* <a href="#referral-program-terms">Referral Program Terms</a>, (vii)&nbsp; */}
+                    <a href="#complaints-policy">Complaints Policy</a>, and (viii)&nbsp;
                     <a href="#platform-business-regulation-terms">Platform to Business Regulation Terms</a>;
                   </li>
                   <li>
-                    "<strong>United Kingdom</strong>" means the United Kingdom of Great Britain and Northern Ireland;
-                    and
-                  </li>
-                  <li>
-                    "<strong>User</strong>" means any user of TheMembers, whether a Creator or a Fan or both (also
+                    "<strong>User</strong>" means any user of "The Members", whether a Creator or a Fan or both (also
                     referred to as "<strong>you</strong>" or "<strong>your</strong>").
                   </li>
                 </ol>
               </li>
               <li>
                 <p>
-                  <strong>Who we are and how to contact us:</strong>
-                  TheMembers is operated by Fenix International Limited. We are a limited company registered in England
-                  and Wales, with company registration number 10354575 and we have our registered office address at
-                  Fourth Floor, Imperial House, 8 Kean Street, London, WC2B 4AS. Our VAT number is 268196365.
+                  <strong>Who we are and how to contact us:</strong>&nbsp;
+                  "The Members" is operated by _____________________.
                 </p>
                 <p>
-                  To contact us with any questions about TheMembers, please email our support team at{" "}
+                  To contact us with any questions about "The Members", please email our support team at&nbsp;
                   <a href="mailto:support@themembers.com">support@themembers.com</a>. If you are unable to contact us by
-                  email, please write to us at the following address: Fourth Floor, Imperial House, 8 Kean Street,
-                  London, WC2B 4AS.
+                  email, please write to us at the following address: _____________________.
                 </p>
               </li>
               <li>
                 <p>
-                  <strong>How we may change the Terms of Service:</strong>
+                  <strong>How we may change the Terms of Service:</strong>&nbsp;
                   We may change any part of the Terms of Service without telling you beforehand in the following
                   circumstances:
                 </p>
                 <ol type="a">
                   <li>
-                    to reflect changes in laws and regulatory requirements which apply to TheMembers and the services,
-                    features and programs of TheMembers where such changes require TheMembers to change its terms and
-                    conditions in a manner which does not allow us to give reasonable notice to you; and{" "}
+                    to reflect changes in laws and regulatory requirements which apply to "The Members" and the services,
+                    features and programs of "The Members" where such changes require "The Members" to change its terms and
+                    conditions in a manner which does not allow us to give reasonable notice to you; and&nbsp;
                   </li>
                   <li>
-                    to address an unforeseen and imminent danger related to defending TheMembers, Fans or Creators from
+                    to address an unforeseen and imminent danger related to defending "The Members", Fans or Creators from
                     fraud, malware, spam, data breaches or other cybersecurity risks.
                   </li>
                 </ol>
                 <p>
                   We may also make other changes to any part of the Terms of Service, and we will give you reasonable
-                  notice of such changes by email or through TheMembers, and you may contact us to end your agreement
+                  notice of such changes by email or through "The Members", and you may contact us to end your agreement
                   with us before the changes take effect. Once any updated Terms of Service are in effect, you will be
-                  bound by them if you continue to use TheMembers.
+                  bound by them if you continue to use "The Members".
                 </p>
               </li>
               <li>
-                <strong>We may make changes to or suspend or withdraw TheMembers:</strong>
-                We may update and change TheMembers from time to time for any reason, including to reflect changes to
+                <strong>We may make changes to or suspend or withdraw "The Members":</strong>
+                We may update and change "The Members" from time to time for any reason, including to reflect changes to
                 our services, Users' needs and our business practices or to improve performance, enhance functionality
                 or address security issues. We will try to give you reasonable notice of any major changes. We do not
-                guarantee that TheMembers, or any Content on it, will always be available or accessible without
-                interruption. We may suspend or withdraw or restrict the availability of all or any part of TheMembers
+                guarantee that "The Members", or any Content on it, will always be available or accessible without
+                interruption. We may suspend or withdraw or restrict the availability of all or any part of "The Members"
                 for business or operational reasons. We will try to give you reasonable notice of any suspension or
                 withdrawal if it affects you.
               </li>
               <li>
                 <p>
-                  <strong>Registering with TheMembers:</strong> To use TheMembers you must first register and create a
-                  User account on TheMembers. You must provide a valid email address, a username, and a password or
-                  authenticate using a valid Twitter or Google account. Your password should be unique (meaning that it
+                  <strong>Registering with "The Members":</strong> To use "The Members" you must first register and create a
+                  User account on "The Members". You must provide a valid email address or
+                  authenticate using a valid Twitter or Google account. Confirm your email address and then, create a new password. Your password should be unique (meaning that it
                   is different to those you use for other websites) and must comply with the technical requirements of
-                  the TheMembers site for the composition of passwords. To register as a User:
+                  the "The Members" site for the composition of passwords. To register as a User:
                 </p>
                 <ol type="a">
                   <li>you must be at least 18 years old, and you will be required to confirm this;</li>
@@ -174,16 +167,16 @@ function PrivacyPolicy() {
                   </li>
                   <li>you must not be barred from accessing our platform under any laws which apply to you.</li>
                 </ol>
-                <p>If you do not meet the above requirements, you must not access or use TheMembers.</p>
+                <p>If you do not meet the above requirements, you must not access or use "The Members".</p>
               </li>
               <li>
                 <p>
-                  <strong>Your commitments to us:</strong>
-                  When you register with and use TheMembers, you make the following commitments to us:
+                  <strong>Your commitments to us:</strong>&nbsp;
+                  When you register with and use "The Members", you make the following commitments to us:
                 </p>
                 <ol type="a">
                   <li>
-                    If you previously had an account with TheMembers, you confirm that your old account was not
+                    If you previously had an account with "The Members", you confirm that your old account was not
                     terminated or suspended by us because you violated any of our terms or policies.
                   </li>
                   <li>
@@ -194,14 +187,14 @@ function PrivacyPolicy() {
                   </li>
                   <li>
                     You consent to receiving communications from us electronically, including by emails and messages
-                    posted to your TheMembers account, and to the processing of your personal data as more fully
+                    posted to your "The Members" account, and to the processing of your personal data as more fully
                     detailed in our <a href="/privacy">Privacy Policy</a>.
                   </li>
                   <li>
                     You will keep your account/login details confidential and secure, including your user details,
                     passwords and any other piece of information that forms part of our security procedures, and you
-                    will not disclose these to anyone else. You will contact{" "}
-                    <a href="mailto:support@themembers.com">support@TheMembers.com</a> promptly if you believe someone
+                    will not disclose these to anyone else. You will contact&nbsp;
+                    <a href="mailto:support@themembers.com">support@themembers.com</a> promptly if you believe someone
                     has used or is using your account without your permission or if your account has been subject to any
                     other breach of security. You also agree to ensure that you log out of your account at the end of
                     each session, and to be particularly careful when accessing your account from a public or shared
@@ -210,12 +203,12 @@ function PrivacyPolicy() {
                   </li>
                   <li>
                     You are responsible for all activity on your account even if, contrary to the Terms of Service,
-                    someone else uses your account.{" "}
+                    someone else uses your account.&nbsp;
                   </li>
                   <li>
-                    You will comply in full with these Terms of Use for all Users, our{" "}
+                    You will comply in full with these Terms of Use for all Users, our&nbsp;
                     <a href="#acceptable-use-policy">Acceptable Use Policy</a> and all other parts of the Terms of
-                    Service which apply to your use of TheMembers.
+                    Service which apply to your use of "The Members".
                   </li>
                 </ol>
               </li>
@@ -226,12 +219,12 @@ function PrivacyPolicy() {
                 <ol type="a">
                   <li>
                     We can but we are not obligated to moderate or review any of your Content to verify compliance with
-                    the Terms of Service (including, in particular, our{" "}
+                    the Terms of Service (including, in particular, our&nbsp;
                     <a href="#acceptable-use-policy">Acceptable Use Policy</a>) and/or any applicable law.
                   </li>
                   <li>
-                    It is our policy to suspend access to any Content you post on TheMembers which we become aware may
-                    not comply with the Terms of Service (including, in particular, our{" "}
+                    It is our policy to suspend access to any Content you post on "The Members" which we become aware may
+                    not comply with the Terms of Service (including, in particular, our&nbsp;
                     <a href="#acceptable-use-policy">Acceptable Use Policy</a>) and/or any applicable law whilst we
                     investigate the suspected non-compliance or unlawfulness of such Content. If we suspend access to
                     any of your Content, you may request a review of our decision to suspend access to the relevant
@@ -247,15 +240,15 @@ function PrivacyPolicy() {
                   </li>
                   <li>
                     If we suspend access to or delete any of your Content, we will notify you via email or electronic
-                    message to your TheMembers account, but we are not obligated to give you prior notice of such
+                    message to your "The Members" account, but we are not obligated to give you prior notice of such
                     removal.
                   </li>
                   <li>
                     <p>
                       We reserve the right in our sole discretion to terminate your agreement with us and your access to
-                      TheMembers for any reason by giving you 30 days’ notice by email or electronic message to your
-                      TheMembers account. We can also suspend access to your User account or terminate your agreement
-                      with us and your access to TheMembers immediately and without prior notice:
+                      "The Members" for any reason by giving you 30 days’ notice by email or electronic message to your
+                      "The Members" account. We can also suspend access to your User account or terminate your agreement
+                      with us and your access to "The Members" immediately and without prior notice:
                     </p>
                     <ul>
                       <li>
@@ -266,45 +259,45 @@ function PrivacyPolicy() {
                       </li>
                       <li>
                         if you take any action that in our opinion has caused or is reasonably likely to cause us to
-                        suffer a loss or that otherwise harms the reputation of TheMembers.
+                        suffer a loss or that otherwise harms the reputation of "The Members".
                       </li>
                     </ul>
                     <p>
                       If we suspend access to your User account or terminate your agreement with us and your access to
-                      TheMembers we will let you know. During any period when access to your User account is suspended,
+                      "The Members" we will let you know. During any period when access to your User account is suspended,
                       any Fan Payments which would otherwise have fallen due during the period of suspension will be
                       suspended, and we may withhold all or any part of the Creator Earnings due to you but not yet paid
-                      out in accordance with section 13 of the Terms of Use for Creators.
+                      out in accordance with section of the "Terms of Use for Creators".
                     </p>
                   </li>
                   <li>
                     Upon termination of your account, we may deal with your Content in any appropriate manner in
                     accordance with our <a href="/privacy">Privacy Policy</a> (including by deleting it) and you will no
-                    longer be entitled to access your Content. There is no technical facility on TheMembers for you to
+                    longer be entitled to access your Content. There is no technical facility on "The Members" for you to
                     be able to access your Content following termination of your account.
                   </li>
                   <li>
-                    We can investigate any suspected or alleged misuse, abuse, or unlawful use of TheMembers and
+                    We can investigate any suspected or alleged misuse, abuse, or unlawful use of "The Members" and
                     cooperate with law enforcement agencies in such investigation.
                   </li>
                   <li>
-                    We can disclose any information or records in our possession or control about your use of TheMembers
+                    We can disclose any information or records in our possession or control about your use of "The Members"
                     to law enforcement agencies in connection with any law enforcement investigation of any suspected or
                     alleged illegal activity, or in response to a court order.
                   </li>
                   <li>
                     We can change the third-party payment providers that we use and if we do so, we will notify you and
-                    store applicable details on your TheMembers account.
+                    store applicable details on your "The Members" account.
                   </li>
                   <li>
-                    Other than Content (which is owned by or licensed to Creators), all rights in and to TheMembers and
+                    Other than Content (which is owned by or licensed to Creators), all rights in and to "The Members" and
                     its entire contents, features, databases, source code and functionality, are owned by us and/or our
                     licensors. Such material is protected by copyright, and may be protected by trademark, trade secret,
                     and other intellectual property laws.
                   </li>
                   <li>
                     We are the sole and exclusive owners of any and all anonymised data relating to your use of
-                    TheMembers and such anonymised data can be used by us for any purpose, including for commercial,
+                    "The Members" and such anonymised data can be used by us for any purpose, including for commercial,
                     development and research purposes.
                   </li>
                 </ol>
@@ -312,12 +305,12 @@ function PrivacyPolicy() {
               <li>
                 <p>
                   <strong>What we are not responsible for:</strong> We will use reasonable care and skill in providing
-                  TheMembers to you, but there are certain things which we are not responsible for, as follows:
+                  "The Members" to you, but there are certain things which we are not responsible for, as follows:
                 </p>
                 <ol type="a">
                   <li>
-                    We do not authorize or approve Content on TheMembers, and views expressed by Creators or Fans on
-                    TheMembers do not necessarily represent our views.
+                    We do not authorize or approve Content on "The Members", and views expressed by Creators or Fans on
+                    "The Members" do not necessarily represent our views.
                   </li>
                   <li>
                     We do not grant you any rights in relation to Content. Any such rights may only be granted to you by
@@ -326,43 +319,43 @@ function PrivacyPolicy() {
                   <li>
                     Your Content may be viewed by individuals that recognise your identity. We will not in any way be
                     responsible to you if you are identified from your Content. While we may, from time to time and in
-                    our sole discretion, offer certain geofencing or geolocation technology on TheMembers, you
+                    our sole discretion, offer certain geofencing or geolocation technology on "The Members", you
                     understand and agree that we do not guarantee the accuracy or effectiveness of such technology, and
                     you will have no claim against us arising from your use of or reliance upon any geofencing or
-                    geolocation technology on TheMembers.
+                    geolocation technology on "The Members".
                   </li>
                   <li>
                     All Content is created, selected and provided by Users and not by us. We are not responsible for
                     reviewing or moderating Content, and we do not select or modify the Content that is stored or
-                    transmitted via TheMembers. We are under no obligation to monitor Content or to detect breaches of
+                    transmitted via "The Members". We are under no obligation to monitor Content or to detect breaches of
                     the Terms of Service (including the <a href="#acceptable-use-policy">Acceptable Use Policy</a>).
                   </li>
                   <li>
                     You agree that you have no obligation to follow any suggestions, comments, reviews or instructions
-                    received from another User of TheMembers and that if you choose to do so, you do so entirely at your
+                    received from another User of "The Members" and that if you choose to do so, you do so entirely at your
                     own risk.
                   </li>
                   <li>
                     We make no promises or guarantees of any kind that Creators or Referring Users will make a
-                    particular sum of money (or any money) from their use of TheMembers (including the TheMembers
-                    Referral Program).
+                    particular sum of money (or any money) from their use of "The Members". 
+                    {/* (including the "The Members" Referral Program). */}
                   </li>
                   <li>
-                    The materials which we make accessible on TheMembers for Users are for general information only. We
+                    The materials which we make accessible on "The Members" for Users are for general information only. We
                     make no promises or guarantees about the accuracy or otherwise of such materials, or that Users will
                     achieve any particular result or outcome from using such materials.
                   </li>
                   <li>
-                    We do not promise that TheMembers is compatible with all devices and operating systems. You are
+                    We do not promise that "The Members" is compatible with all devices and operating systems. You are
                     responsible for configuring your information technology, device, and computer programs to access
-                    TheMembers. You should use your own virus protection software.
+                    "The Members". You should use your own virus protection software.
                   </li>
                   <li>
                     We are not responsible for the availability of the internet, or any errors in your connections,
-                    device or other equipment, or software that may occur in relation to your use of TheMembers.
+                    device or other equipment, or software that may occur in relation to your use of "The Members".
                   </li>
                   <li>
-                    While we try to make sure that TheMembers is secure and free from bugs and viruses, we cannot
+                    While we try to make sure that "The Members" is secure and free from bugs and viruses, we cannot
                     promise that it will be and have no control over the Content that is supplied by Creators.
                   </li>
                   <li>
@@ -371,7 +364,7 @@ function PrivacyPolicy() {
                     of funds.
                   </li>
                   <li>
-                    You acknowledge that once your Content is posted on TheMembers, we cannot control and will not be
+                    You acknowledge that once your Content is posted on "The Members", we cannot control and will not be
                     responsible to you for the use which other Users or third parties make of such Content. You can
                     delete your account at any time, but you acknowledge that deleting your account will not of itself
                     prevent the circulation of any of your Content which may have been recorded by other Users in breach
@@ -389,24 +382,24 @@ function PrivacyPolicy() {
                     trademarks) in your Content or that you have obtained all necessary rights to your Content which are
                     required to grant licenses in respect of your Content to us and to other Users. This includes any
                     rights required to engage in the acts covered by sub-section 10(b) below in any territory in which
-                    TheMembers is accessible and, in particular, in the United States of America, the United Kingdom and
+                    "The Members" is accessible and, in particular, in the United States of America, the United Kingdom and
                     the European Union.
                   </li>
                   <li>
                     You agree to grant us a license under all your Content to perform any act restricted by any
                     intellectual property right (including copyright) in such Content, for any purpose reasonably
-                    related to the provision and operation of TheMembers. Such acts include to reproduce, make available
+                    related to the provision and operation of "The Members". Such acts include to reproduce, make available
                     and communicate to the public, display, perform, distribute, translate, and create adaptations or
                     derivative works of your Content, and otherwise deal in your Content.
                   </li>
                   <li>
                     The license which you grant to us under sub-section 10(b) above is perpetual, non-exclusive,
                     worldwide, royalty-free, sublicensable, assignable and transferable by us. This means that the
-                    license will continue even after your agreement with us ends and you stop using TheMembers, that we
+                    license will continue even after your agreement with us ends and you stop using "The Members", that we
                     do not have to pay you for the license, and that we can grant a sub-license of your Content to
                     someone else or assign or transfer the license to someone else. This license will allow us, for
                     example, to add stickers, text, and watermarks to your Content, to make your Content available to
-                    other Users of TheMembers, as well as to use your Content for other normal operations of TheMembers.
+                    other Users of "The Members", as well as to use your Content for other normal operations of "The Members".
                     We will never sell your Content to other platforms, though we may sell or transfer any license you
                     grant to us in the Terms of Service in the event of a sale of our company or its assets to a third
                     party.
@@ -419,13 +412,13 @@ function PrivacyPolicy() {
                     any such notification to any third-party website or service where we consider it appropriate to do
                     so. However, we do not and are under no obligation to police infringements of your Content. You
                     agree that if we request, you will provide us with all consents and other information which we
-                    reasonably need to submit notifications of infringement on your behalf. Please see our{" "}
+                    reasonably need to submit notifications of infringement on your behalf. Please see our&nbsp;
                     <a href="#complaints-policy">Complaints Policy</a> for how to make a complaint about infringement of
                     intellectual property rights.
                   </li>
                   <li>
                     You waive any moral rights which you may have under any applicable law to object to derogatory
-                    treatment of any Content posted by you on TheMembers. This waiver does not affect in any way your
+                    treatment of any Content posted by you on "The Members". This waiver does not affect in any way your
                     ownership of any intellectual property rights in your Content or the rights which you have to
                     prevent your Content from being copied without your permission. The waiver is intended to allow us
                     when dealing with your Content (as permitted by the license which you give us in section 10(b)
@@ -433,22 +426,22 @@ function PrivacyPolicy() {
                   </li>
                 </ol>
               </li>
-              <li>
+              {/* <li>
                 <strong>Twitter:</strong> Users have the facility to connect an active Twitter account to their
-                TheMembers account and to share certain Content in the form of TheMembers posts to Twitter using the
+                "The Members" account and to share certain Content in the form of "The Members" posts to Twitter using the
                 share feature. If you use this feature, you must fully comply with Twitter's terms of service from time
                 to time in respect of any Content shared in this way.
-              </li>
+              </li> */}
               <li>
                 <p>
-                  <strong>Linking to and from TheMembers:</strong>
+                  <strong>Linking to and from "The Members":</strong>
                 </p>
                 <ol type="a">
                   <li>
-                    <p>Links to TheMembers:</p>
+                    <p>Links to "The Members":</p>
                     <ul>
                       <li>
-                        You may link to the TheMembers homepage, provided you do so in a way that is fair and legal and
+                        You may link to the "The Members" homepage, provided you do so in a way that is fair and legal and
                         does not damage our reputation or take advantage of it, but you must not establish a link in
                         such a way as to suggest any form of association, approval, or endorsement on our part.
                       </li>
@@ -456,19 +449,19 @@ function PrivacyPolicy() {
                         If you are a Creator, when promoting your Creator account you must comply with our Terms of
                         Service and the terms of service of any other website where you place a link to or otherwise
                         promote your Creator account. When promoting your Creator account, you must not impersonate
-                        TheMembers or give the impression that your Creator account is being promoted by us if this is
-                        not the case. You must not promote your TheMembers account by using Google Ads or any similar
+                        "The Members" or give the impression that your Creator account is being promoted by us if this is
+                        not the case. You must not promote your "The Members" account by using Google Ads or any similar
                         advertising platform or search engine advertising service.
                       </li>
                     </ul>
                   </li>
                   <li>
-                    Links from TheMembers: If TheMembers contains links to other sites and resources provided by third
+                    Links from "The Members": If "The Members" contains links to other sites and resources provided by third
                     parties, these links are provided for your convenience only. Such links should not be interpreted as
                     approval by us of those linked websites or information you may obtain from them. We have no control
                     over the contents of those sites or resources and accept no responsibility for them or for any loss
                     or damage that may arise from your use of them. If you decide to access any of the third-party
-                    websites linked to TheMembers, you do so entirely at your own risk and subject to the terms and
+                    websites linked to "The Members", you do so entirely at your own risk and subject to the terms and
                     conditions of use for such websites.
                   </li>
                 </ol>
@@ -476,8 +469,8 @@ function PrivacyPolicy() {
               <li>
                 <p>
                   <strong>How do I delete my account?</strong>
-                  If you want to delete your TheMembers account then you may do so in the 'User Account' section of your
-                  TheMembers account.
+                  If you want to delete your "The Members" account then you may do so in the 'Settings/Privacy and Safity/' section of your
+                  "The Members" account.
                 </p>
                 <ol type="a">
                   <li>
@@ -495,11 +488,11 @@ function PrivacyPolicy() {
                   </li>
                   <li>
                     Once your account has been deleted you won't be charged any further amounts or have access to your
-                    former TheMembers account or its Content, and any subscriptions will be deleted and cannot be
+                    former "The Members" account or its Content, and any subscriptions will be deleted and cannot be
                     subsequently renewed. You will receive an email confirmation upon the successful deletion of your
                     account. Once your account has been deleted, we may deal with your Content in any appropriate manner
                     in accordance with our <a href="/privacy">Privacy Policy</a> (including by deleting it) and you will
-                    no longer be entitled to access your Content. There is no technical facility on TheMembers for you
+                    no longer be entitled to access your Content. There is no technical facility on "The Members" for you
                     to be able to access your Content following termination of your account.
                   </li>
                 </ol>
@@ -525,7 +518,7 @@ function PrivacyPolicy() {
                         We and our subsidiary companies, employees, owners, representatives, and agents will not be
                         liable to you for any loss of profit, loss of business or revenue, business interruption, loss
                         of business opportunity, or loss of anticipated savings suffered by you arising from or in
-                        connection with your use of TheMembers.
+                        connection with your use of "The Members".
                       </li>
                       <li>
                         If you are a consumer User and reside in the United States of America, our total liability to
@@ -544,7 +537,7 @@ function PrivacyPolicy() {
                         <ul>
                           <li>
                             exclude (to the extent permitted by law) all implied conditions, warranties,
-                            representations, or other terms that may apply to TheMembers or any content on it. This
+                            representations, or other terms that may apply to "The Members" or any content on it. This
                             means that if the Terms of Service do not expressly include a promise or commitment by us,
                             then one cannot be implied by law;
                           </li>
@@ -561,8 +554,8 @@ function PrivacyPolicy() {
                               or in connection with:
                             </p>
                             <ul>
-                              <li>your inability to use TheMembers or any of its services, features or programs; or</li>
-                              <li>your use of or reliance on any content (including Content) stored on TheMembers;</li>
+                              <li>your inability to use "The Members" or any of its services, features or programs; or</li>
+                              <li>your use of or reliance on any content (including Content) stored on "The Members";</li>
                             </ul>
                           </li>
                           <li>
@@ -581,7 +574,7 @@ function PrivacyPolicy() {
                             won't be liable to you for any loss or damage caused by a distributed denial-of-service
                             attack, virus, ransomware, or other technologically harmful material that may infect your
                             computer equipment, computer programs, data, or other proprietary material due to your use
-                            of TheMembers or any of its services, features or programs, or due to your downloading of
+                            of "The Members" or any of its services, features or programs, or due to your downloading of
                             any material posted on it, or on any website linked to it;
                           </li>
                           <li>
@@ -598,7 +591,7 @@ function PrivacyPolicy() {
                             Terms of Service arising from events outside our reasonable control. If there is any failure
                             or delay by us in complying with any part of the Terms of Service arising from an event
                             outside our reasonable control then we will contact you as soon as possible to let you know
-                            and we will take steps to minimise the effect of the delay.{" "}
+                            and we will take steps to minimise the effect of the delay.&nbsp;
                           </li>
                         </ul>
                       </li>
@@ -610,7 +603,7 @@ function PrivacyPolicy() {
                         </p>
                         <ul>
                           <li>
-                            100% of the total fees paid by you to us in connection with your use of TheMembers; and
+                            100% of the total fees paid by you to us in connection with your use of "The Members"; and
                           </li>
                           <li>USD 5,000.</li>
                         </ul>
@@ -628,15 +621,15 @@ function PrivacyPolicy() {
                   <li>If we fail to enforce any aspect of your agreement with us, it will not be a waiver;</li>
                   <li>We reserve all rights not expressly granted to you.</li>
                   <li>
-                    No implied licenses or other rights are granted to you in relation to any part of TheMembers, save
+                    No implied licenses or other rights are granted to you in relation to any part of "The Members", save
                     as expressly set out in the Terms of Service.
                   </li>
                   <li>
                     Your agreement with us does not give rights to any third parties, except that the exclusions and
-                    limitations of liability in the section entitled{" "}
+                    limitations of liability in the section entitled&nbsp;
                     <a href="#who-responsible-loss-damage">
                       Who is responsible for any loss or damage suffered by you?
-                    </a>{" "}
+                    </a>&nbsp;
                     may be enforced by our subsidiary companies, employees, owners, representatives and agents.
                   </li>
                   <li>
@@ -652,7 +645,7 @@ function PrivacyPolicy() {
                   </li>
                   <li>
                     The Terms of Service form the entire agreement between us and you regarding your access to and use
-                    of TheMembers, and supersede any and all prior oral or written understandings or agreements between
+                    of "The Members", and supersede any and all prior oral or written understandings or agreements between
                     us and you.
                   </li>
                 </ol>
@@ -661,7 +654,7 @@ function PrivacyPolicy() {
                 <p>
                   <strong>
                     Terms relating to disputes – the law which applies to your agreement with us and where disputes and
-                    claims concerning TheMembers (including those arising from or relating to your agreement with us)
+                    claims concerning "The Members" (including those arising from or relating to your agreement with us)
                     can be brought:
                   </strong>
                 </p>
@@ -695,19 +688,19 @@ function PrivacyPolicy() {
                             If you are a consumer resident in the United Kingdom or the European Union, any claim
                             arising out of or in connection with your agreement with us (whether by you against us or us
                             against you, and including non-contractual disputes or claims) may be brought in the courts
-                            of England and Wales or the courts of the country where you live.{" "}
+                            of England and Wales or the courts of the country where you live.&nbsp;
                           </li>
                           <li>
-                            If you are a consumer resident{" "}
+                            If you are a consumer resident&nbsp;
                             <strong>
                               <u>outside</u>
-                            </strong>{" "}
+                            </strong>&nbsp;
                             of the United Kingdom or the European Union, any claim arising out of or in connection with
                             your agreement with us (whether by you against us or us against you, and including
-                            non-contractual disputes or claims){" "}
+                            non-contractual disputes or claims)&nbsp;
                             <strong>
                               <u>must</u>
-                            </strong>{" "}
+                            </strong>&nbsp;
                             be brought in the courts of England and Wales.
                           </li>
                         </ul>
@@ -751,7 +744,7 @@ function PrivacyPolicy() {
                   </li>
                   <li>
                     <u>Limitation period for bringing claims:</u> Except where prohibited by applicable law, any claim
-                    or cause of action which you have concerning TheMembers (including those arising out of or related
+                    or cause of action which you have concerning "The Members" (including those arising out of or related
                     to your agreement with us) must be filed within one year after the date on which such claim or cause
                     of action arose or the date on which you learned of the facts giving rise to the cause of action
                     (whichever is the earlier), or be forever barred.
@@ -767,11 +760,11 @@ function PrivacyPolicy() {
                 <ol type="a">
                   <li>
                     <a href="#terms-use-fans">Terms of Use for Fans</a> – which contain additional terms which apply if
-                    you use TheMembers as a Fan;
+                    you use "The Members" as a Fan;
                   </li>
                   <li>
                     <a href="#terms-use-creators">Terms of Use for Creators</a> – which contain additional terms which
-                    apply if you use TheMembers as a Creator;
+                    apply if you use "The Members" as a Creator;
                   </li>
                   <li>
                     <a href="/privacy">Privacy Policy</a> – which applies to all Users and tells you how we use your
@@ -779,15 +772,15 @@ function PrivacyPolicy() {
                   </li>
                   <li>
                     <a href="#acceptable-use-policy">Acceptable Use Policy</a> which applies to all Users and tells you
-                    what you can and can’t do on TheMembers;
+                    what you can and can’t do on "The Members";
                   </li>
-                  <li>
+                  {/* <li>
                     <a href="#referral-program-terms">Referral Program Terms</a> – which outline the terms that apply if
-                    you participate in the TheMembers Referral Program;
-                  </li>
+                    you participate in the "The Members" Referral Program;
+                  </li> */}
                   <li>
                     <a href="#complaints-policy">Complaints Policy</a> - which sets out the procedure for making a
-                    complaint about any aspect of TheMembers, and how we will deal with that complaint; and{" "}
+                    complaint about any aspect of "The Members", and how we will deal with that complaint; and&nbsp;
                   </li>
                   <li>
                     <a href="#platform-business-regulation-terms">Platform to Business Regulation Terms</a> – which
@@ -816,14 +809,14 @@ function PrivacyPolicy() {
             <ol>
               <li>
                 <strong>Introduction:</strong>
-                These Terms of Use for Fans are additional terms which apply if you use TheMembers as a Fan (also
+                These Terms of Use for Fans are additional terms which apply if you use "The Members" as a Fan (also
                 referred to as "<strong>you</strong>" and "<strong>your</strong>" in these Terms of Use for Fans). These
                 Terms of Use for Fans form part of your agreement with us.
               </li>
               <li>
                 <p>
                   <strong>Interpretation:</strong>
-                  In these Terms of Use for Fans, defined terms have the same meanings given to them in the{" "}
+                  In these Terms of Use for Fans, defined terms have the same meanings given to them in the&nbsp;
                   <a href="#terms-use-all-users">Terms of Use for all Users</a>. In addition:
                 </p>
                 <ol type="a">
@@ -845,8 +838,8 @@ function PrivacyPolicy() {
               </li>
               <li>
                 <p>
-                  <strong>Other terms which will apply to your use of TheMembers:</strong>
-                  The following terms will also apply to your use of TheMembers and you agree to them:
+                  <strong>Other terms which will apply to your use of "The Members":</strong>
+                  The following terms will also apply to your use of "The Members" and you agree to them:
                 </p>
                 <ol type="a">
                   <li>
@@ -858,11 +851,11 @@ function PrivacyPolicy() {
                   </li>
                   <li>
                     Our <a href="#acceptable-use-policy">Acceptable Use Policy</a> – which tells you what you can and
-                    can't do on TheMembers;
+                    can't do on "The Members";
                   </li>
                   <li>
                     Our <a href="#complaints-policy">Complaints Policy</a> – which sets out the procedure for making a
-                    complaint about any aspect of TheMembers, and how we will deal with that complaint; and
+                    complaint about any aspect of "The Members", and how we will deal with that complaint; and
                   </li>
                   <li>
                     The <a href="/contract">Standard Contract between Fan and Creator</a> – which does not form part of
@@ -873,24 +866,24 @@ function PrivacyPolicy() {
               </li>
               <li>
                 <p>
-                  <strong>Other terms which may apply to your use of TheMembers:</strong> The following additional terms
-                  may apply to your use of TheMembers:
+                  <strong>Other terms which may apply to your use of "The Members":</strong> The following additional terms
+                  may apply to your use of "The Members":
                 </p>
                 <ol type="a">
                   <li>
                     If you are also a Creator, the <a href="#terms-use-creators">Terms of Use for Creators</a> will
-                    apply to your use of TheMembers as a Creator;
+                    apply to your use of "The Members" as a Creator;
                   </li>
                   <li>
                     If you are a Creator who is established or resident in the European Union or the United Kingdom,
-                    then the <a href="#platform-business-regulation-terms">Platform to Business Regulation Terms</a>{" "}
+                    then the <a href="#platform-business-regulation-terms">Platform to Business Regulation Terms</a>&nbsp;
                     will also apply to you; and
                   </li>
-                  <li>
-                    If you participate in the TheMembers referral program, the{" "}
+                  {/* <li>
+                    If you participate in the "The Members" referral program, the&nbsp;
                     <a href="#referral-program-terms">Referral Program Terms</a> will apply to your use of the
-                    TheMembers Referral Program.
-                  </li>
+                    "The Members" Referral Program.
+                  </li> */}
                 </ol>
               </li>
               <li>
@@ -906,25 +899,25 @@ function PrivacyPolicy() {
                     be legally bound by a contract with us under the laws of the country or State/province where you
                     live; and
                   </li>
-                  <li>you are not be barred from accessing TheMembers under any laws which apply to you.</li>
+                  <li>you are not be barred from accessing "The Members" under any laws which apply to you.</li>
                 </ol>
               </li>
               <li>
                 <p>
                   <strong>Content - general terms:</strong>
-                  In addition to the terms set out elsewhere in the Terms of Service (in particular in our{" "}
+                  In addition to the terms set out elsewhere in the Terms of Service (in particular in our&nbsp;
                   <a href="#acceptable-use-policy">Acceptable Use Policy</a>), the following terms apply to the Content
-                  posted, displayed, uploaded or published by you as a Fan on TheMembers:
+                  posted, displayed, uploaded or published by you as a Fan on "The Members":
                 </p>
                 <ol type="a">
                   <li>
                     <p>
                       You warrant (which means that you make a legally enforceable promise to us) that for each item of
-                      Content which you post, display, upload or publish on TheMembers:
+                      Content which you post, display, upload or publish on "The Members":
                     </p>
                     <ol type="i">
                       <li>
-                        the Content complies in full with the Terms of Service (and in particular our{" "}
+                        the Content complies in full with the Terms of Service (and in particular our&nbsp;
                         <a href="#acceptable-use-policy">Acceptable Use Policy</a>);
                       </li>
                       <li>
@@ -935,7 +928,7 @@ function PrivacyPolicy() {
                         if your Content includes or uses any third-party material, you have secured all rights,
                         licenses, written consents and releases that are necessary for the use of such third-party
                         property in your Content and for the subsequent use and exploitation of that Content on
-                        TheMembers.
+                        "The Members".
                       </li>
                     </ol>
                   </li>
@@ -946,14 +939,14 @@ function PrivacyPolicy() {
                   </li>
                   <li>
                     We are not responsible for and do not endorse any aspect of any Content posted by you or any other
-                    User of TheMembers. We do not have any obligation to monitor any Content and have no direct control
+                    User of "The Members". We do not have any obligation to monitor any Content and have no direct control
                     over what your Content may comprise.
                   </li>
                 </ol>
               </li>
               <li>
                 <strong>Adult material:</strong> You acknowledge that you are aware that some of the Content on
-                TheMembers contains adult material, and you agree to take this into account when deciding where to
+                "The Members" contains adult material, and you agree to take this into account when deciding where to
                 access and view Content. We will not be responsible to you if you suffer any loss or damage as a result
                 of your accessing or viewing Content containing adult material in a way which places you in breach of
                 any contract you have with a third party (for example, your employment contract) or in breach of any
@@ -966,16 +959,16 @@ function PrivacyPolicy() {
                 </p>
                 <ol type="a">
                   <li>
-                    All transactions and interactions facilitated by TheMembers are contracts between Fans and Creators
+                    All transactions and interactions facilitated by "The Members" are contracts between Fans and Creators
                     on the terms of the <a href="/contract">Standard Contract between Fan and Creator</a>. Although we
-                    facilitate transactions and interactions between Fans and Creators by providing the TheMembers
-                    platform, storing Content, and acting as a payment intermediary, we are not a party to the{" "}
+                    facilitate transactions and interactions between Fans and Creators by providing the "The Members"
+                    platform, storing Content, and acting as a payment intermediary, we are not a party to the&nbsp;
                     <a href="/contract">Standard Contract between Fan and Creator</a> or any other contract which may
                     exist between a Fan and Creator, and are not responsible for any transactions or interactions
                     between Fans and Creators.
                   </li>
                   <li>
-                    Creators are solely responsible for determining (within the parameters for pricing on TheMembers)
+                    Creators are solely responsible for determining (within the parameters for pricing on "The Members")
                     the pricing applicable to transactions and interactions and the Content to which you may be given
                     access. All prices appear in USD only.
                   </li>
@@ -984,7 +977,7 @@ function PrivacyPolicy() {
                     Payments.
                   </li>
                   <li>
-                    To view a Creator's Content and/or utilise the fan interaction function on TheMembers, you must
+                    To view a Creator's Content and/or utilise the fan interaction function on "The Members", you must
                     first add a payment card to your account and then click the 'Subscribe' button on the relevant
                     Creator's profile.
                   </li>
@@ -1025,11 +1018,11 @@ function PrivacyPolicy() {
                     You agree that you will not make unjustified requests for a refund from any Creator which you
                     follow, or unjustified chargeback requests of your payment card provider in relation to any
                     transaction between you and a Creator. If we consider that any request for a refund or chargeback
-                    request was made by you in bad faith, we have the right to suspend or delete your User account.{" "}
+                    request was made by you in bad faith, we have the right to suspend or delete your User account.&nbsp;
                   </li>
                   <li>
                     Wallet credits: You can prepay an amount to us (known as "Wallet Credits") which you can later use
-                    to make Fan Payments. Purchases on TheMembers cannot be divided - if you attempt a purchase that
+                    to make Fan Payments. Purchases on "The Members" cannot be divided - if you attempt a purchase that
                     costs more than the total amount of your remaining Wallet Credits, your payment card will be charged
                     the full amount for that purchase. Wallet Credits are subject to a maximum amount as determined by
                     us from time to time. Interest will not accrue on Wallet Credits. You are entitled upon request
@@ -1059,7 +1052,7 @@ function PrivacyPolicy() {
             <ol>
               <li>
                 <strong>Introduction:</strong> These Terms of Use for Creators are additional terms which apply if you
-                use TheMembers as a Creator (also referred to as "you" and "your" in these Terms of Use for Creators).
+                use "The Members" as a Creator (also referred to as "you" and "your" in these Terms of Use for Creators).
                 These Terms of Use for Creators form part of your agreement with us.
               </li>
               <li>
@@ -1100,8 +1093,8 @@ function PrivacyPolicy() {
               </li>
               <li>
                 <p>
-                  <strong>Other terms which will apply to your use of TheMembers:</strong> The following terms will also
-                  apply to your use of TheMembers and you agree to them:
+                  <strong>Other terms which will apply to your use of "The Members":</strong> The following terms will also
+                  apply to your use of "The Members" and you agree to them:
                 </p>
                 <ol type="a">
                   <li>
@@ -1113,11 +1106,11 @@ function PrivacyPolicy() {
                   </li>
                   <li>
                     Our <a href="#acceptable-use-policy">Acceptable Use Policy</a> – which tells you what you can and
-                    can’t do on TheMembers;
+                    can’t do on "The Members";
                   </li>
                   <li>
                     Our <a href="#complaints-policy">Complaints Policy</a> – which sets out the procedure for making a
-                    complaint about any aspect of TheMembers, and how we will deal with that complaint; and
+                    complaint about any aspect of "The Members", and how we will deal with that complaint; and
                   </li>
                   <li>
                     The <a href="/contract">Standard Contract between Fan and Creator</a> – which does not form part of
@@ -1128,33 +1121,33 @@ function PrivacyPolicy() {
               </li>
               <li>
                 <p>
-                  <strong>Other terms which may apply to your use of TheMembers:</strong> The following additional terms
-                  may apply to your use of TheMembers:
+                  <strong>Other terms which may apply to your use of "The Members":</strong> The following additional terms
+                  may apply to your use of "The Members":
                 </p>
                 <ol type="a">
                   <li>
-                    If you are established or resident in the European Union or the United Kingdom, then the{" "}
+                    If you are established or resident in the European Union or the United Kingdom, then the&nbsp;
                     <a href="#platform-business-regulation-terms">Platform to Business Regulation Terms</a> will also
                     apply to you;
                   </li>
                   <li>
                     If you are also a Fan, the <a href="#terms-use-fans">Terms of Use for Fans</a> will also apply to
-                    your use of TheMembers as a Fan; and
+                    your use of "The Members" as a Fan; and
                   </li>
-                  <li>
-                    If you participate in the TheMembers Referral Program, the{" "}
+                  {/* <li>
+                    If you participate in the "The Members" Referral Program, the&nbsp;
                     <a href="#referral-program-terms">Referral Program Terms</a> will apply to your use of the
-                    TheMembers Referral Program.
-                  </li>
+                    "The Members" Referral Program.
+                  </li> */}
                 </ol>
               </li>
               <li>
-                <strong>What are the fees that we charge Creators for the use of TheMembers?</strong> We charge a fee to
+                <strong>What are the fees that we charge Creators for the use of "The Members"?</strong> We charge a fee to
                 you of twenty per cent (20%) of all Fan Payments made to you (exclusive of any VAT element of the Fan
                 Payment) (called <strong>Our Fee</strong>). The remaining eighty per cent (80%) of the Fan Payment
                 (exclusive of any VAT element of the Fan Payment) is payable to you (called "
                 <strong>Creator Earnings</strong>"). Our Fee includes our costs of providing, maintaining and operating
-                TheMembers and storing your Content. Our Fee is deducted from the Fan Payment, and Creator Earnings are
+                "The Members" and storing your Content. Our Fee is deducted from the Fan Payment, and Creator Earnings are
                 paid to you in the way described in the <a href="#payouts-creators">Payouts to Creators</a> section
                 below.
               </li>
@@ -1166,7 +1159,7 @@ function PrivacyPolicy() {
                 <ol type="a">
                   <li>
                     You will need on your User account page to upload a valid form of ID and two photos of you in
-                    accordance with the requirements set out{" "}
+                    accordance with the requirements set out&nbsp;
                     <a
                       href="https://themembers.com/help/account-approval-account-application-requirements"
                       target="_blank" rel="noopener noreferrer"
@@ -1181,7 +1174,7 @@ function PrivacyPolicy() {
                   </li>
                   <li>
                     You will need on your User account page to select one of the available methods provided by
-                    TheMembers as to how your Creator Earnings will be transferred to you. These methods are called{" "}
+                    "The Members" as to how your Creator Earnings will be transferred to you. These methods are called&nbsp;
                     <strong>Payout Options</strong>.
                   </li>
                   <li>
@@ -1192,8 +1185,8 @@ function PrivacyPolicy() {
                   <li>You may also need to submit additional information depending on the country where you live.</li>
                   <li>
                     We may ask you for additional age or identity verification information at any time. We may reject
-                    your application to set up a Creator account for any reason, including the reasons stated{" "}
-                    <a href="https://TheMembers.com/help/rejected-applications" target="_blank" rel="noopener noreferrer">
+                    your application to set up a Creator account for any reason, including the reasons stated&nbsp;
+                    <a href="https://themembers.com/help/rejected-applications" target="_blank" rel="noopener noreferrer">
                       here
                     </a>
                     .
@@ -1201,8 +1194,8 @@ function PrivacyPolicy() {
                   <li>
                     Once you have set up your account as a Creator account, then if you want to charge your Fans a
                     monthly subscription fee you will need to set your subscription price for your Fans within the range
-                    allowed by TheMembers as set out{" "}
-                    <a href="https://TheMembers.com/help/subscription-prices" target="_blank" rel="noopener noreferrer">
+                    allowed by "The Members" as set out&nbsp;
+                    <a href="https://themembers.com/help/subscription-prices" target="_blank" rel="noopener noreferrer">
                       here
                     </a>
                     .
@@ -1243,10 +1236,10 @@ function PrivacyPolicy() {
                 </p>
                 <ol type="a">
                   <li>
-                    All transactions and interactions facilitated by TheMembers are contracts between Fans and Creators
+                    All transactions and interactions facilitated by "The Members" are contracts between Fans and Creators
                     on the terms of the <a href="/contract">Standard Contract between Fan and Creator</a>. Although we
-                    facilitate transactions and interactions between Fans and Creators by providing the TheMembers
-                    platform, storing Content, and acting as a payment intermediary, we are not a party to the{" "}
+                    facilitate transactions and interactions between Fans and Creators by providing the "The Members"
+                    platform, storing Content, and acting as a payment intermediary, we are not a party to the&nbsp;
                     <a href="/contract">Standard Contract between Fan and Creator</a> or any other contract which may
                     exist between a Fan and Creator, and are not responsible for any transactions or interactions
                     between Fans and Creators.
@@ -1270,37 +1263,37 @@ function PrivacyPolicy() {
                   <strong>Content – general terms:</strong> In addition to the terms set out elsewhere in the Terms of
                   Service (in particular in our <a href="#acceptable-use-policy">Acceptable Use Policy</a>), the
                   following terms apply to the Content posted, displayed, uploaded or published by you as a Creator on
-                  TheMembers:
+                  "The Members":
                 </p>
                 <ol type="a">
                   <li>
                     Your Content is not confidential, and you authorize your Fans to access and view your Content on
-                    TheMembers for their own lawful and personal use, and in accordance with any licenses that you grant
+                    "The Members" for their own lawful and personal use, and in accordance with any licenses that you grant
                     to your Fans.
                   </li>
                   <li>
                     <p>
                       You warrant (which means that you make a legally enforceable promise to us) that for each item of
-                      Content which you post, display, upload or publish on TheMembers:
+                      Content which you post, display, upload or publish on "The Members":
                     </p>
                     <ol type="i">
                       <li>
-                        the Content complies in full with the Terms of Service (and in particular our{" "}
+                        the Content complies in full with the Terms of Service (and in particular our&nbsp;
                         <a href="#acceptable-use-policy">Acceptable Use Policy</a>);
                       </li>
                       <li>
-                        you hold all rights necessary to license and deal in your Content on TheMembers, including in
+                        you hold all rights necessary to license and deal in your Content on "The Members", including in
                         each territory where you have Fans and in the United Kingdom;
                       </li>
                       <li>
                         you either own your Content (and all intellectual property rights in it) or have a valid license
-                        to offer and supply your Content to your Fans;{" "}
+                        to offer and supply your Content to your Fans;&nbsp;
                       </li>
                       <li>
                         if your Content includes or uses any third-party material, you have secured all rights,
                         licenses, written consents and releases that are necessary for the use of such third-party
                         property in your Content and for the subsequent use and exploitation of that Content on
-                        TheMembers; and
+                        "The Members"; and
                       </li>
                       <li>
                         <p>the Content is:</p>
@@ -1326,10 +1319,10 @@ function PrivacyPolicy() {
                   </li>
                   <li>
                     We are not responsible for and do not endorse any aspect of any Content posted by you or any other
-                    User of TheMembers. We do not have any obligation to monitor any Content and have no direct control
+                    User of "The Members". We do not have any obligation to monitor any Content and have no direct control
                     over what your Content may comprise.
                   </li>
-                  <li>You also agree to act as custodian of records for the Content that you upload to TheMembers.</li>
+                  <li>You also agree to act as custodian of records for the Content that you upload to "The Members".</li>
                 </ol>
               </li>
               <li>
@@ -1345,30 +1338,30 @@ function PrivacyPolicy() {
                       promise) that each individual shown in any Co-Authored Content uploaded to your account:
                     </p>
                     <ol type="i">
-                      <li>is a Creator on TheMembers;</li>
+                      <li>is a Creator on "The Members";</li>
                       <li>
                         has given his or her express, prior and fully informed consent to his or her appearance in the
                         Co-Authored Content; and
                       </li>
                       <li>
-                        has consented to the Co-Authored Content in which he or she appears being posted on TheMembers.
+                        has consented to the Co-Authored Content in which he or she appears being posted on "The Members".
                       </li>
                     </ol>
                   </li>
                   <li>
                     In addition to the confirmations in section 11(a) above, you agree that if you upload Co-Authored
                     Content where the other person or people appearing in the Content can be identified from the
-                    Content, you will tag the TheMembers account(s) of any person or people appearing in the Co-Authored
+                    Content, you will tag the "The Members" account(s) of any person or people appearing in the Co-Authored
                     Content who can be identified from it.
                   </li>
                   <li>
                     You must not upload any Content containing any image, photo, video or audio of anyone else other
-                    than or addition to you unless such person is also a Creator on TheMembers.{" "}
+                    than or addition to you unless such person is also a Creator on "The Members".&nbsp;
                   </li>
                   <li>
                     If any Co-Authored Content is a work of joint authorship, you are solely responsible for obtaining
                     any required licenses or consents from any other joint authors of the Content which are sufficient
-                    to permit such Content to be uploaded to and made available on TheMembers.
+                    to permit such Content to be uploaded to and made available on "The Members".
                   </li>
                   <li>
                     You agree that we will only pay out Creator Earnings to the account of the Creator to which the
@@ -1417,17 +1410,17 @@ function PrivacyPolicy() {
                     Creator Earnings on your behalf in our capacity as your agent.
                   </li>
                   <li>
-                    Your TheMembers account will be updated within a reasonable time with your Creator Earnings. Your
-                    Creator Earnings will become available for withdrawal by you from your TheMembers account once such
-                    Creator Earnings appear in your TheMembers account.
+                    Your "The Members" account will be updated within a reasonable time with your Creator Earnings. Your
+                    Creator Earnings will become available for withdrawal by you from your "The Members" account once such
+                    Creator Earnings appear in your "The Members" account.
                   </li>
                   <li>
-                    To make a withdrawal of Creator Earnings from your TheMembers account, you must have at least the
-                    minimum payout amount in your TheMembers account. Please click on the Banking page on your account
+                    To make a withdrawal of Creator Earnings from your "The Members" account, you must have at least the
+                    minimum payout amount in your "The Members" account. Please click on the Banking page on your account
                     to see what the minimum payout amount is for your country of residence and Payout Option.
                   </li>
                   <li>
-                    The amount that you see in your ‘current balance’ in your TheMembers account is your Creator
+                    The amount that you see in your ‘current balance’ in your "The Members" account is your Creator
                     Earnings at the relevant time. All Fan Payments and Creator Earnings are transacted in USD only. If
                     you have chosen the “Stripe” Payout Option then the Fan Payments and Creator Earnings figures will
                     be reflected in your local currency, at an exchange rate controlled by Stripe. Your bank may charge
@@ -1515,16 +1508,16 @@ function PrivacyPolicy() {
                         local Tax and VAT rules, based on your individual circumstances.
                       </li>
                       <li>
-                        By using TheMembers as a Creator, you warrant (which means you make a legally enforceable
+                        By using "The Members" as a Creator, you warrant (which means you make a legally enforceable
                         promise) that you have reported and will report in the future the receipt of all payments made
-                        to you in connection with your use of TheMembers to the relevant Tax authority in your
+                        to you in connection with your use of "The Members" to the relevant Tax authority in your
                         jurisdiction, as required by law.
                       </li>
                       <li>
                         <p>
-                          By using TheMembers as a Creator you warrant (which means you make a legally enforceable
+                          By using "The Members" as a Creator you warrant (which means you make a legally enforceable
                           promise) that you will at all times comply with all laws and regulations relating to Tax which
-                          apply to you. If, at any point whilst you have an TheMembers account, any Tax non-compliance
+                          apply to you. If, at any point whilst you have an "The Members" account, any Tax non-compliance
                           occurs in relation to you (including a failure by you to report earnings or the imposition on
                           you of any penalty or interest relating to Tax) or if any litigation, enquiry, or
                           investigation is commenced against you that is in connection with, or which may lead to, any
@@ -1532,13 +1525,13 @@ function PrivacyPolicy() {
                         </p>
                         <ol type="1">
                           <li>
-                            notify us by email to <a href="mailto:vat@themembers.com">vat@TheMembers.com</a> in writing
+                            notify us by email to <a href="mailto:vat@themembers.com">vat@"The Members".com</a> in writing
                             within 7 days of the occurrence of the Tax non-compliance or the commencement of the
                             litigation, enquiry or investigation (as applicable); and
                           </li>
                           <li>
                             <p>
-                              promptly provide us by email to <a href="mailto:vat@themembers.com">vat@TheMembers.com</a>{" "}
+                              promptly provide us by email to <a href="mailto:vat@themembers.com">vat@"The Members".com</a>&nbsp;
                               with:
                             </p>
                             <ol type="a">
@@ -1556,41 +1549,41 @@ function PrivacyPolicy() {
                         </ol>
                       </li>
                       <li>
-                        For the avoidance of doubt, you are responsible for your own Tax affairs and TheMembers is not
+                        For the avoidance of doubt, you are responsible for your own Tax affairs and "The Members" is not
                         responsible or liable for any non-payment of Tax by Creators.
                       </li>
                       <li>
-                        We reserve the right to close your TheMembers account if we are notified of or become aware of
+                        We reserve the right to close your "The Members" account if we are notified of or become aware of
                         any Tax non-compliance by you.
                       </li>
                     </ol>
                   </li>
-                  <li>
+                  {/* <li>
                     <p>
                       <strong>UK VAT and UK established Creators:</strong>
                     </p>
                     <ol type="i">
                       <li>
-                        For the purposes of UK VAT only, Creators are treated as providing their services to TheMembers,
+                        For the purposes of UK VAT only, Creators are treated as providing their services to "The Members",
                         rather than to Fans directly.
                       </li>
                       <li>
                         <p>If you are a Creator registered for UK VAT:</p>
                         <ol type="i">
                           <li>
-                            You will be treated, for VAT purposes, as charging TheMembers your Creator Earnings (80% of
+                            You will be treated, for VAT purposes, as charging "The Members" your Creator Earnings (80% of
                             all and any Fan Payments), together with UK VAT at the prevailing rate in force at the time
                             of the Fan Payment;
                           </li>
                           <li>
-                            TheMembers also agrees that, subject to the terms set out in this section of these Terms of
+                            "The Members" also agrees that, subject to the terms set out in this section of these Terms of
                             Use for Creators, you can add UK VAT at the prevailing rate in force at the time of the
-                            referral payment to the amount of any referral payments payable to you under the{" "}
+                            referral payment to the amount of any referral payments payable to you under the&nbsp;
                             <a href="#referral-program-terms">Referral Program Terms</a> ("
                             <strong>Referral Payments</strong>").
                           </li>
                           <li>
-                            You agree to use the TheMembers VAT invoice generator tool which can be found at:{" "}
+                            You agree to use the "The Members" VAT invoice generator tool which can be found at:&nbsp;
                             <a href="https://themembers.com/my/banking/vat/create-document" target="_blank" rel="noopener noreferrer">
                               https://themembers.com/my/banking/vat/create-document
                             </a>
@@ -1607,15 +1600,15 @@ function PrivacyPolicy() {
                             </p>
                             <ol type="a">
                               <li>
-                                your VAT registration number by completing this form{" "}
+                                your VAT registration number by completing this form&nbsp;
                                 <a href="https://themembers.com/my/banking/vat" target="_blank" rel="noopener noreferrer">
                                   https://themembers.com/my/banking/vat
                                 </a>
                                 ;
                               </li>
                               <li>
-                                a valid VAT invoice generated and submitted using the TheMembers VAT invoice generator
-                                tool and uploaded using{" "}
+                                a valid VAT invoice generated and submitted using the "The Members" VAT invoice generator
+                                tool and uploaded using&nbsp;
                                 <a href="https://themembers.com/my/banking/vat/add-documents" target="_blank" rel="noopener noreferrer">
                                   https://themembers.com/my/banking/vat/add-documents
                                 </a>
@@ -1624,7 +1617,7 @@ function PrivacyPolicy() {
                               <li>
                                 a VAT return made to HM Revenue &amp; Customs, including a value of taxable supplies
                                 equal to or greater than the aggregate value of your Creator Earnings (and Referral
-                                Payments, if any) for the relevant period. You can find the monthly earning details at{" "}
+                                Payments, if any) for the relevant period. You can find the monthly earning details at&nbsp;
                                 <a href="https://themembers.com/my/stats/earnings" target="_blank" rel="noopener noreferrer">
                                   https://themembers.com/my/stats/earnings
                                 </a>
@@ -1639,19 +1632,19 @@ function PrivacyPolicy() {
                       </li>
                       <li>
                         If you need any further information or assistance on what is needed in order to receive the VAT
-                        Amount you can email <a href="mailto:vat@themembers.com">vat@TheMembers.com</a>.
+                        Amount you can email <a href="mailto:vat@themembers.com">vat@"The Members".com</a>.
                       </li>
                       <li>
                         More information on who is required to register for VAT in the UK, and the VAT position for
                         Creators whose earnings are not above the earnings threshold or who are not VAT registered can
-                        be found at{" "}
-                        <a href="https://TheMembers.com/help" target="_blank" rel="noopener noreferrer">
+                        be found at 
+                        <a href="https://themembers.com/help" target="_blank" rel="noopener noreferrer">
                           https://themembers.com/help
-                        </a>{" "}
+                        </a>
                       </li>
                       <li>
                         You agree that you will keep copies of all VAT invoices and VAT returns in connection with your
-                        earnings from TheMembers and you will provide us with copies of such documents within 14 days of
+                        earnings from "The Members" and you will provide us with copies of such documents within 14 days of
                         our written request that you do so. For the avoidance of doubt, it is your obligation to comply
                         with all provisions of VAT legislation and make, give, obtain, maintain and keep accurate,
                         complete and up-to-date records, invoices, accounts and other documents required for the
@@ -1669,12 +1662,12 @@ function PrivacyPolicy() {
                         registered and your earnings exceed the VAT registration threshold, you will receive a
                         notification from us asking you to register for VAT. If you receive such a VAT registration
                         notification, you agree to register for VAT as soon as possible and to send your VAT
-                        registration number to us at <a href="mailto:vat@themembers.com">vat@TheMembers.com</a>, within
-                        6 weeks of such notification. Failure to do so may result in your TheMembers account being
+                        registration number to us at <a href="mailto:vat@themembers.com">vat@themembers.com</a>, within
+                        6 weeks of such notification. Failure to do so may result in your "The Members" account being
                         closed.
                       </li>
                     </ol>
-                  </li>
+                  </li> */}
                 </ol>
               </li>
             </ol>
@@ -1690,31 +1683,31 @@ function PrivacyPolicy() {
               <strong>BY USING OUR WEBSITE YOU AGREE TO THIS POLICY – PLEASE READ IT CAREFULLY</strong>
             </p>
             <p>
-              This Policy applies to your use of TheMembers and all Content on TheMembers and forms part of your
-              agreement with us. This Policy sets out what is and is not permitted on TheMembers.<br></br>
-              In this Policy, defined terms have the same meanings as in our{" "}
+              This Policy applies to your use of "The Members" and all Content on "The Members" and forms part of your
+              agreement with us. This Policy sets out what is and is not permitted on "The Members".<br></br>
+              In this Policy, defined terms have the same meanings as in our&nbsp;
               <a href="#terms-use-all-users">Terms of Use for all Users</a>.
             </p>
             <ol>
               <li>
-                <strong>Do not</strong> use TheMembers except for your own personal use and do not sell, rent, transfer,
-                or share your account or any Content obtained from your use of TheMembers to or with anyone else.
+                <strong>Do not</strong> use "The Members" except for your own personal use and do not sell, rent, transfer,
+                or share your account or any Content obtained from your use of "The Members" to or with anyone else.
               </li>
               <li>
-                <strong>Only</strong> use TheMembers in a manner and for a purpose that is lawful.
+                <strong>Only</strong> use "The Members" in a manner and for a purpose that is lawful.
               </li>
               <li>
-                <strong>Do not</strong> upload, post, display, or publish Content on TheMembers that is illegal,
+                <strong>Do not</strong> upload, post, display, or publish Content on "The Members" that is illegal,
                 fraudulent, defamatory, hateful, discriminatory, threatening or harassing, or which encourages or
                 promotes violence or any illegal activity.
               </li>
               <li>
-                <strong>Do not</strong> use TheMembers in any way which may exploit, harm, or attempt to exploit or harm
+                <strong>Do not</strong> use "The Members" in any way which may exploit, harm, or attempt to exploit or harm
                 any individual under 18 years old, for example by exposing them to inappropriate Content.
               </li>
               <li>
                 <p>
-                  <strong>Do not</strong> upload, post, display, or publish Content on TheMembers that:
+                  <strong>Do not</strong> upload, post, display, or publish Content on "The Members" that:
                 </p>
                 <ol type="a">
                   <li>
@@ -1751,7 +1744,7 @@ function PrivacyPolicy() {
                       <li>
                         "revenge porn" (being any sexually explicit material featuring any individual who has not given
                         prior, express and fully informed consent to that material (a) being taken, captured, or
-                        otherwise memorialized, or (b) being posted and shared on TheMembers);
+                        otherwise memorialized, or (b) being posted and shared on "The Members");
                       </li>
                       <li>escort services, sex trafficking, or prostitution;</li>
                     </ol>
@@ -1771,7 +1764,7 @@ function PrivacyPolicy() {
                   <li>
                     contains or refers to anyone else's personal data or private or confidential information (for
                     example, telephone numbers, location information (including street addresses and GPS coordinates),
-                    names, identity documents, email addresses, log-in credentials for TheMembers including passwords
+                    names, identity documents, email addresses, log-in credentials for "The Members" including passwords
                     and security questions, financial information including bank account and credit card details,
                     biometric data, and medical records) without that person's express written consent;
                   </li>
@@ -1811,11 +1804,11 @@ function PrivacyPolicy() {
                 </ol>
               </li>
               <li>
-                <strong>Do not</strong> use TheMembers to stalk, bully, abuse, harass, threaten or intimidate anyone
+                <strong>Do not</strong> use "The Members" to stalk, bully, abuse, harass, threaten or intimidate anyone
                 else.
               </li>
               <li>
-                <strong>Do not</strong> use TheMembers to engage in misleading or deceptive conduct, or conduct that is
+                <strong>Do not</strong> use "The Members" to engage in misleading or deceptive conduct, or conduct that is
                 likely to mislead or deceive any other User.
               </li>
               <li>
@@ -1860,20 +1853,20 @@ function PrivacyPolicy() {
               </li>
               <li>
                 <strong>Do not</strong> decompile, disassemble, reverse engineer, or otherwise attempt to discover or
-                derive the source code of TheMembers.
+                derive the source code of "The Members".
               </li>
               <li>
-                <strong>Do not</strong> use TheMembers in a way that could adversely affect our systems or security or
-                interfere with any other User’s use of TheMembers, including their ability to engage in real time
-                activities through TheMembers.
+                <strong>Do not</strong> use "The Members" in a way that could adversely affect our systems or security or
+                interfere with any other User’s use of "The Members", including their ability to engage in real time
+                activities through "The Members".
               </li>
               <li>
                 <strong>Do not</strong> use any automated program, tool or process (such as web crawlers, robots, bots
-                spiders, and automated scripts) to access TheMembers or any server, network or system associated with
-                TheMembers, or to extract, scrape, collect, harvest or gather Content or information from TheMembers.
+                spiders, and automated scripts) to access "The Members" or any server, network or system associated with
+                "The Members", or to extract, scrape, collect, harvest or gather Content or information from "The Members".
               </li>
               <li>
-                <strong>Do not</strong> use TheMembers' name, logo or any related or similar names, logos, product and
+                <strong>Do not</strong> use "The Members"' name, logo or any related or similar names, logos, product and
                 service names, designs, or slogans other than in the limited ways which are expressly permitted in the
                 Terms of Service or with our prior written agreement.
               </li>
@@ -1887,29 +1880,29 @@ function PrivacyPolicy() {
             </p>
           </section>
 
-          <section>
+          {/* <section>
             <div id="referral-program-terms"></div>
             <h1>REFERRAL PROGRAM TERMS</h1>
             <div>
               <h2>WARNING!</h2>
               <p>
                 In compliance with regulation 3 of the Trading Scheme Regulations 1997 (as amended) and section 120(1)
-                of the Fair Trading Act 1973, please read the warning below in respect of the TheMembers Referral
+                of the Fair Trading Act 1973, please read the warning below in respect of the "The Members" Referral
                 Program:
               </p>
               <ul>
                 <li>
-                  It is illegal for us or for a participant in the TheMembers Referral Program (including Referring
+                  It is illegal for us or for a participant in the "The Members" Referral Program (including Referring
                   Users and Referred Creators) to persuade anyone to make a payment by promising benefits from getting
-                  others to join the TheMembers Referral Program.
+                  others to join the "The Members" Referral Program.
                 </li>
                 <li>
-                  Do not be misled by claims that high earnings are easily achieved from participation in the TheMembers
+                  Do not be misled by claims that high earnings are easily achieved from participation in the "The Members"
                   Referral Program.
                 </li>
                 <li>
                   Although we do not demand any payment from Referring Users for the purposes of participating in the
-                  TheMembers Referral Program, we are legally required to inform you that if you sign this contract, you
+                  "The Members" Referral Program, we are legally required to inform you that if you sign this contract, you
                   have 14 days in which to cancel and get your money back.
                 </li>
               </ul>
@@ -1917,13 +1910,13 @@ function PrivacyPolicy() {
             <ol>
               <li>
                 <strong>Introduction:</strong>
-                These Referral Program Terms are additional terms which apply if you use the TheMembers Referral
+                These Referral Program Terms are additional terms which apply if you use the "The Members" Referral
                 Program. These Referral Program Terms form part of your agreement with us.
               </li>
               <li>
                 <p>
                   <strong>Interpretation:</strong>
-                  In these Referral Program Terms defined terms have the same meanings given to them in the{" "}
+                  In these Referral Program Terms defined terms have the same meanings given to them in the&nbsp;
                   <a href="#terms-use-all-users">Terms of Use for all Users</a>. In addition:
                 </p>
                 <ol type="a">
@@ -1932,62 +1925,62 @@ function PrivacyPolicy() {
                     <strong>your</strong>" in these Referral Program Terms;
                   </li>
                   <li>
-                    "<strong>Referred Creator</strong>" means the person who joins TheMembers as a Creator via the
+                    "<strong>Referred Creator</strong>" means the person who joins "The Members" as a Creator via the
                     Referring User's unique referral link.
                   </li>
                 </ol>
               </li>
               <li>
                 <p>
-                  <strong>What is the TheMembers Referral Program?</strong>
-                  TheMembers offers a referral program by which existing Users can introduce people who are interested
-                  in becoming Creators to TheMembers and receive referral payments from TheMembers which are calculated
+                  <strong>What is the "The Members" Referral Program?</strong>
+                  "The Members" offers a referral program by which existing Users can introduce people who are interested
+                  in becoming Creators to "The Members" and receive referral payments from "The Members" which are calculated
                   and limited as described in these Referral Program Terms.
                 </p>
                 <p>
-                  The TheMembers Referral Program is operated by Fenix International Limited. We are a limited company
+                  The "The Members" Referral Program is operated by Fenix International Limited. We are a limited company
                   registered in England and Wales, with company registration number 10354575 and we have our registered
                   office address at Fourth Floor, Imperial House, 8 Kean Street, London, WC2B 4AS.
                 </p>
               </li>
               <li>
                 <p>
-                  <strong>The rules of the TheMembers Referral Program:</strong>
+                  <strong>The rules of the "The Members" Referral Program:</strong>
                 </p>
                 <ol type="a">
                   <li>
-                    Only Users of TheMembers with a current User account can participate in the TheMembers Referral
+                    Only Users of "The Members" with a current User account can participate in the "The Members" Referral
                     Program. If a User's account has been suspended or terminated by us for any reason or deleted by the
-                    User, that User will not be eligible to participate in the TheMembers Referral Program.
+                    User, that User will not be eligible to participate in the "The Members" Referral Program.
                   </li>
                   <li>
                     You will need on your User account page to add bank account details of your own bank account in
-                    order to receive referral payments under the TheMembers Referral Program.
+                    order to receive referral payments under the "The Members" Referral Program.
                   </li>
                   <li>
                     Each User has a unique referral link (which can be accessed via the User's User account) which the
                     User may share with others. When sharing your unique referral link you must not impersonate
-                    TheMembers or give the impression that your referral link is being shared or promoted by us. You
+                    "The Members" or give the impression that your referral link is being shared or promoted by us. You
                     must not use Google Ads or any similar advertising platform or search engine advertising service to
                     share or promote your unique referral link. Upon our request, you must disclose the methods by which
-                    you share your unique referral link in the Bio/Website field of your TheMembers account.
+                    you share your unique referral link in the Bio/Website field of your "The Members" account.
                   </li>
                   <li>
-                    The Referred Creator must click on your unique referral link and then register with TheMembers using
+                    The Referred Creator must click on your unique referral link and then register with "The Members" using
                     the same browser that they used to click on your unique referral link. If someone registers with
-                    TheMembers other than by using your unique referral link, we will not link that account to your
+                    "The Members" other than by using your unique referral link, we will not link that account to your
                     referral and we will not make any referral payment to you.
                   </li>
                   <li>
-                    The Referred Creator must not have opened a User account with TheMembers (whether under the same
+                    The Referred Creator must not have opened a User account with "The Members" (whether under the same
                     name or another name) before clicking on your unique referral link. If the Referred Creator is
-                    currently or has previously been a User of TheMembers we will not make any referral payment to you
+                    currently or has previously been a User of "The Members" we will not make any referral payment to you
                     for the referral.
                   </li>
                   <li>
                     If the Referred Creator sets up more than one User account we will make referral payments to you on
                     the earnings made by the Referred Creator from their first User account only. We will not pay any
-                    referral payments to you on any further User accounts set up by the Referred Creator.{" "}
+                    referral payments to you on any further User accounts set up by the Referred Creator.&nbsp;
                   </li>
                   <li>
                     We will not pay any referral payments to you on any referral of a Referred Creator which we
@@ -1996,15 +1989,15 @@ function PrivacyPolicy() {
                     operated by you or if there is a commercial relationship between you and the Referred Creator.
                   </li>
                   <li>
-                    <p>You agree that when promoting TheMembers in any way as a Referring User:</p>
+                    <p>You agree that when promoting "The Members" in any way as a Referring User:</p>
                     <ul>
                       <li>
-                        you will not give a false impression of TheMembers, the services, programs, and content
-                        (including Content) made available through TheMembers, its Users or the Terms of Service; and
+                        you will not give a false impression of "The Members", the services, programs, and content
+                        (including Content) made available through "The Members", its Users or the Terms of Service; and
                       </li>
                       <li>
                         you will not make any statements which suggest to a potential Creator that the potential Creator
-                        will make a particular sum of money (or any money) from their use of TheMembers, or any
+                        will make a particular sum of money (or any money) from their use of "The Members", or any
                         statements regarding the likely number of Fans.
                       </li>
                     </ul>
@@ -2019,21 +2012,21 @@ function PrivacyPolicy() {
                   <li>
                     <p>
                       <strong>How are referral payments calculated?</strong> Once a Referred Creator has become a
-                      registered User of TheMembers in accordance with the rules of the TheMembers Referral Program
+                      registered User of "The Members" in accordance with the rules of the "The Members" Referral Program
                       described above, we will pay the Referring User a referral payment equal to five per cent. (5%) of
                       Fan Payments generated by the Referred Creator in the twelve months after the date on which the
-                      Referred Creator becomes a registered User of TheMembers, up to a maximum referral payment by
-                      TheMembers to the Referring User of US$50,000 per Referred Creator.
+                      Referred Creator becomes a registered User of "The Members", up to a maximum referral payment by
+                      "The Members" to the Referring User of US$50,000 per Referred Creator.
                     </p>
                     <p>
                       This means that if a Referred Creator generates Fan Payments with a total value of US$1 million or
                       more in the twelve months after the date on which that Referred Creator becomes a registered User
-                      of TheMembers, then the Referring User's referral payments in relation to that Referred Creator
+                      of "The Members", then the Referring User's referral payments in relation to that Referred Creator
                       will be capped at US$50,000 in total. However, if the Referred Creator generates Fan Payments with
                       a total value of less than US$1 million in the twelve months after the date on which that Referred
-                      Creator becomes a registered User of TheMembers, then the Referring User will be paid five per
+                      Creator becomes a registered User of "The Members", then the Referring User will be paid five per
                       cent. (5%) of the Fan Payments generated by that Referred Creator in the twelve months after the
-                      date on which the Referred Creator becomes a registered User of TheMembers, following which no
+                      date on which the Referred Creator becomes a registered User of "The Members", following which no
                       further referral payments will be made to the Referring User in respect of that Referred Creator.
                     </p>
                     <p>
@@ -2044,37 +2037,37 @@ function PrivacyPolicy() {
                   </li>
                   <li>
                     <strong>VAT:</strong> If you are a Referring User you should know that all referral payments payable
-                    to you by us will be inclusive of any VAT (as defined in the{" "}
+                    to you by us will be inclusive of any VAT (as defined in the&nbsp;
                     <a href="#terms-use-creators">Terms of Use for Creators</a>) which is or becomes chargeable on any
                     supplies made by you, except as provided for in the "
-                    <a href="#promoting-tax-compliance-vat">Promoting Tax compliance and VAT</a>" section of the{" "}
+                    <a href="#promoting-tax-compliance-vat">Promoting Tax compliance and VAT</a>" section of the&nbsp;
                     <a href="#terms-use-creators">Terms of Use for Creators</a>.
                   </li>
                   <li>
                     <p>
                       <strong>Warning:</strong> In compliance with regulation 3 of the Trading Scheme Regulations 1997
                       (as amended) and section 120(1) of the Fair Trading Act 1973, please read the warning below in
-                      respect of the TheMembers Referral Program:
+                      respect of the "The Members" Referral Program:
                     </p>
                     <ul>
                       <li>
-                        It is illegal for us or for a participant in the TheMembers Referral Program (including
+                        It is illegal for us or for a participant in the "The Members" Referral Program (including
                         Referring Users and Referred Creators) to persuade anyone to make a payment by promising
-                        benefits from getting others to join the TheMembers Referral Program.
+                        benefits from getting others to join the "The Members" Referral Program.
                       </li>
                       <li>
                         Do not be misled by claims that high earnings are easily achieved from participation in the
-                        TheMembers Referral Program.
+                        "The Members" Referral Program.
                       </li>
                     </ul>
                   </li>
                   <li>
                     <strong>Choosing a payout method to receive referral payments:</strong> In order to be able to
-                    receive referral payments you must first choose one of the payout methods provided by TheMembers in
+                    receive referral payments you must first choose one of the payout methods provided by "The Members" in
                     your country of residence. These methods are called "Payout Options".
                   </li>
                   <li>
-                    <strong>How frequently are referral payments made?</strong> We will transfer to your TheMembers
+                    <strong>How frequently are referral payments made?</strong> We will transfer to your "The Members"
                     account the referral payment due to you on Fan Payments made to the Referred Creator in a calendar
                     month on or around the first day of the next calendar month (which means, for example, that referral
                     payments due to you in respect of Fan Payments made to the Referred Creator in February shall be
@@ -2102,10 +2095,10 @@ function PrivacyPolicy() {
                     losing your entitlement to referral payments in respect of the relevant Referred Creator.
                   </li>
                   <li>
-                    We may change any aspect of the TheMembers Referral Program (including how referral payments are
-                    calculated) or discontinue the TheMembers Referral Program at any time, but no change will deprive
+                    We may change any aspect of the "The Members" Referral Program (including how referral payments are
+                    calculated) or discontinue the "The Members" Referral Program at any time, but no change will deprive
                     any Referring User of referral payments already earned based on Fan Payments made to Referred
-                    Creators before the changes came into effect.{" "}
+                    Creators before the changes came into effect.&nbsp;
                   </li>
                 </ol>
               </li>
@@ -2146,7 +2139,7 @@ function PrivacyPolicy() {
                   </li>
                   <li>
                     We shall not have any responsibility to you if we withhold or forfeit any payment due to you under
-                    the TheMembers Referral Program where we have a right to do so under these Referral Program Terms.
+                    the "The Members" Referral Program where we have a right to do so under these Referral Program Terms.
                   </li>
                   <li>
                     If we are withholding all or any part of the referral payments due to you and we determine that part
@@ -2163,39 +2156,37 @@ function PrivacyPolicy() {
             <p>
               <strong>Last updated: March 2021</strong>
             </p>
-          </section>
-
+          </section> */}
+  <br />
           <section>
             <div id="complaints-policy"></div>
             <h1>COMPLAINTS POLICY</h1>
             <ol>
               <li>
                 <strong>Introduction:</strong>
-                This document set out our complaints policy. If you are a User of TheMembers, this Complaints Policy
+                This document set out our complaints policy. If you are a User of "The Members", this Complaints Policy
                 forms part of your agreement with us.
               </li>
               <li>
                 <strong>Who we are and how to contact us:</strong>
-                TheMembers is operated by Fenix International Limited. We are a limited company registered in England
-                and Wales, with company registration number 10354575 and we have our registered office address at Fourth
-                Floor, Imperial House, 8 Kean Street, London, WC2B 4AS.
+                _____________________
               </li>
               <li>
                 <strong>Interpretation:</strong>
-                In this Complaints Policy, defined terms have the same meanings given to them in the{" "}
+                In this Complaints Policy, defined terms have the same meanings given to them in the&nbsp;
                 <a href="#terms-use-all-users">Terms of Use for all Users</a>:
               </li>
               <li>
                 <strong>Who can use this Complaints Policy?</strong>
-                Whether or not you are a User of TheMembers, you can use this Complaints Policy to alert us to any
-                complaint which you have relating to TheMembers.
+                Whether or not you are a User of "The Members", you can use this Complaints Policy to alert us to any
+                complaint which you have relating to "The Members".
               </li>
               <li>
                 <p>
                   <strong>How to make a complaint:</strong>
-                  If you have a complaint about TheMembers (including any complaint about Content appearing on
-                  TheMembers or the conduct of a User), please send your complaint to{" "}
-                  <a href="mailto:support@TheMembers.com">support@TheMembers.com</a> including your name, address,
+                  If you have a complaint about "The Members" (including any complaint about Content appearing on
+                  "The Members" or the conduct of a User), please send your complaint to&nbsp;
+                  <a href="mailto:support@themembers.com">support@themembers.com</a> including your name, address,
                   contact details, a description of your complaint and, if your complaint relates to Content, the URL
                   for the Content to which your complaint relates.
                 </p>
@@ -2218,8 +2209,8 @@ function PrivacyPolicy() {
                   <li>if we require further information or documents from you, we will contact you to let you know;</li>
                   <li>
                     we will in good faith take such actions as we consider appropriate to deal with the issue which your
-                    complaint has raised. If you have complained about Content which appears on TheMembers and we are
-                    satisfied that the Content is unlawful or otherwise breaches our{" "}
+                    complaint has raised. If you have complained about Content which appears on "The Members" and we are
+                    satisfied that the Content is unlawful or otherwise breaches our&nbsp;
                     <a href="#acceptable-use-policy">Acceptable Use Policy</a>, we will act quickly to remove such
                     Content.
                   </li>
@@ -2228,7 +2219,7 @@ function PrivacyPolicy() {
               </li>
               <li>
                 <strong>Unjustified or abusive complaints:</strong>
-                If you are a User of TheMembers, you warrant (which means you make a legally enforceable promise) that
+                If you are a User of "The Members", you warrant (which means you make a legally enforceable promise) that
                 you will not make any complaint under this Complaints Policy which is wholly unjustified, abusive, or
                 made in bad faith. If we determine that you have breached this warranty, we may suspend or terminate
                 your User account.
@@ -2266,10 +2257,10 @@ function PrivacyPolicy() {
                 <strong>Platform to Business Regulation</strong>").
               </li>
               <li>
-                <strong>Ranking on TheMembers:</strong>
+                <strong>Ranking on "The Members":</strong>
                 We randomly suggest potential Creators for a User to follow based on the Creators that have earned money
-                on TheMembers in the previous 30 days. We have no ranking system. There is no search/discovery feature
-                on TheMembers.
+                on "The Members" in the previous 30 days. We have no ranking system. There is no search/discovery feature
+                on "The Members".
               </li>
               <li>
                 <p>
@@ -2281,12 +2272,12 @@ function PrivacyPolicy() {
                     any alleged non-compliance by us with any obligations laid down in the Platform to Business
                     Regulation which affect you; or
                   </li>
-                  <li>technological issues relating directly to TheMembers and which affect you; or</li>
-                  <li>measures taken by us or our conduct which relate directly to TheMembers and which affect you,</li>
+                  <li>technological issues relating directly to "The Members" and which affect you; or</li>
+                  <li>measures taken by us or our conduct which relate directly to "The Members" and which affect you,</li>
                 </ol>
                 <p>
-                  then please submit your complaint to{" "}
-                  <a href="mailto:support@themembers.com">support@TheMembers.com</a>.
+                  then please submit your complaint to&nbsp;
+                  <a href="mailto:support@themembers.com">support@themembers.com</a>.
                 </p>
               </li>
               <li>
@@ -2304,7 +2295,7 @@ function PrivacyPolicy() {
                     of the issue raised; and
                   </li>
                   <li>
-                    communicate to you in plain and intelligible language by email or by message to your TheMembers
+                    communicate to you in plain and intelligible language by email or by message to your "The Members"
                     account the outcome of the internal complaint-handling process.
                   </li>
                 </ol>
@@ -2326,7 +2317,7 @@ function PrivacyPolicy() {
               </li>
             </ol>
             <p>
-              <strong>Published: Jun 2021</strong>
+              <strong>Published: Jul 2021</strong>
             </p>
           </section>
         </div>
