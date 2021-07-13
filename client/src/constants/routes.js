@@ -8,6 +8,7 @@ export const NOTIFICATION_ROUTE_ALL = "/notifications/all";
 export const ABOUT_ROUTE = "/about";
 export const CONTACT_ROUTE = "/contact";
 export const CONTRACT_ROUTE = "/contract"
+export const COOKIE_POLICY_ROUTE = "/cookie-policy"
 export const HOW_IT_WORKS_ROUTE="/how"
 export const HELP_ROUTE = "/help";
 export const HELP_DETAIL_ROUTE = "/help/:currentQuestion";

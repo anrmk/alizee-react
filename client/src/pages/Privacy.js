@@ -7,7 +7,7 @@ function Privacy() {
       <div>
         <div>
           <p>
-            <strong>Last Modified: Jun 2021</strong>
+            <strong>Last Modified: Jul 2021</strong>
           </p>
           <p>&nbsp;</p>
           <h2>IMPORTANT POINTS.</h2>
@@ -17,22 +17,18 @@ function Privacy() {
               <strong>1.</strong> <strong>OVERVIEW</strong>
             </p>
             <p>
-              Fenix International Limited and its subsidiaries (collectively, “<strong>TheMembers</strong>,” “
-              <strong>we</strong>,” “<strong>us</strong>,” “<strong>our</strong>”) respect your privacy and are
+              <strong>The Members</strong>, respect your privacy and are
               committed to protecting the personal data we hold about you. If you have questions, comments, or concerns
               about this Privacy Notice or our processing of personal data, please see the bottom of this Privacy Notice
-              for information about how to contact us. TheMembers is the data controller of the personal data collected,
+              for information about how to contact us. The Members is the data controller of the personal data collected,
               and is responsible for the processing of your personal data.
             </p>
             <p>
-              TheMembers is a social network which enables users to share their content; other users to enjoy content
+              The Members is a social network which enables users to share their content; other users to enjoy content
               and for some to do both. We refer to those users who share content as “<strong>Creators</strong>” and
               those users who pay to view Creators’ content as “<strong>Fans</strong>”. This Privacy Notice explains our
               practices with respect to personal data we collect and process about you. This includes information we
-              collect through, or in association with, our website located at <a href="https://themembers.com/"> www.TheMembers.com</a>, our services that we may offer from time to
-              time via our website, our related social media sites (Twitter and Instagram), or otherwise through your
-              interactions with us (the website, our social media pages, and services, collectively, the “
-              <strong>Services</strong>”).
+              collect through, or in association with, our website located at <a href="https://themembers.com/"> www.themembers.com</a>.
             </p>
             <p>
               <em>
@@ -120,11 +116,6 @@ function Privacy() {
                   account name, social security number, driver’s license number, passport number, or other similar
                   identifiers.
                 </li>
-                <li>
-                  Personal information categories listed in the California Customer Records statute (Cal. Civ. Code
-                  1798.80(e)).
-                </li>
-                <li>Characteristics of protected classifications under California or federal law.</li>
                 <li>
                   Commercial information, including records of personal property, products or services purchased,
                   obtained, or considered, or other purchasing or consuming histories or tendencies.
@@ -517,7 +508,6 @@ function Privacy() {
                 <a href="https://themembers.com/help" target="_blank">
                   www.themembers.com/help
                 </a>
-                or emailing us at <a href="mailto:privacy@themembers.com">privacy@themembers.com</a>.
               </p>
               <p>
                 If you have an account with us, you can exercise any of the above rights from your . If you don’t have a
@@ -555,9 +545,7 @@ function Privacy() {
               </p>
               <p>
                 If any authorized agent submits a consumer request on your behalf, in order to confirm that person or
-                entity’s authority to act on your behalf and verify the authorized agent’s identity, we require an email
-                be sent to
-                <a href="mailto:privacy@themembers.com"> privacy@themembers.com</a>, along with all of the below items:
+                entity’s authority to act on your behalf and verify the authorized agent’s identity, along with all of the below items:
               </p>
               <ul>
                 <li>Proof that you gave the authorized agent signed permission to submit the request.</li>
@@ -604,7 +592,6 @@ function Privacy() {
               <p>
                 Nevada law permits our users who are Nevada consumers to request that their personal data not be sold
                 (as defined under applicable Nevada law), even if their personal data is not currently being sold.
-                Requests may be sent to privacy@themembers.com, and are free of charge.
               </p>
             </section>
             <section>
@@ -641,7 +628,7 @@ function Privacy() {
                 Note that we may need to request additional information from you to validate your request. To exercise
                 any of the rights above, please visit <a href="https://themembers.com/help" target="_blank">
                   www.themembers.com/help
-                </a> or email us at <a href="mailto:privacy@themembers.com">privacy@themembers.com</a>.
+                </a>.
               </p>
             </section>
           </section>
@@ -749,7 +736,7 @@ function Privacy() {
                 with a “token” that represents your account, your card’s expiration date, card type and the first two
                 and last four digits of your card number. If you are required to provide your name and email address to
                 the payment provider, then they also provide us with that information. Payments issued to Creators for
-                their content are made by TheMembers using the bank account information that we have collected and
+                their content are made by The Members using the bank account information that we have collected and
                 stored.
               </p>
               <p>
@@ -840,23 +827,7 @@ function Privacy() {
               and practices, and under no circumstances are we responsible or liable for any third party’s compliance
               therewith.
             </p>
-          </section>
-
-          <section>
-            <p>
-              <strong>10.</strong> <strong>ADDITIONAL INFORMATION AND ASSISTANCE</strong>
-            </p>
-            <p>
-              If you have any questions or concerns about this Privacy Notice and/or how we process personal data,
-              please contact us at <a href="mailto:privacy@themembers.com">privacy@themembers.com</a>.
-            </p>
-            <p>
-              In addition, we have appointed a data protection officer (“DPO”) who is responsible for, among other
-              things, responding to questions, requests, and concerns in relation to this Privacy Notice and our use of
-              personal data. You may contact the DPO as follows:
-            </p>
-            <p>We have also appointed an EU Representative who may be reached as follows:</p>
-          </section>
+          </section>        
         </div>
       </div>
     </PublicLayout>

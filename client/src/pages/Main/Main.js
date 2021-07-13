@@ -34,6 +34,7 @@ import Contact from "../Contact";
 import Privacy from "../Privacy";
 import HowItWorks from "../HowItWorks";
 import Contract from "../Contract";
+import CookiePolicy from "../CookiePolicy";
 import { Help, HelpDetails } from "../Help";
 import Notifications from "../Notifications";
 import { MainLayout } from "../Layouts";
@@ -82,6 +83,7 @@ function Main(props) {
       <Route exact path={Routes.SIGN_UP_ROUTE} component={SignUp} />
       <Route exact path={Routes.SIGN_IN_ROUTE} component={SignIn} />
       <Route exact path={Routes.PRIVACY_POLICY_ROUTE} component={PrivacyPolicy} />
+      <Route exact path={Routes.COOKIE_POLICY_ROUTE} component={CookiePolicy} />
       <Route exact path={Routes.EMAIL_CONFIRMATION_ROUTE} component={EmailConfirmation} />
       <Route exact path={Routes.EMAIL_VERIFY_ROUTE} component={EmailVerify} />
       <Route exact path={Routes.RESET_PASSWORD_ROUTE} component={ResetPassword} />

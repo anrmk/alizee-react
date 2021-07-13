@@ -25,6 +25,7 @@ import {
 import UserCard from "./UserCard";
 import { Wallet } from "../Wallet";
 import Animate from "../Animate/Animate";
+import Footer from "../Footer/Footer";
 
 import useStyles from "./styles";
 
@@ -206,6 +207,7 @@ function Sidebar({
               </ListItem>
             </Animate>
           </List>
+		 <Footer open sidebarFooter/>
         </Grid>
       </Grid>
     </Box>
