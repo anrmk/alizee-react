@@ -11,6 +11,7 @@ import ApiContext from "../../context/ApiContext";
 import { PublicLayout } from "../Layouts";
 
 import { createHelpRating, getHelp, getHelpDetail, deleteHelpRating } from "../../store/actions/help";
+import { isEmptyObject } from "../../helpers/functions";
 
 import useStyles from "../../domain/Help/styles";
 
@@ -54,13 +55,15 @@ function HelpDetails() {
           </Grid>
         </Hidden>
         <Grid item md={7} lg={9} md={8} sm={7}>
-          <FaqDetails
-            {...helpDetails}
-            onVote={handleVote}
-            isVoted={help.isVoted}
-            data={help?.data}
-            currentQuestion={params.currentQuestion}
-          />
+          {!isEmptyObject(helpDetails) && (
+            <FaqDetails
+              {...helpDetails}
+              onVote={handleVote}
+              isVoted={help.isVoted}
+              data={help?.data}
+              currentQuestion={params.currentQuestion}
+            />
+          )}
         </Grid>
       </Grid>
     </PublicLayout>

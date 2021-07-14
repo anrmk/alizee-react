@@ -9,6 +9,9 @@ import {
   PRIVACY_POLICY_ROUTE,
   HOW_IT_WORKS_ROUTE,
   COOKIE_POLICY_ROUTE,
+  ACCEPTABLE_USE_POLICY_HASH,
+  COMPLAINTS_POLICY_HASH,
+  REFERRAL_PROGRAM_ROUTE,
 } from "../../constants/routes";
 
 import { Grid, Link, Box } from "@material-ui/core";
@@ -22,23 +25,23 @@ function Footer({ open, sidebarFooter = false }) {
     <>
       {sidebarFooter ? (
         <Box className={classes.root}>
-          <Link href="#" onClick={() => history.push(PRIVACY_POLICY_ROUTE)} color="textSecondary">
+          <Link href="#" onClick={() => history.push(`${HELP_ROUTE}${PRIVACY_POLICY_ROUTE}`)} color="textSecondary">
             Terms of Service
           </Link>
-          <Link href="#" onClick={() => history.push(PRIVACY_ROUTE)} color="textSecondary">
+          <Link href="#" onClick={() => history.push(`${HELP_ROUTE}${PRIVACY_ROUTE}`)} color="textSecondary">
             Privacy
           </Link>
           <Link href="#" onClick={() => history.push(CONTACT_ROUTE)} color="textSecondary">
             Contact
           </Link>
-          <Link href="#" onClick={() => history.push(COOKIE_POLICY_ROUTE)} color="textSecondary">
+          <Link href="#" onClick={() => history.push(`${HELP_ROUTE}${COOKIE_POLICY_ROUTE}`)} color="textSecondary">
             Cookie Policy
           </Link>
           <Link href="#" onClick={() => history.push(HELP_ROUTE)} color="textSecondary">
             More...
           </Link>
           <Link href="#" color="textSecondary">
-            © 2021 The Members{" "}
+            © 2021 The Members
           </Link>
         </Box>
       ) : (
@@ -59,28 +62,31 @@ function Footer({ open, sidebarFooter = false }) {
             {/* <Link href="#" className={classes.link}>Blog</Link> */}
             {/* <Link href="#">Branding</Link> */}
             {/* <Link href="#">Store</Link> */}
-            <Link href="#" onClick={() => history.push(PRIVACY_POLICY_ROUTE)}>
+            <Link href="#" onClick={() => history.push(`${HELP_ROUTE}${PRIVACY_POLICY_ROUTE}`)}>
               Terms of Service
             </Link>
-            <Link href="#" onClick={() => history.push(PRIVACY_ROUTE)}>
+            <Link href="#" onClick={() => history.push(`${HELP_ROUTE}${PRIVACY_ROUTE}`)}>
               Privacy
             </Link>
-            <Link href="#" onClick={() => history.push(HOW_IT_WORKS_ROUTE)}>
+            <Link href="#" onClick={() => history.push(`${HELP_ROUTE}${HOW_IT_WORKS_ROUTE}`)}>
               How it works
             </Link>
-            <Link href="#" onClick={() => history.push(`${HELP_ROUTE}/referral-program`)}>
+            <Link href="#" onClick={() => history.push(`${HELP_ROUTE}${REFERRAL_PROGRAM_ROUTE}`)}>
               Referrals
             </Link>
-            <Link href="#acceptable-use-policy" target="_blank" onClick={() => history.push(PRIVACY_POLICY_ROUTE)}>
+            <Link
+              href={ACCEPTABLE_USE_POLICY_HASH}
+              onClick={() => history.push(`${HELP_ROUTE}${PRIVACY_POLICY_ROUTE}`)}
+            >
               Acceptable Use Policy
             </Link>
-            <Link href="#complaints-policy" target="_blank" onClick={() => history.push(PRIVACY_POLICY_ROUTE)}>
+            <Link href={COMPLAINTS_POLICY_HASH} onClick={() => history.push(`${HELP_ROUTE}${PRIVACY_POLICY_ROUTE}`)}>
               Complaints Policy
             </Link>
-            <Link href="#" onClick={() => history.push(CONTRACT_ROUTE)}>
+            <Link href="#" onClick={() => history.push(`${HELP_ROUTE}${CONTRACT_ROUTE}`)}>
               Standard Contract between Fan and Creator
             </Link>
-            <Link href="#" onClick={() => history.push(COOKIE_POLICY_ROUTE)}>
+            <Link href="#" onClick={() => history.push(`${HELP_ROUTE}${COOKIE_POLICY_ROUTE}`)}>
               Cookie Policy
             </Link>
           </Grid>
