@@ -10,6 +10,7 @@ import {
   Button,
   Typography,
   Divider,
+  Hidden,
 } from "@material-ui/core";
 //import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import ChevronRightIcon from "@material-ui/icons/ChevronRightOutlined";
@@ -38,23 +39,40 @@ function Content({ data = [] }) {
             <ListItemText
               primary={
                 <>
-                  <DisplayName name={item.name} userName={item.userName} identityVerified={true} />
-                  <Typography component="span" variant="body2" >{ACTIVITY_LOG_TYPE[item.type]}</Typography>
-                  {item.description && <Typography component="span" variant="body2">: {item.description}</Typography>}
+                  <Hidden smUp>
+                    <DisplayName name={item.name} userName={item.userName} identityVerified={true} noWrap={false} />
+                  </Hidden>
+                  <Hidden xsDown>
+                    <DisplayName name={item.name} userName={item.userName} identityVerified={true} />
+                  </Hidden>
+
+                  <Typography component="span" variant="body2">
+                    {ACTIVITY_LOG_TYPE[item.type]}
+                  </Typography>
+                  {item.description && (
+                    <Typography component="span" variant="body2">
+                      : {item.description}
+                    </Typography>
+                  )}
                 </>
               }
               secondary={formatDate(item.createdDate)}
             />
 
-            {item.relatedPostId ? (
-              <ListItemSecondaryAction>
-                <Button edge="end" variant="outlined" onClick={() => history.push(POST_ID_ROUTE(item.relatedPostId))}>
-                  Post
-                </Button>
-              </ListItemSecondaryAction>
-            ) : (
+            <Hidden xsDown>
+              {item.relatedPostId ? (
+                <ListItemSecondaryAction>
+                  <Button edge="end" variant="outlined" onClick={() => history.push(POST_ID_ROUTE(item.relatedPostId))}>
+                    Post
+                  </Button>
+                </ListItemSecondaryAction>
+              ) : (
+                <ChevronRightIcon />
+              )}
+            </Hidden>
+            <Hidden smUp>
               <ChevronRightIcon />
-            )}
+            </Hidden>
           </ListItem>
 
           <Divider component="li" />

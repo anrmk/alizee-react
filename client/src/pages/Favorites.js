@@ -21,7 +21,7 @@ function Favorites(props) {
   const history = useHistory();
 
   const { user, me, favorites } = props;
-  const { fetchUser, fetchFavorites, createFollow, deleteFollow } = props;
+  const { fetchUser, fetchFavorites, createFollow, deleteFollow, resetFollowings } = props;
 
   useEffect(() => {
     if (username) {
@@ -32,9 +32,15 @@ function Favorites(props) {
     }
   }, [username]);
 
-   const handleFollowClick = ({ userName, isFollow }) => {
-     !favorites.isLoading && isFollow ? deleteFollow(apiClient, userName) : createFollow(apiClient, userName);
-   };
+  useEffect(() => {
+    return () => {
+      resetFollowings();
+    };
+  }, []);
+
+  const handleFollowClick = ({ userName, isFollow }) => {
+    !favorites.isLoading && isFollow ? deleteFollow(apiClient, userName) : createFollow(apiClient, userName);
+  };
 
   return (
     <Container maxWidth="sm">
@@ -65,9 +71,9 @@ function mapStateToProps(state) {
     },
     user: state.user.data,
     favorites: {
-      isFetching: state.users.isFetching, 
+      isFetching: state.users.isFetching,
       data: state.users.data,
-    }
+    },
   };
 }
 
@@ -77,6 +83,7 @@ function mapDispatchToProps(dispatch) {
     fetchFavorites: (api, userName) => dispatch(accountActions.getFavorites(api, userName)),
     createFollow: (api, userName) => dispatch(relationshipActions.createFollow(api, userName)),
     deleteFollow: (api, userName) => dispatch(relationshipActions.deleteFollow(api, userName)),
+    resetFollowings: () => dispatch(relationshipActions.resetRelationship()),
   };
 }
 

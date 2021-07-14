@@ -21,12 +21,18 @@ import { PROFILE_USERNAME_ROUTE } from "../constants/routes";
 import { formatDate } from "../helpers/functions";
 import useBlockDialog from "../hooks/useBlockDialog";
 
-function BlackList({ me, blocked, fetchBlocked }) {
+function BlackList({ me, blocked, fetchBlocked, resetBlocked }) {
   const apiClient = useContext(ApiContext);
   const blockDialog = useBlockDialog();
 
   useEffect(() => {
     fetchBlocked(apiClient);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      resetBlocked();
+    };
   }, []);
 
   return (
@@ -85,6 +91,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchBlocked: (api) => dispatch(relationshipActions.getBlocked(api)),
+    resetBlocked: () => dispatch(relationshipActions.resetRelationship()),
   };
 }
 

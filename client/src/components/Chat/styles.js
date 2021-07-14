@@ -44,6 +44,10 @@ const useStyles = makeStyles((theme) => ({
   gridListTileBar: {
     background: "none",
   },
+
+  message: {
+    wordBreak: "break-all",
+  },
 }));
 
 export default useStyles;
