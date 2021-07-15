@@ -22,6 +22,7 @@ import {
   SHARE_MESSAGE_SUCCESS,
   SHARE_MESSAGE_FAILURE,
   ADD_MESSAGE_TO_LOCAL,
+  UPDATE_CURRENT_ROOM,
   RESET_CURRENT_ROOM,
 } from "../actions/chat";
 
@@ -44,6 +45,12 @@ export default function chatReducer(state = { isFetching: false, data: [], curre
         ...state,
         ...action.payload,
       };
+    case UPDATE_CURRENT_ROOM: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
     // Reset current room
     case RESET_CURRENT_ROOM:
       return {

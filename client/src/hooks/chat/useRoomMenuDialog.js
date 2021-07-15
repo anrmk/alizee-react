@@ -5,7 +5,6 @@ import ApiContext from "../../context/ApiContext";
 import * as actionChat from "../../store/actions/chat";
 
 import dialogs, { ROOM_MENU_DIALOG_TYPE } from "../../constants/dialogs";
-import { BLOCKED_TYPE } from "../../constants/block_types";
 
 import useDialog from "../useDialog";
 import useBlockDialog from "../../hooks/useBlockDialog";

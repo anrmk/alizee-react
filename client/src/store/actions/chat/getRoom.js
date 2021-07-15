@@ -1,4 +1,4 @@
-import { generateUrl, isEmptyObject } from "../../../helpers/functions";
+import { generateUrl } from "../../../helpers/functions";
 
 export const GET_ROOM_REQUEST = "GET_ROOM_REQUEST";
 export const GET_ROOM_SUCCESS = "GET_ROOM_SUCCESS";
@@ -50,7 +50,7 @@ export function getRoom(api, userName) {
 
       if (roomIndex !== -1) {
         rooms[roomIndex].unreadMessageCount = 0;
-      } 
+      }
 
       dispatch(receiveGetRoom(rooms, data));
     } catch (e) {

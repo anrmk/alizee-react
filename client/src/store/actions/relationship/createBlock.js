@@ -1,6 +1,7 @@
 import { generateUrl, isEmptyObject } from "../../../helpers/functions";
 import { addUserBlock } from "../user";
 import { addPostUserBlock } from "../post";
+import { updateCurrentRoom } from "../chat";
 
 export const CREATE_BLOCK_USER_REQUEST = "CREATE_BLOCK_USER_REQUEST";
 export const CREATE_BLOCK_USER_SUCCESS = "CREATE_BLOCK_USER_SUCCESS";
@@ -68,6 +69,14 @@ export function createBlock(api, userName, type) {
 
       if (!isEmptyObject(getState().user.data)) {
         dispatch(addUserBlock());
+        dispatch(receiveUpdateBlockUser());
+      }
+
+      if (!isEmptyObject(getState().chat.current)) {
+        const current = getState().chat.current;
+        current.isBlocked = true;
+
+        dispatch(updateCurrentRoom(current));
         dispatch(receiveUpdateBlockUser());
       }
 

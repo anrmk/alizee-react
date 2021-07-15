@@ -1,30 +1,26 @@
 import React from "react";
 
-import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { List, ListItem, ListItemIcon, ListItemText, Divider } from "@material-ui/core";
 
-import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
 import DeleteIcon from "@material-ui/icons/DeleteOutline";
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircleOutline";
 import BlockIcon from "@material-ui/icons/BlockOutlined";
 
-import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
-
 function RoomMenuDialog({
   postId,
   userName,
+  isBlocked,
 
   onBlockClick,
   onDeleteClick,
   onClearClick,
 }) {
   const { t } = useTranslation();
-  const history = useHistory();
 
   const handleBlockClick = () => {
-    onBlockClick && onBlockClick({ postId, userName });
+    onBlockClick && onBlockClick({ postId, userName, isBlocked });
   };
 
   const handleClearClick = () => {
@@ -41,7 +37,7 @@ function RoomMenuDialog({
         <ListItemIcon>
           <BlockIcon />
         </ListItemIcon>
-        <ListItemText primary={t("ChatRoomMenuItemAddAccountToBlackListText")} />
+        <ListItemText primary={t(isBlocked ? "ChatRoomMenuItemUnblockUserText" : "ChatRoomMenuItemBlockUserText")} />
       </ListItem>
 
       <Divider />

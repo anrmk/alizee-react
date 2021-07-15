@@ -39,4 +39,5 @@ export {
   shareMessage
 } from "./shareMessage";
 
+export { UPDATE_CURRENT_ROOM , updateCurrentRoom } from "./updateCurrentRoom";
 export { RESET_CURRENT_ROOM, resetCurrentRoom } from "./resetCurrentRoom";

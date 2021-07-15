@@ -1,6 +1,7 @@
 import { generateUrl, isEmptyObject } from "../../../helpers/functions";
 import { removeUserBlock } from "../user";
 import { removePostUserBlock } from "../post";
+import { updateCurrentRoom } from "../chat";
 
 export const UNBLOCK_USER_REQUEST = "UNBLOCK_USER_REQUEST";
 export const UNBLOCK_USER_SUCCESS = "UNBLOCK_USER_SUCCESS";
@@ -63,6 +64,14 @@ export function deleteBlock(api, userName) {
 
       if (!isEmptyObject(getState().user.data)) {
         dispatch(removeUserBlock());
+        dispatch(receiveUpdateBlockUser());
+      }
+
+      if (!isEmptyObject(getState().chat.current)) {
+        const current = getState().chat.current;
+        current.isBlocked = false;
+
+        dispatch(updateCurrentRoom(current));
         dispatch(receiveUpdateBlockUser());
       }
 

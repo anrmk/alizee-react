@@ -67,7 +67,8 @@
 
   "ChatRoomMenuItemContactText": "Contact info",
   "ChatRoomMenuItemDeleteText": "Delete chat",
-  "ChatRoomMenuItemAddAccountToBlackListText": "Block",
+  "ChatRoomMenuItemBlockUserText": "Block",
+  "ChatRoomMenuItemUnblockUserText": "Unblock",
   "ChatRoomMenuItemClearText": "Clear history",
 
   "NavbarMenuItemProfileText": "Profile",
