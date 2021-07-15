@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
-import { Grid, Box, Typography, Divider, Button, Breadcrumbs, Link, Card, CardActions } from "@material-ui/core";
+import { Grid, Box, Typography, Divider, Button, Breadcrumbs, Link } from "@material-ui/core";
 
 import FaqQuestionList from "./FaqQuestionList";
 
 function FaqDetails({ title, id, content, groupId, onVote, isVoted, data = [], currentQuestion }) {
+  const location = useLocation();
+
   const transformData = () => {
     return data.reduce((acc, item) => {
       const res = item.childs.filter((el) => el.id === groupId);
@@ -14,6 +17,13 @@ function FaqDetails({ title, id, content, groupId, onVote, isVoted, data = [], c
       return acc;
     }, []);
   };
+
+  useEffect(() => {
+    if (location.hash) {
+      const el = document.querySelector(location.hash);
+      el && el.scrollIntoView({ behavior: "smooth" });
+    }
+  }, []);
 
   return (
     <Grid container direction="column" spacing={2}>
@@ -30,9 +40,12 @@ function FaqDetails({ title, id, content, groupId, onVote, isVoted, data = [], c
         <Typography variant="h5" gutterBottom>
           {title}
         </Typography>
-        <Typography variant="body1" component="p" color="textSecondary">
-          {content}
-        </Typography>
+        <Typography
+          variant="body1"
+          component="p"
+          color="textSecondary"
+          dangerouslySetInnerHTML={{ __html: content }}
+        ></Typography>
       </Grid>
       <Grid item>
         <Typography variant="h5">Related articles</Typography>

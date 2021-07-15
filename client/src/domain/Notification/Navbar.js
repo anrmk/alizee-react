@@ -13,7 +13,11 @@ import ReportProblemOutlinedIcon from "@material-ui/icons/ReportProblemOutlined"
 
 import useViewport from "../../hooks/useViewport";
 
+import useStyles from "./styles";
+
 function Navbar({ type }) {
+  const classes = useStyles();
+
   const history = useHistory();
   const { up } = useViewport();
 
@@ -22,7 +26,7 @@ function Navbar({ type }) {
   };
 
   return (
-    <BottomNavigation value={type} onChange={handleChange} showLabels={up("md")}>
+    <BottomNavigation value={type} onChange={handleChange} showLabels={up("md")} className={classes.navbar}>
       <BottomNavigationAction label="All" value="all" icon={<AllInboxOutlinedIcon />} />
       <BottomNavigationAction label="Interactions" value="interaction" icon={<ChatBubbleOutlineOutlinedIcon />} />
       <BottomNavigationAction label="Liked" value="liked" icon={<FavoriteBorderOutlinedIcon />} />

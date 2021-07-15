@@ -7,9 +7,10 @@ export const NOTIFICATION_ROUTE_ALL = "/notifications/all";
 
 export const ABOUT_ROUTE = "/about";
 export const CONTACT_ROUTE = "/contact";
-export const CONTRACT_ROUTE = "/contract"
-export const COOKIE_POLICY_ROUTE = "/cookie-policy"
-export const HOW_IT_WORKS_ROUTE="/how"
+export const CONTRACT_ROUTE = "/standard-contract-between-fan-and-creator";
+export const COOKIE_POLICY_ROUTE = "/cookie-policy";
+export const REFERRAL_PROGRAM_ROUTE = "/referral-program";
+export const HOW_IT_WORKS_ROUTE = "/how";
 export const HELP_ROUTE = "/help";
 export const HELP_DETAIL_ROUTE = "/help/:currentQuestion";
 export const HELP_TICKETS_ROUTE = "/help/my/tickets";
@@ -33,7 +34,9 @@ export const PEAR_TO_PEAR_ID_ROUTE = (username) => `/ptp/${username}`;
 
 export const SIGN_IN_ROUTE = "/signIn";
 export const SIGN_UP_ROUTE = "/signUp";
-export const PRIVACY_POLICY_ROUTE = "/terms";
+export const PRIVACY_POLICY_ROUTE = "/terms-of-service";
+export const ACCEPTABLE_USE_POLICY_HASH = "#acceptable-use-policy";
+export const COMPLAINTS_POLICY_HASH = "#complaints-policy";
 export const EMAIL_CONFIRMATION_ROUTE = "/email-confirmation";
 export const EMAIL_VERIFY_ROUTE = "/email-verify";
 export const FOLLOWERS_ROUTE = (username) => `/${username}/followers`;

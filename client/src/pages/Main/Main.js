@@ -17,7 +17,6 @@ import Meeting from "../Meet/Meeting";
 import Room from "../Meet/Room";
 import PearToPear from "../Meet/PeerToPeer";
 import Profile from "../Profile";
-import PrivacyPolicy from "../PrivacyPolicy";
 import Followers from "../Followers";
 import Followings from "../Followings";
 import Blocked from "../Blocked";
@@ -31,10 +30,6 @@ import ChangeLog from "../ChangeLog";
 import NotFound from "../NotFound";
 import About from "../About";
 import Contact from "../Contact";
-import Privacy from "../Privacy";
-import HowItWorks from "../HowItWorks";
-import Contract from "../Contract";
-import CookiePolicy from "../CookiePolicy";
 import { Help, HelpDetails } from "../Help";
 import Notifications from "../Notifications";
 import { MainLayout } from "../Layouts";
@@ -82,8 +77,6 @@ function Main(props) {
       <Route exact path={Routes.NOT_FOUND_ROUTE} component={NotFound} />
       <Route exact path={Routes.SIGN_UP_ROUTE} component={SignUp} />
       <Route exact path={Routes.SIGN_IN_ROUTE} component={SignIn} />
-      <Route exact path={Routes.PRIVACY_POLICY_ROUTE} component={PrivacyPolicy} />
-      <Route exact path={Routes.COOKIE_POLICY_ROUTE} component={CookiePolicy} />
       <Route exact path={Routes.EMAIL_CONFIRMATION_ROUTE} component={EmailConfirmation} />
       <Route exact path={Routes.EMAIL_VERIFY_ROUTE} component={EmailVerify} />
       <Route exact path={Routes.RESET_PASSWORD_ROUTE} component={ResetPassword} />
@@ -93,9 +86,6 @@ function Main(props) {
       <Route exact path={Routes.CHANGE_LOG_ROUTE} component={ChangeLog} />
       <Route exact path={Routes.ABOUT_ROUTE} component={About} />
       <Route exact path={Routes.CONTACT_ROUTE} component={Contact} />
-      <Route exact path={Routes.PRIVACY_ROUTE} component={Privacy} />
-      <Route exact path={Routes.HOW_IT_WORKS_ROUTE} component={HowItWorks} />
-      <Route exact path={Routes.CONTRACT_ROUTE} component={Contract} />
       <PrivateRoute exact path={Routes.STORIES_ID_ROUTE} component={Story} />
       <PrivateRoute path={Routes.PEAR_TO_PEAR_DEFAULT_ROUTE} component={PearToPear} />
 

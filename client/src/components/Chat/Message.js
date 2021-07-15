@@ -96,6 +96,7 @@ const Message = React.memo(
         )}
 
         <ListItemText
+          className={classes.message}
           primary={
             <Link color={message.isOwner ? "primary" : "secondary"} href={PROFILE_USERNAME_ROUTE(message.userName)}>
               {message.name ?? `@${message.userName}`}
