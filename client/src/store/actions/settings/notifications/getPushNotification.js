@@ -1,4 +1,4 @@
-import { generateUrl } from "../../../../helpers/functions";
+import { generateUrl, toBase64 } from "../../../../helpers/functions";
 
 export const GET_PUSH_NOTIFICATION_REQUEST = "GET_PUSH_NOTIFICATION_REQUEST";
 export const GET_PUSH_NOTIFICATION_SUCCESS = "GET_PUSH_NOTIFICATION_SUCCESS";
@@ -38,10 +38,16 @@ function errorGetPushNotification(message) {
 export function getPushNotification(api) {
   return async (dispatch) => {
     dispatch(requestGetPushNotification());
+    const id = toBase64(navigator.userAgent + navigator.productSub, false);
 
     const url = generateUrl("getPushNotification");
     try {
-      const { data } = await api.setMethod("GET").query(url);
+      const { data } = await api
+        .setMethod("GET")
+        .setParams({
+          id,
+        })
+        .query(url);
 
       dispatch(receiveGetPushNotification(data));
     } catch (e) {

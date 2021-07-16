@@ -1,10 +1,17 @@
 import numeral from "numeral";
 import jwt_decode from "jwt-decode";
 
-import ENDPOINTS from '../constants/endpoints';
-import { MEDIA_IMAGE, MEDIA_VIDEO } from '../constants/media_types';
+import ENDPOINTS from "../constants/endpoints";
+import { MEDIA_IMAGE, MEDIA_VIDEO } from "../constants/media_types";
 import { EMAIL_REGEX, NUMBER_REGEX } from "../constants/regexs";
-import { EMAIL_CONFIRMATION_ROUTE, EMAIL_VERIFY_ROUTE, PASSWORD_CHANGE_ROUTE, RESET_PASSWORD_ROUTE, SIGN_IN_ROUTE, SIGN_UP_ROUTE } from "../constants/routes";
+import {
+  EMAIL_CONFIRMATION_ROUTE,
+  EMAIL_VERIFY_ROUTE,
+  PASSWORD_CHANGE_ROUTE,
+  RESET_PASSWORD_ROUTE,
+  SIGN_IN_ROUTE,
+  SIGN_UP_ROUTE,
+} from "../constants/routes";
 import { USER_TOKEN } from "../constants/user";
 import { USERNAME_KEY } from "../constants/jwt";
 
@@ -45,7 +52,7 @@ export function generateFileUrl(address, endpoint, postfix = null) {
  * @return {string}
  */
 export function wrapHttps(url, https) {
-  return `${https ? 'https' : 'http'}://${url}`;
+  return `${https ? "https" : "http"}://${url}`;
 }
 
 export function getToken() {
@@ -72,16 +79,16 @@ export function getOffset(currentOffset, total, step = 1) {
 /**
  * Get full url to ...
  * @param {number} location current location
- * @param {number} route preferred route  
+ * @param {number} route preferred route
  * @param {number} id
  * @return {number} full url to post
  */
 export function getUrlTo(route) {
   const location = window.location.origin;
 
-  if (!location || !route ) return null;
+  if (!location || !route) return null;
 
-  return `${location}${route}`
+  return `${location}${route}`;
 }
 
 /**
@@ -94,16 +101,15 @@ export function getHostFromUrl(url) {
 
   // Find & remove protocol (http, ftp, etc.) and get hostname
   if (url.indexOf("//") > -1) {
-    hostname = url.split('/')[2];
-  }
-  else {
-    hostname = url.split('/')[0];
+    hostname = url.split("/")[2];
+  } else {
+    hostname = url.split("/")[0];
   }
 
   // Find & remove port number
-  hostname = hostname.split(':')[0];
+  hostname = hostname.split(":")[0];
   // Find & remove "?"
-  hostname = hostname.split('?')[0];
+  hostname = hostname.split("?")[0];
 
   return hostname;
 }
@@ -111,17 +117,17 @@ export function getHostFromUrl(url) {
 /**
  * Get media type
  * @param {number} location current location
- * @param {number} route preferred route  
+ * @param {number} route preferred route
  * @param {number} id
  * @return {number} full url to post
  */
 export function getMediaType(type) {
   if (typeof type === "string") {
-    switch(type.toLocaleLowerCase()) {
+    switch (type.toLocaleLowerCase()) {
       case "video":
-        return MEDIA_VIDEO
+        return MEDIA_VIDEO;
       case "image":
-        return MEDIA_IMAGE
+        return MEDIA_IMAGE;
       default:
         return undefined;
     }
@@ -137,13 +143,7 @@ export function getMediaType(type) {
  * @return {Array} new Array with files where duplicates overridden to last added items
  */
 export function getWithoutRepeats(list, property) {
-  return list
-    .reverse()
-    .filter((item, index, self) =>
-    index === self.findIndex((t) => (
-      t[property] === item[property]
-    ))
-  )
+  return list.reverse().filter((item, index, self) => index === self.findIndex((t) => t[property] === item[property]));
 }
 
 /**
@@ -152,7 +152,7 @@ export function getWithoutRepeats(list, property) {
  * @param {format}
  * @return {string}
  */
-export function formatNumber(number, format="0.0a") {
+export function formatNumber(number, format = "0.0a") {
   const formattedNumber = numeral(number).format(format);
 
   if (formattedNumber) {
@@ -174,7 +174,7 @@ export function getFirstElement(element) {
     return element[0];
   }
 
-  return null
+  return null;
 }
 
 /**
@@ -225,8 +225,8 @@ export function getProfileSnapshot(profile) {
     bio: profile.bio,
     sites: profile.sites,
     location: profile.location,
-    wishList: profile.wishList
-  })
+    wishList: profile.wishList,
+  });
 }
 
 export function getFullName(firstName, lastName) {
@@ -248,12 +248,14 @@ export function initTheme(theme) {
 }
 
 export function isPublicRoute(route) {
-  return route.includes(SIGN_IN_ROUTE) ||
+  return (
+    route.includes(SIGN_IN_ROUTE) ||
     route.includes(SIGN_UP_ROUTE) ||
     route.includes(RESET_PASSWORD_ROUTE) ||
     route.includes(PASSWORD_CHANGE_ROUTE) ||
     route.includes(EMAIL_VERIFY_ROUTE) ||
     route.includes(EMAIL_CONFIRMATION_ROUTE)
+  );
 }
 
 /**
@@ -263,7 +265,7 @@ export function isPublicRoute(route) {
  * @param {dark}
  * @return {string}
  */
-export function getStyleByTheme (theme, light, dark) {
+export function getStyleByTheme(theme, light, dark) {
   return theme.palette.type === "light" ? light : dark;
 }
 
@@ -274,7 +276,7 @@ export function getUniqueChars(str) {
     .split("")
     .filter((item, i, ar) => ar.indexOf(item) === i)
     .join("");
-  
+
   return uniqueStr;
 }
 
@@ -293,7 +295,7 @@ export function getUrlParams() {
   const urlParams = new URLSearchParams(query);
   const params = {};
 
-  urlParams.forEach((val, key) => params[key] = val);
+  urlParams.forEach((val, key) => (params[key] = val));
 
   return params;
 }
@@ -303,28 +305,31 @@ export function getYearFromCurrentDate(years) {
 }
 
 export function formatCurrency(amount, currency = "USD") {
-  var formatter = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency
+  var formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency,
   });
   return formatter.format(amount);
 }
 
-const ONE_HOUR_MILLISECONDS = 1000*60*60;
+const ONE_HOUR_MILLISECONDS = 1000 * 60 * 60;
 
 export function formatDate(value, opts = { timeOffset: 12, showSubText: true }) {
   if (!value) return null;
-  
+
   const currentDate = new Date();
   const delta = currentDate - new Date(value);
 
-  let options = {}, subText = "";
- 
-  if(delta > ONE_HOUR_MILLISECONDS * opts.timeOffset) {
-    options = { 
-      month: "short", day: "numeric", 
-      hour: 'numeric', minute: 'numeric', 
-      hour12: true
+  let options = {},
+    subText = "";
+
+  if (delta > ONE_HOUR_MILLISECONDS * opts.timeOffset) {
+    options = {
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
     };
   } else {
     subText = opts.showSubText ? "Today at " : "";
@@ -334,7 +339,7 @@ export function formatDate(value, opts = { timeOffset: 12, showSubText: true }) 
       hour12: true,
     };
   }
-  
+
   var formatter = new Intl.DateTimeFormat("en-US", options);
   return `${subText}${formatter.format(new Date(value))}`;
 }
@@ -347,8 +352,8 @@ export function copyFlatObjectWithIgnore(obj, ignores) {
     if (!ignores.includes(curr)) {
       return {
         ...acc,
-        [curr]: obj[curr]
-      }
+        [curr]: obj[curr],
+      };
     }
 
     return acc;
@@ -369,15 +374,15 @@ export function isSameObjects(obj1, obj2) {
  * @time {ms}
  */
 
-export function debounce (fn, time) {
+export function debounce(fn, time) {
   let timeout;
 
-  return function() {
+  return function () {
     const functionCall = () => fn.apply(this, arguments);
     timeout && clearTimeout(timeout);
-    
+
     timeout = setTimeout(functionCall, time);
-  }
+  };
 }
 
 export function getBase64(file) {
@@ -385,14 +390,14 @@ export function getBase64(file) {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
+    reader.onerror = (error) => reject(error);
   });
 }
 
 export function redirect(url, target) {
   if (!url) return null;
 
-  window.open(url, target ?? "_self")
+  window.open(url, target ?? "_self");
 }
 
 export function getUsernameFromJWT(token) {
@@ -400,7 +405,7 @@ export function getUsernameFromJWT(token) {
 
   const decodedToken = jwt_decode(token);
   if (!decodedToken[USERNAME_KEY]) {
-    return null
+    return null;
   }
 
   return decodedToken[USERNAME_KEY];
@@ -409,9 +414,15 @@ export function getUsernameFromJWT(token) {
 export function arrayToObject(arr, property) {
   if (!arr || !arr?.length) return null;
 
-  return arr.reduce((acc, curr, i) => ({ ...acc, [curr[property]]: { ...curr, index: i } }), {}); 
+  return arr.reduce((acc, curr, i) => ({ ...acc, [curr[property]]: { ...curr, index: i } }), {});
 }
 
 export function getDialogToggleType(withStack) {
   return withStack ? "toggleWithStack" : "toggle";
+}
+
+export function toBase64(value, encode = true) {
+  const padding = "=".repeat((4 - (value.length % 4)) % 4);
+  const result = (value + padding).replace(/\-/g, "+").replace(/_/g, "/");
+  return encode ? window.atob(result) : window.btoa(result);
 }

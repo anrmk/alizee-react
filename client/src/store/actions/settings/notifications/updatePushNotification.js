@@ -1,4 +1,4 @@
-import { generateUrl } from "../../../../helpers/functions";
+import { generateUrl, toBase64 } from "../../../../helpers/functions";
 
 export const UPDATE_PUSH_NOTIFICATION_REQUEST = "UPDATE_PUSH_NOTIFICATION_REQUEST";
 export const UPDATE_PUSH_NOTIFICATION_SUCCESS = "UPDATE_PUSH_NOTIFICATION_SUCCESS";
@@ -38,16 +38,15 @@ function errorUpdatePushNotification(message) {
 export function updatePushNotification(api, opts) {
   return async (dispatch) => {
     dispatch(requestUpdatePushNotification());
-
     const url = generateUrl("updatePushNotification");
     try {
-      await api.setData(opts).query(url);
+      await api.setData(opts).setParams(opts.id).query(url);
 
       dispatch(receiveUpdatePushNotification(opts));
-	  return true
+      return true;
     } catch (e) {
       dispatch(errorUpdatePushNotification("Error: something went wrong:", e));
-	  return false
+      return false;
     }
   };
 }

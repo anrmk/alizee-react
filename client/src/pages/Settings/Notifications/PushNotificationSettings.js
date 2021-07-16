@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { useHistory } from "react-router";
 import { connect } from "react-redux";
 
 import {
@@ -12,13 +13,25 @@ import {
   ListItemSecondaryAction,
   Divider,
   Switch,
+  Link,
 } from "@material-ui/core";
 
+import { HELP_ROUTE } from "../../../constants/routes";
+
 import ApiContext from "../../../context/ApiContext";
+import usePushNotifications from "../../../hooks/usePushNotifications";
 import { isEmptyObject } from "../../../helpers/functions";
 import * as settingsActions from "../../../store/actions/settings";
 
-function PushNotificationSettings({ data, getNotification, updateNotification, onSetAlertText }) {
+import { ALLOW_PUSH_NOTIFICATION } from "../../../constants/permissions";
+
+function PushNotificationSettings({
+  data,
+
+  getNotification,
+  updateNotification,
+  onSetAlertText,
+}) {
   const apiClient = useContext(ApiContext);
   const [settings, setSettings] = useState({
     isActive: false,
@@ -33,6 +46,9 @@ function PushNotificationSettings({ data, getNotification, updateNotification, o
     direct: false,
     messages: false,
   });
+  const { checkPermission, subscribeUserToggle, isSubscribed, isDisable, subscription } = usePushNotifications();
+
+  const history = useHistory();
 
   useEffect(() => {
     getNotification(apiClient);
@@ -44,19 +60,26 @@ function PushNotificationSettings({ data, getNotification, updateNotification, o
     }
   }, [data]);
 
-  const handleSettingsChange = (e) => {
+  const handleSettingsChange = async (e) => {
     var value = { ...settings };
     value[e.target.name] = e.target.checked;
-    setSettings(value);
+    let subscriptionValue = subscription;
+    if ("isActive" === e.target.name) {
+      subscriptionValue = await subscribeUserToggle();
 
+      const permission = checkPermission();
+      if (permission !== ALLOW_PUSH_NOTIFICATION) {
+        return;
+      }
+    }
+    setSettings(value);
     if (!settings.isFetching) {
       (async () => {
-        const fulfilled = await updateNotification(apiClient, value);
+        const fulfilled = await updateNotification(apiClient, { ...value, subscription: subscriptionValue });
         onSetAlertText(fulfilled);
       })();
     }
   };
-
   return (
     <Card>
       <CardHeader
@@ -67,9 +90,22 @@ function PushNotificationSettings({ data, getNotification, updateNotification, o
       <CardContent>
         <List disablePadding onChange={handleSettingsChange}>
           <ListItem>
-            <ListItemText primary="New Campaign Contribution" />
+            <ListItemText
+              primary="New Campaign Contribution"
+              //TODO:  create the reasons not enable push notification in help.
+              secondary={
+                isDisable && (
+                  <>
+                    Not enabled in browser.{" "}
+                    <Link href="#" onClick={() => history.push(HELP_ROUTE)}>
+                      The reasons
+                    </Link>
+                  </>
+                )
+              }
+            />
             <ListItemSecondaryAction>
-              <Switch checked={settings.isActive} name="isActive" />
+              <Switch checked={settings.isActive && isSubscribed} name="isActive" disabled={isDisable} />
             </ListItemSecondaryAction>
           </ListItem>
 
@@ -78,35 +114,35 @@ function PushNotificationSettings({ data, getNotification, updateNotification, o
           <ListItem>
             <ListItemText primary="New Campaign Contribution" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.purchase} disabled={!settings.isActive} name="purchase" />
+              <Switch checked={settings.purchase} disabled={!isSubscribed} name="purchase" />
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
             <ListItemText primary="New Comment" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.comment} disabled={!settings.isActive} name="comment" />
+              <Switch checked={settings.comment} disabled={!isSubscribed} name="comment" />
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
             <ListItemText primary="New Likes" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.like} disabled={!settings.isActive} name="like" />
+              <Switch checked={settings.like} disabled={!isSubscribed} name="like" />
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
             <ListItemText primary="New Subscriber" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.subscriber} disabled={!settings.isActive} name="subscriber" />
+              <Switch checked={settings.subscriber} disabled={!isSubscribed} name="subscriber" />
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
             <ListItemText primary="New Tips" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.tip} disabled={!settings.isActive} name="tip" />
+              <Switch checked={settings.tip} disabled={!isSubscribed} name="tip" />
             </ListItemSecondaryAction>
           </ListItem>
 
@@ -115,7 +151,7 @@ function PushNotificationSettings({ data, getNotification, updateNotification, o
           <ListItem>
             <ListItemText primary="New Stream" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.stream} disabled={!settings.isActive} name="stream" />
+              <Switch checked={settings.stream} disabled={!isSubscribed} name="stream" />
             </ListItemSecondaryAction>
           </ListItem>
 
@@ -124,14 +160,14 @@ function PushNotificationSettings({ data, getNotification, updateNotification, o
           <ListItem>
             <ListItemText primary="Important Direct Messages" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.direct} disabled={!settings.isActive} name="direct" />
+              <Switch checked={settings.direct} disabled={!isSubscribed} name="direct" />
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
             <ListItemText primary="New Messages" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.messages} disabled={!settings.isActive} name="messages" />
+              <Switch checked={settings.messages} disabled={!isSubscribed} name="messages" />
             </ListItemSecondaryAction>
           </ListItem>
         </List>
