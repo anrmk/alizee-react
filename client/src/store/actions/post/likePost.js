@@ -10,7 +10,7 @@ function requestLikePost() {
     type: LIKE_POST_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: ""
+      errorMessage: "",
     },
   };
 }
@@ -21,7 +21,7 @@ function receiveLikePost(post) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      data: post
+      data: post,
     },
   };
 }
@@ -32,7 +32,7 @@ function receiveLikeCurrentPost(post) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      currentPost: post
+      currentPost: post,
     },
   };
 }
@@ -42,7 +42,7 @@ function errorLikePost(message) {
     type: LIKE_POST_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message
+      errorMessage: message,
     },
   };
 }
@@ -76,18 +76,14 @@ export function likePost(api, id) {
         posts[postIndex].iLike = !post.iLike;
 
         dispatch(receiveLikePost(posts));
-      }
-
-      if (!isEmptyObject(postsState.currentPost)) {
+      } else if (!isEmptyObject(postsState.currentPost)) {
         const currentPost = { ...postsState.currentPost };
         const method = currentPost.iLike ? "DELETE" : "POST";
 
-        !(postsState.data.length > 0) && 
-          await api.setMethod(method).setParams({ id }).query(url);
+        !(postsState.data.length > 0) && (await api.setMethod(method).setParams({ id }).query(url));
 
         currentPost.likes += currentPost.iLike ? -1 : 1;
         currentPost.iLike = !currentPost.iLike;
-
         dispatch(receiveLikeCurrentPost(currentPost));
       }
     } catch (e) {

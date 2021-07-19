@@ -61,7 +61,7 @@ const schema = yup.object().shape({
   [MESSAGESFREQUENCY_INPUT_ID]: yup.number().required(),
 });
 
-function EmailNotificationsSettings({ isFetching, data, getNotification, updateNotification, onSetAlertText }) {
+function EmailNotificationsSettings({ isFetching, data, getNotification, updateNotification, onSetAlertText, resetSettings }) {
   const apiClient = useContext(ApiContext);
 
   const { reset, watch, control, handleSubmit } = useForm({
@@ -90,6 +90,9 @@ function EmailNotificationsSettings({ isFetching, data, getNotification, updateN
 
   useEffect(() => {
     getNotification(apiClient);
+	return () => {
+		resetSettings()
+	}
   }, []);
 
   useEffect(() => {
@@ -294,6 +297,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getNotification: (api) => dispatch(settingsActions.getEmailNotification(api)),
     updateNotification: (api, data) => dispatch(settingsActions.updateEmailNotification(api, data)),
+	resetSettings: () => dispatch(settingsActions.resetSettings()),
   };
 }
 
