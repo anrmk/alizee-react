@@ -30,6 +30,7 @@ function PushNotificationSettings({
 
   getNotification,
   updateNotification,
+  resetSettings,
   onSetAlertText,
 }) {
   const apiClient = useContext(ApiContext);
@@ -52,6 +53,9 @@ function PushNotificationSettings({
 
   useEffect(() => {
     getNotification(apiClient);
+    return () => {
+      resetSettings();
+    };
   }, []);
 
   useEffect(() => {
@@ -187,6 +191,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getNotification: (api) => dispatch(settingsActions.getPushNotification(api)),
     updateNotification: (api, data) => dispatch(settingsActions.updatePushNotification(api, data)),
+    resetSettings: () => dispatch(settingsActions.resetSettings()),
   };
 }
 

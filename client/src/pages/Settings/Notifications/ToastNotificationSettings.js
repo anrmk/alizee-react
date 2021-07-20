@@ -18,7 +18,7 @@ import ApiContext from "../../../context/ApiContext";
 import { isEmptyObject } from "../../../helpers/functions";
 import * as settingsActions from "../../../store/actions/settings";
 
-function ToastNotificationSettings({ data, getNotification, updateNotification, onSetAlertText }) {
+function ToastNotificationSettings({ data, getNotification, updateNotification, onSetAlertText, resetSettings }) {
   const apiClient = useContext(ApiContext);
   const [settings, setSettings] = useState({
     isActive: false,
@@ -31,6 +31,9 @@ function ToastNotificationSettings({ data, getNotification, updateNotification, 
 
   useEffect(() => {
     getNotification(apiClient);
+    return () => {
+      resetSettings();
+    };
   }, []);
 
   useEffect(() => {
@@ -117,6 +120,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getNotification: (api) => dispatch(settingsActions.getToastNotification(api)),
     updateNotification: (api, data) => dispatch(settingsActions.updateToastNotification(api, data)),
+    resetSettings: () => dispatch(settingsActions.resetSettings()),
   };
 }
 

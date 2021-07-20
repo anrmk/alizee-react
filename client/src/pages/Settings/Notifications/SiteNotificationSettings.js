@@ -18,7 +18,7 @@ import ApiContext from "../../../context/ApiContext";
 import { isEmptyObject } from "../../../helpers/functions";
 import * as settingsActions from "../../../store/actions/settings";
 
-function SiteNotificationSettings({ data, getNotification, updateNotification, onSetAlertText }) {
+function SiteNotificationSettings({ data, getNotification, updateNotification, onSetAlertText, resetSettings }) {
   const apiClient = useContext(ApiContext);
   const [settings, setSettings] = useState({
     isActive: false,
@@ -35,6 +35,9 @@ function SiteNotificationSettings({ data, getNotification, updateNotification, o
 
   useEffect(() => {
     getNotification(apiClient);
+    return () => {
+      resetSettings();
+    };
   }, []);
 
   useEffect(() => {
@@ -138,6 +141,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getNotification: (api) => dispatch(settingsActions.getSiteNotification(api)),
     updateNotification: (api, data) => dispatch(settingsActions.updateSiteNotification(api, data)),
+    resetSettings: () => dispatch(settingsActions.resetSettings()),
   };
 }
 

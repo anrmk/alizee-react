@@ -32,7 +32,7 @@ function receiveFavoriteCurrentPost(post) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      currentPost: post
+      currentPost: post,
     },
   };
 }
@@ -50,7 +50,7 @@ function errorFavoritePost(message) {
 export function favoritePost(api, id) {
   return async (dispatch, getState) => {
     dispatch(requestFavoritePost());
-    
+
     const url = generateUrl("favoritePost");
     try {
       const postsState = getState().followingPosts;
@@ -69,18 +69,22 @@ export function favoritePost(api, id) {
 
         const post = posts[postIndex];
 
-        await api.setMethod(post.isFavorite ? "DELETE" : "POST").setParams({ id }).query(url);
+        await api
+          .setMethod(post.isFavorite ? "DELETE" : "POST")
+          .setParams({ id })
+          .query(url);
 
         posts[postIndex].isFavorite = !posts[postIndex].isFavorite;
 
         dispatch(receiveFavoritePost(posts));
-      }
-
-      if (!isEmptyObject(postsState.currentPost)) {
+      } else if (!isEmptyObject(postsState.currentPost)) {
         const currentPost = { ...postsState.currentPost };
 
-        !(postsState.data.length > 0) && 
-          await api.setMethod(currentPost.isFavorite ? "DELETE" : "POST").setParams({ id }).query(url);
+        !(postsState.data.length > 0) &&
+          (await api
+            .setMethod(currentPost.isFavorite ? "DELETE" : "POST")
+            .setParams({ id })
+            .query(url));
 
         currentPost.isFavorite = !currentPost.isFavorite;
 
