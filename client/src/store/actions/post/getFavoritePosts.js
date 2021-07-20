@@ -1,4 +1,4 @@
-import { generateUrl, getOffset } from "../../../helpers/functions";
+import { generateUrl } from "../../../helpers/functions";
 import { POSTS_OFFSET, POSTS_LENGTH } from "../../../constants/feed";
 
 export const GET_FAVORITE_POSTS_REQUEST = "GET_FAVORITE_POSTS_REQUEST";
@@ -17,16 +17,15 @@ function requestGetFavoritePosts() {
   };
 }
 
-function receiveGetFavoritePosts(favorites, total, start, hasMore) {
+function receiveGetFavoritePosts(data, length, start) {
   return {
     type: GET_FAVORITE_POSTS_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
-      offset: getOffset(start, total, POSTS_OFFSET),
-      hasMore,
-      data: favorites || [],
-      count: total,
+      offset: start + POSTS_OFFSET,
+      hasMore: length === POSTS_OFFSET,
+      data: data || [],
     },
   };
 }
@@ -59,10 +58,9 @@ export function getFavoritePosts(api, opts) {
 
       dispatch(
         receiveGetFavoritePosts(
-          [...getState().profilePosts.data, ...data.data],
-          data.recordsTotal,
-          currentOffset,
-          currentOffset + data.data.length < data.recordsTotal
+          [...getState().profilePosts.data, ...data],
+          data.length,
+          currentOffset
         )
       );
     } catch (e) {

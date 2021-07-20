@@ -40,7 +40,7 @@ export function updatePushNotification(api, opts) {
     dispatch(requestUpdatePushNotification());
     const url = generateUrl("updatePushNotification");
     try {
-      await api.setData(opts).setParams(opts.id).query(url);
+      await api.setData(opts).setParams({ id: opts.id }).query(url);
 
       dispatch(receiveUpdatePushNotification(opts));
       return true;
