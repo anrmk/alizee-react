@@ -62,24 +62,18 @@ export function createBlock(api, userName, type) {
         })
         .query(url);
 
-      if (getState().followingPosts.data.length) {
-        dispatch(addPostUserBlock(userName));
-        dispatch(receiveUpdateBlockUser());
-      }
-
       if (!isEmptyObject(getState().user.data)) {
         dispatch(addUserBlock());
         dispatch(receiveUpdateBlockUser());
       }
-
       if (!isEmptyObject(getState().chat.current)) {
         const current = getState().chat.current;
+        
         current.isBlocked = true;
 
         dispatch(updateCurrentRoom(current));
         dispatch(receiveUpdateBlockUser());
       }
-
       if (getState().users.data.length) {
         const list = [...getState().users.data];
         const index = list.findIndex((item) => item.userName === userName);
@@ -89,6 +83,10 @@ export function createBlock(api, userName, type) {
         }
 
         dispatch(receiveBlockUser(list));
+      }
+      if (getState().followingPosts.data.length) {
+        dispatch(addPostUserBlock(userName));
+        dispatch(receiveUpdateBlockUser());
       }
     } catch {
       dispatch(errorBlockUser("Error: something went wrong"));

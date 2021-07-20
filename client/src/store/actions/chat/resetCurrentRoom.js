@@ -6,7 +6,7 @@ export function resetCurrentRoom() {
     payload: {
       isFetching: false,
       errorMessage: "",
-      current: undefined
+      current: {}
     },
   })
 }

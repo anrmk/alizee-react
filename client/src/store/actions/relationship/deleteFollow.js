@@ -45,7 +45,7 @@ export function deleteFollow(api, userName) {
       const url = generateUrl("deleteFollow");
       await api.setMethod("DELETE").setParams({ userName: userName }).query(url);
 
-      const updatedData = toggleFollowStatus(getState().users.data);
+      const updatedData = toggleFollowStatus(getState().users.data, userName, false);
 
       dispatch(removeFollower());
       dispatch(receiveDeleteFollow(updatedData));

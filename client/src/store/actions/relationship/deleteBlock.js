@@ -6,7 +6,7 @@ import { updateCurrentRoom } from "../chat";
 export const UNBLOCK_USER_REQUEST = "UNBLOCK_USER_REQUEST";
 export const UNBLOCK_USER_SUCCESS = "UNBLOCK_USER_SUCCESS";
 export const UNBLOCK_USER_FAILURE = "UNBLOCK_USER_FAILURE";
-export const UPDATE_UNBLOCK_USER_FAILURE = "UPDATE_UNBLOCK_USER_FAILURE";
+export const UPDATE_UNBLOCK_USER = "UPDATE_UNBLOCK_USER";
 
 function requestUnblockUser() {
   return {
@@ -41,7 +41,7 @@ function errorUnblockUser(message) {
 
 function receiveUpdateBlockUser() {
   return {
-    type: UPDATE_UNBLOCK_USER_FAILURE,
+    type: UPDATE_UNBLOCK_USER,
     payload: {
       isFetching: false,
       errorMessage: "",
@@ -56,11 +56,6 @@ export function deleteBlock(api, userName) {
     const url = generateUrl("deleteBlock");
     try {
       await api.setMethod("DELETE").setParams({ userName }).query(url);
-
-      if (getState().followingPosts.data.length) {
-        dispatch(removePostUserBlock(userName));
-        dispatch(receiveUpdateBlockUser());
-      }
 
       if (!isEmptyObject(getState().user.data)) {
         dispatch(removeUserBlock());
@@ -78,12 +73,16 @@ export function deleteBlock(api, userName) {
       if (getState().users.data) {
         const list = [...getState().users.data];
         const index = list.findIndex((item) => item.userName === userName);
-        
+
         if (index !== -1) {
           list[index]["isBlocked"] = false;
         }
 
         dispatch(receiveUnblockUser(list));
+      }
+      if (getState().followingPosts.data.length) {
+        dispatch(removePostUserBlock(userName));
+        dispatch(receiveUpdateBlockUser());
       }
     } catch {
       dispatch(errorUnblockUser("Error: something went wrong"));

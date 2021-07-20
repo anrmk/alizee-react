@@ -16,7 +16,7 @@ import useStyles from "./styles";
 const MEDIA_ID = "medias";
 const DESCRIPTION_ID = "description";
 const COMMENTABLE_ID = "commentable";
-const PRIVATE_ID = "mPrivate";
+const PRIVATE_ID = "isExplore";
 const AMOUNT_ID = "amount";
 const TAGGED_USERS_ID = "taggedUsers";
 
@@ -49,7 +49,7 @@ export default function CreatePost({
   medias = [],
   description = "",
   commentable = true,
-  mPrivate = false,
+  isExplore = true,
   amount = 0,
   taggedUsers = [],
 
@@ -63,7 +63,7 @@ export default function CreatePost({
       [MEDIA_ID]: medias,
       [DESCRIPTION_ID]: description,
       [COMMENTABLE_ID]: commentable,
-      [PRIVATE_ID]: mPrivate,
+      [PRIVATE_ID]: isExplore,
       [AMOUNT_ID]: amount,
       [TAGGED_USERS_ID]: taggedUsers
     }
@@ -194,7 +194,7 @@ export default function CreatePost({
           isTaggable
           privateBtnName={PRIVATE_ID}
           commentBtnName={COMMENTABLE_ID}
-          isPrivate={privateWatcher}
+          isExplore={privateWatcher}
           isCommentable={commentableWatcher}
           onChange={handleToolsChange}
         />

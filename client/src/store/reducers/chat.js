@@ -26,7 +26,7 @@ import {
   RESET_CURRENT_ROOM,
 } from "../actions/chat";
 
-export default function chatReducer(state = { isFetching: false, data: [], current: undefined, query: "" }, action) {
+export default function chatReducer(state = { isFetching: false, data: [], current: {}, query: "" }, action) {
   switch (action.type) {
     // Get a room
     case GET_ROOM_REQUEST:
