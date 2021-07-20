@@ -65,15 +65,13 @@ export default function usePushNotifications() {
       const subscription = await swRegistration.pushManager.getSubscription();
 
       if (subscription) {
-        console.log("User is unsubscribed.");
         subscription.unsubscribe();
         updateBtn(false);
         return updateSubscription(null);
       }
     } catch (error) {
-      console.log("Error unsubscribing", error);
-
       updateBtn(false);
+      setIsDisable(true);
       return updateSubscription(null);
     }
   };
@@ -85,12 +83,10 @@ export default function usePushNotifications() {
         userVisibleOnly: true,
         applicationServerKey: applicationServerKey,
       });
-      console.log("User is subscribed.");
 
       updateBtn(true);
       return updateSubscription(JSON.stringify(subscription));
     } catch (error) {
-      console.log("Failed to subscribe the user: ", error);
       updateBtn(false);
       return updateSubscription(null);
     }
@@ -110,10 +106,8 @@ export default function usePushNotifications() {
 
     if (isSubscribed) {
       updateSubscription(JSON.stringify(subscription));
-      console.log("User IS subscribed.");
     } else {
       updateSubscription(null);
-      console.log("User is NOT subscribed.");
     }
 
     updateBtn(isSubscribed);
@@ -121,7 +115,6 @@ export default function usePushNotifications() {
 
   const registerServiceWorker = async () => {
     if ("serviceWorker" in navigator && "PushManager" in window) {
-      console.log("Service Worker and Push is supported");
       try {
         const swReg = await navigator.serviceWorker.register("/sw.js");
 
@@ -129,12 +122,9 @@ export default function usePushNotifications() {
         initializeUI(swReg);
       } catch (error) {
         setIsDisable(true);
-        console.error("Service Worker Error", error);
       }
     } else {
-      console.log("Push notification is not supported in your browser");
       setIsDisable(true);
-      console.warn("Push messaging is not supported");
     }
   };
 

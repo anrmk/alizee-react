@@ -65,8 +65,9 @@ function PushNotificationSettings({
   }, [data]);
 
   const handleSettingsChange = async (e) => {
-    var value = { ...settings };
+    let value = { ...settings };
     value[e.target.name] = e.target.checked;
+
     let subscriptionValue = subscription;
     if ("isActive" === e.target.name) {
       subscriptionValue = await subscribeUserToggle();
@@ -76,10 +77,22 @@ function PushNotificationSettings({
         return;
       }
     }
+
+    if (subscriptionValue) {
+      const {
+        endpoint: endPoint,
+        keys: { auth, p256dh },
+      } = JSON.parse(subscriptionValue);
+      subscriptionValue = { endPoint, auth, p256dh };
+    } else {
+      value.isActive = false;
+      subscriptionValue = { endPoint: "", auth: "", p256dh: "" };
+    }
+
     setSettings(value);
     if (!settings.isFetching) {
       (async () => {
-        const fulfilled = await updateNotification(apiClient, { ...value, subscription: subscriptionValue });
+        const fulfilled = await updateNotification(apiClient, { ...value, ...subscriptionValue });
         onSetAlertText(fulfilled);
       })();
     }
