@@ -45,7 +45,7 @@ export function createFollow(api, userName, isPrivateAccount) {
     try {
       await api.setParams({ userName: userName }).query(url);
 
-      const updatedData = toggleFollowStatus(getState().users.data);
+      const updatedData = toggleFollowStatus(getState().users.data, userName, true);
 
       dispatch(addFollower(isPrivateAccount));
       dispatch(receiveCreateFollow(updatedData));

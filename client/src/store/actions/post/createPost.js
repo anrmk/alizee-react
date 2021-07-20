@@ -56,17 +56,16 @@ export function createPost(api, postData) {
 
         media = getState().media.data;
       }
-
       const { data } = await api
         .setData({
           amount: (postData.amount && Number(postData.amount)) || 0,
           description: postData.description,
           isCommentable: postData.commentable,
-          kind: postData.mprivate ? POST_PRIVATE : POST_PUBLIC,
+          isExplore: postData.isExplore ? POST_PRIVATE : POST_PUBLIC,
           latitude: postData?.latitude,
           longitude: postData?.longitude,
           media: media,
-          userTags: postData.taggedUsers
+          userTags: postData.taggedUsers,
         })
         .query(url);
 

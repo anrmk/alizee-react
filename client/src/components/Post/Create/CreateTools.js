@@ -26,7 +26,7 @@ const supportedInputMediaType = [TYPE_JPEG, TYPE_PJPEG, TYPE_GIF, TYPE_XPNG, TYP
 function CreateTools({
   multiple = true,
   onlyMedia,
-  isPrivate,
+  isExplore,
   isCommentable,
   isTaggable,
   commentBtnName = "comment",
@@ -48,9 +48,9 @@ function CreateTools({
               </IconButton>
             </Tooltip>
           )}
-          <Tooltip title={`Set Post to ${isPrivate ? "Public" : "Private"}`}>
+          <Tooltip title={`Set Post to ${isExplore ? "Public" : "Private"}`}>
             <IconButton onClick={onChange} name={privateBtnName}>
-              {isPrivate ? (
+              {isExplore ? (
                 <VpnLockIcon fontSize="small" color="secondary" />
               ) : (
                 <PublicIcon fontSize="small" />
