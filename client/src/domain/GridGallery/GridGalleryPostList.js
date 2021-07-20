@@ -8,10 +8,7 @@ import PhotoLibraryIcon from "@material-ui/icons/PhotoLibraryOutlined";
 import useStyle from "./styles";
 import { MEDIA_IMAGE, MEDIA_VIDEO } from "../../constants/media_types";
 
-function GridGalleryPostList(props) {
-  const { items } = props;
-  const { onItemClick } = props;
-
+function GridGalleryPostList({ items, onItemClick }) {
   const classes = useStyle();
 
   // const [lastPostIndex, setLastPostIndex] = useState(0);
@@ -96,22 +93,17 @@ function GridGalleryPostList(props) {
 
   return (
     <GridList cols={3} className={classes.gridList}>
-      {items.length > 0 &&
+      {items?.length > 0 &&
         items.map(
           (item, index) =>
-            item.media.length > 0 && (
+            item.media?.length > 0 && (
               <GridListTile key={item.id + index} onClick={() => onItemClick(item.id)} className={classes.tile}>
-                <img
-                  className={classes.image}
-                  loading="lazy"
-                  src={item.media[0].thumbnailUrl}
-                  alt={item.title}
-                />
+                <img className={classes.image} loading="lazy" src={item.media[0].thumbnailUrl} alt={item.title} />
 
                 <GridListTileBar
                   titlePosition="top"
                   actionPosition="right"
-                  className = {classes.tileBar}
+                  className={classes.tileBar}
                   actionIcon={
                     <Box className={classes.icon}>
                       {item.media[0].kind === MEDIA_VIDEO && <PlayArrowIcon />}
