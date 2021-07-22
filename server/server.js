@@ -6,15 +6,15 @@ const fs = require("fs");
 const app = express();
 
 const credentials = {
-  key: fs.readFileSync("/etc/nginx/ssl/76210a123a62e0db.pem"),
-  cert: fs.readFileSync("/etc/nginx/ssl/themembers.com.key"),
+  key: fs.readFileSync(process.env.CERT_PEM_PATH),
+  cert: fs.readFileSync(proccess.env.CERT_KEY_PATH)
 };
 
 const httpsServer = https.createServer(credentials, app);
 const socket = require("socket.io");
 const io = socket(httpsServer, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: process.env.CORS_REMOTE_URL,
     methods: ["GET", "POST"]
   }
 });
@@ -99,4 +99,4 @@ io.on("connection", (socket) => {
   });
 });
 
-httpsServer.listen(8000, () => console.log("server is running on port 8000"));
+httpsServer.listen(process.env.SERVER_PORT, () => console.log("server is running on port", process.env.SERVER_PORT));
