@@ -39,6 +39,7 @@ import { getMe } from "../../store/actions/user";
 import * as Routes from "../../constants/routes";
 
 import useChangeTheme from "../../hooks/useChangeTheme";
+import useNotification from "../../hooks/useNotificationHub";
 import { isPublicRoute } from "../../helpers/functions";
 import ApiContext from "../../context/ApiContext";
 
@@ -49,6 +50,7 @@ function Main(props) {
   const { getMe } = props;
   const { pathname } = useLocation();
   const theme = useChangeTheme(true);
+  useNotification();
 
   useEffect(() => {
     if (!isPublicRoute(pathname)) {

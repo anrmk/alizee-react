@@ -7,43 +7,60 @@ const useStyles = makeStyles((theme) => ({
 
   player: {
     display: "flex",
-    justifyContent: "center",
-    alignSelf: "flex-end",
+    position: "absolute",
+    maxWidth: "266px",
+    bottom: theme.spacing(16),
+    right: theme.spacing(2),
     overflow: "hidden",
-
-    width: "40%",
     zIndex: 1,
+    boxShadow: "0px 0px 20px #00000063",
+    borderRadius: theme.spacing(2),
+
+    [theme.breakpoints.down("sm")]: {
+      maxWidth: "150px"
+    },
 
     "& video" : {
-      width: "100%"
+      width: "100%",
+      objectFit: "cover",
     }
   },
 
   partner: {
     position: "absolute",
-    display: "flex",
-    justifyContent: "center",
-    overflow: "hidden",
-
     width: "100%",
     height: "100vh",
     zIndex: 0,
 
     "& video" : {
-      height: "100%"
+      height: "100%",
+      width: "100%",
+      objectFit: "cover",
+      [theme.breakpoints.down("sm")]: {
+        objectFit: "contain",
+      },
     }
   },
 
-  // status: {
-  //   textAlign: "center",
-  //   zIndex: 1
-  // },
+  status: {
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "column",
+    padding: theme.spacing(1),
+    textAlign: "center",
+    backgroundColor: theme.palette.background.default,
+    borderBottomLeftRadius: theme.spacing(1),
+    borderBottomRightRadius: theme.spacing(1),
+    zIndex: 1
+  },
   
   tools: {
+    position: "absolute",
+    bottom: theme.spacing(2),
     display: "flex",
     width: "100%",
     justifyContent: "space-evenly",
-    zIndex: 1
+    zIndex: 1,
   },
 
   createRoomContainer: {

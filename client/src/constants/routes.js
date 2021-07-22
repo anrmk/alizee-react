@@ -29,6 +29,7 @@ export const CHAT_DEFAULT_ROUTE = "/chat/:username?";
 export const ROOM_ROUTE = "/room";
 export const ROOM_DEFAULT_ROUTE = "/room/:roomId";
 export const ROOM_ID_ROUTE = (roomId) => `/room/${roomId}`;
+export const PEAR_TO_PEAR_ROUTE = "/ptp";
 export const PEAR_TO_PEAR_DEFAULT_ROUTE = "/ptp/:userName?";
 export const PEAR_TO_PEAR_ID_ROUTE = (username) => `/ptp/${username}`;
 

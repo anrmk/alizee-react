@@ -8,8 +8,8 @@ import Sidebar from "../../components/Sidebar";
 import ContainerLayout from "./ContainerLayout";
 
 import { signOutUser } from "../../store/actions/signIn";
+import * as notificationAction from "../../store/actions/notification";
 import * as Routes from "../../constants/routes";
-import useNotification from "../../hooks/useNotificationHub";
 import { usePostDialog, useStoryDialog, useMoodDialog } from "../../hooks/post";
 
 import useStyles from "./styles";
@@ -25,7 +25,6 @@ export default function MainLayout({
 }) {
   const history = useHistory();
   const classes = useStyles();
-  const notification = useNotification();
 
   const { userInfo, notificationData, isAuthenticated } = useSelector(state => ({
     userInfo: state.signIn.userInfo,
@@ -46,6 +45,10 @@ export default function MainLayout({
     dispatch(signOutUser());
   }
 
+  const handleNotificationToggle = async (...data) => {
+    await dispatch(notificationAction.setNotification(...data));
+  };
+
   return (
     <ContainerLayout
       isFullScreenHeight
@@ -63,7 +66,7 @@ export default function MainLayout({
             newNotification={notificationData?.newNotification}
             open
             
-            onChange={notification.toggle}
+            onChange={handleNotificationToggle}
             onSignOut={handleSignOut}
           />
         </Hidden>

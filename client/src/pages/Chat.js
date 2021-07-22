@@ -25,9 +25,9 @@ function Chat(props) {
 
   const { username } = useParams();
 
-  const { user, isAuthenticated } = props;
+  const { user } = props;
   const { chat, current, getRoom, getRooms, filterRooms, resetCurrentRoom } = props;
-  const { createMessage, addMessage } = props;
+  const { createMessage } = props;
 
   const sendTipDialog = useSendTipDialog();
   const newChatDialog = useNewChatDialog();
@@ -37,10 +37,7 @@ function Chat(props) {
   const dialog = useDialog();
   const fullScreen = useFullScreen("root");
 
-  useChatHub({
-    isAuth: isAuthenticated,
-    onReceiveMessage: addMessage,
-  });
+  useChatHub();
 
   const handleModalCloseKeyPress = (e) => {
     if (e.keyCode === ESC_KEY_CODE) {

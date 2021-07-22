@@ -1,6 +1,8 @@
 const express = require("express");
 const https = require("https");
+const crypto = require("crypto");
 const fs = require("fs");
+// const axios = require("axios").default;
 const app = express();
 
 const credentials = {
@@ -8,51 +10,93 @@ const credentials = {
   cert: fs.readFileSync("/etc/nginx/ssl/themembers.com.key"),
 };
 
-const server = https.createServer(credentials, app);
+const httpsServer = https.createServer(credentials, app);
 const socket = require("socket.io");
-const io = socket(server);
+const io = socket(httpsServer, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"]
+  }
+});
 
-const users = {};
+const creators = new Map();
+
+const addCreator = (userName, roomId, socketId) => {
+  if (!userName || !roomId || creators.has(userName)) return false;
+
+  return !!creators.set(userName, { socketId, roomId });
+}
+
+const removeCreator = (userName) => {
+  if (!userName || !creators.has(userName)) return false;
+
+  return !!creators.delete(userName);
+}
+
+const getRoom = (callerName, calleeName) => {
+  if (!callerName && !calleeName) return;
+
+  const roomHash = crypto.createHash("md5").update(callerName + calleeName).digest("hex");
+  const reversedRoomHash = crypto.createHash("md5").update(calleeName + callerName).digest("hex");
+  const rooms = io.of("/").in().adapter.rooms;
+
+  return { 
+    roomId: rooms.has(roomHash) && roomHash || rooms.has(reversedRoomHash) && reversedRoomHash || roomHash,
+    roomSockets: rooms.get(roomHash) || rooms.get(reversedRoomHash)
+  };
+}
+
+const getSocketsByRoom = (roomId) => {
+  const room = io.of("/").in().adapter.rooms.get(roomId);
+
+  if (!roomId && !room && room.size == 0) return [];
+
+  return Array.from(room.values());
+}
 
 io.on("connection", (socket) => {
-  const handshake = socket.handshake;
-  const un = handshake.query["userName"];
-  if (!un) {
-    return;
-  }
+  /*
+    TODO: do a request to the main server to get a user is verified or not, now it is not secure,
+    because we getting it from the client.
+  */
+  socket.on("join", ({ callerName, calleeName, isVerified }) => {
+    const { roomId, roomSockets } = getRoom(callerName, calleeName);
 
-  const userName = un.toLowerCase();
-  users[userName] = socket.id;
+    if (!roomSockets || roomSockets.size === 0 || roomSockets.size === 1) {
+      socket.join(roomId);
+      socket.roomId = roomId;
+      socket.userName = callerName;
 
-  console.log("Connection", userName, socket.id, Object.keys(users).length);
+      if ((!roomSockets || roomSockets.size === 1 || creators.has(callerName)) && isVerified) {
+        addCreator(callerName, roomId, socket.id);
+        socket.emit("init");
+      }
+      (roomSockets && roomSockets.size === 2) && io.to(roomId).emit("ready");
+    }
+  });
 
-  socket.emit("yourID", socket.id);
+  socket.on("signal", (data) => {
+    if (!socket.roomId) return;
 
-  io.sockets.emit("allUsers", users);
+    io.to(socket.roomId).emit("desc", { desc: data.desc, from: data.from });
+  });
+
+  socket.on("removeRoom", () => {
+    if (!socket.roomId) return;
+
+    const sockets = getSocketsByRoom(socket.roomId);
+
+    io.of("/").in().socketsLeave(socket.roomId);
+    removeCreator(socket.userName);
+    sockets.forEach(currentSocket => io.to(currentSocket).emit("roomRemoved"));
+  });
 
   socket.on("disconnect", () => {
-    delete users[userName];
-  });
+    if (!socket.roomId) return;
 
-  socket.on("callUser", (data) => {
-    const peerName = data.to.toLowerCase();
-    io.to(users[peerName]).emit("ring", { signal: data.signal, from: data.from });
-  });
-
-  socket.on("cancelCall", (data) => {
-    const peerName = data.to.toLowerCase();
-    io.to(users[peerName]).emit("cancel", { signal: data.signal });
-  });
-
-  socket.on("acceptCall", (data) => {
-    const peerName = data.to.toLowerCase();
-    io.to(users[peerName]).emit("accept", data.signal);
-  });
-
-  socket.on("declineCall", (data) => {
-    const peerName = data.to.toLowerCase();
-    io.to(users[peerName]).emit("decline", data.signal);
+    socket.leave(socket);
+    io.to(socket.roomId).emit("disconnected");
   });
 });
 
-server.listen(8000, () => console.log("server is running on port 8000"));
+httpsServer.listen(8000, () => console.log("server is running on port 8000"));

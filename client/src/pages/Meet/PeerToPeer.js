@@ -1,27 +1,28 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router";
 
-import useVideoStream from "../../hooks/useVideoStream";
-import useFullScreen from "../../hooks/useFullScreen";
-
 import { Box, IconButton, Typography } from "@material-ui/core";
 import CallEndIcon from "@material-ui/icons/CallEndOutlined";
-import CallIcon from "@material-ui/icons/CallOutlined";
+import LeaveRoomIcon from '@material-ui/icons/ExitToApp';
 import VideocamIcon from "@material-ui/icons/VideocamOutlined";
 import VideocamOffIcon from "@material-ui/icons/VideocamOffOutlined";
 import MicNoneIcon from "@material-ui/icons/MicNoneOutlined";
 import MicOffIcon from "@material-ui/icons/MicOffOutlined";
 import FlipCameraIcon from "@material-ui/icons/FlipCameraIosOutlined";
 
+import useVideoStream from "../../hooks/useVideoStream";
+import useFullScreen from "../../hooks/useFullScreen";
+
 import ApiContext from "../../context/ApiContext";
+import { HOME_ROUTE } from "../../constants/routes";
 import * as notificationAction from "../../store/actions/notification";
-import OnlyModalCard from "./OnlyModalCard";
+// import OnlyModalCard from "./OnlyModalCard";
 
 import useStyles from "./styles";
 
-function PeerToPeer({ user, call }) {
+function PeerToPeer({ user, incomingCallNotify }) {
   const apiClient = useContext(ApiContext);
   const classes = useStyles();
   const history = useHistory();
@@ -33,7 +34,7 @@ function PeerToPeer({ user, call }) {
     peerName: userName,
     isVerified: user.identityVerified,
     onHangup: handleHangup,
-    onCallback: handleConnected,
+    onInitiated: handleCalled
   });
 
   useEffect(() => {
@@ -42,19 +43,16 @@ function PeerToPeer({ user, call }) {
     };
   }, []);
 
-  var handleConnected = () => {
-    if (userName) {
-      call(apiClient, userName); // Signal to user about calling
-      videoStream.call(); // calling
-    }
+  function handleCalled() {
+    userName && incomingCallNotify(apiClient, userName);
   };
 
-  var handleHangup = () => {
+  function handleHangup () {
     fullScreen.toggle(false);
-    history.goBack();
+    history.push(HOME_ROUTE);
   };
 
-  const CustomIconButton = React.useMemo(() =>
+  const CustomIconButton = useMemo(() =>
     React.forwardRef((props, ref) => {
       return (
         <Box textAlign="center" ref={ref}>
@@ -62,14 +60,14 @@ function PeerToPeer({ user, call }) {
           {props.text && <Typography color="textPrimary">{props.text}</Typography>}
         </Box>
       );
-    })
-  );
+    }),
+  []);
 
-  if (!user.identityVerified || !userName) return (
-    <Box height="100vh" display="flex" alignItems="center" justifyContent="center">
-      <OnlyModalCard textContent={userName ? "Only verified user can call" : "Unknown username"} />
-    </Box>
-  );
+  // if (!user.identityVerified || !userName) return (
+  //   <Box height="100vh" display="flex" alignItems="center" justifyContent="center">
+  //     <OnlyModalCard textContent={userName ? "Only verified user can call" : "Unknown username"} />
+  //   </Box>
+  // );
 
   return (
     <Box
@@ -78,46 +76,51 @@ function PeerToPeer({ user, call }) {
       justifyContent="space-between"
       alignItems="center"
       position="relative"
-      height="100vh"
-    >
-      <div className={classes.partner}>
-        <video ref={videoStream.partner} playsInline allowFullScreen controls={false}></video>
-      </div>
+      height="100vh">
+      {videoStream.status && (
+        <Box className={classes.status}>
+          {String(videoStream.initiator) + String(videoStream.callAccepted)}
+          <Typography variant="h6" align="center">{videoStream.status}</Typography>
+        </Box>
+      )}
 
-      <Box p={2}></Box>
-
-      <Box display="flex" justifyContent="center" flexDirection="column" zIndex={1} p={1}>
-        <Typography variant="h6" align="center">{videoStream.status}</Typography>
+      <Box className={classes.partner}>
+        <video ref={videoStream.calleeVideoEl} playsInline allowFullScreen muted={!videoStream.callAccepted} controls={false}></video>
       </Box>
 
-      <Box p={2}></Box>
-
-      <Box className={classes.player} m={1}>
-        <video ref={videoStream.player} playsInline allowFullScreen muted controls={false}></video>
+      <Box className={classes.player}>
+        <video 
+          ref={videoStream.callerVideoEl} 
+          style={{ display: videoStream.callAccepted ? "block" : "none" }}
+          playsInline 
+          allowFullScreen 
+          muted 
+          controls={false}>
+        </video>
       </Box>
 
       <Box className={classes.tools} m={1}>
-        <CustomIconButton text="Camera" className="primary transparent" onClick={videoStream.videoToggle}>
+        <CustomIconButton text="Camera" className="primary transparent" onClick={videoStream.handleVideoToggle}>
           {videoStream.videoOn ? <VideocamIcon fontSize="large" /> : <VideocamOffIcon fontSize="large" />}
         </CustomIconButton>
 
-        <CustomIconButton text="Mute" className="primary transparent" onClick={videoStream.micToggle}>
+        <CustomIconButton text="Mute" className="primary transparent" onClick={videoStream.handleMicToggle}>
           {videoStream.micOn ? <MicNoneIcon fontSize="large" /> : <MicOffIcon fontSize="large" />}
         </CustomIconButton>
 
-        <CustomIconButton text="Flip" className="primary transparent" onClick={videoStream.flipToggle}>
+        <CustomIconButton text="Flip" className="primary transparent" onClick={videoStream.handleFlipToggle}>
           <FlipCameraIcon fontSize="large" />
         </CustomIconButton>
 
         {(videoStream.calling || videoStream.callAccepted) && (
-          <CustomIconButton text="Decline" onClick={videoStream.hangup} className="danger transparent">
+          <CustomIconButton text="Decline" onClick={videoStream.handleHangUp} className="danger transparent">
             <CallEndIcon fontSize="large" />
           </CustomIconButton>
         )}
 
-        {videoStream.caller && !videoStream.callAccepted && (
-          <CustomIconButton text="Accepted" onClick={videoStream.accept} className="success transparent">
-            <CallIcon fontSize="large" />
+        {(user.identityVerified && videoStream.initiator && videoStream.callAccepted) && (
+          <CustomIconButton text="Delete Room" onClick={videoStream.handleRemoveRoom} className="success transparent">
+            <LeaveRoomIcon fontSize="large" />
           </CustomIconButton>
         )}
       </Box>
@@ -136,7 +139,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    call: (api, userName) => dispatch(notificationAction.notifyCall(api, userName)),
+    incomingCallNotify: (api, userName) => dispatch(notificationAction.notifyCall(api, userName)),
   };
 }
 

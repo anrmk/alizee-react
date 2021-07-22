@@ -426,3 +426,7 @@ export function toBase64(value, encode = true) {
   const result = (value + padding).replace(/\-/g, "+").replace(/_/g, "/");
   return encode ? window.atob(result) : window.btoa(result);
 }
+
+export function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
