@@ -59,6 +59,7 @@ export function createPost(api, postData) {
       const { data } = await api
         .setData({
           amount: (postData.amount && Number(postData.amount)) || 0,
+          targetFunds: (postData.targetFunds && Number(postData.targetFunds)) || 0,
           description: postData.description,
           isCommentable: postData.commentable,
           isExplorable: postData.isExplorable,// ? POST_PRIVATE : POST_PUBLIC,

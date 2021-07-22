@@ -42,6 +42,7 @@ function ProfileHeader(props) {
               followingsCount={user?.followingsCount}
               favoritesCount={user?.favoritesCount}
               blockedCount={user?.blockedCount}
+			  postsCount={user?.postsCount}
             />
           </Box>
           <Box>

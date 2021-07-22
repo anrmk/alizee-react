@@ -39,6 +39,7 @@ function CreateTools({
   isExplorable,
   isCommentable,
   isTaggable,
+
   commentBtnName = "comment",
   privateBtnName = "private",
   tagBtnName = "taggedUsers",
@@ -48,7 +49,7 @@ function CreateTools({
   const mediaRef = useRef();
 
   return (
-    <Box display="flex" alignItems="flex-start">
+    <Box display="flex" alignItems="flex-start" marginTop={1} marginBottom={1}>
       {!onlyMedia && (
         <>
           {isTaggable && (

@@ -1,15 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import { Typography, FormControl, TextField, InputAdornment, Box, IconButton } from "@material-ui/core";
+import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 
 import CreateTools from "./CreateTools";
 import GridGalleryHorizontal from "../../GridGalleryHorizontal/GridGalleryHorizontal";
 import ChipsInput from "../../ChipsInput";
 
-import { POST_AMOUNT_TEXT_HELPER } from "../../../constants/form_validations";
+import { POST_AMOUNT_TEXT_HELPER, POST_GOAL_TEXT_HELPER } from "../../../constants/form_validations";
 
 import useStyles from "./styles";
 
@@ -19,6 +20,8 @@ const COMMENTABLE_ID = "commentable";
 const EXPLORABLE_ID = "isExplorable";
 const AMOUNT_ID = "amount";
 const TAGGED_USERS_ID = "taggedUsers";
+const TARGET_FUNDS_ID = "targetFunds";
+const GOAL_BTN_ID = "goalBtn";
 
 const schema = yup.object().shape({
   [MEDIA_ID]: yup
@@ -52,11 +55,15 @@ export default function CreatePost({
   isExplorable = false,
   amount = 0,
   taggedUsers = [],
+  targetFunds = 0,
 
   onTagUsersClick,
-  onSubmit
+  onSubmit,
 }) {
   const classes = useStyles();
+
+  const [goalActive, setGoalActive] = useState(false);
+
   const { errors, register, setValue, getValues, watch, control, handleSubmit } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -65,29 +72,31 @@ export default function CreatePost({
       [COMMENTABLE_ID]: commentable,
       [EXPLORABLE_ID]: isExplorable,
       [AMOUNT_ID]: amount,
-      [TAGGED_USERS_ID]: taggedUsers
-    }
+      [TAGGED_USERS_ID]: taggedUsers,
+      [TARGET_FUNDS_ID]: targetFunds,
+    },
   });
   const mediaWatcher = watch(MEDIA_ID, []);
   const commentableWatcher = watch(COMMENTABLE_ID);
   const privateWatcher = watch(EXPLORABLE_ID);
   const taggedUsersWatcher = watch(TAGGED_USERS_ID);
-  
+
   useEffect(() => {
     register({ name: MEDIA_ID });
     register({ name: COMMENTABLE_ID });
     register({ name: EXPLORABLE_ID });
     register({ name: TAGGED_USERS_ID });
+    register({ name: TARGET_FUNDS_ID });
 
     return () => {
-      mediaWatcher.forEach(file => URL.revokeObjectURL(file.previewUrl));
+      mediaWatcher.forEach((file) => URL.revokeObjectURL(file.previewUrl));
       setValue(MEDIA_ID, []);
-    }
-  }, [])
+    };
+  }, []);
 
   const handleTagUsersClick = () => {
     onTagUsersClick && onTagUsersClick(getValues());
-  }
+  };
 
   const handleFormSubmit = (data) => {
     onSubmit && onSubmit(data);
@@ -95,9 +104,9 @@ export default function CreatePost({
 
   const handleTagUsersChange = (data) => {
     const mappedUsersNamesToKeys = taggedUsers.reduce((acc, curr) => ({ ...acc, [curr.name]: { ...curr } }), {});
-    const currentData = data.reduce((acc, curr) => ([...acc, { ...mappedUsersNamesToKeys[curr] }]), []);
+    const currentData = data.reduce((acc, curr) => [...acc, { ...mappedUsersNamesToKeys[curr] }], []);
     setValue(TAGGED_USERS_ID, currentData);
-  }
+  };
 
   const handleToolsChange = (e) => {
     var target = e.currentTarget;
@@ -109,6 +118,8 @@ export default function CreatePost({
           setValue(target.name, !privateWatcher);
         } else if (target.name === TAGGED_USERS_ID) {
           handleTagUsersClick();
+        } else if (target.name === GOAL_BTN_ID) {
+          setGoalActive((prev) => !prev);
         }
         break;
       case "file":
@@ -124,8 +135,8 @@ export default function CreatePost({
   };
 
   const getTransformedItems = (items) => {
-    return items.map(item => typeof item === "string" ? item : item.name);
-  }
+    return items.map((item) => (typeof item === "string" ? item : item.name));
+  };
 
   return (
     <form id={formId} className={classes.root} onSubmit={handleSubmit(handleFormSubmit)} autoComplete="off">
@@ -145,33 +156,82 @@ export default function CreatePost({
               onChange={onChange}
               error={!!errors[DESCRIPTION_ID]}
               helperText={errors[DESCRIPTION_ID]?.message}
-              inputProps={{ maxLength: 255 }} />
-          )} />
+              inputProps={{ maxLength: 255 }}
+            />
+          )}
+        />
       </FormControl>
-      <Typography color="error">
-        {errors[MEDIA_ID]?.message}
-      </Typography>
+      <CreateTools
+        isTaggable
+        isGoal={goalActive}
+        privateBtnName={EXPLORABLE_ID}
+        commentBtnName={COMMENTABLE_ID}
+        isExplorable={privateWatcher}
+        isCommentable={commentableWatcher}
+        onChange={handleToolsChange}
+      />
+      <Typography color="error">{errors[MEDIA_ID]?.message}</Typography>
       <Box display="flex" flexWrap="wrap" my={1}>
         <FormControl className={classes.inputText} variant="filled">
-          <Controller
-            name={AMOUNT_ID}
-            control={control}
-            render={({ onChange, onBlur, value }) => (
-              <TextField 
-                fullWidth
-                placeholder="Amount"
-                variant="outlined"
-                inputMode="numeric"
-                disabled={!mediaWatcher.length}
-                value={value}
-                error={!!errors[AMOUNT_ID]}
-                helperText={errors[AMOUNT_ID]?.message || POST_AMOUNT_TEXT_HELPER}
-                onBlur={onBlur}
-                onChange={onChange}
-                InputProps={{
-                  startAdornment: <InputAdornment position="start">$</InputAdornment>
-                }} />
-            )} />
+          {goalActive ? (
+            <Controller
+              name={TARGET_FUNDS_ID}
+              control={control}
+              render={({ onChange, onBlur, value }) => (
+                <TextField
+                  fullWidth
+                  placeholder="Fundraising"
+                  variant="outlined"
+                  inputMode="numeric"
+                  disabled={!mediaWatcher.length}
+                  value={value}
+                  error={!!errors[TARGET_FUNDS_ID]}
+                  helperText={errors[TARGET_FUNDS_ID]?.message || POST_GOAL_TEXT_HELPER}
+                  onBlur={onBlur}
+                  onChange={onChange}
+                  InputProps={{
+                    startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={handleToolsChange} name={GOAL_BTN_ID}>
+                          <EmojiEventsIcon fontSize="small" color="secondary" />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              )}
+            />
+          ) : (
+            <Controller
+              name={AMOUNT_ID}
+              control={control}
+              render={({ onChange, onBlur, value }) => (
+                <TextField
+                  fullWidth
+                  placeholder="Amount"
+                  variant="outlined"
+                  inputMode="numeric"
+                  disabled={!mediaWatcher.length}
+                  value={value}
+                  error={!!errors[AMOUNT_ID]}
+                  helperText={errors[AMOUNT_ID]?.message || POST_AMOUNT_TEXT_HELPER}
+                  onBlur={onBlur}
+                  onChange={onChange}
+                  InputProps={{
+                    startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={handleToolsChange} name={GOAL_BTN_ID}>
+                          <EmojiEventsIcon fontSize="small" />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              )}
+            />
+          )}
         </FormControl>
 
         {taggedUsersWatcher.length > 0 && (

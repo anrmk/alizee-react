@@ -11,7 +11,7 @@ import {
   Avatar,
   Typography,
   IconButton,
-  Divider
+  Divider,
 } from "@material-ui/core";
 
 import MoreVertIcon from "@material-ui/icons/MoreVertOutlined";
@@ -22,6 +22,7 @@ import MediaContent from "../MediaContent";
 import { MessageSenderInput } from "../Chat";
 import CommentsPreview from "./CommentsPreview";
 import SuggestionPeopleList from "../SuggestionPeopleList";
+import FundraisingPost from "../FundraisingPost";
 
 import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 import useDoubleTap from "../../hooks/useDoubleTap";
@@ -36,52 +37,64 @@ function Post(props) {
 
   const { id, user, owner, post, comments } = props;
   const { likes, isLike, isFavorite, isUserFavorite } = props;
-  const { onLike, onFavorite, onSendTip, onBuyPost, onReceipt, onPurchase, onShare, onMenu, onCommentSend, onFullScreen } = props;
+  const {
+    onLike,
+    onFavorite,
+    onSendTip,
+    onBuyPost,
+    onReceipt,
+    onPurchase,
+    onShare,
+    onMenu,
+    onCommentSend,
+    onFullScreen,
+  } = props;
 
   const handleMenuClick = () => {
-    onMenu && onMenu({
-      postId: id,
-      userName: owner.userName,
-      name: owner.name,
-      isBlocked: owner.isBlocked,
-      isOwner: user.userName === owner.userName,
-      isFavorite: owner.isFavorite
-     });
+    onMenu &&
+      onMenu({
+        postId: id,
+        userName: owner.userName,
+        name: owner.name,
+        isBlocked: owner.isBlocked,
+        isOwner: user.userName === owner.userName,
+        isFavorite: owner.isFavorite,
+      });
   };
 
   const handleCommentSendClick = (data) => {
     onCommentSend && onCommentSend({ ...data, postId: id });
-  }
+  };
 
   const handleFullScreenClick = () => {
     if (post.isPurchased || post.amount === 0) {
       onFullScreen && onFullScreen({ items: post?.media, startSlideIndex: currentSlideIndex });
     }
-  }
+  };
 
   const handleChangeSlideIndex = (index) => {
     if (post?.media[index]) {
       setCurrentSlideIndex(index);
     }
-  }
+  };
 
-  const doubleTap = useDoubleTap(() => {
-    if (!post.isPurchased && post.amount !== 0) return;
+  const doubleTap = useDoubleTap(
+    () => {
+      if (!post.isPurchased && post.amount !== 0) return;
 
-    onLike && onLike(id);
+      onLike && onLike(id);
 
-    timerLikeAnimation && clearTimeout(timerLikeAnimation);
+      timerLikeAnimation && clearTimeout(timerLikeAnimation);
 
-    setIsLikeAnimation(true);
-    timerLikeAnimation = setTimeout(() => setIsLikeAnimation(false), 400);
-  }, 200, { onSingleTap: handleFullScreenClick });
+      setIsLikeAnimation(true);
+      timerLikeAnimation = setTimeout(() => setIsLikeAnimation(false), 400);
+    },
+    200,
+    { onSingleTap: handleFullScreenClick }
+  );
 
   const renderDescription = (text, withGutter) => (
-    <Typography
-      className={classes.postDescriptionText}
-      variant="body2"
-      component="p"
-      gutterBottom={withGutter}>
+    <Typography className={classes.postDescriptionText} variant="body2" component="p" gutterBottom={withGutter}>
       {text}
     </Typography>
   );
@@ -94,7 +107,7 @@ function Post(props) {
             <Avatar src={owner.avatarUrl} />
           </Link>
         }
-        title= {
+        title={
           <Box display="flex" alignItems="center">
             <Typography variant="body1" className={classes.cardName}>
               {owner.name}
@@ -114,23 +127,28 @@ function Post(props) {
         }
       />
 
-      <CardMedia {...doubleTap}>
+      <CardMedia {...doubleTap} className={classes.cardMedia}>
         <MediaContent
           className={classes.mediaContent}
           id={id}
           user={owner}
           items={post.media}
           amount={post.amount}
+          fundraising={post.fundraising}
           isPurchased={post.isPurchased}
           isOwner={user.userName === owner.userName}
           isLiked={isLikeAnimation}
           onPayClick={onBuyPost}
           onChangeIndex={handleChangeSlideIndex}
         />
+        {post.targetFunds > 0 && (
+          <FundraisingPost position="bottom" fundraising={post.fundraising} targetFunds={post.targetFunds} />
+        )}
       </CardMedia>
 
       <CardContent className={classes.postCardContent}>
         {post.media.length === 0 && post.description && renderDescription(post.description, true)}
+
         <Tools
           id={id}
           user={owner}
@@ -155,19 +173,19 @@ function Post(props) {
 
       <CardActions className={classes.action} disableSpacing>
         {post?.userTags?.length > 0 && <SuggestionPeopleList items={post?.userTags} limit={3} />}
-        {post.isCommentable &&
-          (post.amount === 0 || user.userName === owner.userName || post.isPurchased) && (
-            <>
-              {comments.length > 0 && <CommentsPreview items={comments} />}
-              <Divider className={classes.divider} />
-              <MessageSenderInput 
-                hideMediaEditor 
-                transparentBg 
-                currentFocus={false} 
-                placeholder="Add a comment..." 
-                onSendMessageClick={handleCommentSendClick} />
-            </>
-          )}
+        {post.isCommentable && (post.amount === 0 || user.userName === owner.userName || post.isPurchased) && (
+          <>
+            {comments.length > 0 && <CommentsPreview items={comments} />}
+            <Divider className={classes.divider} />
+            <MessageSenderInput
+              hideMediaEditor
+              transparentBg
+              currentFocus={false}
+              placeholder="Add a comment..."
+              onSendMessageClick={handleCommentSendClick}
+            />
+          </>
+        )}
       </CardActions>
     </Card>
   );

@@ -25,12 +25,13 @@ import { useSendTipDialog, usePaymentDialog, usePurchaseDialog, useReceiptDialog
 import useLightboxModal from "../../hooks/useLightboxModal";
 
 import useStyles from "./styles";
+import FundraisingPost from "../../components/FundraisingPost";
 
 function PostPage(props) {
   const apiClient = useContext(ApiContext);
   const classes = useStyles();
   const history = useHistory();
-  const { currentSlidingViewsState, toggleSlidingViewsState, } = useSlidingViews();
+  const { currentSlidingViewsState, toggleSlidingViewsState } = useSlidingViews();
 
   const postId = props.match.params.id;
 
@@ -87,7 +88,13 @@ function PostPage(props) {
               isOwner={user.userName === post.owner?.userName}
               onClick={lightboxModal.toggle}
             />
-
+            {post.data.targetFunds > 0 && (
+              <FundraisingPost
+                positionDirection="top"
+                fundraising={post.data.fundraising}
+                targetFunds={post.data.targetFunds}
+              />
+            )}
             {post.data.userTags && post.data.userTags.length > 0 && (
               <Box className={classes.userTags}>
                 {post.data.userTags?.map((item) => (
@@ -173,7 +180,7 @@ function mapStateToProps(state) {
       isFetching: state.followingPosts.isFetching,
       errorMessage: state.followingPosts.errorMessage,
       data: state.followingPosts.currentPost,
-      owner: state.followingPosts.currentPost.user || {}
+      owner: state.followingPosts.currentPost.user || {},
     },
     comment: {
       isFetching: state.comment.isFetching,
@@ -188,7 +195,7 @@ function mapDispatchToProps(dispatch) {
     getPost: (api, id) => dispatch(postActions.getPost(api, id)),
     getPurchases: (api, id, callback) => dispatch(postActions.getPurchases(api, id, callback)),
     getReceipt: (api, id, callback) => dispatch(postActions.getReceipt(api, id, callback)),
-    resetCurrentPost: (api,id) => dispatch(postActions.resetCurrentPost()),
+    resetCurrentPost: (api, id) => dispatch(postActions.resetCurrentPost()),
 
     buyPost: (api, id) => dispatch(paymentActions.buyPost(api, id)),
 
