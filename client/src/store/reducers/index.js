@@ -6,7 +6,7 @@ import socialAuth from "./socialAuth";
 import confirmEmail from './confirmEmail';
 import profilePosts from "./profilePosts";
 import followingPosts  from "./followingPosts";
-import suggestionPosts  from "./suggestionPosts";
+import suggestedPosts  from "./suggestedPosts";
 import media from './media';
 import comment from "./comment";
 import users from "./users";
@@ -34,7 +34,7 @@ const appReducer = combineReducers({
   chat,
   profilePosts,
   followingPosts,
-  suggestionPosts,
+  suggestedPosts,
   media,
   user,
   settings,

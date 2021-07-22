@@ -10,7 +10,7 @@ import { SEARCH_TAG_TYPE } from "../constants/search";
 import { POSTS_LENGTH } from "../constants/feed";
 
 import ApiContext from "../context/ApiContext";
-import * as suggestionActions from "../store/actions/suggestion";
+import * as postActions from "../store/actions/post";
 
 import { Divider, Typography, Box } from "@material-ui/core";
 import { NoResult } from "../components/Search";
@@ -22,27 +22,29 @@ function Explore() {
 
   const search = useSearch({ type: SEARCH_TAG_TYPE });
 
-  const { suggestionPosts } = useSelector((state) => ({
-    suggestionPosts: {
-      data: state.suggestionPosts.data,
-      isFetching: state.suggestionPosts.isFetching,
-      hasMore: state.suggestionPosts.hasMore,
+  const { suggestedPosts } = useSelector((state) => ({
+    suggestedPosts: {
+      data: state.suggestedPosts.data,
+      isFetching: state.suggestedPosts.isFetching,
+      hasMore: state.suggestedPosts.hasMore,
     },
   }));
 
   useEffect(() => {
-    if (suggestionPosts.data.length > 0) {
+    if (suggestedPosts.data.length > 0) {
       return;
     }
     (async () => {
-      await dispatch(suggestionActions.getPosts(apiClient, { length: POSTS_LENGTH }));
+      await dispatch(
+        postActions.getSuggestedPosts(apiClient, { length: POSTS_LENGTH })
+      );
     })();
   }, []);
 
   const handleFetchMorePosts = async () => {
-	//   TODO: func calls while we scroll searched posts.
-    if (!suggestionPosts.isFetching && search) {
-      await dispatch(suggestionActions.getPosts(apiClient, { length: POSTS_LENGTH }));
+    //   TODO: func calls while we scroll searched posts.
+    if (!suggestedPosts.isFetching && search) {
+      await dispatch(postActions.getSuggestedPosts(apiClient, { length: POSTS_LENGTH }));
     }
   };
 
@@ -73,10 +75,10 @@ function Explore() {
           </Typography>
         </Box>
       )}
-      
+
       <GridGallery
-        items={suggestionPosts.data}
-        hasMore={suggestionPosts.hasMore}
+        items={suggestedPosts.data}
+        hasMore={suggestedPosts.hasMore}
         onFetchMore={handleFetchMorePosts}
         onItemClick={onItemClick}
       />

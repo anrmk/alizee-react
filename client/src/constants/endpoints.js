@@ -21,6 +21,7 @@ export default {
     getFollowingPosts: "post/getfollowingposts",
     createPost: "post/createpost",
     getFavoritePosts: "post/getfavouriteposts",
+    getSuggestionPosts: "post/getsuggestedposts",
     likePost: "post/like",
     favoritePost: "post/favorite",
     reportPost: "post/report",
@@ -43,7 +44,7 @@ export default {
 
     // MEDIA
     createMedia: "media/createmedia",
- 
+
     // CHAT
     getRoom: "chat/getRoom",
     getRooms: "chat/getRooms",
@@ -69,7 +70,6 @@ export default {
 
     // SUGGESTIONS
     getPeopleSuggestions: "suggestion/people",
-    getPostsSuggestions: "suggestion/posts",
 
     // USER
     getUser: "account/getaccountbyusername",
@@ -113,7 +113,6 @@ export default {
     getAccountInterests: "accountsetting/interests",
     createAccountInterests: "accountsetting/interests",
 
-    
     getPersonal: "accountsetting/personal",
     getCard: "accountsetting/card",
     updateCard: "accountsetting/card",

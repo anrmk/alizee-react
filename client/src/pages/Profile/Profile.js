@@ -193,14 +193,14 @@ function Profile(props) {
     );
   };
 
-  if (user.data.isBlocked) {
-    return (
-      <Box width="100%" textAlign="center">
-        <BlockIcon fontSize="large" />
-        <Typography>You or user blocked you.</Typography>
-      </Box>
-    );
-  }
+  // if (user.data.isBlocked) {
+  //   return (
+  //     <Box width="100%" textAlign="center">
+  //       <BlockIcon fontSize="large" />
+  //       <Typography>You or user blocked you.</Typography>
+  //     </Box>
+  //   );
+  // }
 
   return (
     <>

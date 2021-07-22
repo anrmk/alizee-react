@@ -1,9 +1,9 @@
 import {
-  GET_POST_SUGGESTIONS_REQUEST,
-  GET_POST_SUGGESTIONS_SUCCESS,
-  GET_POST_SUGGESTIONS_FAILURE,
-  RESET_POSTS_SUGGESTIONS
-} from "../actions/suggestion";
+  GET_SUGGESTED_POSTS_REQUEST,
+  GET_SUGGESTED_POSTS_SUCCESS,
+  GET_SUGGESTED_POSTS_FAILURE,
+  RESET_SUGGESTED_POSTS,
+} from "../actions/post";
 
 import { POSTS_DEFAULT_OFFSET } from "../../constants/feed";
 
@@ -17,26 +17,26 @@ export default function post(
   action
 ) {
   switch (action.type) {
-    case RESET_POSTS_SUGGESTIONS: {
+    case GET_SUGGESTED_POSTS_REQUEST: {
       return {
         ...state,
         ...action.payload,
       };
     }
 
-    case GET_POST_SUGGESTIONS_REQUEST: {
+    case GET_SUGGESTED_POSTS_SUCCESS: {
       return {
         ...state,
         ...action.payload,
       };
     }
-    case GET_POST_SUGGESTIONS_SUCCESS: {
+    case GET_SUGGESTED_POSTS_FAILURE: {
       return {
         ...state,
         ...action.payload
       };
     }
-    case GET_POST_SUGGESTIONS_FAILURE: {
+    case RESET_SUGGESTED_POSTS: {
       return {
         ...state,
         ...action.payload,

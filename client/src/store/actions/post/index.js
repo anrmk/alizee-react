@@ -29,6 +29,15 @@ export {
   resetFollowingPosts
 } from "./getFollowingPosts";
 
+export {
+  GET_SUGGESTED_POSTS_REQUEST,
+  GET_SUGGESTED_POSTS_SUCCESS,
+  GET_SUGGESTED_POSTS_FAILURE,
+  RESET_SUGGESTED_POSTS,
+  getSuggestedPosts,
+  resetSuggestedPosts,
+} from "./getSuggestedPosts";
+
 export { 
   GET_POST_REQUEST,
   GET_POST_SUCCESS,

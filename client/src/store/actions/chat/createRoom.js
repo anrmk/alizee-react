@@ -57,7 +57,7 @@ export function createRoom(api, userName) {
 
       dispatch(receiveCreateRoom(rooms, transformedData));
     } catch (e) {
-      return dispatch(errorCreateRoom(e));
+      dispatch(errorCreateRoom(e));
     }
   };
 }

@@ -50,9 +50,7 @@ function addMessageSuccess(room, rooms) {
 export function addMessage(api, data) {
   return async (dispatch, getState) => {
     try {
-      
-
-      const current = { ...getState().chat.current };
+      let current = { ...getState().chat.current };
       const rooms = [...getState().chat.data];
       let updatedRooms = [];
       const index = rooms.findIndex((item) => item.id === data.roomId);
@@ -79,8 +77,6 @@ export function addMessage(api, data) {
       } else {
         await dispatch(getRoom(api, data.userName));
 
-        let current = { ...getState().chat.current };
-
         current = { ...current, lastMessageText: data.text };
         updatedRooms = [current, ...(rooms.filter((item) => item.id !== data.roomId) || [])];
 
@@ -93,7 +89,7 @@ export function addMessage(api, data) {
 }
 
 export function createMessage(api, opts) {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     dispatch(requestCreateMessage());
 
     const url = generateUrl("createMessage");
@@ -111,12 +107,12 @@ export function createMessage(api, opts) {
 
       const { data } = await api.setData(formData).query(url);
 
-      if(!!data) {
+      if(data) {
         dispatch(addMessage(api, data));
       }
       dispatch(receiveCreateMessage());
     } catch (e) {
-      return dispatch(errorCreateMessage(e));
+      dispatch(errorCreateMessage(e));
     }
   };
 }

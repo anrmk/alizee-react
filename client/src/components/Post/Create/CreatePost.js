@@ -16,7 +16,7 @@ import useStyles from "./styles";
 const MEDIA_ID = "medias";
 const DESCRIPTION_ID = "description";
 const COMMENTABLE_ID = "commentable";
-const PRIVATE_ID = "isExplore";
+const EXPLORABLE_ID = "isExplorable";
 const AMOUNT_ID = "amount";
 const TAGGED_USERS_ID = "taggedUsers";
 
@@ -31,7 +31,7 @@ const schema = yup.object().shape({
     .max(255, "Must be no more than 255 characters"),
   [COMMENTABLE_ID]: yup
     .boolean(),
-  [PRIVATE_ID]: yup
+  [EXPLORABLE_ID]: yup
     .boolean(),
   [AMOUNT_ID]: yup
     .number()
@@ -49,7 +49,7 @@ export default function CreatePost({
   medias = [],
   description = "",
   commentable = true,
-  isExplore = true,
+  isExplorable = false,
   amount = 0,
   taggedUsers = [],
 
@@ -63,20 +63,20 @@ export default function CreatePost({
       [MEDIA_ID]: medias,
       [DESCRIPTION_ID]: description,
       [COMMENTABLE_ID]: commentable,
-      [PRIVATE_ID]: isExplore,
+      [EXPLORABLE_ID]: isExplorable,
       [AMOUNT_ID]: amount,
       [TAGGED_USERS_ID]: taggedUsers
     }
   });
   const mediaWatcher = watch(MEDIA_ID, []);
   const commentableWatcher = watch(COMMENTABLE_ID);
-  const privateWatcher = watch(PRIVATE_ID);
+  const privateWatcher = watch(EXPLORABLE_ID);
   const taggedUsersWatcher = watch(TAGGED_USERS_ID);
   
   useEffect(() => {
     register({ name: MEDIA_ID });
     register({ name: COMMENTABLE_ID });
-    register({ name: PRIVATE_ID });
+    register({ name: EXPLORABLE_ID });
     register({ name: TAGGED_USERS_ID });
 
     return () => {
@@ -105,7 +105,7 @@ export default function CreatePost({
       case "button":
         if (target.name === COMMENTABLE_ID) {
           setValue(target.name, !commentableWatcher);
-        } else if (target.name === PRIVATE_ID) {
+        } else if (target.name === EXPLORABLE_ID) {
           setValue(target.name, !privateWatcher);
         } else if (target.name === TAGGED_USERS_ID) {
           handleTagUsersClick();
@@ -192,9 +192,9 @@ export default function CreatePost({
 
         <CreateTools
           isTaggable
-          privateBtnName={PRIVATE_ID}
+          privateBtnName={EXPLORABLE_ID}
           commentBtnName={COMMENTABLE_ID}
-          isExplore={privateWatcher}
+          isExplorable={privateWatcher}
           isCommentable={commentableWatcher}
           onChange={handleToolsChange}
         />

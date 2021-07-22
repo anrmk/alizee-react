@@ -61,7 +61,7 @@ export function createPost(api, postData) {
           amount: (postData.amount && Number(postData.amount)) || 0,
           description: postData.description,
           isCommentable: postData.commentable,
-          isExplore: postData.isExplore ? POST_PRIVATE : POST_PUBLIC,
+          isExplorable: postData.isExplorable,// ? POST_PRIVATE : POST_PUBLIC,
           latitude: postData?.latitude,
           longitude: postData?.longitude,
           media: media,

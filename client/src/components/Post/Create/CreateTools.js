@@ -3,9 +3,9 @@ import React, { useRef } from "react";
 import CommentOutlinedIcon from "@material-ui/icons/SpeakerNotesOutlined";
 import CommentBlockOutlinedIcon from "@material-ui/icons/SpeakerNotesOffOutlined";
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary";
-import TagPeopleIcon from '@material-ui/icons/GroupAdd';
-import PublicIcon from '@material-ui/icons/Public';
-import VpnLockIcon from '@material-ui/icons/VpnLock';
+import TagPeopleIcon from "@material-ui/icons/GroupAdd";
+import PublicIcon from "@material-ui/icons/Public";
+import VpnLockIcon from "@material-ui/icons/VpnLock";
 
 import { Box, IconButton, Tooltip } from "@material-ui/core";
 
@@ -21,19 +21,29 @@ import {
   TYPE_OGG,
 } from "../../../constants/media_types";
 
-const supportedInputMediaType = [TYPE_JPEG, TYPE_PJPEG, TYPE_GIF, TYPE_XPNG, TYPE_PNG, TYPE_MP4, TYPE_MOV, TYPE_WEBM, TYPE_OGG];
+const supportedInputMediaType = [
+  TYPE_JPEG,
+  TYPE_PJPEG,
+  TYPE_GIF,
+  TYPE_XPNG,
+  TYPE_PNG,
+  TYPE_MP4,
+  TYPE_MOV,
+  TYPE_WEBM,
+  TYPE_OGG,
+];
 
 function CreateTools({
   multiple = true,
   onlyMedia,
-  isExplore,
+  isExplorable,
   isCommentable,
   isTaggable,
   commentBtnName = "comment",
   privateBtnName = "private",
   tagBtnName = "taggedUsers",
 
-  onChange
+  onChange,
 }) {
   const mediaRef = useRef();
 
@@ -44,13 +54,13 @@ function CreateTools({
           {isTaggable && (
             <Tooltip title="Tag someone">
               <IconButton onClick={onChange} name={tagBtnName}>
-                  <TagPeopleIcon fontSize="small" />
+                <TagPeopleIcon fontSize="small" />
               </IconButton>
             </Tooltip>
           )}
-          <Tooltip title={`Set Post to ${isExplore ? "Public" : "Private"}`}>
+          <Tooltip title={`Set Post to ${isExplorable ? "Private" : "Public"}`}>
             <IconButton onClick={onChange} name={privateBtnName}>
-              {isExplore ? (
+              {isExplorable ? (
                 <VpnLockIcon fontSize="small" color="secondary" />
               ) : (
                 <PublicIcon fontSize="small" />
