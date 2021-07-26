@@ -17,13 +17,13 @@ function requestCreatePost() {
   };
 }
 
-function receiveCreatePost(posts) {
+function receiveCreatePost(data) {
   return {
     type: CREATE_POST_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
-      data: posts,
+      data,
     },
   };
 }
@@ -38,50 +38,45 @@ function errorCreatePost(message) {
   };
 }
 
-export function createPost(api, postData) {
+export function createPost(api, opts) {
   return async (dispatch, getState) => {
     dispatch(requestCreatePost());
 
     const url = generateUrl("createPost");
     try {
-      const mediaData = postData.medias;
-      let media = [];
-      if (mediaData.length > 0) {
-        await dispatch(createMedia(api, mediaData, MEDIA_CONTENT));
+      const { amount, targetFunds, description, commentable, isExplorable, userTags, medias } = opts;
+      
+      const formData = new FormData();
+      formData.append("amount", (amount && Number(amount)) || 0);
+      formData.append("targetFunds", (targetFunds && Number(targetFunds)) || 0);
+      formData.append("description", description);
+      formData.append("isCommentable", commentable);
+      formData.append("isExplorable", isExplorable);
+      
+      userTags.forEach((userName) => {
+        formData.append("userNames", userName);
+      });
 
-        const mediaErrorMessage = getState().media.errorMessage;
-        if (mediaErrorMessage) {
-          throw mediaErrorMessage;
-        }
+      medias.forEach((file) => {
+        formData.append("files", file);
+      });
 
-        media = getState().media.data;
-      }
-      const { data } = await api
-        .setData({
-          amount: (postData.amount && Number(postData.amount)) || 0,
-          targetFunds: (postData.targetFunds && Number(postData.targetFunds)) || 0,
-          description: postData.description,
-          isCommentable: postData.commentable,
-          isExplorable: postData.isExplorable,// ? POST_PRIVATE : POST_PUBLIC,
-          latitude: postData?.latitude,
-          longitude: postData?.longitude,
-          media: media,
-          userTags: postData.taggedUsers,
-        })
-        .query(url);
-
-      const posts = getState().followingPosts.data;
-
-      if (getState().user.data?.userName && getState().signIn.userInfo.userName !== getState().user.data.userName) {
-        dispatch(receiveCreatePost(posts));
-      } else {
-        const avatarUrl = getState().signIn?.userInfo?.avatarUrl;
-        if (avatarUrl) {
-          data.user.avatarUrl = avatarUrl;
-        }
-
+      const { data } = await api.setData(formData).query(url);
+      if(data) {
+        const posts = getState().followingPosts.data;
         dispatch(receiveCreatePost([data, ...posts]));
       }
+
+      //if (getState().user.data?.userName && getState().signIn.userInfo.userName !== getState().user.data.userName) {
+        //dispatch(receiveCreatePost(posts));
+      // } else {
+      //   const avatarUrl = getState().signIn?.userInfo?.avatarUrl;
+      //   if (avatarUrl) {
+      //     data.user.avatarUrl = avatarUrl;
+      //   }
+
+      //   dispatch(receiveCreatePost([data, ...posts]));
+      // }
     } catch (e) {
       dispatch(errorCreatePost("Error: something went wrong"));
     }

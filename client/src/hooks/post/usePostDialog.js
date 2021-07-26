@@ -36,7 +36,8 @@ export default function usePostDialog() {
 
   const handlePostCreate = useCallback(async (data) => {
     dialog.setParams({ loading: true });
-    data.taggedUsers?.length && (data.taggedUsers = data.taggedUsers.map(item => ({ userName: item.userName })));
+    data.taggedUsers?.length && (data.userTags = data.taggedUsers.map(item => item.userName));
+
     !isFetching && (await dispatch(postActions.createPost(apiClient, data)));
     dialog.toggle({ open: false, loading: false });
     location.pathname !== HOME_ROUTE && history.push(HOME_ROUTE);

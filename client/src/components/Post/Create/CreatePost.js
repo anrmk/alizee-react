@@ -250,14 +250,14 @@ export default function CreatePost({
           </FormControl>
         )}
 
-        <CreateTools
+        {/* <CreateTools
           isTaggable
           privateBtnName={EXPLORABLE_ID}
           commentBtnName={COMMENTABLE_ID}
           isExplorable={privateWatcher}
           isCommentable={commentableWatcher}
           onChange={handleToolsChange}
-        />
+        /> */}
       </Box>
       <GridGalleryHorizontal items={mediaWatcher} />
     </form>
