@@ -16,6 +16,7 @@ import ResetPasswordDialog from "../domain/ResetPasswordDialog";
 import LanguageDialog from "../domain/LanguageDialog";
 import ConfirmDialog from "../domain/ConfirmationDialog.js/ConfirmDialog";
 import LightboxModal from "../domain/LightboxModal";
+import PostStatistics from "../domain/PostStatistics/PostStatistics";
 
 export const LANGUAGE_DIALOG_TYPE = "language";
 
@@ -54,6 +55,8 @@ export const CONFIRM_DIALOG_TYPE = "confirmation";
 export const LIGHTBOX_MODAL_TYPE = "lightbox";
 
 export const INDENTITY_DIALOG_TYPE = "identity";
+
+export const POST_STATISTICS_DIALOG_TYPE = "postStatistics";
 
 const baseDialogProps = {
   dialogProps: { fullWidth: true },
@@ -241,6 +244,11 @@ export default {
   }),
   [INDENTITY_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     content: <LightboxModal {...contentProps} />,
+    ...baseDialogProps,
+    ...dialogProps,
+  }),
+  [POST_STATISTICS_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+    content: <PostStatistics {...contentProps} />,
     ...baseDialogProps,
     ...dialogProps,
   }),

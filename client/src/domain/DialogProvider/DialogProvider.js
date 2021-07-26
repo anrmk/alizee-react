@@ -12,19 +12,20 @@ import {
   Modal,
   Backdrop,
   Fade,
-  useMediaQuery
+  useMediaQuery,
 } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 
 import BackIcon from "@material-ui/icons/ArrowBackRounded";
-import CloseIcon from '@material-ui/icons/CloseRounded';
+import CloseIcon from "@material-ui/icons/CloseRounded";
 
 import DialogContext, {
   initialContext,
   TOGGLE_WITH_STACK_MODAL,
   UPDATE_MODAL,
   TOGGLE_MODAL,
-  STACK_BACK
+  STACK_BACK,
+  UPDATE_MODAL_CONTENT,
 } from "../../context/DialogContext";
 
 import useStyle from "./styles";
@@ -46,6 +47,11 @@ export default function DialogProvider({ children }) {
           ...state,
           ...action.payload,
         };
+      case UPDATE_MODAL_CONTENT:
+        return {
+          ...state,
+          content: React.cloneElement(state.content, action.payload),
+        };
       case TOGGLE_WITH_STACK_MODAL: {
         const { stack } = state;
         return {
@@ -62,7 +68,7 @@ export default function DialogProvider({ children }) {
         return {
           ...state,
           ...prevDialogData,
-          stack: stack.slice(0, stack.length - 1)
+          stack: stack.slice(0, stack.length - 1),
         };
       }
       default:
@@ -112,8 +118,9 @@ export default function DialogProvider({ children }) {
           closeAfterTransition
           BackdropComponent={Backdrop}
           BackdropProps={{
-            timeout: 500
-          }}>
+            timeout: 500,
+          }}
+        >
           <Fade in={!!dialogOptions.open}>
             <>
               <IconButton className={classes.closeBtn} onClick={handleCloseClick}>
@@ -131,7 +138,8 @@ export default function DialogProvider({ children }) {
           aria-labelledby="dialog-title"
           open={!!dialogOptions.open}
           onClose={handleCloseClick}
-          {...dialogOptions.dialogProps}>
+          {...dialogOptions.dialogProps}
+        >
           {dialogOptions.title && (
             <DialogTitle id="dialog-title">
               {dialogOptions.stack?.length > 1 && (
@@ -143,17 +151,22 @@ export default function DialogProvider({ children }) {
             </DialogTitle>
           )}
 
-        {dialogOptions.content && (
-          <DialogContent id="dialog-content" className={clsx(dialogOptions.loading && classes.loading)}>
-            {dialogOptions.loading ? <CircularProgress className={classes.progress} /> : dialogOptions.content}
-          </DialogContent>
-        )}
+          {dialogOptions.content && (
+            <DialogContent id="dialog-content" className={clsx(dialogOptions.loading && classes.loading)}>
+              {dialogOptions.loading ? <CircularProgress className={classes.progress} /> : dialogOptions.content}
+            </DialogContent>
+          )}
 
           {!dialogOptions.actionsComponent
             ? (dialogOptions.onCloseClick || dialogOptions.onMainClick) && (
                 <DialogActions>
                   {(dialogOptions.onCloseClick || dialogOptions.closeBtnProps) && (
-                    <Button disabled={dialogOptions.loading} variant="outlined" {...dialogOptions.closeBtnProps} onClick={handleCloseClick}>
+                    <Button
+                      disabled={dialogOptions.loading}
+                      variant="outlined"
+                      {...dialogOptions.closeBtnProps}
+                      onClick={handleCloseClick}
+                    >
                       {dialogOptions.closeBtnText}
                     </Button>
                   )}
@@ -163,7 +176,8 @@ export default function DialogProvider({ children }) {
                       disabled={dialogOptions.loading}
                       variant="contained"
                       {...dialogOptions.mainBtnProps}
-                      onClick={handleMainClick}>
+                      onClick={handleMainClick}
+                    >
                       {dialogOptions.mainBtnText}
                     </Button>
                   )}

@@ -22,6 +22,7 @@ import activity from "./activity";
 import notification from "./notification";
 import changeLog from "./changeLog";
 import help from "./help";
+import statistics from "./statistics"
 
 import { SIGNOUT_SUCCESS } from "../actions/signIn";
 
@@ -48,6 +49,7 @@ const appReducer = combineReducers({
   notification,
   changeLog,
   help,
+  statistics,
 });
 
 export default function (state, action) {

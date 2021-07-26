@@ -8,6 +8,7 @@ import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import SendIcon from "@material-ui/icons/SendOutlined";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import BarChartIcon from "@material-ui/icons/BarChart";
 
 export const POST_TYPE = 0;
 export const PROFILE_TYPE = 1;
@@ -27,6 +28,7 @@ function Menu({
   onChatShare,
   onDelete,
   onFavorite,
+  onPostStatistics,
 }) {
   const handleBlockClick = () => {
     onBlock && onBlock({ userName, isBlocked: isBlocked });
@@ -50,6 +52,10 @@ function Menu({
 
   const handleFavoriteUserClick = () => {
     onFavorite && onFavorite({ userName, isFavorite });
+  };
+
+  const handlePostStatisticsClick = () => {
+    onPostStatistics && onPostStatistics({ postId });
   };
 
   return (
@@ -80,7 +86,14 @@ function Menu({
           <ListItemText primary="Report" />
         </ListItem>
       )}
-
+      {isOwner && (
+        <ListItem button onClick={handlePostStatisticsClick}>
+          <ListItemIcon>
+            <BarChartIcon />
+          </ListItemIcon>
+          <ListItemText primary="Post statistics" />
+        </ListItem>
+      )}
       {onShare && (
         <ListItem button onClick={handleShareClick}>
           <ListItemIcon>

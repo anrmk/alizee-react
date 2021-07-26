@@ -23,7 +23,7 @@ export default function usePostDialog() {
   const location = useLocation();
 
   const [dialogBaseProps] = useState({
-    mainBtnProps: { title: "Tag People",type: "submit", form: FORM_ID },
+    mainBtnProps: { title: "Tag People", type: "submit", form: FORM_ID },
   });
   let formData = useRef().current;
 
@@ -45,21 +45,24 @@ export default function usePostDialog() {
 
   const handleTagUsersClick = useCallback((data) => {
     formData = data;
-    usersDialog.toggle({
-      title: "Tag People",
-      mainBtnText: "Add",
-      onMainClick: handleAddTaggedUsersClick,
-      onBackClick: () => handleBackClick(formData.taggedUsers)
-    }, {
-      preSelected: data.taggedUsers?.map(item => item.userName)
-    }, 
-    true);
+    usersDialog.toggle(
+      {
+        title: "Tag People",
+        mainBtnText: "Add",
+        onMainClick: handleAddTaggedUsersClick,
+        onBackClick: () => handleBackClick(formData.taggedUsers),
+      },
+      {
+        preSelected: data.taggedUsers?.map((item) => item.userName),
+      },
+      true
+    );
   }, []);
 
   const handleAddTaggedUsersClick = useCallback((data, e) => {
     e.preventDefault();
     handleBackClick(data);
-  }, [])
+  }, []);
 
   const handleBackClick = useCallback((currentTaggedUsernames) => {
     let newTaggedUsers = formData?.taggedUsers;
@@ -69,15 +72,13 @@ export default function usePostDialog() {
     }
 
     dialog.back(
-      dialogs[CREATE_POST_DIALOG_TYPE](
-        dialogBaseProps,
-        {
-          ...formData,
-          formId: FORM_ID,
-          taggedUsers: newTaggedUsers,
-          onSubmit: handlePostCreate,
-          onTagUsersClick: handleTagUsersClick
-        })
+      dialogs[CREATE_POST_DIALOG_TYPE](dialogBaseProps, {
+        ...formData,
+        formId: FORM_ID,
+        taggedUsers: newTaggedUsers,
+        onSubmit: handlePostCreate,
+        onTagUsersClick: handleTagUsersClick,
+      })
     );
   }, []);
 
@@ -88,13 +89,14 @@ export default function usePostDialog() {
           dialogs[CREATE_POST_DIALOG_TYPE](
             {
               ...dialogBaseProps,
-              onMainClick: null
+              onMainClick: null,
             },
             {
               formId: FORM_ID,
               onSubmit: handlePostCreate,
-              onTagUsersClick: handleTagUsersClick
-            })
+              onTagUsersClick: handleTagUsersClick,
+            }
+          )
         );
       } else {
         dialog.toggle(

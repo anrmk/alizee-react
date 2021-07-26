@@ -9,3 +9,5 @@ export { default as useMenuDialog } from "./useMenuDialog";
 export { default as useCommentDialog } from "./useCommentDialog";
 
 export { default as useCommentAction } from "./useCommentAction";
+
+export { default as usePostStatistics } from "./usePostStatistics";

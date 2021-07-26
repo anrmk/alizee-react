@@ -7,6 +7,7 @@ import DialogContext, {
   UPDATE_MODAL,
   TOGGLE_MODAL,
   STACK_BACK,
+  UPDATE_MODAL_CONTENT,
 } from "../context/DialogContext";
 
 export default function useDialog() {
@@ -32,23 +33,33 @@ export default function useDialog() {
     [setData]
   );
 
+  const setContent = useCallback((data) => {
+    setData({
+      type: UPDATE_MODAL_CONTENT,
+      payload: data,
+    });
+  }, []);
+
   const baseToggle = React.useCallback(
     (opts, type) => {
       setData({
         type: type,
         payload: {
           open: !gOpen ? !gOpen : gOpen,
-          ...opts
+          ...opts,
         },
       });
     },
     [setData, gOpen]
   );
 
-  const back = useCallback((params) => {
-    setData({ type: STACK_BACK });
-    params && setParams(params);
-  }, [setData]);
+  const back = useCallback(
+    (params) => {
+      setData({ type: STACK_BACK });
+      params && setParams(params);
+    },
+    [setData]
+  );
 
   const reset = () => {
     setParams(initialContext);
@@ -68,11 +79,12 @@ export default function useDialog() {
 
   return {
     setParams,
+    setContent,
     toggle,
     toggleWithStack,
     reset,
     stack,
     back,
-    dialogOptions
+    dialogOptions,
   };
 }

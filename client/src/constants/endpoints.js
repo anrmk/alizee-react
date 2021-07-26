@@ -147,5 +147,8 @@ export default {
     getHelp: "help/getgroups",
     changeHelpRating: "help/vote",
     getHelpDetails: "help/getarticle",
+
+    //STATISTICS
+    getStatistics: "statistics/getStatistics",
   },
 };

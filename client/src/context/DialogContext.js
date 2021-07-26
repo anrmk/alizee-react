@@ -4,6 +4,7 @@ export const UPDATE_MODAL = "UPDATE_MODAL";
 export const TOGGLE_MODAL = "TOGGLE_MODAL";
 export const TOGGLE_WITH_STACK_MODAL = "TOGGLE_WITH_STACK_MODAL";
 export const STACK_BACK = "STACK_BACK";
+export const UPDATE_MODAL_CONTENT= "UPDATE_MODAL_CONTENT";
 
 export const initialContext = {
 	open: false,

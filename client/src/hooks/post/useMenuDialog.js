@@ -10,6 +10,7 @@ import useBlockDialog from "../useBlockDialog";
 import useConfirmationDialog from "../useConfirmationDialog";
 import useShareDialog, { SHARE_DIALOG_PROFILE_TYPE } from "../useShareDialog";
 import useDeleteAction from "./useDeleteAction";
+import usePostStatistics from "./usePostStatistics";
 import useFavoriteUserAction from "../useFavoriteUserAction";
 import { DEFAULT_ROUTE } from "../../constants/routes";
 import { POST_TYPE } from "../../components/Post/Menu";
@@ -23,6 +24,7 @@ const initProps = {
   isChatShare: false,
   isDelete: true,
   isFavorite: true,
+  isPostStatistics: true,
   useFavoriteProps: null,
   type: POST_TYPE,
 };
@@ -36,6 +38,7 @@ export default function useMenuDialog(props) {
   const reportDialog = useReportDialog();
   const postShareDialog = useSharePostDialog();
   const confirmationDialog = useConfirmationDialog();
+  const postStatistics = usePostStatistics();
   const chatShareDialog = useShareDialog({ withStack: true, type: SHARE_DIALOG_PROFILE_TYPE });
   const { deletePostAction } = useDeleteAction();
   const { favoriteUserAction } = useFavoriteUserAction(props.favoriteProps);
@@ -110,6 +113,7 @@ export default function useMenuDialog(props) {
         onChatShare: props.isChatShare && chatShareDialog.toggle,
         onDelete: props.isDelete && handleDeleteClick,
         onFavorite: props.isFavorite && handleFavoriteUserClick,
+        onPostStatistics: props.isPostStatistics && postStatistics.toggle,
         type: props.type,
         ...data,
       }),

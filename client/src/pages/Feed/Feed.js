@@ -20,12 +20,7 @@ import { STORIES_LENGTH } from "../../constants/feed";
 
 import useShareDialog, { SHARE_DIALOG_POST_TYPE } from "../../hooks/useShareDialog";
 import { useLikeAction, useFavoriteAction, useStoryDialog, useMenuDialog, useCommentAction } from "../../hooks/post";
-import {
-  useSendTipDialog,
-  usePaymentDialog,
-  usePurchaseDialog,
-  useReceiptDialog,
-} from "../../hooks/payment";
+import { useSendTipDialog, usePaymentDialog, usePurchaseDialog, useReceiptDialog } from "../../hooks/payment";
 import useFullScreen from "../../hooks/useFullScreen";
 import useLightboxModal from "../../hooks/useLightboxModal";
 
@@ -90,7 +85,7 @@ function Feed(props) {
 
   const handlePeopleRefreshClick = () => {
     getPeople(apiClient);
-  }
+  };
 
   return (
     <Grid container>
@@ -98,7 +93,6 @@ function Feed(props) {
         <Hidden smDown>
           <Nav />
         </Hidden>
-        
         <PreviewStoriesList
           loading={story.isFetching}
           user={userInfo}
@@ -134,7 +128,8 @@ function Feed(props) {
               items={people.data}
               limit={5}
               isLoading={people.isFetching}
-              onRefresh={handlePeopleRefreshClick} />
+              onRefresh={handlePeopleRefreshClick}
+            />
           </Box>
         </Grid>
       </Hidden>
