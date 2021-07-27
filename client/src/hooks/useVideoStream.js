@@ -15,8 +15,8 @@ const ICE_SERVERS = [
   }
 ];
 
-export default function useVideoStream({ userName, peerName, isVerified, onHangup, onInitiated }) {
-  const { socket } = useSocketIO(userName);
+export default function useVideoStream({ callerName, calleeName, isVerified, onHangup, onInitiated }) {
+  const { socket } = useSocketIO(callerName);
   const { cameraGranted, micGranted, requestBothPermissions } = useCameraMicPermissions();
 
   const callerVideoEl = useRef();
@@ -92,7 +92,7 @@ export default function useVideoStream({ userName, peerName, isVerified, onHangu
       await requestBothPermissions()
       await getUserMedia();
       setUpSignalServerConnection();
-      socket.emit("join", { callerName: userName, calleeName: peerName, isVerified });
+      socket.emit("join", { callerName, calleeName, isVerified });
     } catch (error) {
       setStatus(`You need to give Mic or Camera permision`);
       socket.disconnect();
@@ -121,7 +121,7 @@ export default function useVideoStream({ userName, peerName, isVerified, onHangu
       initiator = true;
       setInitiatorClone(true)
       
-      initiator && onInitiated && onInitiated();
+      initiator && onInitiated && onInitiated(calleeName);
     });
 
     socket.on("ready", () => {
@@ -192,7 +192,7 @@ export default function useVideoStream({ userName, peerName, isVerified, onHangu
     newPeer.on("signal", data => {
       const signal = {
         desc: data,
-        from: userName
+        from: callerName
       };
 
       socket.emit("signal", signal);

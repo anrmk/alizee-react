@@ -53,19 +53,23 @@ export function createPost(api, opts) {
       formData.append("isCommentable", commentable);
       formData.append("isExplorable", isExplorable);
       
-      userTags.forEach((userName) => {
+      userTags && (userTags.forEach((userName) => {
         formData.append("userNames", userName);
-      });
+      }));
 
-      medias.forEach((file) => {
+      medias && (medias.forEach((file) => {
         formData.append("files", file);
-      });
+      }));
 
-      const { data } = await api.setData(formData).query(url);
-      if(data) {
-        const posts = getState().followingPosts.data;
-        dispatch(receiveCreatePost([data, ...posts]));
-      }
+      const { data } = await api
+        .setParams({ mediaType: MEDIA_CONTENT })
+        .setData(formData)
+        .query(url);
+
+      if (!data) throw new Error("Data is undefined");
+
+      const posts = getState().followingPosts.data;
+      dispatch(receiveCreatePost([data, ...posts]));
 
       //if (getState().user.data?.userName && getState().signIn.userInfo.userName !== getState().user.data.userName) {
         //dispatch(receiveCreatePost(posts));

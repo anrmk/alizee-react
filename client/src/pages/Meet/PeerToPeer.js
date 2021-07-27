@@ -30,8 +30,8 @@ function PeerToPeer({ user, incomingCallNotify }) {
 
   const fullScreen = useFullScreen("root");
   const videoStream = useVideoStream({
-    userName: user.userName,
-    peerName: userName,
+    callerName: user.userName,
+    calleeName: userName,
     isVerified: user.identityVerified,
     onHangup: handleHangup,
     onInitiated: handleCalled
@@ -43,8 +43,8 @@ function PeerToPeer({ user, incomingCallNotify }) {
     };
   }, []);
 
-  function handleCalled() {
-    userName && incomingCallNotify(apiClient, userName);
+  function handleCalled(calleeName) {
+    calleeName && incomingCallNotify(apiClient, calleeName);
   };
 
   function handleHangup () {
@@ -79,7 +79,6 @@ function PeerToPeer({ user, incomingCallNotify }) {
       height="100vh">
       {videoStream.status && (
         <Box className={classes.status}>
-          {String(videoStream.initiator) + String(videoStream.callAccepted)}
           <Typography variant="h6" align="center">{videoStream.status}</Typography>
         </Box>
       )}
