@@ -13,14 +13,15 @@ import useStyles from "./styles";
 
 function PublicLayout({ children }) {
   const classes = useStyles();
-  const notification = useNotification();
   const dispatch = useDispatch();
 
-  const { userInfo, notificationData, isAuthenticated } = useSelector((state) => ({
-    userInfo: state.signIn.userInfo,
-    notificationData: state.notification.data,
-    isAuthenticated: state.signIn.isAuthenticated,
-  }));
+  const { userInfo, notificationData, isAuthenticated } = useSelector(
+    (state) => ({
+      userInfo: state.signIn.userInfo,
+      notificationData: state.notification.data,
+      isAuthenticated: state.signIn.isAuthenticated,
+    })
+  );
 
   const handleSignOut = () => {
     dispatch(signOutUser());
@@ -39,12 +40,10 @@ function PublicLayout({ children }) {
             newMessage={notificationData?.newMessage}
             newNotification={notificationData?.newNotification}
             open
-            onChange={notification.toggle}
             onSignOut={handleSignOut}
           />
         </Hidden>
-      }
-    >
+      }>
       {children}
       <Footer open={true} />
     </ContainerLayout>
