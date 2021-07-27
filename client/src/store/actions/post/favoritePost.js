@@ -53,43 +53,36 @@ export function favoritePost(api, id) {
 
     const url = generateUrl("favoritePost");
     try {
-      const postsState = getState().followingPosts;
+      const postsState = { ...getState().followingPosts };
 
       if (!postsState.data.length && isEmptyObject(postsState.currentPost)) {
         throw "There is no local data";
       }
 
-      if (postsState.data.length) {
-        const posts = [...postsState.data];
+      let method = null;
+      let posts = [...postsState.data];
+      let currentPost = { ...postsState.currentPost };
+      let isFollowingPosts = !!posts.length;
+      let isCurrentPost = !isEmptyObject(currentPost);
+      if (isFollowingPosts) {
         const postIndex = posts.findIndex((post) => post.id === id);
 
-        if (postIndex === -1) {
-          throw "Item not found!";
+        if (postIndex !== -1) {
+          const post = posts[postIndex];
+          method = post.isFavorite ? "DELETE" : "POST";
+
+          posts[postIndex].isFavorite = !posts[postIndex].isFavorite;
         }
-
-        const post = posts[postIndex];
-
-        await api
-          .setMethod(post.isFavorite ? "DELETE" : "POST")
-          .setParams({ id })
-          .query(url);
-
-        posts[postIndex].isFavorite = !posts[postIndex].isFavorite;
-
-        dispatch(receiveFavoritePost(posts));
-      } else if (!isEmptyObject(postsState.currentPost)) {
-        const currentPost = { ...postsState.currentPost };
-
-        !(postsState.data.length > 0) &&
-          (await api
-            .setMethod(currentPost.isFavorite ? "DELETE" : "POST")
-            .setParams({ id })
-            .query(url));
+      }
+      if (isCurrentPost) {
+        method = currentPost.isFavorite ? "DELETE" : "POST";
 
         currentPost.isFavorite = !currentPost.isFavorite;
-
-        dispatch(receiveFavoriteCurrentPost(currentPost));
       }
+      await api.setMethod(method).setParams({ id }).query(url);
+
+      isFollowingPosts && dispatch(receiveFavoritePost(posts));
+      isCurrentPost && dispatch(receiveFavoriteCurrentPost(currentPost));
     } catch (e) {
       dispatch(errorFavoritePost("Error: something went wrong"));
     }

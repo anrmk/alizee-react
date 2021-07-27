@@ -53,39 +53,37 @@ export function likePost(api, id) {
 
     const url = generateUrl("likePost");
     try {
-      const postsState = getState().followingPosts;
-
+      const postsState = { ...getState().followingPosts };
       if (!postsState.data.length && isEmptyObject(postsState.currentPost)) {
         throw "There is no local data";
       }
 
-      if (postsState.data.length) {
-        const posts = [...postsState.data];
+      let method = null;
+      let posts = [...postsState.data];
+      let currentPost = { ...postsState.currentPost };
+      let isFollowingPosts = !!posts.length;
+      let isCurrentPost = !isEmptyObject(currentPost);
+
+      if (isFollowingPosts) {
         const postIndex = posts.findIndex((post) => post.id === id);
 
-        if (postIndex === -1) {
-          throw "Item not found!";
+        if (postIndex !== -1) {
+          const post = posts[postIndex];
+          method = post.iLike ? "DELETE" : "POST";
+
+          posts[postIndex].likes += post.iLike ? -1 : 1;
+          posts[postIndex].iLike = !post.iLike;
         }
-
-        const post = posts[postIndex];
-        const method = post.iLike ? "DELETE" : "POST";
-
-        await api.setMethod(method).setParams({ id }).query(url);
-
-        posts[postIndex].likes += post.iLike ? -1 : 1;
-        posts[postIndex].iLike = !post.iLike;
-
-        dispatch(receiveLikePost(posts));
-      } else if (!isEmptyObject(postsState.currentPost)) {
-        const currentPost = { ...postsState.currentPost };
-        const method = currentPost.iLike ? "DELETE" : "POST";
-
-        !(postsState.data.length > 0) && (await api.setMethod(method).setParams({ id }).query(url));
-
+      }
+      if (isCurrentPost) {
+        method = currentPost.iLike ? "DELETE" : "POST";
         currentPost.likes += currentPost.iLike ? -1 : 1;
         currentPost.iLike = !currentPost.iLike;
-        dispatch(receiveLikeCurrentPost(currentPost));
       }
+      await api.setMethod(method).setParams({ id }).query(url);
+
+      isFollowingPosts && dispatch(receiveLikePost(posts));
+      isCurrentPost && dispatch(receiveLikeCurrentPost(currentPost));
     } catch (e) {
       dispatch(errorLikePost("Error: something went wrong"));
     }
