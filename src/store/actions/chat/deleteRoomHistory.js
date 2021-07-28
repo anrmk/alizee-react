@@ -43,7 +43,7 @@ export function deleteRoomHistory(api, id) {
     try {
       await api.setMethod("DELETE").setParams({ id }).query(url);
 
-      const current = getState().chat.current;
+      const { current } = getState().chat;
       if (current?.id === id) {
         errorDeleteRoomHistory("");
       }
@@ -55,7 +55,7 @@ export function deleteRoomHistory(api, id) {
 
       dispatch(receiveDeleteRoomHistory(updatedRoom));
     } catch (e) {
-      return dispatch(errorDeleteRoomHistory(e));
+      dispatch(errorDeleteRoomHistory(e));
     }
   };
 }

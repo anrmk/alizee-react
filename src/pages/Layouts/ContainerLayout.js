@@ -13,17 +13,21 @@ export default function ContainerLayout({
   className,
   children,
   beforeChildren,
-  afterChildren
+  afterChildren,
 }) {
   const classes = useStyles({ isFullScreenHeight });
 
   return (
-    <BaseLayout isFullScreenHeight={isFullScreenHeight}  className={baseClassName}>
+    <BaseLayout
+      isFullScreenHeight={isFullScreenHeight}
+      className={baseClassName}>
       {beforeChildren}
-      <Container {...containerProps} className={clsx(classes.container, className)}>
+      <Container
+        {...containerProps}
+        className={clsx(classes.container, className)}>
         {children}
       </Container>
       {afterChildren}
     </BaseLayout>
-  )
+  );
 }

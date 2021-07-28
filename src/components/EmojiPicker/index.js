@@ -1,1 +1,3 @@
-export { default as EmojiPicker } from "./EmojiPicker";
+import EmojiPicker from "./EmojiPicker";
+
+export default EmojiPicker;

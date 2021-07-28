@@ -11,13 +11,20 @@ const ICE_SERVERS = [
   {
     urls: process.env.REACT_APP_TURN_SERVER_URL.split(","),
     username: process.env.REACT_APP_TURN_SERVER_USERNAME,
-    credential: process.env.REACT_APP_TURN_SERVER_CREDENTIAL
-  }
+    credential: process.env.REACT_APP_TURN_SERVER_CREDENTIAL,
+  },
 ];
 
-export default function useVideoStream({ callerName, calleeName, isVerified, onHangup, onInitiated }) {
+export default function useVideoStream({
+  callerName,
+  calleeName,
+  isVerified,
+  onHangup,
+  onInitiated,
+}) {
   const { socket } = useSocketIO(callerName);
-  const { cameraGranted, micGranted, requestBothPermissions } = useCameraMicPermissions();
+  const { cameraGranted, micGranted, requestBothPermissions } =
+    useCameraMicPermissions();
 
   const callerVideoEl = useRef();
   const calleeVideoEl = useRef();
@@ -65,14 +72,14 @@ export default function useVideoStream({ callerName, calleeName, isVerified, onH
   };
 
   const handleHangUp = () => {
-    resetStatesByDefault()
+    resetStatesByDefault();
 
     onHangup && onHangup();
   };
 
   const handleRemoveRoom = () => {
     socket.emit("removeRoom");
-  }
+  };
 
   const resetStatesByDefault = () => {
     setStatus("");
@@ -85,42 +92,45 @@ export default function useVideoStream({ callerName, calleeName, isVerified, onH
     calleeVideoEl.current.src = null;
     callerVideoEl.current.srcObject = null;
     callerVideoEl.current.src = null;
-  }
+  };
 
   const init = async () => {
     try {
-      await requestBothPermissions()
+      await requestBothPermissions();
       await getUserMedia();
       setUpSignalServerConnection();
       socket.emit("join", { callerName, calleeName, isVerified });
     } catch (error) {
-      setStatus(`You need to give Mic or Camera permision`);
+      setStatus("You need to give Mic or Camera permision");
       socket.disconnect();
     }
-  }
+  };
 
   const getUserMedia = async () => {
     if (!calleeVideoEl.current) return;
 
-    const strm = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    const strm = await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: true,
+    });
 
     setupStream(calleeVideoEl, strm);
 
     currentStream = strm;
     setCurrentStreamClone(strm);
     calleeVideoEl.current.play();
-  }
+  };
 
   const setUpSignalServerConnection = () => {
     socket.on("connect", () => {
       setStatus("Connection is established");
-      console.log("Socket", socket)
+      console.log("Socket", socket);
     });
 
     socket.on("init", () => {
       initiator = true;
-      setInitiatorClone(true)
-      
+      setInitiatorClone(true);
+
       initiator && onInitiated && onInitiated(calleeName);
     });
 
@@ -129,7 +139,7 @@ export default function useVideoStream({ callerName, calleeName, isVerified, onH
       initPeer();
     });
 
-    socket.on("desc", data => {
+    socket.on("desc", (data) => {
       if (data.desc?.type === DATA_TYPE_OFFER && initiator) return;
       if (data.desc?.type === DATA_TYPE_ANSWER && !initiator) return;
       call(data.desc);
@@ -158,7 +168,7 @@ export default function useVideoStream({ callerName, calleeName, isVerified, onH
       setCallAccepted(false);
       setupStream(calleeVideoEl, currentStream);
     });
-  }
+  };
 
   const setupStream = (target, stream, play = true) => {
     if ("srcObject" in calleeVideoEl.current) {
@@ -166,8 +176,8 @@ export default function useVideoStream({ callerName, calleeName, isVerified, onH
     } else {
       target.current.src = window.URL.createObjectURL(stream);
     }
-    play && target.current.play()
-  }
+    play && target.current.play();
+  };
 
   const initPeer = () => {
     const newPeer = new Peer({
@@ -177,8 +187,8 @@ export default function useVideoStream({ callerName, calleeName, isVerified, onH
       iceTransportPolicy: "relay",
       stream: currentStream,
       config: {
-        iceServers: ICE_SERVERS
-      }
+        iceServers: ICE_SERVERS,
+      },
     });
 
     currentPeer = newPeer;
@@ -189,16 +199,16 @@ export default function useVideoStream({ callerName, calleeName, isVerified, onH
       setCalling(true);
     });
 
-    newPeer.on("signal", data => {
+    newPeer.on("signal", (data) => {
       const signal = {
         desc: data,
-        from: callerName
+        from: callerName,
       };
 
       socket.emit("signal", signal);
     });
 
-    newPeer.on("stream", strm => {
+    newPeer.on("stream", (strm) => {
       if (!calleeVideoEl.current || !callerVideoEl.current) return;
 
       setCalling(false);
@@ -211,16 +221,18 @@ export default function useVideoStream({ callerName, calleeName, isVerified, onH
       };
     });
 
-    newPeer.on("close", () => { console.log("Peer connection was closed"); })
+    newPeer.on("close", () => {
+      console.log("Peer connection was closed");
+    });
 
     newPeer.on("error", (err) => {
       console.log(err);
     });
-  }
+  };
 
   const call = async (desc) => {
     currentPeer.signal(desc);
-  }
+  };
 
   const declineCall = () => {
     currentPeerClone.destroy();
@@ -245,6 +257,6 @@ export default function useVideoStream({ callerName, calleeName, isVerified, onH
     handleMicToggle,
     handleFlipToggle,
     handleHangUp: declineCall,
-    handleRemoveRoom
+    handleRemoveRoom,
   };
 }

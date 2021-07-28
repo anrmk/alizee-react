@@ -7,7 +7,7 @@ import * as actionChat from "../../store/actions/chat";
 import dialogs, { ROOM_MENU_DIALOG_TYPE } from "../../constants/dialogs";
 
 import useDialog from "../useDialog";
-import useBlockDialog from "../../hooks/useBlockDialog";
+import useBlockDialog from "../useBlockDialog";
 
 export default function useRoomMenuDialog(callback) {
   const dialog = useDialog();
@@ -17,7 +17,11 @@ export default function useRoomMenuDialog(callback) {
   const blockDialog = useBlockDialog();
 
   const handleDeleteRoom = useCallback(async (id) => {
-    if (!window.confirm("Delete chat?\nDeleting removes the chat from your inbox, but no one else's inbox.")) {
+    if (
+      !window.confirm(
+        "Delete chat?\nDeleting removes the chat from your inbox, but no one else's inbox."
+      )
+    ) {
       return;
     }
 

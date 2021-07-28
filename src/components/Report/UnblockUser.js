@@ -19,8 +19,9 @@ function UnblockUser({
     <Box component="form" onSubmit={handleFormSubmit} id={formId}>
       <FormControl component="fieldset">
         <FormLabel component="legend">
-          {name ?? `@${userName}`} will now be able to see your posts and follow you on Instagram. Instagram won't let
-          them known you unblocked them.
+          {name ?? `@${userName}`} will now be able to see your posts and follow
+          you on Instagram. Instagram won&apos;t let them known you unblocked
+          them.
         </FormLabel>
       </FormControl>
     </Box>

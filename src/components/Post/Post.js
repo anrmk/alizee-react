@@ -68,7 +68,11 @@ function Post(props) {
 
   const handleFullScreenClick = () => {
     if (post.isPurchased || post.amount === 0) {
-      onFullScreen && onFullScreen({ items: post?.media, startSlideIndex: currentSlideIndex });
+      onFullScreen &&
+        onFullScreen({
+          items: post?.media,
+          startSlideIndex: currentSlideIndex,
+        });
     }
   };
 
@@ -94,7 +98,11 @@ function Post(props) {
   );
 
   const renderDescription = (text, withGutter) => (
-    <Typography className={classes.postDescriptionText} variant="body2" component="p" gutterBottom={withGutter}>
+    <Typography
+      className={classes.postDescriptionText}
+      variant="body2"
+      component="p"
+      gutterBottom={withGutter}>
       {text}
     </Typography>
   );
@@ -112,11 +120,15 @@ function Post(props) {
             <Typography variant="body1" className={classes.cardName}>
               {owner.name}
             </Typography>
-            {owner.identityVerified && <VerifiedIcon fontSize="small" color="primary" />}
+            {owner.identityVerified && (
+              <VerifiedIcon fontSize="small" color="primary" />
+            )}
           </Box>
         }
         subheader={
-          <Link to={PROFILE_USERNAME_ROUTE(owner.userName)} className={classes.cardUserName}>
+          <Link
+            to={PROFILE_USERNAME_ROUTE(owner.userName)}
+            className={classes.cardUserName}>
             {`@${owner.userName}`}
           </Link>
         }
@@ -142,12 +154,18 @@ function Post(props) {
           onChangeIndex={handleChangeSlideIndex}
         />
         {post.targetFunds > 0 && (
-          <FundraisingPost position="bottom" fundraising={post.fundraising} targetFunds={post.targetFunds} />
+          <FundraisingPost
+            position="bottom"
+            fundraising={post.fundraising}
+            targetFunds={post.targetFunds}
+          />
         )}
       </CardMedia>
 
       <CardContent className={classes.postCardContent}>
-        {post.media.length === 0 && post.description && renderDescription(post.description, true)}
+        {post.media.length === 0 &&
+          post.description &&
+          renderDescription(post.description, true)}
 
         <Tools
           id={id}
@@ -168,24 +186,31 @@ function Post(props) {
           onPurchase={onPurchase}
           onShare={onShare}
         />
-        {post.media.length > 0 && post.description && renderDescription(post.description)}
+        {post.media.length > 0 &&
+          post.description &&
+          renderDescription(post.description)}
       </CardContent>
 
       <CardActions className={classes.action} disableSpacing>
-        {post?.userTags?.length > 0 && <SuggestionPeopleList items={post?.userTags} limit={3} />}
-        {post.isCommentable && (post.amount === 0 || user.userName === owner.userName || post.isPurchased) && (
-          <>
-            {comments.length > 0 && <CommentsPreview items={comments} />}
-            <Divider className={classes.divider} />
-            <MessageSenderInput
-              hideMediaEditor
-              transparentBg
-              currentFocus={false}
-              placeholder="Add a comment..."
-              onSendMessageClick={handleCommentSendClick}
-            />
-          </>
+        {post?.userTags?.length > 0 && (
+          <SuggestionPeopleList items={post?.userTags} limit={3} />
         )}
+        {post.isCommentable &&
+          (post.amount === 0 ||
+            user.userName === owner.userName ||
+            post.isPurchased) && (
+            <>
+              {comments.length > 0 && <CommentsPreview items={comments} />}
+              <Divider className={classes.divider} />
+              <MessageSenderInput
+                hideMediaEditor
+                transparentBg
+                currentFocus={false}
+                placeholder="Add a comment..."
+                onSendMessageClick={handleCommentSendClick}
+              />
+            </>
+          )}
       </CardActions>
     </Card>
   );

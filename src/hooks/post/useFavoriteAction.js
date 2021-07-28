@@ -11,7 +11,7 @@ export default function useFavoriteAction() {
 
   const handleFavorite = useCallback(async (id) => {
     await dispatch(postActions.favoritePost(apiClient, id));
-  }, [])
+  }, []);
 
   return {
     toggle: handleFavorite,

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 import { Box, IconButton } from "@material-ui/core";
-import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
-import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounded';
+import ArrowBackIosRoundedIcon from "@material-ui/icons/ArrowBackIosRounded";
+import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
 
 import useStyles from "./styles";
 
@@ -11,7 +11,7 @@ function ArrowButtons({
   length,
   currentIndex,
 
-  onChangeIndex
+  onChangeIndex,
 }) {
   const classes = useStyles();
   const [localIndex, setLocalIndex] = useState(currentIndex);
@@ -20,7 +20,7 @@ function ArrowButtons({
     if (currentIndex) {
       setLocalIndex(currentIndex);
     }
-  }, [currentIndex])
+  }, [currentIndex]);
 
   const handleIndexChange = (e, count) => {
     e.stopPropagation();
@@ -38,8 +38,18 @@ function ArrowButtons({
 
   return (
     <Box className={classes.arrowButtonBox} px={2} display="flex">
-      <IconButton onClick={(e) => handleIndexChange(e, localIndex - 1)}><ArrowBackIosRoundedIcon className={classes.arrowButton} fontSize="large" /></IconButton>
-      <IconButton onClick={(e) => handleIndexChange(e, localIndex + 1)}><ArrowForwardIosRoundedIcon className={classes.arrowButton} fontSize="large" /></IconButton>
+      <IconButton onClick={(e) => handleIndexChange(e, localIndex - 1)}>
+        <ArrowBackIosRoundedIcon
+          className={classes.arrowButton}
+          fontSize="large"
+        />
+      </IconButton>
+      <IconButton onClick={(e) => handleIndexChange(e, localIndex + 1)}>
+        <ArrowForwardIosRoundedIcon
+          className={classes.arrowButton}
+          fontSize="large"
+        />
+      </IconButton>
     </Box>
   );
 }

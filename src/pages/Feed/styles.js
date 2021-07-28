@@ -4,20 +4,20 @@ import { getStyleByTheme } from "../../helpers/functions";
 const useStyles = makeStyles((theme) => ({
   root: {
     [theme.breakpoints.down("sm")]: {
-      padding: 0
-    }
+      padding: 0,
+    },
   },
   mainBox: {
     paddingRight: theme.spacing(3),
     [theme.breakpoints.down("sm")]: {
-      paddingRight: "0"
-    }
+      paddingRight: "0",
+    },
   },
   grid: {
     [theme.breakpoints.down("sm")]: {
       width: "100%",
-      margin: 0
-    }
+      margin: 0,
+    },
   },
   suggestionList: {
     position: "sticky",
@@ -26,8 +26,8 @@ const useStyles = makeStyles((theme) => ({
     top: theme.spacing(3),
 
     "&::-webkit-scrollbar": {
-      display: "none"
-    }
+      display: "none",
+    },
   },
   navRoot: {
     position: "sticky",
@@ -36,11 +36,15 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1, 0),
     marginBottom: theme.spacing(1),
     zIndex: theme.zIndex.appBar,
-    borderBottom: "1px solid " + getStyleByTheme(theme, theme.palette.grey["200"], theme.palette.grey["800"])
+    borderBottom: `1px solid ${getStyleByTheme(
+      theme,
+      theme.palette.grey["200"],
+      theme.palette.grey["800"]
+    )}`,
   },
   navDivider: {
-    marginBottom: theme.spacing(1)
-  }
+    marginBottom: theme.spacing(1),
+  },
 }));
 
 export default useStyles;

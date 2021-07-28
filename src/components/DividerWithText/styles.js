@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
   border: {
     borderBottomWidth: "1px",
     borderBottomStyle: "solid",
-    borderColor: gray["400"],	
+    borderColor: gray["400"],
     width: "100%",
   },
   content: {
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     fontSize: 18,
     color: gray["400"],
-	whiteSpace: "nowrap"
+    whiteSpace: "nowrap",
   },
 }));
 

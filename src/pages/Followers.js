@@ -2,17 +2,27 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, Redirect, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 
+import {
+  Container,
+  Tabs,
+  Tab,
+  Card,
+  CardHeader,
+  Avatar,
+} from "@material-ui/core";
 import ApiContext from "../context/ApiContext";
 
 import * as userActions from "../store/actions/user";
 import * as relationshipActions from "../store/actions/relationship";
 
 import { NOT_FOUND_ROUTE, PROFILE_USERNAME_ROUTE } from "../constants/routes";
-import { FOLLOW_PENDING, FOLLOW_ACCEPTED, FOLLOW_REJECTED } from "../constants/follow_types";
-import { RelationshipList } from "../components/RelationshipList";
+import {
+  FOLLOW_PENDING,
+  FOLLOW_ACCEPTED,
+  FOLLOW_REJECTED,
+} from "../constants/follow_types";
+import RelationshipList from "../components/RelationshipList";
 import { useFollowDialog } from "../hooks/payment";
-
-import { Container, Tabs, Tab, Card, CardHeader, Avatar } from "@material-ui/core";
 
 function Followers(props) {
   const { username } = useParams();
@@ -20,7 +30,14 @@ function Followers(props) {
   const followDialog = useFollowDialog();
 
   const { user, me, followers } = props;
-  const { fetchUser, fetchFollowers, acceptFollow, rejectFollow, unrejectFollow, resetFollowers } = props;
+  const {
+    fetchUser,
+    fetchFollowers,
+    acceptFollow,
+    rejectFollow,
+    unrejectFollow,
+    resetFollowers,
+  } = props;
 
   const [status, setStatus] = useState(FOLLOW_ACCEPTED);
 
@@ -38,25 +55,26 @@ function Followers(props) {
     })();
   }, [status]);
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       resetFollowers();
-    };
-  }, []);
+    },
+    []
+  );
 
   if (user.errorMessage) {
     return <Redirect exact to={NOT_FOUND_ROUTE} />;
   }
 
-  const handleConfirmClick = ({ userName, status }) => {
+  const handleConfirmClick = ({ userName }) => {
     !followers.isFetching && acceptFollow(apiClient, userName);
   };
 
-  const handleRejectClick = ({ userName, status }) => {
+  const handleRejectClick = ({ userName }) => {
     rejectFollow(apiClient, userName);
   };
 
-  const handleUnrejectClick = ({ userName, status }) => {
+  const handleUnrejectClick = ({ userName }) => {
     unrejectFollow(apiClient, userName);
   };
 
@@ -80,11 +98,18 @@ function Followers(props) {
             variant="fullWidth"
             onChange={(e, newValue) => {
               setStatus(newValue);
-            }}
-          >
-            <Tab label="Accepted" aria-label="accepted" value={FOLLOW_ACCEPTED} />
+            }}>
+            <Tab
+              label="Accepted"
+              aria-label="accepted"
+              value={FOLLOW_ACCEPTED}
+            />
             <Tab label="Pending" aria-label="pending" value={FOLLOW_PENDING} />
-            <Tab label="Rejected" aria-label="rejected" value={FOLLOW_REJECTED} />
+            <Tab
+              label="Rejected"
+              aria-label="rejected"
+              value={FOLLOW_REJECTED}
+            />
           </Tabs>
         )}
       </Card>
@@ -120,10 +145,14 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchUser: (api, userName) => dispatch(userActions.getUser(api, userName)),
-    fetchFollowers: (api, userName, status) => dispatch(relationshipActions.getFollowers(api, userName, status)),
-    acceptFollow: (api, userName) => dispatch(relationshipActions.acceptFollow(api, userName)),
-    rejectFollow: (api, userName) => dispatch(relationshipActions.rejectFollow(api, userName)),
-    unrejectFollow: (api, userName) => dispatch(relationshipActions.unrejectFollow(api, userName)),
+    fetchFollowers: (api, userName, status) =>
+      dispatch(relationshipActions.getFollowers(api, userName, status)),
+    acceptFollow: (api, userName) =>
+      dispatch(relationshipActions.acceptFollow(api, userName)),
+    rejectFollow: (api, userName) =>
+      dispatch(relationshipActions.rejectFollow(api, userName)),
+    unrejectFollow: (api, userName) =>
+      dispatch(relationshipActions.unrejectFollow(api, userName)),
     resetFollowers: () => dispatch(relationshipActions.resetRelationship()),
   };
 }

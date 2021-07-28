@@ -1,75 +1,73 @@
-export const useConfig = () => {
-  return {
-    hover: {
-      mode: "nearest",
+export const useConfig = () => ({
+  hover: {
+    mode: "nearest",
+    intersect: true,
+  },
+  plugins: {
+    tooltip: {
+      mode: "index",
+      intersect: false,
+    },
+    interaction: {
       intersect: true,
     },
-    plugins: {
-      tooltip: {
-        mode: "index",
-        intersect: false,
+    legend: {
+      display: true,
+      position: "top",
+      align: "center",
+      fullSize: true,
+      labels: {
+        color: "#000",
+        boxWidth: 40,
+        padding: 20,
+        font: {
+          size: 14,
+        },
+        boxHeight: 10,
       },
-      interaction: {
-        intersect: true,
-      },
-      legend: {
+      title: {
         display: true,
-        position: "top",
-        align: "center",
-        fullSize: true,
-        labels: {
-          color: "#000",
-          boxWidth: 40,
-          padding: 20,
-          font: {
-            size: 14,
-          },
-          boxHeight: 10,
-        },
-        title: {
-          display: true,
-          font: {
-            size: 20,
-            weight: "600",
-          },
+        font: {
+          size: 20,
+          weight: "600",
         },
       },
     },
+  },
 
-    maintainAspectRatio: false,
-    scales: {
-      y: {
-        display: true,
-        grid: {
-          display: false,
-        },
-      },
-      x: {
-        grid: {
-          borderColor: "rgb(255, 255, 255,)",
-          borderWidth: 2,
-        },
-        ticks: {},
+  maintainAspectRatio: false,
+  scales: {
+    y: {
+      display: true,
+      grid: {
+        display: false,
       },
     },
-
-    responsive: true,
-
-    elements: {
-      bar: {
-        borderRadius: 6,
+    x: {
+      grid: {
+        borderColor: "rgb(255, 255, 255,)",
+        borderWidth: 2,
       },
-      line: {
-        tension: 0.3,
-        borderWidth: 3,
-      },
-      point: {
-        radius: 0,
-        hoverRadius: 0,
-      },
+      ticks: {},
     },
-  };
-};
+  },
+
+  responsive: true,
+
+  elements: {
+    bar: {
+      borderRadius: 6,
+    },
+    line: {
+      tension: 0.3,
+      borderWidth: 3,
+    },
+    point: {
+      radius: 0,
+      hoverRadius: 0,
+    },
+  },
+});
 
 export const useChartData = (data) => {
   const colors = [
@@ -83,15 +81,13 @@ export const useChartData = (data) => {
   ];
 
   const labels = data.date;
-  const datasets = data.dataset.map((item, idx) => {
-    return {
-      label: item.title,
-      maxBarThickness: 100,
-      data: item.data,
-      borderColor: colors[idx],
-      backgroundColor: colors[idx],
-    };
-  });
+  const datasets = data.dataset.map((item, idx) => ({
+    label: item.title,
+    maxBarThickness: 100,
+    data: item.data,
+    borderColor: colors[idx],
+    backgroundColor: colors[idx],
+  }));
 
   return {
     labels,

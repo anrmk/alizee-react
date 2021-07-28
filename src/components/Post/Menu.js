@@ -1,6 +1,12 @@
 import React from "react";
 
-import { ListItemIcon, ListItemText, List, ListItem, Divider } from "@material-ui/core";
+import {
+  ListItemIcon,
+  ListItemText,
+  List,
+  ListItem,
+  Divider,
+} from "@material-ui/core";
 import BlockIcon from "@material-ui/icons/BlockOutlined";
 import ShareIcon from "@material-ui/icons/ShareOutlined";
 import ReportIcon from "@material-ui/icons/ReportOutlined";
@@ -31,7 +37,7 @@ function Menu({
   onPostStatistics,
 }) {
   const handleBlockClick = () => {
-    onBlock && onBlock({ userName, isBlocked: isBlocked });
+    onBlock && onBlock({ userName, isBlocked });
   };
 
   const handleReportClick = () => {
@@ -65,13 +71,17 @@ function Menu({
           <ListItemIcon>
             <BlockIcon />
           </ListItemIcon>
-          <ListItemText primary={isBlocked ? "Unblock this user" : "Block this user"} />
+          <ListItemText
+            primary={isBlocked ? "Unblock this user" : "Block this user"}
+          />
         </ListItem>
       )}
 
       {!isOwner && onFavorite && (
         <ListItem button onClick={handleFavoriteUserClick}>
-          <ListItemIcon>{isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}</ListItemIcon>
+          <ListItemIcon>
+            {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          </ListItemIcon>
           <ListItemText primary="Add to favorites" />
         </ListItem>
       )}

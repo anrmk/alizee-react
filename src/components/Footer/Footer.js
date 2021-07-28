@@ -1,5 +1,7 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { Grid, Link, Box } from "@material-ui/core";
 import {
   ABOUT_ROUTE,
   HELP_ROUTE,
@@ -15,7 +17,6 @@ import {
   HOME_ROUTE,
 } from "../../constants/routes";
 
-import { Grid, Link, Box } from "@material-ui/core";
 import useStyles from "./styles";
 
 function Footer({ open, sidebarFooter = false }) {

@@ -1,24 +1,30 @@
-import React, { useState } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
+import React from "react";
 import clsx from "clsx";
 
-import { GridList, GridListTile, GridListTileBar, Typography, withWidth } from "@material-ui/core";
+import {
+  GridList,
+  GridListTile,
+  GridListTileBar,
+  withWidth,
+} from "@material-ui/core";
 import AvatarIcon from "../../assets/img/avatar.png";
 
 import useStyle from "./styles";
 
-function GridGalleryUserList({ items, width, onItemClick} ) {
+function GridGalleryUserList({ items, width, onItemClick }) {
   const classes = useStyle();
 
   return (
     <GridList
       spacing={12}
       cols={["xs", "sm"].includes(width) ? 3 : 6}
-      className={clsx(classes.gridList, classes.userViewGridList)}
-    >
+      className={clsx(classes.gridList, classes.userViewGridList)}>
       {items &&
         items.map((item, index) => (
-          <GridListTile key={item.id + index} onClick={() => onItemClick(item.userName)} className={classes.tile}>
+          <GridListTile
+            key={item.id + index}
+            onClick={() => onItemClick(item.userName)}
+            className={classes.tile}>
             <img
               className={clsx(classes.image, classes.userImage)}
               loading="lazy"

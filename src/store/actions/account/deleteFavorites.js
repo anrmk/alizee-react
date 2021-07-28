@@ -22,7 +22,7 @@ function receiveDeleteUserFavorite(data) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      data
+      data,
     },
   };
 }
@@ -47,10 +47,10 @@ export function deleteFavorites(api, userName) {
 
       if (getState().followingPosts.data.length) {
         dispatch(deletePostsUserFavorite(userName));
-      } 
+      }
 
       if (!isEmptyObject(getState().user.data)) {
-        dispatch(removeFavorite())
+        dispatch(removeFavorite());
       }
 
       if (getState().users.data) {
@@ -58,7 +58,7 @@ export function deleteFavorites(api, userName) {
         const index = list.findIndex((item) => item.userName === userName);
 
         if (index !== -1) {
-          list[index]["isFavorite"] = false;
+          list[index].isFavorite = false;
         }
 
         dispatch(receiveDeleteUserFavorite(list));

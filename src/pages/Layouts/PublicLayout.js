@@ -1,12 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Hidden } from "@material-ui/core";
 import ContainerLayout from "./ContainerLayout";
 import { Navbar } from "../../domain/Navbar";
 import Footer from "../../components/Footer";
 
-import { Hidden } from "@material-ui/core";
-
-import useNotification from "../../hooks/useNotificationHub";
 import { signOutUser } from "../../store/actions/signIn";
 
 import useStyles from "./styles";
@@ -45,7 +43,7 @@ function PublicLayout({ children }) {
         </Hidden>
       }>
       {children}
-      <Footer open={true} />
+      <Footer open />
     </ContainerLayout>
   );
 }

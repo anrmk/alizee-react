@@ -1,17 +1,17 @@
 import { generateUrl } from "../../../helpers/functions";
 
-export const UPDATE_PRIVACY_REQUEST = 'UPDATE_PRIVACY_REQUEST';
-export const UPDATE_PRIVACY_SUCCESS = 'UPDATE_PRIVACY_SUCCESS';
-export const UPDATE_PRIVACY_FAILURE = 'UPDATE_PRIVACY_FAILURE';
+export const UPDATE_PRIVACY_REQUEST = "UPDATE_PRIVACY_REQUEST";
+export const UPDATE_PRIVACY_SUCCESS = "UPDATE_PRIVACY_SUCCESS";
+export const UPDATE_PRIVACY_FAILURE = "UPDATE_PRIVACY_FAILURE";
 
 function requestUpdatePrivacy() {
   return {
     type: UPDATE_PRIVACY_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: ''
-    }
-  }
+      errorMessage: "",
+    },
+  };
 }
 
 function receiveUpdatePrivacy(data) {
@@ -19,10 +19,10 @@ function receiveUpdatePrivacy(data) {
     type: UPDATE_PRIVACY_SUCCESS,
     payload: {
       isFetching: false,
-      errorMessage: '',
-      data: data || {}
-    }
-  }
+      errorMessage: "",
+      data: data || {},
+    },
+  };
 }
 
 function errorUpdatePrivacy(message) {
@@ -30,28 +30,28 @@ function errorUpdatePrivacy(message) {
     type: UPDATE_PRIVACY_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message
-    }
-  }
+      errorMessage: message,
+    },
+  };
 }
 
 export function updatePrivacy(api, opts) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(requestUpdatePrivacy());
 
-    const url = generateUrl('updatePrivacy');
+    const url = generateUrl("updatePrivacy");
     try {
       await api
         .setData({
           accountPrivate: opts.accountPrivate,
           showActivity: opts.showActivity,
-          offensiveCommentsHidden: opts.offensiveCommentsHidden
+          offensiveCommentsHidden: opts.offensiveCommentsHidden,
         })
         .query(url);
 
       dispatch(receiveUpdatePrivacy(opts));
-  } catch (e) {
+    } catch (e) {
       dispatch(errorUpdatePrivacy("Error: something went wrong:", e));
     }
-  }
+  };
 }

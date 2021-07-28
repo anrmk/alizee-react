@@ -1,17 +1,11 @@
 import React from "react";
 import ReactPlayer from "react-player";
 
-import {
-  MEDIA_GROUP_TYPE,
-  MEDIA_TYPE,
-} from "../../../constants/media_types";
+import { MEDIA_GROUP_TYPE, MEDIA_TYPE } from "../../../constants/media_types";
 
 import useStyles from "./styles";
 
-export default function MediaContent({
-  type,
-  url
-}) {
+export default function MediaContent({ type, url }) {
   const classes = useStyles();
 
   const mediaTypeToKind = (pType) => {
@@ -20,14 +14,16 @@ export default function MediaContent({
     }
 
     return 2;
-  }
+  };
 
   return mediaTypeToKind(type) === 1 ? (
-    <ReactPlayer
+    <ReactPlayer className={classes.media} controls muted url={url} />
+  ) : (
+    <img
       className={classes.media}
-      controls={true}
-      muted={true}
-      url={url}
+      loading="lazy"
+      src={url}
+      alt="media-content"
     />
-  ) : <img className={classes.media} loading="lazy" src={url} />;
+  );
 }

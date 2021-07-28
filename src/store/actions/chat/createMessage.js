@@ -56,7 +56,9 @@ export function addMessage(api, data) {
       const index = rooms.findIndex((item) => item.id === data.roomId);
 
       if (index !== -1) {
-        const hasStateMessage = current.messages.some((item) => item.id === data.id);
+        const hasStateMessage = current.messages.some(
+          (item) => item.id === data.id
+        );
 
         if (hasStateMessage) {
           return;
@@ -65,20 +67,28 @@ export function addMessage(api, data) {
         rooms[index].lastMessageText = data.text;
 
         rooms[index].unreadMessageCount =
-          current && current.id === data.roomId ? 0 : rooms[index].unreadMessageCount + 1;
+          current && current.id === data.roomId
+            ? 0
+            : rooms[index].unreadMessageCount + 1;
 
         if (current && current.id === data.roomId) {
           current.messages = [...current.messages, data];
         }
 
-        updatedRooms = [rooms[index], ...(rooms.filter((item) => item.id !== data.roomId) || [])];
+        updatedRooms = [
+          rooms[index],
+          ...(rooms.filter((item) => item.id !== data.roomId) || []),
+        ];
 
         dispatch(addMessageSuccess(current, updatedRooms));
       } else {
         await dispatch(getRoom(api, data.userName));
 
         current = { ...current, lastMessageText: data.text };
-        updatedRooms = [current, ...(rooms.filter((item) => item.id !== data.roomId) || [])];
+        updatedRooms = [
+          current,
+          ...(rooms.filter((item) => item.id !== data.roomId) || []),
+        ];
 
         dispatch(addMessageSuccess(current, updatedRooms));
       }
@@ -107,7 +117,7 @@ export function createMessage(api, opts) {
 
       const { data } = await api.setData(formData).query(url);
 
-      if(data) {
+      if (data) {
         dispatch(addMessage(api, data));
       }
       dispatch(receiveCreateMessage());

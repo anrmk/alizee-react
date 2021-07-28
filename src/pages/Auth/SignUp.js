@@ -13,8 +13,6 @@ import * as socialAuthActions from "../../store/actions/socialAuth";
 import { HOME_ROUTE, EMAIL_CONFIRMATION_ROUTE } from "../../constants/routes";
 import ApiContext from "../../context/ApiContext";
 
-import useStyles from "./styles";
-
 function SignUp(props) {
   const apiClient = useContext(ApiContext);
 
@@ -80,9 +78,11 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     signUp: (api, creds) => dispatch(signUpActions.signUpUser(api, creds)),
-    signUpSocial: (api, socialType, data) => dispatch(signInActions.signInSocial(api, socialType, data)),
+    signUpSocial: (api, socialType, data) =>
+      dispatch(signInActions.signInSocial(api, socialType, data)),
     requestSignUpSocial: () => dispatch(socialAuthActions.requestSocialAuth()),
-    failSignUpSocial: (message) => dispatch(socialAuthActions.errorSocialAuth(message)),
+    failSignUpSocial: (message) =>
+      dispatch(socialAuthActions.errorSocialAuth(message)),
   };
 }
 

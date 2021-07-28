@@ -1,1 +1,1 @@
-export { default as useMediaPreviewDialog } from "./useMediaPreviewDialog"
+export { default as useMediaPreviewDialog } from "./useMediaPreviewDialog";

@@ -5,14 +5,15 @@ export const ONE_TIME_AUTH_SUCCESS = "ONE_TIME_AUTH_SUCCESS";
 export const ONE_TIME_AUTH_FAILURE = "ONE_TIME_AUTH_FAILURE";
 
 export function requestOneTimeAuth() {
-  return async dispatch => dispatch({
-    type: ONE_TIME_AUTH_REQUEST,
-    payload: {
-      isFetching: true,
-      isAuthSocial: false,
-      errorMessage: ""
-    }
-  });
+  return async (dispatch) =>
+    dispatch({
+      type: ONE_TIME_AUTH_REQUEST,
+      payload: {
+        isFetching: true,
+        isAuthSocial: false,
+        errorMessage: "",
+      },
+    });
 }
 
 function receiveOneTimeAuth(userInfo) {
@@ -22,24 +23,25 @@ function receiveOneTimeAuth(userInfo) {
       isFetching: false,
       isAuthSocial: true,
       errorMessage: "",
-      data: userInfo || {}
-    }
-  }
+      data: userInfo || {},
+    },
+  };
 }
 
 export function errorOneTimeAuth(message) {
-  return async dispatch => dispatch({
-    type: ONE_TIME_AUTH_FAILURE,
-    payload: {
-      isFetching: false,
-      isAuthSocial: false,
-      errorMessage: message
-    }
-  });
+  return async (dispatch) =>
+    dispatch({
+      type: ONE_TIME_AUTH_FAILURE,
+      payload: {
+        isFetching: false,
+        isAuthSocial: false,
+        errorMessage: message,
+      },
+    });
 }
 
 export function oneTimeAuth(api, opts) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(requestOneTimeAuth());
 
     const url = generateUrl("onetimeauth");
@@ -48,7 +50,7 @@ export function oneTimeAuth(api, opts) {
         .setMethod("POST")
         .setParams({
           email: opts.email,
-          token: opts.token
+          token: opts.token,
         })
         .query(url);
 
@@ -56,5 +58,5 @@ export function oneTimeAuth(api, opts) {
     } catch (e) {
       dispatch(errorOneTimeAuth("Error: social authentication"));
     }
-  }
+  };
 }

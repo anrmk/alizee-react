@@ -44,10 +44,10 @@ export function updateCard(api, data) {
       await api.setMethod("PUT").setData(data).query(url);
 
       dispatch(receiveUpdateCard(data));
-	  return true
+      return true;
     } catch (e) {
       dispatch(errorUpdateCard("Error: something went wrong:", e));
-	  return false
+      return false;
     }
   };
 }

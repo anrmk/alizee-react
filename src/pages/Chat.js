@@ -10,7 +10,10 @@ import SlidingViews from "../components/SlidingViews";
 import * as actionChat from "../store/actions/chat";
 
 import { ESC_KEY_CODE } from "../constants/key_codes";
-import { CHAT_USERNAME_ROUTE, PEAR_TO_PEAR_ID_ROUTE } from "../constants/routes";
+import {
+  CHAT_USERNAME_ROUTE,
+  PEAR_TO_PEAR_ID_ROUTE,
+} from "../constants/routes";
 
 import { useNewChatDialog, useRoomMenuDialog, useChatHub } from "../hooks/chat";
 import useSlidingViews, { RIGHT_OPEN_TYPE } from "../hooks/useSlidingViews";
@@ -26,14 +29,16 @@ function Chat(props) {
   const { username } = useParams();
 
   const { user } = props;
-  const { chat, current, getRoom, getRooms, filterRooms, resetCurrentRoom } = props;
+  const { chat, current, getRoom, getRooms, filterRooms, resetCurrentRoom } =
+    props;
   const { createMessage } = props;
 
   const sendTipDialog = useSendTipDialog();
   const newChatDialog = useNewChatDialog();
   const roomMenuDialog = useRoomMenuDialog();
   const lightboxModal = useLightboxModal();
-  const { currentSlidingViewsState, toggleSlidingViewsState } = useSlidingViews(RIGHT_OPEN_TYPE);
+  const { currentSlidingViewsState, toggleSlidingViewsState } =
+    useSlidingViews(RIGHT_OPEN_TYPE);
   const dialog = useDialog();
   const fullScreen = useFullScreen("root");
 
@@ -97,7 +102,11 @@ function Chat(props) {
   };
 
   return (
-    <SlidingViews mobileOnly currentState={currentSlidingViewsState} firstSize={4} secondSize={8}>
+    <SlidingViews
+      mobileOnly
+      currentState={currentSlidingViewsState}
+      firstSize={4}
+      secondSize={8}>
       <Sidebar
         isLoading={chat.isFetching}
         user={user}
@@ -116,14 +125,20 @@ function Chat(props) {
           isLoading={chat.isFetching}
           onClose={handleRoomClose}
           onMenuClick={() => {
-            roomMenuDialog.toggle({ postId: current?.id, userName: current?.userName, isBlocked: current.isBlocked });
+            roomMenuDialog.toggle({
+              postId: current?.id,
+              userName: current?.userName,
+              isBlocked: current.isBlocked,
+            });
           }}
           onMessageCreate={handleMessageCreate}
           onMediaView={lightboxModal.toggle}
           onVideoStreem={handleCallToPeer}
           onSendTip={sendTipDialog.toggle}
         />
-      ) : (<NoRoom />)}
+      ) : (
+        <NoRoom />
+      )}
     </SlidingViews>
   );
 }
@@ -135,7 +150,7 @@ function mapStateToProps(state) {
       userName: state.signIn?.userInfo?.userName,
       name: state.signIn?.userInfo?.name,
       avatarUrl: state.signIn?.userInfo?.avatarUrl,
-      identityVerified: state.signIn?.userInfo?.identityVerified
+      identityVerified: state.signIn?.userInfo?.identityVerified,
     },
     isAuthenticated: state.signIn.isAuthenticated,
     chat: {

@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import { ENTER_KEY_CODE } from "../../constants/key_codes";
 import { InputAdornment, IconButton, TextField } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/SendOutlined";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOnRounded";
+import { ENTER_KEY_CODE } from "../../constants/key_codes";
 
-import { EmojiPicker } from "../EmojiPicker";
+import EmojiPicker from "../EmojiPicker";
 import { MediaEditor } from "../MediaEditor";
 
 import useStyles from "./styles";
@@ -29,7 +29,7 @@ function MessageSenderInput({
 
   useEffect(() => {
     !disabled && currentFocus && inputRef.current.focus();
-  }, [disabled])
+  }, [disabled]);
 
   const messageSend = () => {
     onSendMessageClick && onSendMessageClick({ media: [], text: value.trim() });
@@ -72,7 +72,11 @@ function MessageSenderInput({
         classes: { notchedOutline: transparentBg && classes.textField },
         startAdornment: (
           <InputAdornment position="start">
-            {!hideMediaEditor && <MediaEditor onSendMediaMessageClick={handleMediaMessageSendClick} />}
+            {!hideMediaEditor && (
+              <MediaEditor
+                onSendMediaMessageClick={handleMediaMessageSendClick}
+              />
+            )}
             {!hideEmojiPicker && (
               <EmojiPicker
                 inputRef={inputRef}
@@ -87,7 +91,6 @@ function MessageSenderInput({
                 <MonetizationOnIcon />
               </IconButton>
             )}
-            
           </InputAdornment>
         ),
         endAdornment: (
@@ -97,7 +100,7 @@ function MessageSenderInput({
             </IconButton>
           </InputAdornment>
         ),
-        className: classes.input
+        className: classes.input,
       }}
       onChange={(e) => setValue(e.target.value)}
       onKeyDown={handleEnterKeyDown}

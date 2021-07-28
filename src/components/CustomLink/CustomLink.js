@@ -1,11 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+/* eslint-disable react/default-props-match-prop-types */
+/* eslint-disable react/require-default-props */
+import React from "react";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 
 import "./CustomLink.scss";
 
 const CustomLink = (props) => {
-  const { 
+  const {
     history,
     to,
     as: Tag,
@@ -19,14 +21,14 @@ const CustomLink = (props) => {
   return (
     <Tag
       {...rest}
-      className={defaultClass + " " + className}
-      onClick={event => {
+      className={`${defaultClass} ${className}`}
+      onClick={(event) => {
         onClick && onClick(event);
         history.push(to);
       }}
     />
   );
-}
+};
 
 CustomLink.propTypes = {
   to: PropTypes.string.isRequired,
@@ -35,10 +37,10 @@ CustomLink.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
   history: PropTypes.shape({
-    push: PropTypes.func.isRequired
+    push: PropTypes.func.isRequired,
   }).isRequired,
 
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 };
 
 CustomLink.defaultProps = {
@@ -48,8 +50,8 @@ CustomLink.defaultProps = {
   className: "",
   children: null,
   history: {},
-  
-  onClick: undefined
+
+  onClick: undefined,
 };
 
 export default withRouter(CustomLink);

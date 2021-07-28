@@ -22,7 +22,7 @@ function Cover({
   const [focusCover, setFocusCover] = useState(false);
 
   const handleCoverChange = (e) => {
-    const files = e.target.files;
+    const { files } = e.target;
 
     if (files && files.length) {
       onFileInputChange && onFileInputChange(files[0]);
@@ -41,8 +41,7 @@ function Cover({
         <Box
           className={clsx(classes.cover, rootClassName)}
           onMouseEnter={() => setFocusCover(true)}
-          onMouseLeave={() => setFocusCover(false)}
-        >
+          onMouseLeave={() => setFocusCover(false)}>
           {children}
           {showControls && (
             <Box position="absolute" right="0" bottom="0">

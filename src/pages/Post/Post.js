@@ -1,8 +1,16 @@
 import React, { useContext, useEffect } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect, useHistory, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { Box, Card, CardMedia, Hidden, IconButton, Chip, Avatar } from "@material-ui/core/";
+import {
+  Box,
+  Card,
+  CardMedia,
+  Hidden,
+  IconButton,
+  Chip,
+  Avatar,
+} from "@material-ui/core/";
 import ImageIcon from "@material-ui/icons/ImageRounded";
 import CommentIcon from "@material-ui/icons/CommentRounded";
 import MoreVertIcon from "@material-ui/icons/MoreVertRounded";
@@ -19,31 +27,54 @@ import * as paymentActions from "../../store/actions/payment";
 import { HOME_ROUTE, PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 
 import useSlidingViews from "../../hooks/useSlidingViews";
-import useShareDialog, { SHARE_DIALOG_POST_TYPE } from "../../hooks/useShareDialog";
-import { useLikeAction, useFavoriteAction, useMenuDialog, useCommentDialog, useCommentAction } from "../../hooks/post";
-import { useSendTipDialog, usePaymentDialog, usePurchaseDialog, useReceiptDialog } from "../../hooks/payment";
+import useShareDialog, {
+  SHARE_DIALOG_POST_TYPE,
+} from "../../hooks/useShareDialog";
+import {
+  useLikeAction,
+  useFavoriteAction,
+  useMenuDialog,
+  useCommentDialog,
+  useCommentAction,
+} from "../../hooks/post";
+import {
+  useSendTipDialog,
+  usePaymentDialog,
+  usePurchaseDialog,
+  useReceiptDialog,
+} from "../../hooks/payment";
 import useLightboxModal from "../../hooks/useLightboxModal";
 
 import useStyles from "./styles";
 import FundraisingPost from "../../components/FundraisingPost";
 
 function PostPage(props) {
+  const { id: postId } = useParams();
   const apiClient = useContext(ApiContext);
   const classes = useStyles();
   const history = useHistory();
-  const { currentSlidingViewsState, toggleSlidingViewsState } = useSlidingViews();
-
-  const postId = props.match.params.id;
+  const { currentSlidingViewsState, toggleSlidingViewsState } =
+    useSlidingViews();
 
   const { user, post, comment } = props;
   const { getPost, getComments, resetComments, resetCurrentPost } = props;
+  const { buyPost, getReceipt, getPurchases } = props;
 
   const likeAction = useLikeAction();
   const favoriteAction = useFavoriteAction();
   const sendTipDialog = useSendTipDialog();
-  const buyPostDialog = usePaymentDialog({ isFetching: props.post.isFetching, onPayment: props.buyPost });
-  const receiptDialog = useReceiptDialog({ isFetching: props.post.isFetching, onReceipt: props.getReceipt });
-  const purchaseDialog = usePurchaseDialog({ isFetching: props.post.isFetching, onPurchases: props.getPurchases });
+  const buyPostDialog = usePaymentDialog({
+    isFetching: post.isFetching,
+    onPayment: buyPost,
+  });
+  const receiptDialog = useReceiptDialog({
+    isFetching: post.isFetching,
+    onReceipt: getReceipt,
+  });
+  const purchaseDialog = usePurchaseDialog({
+    isFetching: post.isFetching,
+    onPurchases: getPurchases,
+  });
   const postMenuDialog = useMenuDialog();
   const commentDialog = useCommentDialog();
   const { handleCommentSendClick } = useCommentAction();
@@ -73,11 +104,16 @@ function PostPage(props) {
 
   return (
     <Box className={classes.container}>
-      <SlidingViews currentState={currentSlidingViewsState} firstSize={8} secondSize={4}>
+      <SlidingViews
+        currentState={currentSlidingViewsState}
+        firstSize={8}
+        secondSize={4}>
         <Card className={classes.card} variant="elevation">
           <CardMedia className={classes.cardMedia}>
             <Hidden mdUp>
-              <IconButton className={classes.iconToggle} onClick={toggleSlidingViewsState}>
+              <IconButton
+                className={classes.iconToggle}
+                onClick={toggleSlidingViewsState}>
                 <CommentIcon />
               </IconButton>
             </Hidden>
@@ -103,7 +139,9 @@ function PostPage(props) {
                     avatar={<Avatar src={item.avatarUrl} />}
                     key={`tagged_${item.name}`}
                     label={item.name}
-                    onClick={() => history.push(PROFILE_USERNAME_ROUTE(item.userName))}
+                    onClick={() =>
+                      history.push(PROFILE_USERNAME_ROUTE(item.userName))
+                    }
                   />
                 ))}
               </Box>
@@ -141,19 +179,16 @@ function PostPage(props) {
                     userName: post.owner.userName,
                     isOwner: user.userName === post.owner.userName,
                   })
-                }
-              >
+                }>
                 <MoreVertIcon />
               </IconButton>
             </>
-          }
-        >
+          }>
           <Tools
             id={post.data.id}
             user={post.owner}
             likes={post.data.likes}
             isLike={post.data.iLike}
-            amount={post.data.amount}
             isFavorite={post.data.isFavorite}
             isVerified={post.owner.identityVerified}
             amount={post.data.amount}
@@ -193,15 +228,18 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getPost: (api, id) => dispatch(postActions.getPost(api, id)),
-    getPurchases: (api, id, callback) => dispatch(postActions.getPurchases(api, id, callback)),
-    getReceipt: (api, id, callback) => dispatch(postActions.getReceipt(api, id, callback)),
+    getPurchases: (api, id, callback) =>
+      dispatch(postActions.getPurchases(api, id, callback)),
+    getReceipt: (api, id, callback) =>
+      dispatch(postActions.getReceipt(api, id, callback)),
     resetCurrentPost: (api, id) => dispatch(postActions.resetCurrentPost()),
 
     buyPost: (api, id) => dispatch(paymentActions.buyPost(api, id)),
 
-    getComments: (api, opts) => dispatch(commentActions.getCommentsPost(api, opts)),
+    getComments: (api, opts) =>
+      dispatch(commentActions.getCommentsPost(api, opts)),
     resetComments: () => dispatch(commentActions.resetCommentsPost()),
-    //createComment: (api, opts) => dispatch(commentActions.createCommentPost(api, opts)),
+    // createComment: (api, opts) => dispatch(commentActions.createCommentPost(api, opts)),
   };
 }
 

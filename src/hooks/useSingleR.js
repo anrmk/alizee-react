@@ -12,6 +12,26 @@ export default function useSingleR(endpoint) {
   }));
 
   useEffect(() => {
+    const connect = () => {
+      const token = getToken()?.access;
+      const newConnection = new signalR.HubConnectionBuilder()
+        .withUrl(
+          wrapHttps(`${process.env.REACT_APP_DOMAIN}${endpoint}`, true),
+          {
+            accessTokenFactory: () => token,
+          }
+        )
+        .withAutomaticReconnect([5000])
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
+
+      newConnection.onclose(() => {
+        console.log("Hub disconnected");
+      });
+
+      setConnection(newConnection);
+    };
+
     isAuthenticated && !connection && connect();
 
     return () => {
@@ -30,30 +50,12 @@ export default function useSingleR(endpoint) {
           console.log("Hub connected");
         })
         .catch((err) => {
-          console.log("Error connection hub: " + JSON.stringify(err));
+          console.log(`Error connection hub: ${JSON.stringify(err)}`);
         });
     }
   }, [connection]);
 
-  var connect = () => {
-    const token = getToken()?.access;
-    const newConnection = new signalR.HubConnectionBuilder()
-      .withUrl(wrapHttps(`${process.env.REACT_APP_DOMAIN}${endpoint}`, true), {
-        accessTokenFactory: () => token,
-      })
-      .withAutomaticReconnect([5000])
-      .configureLogging(signalR.LogLevel.Information)
-      .build();
-
-    newConnection.onclose(() => {
-      console.log("Hub disconnected");
-    });
-
-    setConnection(newConnection);
-  };
-
   return {
-    connection
+    connection,
   };
 }
-

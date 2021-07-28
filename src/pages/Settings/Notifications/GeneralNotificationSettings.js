@@ -2,18 +2,26 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 
 import {
-  SETTINGS_NOTIFICATIONS_PUSH_ROUTE,
-  SETTINGS_NOTIFICATIONS_EMAIL_ROUTE,
-  SETTINGS_NOTIFICATIONS_SITE_ROUTE,
-  SETTINGS_NOTIFICATIONS_TOAST_ROUTE,
-} from "../../../constants/routes";
-
-import { Card, CardContent, CardHeader, Divider, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from "@material-ui/core";
 import WebIcon from "@material-ui/icons/WebOutlined";
 import EmailIcon from "@material-ui/icons/EmailOutlined";
 import LanguageIcon from "@material-ui/icons/LanguageOutlined";
 import ViewDayIcon from "@material-ui/icons/ViewDayOutlined";
 import ChevronRightIcon from "@material-ui/icons/ChevronRightOutlined";
+import {
+  SETTINGS_NOTIFICATIONS_PUSH_ROUTE,
+  SETTINGS_NOTIFICATIONS_EMAIL_ROUTE,
+  SETTINGS_NOTIFICATIONS_SITE_ROUTE,
+  SETTINGS_NOTIFICATIONS_TOAST_ROUTE,
+} from "../../../constants/routes";
 
 function GeneralNotificationSettings() {
   const history = useHistory();
@@ -24,7 +32,10 @@ function GeneralNotificationSettings() {
       <Divider />
       <CardContent>
         <List disablePadding>
-          <ListItem button alignItems="flex-start" onClick={() => history.push(SETTINGS_NOTIFICATIONS_PUSH_ROUTE)}>
+          <ListItem
+            button
+            alignItems="flex-start"
+            onClick={() => history.push(SETTINGS_NOTIFICATIONS_PUSH_ROUTE)}>
             <ListItemIcon>
               <WebIcon />
             </ListItemIcon>
@@ -35,7 +46,10 @@ function GeneralNotificationSettings() {
             <ChevronRightIcon />
           </ListItem>
 
-          <ListItem button alignItems="flex-start" onClick={() => history.push(SETTINGS_NOTIFICATIONS_EMAIL_ROUTE)}>
+          <ListItem
+            button
+            alignItems="flex-start"
+            onClick={() => history.push(SETTINGS_NOTIFICATIONS_EMAIL_ROUTE)}>
             <ListItemIcon>
               <EmailIcon />
             </ListItemIcon>
@@ -46,7 +60,10 @@ function GeneralNotificationSettings() {
             <ChevronRightIcon />
           </ListItem>
 
-          <ListItem button alignItems="flex-start" onClick={() => history.push(SETTINGS_NOTIFICATIONS_SITE_ROUTE)}>
+          <ListItem
+            button
+            alignItems="flex-start"
+            onClick={() => history.push(SETTINGS_NOTIFICATIONS_SITE_ROUTE)}>
             <ListItemIcon>
               <LanguageIcon />
             </ListItemIcon>
@@ -54,7 +71,10 @@ function GeneralNotificationSettings() {
             <ChevronRightIcon />
           </ListItem>
 
-          <ListItem button alignItems="flex-start" onClick={() => history.push(SETTINGS_NOTIFICATIONS_TOAST_ROUTE)}>
+          <ListItem
+            button
+            alignItems="flex-start"
+            onClick={() => history.push(SETTINGS_NOTIFICATIONS_TOAST_ROUTE)}>
             <ListItemIcon>
               <ViewDayIcon />
             </ListItemIcon>

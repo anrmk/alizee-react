@@ -6,7 +6,8 @@ import { STORIES_OFFSET } from "../../../constants/feed";
 export const GET_FOLLOWING_STORIES_REQUEST = "GET_FOLLOWING_STORIES_REQUEST";
 export const GET_FOLLOWING_STORIES_SUCCESS = "GET_FOLLOWING_STORIES_SUCCESS";
 export const GET_FOLLOWING_STORIES_FAILURE = "GET_FOLLOWING_STORIES_FAILURE";
-export const RESET_FOLLOWING_STORIES_SUCCESS = "RESET_FOLLOWING_STORIES_SUCCESS";
+export const RESET_FOLLOWING_STORIES_SUCCESS =
+  "RESET_FOLLOWING_STORIES_SUCCESS";
 
 function requestGetFollowingStories() {
   return {
@@ -60,7 +61,8 @@ export function getFollowingStories(api, opts) {
     dispatch(requestGetFollowingStories());
 
     const url = generateUrl("getFollowingStories");
-    const currentOffset = opts.start !== undefined ? opts.start : getState().story.offset;
+    const currentOffset =
+      opts.start !== undefined ? opts.start : getState().story.offset;
     try {
       const { data } = await api
         .setMethod("GET")

@@ -38,12 +38,12 @@ function errorGetPost(message) {
 }
 
 export function resetCurrentPost() {
-	return {
-		type: RESET_CURRENT_POST,
-		payload: {
-			currentPost: {}
-		}
-	}
+  return {
+    type: RESET_CURRENT_POST,
+    payload: {
+      currentPost: {},
+    },
+  };
 }
 
 export function getPost(api, id) {

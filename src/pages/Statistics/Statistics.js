@@ -1,15 +1,30 @@
+/* eslint-disable no-nested-ternary */
 import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
 
+import { Grid, Typography, Box } from "@material-ui/core/";
 import ApiContext from "../../context/ApiContext";
 import * as activityPaymentsActions from "../../store/actions/activity";
 
-import { SortChartDate, ChartLine, ChartBar, FavoriteList } from "../../domain/Statistics";
+import {
+  SortChartDate,
+  ChartLine,
+  ChartBar,
+  FavoriteList,
+} from "../../domain/Statistics";
 
-import { FILTER_BY_DAYS, FILTER_BY_MONTHS, FILTER_BY_WEEKS, FILTER_BY_YEARS } from "../../constants/chart_sort_date";
-import { monthlyDateChart, dailyDateChart, yearsDateChart, weeksDateChart } from "../../domain/Statistics/data";
-
-import { Grid, Typography, Box } from "@material-ui/core/";
+import {
+  FILTER_BY_DAYS,
+  FILTER_BY_MONTHS,
+  FILTER_BY_WEEKS,
+  FILTER_BY_YEARS,
+} from "../../constants/chart_sort_date";
+import {
+  monthlyDateChart,
+  dailyDateChart,
+  yearsDateChart,
+  weeksDateChart,
+} from "../../domain/Statistics/data";
 
 import useStyles from "./styles";
 
@@ -77,34 +92,39 @@ function Statistics(props) {
       </Grid>
 
       <>
-        {filteredDataByDate().charts.map((item, idx) => {
-          return (
-            <Grid
-              item
-              xs={12}
-              lg={6}
-              xl={
-                item.name === "Income" || item.name === "Balance" || item.name === "Posts" || item.name === "Subscribe"
-                  ? 6
-                  : item.name === "Profile visitors"
-                  ? 8
-                  : 4
-              }
-              key={idx}
-            >
-              {item.name === "Profile visitors" || item.name === "Balance" ? (
-                <ChartBar date={filteredDataByDate().date} name={item.name} dataset={item.dataset} total={item.total} />
-              ) : (
-                <ChartLine
-                  date={filteredDataByDate().date}
-                  name={item.name}
-                  dataset={item.dataset}
-                  total={item.total}
-                />
-              )}
-            </Grid>
-          );
-        })}
+        {filteredDataByDate().charts.map((item, idx) => (
+          <Grid
+            item
+            xs={12}
+            lg={6}
+            xl={
+              item.name === "Income" ||
+              item.name === "Balance" ||
+              item.name === "Posts" ||
+              item.name === "Subscribe"
+                ? 6
+                : item.name === "Profile visitors"
+                ? 8
+                : 4
+            }
+            key={idx}>
+            {item.name === "Profile visitors" || item.name === "Balance" ? (
+              <ChartBar
+                date={filteredDataByDate().date}
+                name={item.name}
+                dataset={item.dataset}
+                total={item.total}
+              />
+            ) : (
+              <ChartLine
+                date={filteredDataByDate().date}
+                name={item.name}
+                dataset={item.dataset}
+                total={item.total}
+              />
+            )}
+          </Grid>
+        ))}
 
         <Grid item xs={12} lg={6} xl={4}>
           <FavoriteList />
@@ -125,7 +145,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getActivityPayments: (api, opts) => dispatch(activityPaymentsActions.getActivityPayments(api, opts)),
+    getActivityPayments: (api, opts) =>
+      dispatch(activityPaymentsActions.getActivityPayments(api, opts)),
   };
 }
 

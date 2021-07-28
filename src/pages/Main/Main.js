@@ -21,7 +21,7 @@ import Followers from "../Followers";
 import Followings from "../Followings";
 import Blocked from "../Blocked";
 import Favorites from "../Favorites";
-import { Settings } from "../Settings";
+import Settings from "../Settings";
 import { ResetPassword, ChangePassword } from "../Password";
 import Search from "../Search";
 import Story from "../Story";
@@ -35,7 +35,7 @@ import Notifications from "../Notifications";
 import { MainLayout } from "../Layouts";
 
 import { signOutUser } from "../../store/actions/signIn";
-import { getMe } from "../../store/actions/user";
+import * as userActions from "../../store/actions/user";
 import * as Routes from "../../constants/routes";
 
 import useChangeTheme from "../../hooks/useChangeTheme";
@@ -79,38 +79,89 @@ function Main(props) {
       <Route exact path={Routes.NOT_FOUND_ROUTE} component={NotFound} />
       <Route exact path={Routes.SIGN_UP_ROUTE} component={SignUp} />
       <Route exact path={Routes.SIGN_IN_ROUTE} component={SignIn} />
-      <Route exact path={Routes.EMAIL_CONFIRMATION_ROUTE} component={EmailConfirmation} />
+      <Route
+        exact
+        path={Routes.EMAIL_CONFIRMATION_ROUTE}
+        component={EmailConfirmation}
+      />
       <Route exact path={Routes.EMAIL_VERIFY_ROUTE} component={EmailVerify} />
-      <Route exact path={Routes.RESET_PASSWORD_ROUTE} component={ResetPassword} />
-      <Route exact path={Routes.PASSWORD_CHANGE_ROUTE} component={ChangePassword} />
+      <Route
+        exact
+        path={Routes.RESET_PASSWORD_ROUTE}
+        component={ResetPassword}
+      />
+      <Route
+        exact
+        path={Routes.PASSWORD_CHANGE_ROUTE}
+        component={ChangePassword}
+      />
       <Route exact path={Routes.HELP_ROUTE} component={Help} />
       <Route exact path={Routes.HELP_DETAIL_ROUTE} component={HelpDetails} />
       <Route exact path={Routes.CHANGE_LOG_ROUTE} component={ChangeLog} />
       <Route exact path={Routes.ABOUT_ROUTE} component={About} />
       <Route exact path={Routes.CONTACT_ROUTE} component={Contact} />
       <PrivateRoute exact path={Routes.STORIES_ID_ROUTE} component={Story} />
-      <PrivateRoute path={Routes.PEAR_TO_PEAR_DEFAULT_ROUTE} component={PearToPear} />
+      <PrivateRoute
+        path={Routes.PEAR_TO_PEAR_DEFAULT_ROUTE}
+        component={PearToPear}
+      />
 
       <Route>
         <MainLayout>
           <Switch>
             <PrivateRoute path={Routes.EXPLORE_ROUTE} component={Explore} />
-            <PrivateRoute path={Routes.NOTIFICATION_ID_DEFAULT_ROUTE} component={Notifications} />
+            <PrivateRoute
+              path={Routes.NOTIFICATION_ID_DEFAULT_ROUTE}
+              component={Notifications}
+            />
             <PrivateRoute path={Routes.POST_ROUTE} component={Post} />
             <PrivateRoute path={Routes.ACTIVITY_ROUTE} component={Activity} />
             <PrivateRoute path={Routes.MEET_ROUTE} component={Meeting} />
             <PrivateRoute path={Routes.CHAT_DEFAULT_ROUTE} component={Chat} />
             <PrivateRoute path={Routes.ROOM_DEFAULT_ROUTE} component={Room} />
             <PrivateRoute path={Routes.SEARCH_ROUTE} component={Search} />
-            <PrivateRoute exact path={Routes.ROOM_ROUTE} component={CreateRoom} />
-            <PrivateRoute exact path={Routes.FAVORITES_ROUTE} component={Favorites} />
-            <PrivateRoute exact path={Routes.BLOCKED_ROUTE} component={Blocked} />
-            <PrivateRoute path={Routes.SETTINGS_DEFAULT_ROUTE} component={Settings} />
-            <PrivateRoute path={Routes.SUGESTED_PEOPLE} component={PeopleSuggested} />
-            <PrivateRoute path={Routes.STATISTICS_ROUTE} component={Statistics} />
-            <PrivateRoute exact path={Routes.PROFILE_FOLLOWERS_ROUTE} component={Followers} />
-            <PrivateRoute exact path={Routes.PROFILE_FOLLOWINGS_ROUTE} component={Followings} />
-            <PrivateRoute exact path={Routes.PROFILE_ROUTE} component={Profile} />
+            <PrivateRoute
+              exact
+              path={Routes.ROOM_ROUTE}
+              component={CreateRoom}
+            />
+            <PrivateRoute
+              exact
+              path={Routes.FAVORITES_ROUTE}
+              component={Favorites}
+            />
+            <PrivateRoute
+              exact
+              path={Routes.BLOCKED_ROUTE}
+              component={Blocked}
+            />
+            <PrivateRoute
+              path={Routes.SETTINGS_DEFAULT_ROUTE}
+              component={Settings}
+            />
+            <PrivateRoute
+              path={Routes.SUGESTED_PEOPLE}
+              component={PeopleSuggested}
+            />
+            <PrivateRoute
+              path={Routes.STATISTICS_ROUTE}
+              component={Statistics}
+            />
+            <PrivateRoute
+              exact
+              path={Routes.PROFILE_FOLLOWERS_ROUTE}
+              component={Followers}
+            />
+            <PrivateRoute
+              exact
+              path={Routes.PROFILE_FOLLOWINGS_ROUTE}
+              component={Followings}
+            />
+            <PrivateRoute
+              exact
+              path={Routes.PROFILE_ROUTE}
+              component={Profile}
+            />
             <PrivateRoute path={Routes.HOME_ROUTE} component={Feed} />
           </Switch>
         </MainLayout>
@@ -130,7 +181,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getMe: (api) => dispatch(getMe(api)),
+    getMe: (api) => dispatch(userActions.getMe(api)),
     signOut: (api) => dispatch(signOutUser(api)),
   };
 }

@@ -7,7 +7,10 @@ import { PrivacyForm } from "../../domain/SettingsForms";
 import ApiContext from "../../context/ApiContext";
 import * as settingsActions from "../../store/actions/settings";
 import * as userActions from "../../store/actions/user";
-import dialogs, { AGREE_DIALOG_TYPE, RESET_PWD_ACCOUNT_DIALOG_TYPE } from "../../constants/dialogs";
+import dialogs, {
+  AGREE_DIALOG_TYPE,
+  RESET_PWD_ACCOUNT_DIALOG_TYPE,
+} from "../../constants/dialogs";
 import useDialog from "../../hooks/useDialog";
 
 function PrivacySecuritySettings(props) {
@@ -65,7 +68,11 @@ function PrivacySecuritySettings(props) {
   };
 
   const handlePasswordResetClick = () => {
-    dialog.toggle(dialogs[RESET_PWD_ACCOUNT_DIALOG_TYPE]({ onMainClick: handlePasswordResetConfirmClick }));
+    dialog.toggle(
+      dialogs[RESET_PWD_ACCOUNT_DIALOG_TYPE]({
+        onMainClick: handlePasswordResetConfirmClick,
+      })
+    );
   };
 
   const handleAccountDeleteConfirmClick = () => {
@@ -123,12 +130,19 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getPrivacy: (api) => dispatch(settingsActions.getPrivacy(api)),
-    updateActivityStatus: (api, status) => dispatch(settingsActions.updateActivityStatus(api, status)),
-    updatePrivateStatus: (api, status) => dispatch(settingsActions.updatePrivateStatus(api, status)),
-    updateOffensiveComments: (api, status) => dispatch(settingsActions.updateOffensiveComments(api, status)),
+    updateActivityStatus: (api, status) =>
+      dispatch(settingsActions.updateActivityStatus(api, status)),
+    updatePrivateStatus: (api, status) =>
+      dispatch(settingsActions.updatePrivateStatus(api, status)),
+    updateOffensiveComments: (api, status) =>
+      dispatch(settingsActions.updateOffensiveComments(api, status)),
     deleteAccount: (api) => dispatch(settingsActions.deleteAccount(api)),
-    getSettingsResetPasswordConfirm: (api) => dispatch(userActions.getSettingsResetPasswordConfirm(api)),
+    getSettingsResetPasswordConfirm: (api) =>
+      dispatch(userActions.getSettingsResetPasswordConfirm(api)),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PrivacySecuritySettings);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PrivacySecuritySettings);

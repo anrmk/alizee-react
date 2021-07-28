@@ -1,16 +1,19 @@
-import { SEARCH_LENGTH, SEARCH_OFFSET } from "../../../constants/search";
+import { SEARCH_LENGTH } from "../../../constants/search";
 import { generateUrl } from "../../../helpers/functions";
 
-export const GET_FOLLOWINGS_BY_QUERY_REQUEST = "GET_FOLLOWINGS_BY_QUERY_REQUEST";
-export const GET_FOLLOWINGS_BY_QUERY_SUCCESS = "GET_FOLLOWINGS_BY_QUERY_SUCCESS";
-export const GET_FOLLOWINGS_BY_QUERY_FAILURE = "GET_FOLLOWINGS_BY_QUERY_FAILURE";
+export const GET_FOLLOWINGS_BY_QUERY_REQUEST =
+  "GET_FOLLOWINGS_BY_QUERY_REQUEST";
+export const GET_FOLLOWINGS_BY_QUERY_SUCCESS =
+  "GET_FOLLOWINGS_BY_QUERY_SUCCESS";
+export const GET_FOLLOWINGS_BY_QUERY_FAILURE =
+  "GET_FOLLOWINGS_BY_QUERY_FAILURE";
 
 function requestGetFollowingsByQuery() {
   return {
     type: GET_FOLLOWINGS_BY_QUERY_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: ""
+      errorMessage: "",
     },
   };
 }
@@ -23,7 +26,7 @@ function receiveGetFollowingsByQuery(data, start, currentLength) {
       offset: 0, // TODO: change to start + SEARCH_OFFSET
       hasMore: currentLength === SEARCH_LENGTH,
       share: data,
-      errorMessage: ""
+      errorMessage: "",
     },
   };
 }
@@ -33,7 +36,7 @@ function errorGetFollowingsByQuery(message) {
     type: GET_FOLLOWINGS_BY_QUERY_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message
+      errorMessage: message,
     },
   };
 }
@@ -51,13 +54,13 @@ export function getFollowingsByQuery(api, query) {
         .setParams({
           query,
           start: currentOffset,
-          length: SEARCH_LENGTH
+          length: SEARCH_LENGTH,
         })
         .query(url);
 
       dispatch(receiveGetFollowingsByQuery(data, currentOffset, data.length));
-    } catch(e) {
-      console.error(e)
+    } catch (e) {
+      console.error(e);
       dispatch(errorGetFollowingsByQuery("Error: GetFollowings"));
     }
   };

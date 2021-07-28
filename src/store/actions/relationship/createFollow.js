@@ -43,15 +43,21 @@ export function createFollow(api, userName, isPrivateAccount) {
 
     const url = generateUrl("createFollow");
     try {
-      await api.setParams({ userName: userName }).query(url);
+      await api.setParams({ userName }).query(url);
 
-      const updatedData = toggleFollowStatus(getState().users.data, userName, true);
+      const updatedData = toggleFollowStatus(
+        getState().users.data,
+        userName,
+        true
+      );
 
       dispatch(addFollower(isPrivateAccount));
       dispatch(receiveCreateFollow(updatedData));
       dispatch(getDeposit(api));
     } catch {
-      return dispatch(errorCreateFollow("When follow was creating then something went wrong"));
+      dispatch(
+        errorCreateFollow("When follow was creating then something went wrong")
+      );
     }
   };
 }
@@ -63,7 +69,7 @@ export function toggleFollowStatus(data, userName, status) {
   const index = list.findIndex((item) => item.userName === userName);
 
   if (index !== -1) {
-    list[index]["isFollow"] = status;
+    list[index].isFollow = status;
   }
 
   return list;

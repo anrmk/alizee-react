@@ -1,6 +1,12 @@
 import React from "react";
 
-import { Box, Menu as MUIMenu, MenuItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import {
+  Box,
+  Menu as MUIMenu,
+  MenuItem,
+  ListItemIcon,
+  ListItemText,
+} from "@material-ui/core";
 
 import GiftIcon from "@material-ui/icons/RedeemOutlined";
 import StarBorderIcon from "@material-ui/icons/StarBorderOutlined";
@@ -17,7 +23,7 @@ function Menu({
   onSendGiftClick,
   onFavoriteClick,
   onShareClick,
-  onClose
+  onClose,
 }) {
   const classes = useStyles();
 

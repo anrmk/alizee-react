@@ -216,7 +216,7 @@ export default function settings(
       };
     // Get account settings
 
-    //GET PERSONAL
+    // GET PERSONAL
     case GET_PERSONAL_REQUEST: {
       return {
         ...state,
@@ -236,7 +236,7 @@ export default function settings(
       };
     }
 
-    //NOTIFICATION SETTINGS
+    // NOTIFICATION SETTINGS
     case GET_SITE_NOTIFICATION_REQUEST: {
       return {
         ...state,
@@ -405,7 +405,7 @@ export default function settings(
       };
     }
 
-    //CARD SETTINGS
+    // CARD SETTINGS
     case GET_CARD_REQUEST: {
       return {
         ...state,
@@ -444,7 +444,7 @@ export default function settings(
       };
     }
 
-    //BANK SETTINGS
+    // BANK SETTINGS
     case GET_BANK_REQUEST: {
       return {
         ...state,
@@ -521,7 +521,7 @@ export default function settings(
       };
     }
 
-    //RESET SETTINGS
+    // RESET SETTINGS
     case RESET_SETTINGS_REQUEST: {
       return {
         ...state,

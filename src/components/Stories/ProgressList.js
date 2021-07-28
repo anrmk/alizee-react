@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { Box } from "@material-ui/core";
 
@@ -11,10 +12,13 @@ import useStyles from "./styles";
 export default function ProgressList() {
   const [count, setCount] = useState(0);
   const { currentId, next, videoDuration, pause } = useContext(ProgressContext);
-  const { defaultInterval, onStoryEnd, onStoryStart, onAllStoriesEnd } = useContext(GlobalContext);
-  const { storyOptions: { stories } } = useContext(StoriesContext);
+  const { defaultInterval, onStoryEnd, onStoryStart, onAllStoriesEnd } =
+    useContext(GlobalContext);
+  const {
+    storyOptions: { stories },
+  } = useContext(StoriesContext);
   const classes = useStyles();
-  let animationFrameId = useRef();
+  const animationFrameId = useRef();
 
   useEffect(() => {
     setCount(0);
@@ -26,17 +30,17 @@ export default function ProgressList() {
     }
     return () => {
       cancelAnimationFrame(animationFrameId.current);
-    }
+    };
   }, [pause]);
 
   let countCopy = count;
   const incrementCount = () => {
     if (countCopy === 0) storyStartCallback();
 
-    setCount(count => {
+    setCount((prevCount) => {
       const interval = getCurrentInterval();
-      countCopy = count + (100 / ((interval / 1000) * 60));
-      return count + (100 / ((interval / 1000) * 60));
+      countCopy = prevCount + 100 / ((interval / 1000) * 60);
+      return prevCount + 100 / ((interval / 1000) * 60);
     });
 
     if (countCopy < 100) {
@@ -49,35 +53,37 @@ export default function ProgressList() {
       cancelAnimationFrame(animationFrameId.current);
       next();
     }
-  }
+  };
 
   const storyStartCallback = () => {
     onStoryStart && onStoryStart(currentId, stories[currentId]);
-  }
+  };
 
   const storyEndCallback = () => {
     onStoryEnd && onStoryEnd(currentId, stories[currentId]);
-  }
+  };
 
   const allStoriesEndCallback = () => {
     onAllStoriesEnd && onAllStoriesEnd(currentId, stories);
-  }
+  };
 
   const getCurrentInterval = () => {
     if (stories[currentId]?.media?.kind === MEDIA_VIDEO) return videoDuration;
 
     return defaultInterval;
-  }
+  };
 
   return (
     <Box className={classes.progressList}>
-      {stories.length && stories.map((_, i) =>
-        <Progress
-          key={i}
-          count={count}
-          width={1 / stories.length}
-          active={i === currentId ? 1 : (i < currentId ? 2 : 0)} />
-      )}
+      {stories.length &&
+        stories.map((_, i) => (
+          <Progress
+            key={i}
+            count={count}
+            width={1 / stories.length}
+            active={i === currentId ? 1 : i < currentId ? 2 : 0}
+          />
+        ))}
     </Box>
   );
 }

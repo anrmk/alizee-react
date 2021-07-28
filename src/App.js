@@ -3,11 +3,11 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { createBrowserHistory as history } from "history";
 import { CssBaseline } from "@material-ui/core";
 
+import { SnackbarProvider } from "notistack";
 import LinearDeterminate from "./components/LinearDeterminate";
 import ThemeProvider from "./domain/ThemeProvider";
 import ViewportProvider from "./domain/ViewportProvider/ViewportProvider";
 import DialogProvider from "./domain/DialogProvider";
-import { SnackbarProvider } from "notistack";
 
 import Main from "./pages/Main";
 
@@ -18,14 +18,14 @@ function App() {
     <Suspense fallback={<LinearDeterminate />}>
       <ViewportProvider>
         <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Router history={history}>
-              <SnackbarProvider maxSnack={3}>
-                <DialogProvider>
-                  <Main />
-                </DialogProvider>
-              </SnackbarProvider>
-            </Router>
+          <CssBaseline />
+          <Router history={history}>
+            <SnackbarProvider maxSnack={3}>
+              <DialogProvider>
+                <Main />
+              </DialogProvider>
+            </SnackbarProvider>
+          </Router>
         </ThemeProvider>
       </ViewportProvider>
     </Suspense>

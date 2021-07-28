@@ -2,8 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import { ListItem, ListItemAvatar, ListItemText, Button } from "@material-ui/core";
-import { FOLLOW_ACCEPTED, FOLLOW_PENDING, FOLLOW_REJECTED } from "../../constants/follow_types";
+import {
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Button,
+} from "@material-ui/core";
+import { FOLLOW_PENDING, FOLLOW_REJECTED } from "../../constants/follow_types";
 
 import Avatar from "../Avatar";
 
@@ -13,14 +18,38 @@ import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 const RelationshipItem = React.memo((props) => {
   const { t } = useTranslation();
 
-  const { userName, status, avatarUrl, coverUrl, name, subtitle, subscriptionPrice, isFollow, isMe, identityVerified } = props;
-  const { onItemClick, onSubscribeClick, onConfirmClick, onRejectClick, onUnrejectClick } = props;
+  const {
+    userName,
+    status,
+    avatarUrl,
+    coverUrl,
+    name,
+    subtitle,
+    subscriptionPrice,
+    isFollow,
+    isMe,
+    identityVerified,
+  } = props;
+  const {
+    onItemClick,
+    onSubscribeClick,
+    onConfirmClick,
+    onRejectClick,
+    onUnrejectClick,
+  } = props;
 
   const classes = useStyles({ url: coverUrl });
 
   const handleSubscribeClick = (e) => {
     e.preventDefault();
-    onSubscribeClick && onSubscribeClick({ userName, name, isFollow, subscriptionPrice, avatarUrl });
+    onSubscribeClick &&
+      onSubscribeClick({
+        userName,
+        name,
+        isFollow,
+        subscriptionPrice,
+        avatarUrl,
+      });
   };
 
   const handleConfirmClick = (e) => {
@@ -49,8 +78,7 @@ const RelationshipItem = React.memo((props) => {
               size="small"
               variant="contained"
               color="primary"
-              onClick={handleConfirmClick}
-            >
+              onClick={handleConfirmClick}>
               {t("ConfirmBtnTextFollowerItem")}
             </Button>
             &nbsp;
@@ -60,8 +88,7 @@ const RelationshipItem = React.memo((props) => {
               size="small"
               variant="contained"
               color="secondary"
-              onClick={handleRejectClick}
-            >
+              onClick={handleRejectClick}>
               {t("DeclineBtnTextFollowerItem")}
             </Button>
           </>
@@ -69,7 +96,11 @@ const RelationshipItem = React.memo((props) => {
 
       case FOLLOW_REJECTED:
         return (
-          <Button disableElevation disableRipple size="small" onClick={handleUnrejectClick}>
+          <Button
+            disableElevation
+            disableRipple
+            size="small"
+            onClick={handleUnrejectClick}>
             {t("UnrejectBtnTextFollowerItem")}
           </Button>
         );
@@ -82,16 +113,21 @@ const RelationshipItem = React.memo((props) => {
             size="small"
             variant="contained"
             color="primary"
-            onClick={handleSubscribeClick}
-          >
-            {isFollow ? t("FollowingBtnTextFollowerItem") : t("FollowerBtnTextFollowerItem")}
+            onClick={handleSubscribeClick}>
+            {isFollow
+              ? t("FollowingBtnTextFollowerItem")
+              : t("FollowerBtnTextFollowerItem")}
           </Button>
         );
     }
   };
 
   return (
-    <ListItem className={classes.item} button to={PROFILE_USERNAME_ROUTE(userName)} component={Link}>
+    <ListItem
+      className={classes.item}
+      button
+      to={PROFILE_USERNAME_ROUTE(userName)}
+      component={Link}>
       <ListItemAvatar>
         <Avatar borderColor="silver" src={avatarUrl} />
       </ListItemAvatar>

@@ -15,15 +15,20 @@ function SocialControl({ urls, onClick }) {
   const renderIcon = (url) => {
     if (url.includes("instagram.com")) {
       return <InstagramIcon />;
-    } else if (url.includes("facebook.com")) {
+    }
+    if (url.includes("facebook.com")) {
       return <FacebookIcon />;
-    } else if (url.includes("linkedin.com")) {
+    }
+    if (url.includes("linkedin.com")) {
       return <LinkedInIcon />;
-    } else if (url.includes("pinterest.com")) {
+    }
+    if (url.includes("pinterest.com")) {
       return <PinterestIcon />;
-    } else if (url.includes("twitter.com/")) {
+    }
+    if (url.includes("twitter.com/")) {
       return <TwitterIcon />;
-    } else if (url.includes("youtube.com")) {
+    }
+    if (url.includes("youtube.com")) {
       return <YouTubeIcon />;
     }
     return <LinkIcon />;

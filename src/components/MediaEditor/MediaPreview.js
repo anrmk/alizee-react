@@ -4,29 +4,31 @@ import clsx from "clsx";
 
 import useStyles from "./styles";
 
-function MediaPreview({
-  type,
-  url,
-  fullWidth,
-}) {
+function MediaPreview({ type, url, fullWidth }) {
   const classes = useStyles();
 
-  const renderMediaItem = (type, url, fw) => {
-    if (type === 1) {
-      return (
+  return (
+    <>
+      {type === 1 && (
         <ReactPlayer
-          className={clsx(classes.video, fw && classes.videoPreview)}
-          controls={fw}
-          muted={true}
+          className={clsx(classes.video, fullWidth && classes.videoPreview)}
+          controls={fullWidth}
+          muted
           url={url}
         />
-      );
-    } else if (type === 2) {
-      return <img src={url} className={clsx(!fw && classes.image, fw && classes.imagePreview)} />;
-    }
-  };
-
-  return renderMediaItem(type, url, fullWidth);
+      )}
+      {type === 2 && (
+        <img
+          src={url}
+          className={clsx(
+            !fullWidth && classes.image,
+            fullWidth && classes.imagePreview
+          )}
+          alt="media-preview-img"
+        />
+      )}
+    </>
+  );
 }
 
 export default MediaPreview;

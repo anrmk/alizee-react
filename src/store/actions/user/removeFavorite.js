@@ -13,7 +13,7 @@ function receiveFavorite(data) {
 
 export function removeFavorite() {
   return (dispatch, getState) => {
-    let user = getState().user.data;
+    const user = getState().user.data;
     user.isFavorite = false;
 
     dispatch(receiveFavorite(user));

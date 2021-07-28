@@ -3,10 +3,22 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import InputMask from "react-input-mask";
 import * as yup from "yup";
+import {
+  Grid,
+  TextField,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+} from "@material-ui/core";
 import { PHONE_REGEX } from "../../constants/regexs";
 
-import { Grid, TextField, Button, Card, CardContent, CardHeader, Divider } from "@material-ui/core";
-import { EMPTY_VALUE_ERROR, VALUE_MIN_LENGTH, VALUE_MAX_LENGTH } from "../../constants/form_validations";
+import {
+  EMPTY_VALUE_ERROR,
+  VALUE_MIN_LENGTH,
+  VALUE_MAX_LENGTH,
+} from "../../constants/form_validations";
 
 const USERNAME_INPUT_ID = "userName";
 const EMAIL_INPUT_ID = "email";
@@ -43,7 +55,12 @@ function EditAccountForm({
       <CardHeader title="Account" />
       <Divider />
       <CardContent>
-        <Grid container component="form" direction="column" spacing={2} onSubmit={handleSubmit(onSubmit)}>
+        <Grid
+          container
+          component="form"
+          direction="column"
+          spacing={2}
+          onSubmit={handleSubmit(onSubmit)}>
           <Grid item>
             <Controller
               name={USERNAME_INPUT_ID}
@@ -97,8 +114,9 @@ function EditAccountForm({
                   mask={PHONE_REGEX}
                   value={value || ""}
                   onBlur={onBlur}
-                  onChange={(e) => onChange(e.target.value.replace(/\D+/g, ""))}
-                >
+                  onChange={(e) =>
+                    onChange(e.target.value.replace(/\D+/g, ""))
+                  }>
                   <TextField
                     variant="outlined"
                     fullWidth
@@ -115,7 +133,11 @@ function EditAccountForm({
           </Grid>
 
           <Grid item>
-            <Button type="submit" variant="contained" color="primary" disableElevation>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disableElevation>
               Update
             </Button>
           </Grid>

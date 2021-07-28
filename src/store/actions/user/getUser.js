@@ -56,7 +56,10 @@ export function getUser(api, username, me = false) {
 
     const url = generateUrl("getUser");
     try {
-      const { data } = await api.setMethod("GET").setParams({ username }).query(url);
+      const { data } = await api
+        .setMethod("GET")
+        .setParams({ username })
+        .query(url);
 
       if (!me) {
         dispatch(receiveGetUser(data));

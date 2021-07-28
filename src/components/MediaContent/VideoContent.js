@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import ReactPlayer from "react-player";
@@ -19,7 +19,7 @@ export default function VideoContent({
   showControls,
   className,
   videoClassName,
-  videoPlayerProps
+  videoPlayerProps,
 }) {
   const classes = useStyles();
 
@@ -41,7 +41,8 @@ export default function VideoContent({
   const getControlsOpacity = (show, stop) => {
     if (stop && show) {
       return 1;
-    } else if ((!stop && show) || (!stop && !show)) {
+    }
+    if ((!stop && show) || (!stop && !show)) {
       return 1;
     }
 
@@ -63,35 +64,52 @@ export default function VideoContent({
   };
 
   const renderPlayBtn = (show, stop) => {
-    let styleOpacity = getControlsOpacity(show, stop);
+    const styleOpacity = getControlsOpacity(show, stop);
 
     return (
-      <div className={`${classes.playerControlls} play`} style={{ opacity: styleOpacity }} onClick={handlePlayBtnClick}>
+      <div
+        role="button"
+        tabIndex={0}
+        className={`${classes.playerControlls} play`}
+        style={{ opacity: styleOpacity }}
+        onClick={handlePlayBtnClick}>
         {!stop ? <PlayIcon /> : <PauseIcon />}
       </div>
     );
   };
 
   const renderMuteBtn = (show, mute, stop) => {
-    let styleOpacity = getControlsOpacity(show, stop);
+    const styleOpacity = getControlsOpacity(show, stop);
 
     return (
       <div
+        role="button"
+        tabIndex={0}
         className={`${classes.playerControlls} volume`}
         style={{ opacity: styleOpacity }}
-        onClick={handleMuteBtnClick}
-      >
+        onClick={handleMuteBtnClick}>
         {mute ? <VolumeUp /> : <VolumeOff />}
       </div>
     );
   };
 
   return (
-    <Box id={id} className={clsx(classes.videoContent, className)} onMouseEnter={() => setShowing(true)} onMouseLeave={() => setShowing(false)}>
+    <Box
+      id={id}
+      className={clsx(classes.videoContent, className)}
+      onMouseEnter={() => setShowing(true)}
+      onMouseLeave={() => setShowing(false)}>
       {showControls && renderPlayBtn(showing, playing)}
       {showControls && renderMuteBtn(showing, muted, playing)}
       {/* <VisibilitySensor partialVisibility onChange={(isVisible) => setIsVisible(isVisible)}> */}
-      <ReactPlayer className={clsx(classes.player, videoClassName)} width="100%" height="100%" playing={playing} volume={muted ? 1 : 0} url={url} />
+      <ReactPlayer
+        className={clsx(classes.player, videoClassName)}
+        width="100%"
+        height="100%"
+        playing={playing}
+        volume={muted ? 1 : 0}
+        url={url}
+      />
       {/* <ReactPlayer className={clsx(classes.player, videoClassName)} width="100%" height="100%" playing={playing} volume={muted ? 1 : 0} url={url} {...videoPlayerProps} /> */}
       {/* </VisibilitySensor> */}
     </Box>
@@ -100,10 +118,10 @@ export default function VideoContent({
 
 VideoContent.propTypes = {
   url: PropTypes.string,
-  showControls: PropTypes.bool
+  showControls: PropTypes.bool,
 };
 
 VideoContent.defaultProps = {
   url: "",
-  showControls: true
+  showControls: true,
 };

@@ -67,8 +67,8 @@ export function createBlock(api, userName, type) {
         dispatch(receiveUpdateBlockUser());
       }
       if (!isEmptyObject(getState().chat.current)) {
-        const current = getState().chat.current;
-        
+        const { current } = getState().chat;
+
         current.isBlocked = true;
 
         dispatch(updateCurrentRoom(current));
@@ -79,7 +79,7 @@ export function createBlock(api, userName, type) {
         const index = list.findIndex((item) => item.userName === userName);
 
         if (index !== -1) {
-          list[index]["isBlocked"] = true;
+          list[index].isBlocked = true;
         }
 
         dispatch(receiveBlockUser(list));

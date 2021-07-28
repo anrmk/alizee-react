@@ -65,20 +65,20 @@ function EmojiPicker({
     }, 0);
   };
 
-  const renderEmojiPicker = () => {
-    return (
-      <Box className={classes.picker}>
-        {emojiPickerIsOpen && <Picker
+  const renderEmojiPicker = () => (
+    <Box className={classes.picker}>
+      {emojiPickerIsOpen && (
+        <Picker
           tabIndex={0}
           set="google"
           showPreview={false}
           showSkinTones={false}
           theme={theme.palette.type === "light" ? "light" : "dark"}
           onClick={handleAddEmoji}
-        />}
-      </Box>
-    );
-  };
+        />
+      )}
+    </Box>
+  );
 
   return (
     <>

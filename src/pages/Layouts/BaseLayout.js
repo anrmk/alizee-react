@@ -7,13 +7,9 @@ import useStyles from "./styles";
 export default function BaseLayout({
   isFullScreenHeight,
   className,
-  children
+  children,
 }) {
   const classes = useStyles({ isFullScreenHeight });
 
-  return (
-    <Box className={clsx(classes.base, className)}>
-      {children}
-    </Box>
-  )
+  return <Box className={clsx(classes.base, className)}>{children}</Box>;
 }

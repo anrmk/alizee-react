@@ -17,27 +17,39 @@ function UsersDialog({
 }) {
   const [selectedLength, setSelectedLength] = useState(preSelected.length);
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       onResetQuery && onResetQuery();
-    };
-  }, []);
+    },
+    []
+  );
 
-  const handleItemSelect = (items) => {
-    setSelectedLength(items.length);
+  const handleItemSelect = (pItems) => {
+    setSelectedLength(pItems.length);
 
-    onItemSelect && onItemSelect(items);
-  }
+    onItemSelect && onItemSelect(pItems);
+  };
 
   return (
     <>
       <SearchInput onSendQuery={onSendQuery} />
-      <Typography align="right">{selectedLength}/{selectionLimit}</Typography>
+      <Typography align="right">
+        {selectedLength}/{selectionLimit}
+      </Typography>
 
-      {loading ? 
-        <Box display="flex" alignItems="center" justifyContent="center"><CircularProgress/></Box> : 
-        <SelectableList items={items} preSelected={preSelected} multiple={multiple} maxSelections={selectionLimit} onItemSelect={handleItemSelect} />
-      }
+      {loading ? (
+        <Box display="flex" alignItems="center" justifyContent="center">
+          <CircularProgress />
+        </Box>
+      ) : (
+        <SelectableList
+          items={items}
+          preSelected={preSelected}
+          multiple={multiple}
+          maxSelections={selectionLimit}
+          onItemSelect={handleItemSelect}
+        />
+      )}
     </>
   );
 }

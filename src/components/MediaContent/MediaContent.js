@@ -23,7 +23,7 @@ function MediaContent({
 
   onPayClick,
   onChangeIndex,
-  onClick
+  onClick,
 }) {
   const classes = useStyles();
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
@@ -31,17 +31,17 @@ function MediaContent({
   const handlePayPostClick = () => {
     onPayClick && onPayClick({ id, amount, user });
   };
-  
+
   const handleClick = () => {
     onClick && onClick({ items, startSlideIndex: currentSlideIndex });
-  }
+  };
 
   const handleChangeSlideIndex = (index) => {
     if (items[index]) {
       setCurrentSlideIndex(index);
     }
     onChangeIndex && onChangeIndex(index);
-  }
+  };
 
   if (!items || !items.length) return <></>;
 
@@ -50,14 +50,37 @@ function MediaContent({
       <Fade in={isLiked}>
         <FavoriteIcon className={classes.favoriteIcon} />
       </Fade>
-      <Gallery className={classes.root} amount={amount} isPurchased={isPurchased} onPayClick={handlePayPostClick} onChangeIndex={handleChangeSlideIndex}>
+      <Gallery
+        className={classes.root}
+        amount={amount}
+        isPurchased={isPurchased}
+        onPayClick={handlePayPostClick}
+        onChangeIndex={handleChangeSlideIndex}>
         {items.length &&
           items.map((item) => {
-            if ((item.kind === MEDIA_IMAGE) || (!isPurchased && !isOwner && amount > 0)) {
+            if (
+              item.kind === MEDIA_IMAGE ||
+              (!isPurchased && !isOwner && amount > 0)
+            ) {
               const url = showThumbnail ? item.thumbnailUrl : item.url;
-              return <ImagesContent className={classes.mediaContent} wrapperClassName={classes.imageContentWrapper} key={item.id} url={url} />;
-            } else if (item.kind === MEDIA_VIDEO) {
-              return <VideoContent className={classes.mediaContent} key={item.id} url={item.url} showControls={amount === 0 || isPurchased} />
+              return (
+                <ImagesContent
+                  className={classes.mediaContent}
+                  wrapperClassName={classes.imageContentWrapper}
+                  key={item.id}
+                  url={url}
+                />
+              );
+            }
+            if (item.kind === MEDIA_VIDEO) {
+              return (
+                <VideoContent
+                  className={classes.mediaContent}
+                  key={item.id}
+                  url={item.url}
+                  showControls={amount === 0 || isPurchased}
+                />
+              );
             }
             return null;
           })}

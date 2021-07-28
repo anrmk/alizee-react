@@ -1,5 +1,18 @@
 export const monthlyDateChart = {
-  date: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  date: [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ],
   charts: [
     {
       name: "Balance",
@@ -305,7 +318,16 @@ export const yearsDateChart = {
 };
 
 export const weeksDateChart = {
-  date: ["26.04", "03.05", "10.05", "17.05", "24.05", "31.05", "07.06", "14.06"],
+  date: [
+    "26.04",
+    "03.05",
+    "10.05",
+    "17.05",
+    "24.05",
+    "31.05",
+    "07.06",
+    "14.06",
+  ],
   charts: [
     {
       name: "Balance",

@@ -2,9 +2,13 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => {
   const pickerScrollbarTrackBackgroundColor =
-    theme.palette.type === "light" ? theme.palette.grey[300] : theme.palette.grey[600];
+    theme.palette.type === "light"
+      ? theme.palette.grey[300]
+      : theme.palette.grey[600];
   const pickerBackgroundColor =
-    theme.palette.type === "light" ? theme.palette.common.white : theme.palette.background.paper;
+    theme.palette.type === "light"
+      ? theme.palette.common.white
+      : theme.palette.background.paper;
 
   return {
     picker: {
@@ -16,7 +20,9 @@ const useStyles = makeStyles((theme) => {
         bottom: "60px",
         left: 0,
         backgroundColor:
-          theme.palette.type === "light" ? theme.palette.common.white : theme.palette.background.paper,
+          theme.palette.type === "light"
+            ? theme.palette.common.white
+            : theme.palette.background.paper,
       },
       "& .emoji-mart-category-label span": {
         backgroundColor: pickerBackgroundColor,

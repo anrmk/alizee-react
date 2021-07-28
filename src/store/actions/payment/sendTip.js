@@ -44,18 +44,18 @@ export function sendTip(api, userName, amount, message) {
 
       await api
         .setData({
-          userName: userName,
-          amount: amount,
-          message: message,
+          userName,
+          amount,
+          message,
         })
         .query(url);
 
       dispatch(receiveSendTip());
       dispatch(getDeposit(api));
-	  return true
+      return true;
     } catch (e) {
       dispatch(errorSendTip("Error: something went wrong"));
-	  return false
+      return false;
     }
   };
 }

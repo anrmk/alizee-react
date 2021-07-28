@@ -55,14 +55,14 @@ export function likePost(api, id) {
     try {
       const postsState = { ...getState().followingPosts };
       if (!postsState.data.length && isEmptyObject(postsState.currentPost)) {
-        throw "There is no local data";
+        throw new Error("There is no local data");
       }
 
       let method = null;
-      let posts = [...postsState.data];
-      let currentPost = { ...postsState.currentPost };
-      let isFollowingPosts = !!posts.length;
-      let isCurrentPost = !isEmptyObject(currentPost);
+      const posts = [...postsState.data];
+      const currentPost = { ...postsState.currentPost };
+      const isFollowingPosts = !!posts.length;
+      const isCurrentPost = !isEmptyObject(currentPost);
 
       if (isFollowingPosts) {
         const postIndex = posts.findIndex((post) => post.id === id);

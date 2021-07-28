@@ -18,7 +18,13 @@ function DisplayName({
           <Typography {...typographyProps} style={{ marginRight: "4px" }}>
             {name ?? "No Name"}
             &nbsp;
-            {identityVerified && <VerifiedIcon fontSize="small" color="primary" style={{ verticalAlign: "middle" }} />}
+            {identityVerified && (
+              <VerifiedIcon
+                fontSize="small"
+                color="primary"
+                style={{ verticalAlign: "middle" }}
+              />
+            )}
           </Typography>
           {userName && (
             <Typography variant="caption" color="textSecondary" noWrap>
@@ -31,10 +37,21 @@ function DisplayName({
           <Typography {...typographyProps} noWrap component={Box} width="100%">
             {name ?? "No Name"}
             &nbsp;
-            {identityVerified && <VerifiedIcon fontSize="small" color="primary" style={{ verticalAlign: "middle" }} />}
+            {identityVerified && (
+              <VerifiedIcon
+                fontSize="small"
+                color="primary"
+                style={{ verticalAlign: "middle" }}
+              />
+            )}
           </Typography>
           {userName && (
-            <Typography variant="caption" color="textSecondary" noWrap component={Box} width="100%">
+            <Typography
+              variant="caption"
+              color="textSecondary"
+              noWrap
+              component={Box}
+              width="100%">
               @{userName}
             </Typography>
           )}

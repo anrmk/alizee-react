@@ -1,4 +1,3 @@
-import { number } from "yup";
 import { generateUrl } from "../../../helpers/functions";
 
 export const REPORT_POST_REQUEST = "REPORT_POST_REQUEST";
@@ -44,7 +43,7 @@ export function reportPost(api, opts) {
       await api
         .setData({
           postId: opts.postId,
-          reportType: parseInt(opts.reportType),
+          reportType: parseInt(opts.reportType, 10),
         })
         .query(url);
 

@@ -1,5 +1,5 @@
 const useChartData = (data) => {
-  if (!data?.data) return;
+  if (!data?.data) return null;
   const colors = [
     "#ff335a",
     "#ff9501",
@@ -13,16 +13,14 @@ const useChartData = (data) => {
   ];
 
   const labels = data.date;
-  const datasets = data.data.map((item, idx) => {
-    return {
-      label: item.title,
-      maxBarThickness: 100,
-      data: item.data,
-      borderColor: colors[idx],
-      backgroundColor: colors[idx],
-      total: item.total,
-    };
-  });
+  const datasets = data.data.map((item, idx) => ({
+    label: item.title,
+    maxBarThickness: 100,
+    data: item.data,
+    borderColor: colors[idx],
+    backgroundColor: colors[idx],
+    total: item.total,
+  }));
 
   return {
     labels,

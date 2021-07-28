@@ -9,7 +9,7 @@ function Search({
   value,
   placeholder,
 
-  onChange
+  onChange,
 }) {
   const classes = useStyles();
 
@@ -21,19 +21,21 @@ function Search({
       type="text"
       value={value}
       InputProps={{
-        endAdornment:
+        endAdornment: (
           <InputAdornment position="end">
             <SearchIcon className={classes.searchIcon} />
           </InputAdornment>
+        ),
       }}
-      onChange={onChange} />
-  )
+      onChange={onChange}
+    />
+  );
 }
 
 Search.defaultProps = {
   className: "",
   placeholder: "Search ...",
-  onChange: (e) => { }
-}
+  onChange: (e) => {},
+};
 
 export default Search;

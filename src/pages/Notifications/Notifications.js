@@ -2,9 +2,8 @@ import React, { useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { Navbar, Content, SortContent } from "../../domain/Notification";
-
 import { Divider, Grid } from "@material-ui/core";
+import { Navbar, Content } from "../../domain/Notification";
 
 import ApiContext from "../../context/ApiContext";
 import * as notificationActions from "../../store/actions/notification";
@@ -48,8 +47,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getNotifications: (api, opts) => dispatch(notificationActions.getNotificationsList(api, opts)),
-    resetNotifications: (api) => dispatch(notificationActions.resetCurrentNotificationList(api)),
+    getNotifications: (api, opts) =>
+      dispatch(notificationActions.getNotificationsList(api, opts)),
+    resetNotifications: (api) =>
+      dispatch(notificationActions.resetCurrentNotificationList(api)),
   };
 }
 

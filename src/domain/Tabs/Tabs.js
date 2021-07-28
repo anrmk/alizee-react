@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 import { getFirstElement } from "../../helpers/functions";
 
 import "./Tabs.scss";
 
-function Tabs({ 
+function Tabs({
   activeKey,
   classNameContainer,
   classNameMenu,
@@ -14,7 +14,7 @@ function Tabs({
   contentSize,
   children,
 
-  onSelect
+  onSelect,
 }) {
   const activeContentItem = "show active";
   const [currentKey, setCurrentKey] = useState(
@@ -23,21 +23,21 @@ function Tabs({
 
   useEffect(() => {
     setCurrentKey(activeKey);
-  }, [activeKey])
+  }, [activeKey]);
 
-  const handleTabSelect = id => {
+  const handleTabSelect = (id) => {
     setCurrentKey(id);
     onSelect && onSelect(id);
-  }
+  };
 
-  const renderTabs = element => {
+  const renderTabs = (element) => {
     if (Array.isArray(element)) {
-      const tabsExtended = React.Children.map(children, tabElement => {
+      const tabsExtended = React.Children.map(children, (tabElement) => {
         const newProps = {
           ...tabElement.props,
           active: currentKey === tabElement.props.eventKey,
-          onClick: id => handleTabSelect(id)
-        };  
+          onClick: (id) => handleTabSelect(id),
+        };
 
         return React.cloneElement(tabElement, newProps);
       });
@@ -46,17 +46,20 @@ function Tabs({
     }
 
     // If is not an array then just render a single tab
-    return (
-      element.props.children({ ...element.props, onClick: id => handleTabSelect(id) })
-    );
-  }
+    return element.props.children({
+      ...element.props,
+      onClick: (id) => handleTabSelect(id),
+    });
+  };
 
-  const renderContent = element => {
+  const renderContent = (element) => {
     if (Array.isArray(element)) {
       const contentExtended = React.Children.map(element, ({ props }) => {
         const contentElements = props?.children;
         const newProps = {
-          className: `tab-pane ${currentKey === props.eventKey ? activeContentItem : ''}`
+          className: `tab-pane ${
+            currentKey === props.eventKey ? activeContentItem : ""
+          }`,
         };
 
         return React.createElement("div", newProps, contentElements);
@@ -66,15 +69,19 @@ function Tabs({
     }
 
     // If is not an array then just render a single content
-    return (
-      element.props.children({ ...element.props, onClick: id => handleTabSelect(id) })
-    );
-  }
+    return element.props.children({
+      ...element.props,
+      onClick: (id) => handleTabSelect(id),
+    });
+  };
 
   return (
     <div className={`row ${classNameContainer}`}>
       <div className={`c-tabs-menu col-${menuSize} ${classNameMenu}`}>
-        <div className="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+        <div
+          className="nav flex-column nav-pills"
+          role="tablist"
+          aria-orientation="vertical">
           {renderTabs(children)}
         </div>
       </div>
@@ -84,7 +91,7 @@ function Tabs({
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 Tabs.propTypes = {
@@ -95,9 +102,9 @@ Tabs.propTypes = {
   menuSize: PropTypes.number,
   contentSize: PropTypes.number,
   children: PropTypes.node.isRequired,
-  
-  onSelect: PropTypes.func
-}
+
+  onSelect: PropTypes.func,
+};
 
 Tabs.defaultProps = {
   activeKey: "",
@@ -108,7 +115,7 @@ Tabs.defaultProps = {
   contentSize: 9,
   children: null,
 
-  onSelect: undefined
+  onSelect: undefined,
 };
 
 export default Tabs;

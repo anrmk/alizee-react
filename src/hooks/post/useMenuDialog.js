@@ -1,6 +1,7 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useHistory, useLocation } from "react-router";
 
+import { useSelector } from "react-redux";
 import dialogs, { POST_MENU_DIALOG_TYPE } from "../../constants/dialogs";
 
 import useDialog from "../useDialog";
@@ -14,7 +15,6 @@ import usePostStatistics from "./usePostStatistics";
 import useFavoriteUserAction from "../useFavoriteUserAction";
 import { DEFAULT_ROUTE } from "../../constants/routes";
 import { POST_TYPE } from "../../components/Post/Menu";
-import { useSelector } from "react-redux";
 import { ConfirmDialog } from "../../domain/ConfirmationDialog.js";
 
 const initProps = {
@@ -39,7 +39,10 @@ export default function useMenuDialog(props) {
   const postShareDialog = useSharePostDialog();
   const confirmationDialog = useConfirmationDialog();
   const postStatistics = usePostStatistics();
-  const chatShareDialog = useShareDialog({ withStack: true, type: SHARE_DIALOG_PROFILE_TYPE });
+  const chatShareDialog = useShareDialog({
+    withStack: true,
+    type: SHARE_DIALOG_PROFILE_TYPE,
+  });
   const { deletePostAction } = useDeleteAction();
   const { favoriteUserAction } = useFavoriteUserAction(props.favoriteProps);
   const [localData, setLocalData] = useState(null);

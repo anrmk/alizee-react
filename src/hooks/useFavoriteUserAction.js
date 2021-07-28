@@ -10,12 +10,12 @@ export default function useFavoriteUserAction() {
   const dispatch = useDispatch();
 
   const handleFavoriteUser = useCallback(async ({ userName, isFavorite }) => {
-    isFavorite ? 
-      await dispatch(accountActions.deleteFavorites(apiClient, userName)) : 
-      await dispatch(accountActions.createFavorites(apiClient, userName));
+    isFavorite
+      ? await dispatch(accountActions.deleteFavorites(apiClient, userName))
+      : await dispatch(accountActions.createFavorites(apiClient, userName));
   }, []);
 
   return {
-    favoriteUserAction: handleFavoriteUser
+    favoriteUserAction: handleFavoriteUser,
   };
 }

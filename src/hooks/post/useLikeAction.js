@@ -9,12 +9,9 @@ export default function useLikeAction() {
 
   const dispatch = useDispatch();
 
-  const handleLike = useCallback(
-    async (id) => {
-      await dispatch(postActions.likePost(apiClient, id));
-    },
-    []
-  );
+  const handleLike = useCallback(async (id) => {
+    await dispatch(postActions.likePost(apiClient, id));
+  }, []);
 
   return {
     toggle: handleLike,

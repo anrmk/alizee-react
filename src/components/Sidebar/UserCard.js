@@ -2,7 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import { Box, Typography, BottomNavigation, BottomNavigationAction } from "@material-ui/core";
+import {
+  Box,
+  Typography,
+  BottomNavigation,
+  BottomNavigationAction,
+} from "@material-ui/core";
 
 import LiveTvIcon from "@material-ui/icons/LiveTvOutlined";
 import AddPhotoCameraIcon from "@material-ui/icons/AddAPhotoOutlined";
@@ -28,13 +33,16 @@ function UserCard(props) {
           src={avatarUrl}
           size="big"
           borderColor="silver"
-          avatarBaseProps={{ component: Link, to: PROFILE_USERNAME_ROUTE(userName) }}
+          avatarBaseProps={{
+            component: Link,
+            to: PROFILE_USERNAME_ROUTE(userName),
+          }}
         />
       </Box>
-      
+
       <Box display="flex" alignItems="center" justifyContent="center">
         <Typography variant="h6" className={classes.cardName}>
-          {name} 
+          {name}
         </Typography>
         {identityVerified && <VerifiedIcon fontSize="small" color="primary" />}
       </Box>

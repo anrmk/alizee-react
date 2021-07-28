@@ -5,19 +5,29 @@ import ApiContext from "../../context/ApiContext";
 import * as settingsActions from "../../store/actions/settings";
 import { EditSubscriptionForm } from "../../domain/SettingsForms";
 
-function EditSubscriptionSettings({ data, getSubscription, updateSubscription, onSetAlertText }) {
+function EditSubscriptionSettings({
+  data,
+  getSubscription,
+  updateSubscription,
+  onSetAlertText,
+}) {
   const apiClient = useContext(ApiContext);
 
   useEffect(() => {
     getSubscription(apiClient);
   }, []);
 
-  const handleEditProfileSubmit = async (data) => {
-    const fulfilled = await updateSubscription(apiClient, data);
+  const handleEditProfileSubmit = async (pData) => {
+    const fulfilled = await updateSubscription(apiClient, pData);
     onSetAlertText(fulfilled);
   };
 
-  return <EditSubscriptionForm price={data.price} onSubmit={handleEditProfileSubmit} />;
+  return (
+    <EditSubscriptionForm
+      price={data.price}
+      onSubmit={handleEditProfileSubmit}
+    />
+  );
 }
 
 function mapStateToProps(state) {
@@ -30,8 +40,12 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getSubscription: (api) => dispatch(settingsActions.getSubscription(api)),
-    updateSubscription: (api, opts) => dispatch(settingsActions.updateSubscription(api, opts)),
+    updateSubscription: (api, opts) =>
+      dispatch(settingsActions.updateSubscription(api, opts)),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditSubscriptionSettings);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditSubscriptionSettings);

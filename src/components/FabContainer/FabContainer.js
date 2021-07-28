@@ -12,14 +12,14 @@ function FabContainer({
   component: Component = Box,
   fabHide = false,
 
-  onFabClick
+  onFabClick,
 }) {
   const classes = useStyles();
 
   return (
     <Component className={className}>
       {children}
-      {!fabHide && 
+      {!fabHide && (
         <Fab
           aria-label="Add"
           color="primary"
@@ -27,9 +27,9 @@ function FabContainer({
           onClick={onFabClick}>
           {iconComponent}
         </Fab>
-      }
+      )}
     </Component>
-  )
+  );
 }
 
 export default FabContainer;

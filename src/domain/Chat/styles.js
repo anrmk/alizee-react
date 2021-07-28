@@ -9,16 +9,16 @@ export const StyledBadge = withStyles(() => ({
 
   badge: {
     position: "relative",
-    transform: "none"
+    transform: "none",
   },
 }))(Badge);
 
 const useStyles = makeStyles((theme) => {
   const hideScroll = {
     "&::-webkit-scrollbar": {
-      display: "none"
-    }
-  }
+      display: "none",
+    },
+  };
   return {
     card: {
       position: "relative",
@@ -28,7 +28,9 @@ const useStyles = makeStyles((theme) => {
       justifyContent: "space-between",
 
       [theme.breakpoints.down("sm")]: {
-        height: `calc(100vh - ${(theme.mixins.toolbar.minHeight * 2 + theme.spacing(3))}px)`,
+        height: `calc(100vh - ${
+          theme.mixins.toolbar.minHeight * 2 + theme.spacing(3)
+        }px)`,
       },
     },
 
@@ -36,7 +38,7 @@ const useStyles = makeStyles((theme) => {
       position: "relative",
       zIndex: "1",
       flex: "1 1 0",
-      order: 2
+      order: 2,
     },
 
     cardFooter: {
@@ -45,7 +47,7 @@ const useStyles = makeStyles((theme) => {
       flex: "none",
       order: 3,
       boxSizing: "border-box",
-      width: "100%"
+      width: "100%",
     },
 
     sidebarList: {
@@ -57,20 +59,20 @@ const useStyles = makeStyles((theme) => {
       top: 0,
       display: "flex",
       flexDirection: "column",
-      ...hideScroll
+      ...hideScroll,
     },
     sidebarListItemText: {
-      width: "100%"
+      width: "100%",
     },
     sidebarListItemOfflineDate: {
       flex: "1 1 70%",
-      textAlign: "end"
+      textAlign: "end",
     },
 
     icon: {
-      fontSize: theme.spacing(8)
-    }
-  }
+      fontSize: theme.spacing(8),
+    },
+  };
 });
 
 export default useStyles;

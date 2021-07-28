@@ -5,7 +5,7 @@ import { useHistory } from "react-router";
 
 import { Box, IconButton, Typography } from "@material-ui/core";
 import CallEndIcon from "@material-ui/icons/CallEndOutlined";
-import LeaveRoomIcon from '@material-ui/icons/ExitToApp';
+import LeaveRoomIcon from "@material-ui/icons/ExitToApp";
 import VideocamIcon from "@material-ui/icons/VideocamOutlined";
 import VideocamOffIcon from "@material-ui/icons/VideocamOffOutlined";
 import MicNoneIcon from "@material-ui/icons/MicNoneOutlined";
@@ -34,34 +34,37 @@ function PeerToPeer({ user, incomingCallNotify }) {
     calleeName: userName,
     isVerified: user.identityVerified,
     onHangup: handleHangup,
-    onInitiated: handleCalled
+    onInitiated: handleCalled,
   });
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       fullScreen.toggle(false);
-    };
-  }, []);
+    },
+    []
+  );
 
   function handleCalled(calleeName) {
     calleeName && incomingCallNotify(apiClient, calleeName);
-  };
+  }
 
-  function handleHangup () {
+  function handleHangup() {
     fullScreen.toggle(false);
     history.push(HOME_ROUTE);
-  };
+  }
 
-  const CustomIconButton = useMemo(() =>
-    React.forwardRef((props, ref) => {
-      return (
+  const CustomIconButton = useMemo(
+    () =>
+      React.forwardRef((props, ref) => (
         <Box textAlign="center" ref={ref}>
           <IconButton {...props}>{props.children}</IconButton>
-          {props.text && <Typography color="textPrimary">{props.text}</Typography>}
+          {props.text && (
+            <Typography color="textPrimary">{props.text}</Typography>
+          )}
         </Box>
-      );
-    }),
-  []);
+      )),
+    []
+  );
 
   // if (!user.identityVerified || !userName) return (
   //   <Box height="100vh" display="flex" alignItems="center" justifyContent="center">
@@ -79,49 +82,82 @@ function PeerToPeer({ user, incomingCallNotify }) {
       height="100vh">
       {videoStream.status && (
         <Box className={classes.status}>
-          <Typography variant="h6" align="center">{videoStream.status}</Typography>
+          <Typography variant="h6" align="center">
+            {videoStream.status}
+          </Typography>
         </Box>
       )}
 
       <Box className={classes.partner}>
-        <video ref={videoStream.calleeVideoEl} playsInline allowFullScreen muted={!videoStream.callAccepted} controls={false}></video>
+        <video
+          ref={videoStream.calleeVideoEl}
+          playsInline
+          allowFullScreen
+          muted={!videoStream.callAccepted}
+          controls={false}
+        />
       </Box>
 
       <Box className={classes.player}>
-        <video 
-          ref={videoStream.callerVideoEl} 
+        <video
+          ref={videoStream.callerVideoEl}
           style={{ display: videoStream.callAccepted ? "block" : "none" }}
-          playsInline 
-          allowFullScreen 
-          muted 
-          controls={false}>
-        </video>
+          playsInline
+          allowFullScreen
+          muted
+          controls={false}
+        />
       </Box>
 
       <Box className={classes.tools} m={1}>
-        <CustomIconButton text="Camera" className="primary transparent" onClick={videoStream.handleVideoToggle}>
-          {videoStream.videoOn ? <VideocamIcon fontSize="large" /> : <VideocamOffIcon fontSize="large" />}
+        <CustomIconButton
+          text="Camera"
+          className="primary transparent"
+          onClick={videoStream.handleVideoToggle}>
+          {videoStream.videoOn ? (
+            <VideocamIcon fontSize="large" />
+          ) : (
+            <VideocamOffIcon fontSize="large" />
+          )}
         </CustomIconButton>
 
-        <CustomIconButton text="Mute" className="primary transparent" onClick={videoStream.handleMicToggle}>
-          {videoStream.micOn ? <MicNoneIcon fontSize="large" /> : <MicOffIcon fontSize="large" />}
+        <CustomIconButton
+          text="Mute"
+          className="primary transparent"
+          onClick={videoStream.handleMicToggle}>
+          {videoStream.micOn ? (
+            <MicNoneIcon fontSize="large" />
+          ) : (
+            <MicOffIcon fontSize="large" />
+          )}
         </CustomIconButton>
 
-        <CustomIconButton text="Flip" className="primary transparent" onClick={videoStream.handleFlipToggle}>
+        <CustomIconButton
+          text="Flip"
+          className="primary transparent"
+          onClick={videoStream.handleFlipToggle}>
           <FlipCameraIcon fontSize="large" />
         </CustomIconButton>
 
         {(videoStream.calling || videoStream.callAccepted) && (
-          <CustomIconButton text="Decline" onClick={videoStream.handleHangUp} className="danger transparent">
+          <CustomIconButton
+            text="Decline"
+            onClick={videoStream.handleHangUp}
+            className="danger transparent">
             <CallEndIcon fontSize="large" />
           </CustomIconButton>
         )}
 
-        {(user.identityVerified && videoStream.initiator && videoStream.callAccepted) && (
-          <CustomIconButton text="Delete Room" onClick={videoStream.handleRemoveRoom} className="success transparent">
-            <LeaveRoomIcon fontSize="large" />
-          </CustomIconButton>
-        )}
+        {user.identityVerified &&
+          videoStream.initiator &&
+          videoStream.callAccepted && (
+            <CustomIconButton
+              text="Delete Room"
+              onClick={videoStream.handleRemoveRoom}
+              className="success transparent">
+              <LeaveRoomIcon fontSize="large" />
+            </CustomIconButton>
+          )}
       </Box>
     </Box>
   );
@@ -131,14 +167,15 @@ function mapStateToProps(state) {
   return {
     user: {
       userName: state.signIn?.userInfo?.userName,
-      identityVerified: state.signIn?.userInfo?.identityVerified
+      identityVerified: state.signIn?.userInfo?.identityVerified,
     },
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    incomingCallNotify: (api, userName) => dispatch(notificationAction.notifyCall(api, userName)),
+    incomingCallNotify: (api, userName) =>
+      dispatch(notificationAction.notifyCall(api, userName)),
   };
 }
 

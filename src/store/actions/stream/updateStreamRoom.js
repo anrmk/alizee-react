@@ -20,7 +20,7 @@ function receiveUpdateStreamRoom(data) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      data: data,
+      data,
     },
   };
 }
@@ -42,10 +42,7 @@ export function updateStreamRoom(api, roomData) {
     try {
       const url = generateUrl("updateStreamRoom");
 
-      const { data } = await api
-        .setMethod("PUT")
-        .setData(roomData)
-        .query(url);
+      const { data } = await api.setMethod("PUT").setData(roomData).query(url);
 
       dispatch(receiveUpdateStreamRoom(data));
     } catch (e) {

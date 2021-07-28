@@ -3,16 +3,16 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   root: {
     overflow: "hidden !important",
-    minHeight: "100px"
+    minHeight: "100px",
   },
 
   defaultLabel: {
-    textAlign: "center"
+    textAlign: "center",
   },
 
   gridList: {
     overflow: "hidden",
-   // minWidth: 220,
+    // minWidth: 220,
   },
 
   userViewGridList: {
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
   tile: {
     height: "auto !important",
-   // padding: theme.spacing(0.5) + " !important",
+    // padding: theme.spacing(0.5) + " !important",
     cursor: "pointer",
     // [theme.breakpoints.down("sm")]: {
     //   padding: theme.spacing(0.1)+ " !important"
@@ -30,8 +30,8 @@ const useStyles = makeStyles((theme) => ({
 
   image: {
     width: "100%",
-    height: "100%", //"auto !important",
-    overflow: "hidden"
+    height: "100%", // "auto !important",
+    overflow: "hidden",
   },
 
   userImage: {
@@ -45,14 +45,14 @@ const useStyles = makeStyles((theme) => ({
 
   userTileBar: {
     position: "absolute",
-    //bottom: "0"
-    margin: 0
-    //olor: theme.
+    // bottom: "0"
+    margin: 0,
+    // olor: theme.
   },
 
   icon: {
     color: "white",
-    marginRight: theme.spacing(0.5)
+    marginRight: theme.spacing(0.5),
   },
 
   // gridListTileBarTitle: {
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   gridListUserViewBorder: {
-    border: "2px solid " + theme.palette.background.paper
+    border: `2px solid ${theme.palette.background.paper}`,
   },
 
   gridListTileBarTitleUserView: {
@@ -72,8 +72,6 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: "start",
     marginTop: theme.spacing(0.5),
   },
-
-  
 }));
 
 export default useStyles;

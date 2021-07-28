@@ -52,7 +52,7 @@ export function updateCover(api, opts) {
       dispatch(receiveUpdateCover(userInfo));
 
       const user = getState().user.data;
-      if (!isEmptyObject(user) && user?.userName == userInfo.userName) {
+      if (!isEmptyObject(user) && user?.userName === userInfo.userName) {
         dispatch(changeCover(data.url));
       }
     } catch {

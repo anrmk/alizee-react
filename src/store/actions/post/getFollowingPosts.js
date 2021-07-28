@@ -24,7 +24,7 @@ function receiveGetFollowingPosts(data, length, start) {
       errorMessage: "",
       offset: start + POSTS_OFFSET,
       hasMore: length === POSTS_LENGTH,
-      data: data || []
+      data: data || [],
     },
   };
 }
@@ -49,8 +49,8 @@ export function resetFollowingPosts() {
         offset: 0,
         hasMore: false,
         errorMessage: "",
-        data: []
-      }
+        data: [],
+      },
     });
 }
 
@@ -69,7 +69,13 @@ export function getFollowingPosts(api) {
         })
         .query(url);
 
-      dispatch(receiveGetFollowingPosts([...getState().followingPosts.data, ...data], data.length, currentOffset));
+      dispatch(
+        receiveGetFollowingPosts(
+          [...getState().followingPosts.data, ...data],
+          data.length,
+          currentOffset
+        )
+      );
     } catch (e) {
       dispatch(errorGetFollowingPosts("Error: something went wrong:", e));
     }

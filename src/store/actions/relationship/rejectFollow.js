@@ -42,17 +42,19 @@ export function rejectFollow(api, userName) {
 
     const url = generateUrl("rejectFollow");
     try {
-      await api.setParams({ userName: userName }).query(url);
+      await api.setParams({ userName }).query(url);
 
       const list = [...getState().users.data];
       const index = list.findIndex((item) => item.userName === userName);
       if (index !== -1) {
-        list[index]["status"] = FOLLOW_REJECTED;
+        list[index].status = FOLLOW_REJECTED;
       }
 
       dispatch(receiveRejectFollow(list));
     } catch {
-      return dispatch(errorRejectFollow("When follow was creating then something went wrong"));
+      dispatch(
+        errorRejectFollow("When follow was creating then something went wrong")
+      );
     }
   };
 }

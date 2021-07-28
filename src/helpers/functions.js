@@ -1,4 +1,6 @@
+/* eslint-disable prefer-destructuring */
 import numeral from "numeral";
+// eslint-disable-next-line camelcase
 import jwt_decode from "jwt-decode";
 
 import ENDPOINTS from "../constants/endpoints";
@@ -23,7 +25,7 @@ import { USERNAME_KEY } from "../constants/jwt";
  * @return {string}
  */
 export function generateUrl(endpoint, api = ENDPOINTS, postfix = null) {
-  if (!api.endpoints.hasOwnProperty(endpoint)) {
+  if (!Object.prototype.hasOwnProperty.call(api.endpoints, endpoint)) {
     console.warn(`There is no ${endpoint} endpoint`);
     return endpoint;
   }
@@ -97,7 +99,7 @@ export function getUrlTo(route) {
  * @return {number} hostname
  */
 export function getHostFromUrl(url) {
-  var hostname;
+  let hostname;
 
   // Find & remove protocol (http, ftp, etc.) and get hostname
   if (url.indexOf("//") > -1) {
@@ -143,7 +145,12 @@ export function getMediaType(type) {
  * @return {Array} new Array with files where duplicates overridden to last added items
  */
 export function getWithoutRepeats(list, property) {
-  return list.reverse().filter((item, index, self) => index === self.findIndex((t) => t[property] === item[property]));
+  return list
+    .reverse()
+    .filter(
+      (item, index, self) =>
+        index === self.findIndex((t) => t[property] === item[property])
+    );
 }
 
 /**
@@ -186,11 +193,17 @@ export function getDate(date) {
   if (date) {
     const newDate = new Date(date);
     const year = newDate.getUTCFullYear();
-    let month = newDate.getUTCMonth() > 9 ? newDate.getUTCMonth() : "0" + newDate.getUTCMonth();
+    let month =
+      newDate.getUTCMonth() > 9
+        ? newDate.getUTCMonth()
+        : `0${newDate.getUTCMonth()}`;
     if (month === "00") {
       month = "01";
     }
-    let day = newDate.getUTCDate() > 9 ? newDate.getUTCDate() : "0" + newDate.getUTCDate();
+    let day =
+      newDate.getUTCDate() > 9
+        ? newDate.getUTCDate()
+        : `0${newDate.getUTCDate()}`;
     if (day === "00") {
       day = "01";
     }
@@ -233,7 +246,7 @@ export function getFullName(firstName, lastName) {
   if (!lastName && firstName) return firstName;
   if (!firstName && lastName) return lastName;
 
-  return firstName + " " + lastName;
+  return `${firstName} ${lastName}`;
 }
 
 export function initTheme(theme) {
@@ -295,7 +308,9 @@ export function getUrlParams() {
   const urlParams = new URLSearchParams(query);
   const params = {};
 
-  urlParams.forEach((val, key) => (params[key] = val));
+  urlParams.forEach((val, key) => {
+    params[key] = val;
+  });
 
   return params;
 }
@@ -305,7 +320,7 @@ export function getYearFromCurrentDate(years) {
 }
 
 export function formatCurrency(amount, currency = "USD") {
-  var formatter = new Intl.NumberFormat("en-US", {
+  const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency,
   });
@@ -314,14 +329,17 @@ export function formatCurrency(amount, currency = "USD") {
 
 const ONE_HOUR_MILLISECONDS = 1000 * 60 * 60;
 
-export function formatDate(value, opts = { timeOffset: 12, showSubText: true }) {
+export function formatDate(
+  value,
+  opts = { timeOffset: 12, showSubText: true }
+) {
   if (!value) return null;
 
   const currentDate = new Date();
   const delta = currentDate - new Date(value);
 
-  let options = {},
-    subText = "";
+  let options = {};
+  let subText = "";
 
   if (delta > ONE_HOUR_MILLISECONDS * opts.timeOffset) {
     options = {
@@ -340,7 +358,7 @@ export function formatDate(value, opts = { timeOffset: 12, showSubText: true }) 
     };
   }
 
-  var formatter = new Intl.DateTimeFormat("en-US", options);
+  const formatter = new Intl.DateTimeFormat("en-US", options);
   return `${subText}${formatter.format(new Date(value))}`;
 }
 
@@ -377,8 +395,9 @@ export function isSameObjects(obj1, obj2) {
 export function debounce(fn, time) {
   let timeout;
 
-  return function () {
-    const functionCall = () => fn.apply(this, arguments);
+  // eslint-disable-next-line func-names
+  return function (...args) {
+    const functionCall = () => fn.apply(this, args);
     timeout && clearTimeout(timeout);
 
     timeout = setTimeout(functionCall, time);
@@ -395,7 +414,7 @@ export function getBase64(file) {
 }
 
 export function redirect(url, target) {
-  if (!url) return null;
+  if (!url) return;
 
   window.open(url, target ?? "_self");
 }
@@ -414,7 +433,10 @@ export function getUsernameFromJWT(token) {
 export function arrayToObject(arr, property) {
   if (!arr || !arr?.length) return null;
 
-  return arr.reduce((acc, curr, i) => ({ ...acc, [curr[property]]: { ...curr, index: i } }), {});
+  return arr.reduce(
+    (acc, curr, i) => ({ ...acc, [curr[property]]: { ...curr, index: i } }),
+    {}
+  );
 }
 
 export function getDialogToggleType(withStack) {
@@ -423,6 +445,7 @@ export function getDialogToggleType(withStack) {
 
 export function toBase64(value, encode = true) {
   const padding = "=".repeat((4 - (value.length % 4)) % 4);
+  // eslint-disable-next-line no-useless-escape
   const result = (value + padding).replace(/\-/g, "+").replace(/_/g, "/");
   return encode ? window.atob(result) : window.btoa(result);
 }

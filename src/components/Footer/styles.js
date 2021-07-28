@@ -1,9 +1,10 @@
+/* eslint-disable prettier/prettier */
 import { makeStyles } from "@material-ui/core/styles";
 import grey from "@material-ui/core/colors/grey";
 
 const useStyles = makeStyles((theme) => ({
-  root: (props) => {
-    return props.sidebarFooter
+  root: (props) =>
+    props.sidebarFooter
       ? {
           padding: theme.spacing(2),
           display: "flex",
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
           "& a": {
             color: grey["400"],
             "&::after": {
-              content: '"\\2022"',
+              content: "\"\\2022\"",
               padding: theme.spacing(0, 2),
             },
           },
@@ -45,8 +46,7 @@ const useStyles = makeStyles((theme) => ({
           [theme.breakpoints.down("xs")]: {
             display: "none !important",
           },
-        };
-  },
+        },
 }));
 
 export default useStyles;

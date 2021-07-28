@@ -4,7 +4,15 @@ import { Link } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
-import { Box, Checkbox, FormControl, FormControlLabel, FormHelperText, TextField, Typography } from "@material-ui/core";
+import {
+  Box,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  FormHelperText,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 
 import { PRIVACY_POLICY_ROUTE, SIGN_IN_ROUTE } from "../../constants/routes";
 import CONTROLLERS from "../../constants/endpoints";
@@ -27,7 +35,10 @@ const schema = yup.object().shape({
     .required(EMPTY_VALUE_ERROR)
     .min(3, VALUE_MIN_LENGTH(3))
     .max(32, VALUE_MAX_LENGTH(32)),
-  [EMAIL_INPUT_ID]: yup.string().required(EMPTY_VALUE_ERROR).email(INVALID_EMAIL_ERROR),
+  [EMAIL_INPUT_ID]: yup
+    .string()
+    .required(EMPTY_VALUE_ERROR)
+    .email(INVALID_EMAIL_ERROR),
   [PRIVACY_POLICY_CHECKBOX_ID]: yup
     .bool()
     .oneOf([true], PRIVACY_POLICY_REQUIRED_ERROR)
@@ -68,7 +79,7 @@ function SignUpForm({
 
   return (
     <AuthBaseForm
-      isSingUpForm={true}
+      isSingUpForm
       error={error}
       onFormSubmit={handleSubmit(handleFormSubmit)}
       onSocialRequest={onSocialRequest}
@@ -81,8 +92,7 @@ function SignUpForm({
             Sign In
           </Link>
         </Typography>
-      }
-    >
+      }>
       <Controller
         name={EMAIL_INPUT_ID}
         control={control}
@@ -136,8 +146,7 @@ function SignUpForm({
           <FormControl
             error={!!errors[PRIVACY_POLICY_CHECKBOX_ID]}
             component="fieldset"
-            className={classes.formElementIndent}
-          >
+            className={classes.formElementIndent}>
             <FormControlLabel
               control={
                 <Checkbox
@@ -150,13 +159,18 @@ function SignUpForm({
               label={
                 <Typography>
                   I agree with{" "}
-                  <Link className={classes.link} color="primary" to={PRIVACY_POLICY_ROUTE}>
+                  <Link
+                    className={classes.link}
+                    color="primary"
+                    to={PRIVACY_POLICY_ROUTE}>
                     Conditions and Terms
                   </Link>
                 </Typography>
               }
             />
-            <FormHelperText error>{errors[PRIVACY_POLICY_CHECKBOX_ID]?.message}</FormHelperText>
+            <FormHelperText error>
+              {errors[PRIVACY_POLICY_CHECKBOX_ID]?.message}
+            </FormHelperText>
           </FormControl>
         )}
       />

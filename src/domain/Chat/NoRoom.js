@@ -1,7 +1,7 @@
 import React from "react";
 
 function NoRoom() {
-  return <div></div>;
+  return <div />;
 }
 
 export default NoRoom;

@@ -42,7 +42,10 @@ export function getHotStreamers(api) {
 
     const url = generateUrl("getHotStreamers");
     try {
-      const { data } = await api.setMethod("GET").setParams({ length: HOT_STREAMERS_LENGTH }).query(url);
+      const { data } = await api
+        .setMethod("GET")
+        .setParams({ length: HOT_STREAMERS_LENGTH })
+        .query(url);
 
       dispatch(receiveGetHotStreamers(data));
     } catch (e) {

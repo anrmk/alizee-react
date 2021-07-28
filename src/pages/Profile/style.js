@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   userInfo: {
     position: "sticky",
-    top: "4rem"
+    top: "4rem",
   },
 }));
 

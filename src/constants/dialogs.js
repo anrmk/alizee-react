@@ -3,7 +3,14 @@ import React from "react";
 import { Error } from "../components/ErrorDialog";
 import { MediaEditorPreview, MediaPreview } from "../components/MediaEditor";
 import UsersDialog from "../domain/UsersDialog";
-import { Receipt, Purchase, CreatePost, CreateStories, CreateMood, Menu as PostMenu } from "../components/Post";
+import {
+  Receipt,
+  Purchase,
+  CreatePost,
+  CreateStories,
+  CreateMood,
+  Menu as PostMenu,
+} from "../components/Post";
 import { SendTip, Payment } from "../components/Payment";
 import { ReportPost, BlockUser, UnblockUser } from "../components/Report";
 
@@ -188,12 +195,12 @@ export default {
     ...dialogProps,
   }),
   [USERS_LIST_DIALOG_TYPE]: (dialogProps, contentProps) => ({
-      title: "Users List",
-      content: <UsersDialog {...contentProps} />,
-      mainBtnText: "Add",
-      closeBtnText: "Cancel",
-      ...baseDialogProps,
-      ...dialogProps,
+    title: "Users List",
+    content: <UsersDialog {...contentProps} />,
+    mainBtnText: "Add",
+    closeBtnText: "Cancel",
+    ...baseDialogProps,
+    ...dialogProps,
   }),
   [AGREE_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     content: <AgreeDialog {...contentProps} />,

@@ -1,4 +1,4 @@
-import { generateUrl, isEmptyObject } from "../../../helpers/functions";
+import { generateUrl } from "../../../helpers/functions";
 import { getPost } from "../post/getPost";
 import { getDeposit } from "../account";
 

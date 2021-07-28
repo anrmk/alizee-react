@@ -17,13 +17,13 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: theme.spacing(2),
 
     [theme.breakpoints.down("sm")]: {
-      maxWidth: "150px"
+      maxWidth: "150px",
     },
 
-    "& video" : {
+    "& video": {
       width: "100%",
       objectFit: "cover",
-    }
+    },
   },
 
   partner: {
@@ -32,14 +32,14 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
     zIndex: 0,
 
-    "& video" : {
+    "& video": {
       height: "100%",
       width: "100%",
       objectFit: "cover",
       [theme.breakpoints.down("sm")]: {
         objectFit: "contain",
       },
-    }
+    },
   },
 
   status: {
@@ -51,9 +51,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.default,
     borderBottomLeftRadius: theme.spacing(1),
     borderBottomRightRadius: theme.spacing(1),
-    zIndex: 1
+    zIndex: 1,
   },
-  
+
   tools: {
     position: "absolute",
     bottom: theme.spacing(2),
@@ -107,7 +107,7 @@ const useStyles = makeStyles((theme) => ({
     height: "auto",
     padding: theme.spacing(0.5),
   },
-  
+
   onlyModalRoot: {
     padding: theme.spacing(8, 2),
   },
@@ -116,12 +116,15 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   onlyModalIcon: {
     fontSize: theme.typography.h1.fontSize,
-    color: theme.palette.type === "light" ? theme.palette.primary.light : theme.palette.grey["200"]
-  }
+    color:
+      theme.palette.type === "light"
+        ? theme.palette.primary.light
+        : theme.palette.grey["200"],
+  },
 }));
 
 export default useStyles;

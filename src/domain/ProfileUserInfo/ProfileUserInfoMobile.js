@@ -37,28 +37,37 @@ function ProfileUserInfo({
   return (
     <Box display="flex" flexDirection="column" padding={1}>
       {isOwner ? (
-        <Button disableElevation color="primary" variant="contained" to="statistics" component={Link}>
+        <Button
+          disableElevation
+          color="primary"
+          variant="contained"
+          to="statistics"
+          component={Link}>
           Statistics
         </Button>
       ) : (
         <>
           <Box className={classes.btnsGroupMobile}>
-            <Button fullWidth disableElevation color="primary" variant="contained" onClick={handleSubscribeClick}>
+            <Button
+              fullWidth
+              disableElevation
+              color="primary"
+              variant="contained"
+              onClick={handleSubscribeClick}>
               {getSubscriptionBtnText(followStatus, subscriptionPrice, t)}
             </Button>
             <IconButton
               color="primary"
               disabled={!isFollow || isAwaitingConfirmation(followStatus)}
               to={CHAT_USERNAME_ROUTE(user.userName)}
-              component={Link}
-            >
+              component={Link}>
               <MessageIcon />
             </IconButton>
-            {isVerified && 
+            {isVerified && (
               <IconButton color="primary" onClick={handleSendTipClick}>
                 <DollarIcon />
               </IconButton>
-            }
+            )}
           </Box>
         </>
       )}
@@ -70,8 +79,7 @@ function ProfileUserInfo({
             color="textSecondary"
             align="justify"
             className={classes.breakText}
-            component="p"
-          >
+            component="p">
             {user.mood}
           </Typography>
         </Box>

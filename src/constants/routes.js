@@ -65,15 +65,18 @@ export const SETTINGS_BANK_ROUTE = "/settings/bank";
 
 export const SETTINGS_NOTIFICATIONS_ROUTE = "/settings/notifications";
 export const SETTINGS_NOTIFICATIONS_PUSH_ROUTE = "/settings/notifications/push";
-export const SETTINGS_NOTIFICATIONS_EMAIL_ROUTE = "/settings/notifications/email";
+export const SETTINGS_NOTIFICATIONS_EMAIL_ROUTE =
+  "/settings/notifications/email";
 export const SETTINGS_NOTIFICATIONS_SITE_ROUTE = "/settings/notifications/site";
-export const SETTINGS_NOTIFICATIONS_TOAST_ROUTE = "/settings/notifications/toast";
+export const SETTINGS_NOTIFICATIONS_TOAST_ROUTE =
+  "/settings/notifications/toast";
 
 export const SETTINGS_PRIVACY_SECURITY_ROUTE = "/settings/privacy-security";
 export const SETTINGS_SUBSCRIPTION_ROUTE = "/settings/subscription";
 export const RESET_PASSWORD_ROUTE = "/reset-password";
 export const PASSWORD_CHANGE_ROUTE = "/password-change";
-export const STORIES_ROUTE = (id, username) => (username ? `/stories/${username}/${id}` : `/stories/${id}`);
+export const STORIES_ROUTE = (id, username) =>
+  username ? `/stories/${username}/${id}` : `/stories/${id}`;
 export const STORIES_ID_ROUTE = "/stories/:username/:slideId?";
 export const STORIES_DEFAULT_ROUTE = "/stories";
 
@@ -81,4 +84,5 @@ export const STATISTICS_ROUTE = "/statistics";
 
 export const NOT_FOUND_ROUTE = "/not-found";
 
-export const ONDATO_ROUTE = "https://sandbox-start.ondato.com/clients/themembers";
+export const ONDATO_ROUTE =
+  "https://sandbox-start.ondato.com/clients/themembers";

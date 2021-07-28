@@ -2,7 +2,17 @@ import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Card, CardHeader, CardContent, Grid, Button, FormGroup, TextField, InputAdornment, Divider, IconButton } from "@material-ui/core";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Grid,
+  Button,
+  FormGroup,
+  TextField,
+  InputAdornment,
+  Divider,
+} from "@material-ui/core";
 
 import Avatar from "../../components/Avatar";
 import ChipsInput from "../../components/ChipsInput";
@@ -31,22 +41,15 @@ const schema = yup.object().shape({
     .required(EMPTY_VALUE_ERROR)
     .min(2, VALUE_MIN_LENGTH(2))
     .max(49, VALUE_MAX_LENGTH(49)),
-    [USERNAME_INPUT_ID]: yup
-      .string()
-      .required(EMPTY_VALUE_ERROR)
-      .min(3, VALUE_MIN_LENGTH(3))
-      .max(32, VALUE_MAX_LENGTH(32)),
+  [USERNAME_INPUT_ID]: yup
+    .string()
+    .required(EMPTY_VALUE_ERROR)
+    .min(3, VALUE_MIN_LENGTH(3))
+    .max(32, VALUE_MAX_LENGTH(32)),
   [SITES_INPUT_ID]: yup.array().nullable().notRequired(),
   [BIO_INPUT_ID]: yup.string().nullable().notRequired(),
-  [LOCATION_INPUT_ID]: yup
-    .string()
-    .nullable()
-    .notRequired(),
-  [WISHLIST_INPUT_ID]: yup
-    .string()
-    .url()
-    .nullable()
-    .notRequired()
+  [LOCATION_INPUT_ID]: yup.string().nullable().notRequired(),
+  [WISHLIST_INPUT_ID]: yup.string().url().nullable().notRequired(),
 });
 
 function EditProfileForm({
@@ -89,9 +92,7 @@ function EditProfileForm({
   const watcherCoverUrl = watch("coverUrl", coverUrl);
 
   const chipsInputFilters = [
-    (val) => {
-      return !SITE_REGEX.test(val) ? `${val} is not a valid address.` : false;
-    },
+    (val) => (!SITE_REGEX.test(val) ? `${val} is not a valid address.` : false),
   ];
 
   useEffect(
@@ -154,8 +155,7 @@ function EditProfileForm({
               showControls
               src={watcherCoverUrl}
               onFileInputChange={handleCoverImageChange}
-              onDeleteImageClick={handleDeleteCoverImageClick}
-            >
+              onDeleteImageClick={handleDeleteCoverImageClick}>
               <Avatar
                 src={watcherAvatarUrl}
                 showControls
@@ -167,7 +167,13 @@ function EditProfileForm({
             </Cover>
           </Grid>
 
-          <Grid container item component="form" direction="column" spacing={2} onSubmit={handleSubmit(onSubmit)}>
+          <Grid
+            container
+            item
+            component="form"
+            direction="column"
+            spacing={2}
+            onSubmit={handleSubmit(onSubmit)}>
             <Grid item>
               <Controller
                 name={DISPLAY_NAME_INPUT_ID}
@@ -208,7 +214,9 @@ function EditProfileForm({
                     onBlur={onBlur}
                     onChange={(e) => onChange(e.target.value)}
                     InputProps={{
-                      startAdornment: <InputAdornment position="start">@</InputAdornment>,
+                      startAdornment: (
+                        <InputAdornment position="start">@</InputAdornment>
+                      ),
                     }}
                   />
                 )}
@@ -296,7 +304,12 @@ function EditProfileForm({
               />
             </Grid>
             <Grid item>
-              <Button type="submit" variant="contained" color="primary" disableElevation disabled={isFetching}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                disableElevation
+                disabled={isFetching}>
                 Update
               </Button>
             </Grid>

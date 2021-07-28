@@ -1,6 +1,13 @@
 import React, { useContext, useEffect } from "react";
 import { connect } from "react-redux";
-import { useHistory, useParams, Redirect, useRouteMatch, generatePath, useLocation } from "react-router-dom";
+import {
+  useHistory,
+  useParams,
+  Redirect,
+  useRouteMatch,
+  generatePath,
+  useLocation,
+} from "react-router-dom";
 import { Box } from "@material-ui/core";
 
 import Stories from "../components/Stories";
@@ -12,7 +19,9 @@ import dialogs, { STORY_DIALOG_TYPE } from "../constants/dialogs";
 import { STORIES_LENGTH } from "../constants/feed";
 import useDialog from "../hooks/useDialog";
 import useStoriesSwitcher from "../hooks/useStoriesSwitcher";
-import useShareDialog, { SHARE_DIALOG_STORY_TYPE } from "../hooks/useShareDialog";
+import useShareDialog, {
+  SHARE_DIALOG_STORY_TYPE,
+} from "../hooks/useShareDialog";
 import useFullScreen from "../hooks/useFullScreen";
 
 function Story(props) {
@@ -34,36 +43,38 @@ function Story(props) {
     currentUser,
     handlePreviousStory,
     handleNextStory,
-    handleSlideChange
-  } = useStoriesSwitcher({ 
+    handleSlideChange,
+  } = useStoriesSwitcher({
     data: story.data.length ? story.data : story.current,
     slideId,
     storyId: location.state?.storyId,
-    onUpdatePath: handlePathUpdate
+    onUpdatePath: handlePathUpdate,
   });
 
   const shareDialog = useShareDialog({
     withStack: true,
-    type: SHARE_DIALOG_STORY_TYPE
+    type: SHARE_DIALOG_STORY_TYPE,
   });
 
   useEffect(() => {
     if (username) {
       (async () => {
-        location.state?.from === HOME_ROUTE && !location.state?.me ?
-          await getFollowingStories(apiClient, { length: STORIES_LENGTH }) :
-          await getStory(apiClient, { username, length: 10 });
+        location.state?.from === HOME_ROUTE && !location.state?.me
+          ? await getFollowingStories(apiClient, { length: STORIES_LENGTH })
+          : await getStory(apiClient, { username, length: 10 });
       })();
     }
 
     return () => {
       fullScreen.toggle(false);
       resetStory();
-    }
+    };
   }, []);
 
-  function handlePathUpdate(userName, slideId) {
-    history.replace({ pathname: generatePath(path, { username: userName, slideId }) });
+  function handlePathUpdate(userName, pSlideId) {
+    history.replace({
+      pathname: generatePath(path, { username: userName, slideId: pSlideId }),
+    });
   }
 
   if (!username || story.errorMessage) {
@@ -72,11 +83,14 @@ function Story(props) {
 
   const handleDialogToggle = () => {
     dialog.reset();
-    dialog.toggleWithStack(dialogs[STORY_DIALOG_TYPE](null, {
-      onShareClick: () => shareDialog.toggle({ id: currentSlideId, userName: username }),
-      onReportClick: () => dialog.toggle({ open: false }) // TODO: mocked
-    }));
-  }
+    dialog.toggleWithStack(
+      dialogs[STORY_DIALOG_TYPE](null, {
+        onShareClick: () =>
+          shareDialog.toggle({ id: currentSlideId, userName: username }),
+        onReportClick: () => dialog.toggle({ open: false }), // TODO: mocked
+      })
+    );
+  };
 
   return (
     <Box display="flex" justifyContent="center" height="100vh">
@@ -91,7 +105,8 @@ function Story(props) {
         onCloseClick={() => history.push(DEFAULT_ROUTE)}
         onChange={handleSlideChange}
         onAllStoriesEnd={handleNextStory}
-        onPrevious={handlePreviousStory} />
+        onPrevious={handlePreviousStory}
+      />
     </Box>
   );
 }
@@ -103,8 +118,8 @@ function mapStateToProps(state) {
       data: state.story.data,
       current: state.story.currentStory,
       errorMessage: state.story.errorMessage,
-      hasMore: state.story.hasMore
-    }
+      hasMore: state.story.hasMore,
+    },
   };
 }
 
@@ -112,7 +127,8 @@ function mapDispatchToProps(dispatch) {
   return {
     getStory: (api, opts) => dispatch(storyActions.getStory(api, opts)),
     resetStory: () => dispatch(storyActions.resetStory()),
-    getFollowingStories: (api, opts) => dispatch(storyActions.getFollowingStories(api, opts))
+    getFollowingStories: (api, opts) =>
+      dispatch(storyActions.getFollowingStories(api, opts)),
   };
 }
 

@@ -1,4 +1,7 @@
-import { FOLLOW_ACCEPTED, FOLLOW_PENDING } from "../../../constants/follow_types";
+import {
+  FOLLOW_ACCEPTED,
+  FOLLOW_PENDING,
+} from "../../../constants/follow_types";
 
 export const ADD_FOLLOWER_SUCCESS = "ADD_FOLLOWER_SUCCESS";
 
@@ -13,7 +16,7 @@ function receiveUserFollowerCountIncrement(data) {
 
 export function addFollower(isPrivateAccount) {
   return (dispatch, getState) => {
-    var data = getState().user.data;
+    const { data } = getState().user;
     data.followersCount += 1;
     data.isFollow = true;
     data.followStatus = isPrivateAccount ? FOLLOW_PENDING : FOLLOW_ACCEPTED;

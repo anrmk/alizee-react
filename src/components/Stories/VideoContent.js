@@ -13,14 +13,16 @@ export default function VideoContent({
   paused,
   config,
 
-  onDuration
+  onDuration,
 }) {
   const classes = useStyles();
   const [loaded, setLoaded] = useState(false);
-  const { storyOptions: { muted } } = useContext(StoriesContext);
+  const {
+    storyOptions: { muted },
+  } = useContext(StoriesContext);
   const { muteAudio } = useStoriesControls();
   const { videoContentClassName } = config;
-  let videoEl = useRef(null);
+  const videoEl = useRef(null);
 
   useEffect(() => muteAudio(false), []);
 
@@ -29,7 +31,7 @@ export default function VideoContent({
       if (paused) {
         videoEl.current.pause();
       } else {
-        videoEl.current.play().catch(() => { });
+        videoEl.current.play().catch(() => {});
       }
     }
   }, [paused]);
@@ -37,21 +39,22 @@ export default function VideoContent({
   const handleLoadedData = () => {
     onDuration(videoEl.current.duration);
     setLoaded(true);
-    videoEl.current.play().then(() => {
-      action("play");
-    }).catch(() => {
-      muteAudio(true);
-      videoEl.current.play().finally(() => {
+    videoEl.current
+      .play()
+      .then(() => {
         action("play");
       })
-    });
-  }
-  
+      .catch(() => {
+        muteAudio(true);
+        videoEl.current.play().finally(() => {
+          action("play");
+        });
+      });
+  };
+
   return (
     <>
-      {!loaded && (
-        <CircularProgress className={classes.loader} />
-      )}
+      {!loaded && <CircularProgress className={classes.loader} />}
       <video
         className={clsx(classes.video, videoContentClassName)}
         ref={videoEl}
@@ -59,7 +62,8 @@ export default function VideoContent({
         controls={false}
         onLoadedData={handleLoadedData}
         playsInline
-        muted={muted} />
+        muted={muted}
+      />
     </>
   );
 }

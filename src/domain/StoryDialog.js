@@ -1,5 +1,11 @@
 import React from "react";
-import { Box, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import {
+  Box,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from "@material-ui/core";
 
 import ShareIcon from "@material-ui/icons/ShareRounded";
 import ReportIcon from "@material-ui/icons/ReportRounded";
@@ -22,7 +28,7 @@ function StoryDialog({ onShareClick, onReportClick }) {
         </ListItem>
       </List>
     </Box>
-  )
+  );
 }
 
 export default StoryDialog;

@@ -4,14 +4,18 @@ import "./Thumbnail.scss";
 
 function Thumbnail({ name, url, className }) {
   return (
-    <div className={`thumbnail ${className}`} title={name} style={{backgroundImage: `url(${url})` }}></div>
+    <div
+      className={`thumbnail ${className}`}
+      title={name}
+      style={{ backgroundImage: `url(${url})` }}
+    />
   );
 }
 
 Thumbnail.defaultProps = {
-  name : "",
+  name: "",
   url: "",
-  className: ""
-}
+  className: "",
+};
 
 export default Thumbnail;

@@ -13,13 +13,19 @@ import { getUrlParams } from "../../helpers/functions";
 
 import ApiContext from "../../context/ApiContext";
 
-import useStyles from "./styles";
-
 function SignIn(props) {
   const apiClient = useContext(ApiContext);
 
   const { isAuthenticated, errorMessage } = props;
-  const { authSocial, signIn, signInSocial, requestSignInSocial, failSignInSocial, resetSignIn } = props;
+  const {
+    authSocial,
+    signIn,
+    signInSocial,
+    requestSignInSocial,
+    failSignInSocial,
+    resetSignIn,
+  } = props;
+  // eslint-disable-next-line react/destructuring-assignment
   const { from } = props.location.state || { from: { pathname: "/" } };
 
   useEffect(() => {
@@ -76,7 +82,8 @@ function SignIn(props) {
         onSubmit={handleFormSubmit}
         onSocialRequest={handleSocialRequest}
         onSocialSuccess={handleSocialSuccess}
-        onSocialFailure={handleSocialFailure} />
+        onSocialFailure={handleSocialFailure}
+      />
     </TwoColumnLayout>
   );
 }
@@ -91,10 +98,13 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     signIn: (creds, api) => dispatch(signInActions.signInUser(creds, api)),
-    signInSocial: (api, socialType, data) => dispatch(signInActions.signInSocial(api, socialType, data)),
-    authSocial: (api, socialType, data) => dispatch(socialAuthActions.socialAuth(api, socialType, data)),
+    signInSocial: (api, socialType, data) =>
+      dispatch(signInActions.signInSocial(api, socialType, data)),
+    authSocial: (api, socialType, data) =>
+      dispatch(socialAuthActions.socialAuth(api, socialType, data)),
     requestSignInSocial: () => dispatch(socialAuthActions.requestSocialAuth()),
-    failSignInSocial: (message) => dispatch(socialAuthActions.errorSocialAuth(message)),
+    failSignInSocial: (message) =>
+      dispatch(socialAuthActions.errorSocialAuth(message)),
     resetSignIn: () => dispatch(signInActions.resetSignIn()),
   };
 }

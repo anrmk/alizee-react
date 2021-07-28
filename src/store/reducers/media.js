@@ -1,31 +1,33 @@
 import {
   CREATE_MEDIA_REQUEST,
   CREATE_MEDIA_SUCCESS,
-  CREATE_MEDIA_FAILURE
-} from '../actions/media';
+  CREATE_MEDIA_FAILURE,
+} from "../actions/media";
 
-export default function signIn(state = {
-  isFetching: false,
-  data: [],
-}, action) {
+export default function signIn(
+  state = {
+    isFetching: false,
+    data: [],
+  },
+  action
+) {
   switch (action.type) {
     case CREATE_MEDIA_REQUEST:
-      return { 
+      return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case CREATE_MEDIA_SUCCESS:
-      return { 
+      return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case CREATE_MEDIA_FAILURE:
-      return { 
+      return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     default:
-      return state
+      return state;
   }
 }
-

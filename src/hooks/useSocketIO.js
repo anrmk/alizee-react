@@ -7,22 +7,24 @@ export default function useSocketIO(userName, options) {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const isHttps = process.env.NODE_ENV === "production" 
+    const isHttps = process.env.NODE_ENV === "production";
     const newSocket = io.connect(
       wrapHttps(process.env.REACT_APP_SS_DOMAIN, isHttps),
-      options);
+      options
+    );
 
     setSocket(newSocket);
   }, [userName, options]);
 
-  useEffect(() => {
-    return () => {
-      if(socket) {
+  useEffect(
+    () => () => {
+      if (socket) {
         socket.disconnect();
         setSocket(null);
       }
-    };
-  }, [socket]);
+    },
+    [socket]
+  );
 
   return { socket };
 }

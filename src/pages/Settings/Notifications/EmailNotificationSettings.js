@@ -61,7 +61,14 @@ const schema = yup.object().shape({
   [MESSAGESFREQUENCY_INPUT_ID]: yup.number().required(),
 });
 
-function EmailNotificationsSettings({ isFetching, data, getNotification, updateNotification, onSetAlertText, resetSettings }) {
+function EmailNotificationsSettings({
+  isFetching,
+  data,
+  getNotification,
+  updateNotification,
+  onSetAlertText,
+  resetSettings,
+}) {
   const apiClient = useContext(ApiContext);
 
   const { reset, watch, control, handleSubmit } = useForm({
@@ -90,9 +97,9 @@ function EmailNotificationsSettings({ isFetching, data, getNotification, updateN
 
   useEffect(() => {
     getNotification(apiClient);
-	return () => {
-		resetSettings()
-	}
+    return () => {
+      resetSettings();
+    };
   }, []);
 
   useEffect(() => {
@@ -101,58 +108,53 @@ function EmailNotificationsSettings({ isFetching, data, getNotification, updateN
     }
   }, [data]);
 
-  const handleSettingsChange = (data) => {
+  const handleSettingsChange = (pData) => {
     if (!isFetching) {
       (async () => {
-        const fulfilled = await updateNotification(apiClient, data);
+        const fulfilled = await updateNotification(apiClient, pData);
         onSetAlertText(fulfilled);
       })();
     }
   };
 
-  const renderSwitchControl = (name, disabled) => {
-    return (
-      <Controller
-        name={name}
-        control={control}
-        render={({ onChange, onBlur, value }) => (
-          <Switch
-            checked={value}
-            id={name}
-            onBlur={onBlur}
-            disabled={disabled}
-            onChange={(e) => onChange(e.target.checked)}
-          />
-        )}
-      />
-    );
-  };
+  const renderSwitchControl = (name, disabled) => (
+    <Controller
+      name={name}
+      control={control}
+      render={({ onChange, onBlur, value }) => (
+        <Switch
+          checked={value}
+          id={name}
+          onBlur={onBlur}
+          disabled={disabled}
+          onChange={(e) => onChange(e.target.checked)}
+        />
+      )}
+    />
+  );
 
-  const renderSelectControl = (name, disabled) => {
-    return (
-      <Controller
-        name={name}
-        control={control}
-        render={({ onChange, onBlur, value }) => (
-          <Select
-            native
-            fullWidth
-            variant="outlined"
-            value={value}
-            disabled={disabled}
-            onBlur={onBlur}
-            onChange={onChange}
-          >
-            <option value={1}>Every hour</option>
-            <option value={3}>Every 3 hours</option>
-            <option value={6}>Every 6 hours</option>
-            <option value={12}>Every 12 hours</option>
-            <option value={24}>Every 24 hours</option>
-          </Select>
-        )}
-      />
-    );
-  };
+  const renderSelectControl = (name, disabled) => (
+    <Controller
+      name={name}
+      control={control}
+      render={({ onChange, onBlur, value }) => (
+        <Select
+          native
+          fullWidth
+          variant="outlined"
+          value={value}
+          disabled={disabled}
+          onBlur={onBlur}
+          onChange={onChange}>
+          <option value={1}>Every hour</option>
+          <option value={3}>Every 3 hours</option>
+          <option value={6}>Every 6 hours</option>
+          <option value={12}>Every 12 hours</option>
+          <option value={24}>Every 24 hours</option>
+        </Select>
+      )}
+    />
+  );
 
   return (
     <Card>
@@ -167,13 +169,18 @@ function EmailNotificationsSettings({ isFetching, data, getNotification, updateN
         <List disablePadding onChange={handleSubmit(handleSettingsChange)}>
           <ListItem>
             <ListItemText primary="Email Notifications" />
-            <ListItemSecondaryAction>{renderSwitchControl(ISACTIVE_INPUT_ID)}</ListItemSecondaryAction>
+            <ListItemSecondaryAction>
+              {renderSwitchControl(ISACTIVE_INPUT_ID)}
+            </ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
             <ListItemText primary="Monthly Newsletter" />
             <ListItemSecondaryAction>
-              {renderSwitchControl(NEWSLETTER_INPUT_ID, !watch(ISACTIVE_INPUT_ID))}
+              {renderSwitchControl(
+                NEWSLETTER_INPUT_ID,
+                !watch(ISACTIVE_INPUT_ID)
+              )}
             </ListItemSecondaryAction>
           </ListItem>
 
@@ -182,7 +189,10 @@ function EmailNotificationsSettings({ isFetching, data, getNotification, updateN
           <ListItem>
             <ListItemText>
               <Typography>New Likes Summary</Typography>
-              {renderSelectControl(LIKEFREQUENCY_INPUT_ID, !watch(LIKE_INPUT_ID) || !watch(ISACTIVE_INPUT_ID))}
+              {renderSelectControl(
+                LIKEFREQUENCY_INPUT_ID,
+                !watch(LIKE_INPUT_ID) || !watch(ISACTIVE_INPUT_ID)
+              )}
             </ListItemText>
             <ListItemSecondaryAction>
               {renderSwitchControl(LIKE_INPUT_ID, !watch(ISACTIVE_INPUT_ID))}
@@ -201,21 +211,30 @@ function EmailNotificationsSettings({ isFetching, data, getNotification, updateN
           <ListItem>
             <ListItemText primary="New Campaign Contribution" />
             <ListItemSecondaryAction>
-              {renderSwitchControl(PURCHASE_INPUT_ID, !watch(ISACTIVE_INPUT_ID))}
+              {renderSwitchControl(
+                PURCHASE_INPUT_ID,
+                !watch(ISACTIVE_INPUT_ID)
+              )}
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
             <ListItemText primary="New Referral" />
             <ListItemSecondaryAction>
-              {renderSwitchControl(REFERRAL_INPUT_ID, !watch(ISACTIVE_INPUT_ID))}
+              {renderSwitchControl(
+                REFERRAL_INPUT_ID,
+                !watch(ISACTIVE_INPUT_ID)
+              )}
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
             <ListItemText primary="New Subscriber" />
             <ListItemSecondaryAction>
-              {renderSwitchControl(SUBSCRIBER_INPUT_ID, !watch(ISACTIVE_INPUT_ID))}
+              {renderSwitchControl(
+                SUBSCRIBER_INPUT_ID,
+                !watch(ISACTIVE_INPUT_ID)
+              )}
             </ListItemSecondaryAction>
           </ListItem>
 
@@ -236,7 +255,10 @@ function EmailNotificationsSettings({ isFetching, data, getNotification, updateN
           <ListItem>
             <ListItemText primary="Returning Subscriber" />
             <ListItemSecondaryAction>
-              {renderSwitchControl(RETURNING_INPUT_ID, !watch(ISACTIVE_INPUT_ID))}
+              {renderSwitchControl(
+                RETURNING_INPUT_ID,
+                !watch(ISACTIVE_INPUT_ID)
+              )}
             </ListItemSecondaryAction>
           </ListItem>
 
@@ -245,7 +267,10 @@ function EmailNotificationsSettings({ isFetching, data, getNotification, updateN
           <ListItem>
             <ListItemText>
               <Typography>New Posts Summary</Typography>
-              {renderSelectControl(POSTFREQUENCY_INPUT_ID, !watch(POST_INPUT_ID) || !watch(ISACTIVE_INPUT_ID))}
+              {renderSelectControl(
+                POSTFREQUENCY_INPUT_ID,
+                !watch(POST_INPUT_ID) || !watch(ISACTIVE_INPUT_ID)
+              )}
             </ListItemText>
             <ListItemSecondaryAction>
               {renderSwitchControl(POST_INPUT_ID, !watch(ISACTIVE_INPUT_ID))}
@@ -264,7 +289,10 @@ function EmailNotificationsSettings({ isFetching, data, getNotification, updateN
           <ListItem>
             <ListItemText primary="Upcoming stream reminders" />
             <ListItemSecondaryAction>
-              {renderSwitchControl(UPCOMMINGSTREAM_INPUT_ID, !watch(ISACTIVE_INPUT_ID))}
+              {renderSwitchControl(
+                UPCOMMINGSTREAM_INPUT_ID,
+                !watch(ISACTIVE_INPUT_ID)
+              )}
             </ListItemSecondaryAction>
           </ListItem>
 
@@ -273,11 +301,17 @@ function EmailNotificationsSettings({ isFetching, data, getNotification, updateN
           <ListItem>
             <ListItemText>
               <Typography>New Private Message Summary</Typography>
-              {renderSelectControl(MESSAGESFREQUENCY_INPUT_ID, !watch(MESSAGES_INPUT_ID) || !watch(ISACTIVE_INPUT_ID))}
+              {renderSelectControl(
+                MESSAGESFREQUENCY_INPUT_ID,
+                !watch(MESSAGES_INPUT_ID) || !watch(ISACTIVE_INPUT_ID)
+              )}
             </ListItemText>
 
             <ListItemSecondaryAction>
-              {renderSwitchControl(MESSAGES_INPUT_ID, !watch(ISACTIVE_INPUT_ID))}
+              {renderSwitchControl(
+                MESSAGES_INPUT_ID,
+                !watch(ISACTIVE_INPUT_ID)
+              )}
             </ListItemSecondaryAction>
           </ListItem>
         </List>
@@ -295,10 +329,15 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getNotification: (api) => dispatch(settingsActions.getEmailNotification(api)),
-    updateNotification: (api, data) => dispatch(settingsActions.updateEmailNotification(api, data)),
-	resetSettings: () => dispatch(settingsActions.resetSettings()),
+    getNotification: (api) =>
+      dispatch(settingsActions.getEmailNotification(api)),
+    updateNotification: (api, data) =>
+      dispatch(settingsActions.updateEmailNotification(api, data)),
+    resetSettings: () => dispatch(settingsActions.resetSettings()),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EmailNotificationsSettings);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EmailNotificationsSettings);

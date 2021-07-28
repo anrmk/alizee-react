@@ -1,5 +1,5 @@
 import { MEDIA_STORY } from "../../../constants/media_types";
-import { generateUrl, isEmptyObject } from "../../../helpers/functions";
+import { generateUrl } from "../../../helpers/functions";
 import { createMedia } from "../media";
 
 export const CREATE_STORY_SLIDE_REQUEST = "CREATE_STORY_SLIDE_REQUEST";

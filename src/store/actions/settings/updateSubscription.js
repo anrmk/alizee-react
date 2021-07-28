@@ -42,16 +42,13 @@ export function updateSubscription(api, opts) {
     const url = generateUrl("updateSubscription");
     try {
       const { price } = opts;
-      await api
-        .setMethod("PUT")
-        .setParams({ price })
-        .query(url);
+      await api.setMethod("PUT").setParams({ price }).query(url);
 
       dispatch(receiveUpdateSubscription({ price }));
-	  return true
+      return true;
     } catch (e) {
       dispatch(errorUpdateSubscription("Error: something went wrong:", e));
-	  return false
+      return false;
     }
   };
 }

@@ -43,7 +43,7 @@ export default function useDialog() {
   const baseToggle = React.useCallback(
     (opts, type) => {
       setData({
-        type: type,
+        type,
         payload: {
           open: !gOpen ? !gOpen : gOpen,
           ...opts,

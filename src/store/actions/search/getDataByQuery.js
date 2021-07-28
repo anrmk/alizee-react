@@ -1,6 +1,10 @@
 import { generateUrl } from "../../../helpers/functions";
 
-import { SEARCH_DEFAULT_OFFSET, SEARCH_OFFSET, SEARCH_TAG_TYPE, SEARCH_LENGTH } from "../../../constants/search";
+import {
+  SEARCH_DEFAULT_OFFSET,
+  SEARCH_OFFSET,
+  SEARCH_LENGTH,
+} from "../../../constants/search";
 
 export const GET_DATA_BY_QUERY_REQUEST = "GET_DATA_BY_QUERY_REQUEST";
 export const GET_DATA_BY_QUERY_SUCCESS = "GET_DATA_BY_QUERY_SUCCESS";
@@ -69,7 +73,7 @@ export function resetSearch() {
         data: [],
         tags: [],
         type: null,
-		query: "",
+        query: "",
       },
     });
 }
@@ -95,7 +99,7 @@ export function getDataByQuery(api, opts) {
           length: SEARCH_LENGTH,
         })
         .query(url);
-      const tags = data.tags;
+      const { tags } = data;
       const users = data.data;
 
       await dispatch(

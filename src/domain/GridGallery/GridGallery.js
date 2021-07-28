@@ -14,7 +14,11 @@ function GridGallery(props) {
   return (
     items &&
     !!items.length && (
-      <InfiniteScroll className={classes.root} dataLength={items.length} next={onFetchMore} hasMore={hasMore}>
+      <InfiniteScroll
+        className={classes.root}
+        dataLength={items.length}
+        next={onFetchMore}
+        hasMore={hasMore}>
         {isUserView ? (
           <GridGalleryUserList items={items} onItemClick={onItemClick} />
         ) : (

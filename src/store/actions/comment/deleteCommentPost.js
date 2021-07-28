@@ -9,8 +9,8 @@ function requestDeleteComment() {
     type: DELETE_COMMENT_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: ""
-    }
+      errorMessage: "",
+    },
   };
 }
 
@@ -20,8 +20,8 @@ function receiveDeleteComment(posts) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      data: posts
-    }
+      data: posts,
+    },
   };
 }
 
@@ -31,7 +31,7 @@ function errorDeleteComment(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
-    }
+    },
   };
 }
 
@@ -44,22 +44,27 @@ export function deleteComment(api, commentId) {
       const comments = getState().comment.data;
 
       if (!comments.length) {
-        throw "There is no local data";
+        throw new Error("There is no local data");
       }
 
       if (comments.length) {
-        const commentIndex = comments.findIndex((post) => post.id === commentId);
+        const commentIndex = comments.findIndex(
+          (post) => post.id === commentId
+        );
 
         if (commentIndex === -1) {
-          throw "Item not found!";
+          throw new Error("Item not found!");
         }
 
         await api.setMethod("DELETE").setParams({ id: commentId }).query(url);
 
-        dispatch(receiveDeleteComment(comments.filter((comments) => comments.id !== commentId)));
-      }
-      else {
-        throw "Comments don't exist";
+        dispatch(
+          receiveDeleteComment(
+            comments.filter((comment) => comment.id !== commentId)
+          )
+        );
+      } else {
+        throw new Error("Comments don't exist");
       }
     } catch (e) {
       dispatch(errorDeleteComment("Error: something went wrong"));

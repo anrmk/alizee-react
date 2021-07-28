@@ -10,17 +10,16 @@ export default function Story({
   url,
   action,
   playState,
-  onVideoDuration
+  onVideoDuration,
 }) {
   const classes = useStyles();
-  const { width, height, loader, header, storyStyles } = useContext(
-    GlobalContext
-  );
+  const { width, height, loader, header, storyStyles } =
+    useContext(GlobalContext);
   const config = { width, height, loader, header, storyStyles };
 
   const handleVideoDuration = (duration) => {
     onVideoDuration(duration);
-  }
+  };
 
   return (
     <Box className={classes.story}>
@@ -30,7 +29,8 @@ export default function Story({
         action={action}
         playState={playState}
         config={config}
-        onVideoDuration={handleVideoDuration} />
+        onVideoDuration={handleVideoDuration}
+      />
     </Box>
   );
 }

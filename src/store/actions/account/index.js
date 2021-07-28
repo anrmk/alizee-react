@@ -23,5 +23,5 @@ export {
   GET_USER_DEPOSIT_REQUEST,
   GET_USER_DEPOSIT_SUCCESS,
   GET_USER_DEPOSIT_FAILURE,
-  getDeposit
+  getDeposit,
 } from "./getDeposit";

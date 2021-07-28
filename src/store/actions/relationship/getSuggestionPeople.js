@@ -54,7 +54,10 @@ export function getSuggestionPeople(api, count) {
 
     try {
       const url = generateUrl("getPeopleSuggestions");
-      const { data } = await api.setMethod("GET").setParams({ length: count }).query(url);
+      const { data } = await api
+        .setMethod("GET")
+        .setParams({ length: count })
+        .query(url);
 
       dispatch(receiveGetSuggestionPeople(data));
     } catch (e) {

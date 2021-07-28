@@ -1,7 +1,9 @@
 import { isEmptyObject } from "../../../helpers/functions";
 
-export const DELETE_POSTS_USER_FAVORITE_SUCCESS = "DELETE_POSTS_USER_FAVORITE_SUCCESS";
-export const DELETE_POST_USER_FAVORITE_SUCCESS = "DELETE_POST_USER_FAVORITE_SUCCESS";
+export const DELETE_POSTS_USER_FAVORITE_SUCCESS =
+  "DELETE_POSTS_USER_FAVORITE_SUCCESS";
+export const DELETE_POST_USER_FAVORITE_SUCCESS =
+  "DELETE_POST_USER_FAVORITE_SUCCESS";
 
 function receiveUserFavorite(data) {
   return {
@@ -28,12 +30,12 @@ function receivePostUserFavorite(data) {
 export function deletePostsUserFavorite(userName) {
   return (dispatch, getState) => {
     if (!isEmptyObject(getState().followingPosts.currentPost)) {
-      const currentPostState = {...getState().followingPosts.currentPost};
+      const currentPostState = { ...getState().followingPosts.currentPost };
       currentPostState.user.isFavorite = false;
 
       receivePostUserFavorite(currentPostState);
     }
-    
+
     const followingPosts = getState().followingPosts.data;
     if (followingPosts.length) {
       const list = [...followingPosts];

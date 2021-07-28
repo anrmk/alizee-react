@@ -4,8 +4,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(0),
     padding: theme.spacing(0),
-   // background: theme.palette.primary.dark,
-    
+    // background: theme.palette.primary.dark,
 
     "& .MuiCardContent-root": {
       display: "flex",
@@ -19,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
     "& > .MuiSvgIcon-root": {
       marginTop: theme.spacing(1),
-      marginRight: theme.spacing(1)
+      marginRight: theme.spacing(1),
     },
 
     "& div.MuiFormControl-root": {
@@ -27,13 +26,13 @@ const useStyles = makeStyles((theme) => ({
       "& input": {
         marginLeft: theme.spacing(1),
         flex: 1,
-        width: "100%"
+        width: "100%",
       },
     },
-    
+
     "& button": {
-      marginLeft: theme.spacing(1)
-    }
+      marginLeft: theme.spacing(1),
+    },
   },
 }));
 

@@ -12,7 +12,7 @@ import {
   Divider,
   Hidden,
 } from "@material-ui/core";
-//import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
+// import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import ChevronRightIcon from "@material-ui/icons/ChevronRightOutlined";
 
 import Avatar from "../../components/Avatar";
@@ -29,21 +29,36 @@ function Content({ data = [] }) {
     <List dense disablePadding>
       {data.map((item) => (
         <React.Fragment key={item.id}>
-          <ListItem button onClick={() => history.push(PROFILE_USERNAME_ROUTE(item.userName))}>
+          <ListItem
+            button
+            onClick={() => history.push(PROFILE_USERNAME_ROUTE(item.userName))}>
             {/* {!!item.status !== true && <FiberManualRecordIcon color="primary" className={classes.icon} />} */}
 
             <ListItemAvatar>
-              <Avatar src={item.avatarUrl} alt={item.name} borderColor="silver" />
+              <Avatar
+                src={item.avatarUrl}
+                alt={item.name}
+                borderColor="silver"
+              />
             </ListItemAvatar>
 
             <ListItemText
               primary={
                 <>
                   <Hidden smUp>
-                    <DisplayName name={item.name} userName={item.userName} identityVerified={true} noWrap={false} />
+                    <DisplayName
+                      name={item.name}
+                      userName={item.userName}
+                      identityVerified
+                      noWrap={false}
+                    />
                   </Hidden>
                   <Hidden xsDown>
-                    <DisplayName name={item.name} userName={item.userName} identityVerified={true} />
+                    <DisplayName
+                      name={item.name}
+                      userName={item.userName}
+                      identityVerified
+                    />
                   </Hidden>
 
                   <Typography component="span" variant="body2">
@@ -62,7 +77,12 @@ function Content({ data = [] }) {
             <Hidden xsDown>
               {item.relatedPostId ? (
                 <ListItemSecondaryAction>
-                  <Button edge="end" variant="outlined" onClick={() => history.push(POST_ID_ROUTE(item.relatedPostId))}>
+                  <Button
+                    edge="end"
+                    variant="outlined"
+                    onClick={() =>
+                      history.push(POST_ID_ROUTE(item.relatedPostId))
+                    }>
                     Post
                   </Button>
                 </ListItemSecondaryAction>

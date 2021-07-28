@@ -28,36 +28,74 @@ function ProfileStatisticsMobile({
     <Box className={clsx(classes.root, className)}>
       {isOwner ? (
         <>
-          <Box className={classes.itemMobile} to={FOLLOWERS_ROUTE(userName)} component={Link}>
-            <Typography className={classes.textMobile}>{followersCount || "0"}</Typography>
-            <Typography className={classes.textCaptionMobile}>followers</Typography>
+          <Box
+            className={classes.itemMobile}
+            to={FOLLOWERS_ROUTE(userName)}
+            component={Link}>
+            <Typography className={classes.textMobile}>
+              {followersCount || "0"}
+            </Typography>
+            <Typography className={classes.textCaptionMobile}>
+              followers
+            </Typography>
           </Box>
-          <Box className={classes.itemMobile} to={FOLLOWINGS_ROUTE(userName)} component={Link}>
-            <Typography className={classes.textMobile}>{followingsCount || "0"}</Typography>
-            <Typography className={classes.textCaptionMobile}>followings</Typography>
+          <Box
+            className={classes.itemMobile}
+            to={FOLLOWINGS_ROUTE(userName)}
+            component={Link}>
+            <Typography className={classes.textMobile}>
+              {followingsCount || "0"}
+            </Typography>
+            <Typography className={classes.textCaptionMobile}>
+              followings
+            </Typography>
           </Box>
-          <Box className={classes.itemMobile} to={FAVORITES_USERNAME_ROUTE(userName)} component={Link}>
-            <Typography className={classes.textMobile}>{favoritesCount || "0"}</Typography>
-            <Typography className={classes.textCaptionMobile}>favorites</Typography>
+          <Box
+            className={classes.itemMobile}
+            to={FAVORITES_USERNAME_ROUTE(userName)}
+            component={Link}>
+            <Typography className={classes.textMobile}>
+              {favoritesCount || "0"}
+            </Typography>
+            <Typography className={classes.textCaptionMobile}>
+              favorites
+            </Typography>
           </Box>
-          <Box className={classes.itemMobile} to={BLOCKED_USERNAME_ROUTE(userName)} component={Link}>
-            <Typography className={classes.textMobile}>{blockedCount || "0"}</Typography>
-            <Typography className={classes.textCaptionMobile}>blocked</Typography>
+          <Box
+            className={classes.itemMobile}
+            to={BLOCKED_USERNAME_ROUTE(userName)}
+            component={Link}>
+            <Typography className={classes.textMobile}>
+              {blockedCount || "0"}
+            </Typography>
+            <Typography className={classes.textCaptionMobile}>
+              blocked
+            </Typography>
           </Box>
         </>
       ) : (
         <>
           <Box className={classes.itemMobile}>
-            <Typography className={classes.textMobile}>{postsCount || "0"}</Typography>
+            <Typography className={classes.textMobile}>
+              {postsCount || "0"}
+            </Typography>
             <Typography className={classes.textCaptionMobile}>posts</Typography>
           </Box>
           <Box className={classes.itemMobile}>
-            <Typography className={classes.textMobile}>{followersCount || "0"}</Typography>
-            <Typography className={classes.textCaptionMobile}>followers</Typography>
+            <Typography className={classes.textMobile}>
+              {followersCount || "0"}
+            </Typography>
+            <Typography className={classes.textCaptionMobile}>
+              followers
+            </Typography>
           </Box>
           <Box className={classes.itemMobile}>
-            <Typography className={classes.textMobile}>{followingsCount || "0"}</Typography>
-            <Typography className={classes.textCaptionMobile}>followings</Typography>
+            <Typography className={classes.textMobile}>
+              {followingsCount || "0"}
+            </Typography>
+            <Typography className={classes.textCaptionMobile}>
+              followings
+            </Typography>
           </Box>
         </>
       )}

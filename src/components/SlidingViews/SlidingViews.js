@@ -1,7 +1,11 @@
 import React from "react";
 import { Box } from "@material-ui/core/";
 
-import { LEFT_OPEN_TYPE, BOTH_OPEN_TYPE, RIGHT_OPEN_TYPE } from "../../hooks/useSlidingViews";
+import {
+  LEFT_OPEN_TYPE,
+  BOTH_OPEN_TYPE,
+  RIGHT_OPEN_TYPE,
+} from "../../hooks/useSlidingViews";
 import useViewport from "../../hooks/useViewport";
 import SlidingView from "./SlidingView";
 
@@ -16,7 +20,7 @@ const SlidingViews = ({
   firstSize = 5,
   secondSize = 5,
   mobileOnly = false,
-  children
+  children,
 }) => {
   const classes = useStyles();
   const { up } = useViewport();
@@ -30,21 +34,28 @@ const SlidingViews = ({
 
   const getCurrentState = (state, size) => {
     if (!up("md")) {
-      if (state === currentState || currentState === BOTH_OPEN_TYPE && state === priorityState) {
+      if (
+        state === currentState ||
+        (currentState === BOTH_OPEN_TYPE && state === priorityState)
+      ) {
         return FULL_WIDTH;
-      } else {
-        return HIDE_WIDTH;
       }
+      return HIDE_WIDTH;
     }
 
     if (state === priorityState && state === currentState && !mobileOnly) {
       return FULL_WIDTH;
-    } else if (priorityState !== state && priorityState === currentState && !mobileOnly) {
+    }
+    if (
+      priorityState !== state &&
+      priorityState === currentState &&
+      !mobileOnly
+    ) {
       return HIDE_WIDTH;
     }
 
     return size;
-  }
+  };
 
   return (
     <Box className={classes.slidingViewsRoot}>
@@ -56,6 +67,6 @@ const SlidingViews = ({
       </SlidingView>
     </Box>
   );
-}
+};
 
 export default SlidingViews;

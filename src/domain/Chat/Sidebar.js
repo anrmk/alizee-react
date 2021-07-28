@@ -2,7 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import { Card, CardContent, CardHeader, IconButton, Divider } from "@material-ui/core/";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  IconButton,
+  Divider,
+} from "@material-ui/core/";
 
 import ChatIcon from "@material-ui/icons/ChatOutlined";
 
@@ -22,7 +28,7 @@ function Sidebar({
 
   onSearchChange,
   onItemClick,
-  onNewChatClick
+  onNewChatClick,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -46,7 +52,10 @@ function Sidebar({
       <Divider />
 
       <CardContent>
-        <Search placeholder={t("ChatSidebarSearchInputLabel")} onChange={onSearchChange} />
+        <Search
+          placeholder={t("ChatSidebarSearchInputLabel")}
+          onChange={onSearchChange}
+        />
       </CardContent>
       <CardContent className={classes.cardContent}>
         <SidebarList

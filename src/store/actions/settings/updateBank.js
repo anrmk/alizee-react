@@ -44,10 +44,10 @@ export function updateBank(api, data) {
       await api.setMethod("PUT").setData(data).query(url);
 
       dispatch(receiveUpdateBank(data));
-	  return true
+      return true;
     } catch (e) {
       dispatch(errorUpdateBank("Error: something went wrong:", e));
-	  return false
+      return false;
     }
   };
 }

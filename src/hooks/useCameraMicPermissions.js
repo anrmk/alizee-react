@@ -9,7 +9,7 @@ export default function useCameraMicPermissions() {
   const requestBothPermissions = async () => {
     await requestCameraPermission();
     await requestMicPermission();
-  }
+  };
 
   const requestCameraPermission = async () => {
     const res = await navigator.permissions.query({ name: "camera" });
@@ -17,7 +17,7 @@ export default function useCameraMicPermissions() {
     res.onchange = (e) => {
       setCameraGranted(e.currentTarget.state === PERMISSION_STATE_GRANTED);
     };
-  }
+  };
 
   const requestMicPermission = async () => {
     const res = await navigator.permissions.query({ name: "microphone" });
@@ -25,13 +25,13 @@ export default function useCameraMicPermissions() {
     res.onchange = (e) => {
       setMicGranted(e.currentTarget.state === PERMISSION_STATE_GRANTED);
     };
-  }
+  };
 
   return {
     cameraGranted,
     micGranted,
     requestBothPermissions,
     requestCameraPermission,
-    requestMicPermission
-  }
+    requestMicPermission,
+  };
 }

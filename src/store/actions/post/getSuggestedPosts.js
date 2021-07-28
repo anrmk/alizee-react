@@ -92,8 +92,8 @@ const gridGallerySelector = (state) => state.suggestedPosts.data;
 
 export const getGridGalleryPosts = createSelector(
   [gridGallerySelector],
-  (data) => {
-    return data.reduce(
+  (data) =>
+    data.reduce(
       (acc, curr) => [
         ...acc,
         {
@@ -104,6 +104,5 @@ export const getGridGalleryPosts = createSelector(
         },
       ],
       []
-    );
-  }
+    )
 );

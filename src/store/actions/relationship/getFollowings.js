@@ -25,7 +25,7 @@ function receiveGetFollowings(data) {
     type: GET_FOLLOWINGS_SUCCESS,
     payload: {
       isFetching: false,
-      data: data,
+      data,
       errorMessage: "",
     },
   };
@@ -93,7 +93,10 @@ export function getFollowings(api, userName) {
 
     const url = generateUrl("getFollowings");
     try {
-      const { data } = await api.setMethod("GET").setParams({ userName }).query(url);
+      const { data } = await api
+        .setMethod("GET")
+        .setParams({ userName })
+        .query(url);
 
       dispatch(receiveGetFollowings(data));
     } catch {
@@ -108,7 +111,10 @@ export function getShareFollowings(api, userName) {
 
     const url = generateUrl("getFollowings");
     try {
-      const { data } = await api.setMethod("GET").setParams({ userName }).query(url);
+      const { data } = await api
+        .setMethod("GET")
+        .setParams({ userName })
+        .query(url);
 
       dispatch(receiveGetFollowingsShare(data));
     } catch {
@@ -122,14 +128,24 @@ const querySelector = (state) => state.users.query;
 const shareSelector = (state) => state.users.share;
 const dataSelector = (state) => state.users.data;
 
-export const getFilteredShare = createSelector([querySelector, shareSelector], (query, data) => {
-  if (!query) return data;
+export const getFilteredShare = createSelector(
+  [querySelector, shareSelector],
+  (query, data) => {
+    if (!query) return data;
 
-  return data.filter((item) => item?.name?.toLowerCase().includes(query.toLowerCase()));
-});
+    return data.filter((item) =>
+      item?.name?.toLowerCase().includes(query.toLowerCase())
+    );
+  }
+);
 
-export const getFilteredUsers = createSelector([querySelector, dataSelector], (query, data) => {
-  if (!query) return data;
+export const getFilteredUsers = createSelector(
+  [querySelector, dataSelector],
+  (query, data) => {
+    if (!query) return data;
 
-  return data.filter((item) => item?.name?.toLowerCase().includes(query.toLowerCase()));
-});
+    return data.filter((item) =>
+      item?.name?.toLowerCase().includes(query.toLowerCase())
+    );
+  }
+);

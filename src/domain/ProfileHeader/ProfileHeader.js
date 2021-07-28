@@ -5,7 +5,6 @@ import MoreVertIcon from "@material-ui/icons/MoreVertRounded";
 
 import Cover from "../../components/Cover";
 import Avatar from "../../components/Avatar";
-import { USER_RANKING } from "../../constants/user";
 
 import { ProfileStatistics } from "../ProfileStatistics";
 import DisplayName from "../../components/DisplayName";
@@ -18,7 +17,12 @@ function ProfileHeader(props) {
   const classes = useStyles();
 
   const { isOwner } = props;
-  const { onNewCoverImageClick, onDeleteCoverImageClick, onCoverUrlChange, onMenuClick } = props;
+  const {
+    onNewCoverImageClick,
+    onDeleteCoverImageClick,
+    onCoverUrlChange,
+    onMenuClick,
+  } = props;
 
   return (
     <Box className={classes.root}>
@@ -42,11 +46,14 @@ function ProfileHeader(props) {
               followingsCount={user?.followingsCount}
               favoritesCount={user?.favoritesCount}
               blockedCount={user?.blockedCount}
-			  postsCount={user?.postsCount}
+              postsCount={user?.postsCount}
             />
           </Box>
           <Box>
-            <IconButton onClick={onMenuClick} aria-label="Profile menu" aria-haspopup="true">
+            <IconButton
+              onClick={onMenuClick}
+              aria-label="Profile menu"
+              aria-haspopup="true">
               <MoreVertIcon htmlColor="white" />
             </IconButton>
           </Box>
@@ -58,10 +65,12 @@ function ProfileHeader(props) {
           src={user.coverUrl}
           onFileInputChange={onCoverUrlChange}
           onNewImageClick={onNewCoverImageClick}
-          onDeleteImageClick={onDeleteCoverImageClick}
-        >
+          onDeleteImageClick={onDeleteCoverImageClick}>
           <Box position="absolute" top="0px" right="0px">
-            <IconButton aria-label="Profile menu" aria-haspopup="true" onClick={onMenuClick}>
+            <IconButton
+              aria-label="Profile menu"
+              aria-haspopup="true"
+              onClick={onMenuClick}>
               <MoreVertIcon htmlColor="white" />
             </IconButton>
           </Box>
@@ -71,8 +80,7 @@ function ProfileHeader(props) {
             alignItems="flex-end"
             position="relative"
             top="24px"
-            paddingLeft={1}
-          >
+            paddingLeft={1}>
             <Avatar
               className={classes.avatarHeader}
               src={user.avatarUrl}
@@ -83,15 +91,13 @@ function ProfileHeader(props) {
               borderWidth="4px"
             />
             <Box marginLeft={1} width="calc(100% - 124px)">
-              {
-                <DisplayName
-                  name={user.name}
-                  userName={user.userName}
-                  identityVerified={user.identityVerified}
-                  noWrap={false}
-                  alignItems="flex-start"
-                />
-              }
+              <DisplayName
+                name={user.name}
+                userName={user.userName}
+                identityVerified={user.identityVerified}
+                noWrap={false}
+                alignItems="flex-start"
+              />
             </Box>
           </Box>
         </Cover>

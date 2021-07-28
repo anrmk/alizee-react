@@ -2,13 +2,13 @@ import React from "react";
 import clsx from "clsx";
 import { Box, Button, Card, CardContent, Typography } from "@material-ui/core";
 
+import { Alert } from "@material-ui/lab";
 import SocialButtons from "../../components/SocialButtons/SocialButtons";
 import DividerWithText from "../../components/DividerWithText";
 
 import { GOOGLE_CLIENT_ID } from "../../constants/social_client_ids";
 
 import useStyles from "./styles";
-import { Alert } from "@material-ui/lab";
 
 const FORM_ID = "sign";
 
@@ -41,7 +41,10 @@ function AuthBaseForm({
 
             <Box marginBottom="16px">
               <SocialButtons
-                className={clsx(classes.formElement, helpComponent && classes.formElementIndent)}
+                className={clsx(
+                  classes.formElement,
+                  helpComponent && classes.formElementIndent
+                )}
                 googleClientId={GOOGLE_CLIENT_ID}
                 onRequest={onSocialRequest}
                 onSuccess={onSocialSuccess}
@@ -53,11 +56,17 @@ function AuthBaseForm({
               <DividerWithText>or</DividerWithText>
             </Box>
 
-            <Box marginBottom="16px" component="form" id={FORM_ID} onSubmit={onFormSubmit}>
+            <Box
+              marginBottom="16px"
+              component="form"
+              id={FORM_ID}
+              onSubmit={onFormSubmit}>
               {children}
             </Box>
             <Box marginBottom="16px">{helpComponent}</Box>
-            <Box marginBottom="16px">{error && <Alert severity="error">{error}</Alert>}</Box>
+            <Box marginBottom="16px">
+              {error && <Alert severity="error">{error}</Alert>}
+            </Box>
             <Box marginBottom="16px">
               <Button
                 form={FORM_ID}
@@ -66,8 +75,7 @@ function AuthBaseForm({
                 disableElevation
                 type="submit"
                 variant="contained"
-                color="primary"
-              >
+                color="primary">
                 {isSingUpForm ? "Sing Up" : "Sign In"}
               </Button>
             </Box>

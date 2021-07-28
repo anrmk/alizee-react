@@ -1,9 +1,17 @@
 import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { formatCurrency } from "../../helpers/functions";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Card, CardHeader, CardContent, Box, TextField, InputAdornment, FormHelperText } from "@material-ui/core";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Box,
+  TextField,
+  InputAdornment,
+  FormHelperText,
+} from "@material-ui/core";
+import { formatCurrency } from "../../helpers/functions";
 
 import Avatar from "../Avatar";
 import { TAX_PERCENTAGE } from "../../constants/payment";
@@ -41,8 +49,16 @@ function SendTip({
 
   return (
     <Card variant="outlined">
-      <CardHeader avatar={<Avatar src={user.avatarUrl} />} title={user.name} subheader={user.userName} />
-      <CardContent component="form" id={formId} onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+      <CardHeader
+        avatar={<Avatar src={user.avatarUrl} />}
+        title={user.name}
+        subheader={user.userName}
+      />
+      <CardContent
+        component="form"
+        id={formId}
+        onSubmit={handleSubmit(onSubmit)}
+        autoComplete="off">
         <Controller
           name={AMOUNT_INPUT_ID}
           control={control}
@@ -61,9 +77,13 @@ function SendTip({
                 onBlur={onBlur}
                 onChange={onChange}
                 InputProps={{
-                  startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                  startAdornment: (
+                    <InputAdornment position="start">$</InputAdornment>
+                  ),
                   endAdornment: (
-                    <InputAdornment position="end">+ {value && formatCurrency(value * TAX_PERCENTAGE)} (GTS)</InputAdornment>
+                    <InputAdornment position="end">
+                      + {value && formatCurrency(value * TAX_PERCENTAGE)} (GTS)
+                    </InputAdornment>
                   ),
                 }}
               />
@@ -72,7 +92,11 @@ function SendTip({
                   <FormHelperText>{INVALID_AMOUNT_MAX_ERROR}</FormHelperText>
                 </Box>
                 <Box>
-                  <FormHelperText>Total: {value && formatCurrency(value * 1 + value * TAX_PERCENTAGE)}</FormHelperText>
+                  <FormHelperText>
+                    Total:{" "}
+                    {value &&
+                      formatCurrency(value * 1 + value * TAX_PERCENTAGE)}
+                  </FormHelperText>
                 </Box>
               </Box>
             </>

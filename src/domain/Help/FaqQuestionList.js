@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 
 import { useHistory } from "react-router-dom";
@@ -17,8 +18,7 @@ function FaqQuestionList({ data = [], currentQuestion }) {
               onClick={(e) => {
                 e.preventDefault();
                 history.push(`/help/${item.handle}`);
-              }}
-            >
+              }}>
               {item?.title}
             </Link>
           </Grid>

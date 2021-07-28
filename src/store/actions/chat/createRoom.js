@@ -1,4 +1,7 @@
-import { generateUrl, copyFlatObjectWithIgnore } from "../../../helpers/functions";
+import {
+  generateUrl,
+  copyFlatObjectWithIgnore,
+} from "../../../helpers/functions";
 
 export const CREATE_ROOM_REQUEST = "CREATE_ROOM_REQUEST";
 export const CREATE_ROOM_SUCCESS = "CREATE_ROOM_SUCCESS";
@@ -21,7 +24,7 @@ function receiveCreateRoom(data, current) {
       isFetching: false,
       errorMessage: "",
       data,
-      current
+      current,
     },
   };
 }
@@ -46,14 +49,16 @@ export function createRoom(api, userName) {
 
       const transformedData = {
         ...copyFlatObjectWithIgnore(data, ["userName"]),
-        userName: data.userName
+        userName: data.userName,
       };
 
       const chatState = getState().chat;
-      const existedRoom = chatState.data.filter(room => room.id === transformedData.id);
-      const rooms = existedRoom.length ?
-        [...chatState.data] :
-        [...chatState.data, { ...transformedData }];
+      const existedRoom = chatState.data.filter(
+        (room) => room.id === transformedData.id
+      );
+      const rooms = existedRoom.length
+        ? [...chatState.data]
+        : [...chatState.data, { ...transformedData }];
 
       dispatch(receiveCreateRoom(rooms, transformedData));
     } catch (e) {

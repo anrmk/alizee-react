@@ -2,9 +2,6 @@ import React, { useState, useEffect } from "react";
 
 import { Line } from "react-chartjs-2";
 
-import useChartConfig from "./useChartConfig";
-import useChartData from "./useChartData";
-
 import {
   Box,
   Card,
@@ -16,6 +13,8 @@ import {
   List,
   ListItemText,
 } from "@material-ui/core";
+import useChartConfig from "./useChartConfig";
+import useChartData from "./useChartData";
 
 import useStyles from "./styles";
 
@@ -25,11 +24,12 @@ const PostStatistics = ({ data, onReset }) => {
   const options = useChartConfig();
   const classes = useStyles();
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       onReset();
-    };
-  }, []);
+    },
+    []
+  );
 
   const handleLegendClick = ({ currentTarget }, index, item) => {
     chart.setDatasetVisibility(
@@ -37,7 +37,7 @@ const PostStatistics = ({ data, onReset }) => {
       !chart.isDatasetVisible(item.datasetIndex)
     );
     const meta = chart.getDatasetMeta(0);
-    const result = meta.data[index].hidden === true ? false : true;
+    const result = meta.data[index].hidden !== true;
     if (result) {
       meta.data[index].hidden = true;
       currentTarget.style.textDecoration = "line-through";
@@ -67,38 +67,37 @@ const PostStatistics = ({ data, onReset }) => {
             <List className={classes.root} dense>
               {chart.options.plugins.legend.labels
                 .generateLabels(chart)
-                .map((item, idx) => {
-                  return (
-                    <ListItem
-                      component="li"
-                      autoFocus
-                      button
-                      divider
-                      key={idx}
-                      onClick={(e) => {
-                        handleLegendClick(e, idx, item);
-                      }}>
-                      <ListItemText
-                        primary={item.text.toUpperCase()}
-                        secondary={
-                          <Box
-                            left={0}
-                            top="50%"
-                            bottom="50%"
-                            position="absolute"
-                            component="span"
-                            bgcolor={item.fillStyle}
-                            borderRadius="50%"
-                            height="6px"
-                            width="6px"></Box>
-                        }
-                      />
-                      <Typography variant="body1">
-                        {chartData.datasets[idx].total}
-                      </Typography>
-                    </ListItem>
-                  );
-                })}
+                .map((item, idx) => (
+                  <ListItem
+                    component="li"
+                    autoFocus
+                    button
+                    divider
+                    key={idx}
+                    onClick={(e) => {
+                      handleLegendClick(e, idx, item);
+                    }}>
+                    <ListItemText
+                      primary={item.text.toUpperCase()}
+                      secondary={
+                        <Box
+                          left={0}
+                          top="50%"
+                          bottom="50%"
+                          position="absolute"
+                          component="span"
+                          bgcolor={item.fillStyle}
+                          borderRadius="50%"
+                          height="6px"
+                          width="6px"
+                        />
+                      }
+                    />
+                    <Typography variant="body1">
+                      {chartData.datasets[idx].total}
+                    </Typography>
+                  </ListItem>
+                ))}
             </List>
           )}
         </>

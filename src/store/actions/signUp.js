@@ -55,12 +55,15 @@ export function signUpUser(api, creds) {
         .query(url, { "g-recaptcha-response": creds.token });
 
       if (status !== 201) {
-        return dispatch(errorSignUp(data.message));
+        dispatch(errorSignUp(data.message));
+        return;
       }
 
       dispatch(receiveSignUp());
     } catch (e) {
-      dispatch(errorSignUp(e.response?.data || e.message, e.response?.status || 500));
+      dispatch(
+        errorSignUp(e.response?.data || e.message, e.response?.status || 500)
+      );
     }
   };
 }

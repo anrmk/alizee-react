@@ -13,7 +13,7 @@ function receiveBlocked(user) {
 
 export function addUserBlock() {
   return (dispatch, getState) => {
-    let user = getState().user.data;
+    const user = getState().user.data;
     user.isBlocked = true;
 
     dispatch(receiveBlocked(user));
@@ -22,7 +22,7 @@ export function addUserBlock() {
 
 export function removeUserBlock() {
   return (dispatch, getState) => {
-    var user = getState().user;
+    const { user } = getState();
     user.data.isBlocked = false;
 
     dispatch(receiveBlocked(user));

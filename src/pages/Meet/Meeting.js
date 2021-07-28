@@ -4,11 +4,18 @@ import { useTranslation } from "react-i18next";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Button, Container, Grid, Paper, TextField, Typography } from "@material-ui/core";
+import {
+  Button,
+  Container,
+  Grid,
+  Paper,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 
 import VideocamOutlinedIcon from "@material-ui/icons/VideocamOutlined";
 
-import meetImage from "../../../src/assets/img/meet_image.jpg";
+import meetImage from "../../assets/img/meet_image.jpg";
 import useStyles from "./styles";
 
 const LINK_CODE_ID = "linkCode";
@@ -32,7 +39,7 @@ function Meeting() {
   });
 
   const handleCreate = () => {
-    history.push(`/room`);
+    history.push("/room");
   };
 
   const handleJoinInputSubmit = (data) => {
@@ -42,7 +49,14 @@ function Meeting() {
   return (
     <Container className={classes.meetingContainer} disableGutters>
       <Grid container direction="row" justify="center" spacing={2}>
-        <Grid item container direction="column" justify="center" xs={10} md={6} className={classes.meetingLinkItem}>
+        <Grid
+          item
+          container
+          direction="column"
+          justify="center"
+          xs={10}
+          md={6}
+          className={classes.meetingLinkItem}>
           <Typography variant="h4" align="left" paragraph>
             {t("MeetMeetingTitle")}
           </Typography>
@@ -50,9 +64,19 @@ function Meeting() {
             {t("MeetMeetingSubtitle")}
           </Typography>
 
-          <Grid item container direction="row" alignItems="center" className={classes.meetingLinkBox} spacing={4}>
+          <Grid
+            item
+            container
+            direction="row"
+            alignItems="center"
+            className={classes.meetingLinkBox}
+            spacing={4}>
             <Grid item>
-              <Button size="large" variant="contained" color="primary" onClick={handleCreate}>
+              <Button
+                size="large"
+                variant="contained"
+                color="primary"
+                onClick={handleCreate}>
                 <VideocamOutlinedIcon />
                 {t("MeetMeetingNewMeetingButtonLabel")}
               </Button>
@@ -82,7 +106,14 @@ function Meeting() {
           </Grid>
         </Grid>
 
-        <Grid item container direction="column" justify="center" xs={8} md={6} className={classes.meetingImageItem}>
+        <Grid
+          item
+          container
+          direction="column"
+          justify="center"
+          xs={8}
+          md={6}
+          className={classes.meetingImageItem}>
           <Paper className={classes.meetingImagePaper}>
             <img className={classes.meetingImage} src={meetImage} alt="" />
           </Paper>

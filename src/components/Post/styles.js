@@ -15,9 +15,12 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     display: "flex",
     flexDirection: "column",
-    justifyContent: ({ isPurchased }) => (isPurchased ? "space-between" : "flex-start"),
+    justifyContent: ({ isPurchased }) =>
+      isPurchased ? "space-between" : "flex-start",
     [theme.breakpoints.down("sm")]: {
-      height: `calc(100vh - ${theme.mixins.toolbar.minHeight * 2 + theme.spacing(3)}px)`,
+      height: `calc(100vh - ${
+        theme.mixins.toolbar.minHeight * 2 + theme.spacing(3)
+      }px)`,
     },
   },
 

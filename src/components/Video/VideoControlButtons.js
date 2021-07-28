@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, IconButton, Hidden } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 
 import CallEndIcon from "@material-ui/icons/CallEnd";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
@@ -19,20 +19,23 @@ function VideoControlButtons() {
         variant="contained"
         color="secondary"
         startIcon={<MicNoneIcon />}
-        endIcon={<ExpandLessIcon />} />
+        endIcon={<ExpandLessIcon />}
+      />
       <StyledButton
         className={classes.button}
         size="medium"
         variant="contained"
         color="secondary"
-        endIcon={<CallEndIcon />} />
+        endIcon={<CallEndIcon />}
+      />
       <StyledButton
         className={classes.button}
         size="medium"
         variant="contained"
         color="secondary"
         startIcon={<VideocamIcon />}
-        endIcon={<ExpandLessIcon />} />
+        endIcon={<ExpandLessIcon />}
+      />
     </Box>
   );
 }

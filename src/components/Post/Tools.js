@@ -1,6 +1,14 @@
+/* eslint-disable no-nested-ternary */
 import React, { useCallback } from "react";
 import { Link } from "react-router-dom";
-import { Box, Chip, IconButton, Tooltip, Typography, Hidden } from "@material-ui/core";
+import {
+  Box,
+  Chip,
+  IconButton,
+  Tooltip,
+  Typography,
+  Hidden,
+} from "@material-ui/core";
 
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import FavoriteIcon from "@material-ui/icons/FavoriteRounded";
@@ -72,7 +80,10 @@ const Tools = ({
   return (
     <Box width="100%">
       <Box display="flex" alignItems="center">
-        <IconButton disabled={!isPurchased && amount > 0} onClick={handleLikeClick} aria-label="add to favorites">
+        <IconButton
+          disabled={!isPurchased && amount > 0}
+          onClick={handleLikeClick}
+          aria-label="add to favorites">
           {isLike ? <FavoriteIcon htmlColor="red" /> : <FavoriteBorderIcon />}
         </IconButton>
 
@@ -106,13 +117,16 @@ const Tools = ({
           </>
         )}
 
-        <div className={classes.grow}></div>
+        <div className={classes.grow} />
 
-        <IconButton color="primary" aria-label="favorite" onClick={handleFavoriteClick}>
+        <IconButton
+          color="primary"
+          aria-label="favorite"
+          onClick={handleFavoriteClick}>
           {isFavorite ? <BookmarkIcon /> : <BookmarkBorderIcon />}
         </IconButton>
 
-        {(isVerified || isOwner) && amount !== 0 ?
+        {(isVerified || isOwner) && amount !== 0 ? (
           !isPurchased ? (
             <Tooltip title="Unlock post">
               <Chip
@@ -124,11 +138,12 @@ const Tools = ({
               />
             </Tooltip>
           ) : (
-            <IconButton onClick={isOwner ? handlePurchaseClick : handleReceiptClick}>
+            <IconButton
+              onClick={isOwner ? handlePurchaseClick : handleReceiptClick}>
               <ReceiptIcon />
             </IconButton>
-          ) : null
-        }
+          )
+        ) : null}
       </Box>
 
       {likes > 0 && (
@@ -140,6 +155,6 @@ const Tools = ({
       )}
     </Box>
   );
-}
+};
 
 export default Tools;

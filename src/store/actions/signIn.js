@@ -105,11 +105,18 @@ export function signInUser(creds, api) {
         throw new Error("User doesn't have username");
       }
 
-      dispatch(receiveSignIn({
-        userName: usernameFromToken
-      }, true));
+      dispatch(
+        receiveSignIn(
+          {
+            userName: usernameFromToken,
+          },
+          true
+        )
+      );
     } catch (e) {
-      dispatch(errorSignIn(e.response?.data || e.message, e.response?.status || 500));
+      dispatch(
+        errorSignIn(e.response?.data || e.message, e.response?.status || 500)
+      );
     }
   };
 }
@@ -117,6 +124,7 @@ export function signInUser(creds, api) {
 export function signInSocial(api, socialType, opts) {
   return async (dispatch, getState) => {
     dispatch(requestSignIn());
+    console.log("Here");
 
     try {
       if (socialType === SOCIAL_GOOGLE) {
@@ -144,11 +152,18 @@ export function signInSocial(api, socialType, opts) {
         throw new Error("User doesn't have username");
       }
 
-      dispatch(receiveSignIn({
-        userName: usernameFromToken
-      }, true));
+      dispatch(
+        receiveSignIn(
+          {
+            userName: usernameFromToken,
+          },
+          true
+        )
+      );
     } catch (e) {
-      dispatch(errorSignIn(e.response?.data || e.message, e.response?.status || 500));
+      dispatch(
+        errorSignIn(e.response?.data || e.message, e.response?.status || 500)
+      );
     }
   };
 }

@@ -11,7 +11,7 @@ const previewStoryListItemBase = {
   minWidth: "114px",
   maxWidth: "114px",
   height: "174px",
-}
+};
 
 const useStyles = makeStyles((theme) => ({
   previewStoryList: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       padding: theme.spacing(1),
       marginBottom: theme.spacing(0),
-    }
+    },
   },
   previewStoryListProgress: {
     display: "block",
@@ -38,12 +38,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-start",
     padding: theme.spacing(1.5),
     borderRadius: theme.shape.borderRadius,
-    backgroundImage: ({ previewUrl }) => previewUrl && tintedBg(0.25) + `url("${previewUrl}")`,
+    backgroundImage: ({ previewUrl }) =>
+      previewUrl && `${tintedBg(0.25)}url("${previewUrl}")`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundColor: theme.palette.background.paper,
-    borderColor: theme.palette.grey[theme.palette.type === "dark" ? "800" : "200"],
+    borderColor:
+      theme.palette.grey[theme.palette.type === "dark" ? "800" : "200"],
     borderWidth: "1px",
     borderStyle: "solid",
     cursor: "pointer",
@@ -96,7 +98,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     bottom: "36px",
     backgroundColor: theme.palette.primary.main,
-    border: "4px solid " + theme.palette.common.white,
+    border: `4px solid ${theme.palette.common.white}`,
     borderRadius: "50%",
   },
   createButtonText: {
@@ -112,15 +114,15 @@ export const CustomLinearProgress = withStyles((theme) => ({
     width: "100%",
     borderRadius: theme.shape.borderRadius,
     "& + &": {
-      marginLeft: theme.spacing(1)
-    }
+      marginLeft: theme.spacing(1),
+    },
   },
   colorPrimary: {
     backgroundColor: theme.palette.grey[700],
   },
   bar: {
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: theme.palette.grey[400]
+    backgroundColor: theme.palette.grey[400],
   },
 }))(LinearProgress);
 

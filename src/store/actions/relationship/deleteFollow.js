@@ -43,15 +43,21 @@ export function deleteFollow(api, userName) {
     dispatch(requestDeleteFollow());
     try {
       const url = generateUrl("deleteFollow");
-      await api.setMethod("DELETE").setParams({ userName: userName }).query(url);
+      await api.setMethod("DELETE").setParams({ userName }).query(url);
 
-      const updatedData = toggleFollowStatus(getState().users.data, userName, false);
+      const updatedData = toggleFollowStatus(
+        getState().users.data,
+        userName,
+        false
+      );
 
       dispatch(removeFollower());
       dispatch(receiveDeleteFollow(updatedData));
       dispatch(getDeposit(api));
     } catch (e) {
-      return dispatch(errorDeleteFollow("When follow was deleting then something went wrong"));
+      dispatch(
+        errorDeleteFollow("When follow was deleting then something went wrong")
+      );
     }
   };
 }

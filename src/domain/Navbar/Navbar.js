@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 
-import { Grid, AppBar, Toolbar, IconButton, Badge, Button } from "@material-ui/core";
+import {
+  Grid,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Badge,
+  Button,
+} from "@material-ui/core";
 
 import NotificationsIcon from "@material-ui/icons/NotificationsActiveOutlined";
 import MailIcon from "@material-ui/icons/MailOutline";
@@ -72,7 +79,9 @@ function Navbar({
           location.pathname !== CHANGE_LOG_ROUTE && (
             <Grid item>
               <Toolbar>
-                <Button startIcon={<ArrowBackIcon />} onClick={() => history.goBack()}>
+                <Button
+                  startIcon={<ArrowBackIcon />}
+                  onClick={() => history.goBack()}>
                   Back
                 </Button>
               </Toolbar>
@@ -85,14 +94,18 @@ function Navbar({
           </Grid>
         )}
 
-        <Grid item></Grid>
+        <Grid item />
 
         <Grid item>
           <Toolbar disableGutters>
             {isAuthenticated ? (
               <>
-                <IconButton onClick={() => history.push(NOTIFICATION_ROUTE_ALL)}>
-                  <Badge variant="dot" invisible={!newNotification} color="primary">
+                <IconButton
+                  onClick={() => history.push(NOTIFICATION_ROUTE_ALL)}>
+                  <Badge
+                    variant="dot"
+                    invisible={!newNotification}
+                    color="primary">
                     <NotificationsIcon />
                   </Badge>
                 </IconButton>
@@ -103,7 +116,10 @@ function Navbar({
                   </Badge>
                 </IconButton>
 
-                <IconButton ref={anchorEl} aria-controls={menuId} onClick={handleMenuOpen}>
+                <IconButton
+                  ref={anchorEl}
+                  aria-controls={menuId}
+                  onClick={handleMenuOpen}>
                   <Avatar src={avatarUrl} size="small" />
                 </IconButton>
 
@@ -123,8 +139,7 @@ function Navbar({
                   color="secondary"
                   variant="outlined"
                   size="small"
-                  onClick={() => handleChangeRoute(SIGN_UP_ROUTE)}
-                >
+                  onClick={() => handleChangeRoute(SIGN_UP_ROUTE)}>
                   Sign Up
                 </Button>
                 &nbsp;
@@ -132,8 +147,7 @@ function Navbar({
                   color="primary"
                   variant="outlined"
                   size="small"
-                  onClick={() => handleChangeRoute(SIGN_IN_ROUTE)}
-                >
+                  onClick={() => handleChangeRoute(SIGN_IN_ROUTE)}>
                   Log in
                 </Button>
               </>

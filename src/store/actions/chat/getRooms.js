@@ -59,7 +59,7 @@ export function getRooms(api) {
 
       dispatch(receiveGetRooms(data));
     } catch {
-      return dispatch(errorGetRooms("Error: GetRooms"));
+      dispatch(errorGetRooms("Error: GetRooms"));
     }
   };
 }
@@ -83,10 +83,13 @@ export function removeRoom(roomId) {
 const querySelector = (state) => state.chat.query;
 const dataSelector = (state) => state.chat.data;
 
-export const getFilteredRooms = createSelector([querySelector, dataSelector], (query, data) => {
-  if (!query) return data;
+export const getFilteredRooms = createSelector(
+  [querySelector, dataSelector],
+  (query, data) => {
+    if (!query) return data;
 
-  return data
-    .filter((item) => item && item.name.toLowerCase().includes(query))
-    .sort((a, b) => b.unreadMessageCount - a.unreadMessageCount);
-});
+    return data
+      .filter((item) => item && item.name.toLowerCase().includes(query))
+      .sort((a, b) => b.unreadMessageCount - a.unreadMessageCount);
+  }
+);

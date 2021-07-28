@@ -24,7 +24,7 @@ function receiveGetHashTags(hashTags) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      data: hashTags || []
+      data: hashTags || [],
     },
   };
 }
@@ -41,19 +41,16 @@ function errorGetHashTags(message) {
 }
 
 export function getHashTags(api) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(requestGetHashTags());
 
     const url = generateUrl("getHashTags");
     try {
-      const { data } = await api
-        .setMethod("GET")
-        .setParams({})
-        .query(url);
+      const { data } = await api.setMethod("GET").setParams({}).query(url);
 
-      data.forEach(item => {
-        item["isSelected"] = false;
-      })
+      data.forEach((item) => {
+        item.isSelected = false;
+      });
 
       dispatch(receiveGetHashTags(data));
     } catch (e) {
@@ -66,7 +63,5 @@ const selectableHashTagsSelector = (state) => state.hashTags.data;
 
 export const getSelectableHashTags = createSelector(
   [selectableHashTagsSelector],
-  (data) => data.reduce((acc, curr) => (
-      { ...acc, [curr.id]: { ...curr } }
-    ), {})
+  (data) => data.reduce((acc, curr) => ({ ...acc, [curr.id]: { ...curr } }), {})
 );

@@ -12,14 +12,21 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     padding: theme.spacing(2),
-    border: `3px solid ${theme.palette.type === "light" ? theme.palette.primary.light : theme.palette.grey["200"]}`,
+    border: `3px solid ${
+      theme.palette.type === "light"
+        ? theme.palette.primary.light
+        : theme.palette.grey["200"]
+    }`,
     borderRadius: "50%",
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
   },
 
   icon: {
     fontSize: theme.typography.h1.fontSize,
-    color: theme.palette.type === "light" ? theme.palette.primary.light : theme.palette.grey["200"]
+    color:
+      theme.palette.type === "light"
+        ? theme.palette.primary.light
+        : theme.palette.grey["200"],
   },
 }));
 

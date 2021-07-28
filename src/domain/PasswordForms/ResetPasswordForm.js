@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Button, Divider, TextField } from "@material-ui/core";
-import LockIcon from '@material-ui/icons/VerifiedUserOutlined';
+import LockIcon from "@material-ui/icons/VerifiedUserOutlined";
 
 import { isCorrectEmail } from "../../helpers/functions";
 import { SIGN_UP_ROUTE, SIGN_IN_ROUTE } from "../../constants/routes";
@@ -15,7 +15,7 @@ const INVALID_EMAIL_ERROR = "Invalid email address";
 function ResetPasswordForm({
   loading,
 
-  onSubmit
+  onSubmit,
 }) {
   const classes = useStyles();
   const history = useHistory();
@@ -27,26 +27,25 @@ function ResetPasswordForm({
     e.preventDefault();
 
     onSubmit && onSubmit(email);
-  }
+  };
 
   const handleEmailChange = (e) => {
     const value = e.target.value.trim();
 
     if (value.length && btnDisabled) {
-      setBtnDisabled(false)
+      setBtnDisabled(false);
     } else if (!value.length && !btnDisabled) {
-      setBtnDisabled(true)
+      setBtnDisabled(true);
     }
 
     if (value.length && !isCorrectEmail(value) && !error) {
       setError(INVALID_EMAIL_ERROR);
-    }
-    else if (!value.length || isCorrectEmail(value) && error) {
+    } else if (!value.length || (isCorrectEmail(value) && error)) {
       setError("");
     }
 
     setEmail(value);
-  }
+  };
 
   return (
     <BaseForm
@@ -57,7 +56,7 @@ function ResetPasswordForm({
       btnDisabled={loading || btnDisabled || !!error}
       onSubmit={handleSubmit}
       icon={<LockIcon className={classes.icon} />}
-      footerComponent={(
+      footerComponent={
         <>
           <Divider className={classes.divider} />
           <Button
@@ -75,8 +74,7 @@ function ResetPasswordForm({
             Back To Login
           </Button>
         </>
-      )}>
-
+      }>
       <TextField
         className={classes.formElementIndent}
         variant="outlined"
@@ -88,7 +86,8 @@ function ResetPasswordForm({
         value={email}
         error={!!error}
         helperText={error}
-        onChange={handleEmailChange} />
+        onChange={handleEmailChange}
+      />
     </BaseForm>
   );
 }

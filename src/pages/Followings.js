@@ -1,19 +1,17 @@
 import React, { useContext, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { connect } from "react-redux";
-import { useParams } from "react-router-dom";
 
+import { Container, Card, CardHeader, Avatar } from "@material-ui/core";
 import ApiContext from "../context/ApiContext";
 
 import { PROFILE_USERNAME_ROUTE } from "../constants/routes";
 
-import { RelationshipList } from "../components/RelationshipList";
+import RelationshipList from "../components/RelationshipList";
 import * as userActions from "../store/actions/user";
 import * as relationshipActions from "../store/actions/relationship";
 
 import { useFollowDialog } from "../hooks/payment";
-
-import { Container, Card, CardHeader, Avatar } from "@material-ui/core";
 
 function Followings(props) {
   const { username } = useParams();
@@ -35,11 +33,12 @@ function Followings(props) {
     }
   }, [username]);
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       resetFollowings();
-    };
-  }, []);
+    },
+    []
+  );
 
   return (
     <Container maxWidth="sm">
@@ -51,10 +50,14 @@ function Followings(props) {
           onClick={() => {
             history.push(PROFILE_USERNAME_ROUTE(user.userName));
           }}
-        ></CardHeader>
+        />
       </Card>
 
-      <RelationshipList items={following.data} currentUserName={me.userName} onSubscribeClick={followDialog.toggle} />
+      <RelationshipList
+        items={following.data}
+        currentUserName={me.userName}
+        onSubscribeClick={followDialog.toggle}
+      />
     </Container>
   );
 }
@@ -75,7 +78,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchUser: (api, username) => dispatch(userActions.getUser(api, username)),
-    fetchFollowings: (api, userName) => dispatch(relationshipActions.getFollowings(api, userName)),
+    fetchFollowings: (api, userName) =>
+      dispatch(relationshipActions.getFollowings(api, userName)),
     resetFollowings: () => dispatch(relationshipActions.resetRelationship()),
   };
 }

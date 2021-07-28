@@ -1,8 +1,14 @@
 import React from "react";
-import { formatDate, formatCurrency } from "../../helpers/functions";
 
-import { List, ListItem, ListItemAvatar, ListItemText, Typography, Divider, Grid } from "@material-ui/core";
-import { positions } from "@material-ui/system";
+import {
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Typography,
+  Grid,
+} from "@material-ui/core";
+import { formatDate, formatCurrency } from "../../helpers/functions";
 import Avatar from "../Avatar";
 
 import useStyles from "./styles";
@@ -26,7 +32,7 @@ function Purchase({ purchases }) {
                     <Typography component="span">{item.name}</Typography>
                   </Grid>
                   <Grid item>
-                    <Typography component="span" variant="body2" >
+                    <Typography component="span" variant="body2">
                       {formatDate(item.createdDate)}
                     </Typography>
                   </Grid>
@@ -34,7 +40,10 @@ function Purchase({ purchases }) {
               }
               secondary={
                 <>
-                  <Typography component="span" color="textPrimary" variant="body2">
+                  <Typography
+                    component="span"
+                    color="textPrimary"
+                    variant="body2">
                     {formatCurrency(item.amount)}
                   </Typography>{" "}
                   - {item.description}

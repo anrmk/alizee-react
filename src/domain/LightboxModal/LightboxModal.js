@@ -23,31 +23,43 @@ function LightboxModal({ items, startSlideIndex = 0 }) {
     }
   };
 
-  const isVideo = (type) => {
-    return type === MEDIA_VIDEO;
-  };
+  const isVideo = (type) => type === MEDIA_VIDEO;
 
   return (
     <Box
       width="100%"
       style={{
         height: isVideo(currentMediaType) && "100%",
-      }}
-    >
+      }}>
       <Gallery
         isPurchased
         className={classes.root}
         style={{ height: isVideo(currentMediaType) && "100%" }}
         pagination={false}
         currentIndex={startSlideIndex}
-        onChangeIndex={handleChangeIndex}
-      >
+        onChangeIndex={handleChangeIndex}>
         {items.length &&
           items.map((item) => {
             if (item.kind === MEDIA_IMAGE) {
-              return <img loading="lazy" className={classes.imageContent} key={item.id} src={item.url} />;
-            } else if (item.kind === MEDIA_VIDEO) {
-              return <VideoContent className={classes.videoContent} key={item.id} url={item.url} showControls />;
+              return (
+                <img
+                  loading="lazy"
+                  className={classes.imageContent}
+                  key={item.id}
+                  src={item.url}
+                  alt="lightbox-img"
+                />
+              );
+            }
+            if (item.kind === MEDIA_VIDEO) {
+              return (
+                <VideoContent
+                  className={classes.videoContent}
+                  key={item.id}
+                  url={item.url}
+                  showControls
+                />
+              );
             }
             return null;
           })}

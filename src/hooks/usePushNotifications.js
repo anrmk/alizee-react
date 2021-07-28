@@ -1,3 +1,4 @@
+/* eslint-disable no-return-await */
 import { useState, useEffect } from "react";
 import { BLOCKED_PUSH_NOTIFICATION } from "../constants/permissions";
 import { toBase64 } from "../helpers/functions";
@@ -19,53 +20,49 @@ export default function usePushNotifications() {
 
     const outputArray = new Uint8Array(base64.length);
 
+    // eslint-disable-next-line no-plusplus
     for (let i = 0; i < base64.length; ++i) {
       outputArray[i] = base64.charCodeAt(i);
     }
     return outputArray;
   };
 
-  const checkSubscription = async (swRegistration) => {
-    const subscription = await swRegistration.pushManager.getSubscription();
-    return subscription;
-  };
+  const checkSubscription = async (pSwRegistration) =>
+    await pSwRegistration.pushManager.getSubscription();
 
-  const checkPermission = () => {
-    return Notification.permission;
-  };
+  const checkPermission = () => Notification.permission;
 
-  const updateSubscription = (subscription) => {
-    if (subscription) {
-      setSubscription(subscription);
-      return subscription;
-    } else {
-      setSubscription(subscription);
-      return subscription;
+  const updateSubscription = (newSubscription) => {
+    if (newSubscription) {
+      setSubscription(newSubscription);
+      return newSubscription;
     }
+    setSubscription(newSubscription);
+    return newSubscription;
   };
 
-  const updateBtn = (isSubscribed) => {
+  const updateBtn = (subscriptionStatus) => {
     if (Notification.permission === BLOCKED_PUSH_NOTIFICATION) {
       setIsSubscribed(false);
       setIsDisable(true);
       return updateSubscription(null);
     }
 
-    if (isSubscribed) {
-      setIsSubscribed(isSubscribed);
-      return isSubscribed;
-    } else {
-      setIsSubscribed(isSubscribed);
-      return isSubscribed;
+    if (subscriptionStatus) {
+      setIsSubscribed(subscriptionStatus);
+      return subscriptionStatus;
     }
+    setIsSubscribed(subscriptionStatus);
+    return subscriptionStatus;
   };
 
   const unsubscribeUser = async () => {
     try {
-      const subscription = await swRegistration.pushManager.getSubscription();
+      const localSubscription =
+        await swRegistration.pushManager.getSubscription();
 
-      if (subscription) {
-        subscription.unsubscribe();
+      if (localSubscription) {
+        localSubscription.unsubscribe();
         updateBtn(false);
         return updateSubscription(null);
       }
@@ -74,18 +71,20 @@ export default function usePushNotifications() {
       setIsDisable(true);
       return updateSubscription(null);
     }
+
+    return null;
   };
 
   const subscribeUser = async () => {
     const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
     try {
-      const subscription = await swRegistration.pushManager.subscribe({
+      const localSubscription = await swRegistration.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: applicationServerKey,
+        applicationServerKey,
       });
 
       updateBtn(true);
-      return updateSubscription(JSON.stringify(subscription));
+      return updateSubscription(JSON.stringify(localSubscription));
     } catch (error) {
       updateBtn(false);
       return updateSubscription(null);
@@ -95,22 +94,21 @@ export default function usePushNotifications() {
   const subscribeUserToggle = async () => {
     if (isSubscribed) {
       return await unsubscribeUser();
-    } else {
-      return await subscribeUser();
     }
+    return await subscribeUser();
   };
 
-  const initializeUI = async (swRegistration) => {
-    const subscription = await checkSubscription(swRegistration);
-    const isSubscribed = !(subscription === null);
+  const initializeUI = async (pSwRegistration) => {
+    const localSubscription = await checkSubscription(pSwRegistration);
+    const subscriptionStatus = !(localSubscription === null);
 
-    if (isSubscribed) {
-      updateSubscription(JSON.stringify(subscription));
+    if (subscriptionStatus) {
+      updateSubscription(JSON.stringify(localSubscription));
     } else {
       updateSubscription(null);
     }
 
-    updateBtn(isSubscribed);
+    updateBtn(subscriptionStatus);
   };
 
   const registerServiceWorker = async () => {

@@ -18,7 +18,13 @@ import ApiContext from "../../../context/ApiContext";
 import { isEmptyObject } from "../../../helpers/functions";
 import * as settingsActions from "../../../store/actions/settings";
 
-function SiteNotificationSettings({ data, getNotification, updateNotification, onSetAlertText, resetSettings }) {
+function SiteNotificationSettings({
+  data,
+  getNotification,
+  updateNotification,
+  onSetAlertText,
+  resetSettings,
+}) {
   const apiClient = useContext(ApiContext);
   const [settings, setSettings] = useState({
     isActive: false,
@@ -47,7 +53,7 @@ function SiteNotificationSettings({ data, getNotification, updateNotification, o
   }, [data]);
 
   const handleSettingsChange = (e) => {
-    var value = { ...settings };
+    const value = { ...settings };
     value[e.target.name] = e.target.checked;
     setSettings(value);
 
@@ -77,35 +83,55 @@ function SiteNotificationSettings({ data, getNotification, updateNotification, o
           <ListItem>
             <ListItemText primary="New Campaign Contribution" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.purchase} disabled={!settings.isActive} name="purchase" />
+              <Switch
+                checked={settings.purchase}
+                disabled={!settings.isActive}
+                name="purchase"
+              />
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
             <ListItemText primary="New Comment" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.comment} disabled={!settings.isActive} name="comment" />
+              <Switch
+                checked={settings.comment}
+                disabled={!settings.isActive}
+                name="comment"
+              />
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
             <ListItemText primary="New Likes" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.like} disabled={!settings.isActive} name="like" />
+              <Switch
+                checked={settings.like}
+                disabled={!settings.isActive}
+                name="like"
+              />
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
             <ListItemText primary="New Subscriber" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.subscriber} disabled={!settings.isActive} name="subscriber" />
+              <Switch
+                checked={settings.subscriber}
+                disabled={!settings.isActive}
+                name="subscriber"
+              />
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
             <ListItemText primary="New Tips" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.tip} disabled={!settings.isActive} name="tip" />
+              <Switch
+                checked={settings.tip}
+                disabled={!settings.isActive}
+                name="tip"
+              />
             </ListItemSecondaryAction>
           </ListItem>
 
@@ -114,14 +140,22 @@ function SiteNotificationSettings({ data, getNotification, updateNotification, o
           <ListItem>
             <ListItemText primary="Discounts from users I used to follow" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.discount} disabled={!settings.isActive} name="discount" />
+              <Switch
+                checked={settings.discount}
+                disabled={!settings.isActive}
+                name="discount"
+              />
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
             <ListItemText primary="Upcoming stream reminders" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.stream} disabled={!settings.isActive} name="stream" />
+              <Switch
+                checked={settings.stream}
+                disabled={!settings.isActive}
+                name="stream"
+              />
             </ListItemSecondaryAction>
           </ListItem>
         </List>
@@ -139,10 +173,15 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getNotification: (api) => dispatch(settingsActions.getSiteNotification(api)),
-    updateNotification: (api, data) => dispatch(settingsActions.updateSiteNotification(api, data)),
+    getNotification: (api) =>
+      dispatch(settingsActions.getSiteNotification(api)),
+    updateNotification: (api, data) =>
+      dispatch(settingsActions.updateSiteNotification(api, data)),
     resetSettings: () => dispatch(settingsActions.resetSettings()),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SiteNotificationSettings);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SiteNotificationSettings);

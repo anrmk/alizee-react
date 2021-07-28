@@ -1,13 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 
-import { IconButton, Drawer, List, ListItem, ListItemText, ListItemIcon } from "@material-ui/core";
+import {
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+} from "@material-ui/core";
 
 import PhotoCameraIcon from "@material-ui/icons/PhotoCameraOutlined";
 import ControlPointIcon from "@material-ui/icons/ControlPointDuplicateOutlined";
 import MoodIcon from "@material-ui/icons/Mood";
-import AddCircleIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 
-function PostSprout({ isOpen, onClose, onCreatePost, onCreateStory, onCreateMood }) {
+function PostSprout({
+  isOpen,
+  onClose,
+  onCreatePost,
+  onCreateStory,
+  onCreateMood,
+}) {
   const container = window !== undefined ? window.document.body : undefined;
 
   const handleCreateMood = () => {
@@ -25,12 +36,15 @@ function PostSprout({ isOpen, onClose, onCreatePost, onCreateStory, onCreateMood
     onCreatePost && onCreatePost();
   };
 
-  {
-    /* TODO: create independent DrawerProvider and move out this logic */
-  }
+  /* TODO: create independent DrawerProvider and move out this logic */
 
   return (
-    <Drawer anchor="bottom" open={isOpen} onClose={onClose} container={container} ModalProps={{ keepMounted: true }}>
+    <Drawer
+      anchor="bottom"
+      open={isOpen}
+      onClose={onClose}
+      container={container}
+      ModalProps={{ keepMounted: true }}>
       <List>
         <ListItem button onClick={handleCreateMood}>
           <ListItemIcon>

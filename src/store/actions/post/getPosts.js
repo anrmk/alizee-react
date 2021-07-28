@@ -27,7 +27,7 @@ function receiveGetPosts(data, length, start) {
       errorMessage: "",
       offset: start + POSTS_OFFSET,
       hasMore: length === POSTS_OFFSET,
-      data: data || []
+      data: data || [],
     },
   };
 }
@@ -75,7 +75,6 @@ export function refreshPost(postData) {
   };
 }
 
-
 export function getPosts(api, opts) {
   return async (dispatch, getState) => {
     dispatch(requestGetPosts());
@@ -109,17 +108,19 @@ export function getPosts(api, opts) {
 // Selectors
 const gridGallerySelector = (state) => state.profilePosts.data;
 
-export const getGridGalleryPosts = createSelector([gridGallerySelector], (data) => {
-  return data.reduce(
-    (acc, curr) => [
-      ...acc,
-      {
-        id: curr.id,
-        caption: curr.description,
-        amount: curr.amount,
-        media: curr.media.length > 0 ? [...curr.media] : [],
-      },
-    ],
-    []
-  );
-});
+export const getGridGalleryPosts = createSelector(
+  [gridGallerySelector],
+  (data) =>
+    data.reduce(
+      (acc, curr) => [
+        ...acc,
+        {
+          id: curr.id,
+          caption: curr.description,
+          amount: curr.amount,
+          media: curr.media.length > 0 ? [...curr.media] : [],
+        },
+      ],
+      []
+    )
+);

@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
     width: "20px",
     padding: theme.spacing(0.5),
     background: theme.palette.common.white,
-    borderRadius: "4px"
+    borderRadius: "4px",
   },
 }));
 

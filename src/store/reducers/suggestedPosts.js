@@ -33,7 +33,7 @@ export default function post(
     case GET_SUGGESTED_POSTS_FAILURE: {
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
     }
     case RESET_SUGGESTED_POSTS: {

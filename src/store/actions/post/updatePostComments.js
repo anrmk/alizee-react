@@ -7,7 +7,7 @@ function requestUpdatePostComments() {
     type: UPDATE_POST_COMMENTS_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: ""
+      errorMessage: "",
     },
   };
 }
@@ -18,7 +18,7 @@ function receiveUpdatePostComments(posts) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      data: posts
+      data: posts,
     },
   };
 }
@@ -28,7 +28,7 @@ function errorUpdatePostComments(message) {
     type: UPDATE_POST_COMMENTS_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message
+      errorMessage: message,
     },
   };
 }
@@ -41,14 +41,14 @@ export function updatePostComments(postId, comment) {
       const postsState = getState().followingPosts;
 
       if (!postsState.data.length) {
-        throw "There is no local data";
+        throw new Error("There is no local data");
       }
 
       const posts = [...postsState.data];
       const postIndex = posts.findIndex((post) => post.id === postId);
 
       if (postIndex === -1) {
-        throw "Item not found!";
+        throw new Error("Item not found!");
       }
 
       posts[postIndex].comments = [...posts[postIndex].comments, comment];

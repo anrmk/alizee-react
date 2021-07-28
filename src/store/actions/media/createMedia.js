@@ -1,17 +1,17 @@
-import { generateUrl } from '../../../helpers/functions';
+import { generateUrl } from "../../../helpers/functions";
 
-export const CREATE_MEDIA_REQUEST = 'CREATE_MEDIA_REQUEST';
-export const CREATE_MEDIA_SUCCESS = 'CREATE_MEDIA_SUCCESS';
-export const CREATE_MEDIA_FAILURE = 'CREATE_MEDIA_FAILURE';
+export const CREATE_MEDIA_REQUEST = "CREATE_MEDIA_REQUEST";
+export const CREATE_MEDIA_SUCCESS = "CREATE_MEDIA_SUCCESS";
+export const CREATE_MEDIA_FAILURE = "CREATE_MEDIA_FAILURE";
 
 function requestCreateMedia() {
   return {
     type: CREATE_MEDIA_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: '',
-    }
-  }
+      errorMessage: "",
+    },
+  };
 }
 
 function receiveCreateMedia(media) {
@@ -19,10 +19,10 @@ function receiveCreateMedia(media) {
     type: CREATE_MEDIA_SUCCESS,
     payload: {
       isFetching: false,
-      errorMessage: '',
-      data: media
-    }
-  }
+      errorMessage: "",
+      data: media,
+    },
+  };
 }
 
 function errorCreateMedia(message) {
@@ -30,19 +30,19 @@ function errorCreateMedia(message) {
     type: CREATE_MEDIA_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message
-    }
-  }
+      errorMessage: message,
+    },
+  };
 }
 
 export function createMedia(api, media, mediaType) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(requestCreateMedia());
 
-    const url = generateUrl('createMedia');
+    const url = generateUrl("createMedia");
     try {
       const formData = new FormData();
-      media.forEach(file => {
+      media.forEach((file) => {
         formData.append("files", file);
       });
 
@@ -55,5 +55,5 @@ export function createMedia(api, media, mediaType) {
     } catch (e) {
       dispatch(errorCreateMedia("Error: something went wrong"));
     }
-  }
+  };
 }

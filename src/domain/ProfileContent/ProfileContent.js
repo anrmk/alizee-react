@@ -1,10 +1,9 @@
 import React from "react";
 
+import { Hidden, Divider } from "@material-ui/core";
 import PostTabs from "./PostTabs";
 import GridGallery from "../GridGallery";
 import { ProfileStatisticsMobile } from "../ProfileStatistics";
-
-import { Hidden, Divider } from "@material-ui/core";
 
 function ProfileContent(props) {
   const { isOwner, items, hasMore, tabIndex, disabled, user } = props;
@@ -24,8 +23,18 @@ function ProfileContent(props) {
         <Divider />
       </Hidden>
 
-      <PostTabs isOwner={isOwner} index={tabIndex} onTabChange={onTabChange} disabled={disabled} />
-      <GridGallery items={items} hasMore={hasMore} onFetchMore={onFetchMore} onItemClick={onItemClick} />
+      <PostTabs
+        isOwner={isOwner}
+        index={tabIndex}
+        onTabChange={onTabChange}
+        disabled={disabled}
+      />
+      <GridGallery
+        items={items}
+        hasMore={hasMore}
+        onFetchMore={onFetchMore}
+        onItemClick={onItemClick}
+      />
     </>
   );
 }

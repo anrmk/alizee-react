@@ -43,8 +43,8 @@ export function getDeposit(api) {
     try {
       const { data } = await api.setMethod("GET").query(url);
 
-       const user = { ...getState().signIn?.userInfo };
-       user.deposit = data.balance;
+      const user = { ...getState().signIn?.userInfo };
+      user.deposit = data.balance;
 
       dispatch(receiveGetUserDeposit(user));
     } catch {

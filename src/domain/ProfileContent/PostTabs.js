@@ -25,7 +25,11 @@ function PostTabs({
   return (
     <Box marginBottom={1} className={classes.tabsWrapper}>
       <Hidden smDown>
-        <Tabs value={index} onChange={handleChange} variant="fullWidth" centered>
+        <Tabs
+          value={index}
+          onChange={handleChange}
+          variant="fullWidth"
+          centered>
           <Tab
             label={
               <Box display="flex" flexDirection="row">
@@ -36,7 +40,7 @@ function PostTabs({
               </Box>
             }
             disabled={disabled}
-          ></Tab>
+          />
           <Tab
             label={
               <Box display="flex" flexDirection="row">
@@ -65,11 +69,27 @@ function PostTabs({
       </Hidden>
       <Hidden mdUp>
         <Box paddingTop={2}>
-          <Tabs value={index} onChange={handleChange} variant="fullWidth" centered>
-            <Tab icon={<AppsOutlinedIcon fontSize="large" />} disabled={disabled} className={classes.tab}></Tab>
-            <Tab icon={<PagesIcon fontSize="large" />} disabled={disabled} className={classes.tab} />
+          <Tabs
+            value={index}
+            onChange={handleChange}
+            variant="fullWidth"
+            centered>
+            <Tab
+              icon={<AppsOutlinedIcon fontSize="large" />}
+              disabled={disabled}
+              className={classes.tab}
+            />
+            <Tab
+              icon={<PagesIcon fontSize="large" />}
+              disabled={disabled}
+              className={classes.tab}
+            />
             {isOwner && (
-              <Tab icon={<PhotoOutlinedIcon fontSize="large" />} disabled={disabled} className={classes.tab} />
+              <Tab
+                icon={<PhotoOutlinedIcon fontSize="large" />}
+                disabled={disabled}
+                className={classes.tab}
+              />
             )}
           </Tabs>
         </Box>

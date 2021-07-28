@@ -1,10 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Redirect, useHistory, useParams, useRouteMatch } from "react-router-dom";
+import {
+  Redirect,
+  useHistory,
+  useParams,
+  useRouteMatch,
+} from "react-router-dom";
 import { connect } from "react-redux";
 
-import { Box, Grid, Hidden, Typography } from "@material-ui/core/";
-
-import BlockIcon from "@material-ui/icons/Block";
+import { Box, Grid, Hidden } from "@material-ui/core/";
 
 import ApiContext from "../../context/ApiContext";
 import ProfileHeader from "../../domain/ProfileHeader";
@@ -15,7 +18,12 @@ import * as relationshipActions from "../../store/actions/relationship";
 import * as userActions from "../../store/actions/user";
 import * as settingsActions from "../../store/actions/settings";
 
-import { SETTINGS_ROUTE, POST_ID_ROUTE, SETTINGS_EDIT_PROFILE_ROUTE, NOT_FOUND_ROUTE } from "../../constants/routes";
+import {
+  SETTINGS_ROUTE,
+  POST_ID_ROUTE,
+  SETTINGS_EDIT_PROFILE_ROUTE,
+  NOT_FOUND_ROUTE,
+} from "../../constants/routes";
 
 import useConfirmationDialog from "../../hooks/useConfirmationDialog";
 import useDialog from "../../hooks/useDialog";
@@ -23,7 +31,10 @@ import { useMenuDialog, useMoodDialog } from "../../hooks/post";
 import { useSendTipDialog } from "../../hooks/payment";
 import useFollowDialog from "../../hooks/payment/useFollowDialog";
 import dialogs, { PROFILE_EDIT_COVER } from "../../constants/dialogs";
-import { ProfileUserInfo, ProfileUserInfoMobile } from "../../domain/ProfileUserInfo";
+import {
+  ProfileUserInfo,
+  ProfileUserInfoMobile,
+} from "../../domain/ProfileUserInfo";
 import { PROFILE_TYPE } from "../../components/Post/Menu";
 import { RedirectContent } from "../../domain/ConfirmationDialog.js";
 
@@ -62,12 +73,13 @@ function Profile(props) {
     type: PROFILE_TYPE,
   });
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       resetUser();
       resetPosts();
-    };
-  }, []);
+    },
+    []
+  );
 
   useEffect(() => {
     if (username) {
@@ -137,7 +149,7 @@ function Profile(props) {
 
   const handleTabChange = (index) => {
     setPostSettings({
-      index: index,
+      index,
       tagged: index === 1 || false,
     });
   };
@@ -177,7 +189,8 @@ function Profile(props) {
   };
 
   const handleMoodUpdateClick = () => {
-    createMoodDialog.toggle && createMoodDialog.toggle({ ...user.data, defaultValue: user.data.mood });
+    createMoodDialog.toggle &&
+      createMoodDialog.toggle({ ...user.data, defaultValue: user.data.mood });
   };
 
   const handleGoToSocialClick = (link) => {
@@ -305,17 +318,24 @@ function mapDispatchToProps(dispatch) {
     fetchUser: (api, userName) => dispatch(userActions.getUser(api, userName)),
     resetUser: () => dispatch(userActions.resetUser()),
 
-    fetchPosts: (api, opts) => dispatch(profilePostsActions.getPosts(api, opts)),
+    fetchPosts: (api, opts) =>
+      dispatch(profilePostsActions.getPosts(api, opts)),
     resetPosts: () => dispatch(profilePostsActions.resetPosts()),
 
-    getFavoritePosts: (api, opts) => dispatch(profilePostsActions.getFavoritePosts(api, opts)),
+    getFavoritePosts: (api, opts) =>
+      dispatch(profilePostsActions.getFavoritePosts(api, opts)),
 
     createFollow: (api, userName, isPrivateAccount) =>
-      dispatch(relationshipActions.createFollow(api, userName, isPrivateAccount)),
-    deleteFollow: (api, userName) => dispatch(relationshipActions.deleteFollow(api, userName)),
+      dispatch(
+        relationshipActions.createFollow(api, userName, isPrivateAccount)
+      ),
+    deleteFollow: (api, userName) =>
+      dispatch(relationshipActions.deleteFollow(api, userName)),
 
-    updateCover: (api, opts) => dispatch(settingsActions.updateCover(api, opts)),
-    updateAvatar: (api, opts) => dispatch(settingsActions.updateAvatar(api, opts)),
+    updateCover: (api, opts) =>
+      dispatch(settingsActions.updateCover(api, opts)),
+    updateAvatar: (api, opts) =>
+      dispatch(settingsActions.updateAvatar(api, opts)),
   };
 }
 

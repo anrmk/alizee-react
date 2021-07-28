@@ -5,13 +5,13 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     [theme.breakpoints.up("md")]: {
       width: "50%",
-    }
+    },
   },
   title: {
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
   },
   content: {
-    height: `35vh`
+    height: "35vh",
   },
   dateBtn: {
     cursor: "pointer",
@@ -19,15 +19,15 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none !important",
     color: theme.palette.text.secondary,
     "& + &": {
-      marginLeft: theme.spacing(1)
+      marginLeft: theme.spacing(1),
     },
     "&:hover": {
-      color: theme.palette.text.primary
-    }
+      color: theme.palette.text.primary,
+    },
   },
   active: {
-    color: theme.palette.text.primary
-  }
+    color: theme.palette.text.primary,
+  },
 }));
 
 export default useStyles;

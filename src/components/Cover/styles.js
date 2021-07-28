@@ -17,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
     },
     position: "relative",
     height: "220px",
-    backgroundImage: ({ imageUrl }) => getGradient(theme.palette.type) + `url("${imageUrl ? imageUrl : DefaultCover}")`,
+    backgroundImage: ({ imageUrl }) =>
+      `${getGradient(theme.palette.type)}url("${imageUrl || DefaultCover}")`,
     backgroundColor: theme.palette.background.paper,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",

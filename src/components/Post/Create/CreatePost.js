@@ -3,14 +3,24 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import { Typography, FormControl, TextField, InputAdornment, Box, IconButton } from "@material-ui/core";
+import {
+  Typography,
+  FormControl,
+  TextField,
+  InputAdornment,
+  Box,
+  IconButton,
+} from "@material-ui/core";
 import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 
 import CreateTools from "./CreateTools";
 import GridGalleryHorizontal from "../../GridGalleryHorizontal/GridGalleryHorizontal";
 import ChipsInput from "../../ChipsInput";
 
-import { POST_AMOUNT_TEXT_HELPER, POST_GOAL_TEXT_HELPER } from "../../../constants/form_validations";
+import {
+  POST_AMOUNT_TEXT_HELPER,
+  POST_GOAL_TEXT_HELPER,
+} from "../../../constants/form_validations";
 
 import useStyles from "./styles";
 
@@ -24,27 +34,14 @@ const TARGET_FUNDS_ID = "targetFunds";
 const GOAL_BTN_ID = "goalBtn";
 
 const schema = yup.object().shape({
-  [MEDIA_ID]: yup
-    .array()
-    .min(0)
-    .max(12)
-    .required("Media is required"),
+  [MEDIA_ID]: yup.array().min(0).max(12).required("Media is required"),
   [DESCRIPTION_ID]: yup
     .string()
     .max(255, "Must be no more than 255 characters"),
-  [COMMENTABLE_ID]: yup
-    .boolean(),
-  [EXPLORABLE_ID]: yup
-    .boolean(),
-  [AMOUNT_ID]: yup
-    .number()
-    .typeError("Must be a number")
-    .min(0)
-    .notRequired(),
-  [TAGGED_USERS_ID]: yup
-    .array()
-    .nullable()
-    .notRequired()
+  [COMMENTABLE_ID]: yup.boolean(),
+  [EXPLORABLE_ID]: yup.boolean(),
+  [AMOUNT_ID]: yup.number().typeError("Must be a number").min(0).notRequired(),
+  [TAGGED_USERS_ID]: yup.array().nullable().notRequired(),
 });
 
 export default function CreatePost({
@@ -64,7 +61,15 @@ export default function CreatePost({
 
   const [goalActive, setGoalActive] = useState(false);
 
-  const { errors, register, setValue, getValues, watch, control, handleSubmit } = useForm({
+  const {
+    errors,
+    register,
+    setValue,
+    getValues,
+    watch,
+    control,
+    handleSubmit,
+  } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       [MEDIA_ID]: medias,
@@ -103,13 +108,19 @@ export default function CreatePost({
   };
 
   const handleTagUsersChange = (data) => {
-    const mappedUsersNamesToKeys = taggedUsers.reduce((acc, curr) => ({ ...acc, [curr.name]: { ...curr } }), {});
-    const currentData = data.reduce((acc, curr) => [...acc, { ...mappedUsersNamesToKeys[curr] }], []);
+    const mappedUsersNamesToKeys = taggedUsers.reduce(
+      (acc, curr) => ({ ...acc, [curr.name]: { ...curr } }),
+      {}
+    );
+    const currentData = data.reduce(
+      (acc, curr) => [...acc, { ...mappedUsersNamesToKeys[curr] }],
+      []
+    );
     setValue(TAGGED_USERS_ID, currentData);
   };
 
   const handleToolsChange = (e) => {
-    var target = e.currentTarget;
+    const target = e.currentTarget;
     switch (target.type) {
       case "button":
         if (target.name === COMMENTABLE_ID) {
@@ -122,24 +133,34 @@ export default function CreatePost({
           setGoalActive((prev) => !prev);
         }
         break;
-      case "file":
-        const files = target.files;
+      case "file": {
+        const { files } = target;
 
-        if (files.length > 0) {
+        if (target.files.length > 0) {
           const mediaFiles = [...files];
-          mediaFiles.forEach((file) => (file.previewURL = URL.createObjectURL(file)));
+          mediaFiles.forEach((file) => {
+            file.previewURL = URL.createObjectURL(file);
+          });
           setValue(MEDIA_ID, mediaFiles);
         }
+
+        break;
+      }
+
+      default:
         break;
     }
   };
 
-  const getTransformedItems = (items) => {
-    return items.map((item) => (typeof item === "string" ? item : item.name));
-  };
+  const getTransformedItems = (items) =>
+    items.map((item) => (typeof item === "string" ? item : item.name));
 
   return (
-    <form id={formId} className={classes.root} onSubmit={handleSubmit(handleFormSubmit)} autoComplete="off">
+    <form
+      id={formId}
+      className={classes.root}
+      onSubmit={handleSubmit(handleFormSubmit)}
+      autoComplete="off">
       <FormControl variant="filled" fullWidth>
         <Controller
           name={DESCRIPTION_ID}
@@ -186,14 +207,20 @@ export default function CreatePost({
                   disabled={!mediaWatcher.length}
                   value={value}
                   error={!!errors[TARGET_FUNDS_ID]}
-                  helperText={errors[TARGET_FUNDS_ID]?.message || POST_GOAL_TEXT_HELPER}
+                  helperText={
+                    errors[TARGET_FUNDS_ID]?.message || POST_GOAL_TEXT_HELPER
+                  }
                   onBlur={onBlur}
                   onChange={onChange}
                   InputProps={{
-                    startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                    startAdornment: (
+                      <InputAdornment position="start">$</InputAdornment>
+                    ),
                     endAdornment: (
                       <InputAdornment position="end">
-                        <IconButton onClick={handleToolsChange} name={GOAL_BTN_ID}>
+                        <IconButton
+                          onClick={handleToolsChange}
+                          name={GOAL_BTN_ID}>
                           <EmojiEventsIcon fontSize="small" color="secondary" />
                         </IconButton>
                       </InputAdornment>
@@ -215,14 +242,20 @@ export default function CreatePost({
                   disabled={!mediaWatcher.length}
                   value={value}
                   error={!!errors[AMOUNT_ID]}
-                  helperText={errors[AMOUNT_ID]?.message || POST_AMOUNT_TEXT_HELPER}
+                  helperText={
+                    errors[AMOUNT_ID]?.message || POST_AMOUNT_TEXT_HELPER
+                  }
                   onBlur={onBlur}
                   onChange={onChange}
                   InputProps={{
-                    startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                    startAdornment: (
+                      <InputAdornment position="start">$</InputAdornment>
+                    ),
                     endAdornment: (
                       <InputAdornment position="end">
-                        <IconButton onClick={handleToolsChange} name={GOAL_BTN_ID}>
+                        <IconButton
+                          onClick={handleToolsChange}
+                          name={GOAL_BTN_ID}>
                           <EmojiEventsIcon fontSize="small" />
                         </IconButton>
                       </InputAdornment>

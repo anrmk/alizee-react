@@ -16,7 +16,7 @@ ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <ApiContext.Provider value={clientApi}>
-          <App />
+        <App />
       </ApiContext.Provider>
     </PersistGate>
   </Provider>,

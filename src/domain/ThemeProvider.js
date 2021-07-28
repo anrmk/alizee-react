@@ -1,8 +1,13 @@
 import React from "react";
-import { createMuiTheme, ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
+import {
+  createMuiTheme,
+  ThemeProvider as MuiThemeProvider,
+} from "@material-ui/core/styles";
 
 import { initTheme } from "../helpers/functions";
-import ThemeDispatchContext, { CHANGE_THEME } from "../context/ThemeDispatchContext";
+import ThemeDispatchContext, {
+  CHANGE_THEME,
+} from "../context/ThemeDispatchContext";
 
 const ThemeProvider = ({ children, theme }) => {
   const themeInitialOptions = {
@@ -35,7 +40,9 @@ const ThemeProvider = ({ children, theme }) => {
 
   return (
     <MuiThemeProvider theme={memoizedTheme}>
-      <ThemeDispatchContext.Provider value={dispatch}>{children}</ThemeDispatchContext.Provider>
+      <ThemeDispatchContext.Provider value={dispatch}>
+        {children}
+      </ThemeDispatchContext.Provider>
     </MuiThemeProvider>
   );
 };

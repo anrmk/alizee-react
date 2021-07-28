@@ -4,8 +4,16 @@ import { useDispatch } from "react-redux";
 import ApiContext from "../context/ApiContext";
 import * as actionChat from "../store/actions/chat";
 import { getUrlTo } from "../helpers/functions";
-import { POST_MESSAGE_TYPE, STORY_MESSAGE_TYPE, PROFILE_MESSAGE_TYPE } from "../constants/message_types";
-import { POST_ID_ROUTE, PROFILE_USERNAME_ROUTE, STORIES_ROUTE } from "../constants/routes";
+import {
+  POST_MESSAGE_TYPE,
+  STORY_MESSAGE_TYPE,
+  PROFILE_MESSAGE_TYPE,
+} from "../constants/message_types";
+import {
+  POST_ID_ROUTE,
+  PROFILE_USERNAME_ROUTE,
+  STORIES_ROUTE,
+} from "../constants/routes";
 import useDialog from "./useDialog";
 import useUsersDialog from "./useUsersDialog";
 
@@ -13,10 +21,7 @@ export const SHARE_DIALOG_STORY_TYPE = "story";
 export const SHARE_DIALOG_PROFILE_TYPE = "profile";
 export const SHARE_DIALOG_POST_TYPE = "post";
 
-export default function useShareDialog({
-  withStack = false,
-  type,
-}) {
+export default function useShareDialog({ withStack = false, type }) {
   const apiClient = useContext(ApiContext);
   const dispatch = useDispatch();
   const dialog = useDialog();
@@ -28,13 +33,13 @@ export default function useShareDialog({
     const { id, userName } = data;
 
     usersDialog.toggle(
-        {
-          title: "Share To Chat",
-          mainBtnText: "Share",
-          onMainClick: handleShareDialogBtnClick
-        },
-        null,
-        withStack
+      {
+        title: "Share To Chat",
+        mainBtnText: "Share",
+        onMainClick: handleShareDialogBtnClick,
+      },
+      null,
+      withStack
     );
 
     currentShareId = id;
@@ -42,9 +47,13 @@ export default function useShareDialog({
   }, []);
 
   const handleShareDialogBtnClick = useCallback(async (items) => {
-    if ((!items.length && !currentShareId) || (!items.length && !currentShareUsername)) return;
+    if (
+      (!items.length && !currentShareId) ||
+      (!items.length && !currentShareUsername)
+    )
+      return;
 
-    const followersUsernames = items.map(item => item.userName);
+    const followersUsernames = items.map((item) => item.userName);
     let url = "";
     let messageType = "";
 
@@ -60,15 +69,17 @@ export default function useShareDialog({
     } else return;
 
     dialog.setParams({ loading: true });
-    await dispatch(actionChat.shareMessage(apiClient, {
-      followersUsernames,
-      message: url,
-      type: messageType
-    }));
+    await dispatch(
+      actionChat.shareMessage(apiClient, {
+        followersUsernames,
+        message: url,
+        type: messageType,
+      })
+    );
     dialog.toggle({ open: false, loading: false });
   }, []);
 
   return {
-    toggle: handleOpenClick
+    toggle: handleOpenClick,
   };
 }

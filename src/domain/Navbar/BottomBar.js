@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import clsx from "clsx";
 
-import { AppBar, BottomNavigation, BottomNavigationAction } from "@material-ui/core";
+import {
+  AppBar,
+  BottomNavigation,
+  BottomNavigationAction,
+} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
 import HomeIcon from "@material-ui/icons/HomeOutlined";
 import ExploreIcon from "@material-ui/icons/ExploreOutlined";
@@ -11,7 +15,12 @@ import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
 
 import { PostSprout } from "../PostsList";
 
-import { HOME_ROUTE, SEARCH_ROUTE, EXPLORE_ROUTE, PROFILE_USERNAME_ROUTE } from "../../constants/routes";
+import {
+  HOME_ROUTE,
+  SEARCH_ROUTE,
+  EXPLORE_ROUTE,
+  PROFILE_USERNAME_ROUTE,
+} from "../../constants/routes";
 
 import useStyles from "./styles";
 
@@ -48,7 +57,6 @@ function BottomBar({
         history.push(PROFILE_USERNAME_ROUTE(user.userName));
         break;
       default:
-        return;
     }
   };
 
@@ -58,10 +66,16 @@ function BottomBar({
 
   return (
     <AppBar className={clsx(classes.root, "bottom")} component="footer">
-      <BottomNavigation value={value} onChange={handleChange} showLabels={false}>
+      <BottomNavigation
+        value={value}
+        onChange={handleChange}
+        showLabels={false}>
         <BottomNavigationAction value="home" icon={<HomeIcon />} />
         <BottomNavigationAction value="search" icon={<SearchIcon />} />
-        <BottomNavigationAction value="post" icon={<AddCircleIcon fontSize="large" />} />
+        <BottomNavigationAction
+          value="post"
+          icon={<AddCircleIcon fontSize="large" />}
+        />
         <BottomNavigationAction value="explore" icon={<ExploreIcon />} />
         <BottomNavigationAction value="profile" icon={<AccountIcon />} />
       </BottomNavigation>

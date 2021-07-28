@@ -2,12 +2,12 @@ import React, { useRef } from "react";
 
 import useStyles from "./styles";
 
-function InputField({ 
-  children, 
+function InputField({
+  children,
   accept = "image/jpeg, image/jpg, image/gif, image/png",
 
-  onChange
- }) {
+  onChange,
+}) {
   const classes = useStyles();
   const mediaRef = useRef();
   return (

@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {
-  InputAdornment,
-  IconButton,
-  TextField
-} from "@material-ui/core";
-import LockIcon from '@material-ui/icons/LockOutlined';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import { InputAdornment, IconButton, TextField } from "@material-ui/core";
+import LockIcon from "@material-ui/icons/LockOutlined";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
 import BaseForm from "./BaseForm";
 import useStyles from "./styles";
@@ -26,7 +22,7 @@ function ChangePasswordForm({
   helperText = "In order to protect your account, make sure your password.",
   btnText = "Change Password",
 
-  onSubmit
+  onSubmit,
 }) {
   const classes = useStyles();
   const [formData, setFormData] = useState({
@@ -34,47 +30,70 @@ function ChangePasswordForm({
     confirmPassword: "",
     showPassword: false,
     passwordError: "",
-    confirmPasswordError: ""
+    confirmPasswordError: "",
   });
   const [btnDisabled, setBtnDisabled] = useState(true);
 
   useEffect(() => {
-    const passwordFilled = (!!formData.password.length && !(!!formData.passwordError));
-    const confirmPasswordFilled = (!!formData.confirmPassword.length && !(!!formData.confirmPasswordError));
-    setBtnDisabled(loading || !passwordFilled || !confirmPasswordFilled)
-  }, [formData])
+    const passwordFilled =
+      !!formData.password.length && !formData.passwordError;
+    const confirmPasswordFilled =
+      !!formData.confirmPassword.length && !formData.confirmPasswordError;
+    setBtnDisabled(loading || !passwordFilled || !confirmPasswordFilled);
+  }, [formData]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     onSubmit && onSubmit(formData.password);
-  }
+  };
 
   const handleInputChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
+    const { name } = e.target;
+    const { value } = e.target;
 
     if (!name) return;
 
     if (name === PASSWORD_INPUT_ID) {
       // String length is less than 4
       if (value.length && value.length < 4) {
-        setFormData({ ...formData, [name]: value, passwordError: LENGTH_ERROR });
+        setFormData({
+          ...formData,
+          [name]: value,
+          passwordError: LENGTH_ERROR,
+        });
         return;
       }
       // String contains 4 unique chars
       if (value.length && getUniqueChars(value).length < 4) {
-        setFormData({ ...formData, [name]: value, passwordError: UNIQUE_CHARS_ERROR });
+        setFormData({
+          ...formData,
+          [name]: value,
+          passwordError: UNIQUE_CHARS_ERROR,
+        });
         return;
       }
       // String contains numbers
       if (value.length && !hasNumbers(value)) {
-        setFormData({ ...formData, [name]: value, passwordError: CONTAINS_NUMBER_ERROR });
+        setFormData({
+          ...formData,
+          [name]: value,
+          passwordError: CONTAINS_NUMBER_ERROR,
+        });
         return;
       }
       // Password and Confirm Password are the same
-      if (value.length && formData.confirmPassword.length && value !== formData.confirmPassword) {
-        setFormData({ ...formData, [name]: value, passwordError: "", confirmPasswordError: PASSWORDS_DONT_MATCH_ERROR });
+      if (
+        value.length &&
+        formData.confirmPassword.length &&
+        value !== formData.confirmPassword
+      ) {
+        setFormData({
+          ...formData,
+          [name]: value,
+          passwordError: "",
+          confirmPasswordError: PASSWORDS_DONT_MATCH_ERROR,
+        });
         return;
       }
     }
@@ -82,17 +101,26 @@ function ChangePasswordForm({
     if (name === CONFIRM_PASSWORD_INPUT_ID) {
       // Password and Confirm Password are the same
       if (formData.password !== value) {
-        setFormData({ ...formData, [name]: value, confirmPasswordError: PASSWORDS_DONT_MATCH_ERROR });
+        setFormData({
+          ...formData,
+          [name]: value,
+          confirmPasswordError: PASSWORDS_DONT_MATCH_ERROR,
+        });
         return;
       }
     }
 
-    setFormData({ ...formData, [name]: value, passwordError: "", confirmPasswordError: "" })
-  }
+    setFormData({
+      ...formData,
+      [name]: value,
+      passwordError: "",
+      confirmPasswordError: "",
+    });
+  };
 
   const handleShowPasswordClick = () => {
     setFormData({ ...formData, showPassword: !formData.showPassword });
-  }
+  };
 
   return (
     <BaseForm
@@ -114,18 +142,24 @@ function ChangePasswordForm({
         helperText={formData.passwordError}
         value={formData.password}
         InputProps={{
-          endAdornment:
+          endAdornment: (
             <InputAdornment position="end">
               <IconButton
                 aria-label="toggle password visibility"
                 onClick={handleShowPasswordClick}
                 onMouseDown={(e) => e.preventDefault()}
                 edge="end">
-                {formData.showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                {formData.showPassword ? (
+                  <VisibilityIcon />
+                ) : (
+                  <VisibilityOffIcon />
+                )}
               </IconButton>
             </InputAdornment>
+          ),
         }}
-        onChange={handleInputChange} />
+        onChange={handleInputChange}
+      />
 
       <TextField
         variant="outlined"
@@ -139,7 +173,8 @@ function ChangePasswordForm({
         error={!!formData.confirmPasswordError}
         helperText={formData.confirmPasswordError}
         value={formData.confirmPassword}
-        onChange={handleInputChange} />
+        onChange={handleInputChange}
+      />
     </BaseForm>
   );
 }

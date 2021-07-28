@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
 
-import { Grid, TextField, Box, Button, MenuItem } from "@material-ui/core";
+import { Grid, TextField, Button, MenuItem } from "@material-ui/core";
 
 import * as yup from "yup";
 
@@ -14,9 +14,15 @@ const ROUTING_NUMBER_INPUT_ID = "routingNumber";
 const TYPE_INPUT_ID = "type";
 
 const schema = yup.object().shape({
-  [ACCTOUNT_NUMBER_INPUT_ID]: yup.string().max(16, VALUE_MAX_LENGTH(16)).required(),
+  [ACCTOUNT_NUMBER_INPUT_ID]: yup
+    .string()
+    .max(16, VALUE_MAX_LENGTH(16))
+    .required(),
 
-  [ROUTING_NUMBER_INPUT_ID]: yup.string().max(16, VALUE_MAX_LENGTH(16)).required(),
+  [ROUTING_NUMBER_INPUT_ID]: yup
+    .string()
+    .max(16, VALUE_MAX_LENGTH(16))
+    .required(),
 
   [TYPE_INPUT_ID]: yup.number().required(),
 });
@@ -41,7 +47,12 @@ function EditBankForm({
   });
 
   return (
-    <Grid container component="form" spacing={2} direction="column" onSubmit={handleSubmit(onSubmit)}>
+    <Grid
+      container
+      component="form"
+      spacing={2}
+      direction="column"
+      onSubmit={handleSubmit(onSubmit)}>
       <Grid item>
         <Controller
           name={ACCTOUNT_NUMBER_INPUT_ID}
@@ -110,8 +121,7 @@ function EditBankForm({
                 shrink: true,
               }}
               onBlur={onBlur}
-              onChange={(e) => onChange(e.target.value)}
-            >
+              onChange={(e) => onChange(e.target.value)}>
               <MenuItem value={0}>Checking</MenuItem>
               <MenuItem value={1}>Saving</MenuItem>
             </TextField>
@@ -119,7 +129,12 @@ function EditBankForm({
         />
       </Grid>
       <Grid item>
-        <Button type="submit" variant="contained" color="primary" disableElevation disabled={isFetching}>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          disableElevation
+          disabled={isFetching}>
           Update
         </Button>
       </Grid>

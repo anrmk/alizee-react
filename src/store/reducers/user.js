@@ -2,34 +2,27 @@ import {
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
   GET_USER_FAILURE,
-
   RESET_USER,
   RESET_PASSWORD_CONFIRM_REQUEST,
   RESET_PASSWORD_CONFIRM_SUCCESS,
   RESET_PASSWORD_CONFIRM_FAILURE,
-
   GET_SETTINGS_RESET_PASSWORD_CONFIRM_REQUEST,
   GET_SETTINGS_RESET_PASSWORD_CONFIRM_SUCCESS,
   GET_SETTINGS_RESET_PASSWORD_CONFIRM_FAILURE,
-
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAILURE,
-
   GET_USER_STATISTICS_REQUEST,
   GET_USER_STATISTICS_SUCCESS,
   GET_USER_STATISTICS_FAILURE,
-
   ADD_FOLLOWER_SUCCESS,
   REMOVE_FOLLOWER_SUCCESS,
-
   ADD_FAVORITE_SUCCESS,
   REMOVE_FAVORITE_SUCCESS,
-
   UPDATE_BLOCKED_SUCCESS,
   UPDATE_MOOD_SUCCESS,
   CHANGE_AVATAR_SUCCESS,
-  CHANGE_COVER_SUCCESS
+  CHANGE_COVER_SUCCESS,
 } from "../actions/user";
 
 export default function user(
@@ -127,7 +120,7 @@ export default function user(
         ...action.payload,
       };
 
-    //FOLLOW
+    // FOLLOW
     case ADD_FOLLOWER_SUCCESS: {
       return {
         ...state,
@@ -142,7 +135,7 @@ export default function user(
       };
     }
 
-    //MOOD
+    // MOOD
     case UPDATE_MOOD_SUCCESS: {
       return {
         ...state,
@@ -150,7 +143,7 @@ export default function user(
       };
     }
 
-    //FAVORITE
+    // FAVORITE
     case ADD_FAVORITE_SUCCESS: {
       return {
         ...state,

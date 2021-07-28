@@ -6,19 +6,19 @@ const useStyles = makeStyles((theme) => ({
     minWidth: "360px",
     maxWidth: "360px",
     backgroundColor: blue[500],
-    borderRadius: theme.shape.borderRadius
+    borderRadius: theme.shape.borderRadius,
   },
   name: {
     color: theme.palette.common.white,
-    fontWeight: theme.typography.h6.fontWeight
+    fontWeight: theme.typography.h6.fontWeight,
   },
   userName: {
     color: blue[200],
-    marginLeft: theme.spacing(0.4)
+    marginLeft: theme.spacing(0.4),
   },
   description: {
-    color: theme.palette.common.white
-  }
+    color: theme.palette.common.white,
+  },
 }));
 
 export default useStyles;

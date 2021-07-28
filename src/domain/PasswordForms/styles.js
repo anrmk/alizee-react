@@ -3,10 +3,10 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => {
   const baseFormElement = {
     width: "100%",
-    marginBottom: theme.spacing(2)
-  }
+    marginBottom: theme.spacing(2),
+  };
 
-  return ({
+  return {
     circleIcon: {
       width: "150px",
       height: "150px",
@@ -14,13 +14,20 @@ const useStyles = makeStyles((theme) => {
       alignItems: "center",
       justifyContent: "center",
       padding: theme.spacing(2),
-      border: `3px solid ${theme.palette.type === "light" ? theme.palette.primary.light : theme.palette.grey["200"]}`,
+      border: `3px solid ${
+        theme.palette.type === "light"
+          ? theme.palette.primary.light
+          : theme.palette.grey["200"]
+      }`,
       borderRadius: "50%",
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(2),
     },
     icon: {
       fontSize: theme.typography.h1.fontSize,
-      color: theme.palette.type === "light" ? theme.palette.primary.light : theme.palette.grey["200"]
+      color:
+        theme.palette.type === "light"
+          ? theme.palette.primary.light
+          : theme.palette.grey["200"],
     },
     content: {
       maxWidth: "400px",
@@ -36,11 +43,11 @@ const useStyles = makeStyles((theme) => {
     },
     captionText: {
       color: theme.palette.grey["500"],
-      marginBottom: theme.spacing(2)
+      marginBottom: theme.spacing(2),
     },
     controlForm: {
       ...baseFormElement,
-      textAlign: "left"
+      textAlign: "left",
     },
     formElementIndent: {
       marginBottom: theme.spacing(2),
@@ -49,9 +56,9 @@ const useStyles = makeStyles((theme) => {
       ...baseFormElement,
       marginTop: theme.spacing(4),
       marginBottom: 0,
-      backgroundColor: theme.palette.grey["200"]
+      backgroundColor: theme.palette.grey["200"],
     },
-  })
+  };
 });
 
 export default useStyles;

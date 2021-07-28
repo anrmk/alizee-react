@@ -1,51 +1,54 @@
 import {
   AUTH_SOCIAL_REQUEST,
   AUTH_SOCIAL_SUCCESS,
-  AUTH_SOCIAL_FAILURE
+  AUTH_SOCIAL_FAILURE,
 } from "../actions/socialAuth";
 import {
   ONE_TIME_AUTH_REQUEST,
   ONE_TIME_AUTH_SUCCESS,
-  ONE_TIME_AUTH_FAILURE
+  ONE_TIME_AUTH_FAILURE,
 } from "../actions/oneTimeAuth";
 
-export default function socialAuth(state = {
-  isFetching: false,
-  errorMessage: '',
-  data: {}
-}, action) {
+export default function socialAuth(
+  state = {
+    isFetching: false,
+    errorMessage: "",
+    data: {},
+  },
+  action
+) {
   switch (action.type) {
     case AUTH_SOCIAL_REQUEST:
-      return { 
+      return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case AUTH_SOCIAL_SUCCESS:
-      return { 
+      return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case AUTH_SOCIAL_FAILURE:
-      return { 
+      return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case ONE_TIME_AUTH_REQUEST:
-      return { 
+      return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case ONE_TIME_AUTH_SUCCESS:
-      return { 
+      return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case ONE_TIME_AUTH_FAILURE:
-      return { 
+      return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     default:
-      return state
+      return state;
   }
 }

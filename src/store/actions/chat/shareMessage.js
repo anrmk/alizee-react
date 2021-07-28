@@ -19,7 +19,7 @@ function receiveShareMessage() {
     type: SHARE_MESSAGE_SUCCESS,
     payload: {
       isFetching: false,
-      errorMessage: ""
+      errorMessage: "",
     },
   };
 }
@@ -42,10 +42,10 @@ export function shareMessage(api, opts) {
     try {
       const { followersUsernames, message, type } = opts;
       await api
-        .setData({ 
-          followersUsernames, 
+        .setData({
+          followersUsernames,
           message,
-          type
+          type,
         })
         .query(url);
 

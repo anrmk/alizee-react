@@ -4,7 +4,10 @@ import {
   GET_ACTIVITY_PAYMENTS_FAILURE,
 } from "../actions/activity";
 
-export default function chatReducer(state = { isFetching: false, payment: [] }, action) {
+export default function chatReducer(
+  state = { isFetching: false, payment: [] },
+  action
+) {
   switch (action.type) {
     // Get the payment activity
     case GET_ACTIVITY_PAYMENTS_REQUEST:
@@ -27,4 +30,3 @@ export default function chatReducer(state = { isFetching: false, payment: [] }, 
       return state;
   }
 }
-

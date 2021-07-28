@@ -1,7 +1,7 @@
 import { useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import useDialog from ".././useDialog";
+import useDialog from "../useDialog";
 import dialogs, { POST_STATISTICS_DIALOG_TYPE } from "../../constants/dialogs";
 
 import ApiContext from "../../context/ApiContext";

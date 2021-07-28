@@ -9,7 +9,6 @@ import { Box } from "@material-ui/core";
 import SidebarList from "./SidebarList";
 
 const Sidebar = function ({ data = [] }) {
-
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -21,8 +20,14 @@ const Sidebar = function ({ data = [] }) {
       <Box mb={8}>
         {data.length > 0 &&
           data.map((item) => (
-            <Accordion expanded={expanded === item.name} onChange={handleChange(item.name)} key={item.id}>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={item.name} id={item.name}>
+            <Accordion
+              expanded={expanded === item.name}
+              onChange={handleChange(item.name)}
+              key={item.id}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls={item.name}
+                id={item.name}>
                 <Typography>{item.name}</Typography>
               </AccordionSummary>
               <AccordionDetails>

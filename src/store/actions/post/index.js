@@ -1,32 +1,29 @@
-export { 
+export {
   GET_POSTS_REQUEST,
   GET_POSTS_SUCCESS,
   GET_POSTS_FAILURE,
   RESET_POSTS,
   REFRESH_POST,
-
   getPosts,
   resetPosts,
-  getGridGalleryPosts
+  getGridGalleryPosts,
 } from "./getPosts";
 
-export { 
+export {
   GET_FAVORITE_POSTS_REQUEST,
   GET_FAVORITE_POSTS_SUCCESS,
   GET_FAVORITE_POSTS_FAILURE,
   RESET_FAVORITE_POSTS,
-
   getFavoritePosts,
 } from "./getFavoritePosts";
 
-export { 
+export {
   GET_FOLLOWING_POSTS_REQUEST,
   GET_FOLLOWING_POSTS_SUCCESS,
   GET_FOLLOWING_POSTS_FAILURE,
   RESET_FOLLOWING_POSTS,
-
   getFollowingPosts,
-  resetFollowingPosts
+  resetFollowingPosts,
 } from "./getFollowingPosts";
 
 export {
@@ -38,98 +35,88 @@ export {
   resetSuggestedPosts,
 } from "./getSuggestedPosts";
 
-export { 
+export {
   GET_POST_REQUEST,
   GET_POST_SUCCESS,
   GET_POST_FAILURE,
   RESET_CURRENT_POST,
-
   resetCurrentPost,
-  getPost
+  getPost,
 } from "./getPost";
 
-export { 
+export {
   CREATE_POST_REQUEST,
   CREATE_POST_SUCCESS,
   CREATE_POST_FAILURE,
-
-  createPost
+  createPost,
 } from "./createPost";
 
-export { 
+export {
   LIKE_POST_REQUEST,
   LIKE_POST_SUCCESS,
   LIKE_CURRENT_POST_SUCCESS,
   LIKE_POST_FAILURE,
-
-  likePost
+  likePost,
 } from "./likePost";
 
-export { 
+export {
   FAVORITE_POST_REQUEST,
   FAVORITE_POST_SUCCESS,
   FAVORITE_CURRENT_POST_SUCCESS,
   FAVORITE_POST_FAILURE,
-
-  favoritePost
+  favoritePost,
 } from "./favoritePost";
 
-export { 
+export {
   PURCHASE_POST_REQUEST,
   PURCHASE_POST_SUCCESS,
   PURCHASE_POST_FAILURE,
-  getPurchases
+  getPurchases,
 } from "./getPurchases";
 
 export {
   RECEIPT_POST_REQUEST,
   RECEIPT_POST_SUCCESS,
   RECEIPT_POST_FAILURE,
-  getReceipt
+  getReceipt,
 } from "./getReceipt";
 
-export { 
+export {
   REPORT_POST_REQUEST,
   REPORT_POST_SUCCESS,
   REPORT_POST_FAILURE,
-
-  reportPost
+  reportPost,
 } from "./reportPost";
 
-export { 
+export {
   UPDATE_POST_COMMENTS_REQUEST,
   UPDATE_POST_COMMENTS_SUCCESS,
   UPDATE_POST_COMMENTS_FAILURE,
-
-  updatePostComments
+  updatePostComments,
 } from "./updatePostComments";
 
 export {
   DELETE_POST_REQUEST,
   DELETE_POST_SUCCESS,
   DELETE_POST_FAILURE,
-
-  deletePost
+  deletePost,
 } from "./deletePost";
 
 export {
   ADD_POSTS_USER_FAVORITE_SUCCESS,
   ADD_POST_USER_FAVORITE_SUCCESS,
-
-  addPostsUserFavorite
+  addPostsUserFavorite,
 } from "./addUserFavorite";
 
 export {
   DELETE_POSTS_USER_FAVORITE_SUCCESS,
   DELETE_POST_USER_FAVORITE_SUCCESS,
-
-  deletePostsUserFavorite
+  deletePostsUserFavorite,
 } from "./deleteUserFavorite";
 
 export {
   UPDATE_POSTS_USER_BLOCK_SUCCESS,
   UPDATE_POST_USER_BLOCK_SUCCESS,
-
   addPostUserBlock,
-  removePostUserBlock
+  removePostUserBlock,
 } from "./updatePostUserBlock";

@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
+import { Divider, Typography, Box } from "@material-ui/core";
 import { POST_ID_ROUTE } from "../constants/routes";
 
 import GridGallery from "../domain/GridGallery";
@@ -12,7 +13,6 @@ import { POSTS_LENGTH } from "../constants/feed";
 import ApiContext from "../context/ApiContext";
 import * as postActions from "../store/actions/post";
 
-import { Divider, Typography, Box } from "@material-ui/core";
 import { NoResult } from "../components/Search";
 
 function Explore() {
@@ -44,7 +44,9 @@ function Explore() {
   const handleFetchMorePosts = async () => {
     //   TODO: func calls while we scroll searched posts.
     if (!suggestedPosts.isFetching && search) {
-      await dispatch(postActions.getSuggestedPosts(apiClient, { length: POSTS_LENGTH }));
+      await dispatch(
+        postActions.getSuggestedPosts(apiClient, { length: POSTS_LENGTH })
+      );
     }
   };
 

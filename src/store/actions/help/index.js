@@ -1,4 +1,10 @@
-export { GET_HELP_FAILURE, GET_HELP_REQUEST, GET_HELP_SUCCESS, RESET_CURRENT_HELP, getHelp } from "./getHelp";
+export {
+  GET_HELP_FAILURE,
+  GET_HELP_REQUEST,
+  GET_HELP_SUCCESS,
+  RESET_CURRENT_HELP,
+  getHelp,
+} from "./getHelp";
 
 export {
   POST_HELP_RATING_FAILURE,

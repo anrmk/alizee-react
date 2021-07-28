@@ -10,7 +10,10 @@ import useStyles from "./styles";
 const MOOD_ID = "mood";
 
 const schema = yup.object().shape({
-  [MOOD_ID]: yup.string().max(128, "Must be no more than 128 characters").required("Is required field"),
+  [MOOD_ID]: yup
+    .string()
+    .max(128, "Must be no more than 128 characters")
+    .required("Is required field"),
 });
 
 function CreateMood({
@@ -33,7 +36,11 @@ function CreateMood({
   };
 
   return (
-    <form id={formId} className={classes.root} onSubmit={handleSubmit(handleFormSubmit)} autoComplete="off">
+    <form
+      id={formId}
+      className={classes.root}
+      onSubmit={handleSubmit(handleFormSubmit)}
+      autoComplete="off">
       <FormControl variant="filled" fullWidth>
         <Controller
           name={MOOD_ID}

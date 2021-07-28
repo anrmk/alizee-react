@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { connect } from "react-redux";
 
+import { Box } from "@material-ui/core";
 import EmailCard from "../domain/EmailCard/EmailCard";
 
-import { resendEmailVerification } from "../store/actions/resendEmailVerification";
+import * as emailActions from "../store/actions/resendEmailVerification";
 
 import ApiContext from "../context/ApiContext";
-import { Box } from "@material-ui/core";
 
 function EmailConfirmation(props) {
   const apiClient = useContext(ApiContext);
@@ -18,7 +18,11 @@ function EmailConfirmation(props) {
   };
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      height="100vh">
       <EmailCard onResendBtnClick={handleResendBtnClick} />
     </Box>
   );
@@ -32,7 +36,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    resendEmailVerification: (email, api) => dispatch(resendEmailVerification(email, api)),
+    resendEmailVerification: (email, api) =>
+      dispatch(emailActions.resendEmailVerification(email, api)),
   };
 }
 

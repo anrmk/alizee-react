@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState} from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import dialogs, { MEDIA_EDITOR_DIALOG_TYPE } from "../../constants/dialogs";
 import {
@@ -13,17 +13,28 @@ export default function useMediaEditorDialog({ onSendMediaMessageClick }) {
   const dialog = useDialog();
   const [uploadedMediaFiles, setUploadedMediaFiles] = useState([]);
 
-  useEffect(() => () => uploadedMediaFiles.forEach((file) => URL.revokeObjectURL(file.previewUrl)), []);
+  useEffect(
+    () => () =>
+      uploadedMediaFiles.forEach((file) =>
+        URL.revokeObjectURL(file.previewUrl)
+      ),
+    []
+  );
 
   const handleCloseMediaFilePreview = () => {
     setUploadedMediaFiles([]);
   };
 
   const handleSendMediaMessage = () => {
-    onSendMediaMessageClick(uploadedMediaFiles.filter((file) => {
-      return MEDIA_TYPE[file.type] === MEDIA_GROUP_TYPE.VIDEO && file.size < MAX_SIZE_VIDEO_MEDIA_FILE
-        || MEDIA_TYPE[file.type] === MEDIA_GROUP_TYPE.IMAGE && file.size < MAX_SIZE_IMAGE_MEDIA_FILE
-    }));
+    onSendMediaMessageClick(
+      uploadedMediaFiles.filter(
+        (file) =>
+          (MEDIA_TYPE[file.type] === MEDIA_GROUP_TYPE.VIDEO &&
+            file.size < MAX_SIZE_VIDEO_MEDIA_FILE) ||
+          (MEDIA_TYPE[file.type] === MEDIA_GROUP_TYPE.IMAGE &&
+            file.size < MAX_SIZE_IMAGE_MEDIA_FILE)
+      )
+    );
     setUploadedMediaFiles([]);
     dialog.toggle({ open: false });
   };
@@ -58,6 +69,6 @@ export default function useMediaEditorDialog({ onSendMediaMessageClick }) {
   }, []);
 
   return {
-    onMediaChange
+    onMediaChange,
   };
 }

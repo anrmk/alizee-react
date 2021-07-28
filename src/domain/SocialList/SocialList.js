@@ -1,5 +1,9 @@
 import React from "react";
-import { FacebookShareButton, TwitterShareButton, TelegramShareButton } from "react-share";
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  TelegramShareButton,
+} from "react-share";
 import { ListItem, List, ListItemIcon, ListItemText } from "@material-ui/core";
 
 import LinkIcon from "@material-ui/icons/Link";
@@ -11,10 +15,17 @@ import { getUrlTo } from "../../helpers/functions";
 import { POST_ID_ROUTE, PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 import { POST_TYPE } from "../../components/Post/Menu";
 
-export default function SocialList({ postId, userName, description, type = POST_TYPE }) {
-  const postUrl = getUrlTo(type === POST_TYPE ? 
-    POST_ID_ROUTE(postId) :
-    PROFILE_USERNAME_ROUTE(userName));
+export default function SocialList({
+  postId,
+  userName,
+  description,
+  type = POST_TYPE,
+}) {
+  const postUrl = getUrlTo(
+    type === POST_TYPE
+      ? POST_ID_ROUTE(postId)
+      : PROFILE_USERNAME_ROUTE(userName)
+  );
 
   return (
     <List>
@@ -45,7 +56,12 @@ export default function SocialList({ postId, userName, description, type = POST_
         <ListItemText primary="Share to Twitter" />
       </ListItem>
 
-      <ListItem button url={postUrl} title={userName} resetButtonStyle={false} component={TelegramShareButton}>
+      <ListItem
+        button
+        url={postUrl}
+        title={userName}
+        resetButtonStyle={false}
+        component={TelegramShareButton}>
         <ListItemIcon>
           <TelegramIcon fontSize="large" />
         </ListItemIcon>

@@ -1,9 +1,15 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import {
+  Avatar,
+  Card,
+  CardHeader,
+  CardContent,
+  CardActions,
+  Divider,
+} from "@material-ui/core";
 import { MessageSenderInput, MessagesList } from "../Chat";
-
-import { Avatar, Card, CardHeader, CardContent, CardActions, Divider } from "@material-ui/core";
 
 import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 
@@ -11,7 +17,18 @@ import useStyles from "./styles";
 
 function Comments(props) {
   const { children, headerBackComponent } = props;
-  const { postId, isOwner, user, owner, description, items, isCommentable, isPurchased, isFollowed, hasMore } = props;
+  const {
+    postId,
+    isOwner,
+    user,
+    owner,
+    description,
+    items,
+    isCommentable,
+    isPurchased,
+    isFollowed,
+    hasMore,
+  } = props;
   const { onFetchMore, onCommentSendClick, onSendTip, onDeleteMessage } = props;
 
   const classes = useStyles({ isPurchased });
@@ -60,13 +77,19 @@ function Comments(props) {
             items={items}
             hasMore={hasMore}
             onFetchMore={onFetchMore}
-            onDeleteMessage={onDeleteMessage}/>
+            onDeleteMessage={onDeleteMessage}
+          />
         </CardContent>
       )}
 
       {((isCommentable && isPurchased && isFollowed) || isOwner) && (
         <CardActions className={classes.cardFooter}>
-          <MessageSenderInput hideMediaEditor hidePayment={isOwner} onSendMessageClick={handleCommentSendClick} onSendTip={handleSendTipClick} />
+          <MessageSenderInput
+            hideMediaEditor
+            hidePayment={isOwner}
+            onSendMessageClick={handleCommentSendClick}
+            onSendTip={handleSendTipClick}
+          />
         </CardActions>
       )}
     </Card>

@@ -6,7 +6,7 @@ function EditCoverDialog({ src, alt }) {
     <Box display="block">
       <img src={src} alt={alt} width="100%" />
     </Box>
-  )
+  );
 }
 
 export default EditCoverDialog;

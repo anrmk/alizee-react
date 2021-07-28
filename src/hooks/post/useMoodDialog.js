@@ -17,23 +17,28 @@ export default function useMoodDialog() {
     isFetching: state.story.isFetching,
   }));
 
-  const handleMoodCreate = useCallback(
-    async (data) => {
-      dialog.toggle({ open: false });
-      !isFetching && (await dispatch(moodAction.createMood(apiClient, data)));
-    },
-    []
-  );
+  const handleMoodCreate = useCallback(async (data) => {
+    dialog.toggle({ open: false });
+    !isFetching && (await dispatch(moodAction.createMood(apiClient, data)));
+  }, []);
 
-  const handleDialogToggle = useCallback(async (data) => {
-    dialog.toggle(dialogs[CREATE_MOOD_DIALOG_TYPE]({ 
-      mainBtnProps: { type: "submit", form: FORM_ID }
-    }, {
-      formId: FORM_ID,
-      onSubmit: handleMoodCreate,
-      ...data 
-    }));
-  }, [handleMoodCreate]);
+  const handleDialogToggle = useCallback(
+    async (data) => {
+      dialog.toggle(
+        dialogs[CREATE_MOOD_DIALOG_TYPE](
+          {
+            mainBtnProps: { type: "submit", form: FORM_ID },
+          },
+          {
+            formId: FORM_ID,
+            onSubmit: handleMoodCreate,
+            ...data,
+          }
+        )
+      );
+    },
+    [handleMoodCreate]
+  );
 
   return {
     toggle: handleDialogToggle,

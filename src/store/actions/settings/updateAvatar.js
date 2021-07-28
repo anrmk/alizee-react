@@ -52,7 +52,7 @@ export function updateAvatar(api, opts) {
       dispatch(receiveUpdateAvatar(userInfo));
 
       const user = getState().user.data;
-      if (!isEmptyObject(user) && user?.userName == userInfo.userName) {
+      if (!isEmptyObject(user) && user?.userName === userInfo.userName) {
         dispatch(changeAvatar(data.url));
       }
     } catch (e) {

@@ -6,7 +6,11 @@ import { Box, Typography, LinearProgress } from "@material-ui/core";
 
 import useStyles from "./styles";
 
-function FundraisingPost({ fundraising = 0, targetFunds = 0, positionDirection = "bottom" }) {
+function FundraisingPost({
+  fundraising = 0,
+  targetFunds = 0,
+  positionDirection = "bottom",
+}) {
   const classes = useStyles();
 
   const findPercent = () => {
@@ -17,12 +21,21 @@ function FundraisingPost({ fundraising = 0, targetFunds = 0, positionDirection =
   return (
     <Box className={classes.root} {...{ [positionDirection]: 0 }}>
       <EmojiEventsIcon color="secondary" fontSize="small" />
-      <LinearProgress variant="determinate" color="secondary" value={findPercent()} className={classes.progressBar} />
+      <LinearProgress
+        variant="determinate"
+        color="secondary"
+        value={findPercent()}
+        className={classes.progressBar}
+      />
       <Box position="absolute" lineHeight="16px" fontSize={12} component="span">
-        {"$" + fundraising}
+        {`$${fundraising}`}
       </Box>
-      <Typography variant="body2" color="textPrimary" align="right" className={classes.targetFunds}>
-        {"$" + targetFunds}
+      <Typography
+        variant="body2"
+        color="textPrimary"
+        align="right"
+        className={classes.targetFunds}>
+        {`$${targetFunds}`}
       </Typography>
     </Box>
   );

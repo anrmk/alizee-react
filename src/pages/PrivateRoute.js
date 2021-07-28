@@ -11,7 +11,11 @@ const PrivateRoute = ({ component: Component, componentProps, ...rest }) => {
   const { isAuthenticated } = rest;
 
   if (!isAuthenticated && pathname === DEFAULT_ROUTE && !username) {
-    return <Redirect to={{ pathname: SIGN_IN_ROUTE, state: { from: DEFAULT_ROUTE } }} />;
+    return (
+      <Redirect
+        to={{ pathname: SIGN_IN_ROUTE, state: { from: DEFAULT_ROUTE } }}
+      />
+    );
   }
 
   return (
@@ -21,7 +25,9 @@ const PrivateRoute = ({ component: Component, componentProps, ...rest }) => {
         isAuthenticated ? (
           <Component {...props} {...componentProps} />
         ) : (
-          <Redirect to={{ pathname: SIGN_IN_ROUTE, state: { from: props.location } }} />
+          <Redirect
+            to={{ pathname: SIGN_IN_ROUTE, state: { from: props.location } }}
+          />
         )
       }
     />

@@ -1,4 +1,4 @@
-import { generateUrl, getOffset } from "../../helpers/functions";
+import { generateUrl } from "../../helpers/functions";
 
 export const GET_CHANGE_LOG_REQUEST = "GET_CHANGE_LOG_REQUEST";
 export const GET_CHANGE_LOG_SUCCESS = "GET_CHANGE_LOG_SUCCESS";
@@ -60,12 +60,17 @@ export function getChangeLog(api, opts) {
         .setMethod("GET")
         .setParams({
           start: 0,
-          length: opts.length
+          length: opts.length,
         })
         .query(url);
 
       dispatch(
-        receiveChangeLog([...getState().changeLog.data, ...data.data], data.recordsTotal, currentOffset, !!data.data.length)
+        receiveChangeLog(
+          [...getState().changeLog.data, ...data.data],
+          data.recordsTotal,
+          currentOffset,
+          !!data.data.length
+        )
       );
     } catch (e) {
       dispatch(errorChangeLog("Error: something went wrong:", e));

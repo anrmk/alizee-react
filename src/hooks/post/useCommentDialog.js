@@ -14,26 +14,32 @@ export default function useCommentDialog() {
 
   const dispatch = useDispatch();
   const { isFetching } = useSelector((state) => ({
-    isFetching: state.comment.isFetching
+    isFetching: state.comment.isFetching,
   }));
 
   const handleDeleteConfirmClick = useCallback(async ({ commentId }) => {
     dialog.setParams({ loading: true });
-    !isFetching && await dispatch(commentActions.deleteComment(apiClient, commentId));
+    !isFetching &&
+      (await dispatch(commentActions.deleteComment(apiClient, commentId)));
     dialog.toggle({ open: false, loading: false });
   }, []);
 
   const handleDialogToggle = useCallback(async (commentId) => {
-    dialog.toggle(dialogs[AGREE_DIALOG_TYPE]({
-      title: t("DeleteCommentDialogTitle"),
-      onMainClick: handleDeleteConfirmClick,
-      state: { commentId }
-    }, {
-      content: t("DeleteCommentDialogDescription")
-    }));
+    dialog.toggle(
+      dialogs[AGREE_DIALOG_TYPE](
+        {
+          title: t("DeleteCommentDialogTitle"),
+          onMainClick: handleDeleteConfirmClick,
+          state: { commentId },
+        },
+        {
+          content: t("DeleteCommentDialogDescription"),
+        }
+      )
+    );
   }, []);
 
   return {
-    toggle: handleDialogToggle
+    toggle: handleDialogToggle,
   };
 }

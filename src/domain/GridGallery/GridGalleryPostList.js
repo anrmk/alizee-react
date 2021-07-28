@@ -1,6 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { GridList, GridListTile, GridListTileBar, Hidden, Box } from "@material-ui/core";
+import {
+  GridList,
+  GridListTile,
+  GridListTileBar,
+  Box,
+} from "@material-ui/core";
 
 import PlayArrowIcon from "@material-ui/icons/PlayArrowOutlined";
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibraryOutlined";
@@ -97,8 +102,16 @@ function GridGalleryPostList({ items, onItemClick }) {
         items.map(
           (item, index) =>
             item.media?.length > 0 && (
-              <GridListTile key={item.id + index} onClick={() => onItemClick(item.id)} className={classes.tile}>
-                <img className={classes.image} loading="lazy" src={item.media[0].thumbnailUrl} alt={item.title} />
+              <GridListTile
+                key={item.id + index}
+                onClick={() => onItemClick(item.id)}
+                className={classes.tile}>
+                <img
+                  className={classes.image}
+                  loading="lazy"
+                  src={item.media[0].thumbnailUrl}
+                  alt={item.title}
+                />
 
                 <GridListTileBar
                   titlePosition="top"
@@ -107,7 +120,10 @@ function GridGalleryPostList({ items, onItemClick }) {
                   actionIcon={
                     <Box className={classes.icon}>
                       {item.media[0].kind === MEDIA_VIDEO && <PlayArrowIcon />}
-                      {item.media.length > 1 && item.media[0].kind === MEDIA_IMAGE && <PhotoLibraryIcon />}
+                      {item.media.length > 1 &&
+                        item.media[0].kind === MEDIA_IMAGE && (
+                          <PhotoLibraryIcon />
+                        )}
                     </Box>
                   }
                 />
@@ -119,16 +135,10 @@ function GridGalleryPostList({ items, onItemClick }) {
 }
 
 GridGalleryPostList.propTypes = {
-  item: PropTypes.object,
-  isUserView: PropTypes.bool,
-
   onItemClick: PropTypes.func,
 };
 
 GridGalleryPostList.defaultProps = {
-  item: {},
-  isUserView: false,
-
   onItemClick: undefined,
 };
 

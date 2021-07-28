@@ -17,8 +17,9 @@ function RedirectContent({ link }) {
           Make sure to only follow links from sources you trust.
         </Typography>
         <Typography variant="caption" component="p">
-          We're showing you this because our systems detected that link you're trying to follow may not take you where
-          you intended to go.
+          We&apos;re showing you this because our systems detected that link
+          you&apos;re trying to follow may not take you where you intended to
+          go.
         </Typography>
       </Box>
     </Box>

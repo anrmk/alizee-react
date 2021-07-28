@@ -11,8 +11,8 @@ function requestGetActivityPayments() {
     type: GET_ACTIVITY_PAYMENTS_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: ""
-    }
+      errorMessage: "",
+    },
   };
 }
 
@@ -23,7 +23,7 @@ function receiveGetActivityPayments(data) {
       isFetching: false,
       errorMessage: "",
       payment: data || [],
-    }
+    },
   };
 }
 
@@ -32,8 +32,8 @@ function errorGetActivityPayments(message) {
     type: GET_ACTIVITY_PAYMENTS_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message
-    }
+      errorMessage: message,
+    },
   };
 }
 
@@ -47,13 +47,13 @@ export function getActivityPayments(api, opts) {
         .setMethod("GET")
         .setParams({
           start: opts?.start ?? new Date().toUTCString(),
-          end: opts?.end ?? new Date().toUTCString()
+          end: opts?.end ?? new Date().toUTCString(),
         })
         .query(url);
 
       dispatch(receiveGetActivityPayments(data));
     } catch (e) {
-      return dispatch(errorGetActivityPayments(e));
+      dispatch(errorGetActivityPayments(e));
     }
   };
 }
@@ -61,15 +61,21 @@ export function getActivityPayments(api, opts) {
 // Selectors
 const paymentSelector = (state) => state.activity.payment;
 
-export const getActivityPaymentsChart = createSelector([paymentSelector], (data) => {
-  return data.reduce((acc, curr) => ({
-      ...acc,
-      ["labels"]: [...acc["labels"] || [], new Date(curr.createdDate).toLocaleDateString()],
-      ["otherTotal"]: [...acc["otherTotal"] || [], curr.totalOtherAmount],
-      ["postsTotal"]: [...acc["postsTotal"] || [], curr.totalTipsAmount],
-      ["tipsTotal"]: [...acc["tipsTotal"] || [], curr.totalPostsAmount],
-      ["total"]: (acc["total"] || 0) + curr.totalAmount
-    }),
-    {}
-  );
-});
+export const getActivityPaymentsChart = createSelector(
+  [paymentSelector],
+  (data) =>
+    data.reduce(
+      (acc, curr) => ({
+        ...acc,
+        labels: [
+          ...(acc.labels || []),
+          new Date(curr.createdDate).toLocaleDateString(),
+        ],
+        otherTotal: [...(acc.otherTotal || []), curr.totalOtherAmount],
+        postsTotal: [...(acc.postsTotal || []), curr.totalTipsAmount],
+        tipsTotal: [...(acc.tipsTotal || []), curr.totalPostsAmount],
+        total: (acc.total || 0) + curr.totalAmount,
+      }),
+      {}
+    )
+);

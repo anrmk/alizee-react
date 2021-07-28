@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useContext, useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import { connect } from "react-redux";
@@ -47,7 +48,13 @@ function PushNotificationSettings({
     direct: false,
     messages: false,
   });
-  const { checkPermission, subscribeUserToggle, isSubscribed, isDisable, subscription } = usePushNotifications();
+  const {
+    checkPermission,
+    subscribeUserToggle,
+    isSubscribed,
+    isDisable,
+    subscription,
+  } = usePushNotifications();
 
   const history = useHistory();
 
@@ -65,11 +72,11 @@ function PushNotificationSettings({
   }, [data]);
 
   const handleSettingsChange = async (e) => {
-    let value = { ...settings };
+    const value = { ...settings };
     value[e.target.name] = e.target.checked;
 
     let subscriptionValue = subscription;
-    if ("isActive" === e.target.name) {
+    if (e.target.name === "isActive") {
       subscriptionValue = await subscribeUserToggle();
 
       const permission = checkPermission();
@@ -92,7 +99,10 @@ function PushNotificationSettings({
     setSettings(value);
     if (!settings.isFetching) {
       (async () => {
-        const fulfilled = await updateNotification(apiClient, { ...value, ...subscriptionValue });
+        const fulfilled = await updateNotification(apiClient, {
+          ...value,
+          ...subscriptionValue,
+        });
         onSetAlertText(fulfilled);
       })();
     }
@@ -109,7 +119,7 @@ function PushNotificationSettings({
           <ListItem>
             <ListItemText
               primary="New Campaign Contribution"
-              //TODO:  create the reasons not enable push notification in help.
+              // TODO:  create the reasons not enable push notification in help.
               secondary={
                 isDisable && (
                   <>
@@ -122,7 +132,11 @@ function PushNotificationSettings({
               }
             />
             <ListItemSecondaryAction>
-              <Switch checked={settings.isActive && isSubscribed} name="isActive" disabled={isDisable} />
+              <Switch
+                checked={settings.isActive && isSubscribed}
+                name="isActive"
+                disabled={isDisable}
+              />
             </ListItemSecondaryAction>
           </ListItem>
 
@@ -131,35 +145,55 @@ function PushNotificationSettings({
           <ListItem>
             <ListItemText primary="New Campaign Contribution" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.purchase} disabled={!isSubscribed} name="purchase" />
+              <Switch
+                checked={settings.purchase}
+                disabled={!isSubscribed}
+                name="purchase"
+              />
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
             <ListItemText primary="New Comment" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.comment} disabled={!isSubscribed} name="comment" />
+              <Switch
+                checked={settings.comment}
+                disabled={!isSubscribed}
+                name="comment"
+              />
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
             <ListItemText primary="New Likes" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.like} disabled={!isSubscribed} name="like" />
+              <Switch
+                checked={settings.like}
+                disabled={!isSubscribed}
+                name="like"
+              />
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
             <ListItemText primary="New Subscriber" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.subscriber} disabled={!isSubscribed} name="subscriber" />
+              <Switch
+                checked={settings.subscriber}
+                disabled={!isSubscribed}
+                name="subscriber"
+              />
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
             <ListItemText primary="New Tips" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.tip} disabled={!isSubscribed} name="tip" />
+              <Switch
+                checked={settings.tip}
+                disabled={!isSubscribed}
+                name="tip"
+              />
             </ListItemSecondaryAction>
           </ListItem>
 
@@ -168,7 +202,11 @@ function PushNotificationSettings({
           <ListItem>
             <ListItemText primary="New Stream" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.stream} disabled={!isSubscribed} name="stream" />
+              <Switch
+                checked={settings.stream}
+                disabled={!isSubscribed}
+                name="stream"
+              />
             </ListItemSecondaryAction>
           </ListItem>
 
@@ -177,14 +215,22 @@ function PushNotificationSettings({
           <ListItem>
             <ListItemText primary="Important Direct Messages" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.direct} disabled={!isSubscribed} name="direct" />
+              <Switch
+                checked={settings.direct}
+                disabled={!isSubscribed}
+                name="direct"
+              />
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
             <ListItemText primary="New Messages" />
             <ListItemSecondaryAction>
-              <Switch checked={settings.messages} disabled={!isSubscribed} name="messages" />
+              <Switch
+                checked={settings.messages}
+                disabled={!isSubscribed}
+                name="messages"
+              />
             </ListItemSecondaryAction>
           </ListItem>
         </List>
@@ -202,10 +248,15 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getNotification: (api) => dispatch(settingsActions.getPushNotification(api)),
-    updateNotification: (api, data) => dispatch(settingsActions.updatePushNotification(api, data)),
+    getNotification: (api) =>
+      dispatch(settingsActions.getPushNotification(api)),
+    updateNotification: (api, data) =>
+      dispatch(settingsActions.updatePushNotification(api, data)),
     resetSettings: () => dispatch(settingsActions.resetSettings()),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PushNotificationSettings);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PushNotificationSettings);

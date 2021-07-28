@@ -1,4 +1,3 @@
-
 import { generateUrl } from "../../../helpers/functions";
 
 export const NOTIFY_CALL_SUCCESS = "NOTIFY_CALL_SUCCESS";
@@ -10,7 +9,7 @@ function receiveCallNotify() {
     payload: {
       isFetching: false,
       errorMessage: "",
-    }
+    },
   };
 }
 

@@ -21,7 +21,12 @@ export default function useLightboxModal() {
   }, []);
 
   const handleDialogToggle = useCallback(({ items, startSlideIndex = 0 }) => {
-    dialog.toggle(dialogs[LIGHTBOX_MODAL_TYPE]({ asModal: true }, { items, startSlideIndex }));
+    dialog.toggle(
+      dialogs[LIGHTBOX_MODAL_TYPE](
+        { asModal: true },
+        { items, startSlideIndex }
+      )
+    );
   }, []);
 
   return {

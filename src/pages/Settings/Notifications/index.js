@@ -1,4 +1,3 @@
-
 export { default as GeneralNotificationSettings } from "./GeneralNotificationSettings";
 export { default as PushNotificationSettings } from "./PushNotificationSettings";
 export { default as EmailNotificationSettings } from "./EmailNotificationSettings";

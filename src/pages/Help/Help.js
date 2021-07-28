@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import {  Grid, Hidden } from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
 
 import { Sidebar, Content } from "../../domain/Help/index";
 
@@ -27,15 +27,21 @@ function Help() {
     <PublicLayout>
       <Grid container spacing={4}>
         <Hidden smUp>
-          <Grid item md={7} lg={9} md={8} sm={7}>
+          <Grid item lg={9} md={8} sm={7}>
             <Content data={help?.data} />
           </Grid>
         </Hidden>
-        <Grid item md={5} lg={3} xs={12} md={4} sm={5} className={classes.sidebarSection}>
+        <Grid
+          item
+          lg={3}
+          xs={12}
+          md={4}
+          sm={5}
+          className={classes.sidebarSection}>
           <Sidebar data={help?.data} />
         </Grid>
         <Hidden xsDown>
-          <Grid item md={7} lg={9} md={8} sm={7}>
+          <Grid item lg={9} md={8} sm={7}>
             <Content data={help?.data} />
           </Grid>
         </Hidden>

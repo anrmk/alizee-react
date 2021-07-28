@@ -8,14 +8,14 @@ export default function Progress({
   active,
   count,
   pause,
-  bufferAction
+  bufferAction,
 }) {
   const classes = useStyles({
     width,
     active,
     count,
     pause,
-    bufferAction
+    bufferAction,
   });
 
   return (

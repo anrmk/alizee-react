@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import ApiContext from "../../context/ApiContext";
 import * as userActions from "../../store/actions/user";
 import { ChangePasswordForm } from "../../domain/PasswordForms";
-import AlertContainer from "../../components/AlertContainer"
+import AlertContainer from "../../components/AlertContainer";
 import { getUrlParams } from "../../helpers/functions";
 import { SIGN_IN_ROUTE } from "../../constants/routes";
 import useStyles from "./styles";
@@ -17,7 +17,7 @@ function ResetSettings({
   error,
   passwordUpdated,
 
-  changePassword
+  changePassword,
 }) {
   const history = useHistory();
   const apiClient = useContext(ApiContext);
@@ -33,18 +33,18 @@ function ResetSettings({
   }, [passwordUpdated]);
 
   if (!params?.token || !params?.email) {
-    return <Redirect to={SIGN_IN_ROUTE} />
+    return <Redirect to={SIGN_IN_ROUTE} />;
   }
 
   const handleSubmit = async (password) => {
     const { token, email } = params;
     await changePassword(apiClient, { token, email, password });
     setAlertOpen(true);
-  }
+  };
 
   return (
-    <AlertContainer 
-      successAlert="You have changed your password." 
+    <AlertContainer
+      successAlert="You have changed your password."
       errorAlert="Password has not been changed."
       className={classes.container}
       alertOpen={alertOpen}
@@ -52,21 +52,22 @@ function ResetSettings({
       onAlertClose={() => setAlertOpen(false)}>
       <ChangePasswordForm loading={isFetching} onSubmit={handleSubmit} />
     </AlertContainer>
-  )
+  );
 }
 
 function mapStateToProps(state) {
   return {
     isFetching: state.user.isFetching,
     error: state.user.errorMessage,
-    passwordUpdated: state.user.passwordUpdated
-  }
+    passwordUpdated: state.user.passwordUpdated,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    changePassword: (api, opts) => dispatch(userActions.resetPassword(api, opts)),
-  }
+    changePassword: (api, opts) =>
+      dispatch(userActions.resetPassword(api, opts)),
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResetSettings);

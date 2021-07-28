@@ -1,3 +1,3 @@
 import SocialControl from "./SocialControl";
 
-export { SocialControl };
+export default SocialControl;

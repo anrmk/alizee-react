@@ -51,9 +51,7 @@ function PaymentChart({ data, onDateClick }) {
       yAxes: [
         {
           ticks: {
-            callback: (value) => {
-              return "$" + value;
-            },
+            callback: (value) => `$${value}`,
           },
         },
       ],
@@ -69,8 +67,7 @@ function PaymentChart({ data, onDateClick }) {
     <Typography
       className={clsx(classes.dateBtn, type === activeDate && classes.active)}
       onClick={() => handleDateClick(type)}
-      component={Link}
-    >
+      component={Link}>
       {text}
     </Typography>
   );

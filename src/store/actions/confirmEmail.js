@@ -1,18 +1,18 @@
-import { generateUrl } from '../../helpers/functions';
-import { signInUser } from './signIn';
+import { generateUrl } from "../../helpers/functions";
+import { signInUser } from "./signIn";
 
-export const EMAIL_CONFIRM_REQUEST = 'EMAIL_CONFIRM_REQUEST';
-export const EMAIL_CONFIRM_SUCCESS = 'EMAIL_CONFIRM_SUCCESS';
-export const EMAIL_CONFIRM_FAILURE = 'EMAIL_CONFIRM_FAILURE';
+export const EMAIL_CONFIRM_REQUEST = "EMAIL_CONFIRM_REQUEST";
+export const EMAIL_CONFIRM_SUCCESS = "EMAIL_CONFIRM_SUCCESS";
+export const EMAIL_CONFIRM_FAILURE = "EMAIL_CONFIRM_FAILURE";
 
 function requestConfirmEmail() {
   return {
     type: EMAIL_CONFIRM_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: ''
-    }
-  }
+      errorMessage: "",
+    },
+  };
 }
 
 function receiveConfirmEmail(confirmingInfo) {
@@ -20,11 +20,11 @@ function receiveConfirmEmail(confirmingInfo) {
     type: EMAIL_CONFIRM_SUCCESS,
     payload: {
       isFetching: false,
-      errorMessage: '',
+      errorMessage: "",
       data: confirmingInfo,
-      isConfirmed: true
-    }
-  }
+      isConfirmed: true,
+    },
+  };
 }
 
 function errorConfirmEmail(message, status) {
@@ -33,13 +33,13 @@ function errorConfirmEmail(message, status) {
     payload: {
       isFetching: false,
       errorMessage: message,
-      errorStatus: status
-    }
-  }
+      errorStatus: status,
+    },
+  };
 }
 
 export function confirmEmail(api, creds) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(requestConfirmEmail());
 
     const url = generateUrl("confirmEmail");
@@ -49,14 +49,14 @@ export function confirmEmail(api, creds) {
         .setParams({
           password: creds.password,
           email: creds.email,
-          token: creds.token
+          token: creds.token,
         })
         .query(url);
-      
-      dispatch(receiveConfirmEmail(data))
-      dispatch(signInUser(data, api))
+
+      dispatch(receiveConfirmEmail(data));
+      dispatch(signInUser(data, api));
     } catch (e) {
       dispatch(errorConfirmEmail(e.message, e.response?.status || 500));
     }
-  }
+  };
 }

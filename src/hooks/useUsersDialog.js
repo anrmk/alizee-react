@@ -1,3 +1,5 @@
+/* eslint-disable no-var */
+/* eslint-disable vars-on-top */
 import { useState, useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -38,13 +40,19 @@ export default function useUsersDialog() {
 
   const handleFollowingsFilter = async (query) => {
     if (!query) {
-      await dispatch(actionRelationship.getShareFollowings(apiClient, userName));
+      await dispatch(
+        actionRelationship.getShareFollowings(apiClient, userName)
+      );
     } else {
       await dispatch(actionRelationship.getFollowingsByQuery(apiClient, query));
     }
   };
 
-  const handleOpenClick = async (dialogOpts, contentOpts, withStack = false) => {
+  const handleOpenClick = async (
+    dialogOpts,
+    contentOpts,
+    withStack = false
+  ) => {
     const toggleType = withStack ? "toggleWithStack" : "toggle";
 
     setOptsState({ dialogOpts, contentOpts });
@@ -62,34 +70,38 @@ export default function useUsersDialog() {
     await dispatch(actionRelationship.getShareFollowings(apiClient, userName));
 
     dialog.setParams({ loading: false });
-  }
+  };
 
-  var handleUpdateParams = (followersList, dialogOpts, contentOpts) => {
-    if (followersList) setCurrentItems([...followersList]);
+  var handleUpdateParams = (
+    newFollowersList,
+    newDialogOpts,
+    newContentOpts
+  ) => {
+    if (newFollowersList) setCurrentItems([...newFollowersList]);
 
     dialog.setParams(
       dialogs[USERS_LIST_DIALOG_TYPE](
         {
           state: selectedItems,
           ...optsState.dialogOpts,
-          ...dialogOpts
+          ...newDialogOpts,
         },
         {
           multiple: true,
           onItemSelect: (selected) => setSelectedItems(selected),
-          items: followersList || currentItems,
+          items: newFollowersList || currentItems,
           onSendQuery: handleFollowingsFilter,
           onResetQuery: handleResetQuery,
           ...optsState.contentOpts,
-          ...contentOpts
+          ...newContentOpts,
         }
       )
     );
-  }
+  };
 
   return {
     toggle: handleOpenClick,
     update: handleUpdateParams,
-    selectedItems
+    selectedItems,
   };
 }

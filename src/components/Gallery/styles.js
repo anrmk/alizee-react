@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -11,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
       overflow: "hidden",
       display: "block",
       width: "100%",
-    }
+    },
   },
 
   payableDescription: {
@@ -23,15 +24,18 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     zIndex: 1,
-    backgroundColor: theme.palette.type === "dark" ? "rgba(0,0,0,0.3)" : "rgba(255,255,255,0.3)",
-    padding: "30% 0" 
+    backgroundColor:
+      theme.palette.type === "dark"
+        ? "rgba(0,0,0,0.3)"
+        : "rgba(255,255,255,0.3)",
+    padding: "30% 0",
   },
 
   swipeableView: {
     height: "100%",
     "& > .react-swipeable-view-container": {
-      height: "100%"
-    }
+      height: "100%",
+    },
   },
 
   slide: {
@@ -40,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
 
   pagination: {
@@ -74,26 +78,26 @@ const useStyles = makeStyles((theme) => ({
           backgroundColor: "rgba(144, 202, 249, 0.85)",
           borderRadius: "50%",
           boxShadow: "0px 0px 15px rgba(10, 1, 22, 0.5)",
-          transition: "all .2s linear"
+          transition: "all .2s linear",
         },
 
         "&::focus::before": {
           transform: "scale(1.2)",
-          background: "rgb(228, 228, 228)"
+          background: "rgb(228, 228, 228)",
         },
 
         "&.active": {
           "&::before": {
             transform: "scale(1.2)",
-            background: "rgb(228, 228, 228)"
-          }
-        }
+            background: "rgb(228, 228, 228)",
+          },
+        },
       },
 
       "& li+li": {
-        marginLeft: theme.spacing(2)
-      }
-    }
+        marginLeft: theme.spacing(2),
+      },
+    },
   },
 
   arrowButtonBox: {
@@ -101,14 +105,14 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     display: "flex",
     justifyContent: "space-between",
-    pointerEvents: "none"
+    pointerEvents: "none",
   },
 
   arrowButton: {
     color: theme.palette.grey["100"],
     pointerEvents: "all",
-    filter: "drop-shadow(0 0 10px black)"
-  }
+    filter: "drop-shadow(0 0 10px black)",
+  },
 }));
 
 export default useStyles;

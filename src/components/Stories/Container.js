@@ -7,7 +7,7 @@ import PlayIcon from "@material-ui/icons/PlayArrowRounded";
 import VolumeUpIcon from "@material-ui/icons/VolumeUpRounded";
 import VolumeOffIcon from "@material-ui/icons/VolumeOffRounded";
 import MoreHorizIcon from "@material-ui/icons/MoreHorizRounded";
-import ArrowCircleIcon from '@material-ui/icons/ArrowDropDownCircleRounded';
+import ArrowCircleIcon from "@material-ui/icons/ArrowDropDownCircleRounded";
 
 import GlobalContext from "./Context/GlobalContext";
 import StoriesContext, { UPDATE_STORY_DATA } from "./Context/StoriesContext";
@@ -37,10 +37,13 @@ export default function Container() {
     onCloseClick,
     onChange,
     onAllStoriesEnd,
-    onPrevious
+    onPrevious,
   } = useContext(GlobalContext);
-  const { storyOptions: { stories, muted }, setStoriesOptions } = useContext(StoriesContext);
-  let mousedownId = useRef();
+  const {
+    storyOptions: { stories, muted },
+    setStoriesOptions,
+  } = useContext(StoriesContext);
+  const mousedownId = useRef();
   const classes = useStyles({ pause, bufferAction });
 
   useEffect(() => {
@@ -60,19 +63,19 @@ export default function Container() {
   const toggleState = (pAction, pBufferAction) => {
     setPause(pAction === "pause");
     setBufferAction(!!pBufferAction);
-  }
+  };
 
   const setCurrentIdWrapper = (callback) => {
     setCurrentId(callback);
     toggleState("pause", true);
-  }
+  };
 
   const previous = () => {
     if (stories.length <= 1) return;
-    setCurrentIdWrapper(prev => prev > 0 ? prev - 1 : prev);
+    setCurrentIdWrapper((prev) => (prev > 0 ? prev - 1 : prev));
 
     currentId - 1 >= 0 && onChange && onChange(stories, user, currentId - 1);
-  }
+  };
 
   const next = () => {
     if (loop) {
@@ -87,15 +90,15 @@ export default function Container() {
   };
 
   const updateNextStoryIdForLoop = () => {
-    setCurrentIdWrapper(prev => (prev + 1) % stories.length);
-  }
+    setCurrentIdWrapper((prev) => (prev + 1) % stories.length);
+  };
 
   const updateNextStoryId = () => {
-    setCurrentIdWrapper(prev => {
+    setCurrentIdWrapper((prev) => {
       if (prev < stories.length - 1) return prev + 1;
       return prev;
-    })
-  }
+    });
+  };
 
   const debouncePause = (e) => {
     e.preventDefault();
@@ -103,10 +106,10 @@ export default function Container() {
     mousedownId.current = setTimeout(() => {
       toggleState("pause");
     }, 200);
-  }
+  };
 
   const handleMouseUp = (e, type) => {
-    e.preventDefault()
+    e.preventDefault();
     mousedownId.current && clearTimeout(mousedownId.current);
 
     if (type === "previous" && currentId === 0) {
@@ -115,9 +118,11 @@ export default function Container() {
       onAllStoriesEnd && onAllStoriesEnd(currentId, stories);
     }
 
-    if (pause && currentId === 0 && type === "previous" || 
-      pause && currentId >= stories.length - 1 && type === "next" || 
-      pause && currentId < stories.length - 1) {
+    if (
+      (pause && currentId === 0 && type === "previous") ||
+      (pause && currentId >= stories.length - 1 && type === "next") ||
+      (pause && currentId < stories.length - 1)
+    ) {
       toggleState("play");
     } else if (stories.length > 1) {
       if (type === "previous" && currentId === 0) {
@@ -128,7 +133,7 @@ export default function Container() {
         type === "next" ? next() : previous();
       }
     }
-  }
+  };
 
   const handleBtnPlayClick = () => {
     mousedownId.current && clearTimeout(mousedownId.current);
@@ -136,62 +141,92 @@ export default function Container() {
     mousedownId.current = setTimeout(() => {
       toggleState(pause ? "play" : "pause");
     }, 0);
-  }
+  };
 
   const handleMuteClick = () => {
     setStoriesOptions({
       type: UPDATE_STORY_DATA,
-      payload: { muted: !muted }
+      payload: { muted: !muted },
     });
-  }
+  };
 
   const handleMoreBtnClick = () => {
     toggleState("pause", false);
     onMoreClick && onMoreClick();
-  }
+  };
 
   const handleVideoDuration = (duration) => {
     setVideoDuration(duration * 1000);
-  }
+  };
 
   return (
     <Box className={classes.container}>
       <Hidden smDown>
         <Box display="flex" alignItems="center">
-          <IconButton aria-label="previous-btn" disableRipple onClick={e => handleMouseUp(e, "previous")}>
-            <ArrowCircleIcon className={classes.arrowNextIcon} fontSize="large" />
+          <IconButton
+            aria-label="previous-btn"
+            disableRipple
+            onClick={(e) => handleMouseUp(e, "previous")}>
+            <ArrowCircleIcon
+              className={classes.arrowNextIcon}
+              fontSize="large"
+            />
           </IconButton>
         </Box>
       </Hidden>
       <Box className={classes.content}>
         <Box className={classes.header}>
-          <ProgressContext.Provider value={{
-            bufferAction: bufferAction,
-            videoDuration: videoDuration,
-            currentId,
-            pause,
-            next
-          }}>
+          <ProgressContext.Provider
+            value={{
+              bufferAction,
+              videoDuration,
+              currentId,
+              pause,
+              next,
+            }}>
             <ProgressList />
           </ProgressContext.Provider>
           <Box className={classes.headerInner}>
             <Box className={classes.userInfo}>
               <Avatar src={avatarUrl} />
               <Box>
-                {fullName && <Typography className={classes.headerText} variant="body1" noWrap>{fullName}</Typography>}
-                {createdDate && <Typography className={classes.headerText} variant="caption" noWrap>{getDate(createdDate)}</Typography>}
+                {fullName && (
+                  <Typography
+                    className={classes.headerText}
+                    variant="body1"
+                    noWrap>
+                    {fullName}
+                  </Typography>
+                )}
+                {createdDate && (
+                  <Typography
+                    className={classes.headerText}
+                    variant="caption"
+                    noWrap>
+                    {getDate(createdDate)}
+                  </Typography>
+                )}
               </Box>
             </Box>
             <Box className={classes.tools}>
-              <IconButton className={classes.btn} size="small" onClick={handleBtnPlayClick}>
+              <IconButton
+                className={classes.btn}
+                size="small"
+                onClick={handleBtnPlayClick}>
                 {pause ? <PlayIcon /> : <PauseIcon />}
               </IconButton>
               {stories[currentId]?.media?.kind === MEDIA_VIDEO && (
-                <IconButton className={classes.btn} size="small" onClick={handleMuteClick}>
+                <IconButton
+                  className={classes.btn}
+                  size="small"
+                  onClick={handleMuteClick}>
                   {muted ? <VolumeOffIcon /> : <VolumeUpIcon />}
                 </IconButton>
               )}
-              <IconButton className={classes.btn} size="small" onClick={onCloseClick}>
+              <IconButton
+                className={classes.btn}
+                size="small"
+                onClick={onCloseClick}>
                 <CloseIcon />
               </IconButton>
             </Box>
@@ -204,9 +239,13 @@ export default function Container() {
           playState={pause}
           url={stories[currentId]?.media.url}
           kind={stories[currentId]?.media?.kind}
-          onVideoDuration={handleVideoDuration} />
+          onVideoDuration={handleVideoDuration}
+        />
         <Box className={classes.footer}>
-          <IconButton className={classes.btn} size="small" onClick={handleMoreBtnClick}>
+          <IconButton
+            className={classes.btn}
+            size="small"
+            onClick={handleMoreBtnClick}>
             <MoreHorizIcon />
           </IconButton>
         </Box>
@@ -215,21 +254,29 @@ export default function Container() {
           <Box
             className={classes.controls}
             onTouchStart={debouncePause}
-            onTouchEnd={e => handleMouseUp(e, "previous")}
+            onTouchEnd={(e) => handleMouseUp(e, "previous")}
             onMouseDown={debouncePause}
-            onMouseUp={(e) => handleMouseUp(e, "previous")} />
+            onMouseUp={(e) => handleMouseUp(e, "previous")}
+          />
           <Box
             className={classes.controls}
             onTouchStart={debouncePause}
-            onTouchEnd={e => handleMouseUp(e, "next")}
+            onTouchEnd={(e) => handleMouseUp(e, "next")}
             onMouseDown={debouncePause}
-            onMouseUp={(e) => handleMouseUp(e, "next")} />
+            onMouseUp={(e) => handleMouseUp(e, "next")}
+          />
         </Box>
       </Box>
       <Hidden smDown>
         <Box display="flex" alignItems="center">
-          <IconButton aria-label="next-btn" disableRipple onClick={e => handleMouseUp(e, "next")}>
-            <ArrowCircleIcon className={classes.arrowPreviousIcon} fontSize="large" />
+          <IconButton
+            aria-label="next-btn"
+            disableRipple
+            onClick={(e) => handleMouseUp(e, "next")}>
+            <ArrowCircleIcon
+              className={classes.arrowPreviousIcon}
+              fontSize="large"
+            />
           </IconButton>
         </Box>
       </Hidden>

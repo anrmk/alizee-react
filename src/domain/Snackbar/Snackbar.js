@@ -2,17 +2,29 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useSnackbar } from "notistack";
 
-import { Box, ListItem, ListItemAvatar, ListItemText, Typography, IconButton, Button } from "@material-ui/core";
-import Avatar from "../../components/Avatar";
+import {
+  Box,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Typography,
+  IconButton,
+  Button,
+} from "@material-ui/core";
 
 import CloseIcon from "@material-ui/icons/CloseRounded";
 import CallIcon from "@material-ui/icons/CallRounded";
+import Avatar from "../../components/Avatar";
 
-import { PEAR_TO_PEAR_ID_ROUTE, POST_ID_ROUTE, PROFILE_USERNAME_ROUTE } from "../../constants/routes";
+import {
+  PEAR_TO_PEAR_ID_ROUTE,
+  POST_ID_ROUTE,
+  PROFILE_USERNAME_ROUTE,
+} from "../../constants/routes";
 
 import useStyles from "./style";
 
-export default function Snackbar({ 
+export default function Snackbar({
   id,
   name,
   userName,
@@ -22,7 +34,7 @@ export default function Snackbar({
   isCallable,
   onOpen,
   onCall,
-  onClose
+  onClose,
 }) {
   const classes = useStyles();
   const { closeSnackbar } = useSnackbar();
@@ -31,17 +43,17 @@ export default function Snackbar({
   const handleCloseClick = (e) => {
     closeSnackbar();
     onClose && onClose(e);
-  }
+  };
 
   const handleCallClick = (e) => {
     history.push(PEAR_TO_PEAR_ID_ROUTE(userName));
     onCall && onCall(e);
-  }
+  };
 
   const handleOpenClick = (e) => {
     history.push(POST_ID_ROUTE(relatedPostId));
     onOpen && onOpen(e);
-  }
+  };
 
   return (
     <Box className={classes.rootContainer}>
@@ -51,8 +63,8 @@ export default function Snackbar({
             <Avatar borderColor="silver" src={avatarUrl} />
           </Box>
         </ListItemAvatar>
-        <ListItemText 
-          primary={(
+        <ListItemText
+          primary={
             <Box display="flex">
               <Typography noWrap variant="body1" className={classes.name}>
                 {name}
@@ -61,8 +73,9 @@ export default function Snackbar({
                 @{userName}
               </Typography>
             </Box>
-          )}
-          secondary={relatedPostId ? (
+          }
+          secondary={
+            relatedPostId ? (
               <Typography
                 noWrap
                 variant="body2"
@@ -70,33 +83,31 @@ export default function Snackbar({
                 {description}
               </Typography>
             ) : (
-              <Typography noWrap variant="body2" className={classes.description}>
+              <Typography
+                noWrap
+                variant="body2"
+                className={classes.description}>
                 {description}
               </Typography>
-          )} />
-          <Box marginLeft={(2)} display="flex">
-            {relatedPostId && (
-              <Button
-                size="small"
-                variant="outlined"
-                onClick={handleOpenClick}>
-                Open
-              </Button>
-            )}
-            {isCallable && (
-              <IconButton
-                size="small"
-                onClick={handleCallClick}>
-                <CallIcon htmlColor="white" />
-              </IconButton>
-            )}
-            <IconButton
-              size="small"
-              onClick={handleCloseClick}>
-              <CloseIcon htmlColor="white" />
+            )
+          }
+        />
+        <Box marginLeft={2} display="flex">
+          {relatedPostId && (
+            <Button size="small" variant="outlined" onClick={handleOpenClick}>
+              Open
+            </Button>
+          )}
+          {isCallable && (
+            <IconButton size="small" onClick={handleCallClick}>
+              <CallIcon htmlColor="white" />
             </IconButton>
-          </Box>
+          )}
+          <IconButton size="small" onClick={handleCloseClick}>
+            <CloseIcon htmlColor="white" />
+          </IconButton>
+        </Box>
       </ListItem>
     </Box>
-  )
+  );
 }

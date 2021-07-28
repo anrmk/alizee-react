@@ -4,11 +4,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 import useStyles from "./styles";
 
-export default function ImageContent({
-  url,
-  action,
-  config
-}) {
+export default function ImageContent({ url, action, config }) {
   const [loaded, setLoaded] = React.useState(false);
   const classes = useStyles({ loaded });
 
@@ -17,14 +13,17 @@ export default function ImageContent({
   const handleLoaded = () => {
     setLoaded(true);
     action("play");
-  }
+  };
 
   return (
     <>
-      <img className={clsx(classes.image, imageContentClassName)} src={url} onLoad={handleLoaded} />
-      {!loaded && (
-        <CircularProgress className={classes.loader} />
-      )}
+      <img
+        className={clsx(classes.image, imageContentClassName)}
+        src={url}
+        alt="content-img"
+        onLoad={handleLoaded}
+      />
+      {!loaded && <CircularProgress className={classes.loader} />}
     </>
   );
 }

@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import clsx from "clsx";
 import SwipeableViews from "react-swipeable-views";
 
-import ArrowButtons from "./ArrowButtons";
-import Pagination from "./Pagination";
-
 import { Box, Typography, IconButton, Hidden } from "@material-ui/core";
 import LockIcon from "@material-ui/icons/LockOutlined";
+import ArrowButtons from "./ArrowButtons";
+import Pagination from "./Pagination";
 
 import useStyles from "./styles";
 
@@ -50,18 +49,21 @@ function Gallery({
         slideClassName={classes.slide}
         enableMouseEvents
         index={localIndex}
-        onChangeIndex={handleIndexChange}
-      >
+        onChangeIndex={handleIndexChange}>
         {children}
       </SwipeableViews>
       {(amount === 0 || isPurchased) && (
         <>
-		<Hidden smDown>
-		{children.length > 1 && (
-            <ArrowButtons length={children.length} currentIndex={localIndex} onChangeIndex={handleIndexChange} />
-          )}
-		</Hidden>
-          
+          <Hidden smDown>
+            {children.length > 1 && (
+              <ArrowButtons
+                length={children.length}
+                currentIndex={localIndex}
+                onChangeIndex={handleIndexChange}
+              />
+            )}
+          </Hidden>
+
           {pagination && (
             <Pagination
               className={classes.pagination}

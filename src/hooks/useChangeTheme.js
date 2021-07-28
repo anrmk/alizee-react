@@ -1,7 +1,9 @@
 import { useContext, useCallback } from "react";
 import { useTheme } from "@material-ui/core/styles";
 
-import ThemeDispatchContext, { CHANGE_THEME } from "../context/ThemeDispatchContext";
+import ThemeDispatchContext, {
+  CHANGE_THEME,
+} from "../context/ThemeDispatchContext";
 import { initTheme } from "../helpers/functions";
 
 export default function useChangeTheme(ignoreStorage) {
@@ -9,13 +11,16 @@ export default function useChangeTheme(ignoreStorage) {
   const theme = useTheme();
   const currentTheme = theme.palette.type === "light" ? "dark" : "light";
 
-  const changeTheme = useCallback((newTheme) => {
-    dispatch({
-      type: CHANGE_THEME,
-      payload: newTheme ?? currentTheme,
-    });
-    !ignoreStorage && localStorage.setItem("CURRENT_THEME", currentTheme);
-  }, [theme.palette.type, dispatch]);
+  const changeTheme = useCallback(
+    (newTheme) => {
+      dispatch({
+        type: CHANGE_THEME,
+        payload: newTheme ?? currentTheme,
+      });
+      !ignoreStorage && localStorage.setItem("CURRENT_THEME", currentTheme);
+    },
+    [theme.palette.type, dispatch]
+  );
 
   const setupTheme = useCallback(() => {
     const localStorageValue = initTheme();
@@ -28,6 +33,6 @@ export default function useChangeTheme(ignoreStorage) {
   return {
     currentTheme: theme.palette.type,
     toggle: changeTheme,
-    setupTheme
-  }
-};
+    setupTheme,
+  };
+}

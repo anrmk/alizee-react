@@ -23,13 +23,19 @@ function Room(props) {
         },
         // audio: true
       })
-      .then((stream) => {
-        setStream(stream);
+      .then((newStream) => {
+        setStream(newStream);
       });
   }, []);
 
   return (
-    <StreamRoom streamTabsData={streamTabsData} user={user} isPeerToPeer={true} stream={stream} roomId={roomId} />
+    <StreamRoom
+      streamTabsData={streamTabsData}
+      user={user}
+      isPeerToPeer
+      stream={stream}
+      roomId={roomId}
+    />
   );
 }
 

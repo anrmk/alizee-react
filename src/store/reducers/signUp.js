@@ -4,45 +4,48 @@ import {
   SIGNUP_FAILURE,
   SIGNUP_SOCIAL_REQUEST,
   SIGNUP_SOCIAL_SUCCESS,
-  SIGNUP_SOCIAL_FAILURE
-} from '../actions/signUp';
+  SIGNUP_SOCIAL_FAILURE,
+} from "../actions/signUp";
 
-export default function signUp(state = {
-  isFetching: false,
-  isSignUp: false
-}, action) {
+export default function signUp(
+  state = {
+    isFetching: false,
+    isSignUp: false,
+  },
+  action
+) {
   switch (action.type) {
     case SIGNUP_REQUEST:
-      return { 
+      return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case SIGNUP_SUCCESS:
-      return { 
+      return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case SIGNUP_FAILURE:
-      return { 
+      return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case SIGNUP_SOCIAL_REQUEST:
-      return { 
+      return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case SIGNUP_SOCIAL_SUCCESS:
-      return { 
+      return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     case SIGNUP_SOCIAL_FAILURE:
-      return { 
+      return {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     default:
-      return state
+      return state;
   }
 }

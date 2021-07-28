@@ -5,25 +5,26 @@ const getColumnWidth = (size) => (100 / 12) * size;
 const useStyles = makeStyles((theme) => ({
   slidingViewsRoot: {
     display: "flex",
-    height: "100%"
+    height: "100%",
   },
   slidingView: ({ size }) => ({
-    maxWidth: getColumnWidth(size) + "%",
-    flexBasis: getColumnWidth(size) + "%",
+    maxWidth: `${getColumnWidth(size)}%`,
+    flexBasis: `${getColumnWidth(size)}%`,
     transition: "all .1s ease-in",
     "& + &": {
       marginRight: "30px !important",
     },
     [theme.breakpoints.up("md")]: {
-      padding: theme.spacing(0, 1)
+      padding: theme.spacing(0, 1),
     },
     [theme.breakpoints.down("sm")]: {
-      minHeight: `calc(100vh - ${(theme.mixins.toolbar.minHeight*2 + theme.spacing(3))}px)`,
+      minHeight: `calc(100vh - ${
+        theme.mixins.toolbar.minHeight * 2 + theme.spacing(3)
+      }px)`,
       overflow: "hidden",
-      zIndex: 1000
+      zIndex: 1000,
     },
-  })
+  }),
 }));
 
 export default useStyles;
-

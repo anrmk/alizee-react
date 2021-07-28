@@ -6,7 +6,7 @@ function receiveUserMood(user) {
     payload: {
       isFetching: true,
       errorMessage: "",
-      data: user
+      data: user,
     },
   };
 }

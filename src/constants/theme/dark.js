@@ -1,5 +1,4 @@
 import { createMuiTheme } from "@material-ui/core";
-import ThemeDispatchContext from "../../context/ThemeDispatchContext";
 
 import defaultTheme from "./default";
 
@@ -14,15 +13,15 @@ export default createMuiTheme({
     },
 
     primary: {
-      main: "#35B1F6", //"#845DD7",
+      main: "#35B1F6", // "#845DD7",
     },
 
     secondary: {
-      main: "#845DD7", //"#8A2260",
+      main: "#845DD7", // "#8A2260",
     },
 
     success: {
-      main: "#58CD86", //"#18AA7E"
+      main: "#58CD86", // "#18AA7E"
       contrast: "#44b700",
     },
 
@@ -37,7 +36,8 @@ export default createMuiTheme({
     background: {
       default: "#1F2128",
       paper: "#242731",
-      mainGradient: "linear-gradient(141.21deg, #36704d -16.59%, #356078 40.28%, #70538a 90.77%)",
+      mainGradient:
+        "linear-gradient(141.21deg, #36704d -16.59%, #356078 40.28%, #70538a 90.77%)",
       secondGradient:
         "linear-gradient(141.21deg, rgba(136, 108, 169, 0.15) -16.6%, rgba(104, 215, 148, 0.15) -16.59%, rgba(111, 203, 255, 0.15) 40.28%, rgba(184, 138, 225, 0.15) 90.77%)",
     },
@@ -71,7 +71,7 @@ export default createMuiTheme({
 
     MuiCard: {
       root: {
-        backgroundColor: "#242731", //"#2E2E3D"
+        backgroundColor: "#242731", // "#2E2E3D"
 
         "&.noborder": {},
       },
@@ -126,7 +126,6 @@ export default createMuiTheme({
       },
 
       containedSecondary: {
-        color: "white",
         background:
           "linear-gradient(141.21deg, rgba(136, 108, 169, 0.15) -16.6%, rgba(104, 215, 148, 0.15) -16.59%, rgba(111, 203, 255, 0.15) 40.28%, rgba(184, 138, 225, 0.15) 90.77%)",
         backgroundColor: "transparent",

@@ -62,7 +62,7 @@ export default function DialogProvider({ children }) {
       }
       case STACK_BACK: {
         const { stack } = state;
-        if (!stack.length) return;
+        if (!stack.length) return null;
         const prevDialogData = stack[stack.length - 2];
 
         return {
@@ -94,7 +94,8 @@ export default function DialogProvider({ children }) {
   };
 
   const handleMainClick = (e) => {
-    dialogOptions.onMainClick && dialogOptions.onMainClick(dialogOptions.state, e);
+    dialogOptions.onMainClick &&
+      dialogOptions.onMainClick(dialogOptions.state, e);
   };
 
   const handleBackClick = (e) => {
@@ -119,11 +120,12 @@ export default function DialogProvider({ children }) {
           BackdropComponent={Backdrop}
           BackdropProps={{
             timeout: 500,
-          }}
-        >
+          }}>
           <Fade in={!!dialogOptions.open}>
             <>
-              <IconButton className={classes.closeBtn} onClick={handleCloseClick}>
+              <IconButton
+                className={classes.closeBtn}
+                onClick={handleCloseClick}>
                 <CloseIcon />
               </IconButton>
               {dialogOptions.content}
@@ -132,14 +134,13 @@ export default function DialogProvider({ children }) {
         </Modal>
       ) : (
         <Dialog
-          fullWidth={true}
-          maxWidth={"sm"}
+          fullWidth
+          maxWidth="sm"
           fullScreen={fullScreen}
           aria-labelledby="dialog-title"
           open={!!dialogOptions.open}
           onClose={handleCloseClick}
-          {...dialogOptions.dialogProps}
-        >
+          {...dialogOptions.dialogProps}>
           {dialogOptions.title && (
             <DialogTitle id="dialog-title">
               {dialogOptions.stack?.length > 1 && (
@@ -152,32 +153,38 @@ export default function DialogProvider({ children }) {
           )}
 
           {dialogOptions.content && (
-            <DialogContent id="dialog-content" className={clsx(dialogOptions.loading && classes.loading)}>
-              {dialogOptions.loading ? <CircularProgress className={classes.progress} /> : dialogOptions.content}
+            <DialogContent
+              id="dialog-content"
+              className={clsx(dialogOptions.loading && classes.loading)}>
+              {dialogOptions.loading ? (
+                <CircularProgress className={classes.progress} />
+              ) : (
+                dialogOptions.content
+              )}
             </DialogContent>
           )}
 
           {!dialogOptions.actionsComponent
             ? (dialogOptions.onCloseClick || dialogOptions.onMainClick) && (
                 <DialogActions>
-                  {(dialogOptions.onCloseClick || dialogOptions.closeBtnProps) && (
+                  {(dialogOptions.onCloseClick ||
+                    dialogOptions.closeBtnProps) && (
                     <Button
                       disabled={dialogOptions.loading}
                       variant="outlined"
                       {...dialogOptions.closeBtnProps}
-                      onClick={handleCloseClick}
-                    >
+                      onClick={handleCloseClick}>
                       {dialogOptions.closeBtnText}
                     </Button>
                   )}
-                  {(dialogOptions.onMainClick || dialogOptions.mainBtnProps) && (
+                  {(dialogOptions.onMainClick ||
+                    dialogOptions.mainBtnProps) && (
                     <Button
                       disableElevation
                       disabled={dialogOptions.loading}
                       variant="contained"
                       {...dialogOptions.mainBtnProps}
-                      onClick={handleMainClick}
-                    >
+                      onClick={handleMainClick}>
                       {dialogOptions.mainBtnText}
                     </Button>
                   )}

@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useSnackbar } from "notistack";
-import i18n from "i18next";
 
 import { Switch, useParams, useHistory, useLocation } from "react-router-dom";
 import {
@@ -51,7 +50,10 @@ import {
   ToastNotificationSettings,
 } from "./Notifications";
 
-import { DEFAULT_ALERT_SUCCESS_TEXT, DEFAULT_ALERT_ERROR_TEXT } from "../../constants/alerts";
+import {
+  DEFAULT_ALERT_SUCCESS_TEXT,
+  DEFAULT_ALERT_ERROR_TEXT,
+} from "../../constants/alerts";
 
 import useSlidingViews, { RIGHT_OPEN_TYPE } from "../../hooks/useSlidingViews";
 import useChangeTheme from "../../hooks/useChangeTheme";
@@ -104,7 +106,8 @@ const TABS = [
 
 function Settings() {
   const { type } = useParams();
-  const { currentSlidingViewsState, toggleSlidingViewsState } = useSlidingViews(RIGHT_OPEN_TYPE);
+  const { currentSlidingViewsState, toggleSlidingViewsState } =
+    useSlidingViews(RIGHT_OPEN_TYPE);
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
@@ -129,12 +132,22 @@ function Settings() {
   };
 
   return (
-    <SlidingViews mobileOnly currentState={currentSlidingViewsState} firstSize={4} secondSize={8}>
+    <SlidingViews
+      mobileOnly
+      currentState={currentSlidingViewsState}
+      firstSize={4}
+      secondSize={8}>
       <Card>
-        <List disablePadding component="nav" subheader={<ListSubheader>Settings</ListSubheader>}>
+        <List
+          disablePadding
+          component="nav"
+          subheader={<ListSubheader>Settings</ListSubheader>}>
           {TABS.map((tab) => (
             <Box key={`settings_${tab.index}`}>
-              <ListItem button selected={location.pathname.includes(tab.route)} onClick={() => history.push(tab.route)}>
+              <ListItem
+                button
+                selected={location.pathname.includes(tab.route)}
+                onClick={() => history.push(tab.route)}>
                 <ListItemText primary={tab.title} />
                 <ChevronRightIcon />
               </ListItem>
@@ -145,7 +158,10 @@ function Settings() {
             <ListItemIcon>
               <NightIcon />
             </ListItemIcon>
-            <ListItemText id="switch-theme-label" primary={t("NavbarMenuItemDarkMode")} />
+            <ListItemText
+              id="switch-theme-label"
+              primary={t("NavbarMenuItemDarkMode")}
+            />
             <ListItemSecondaryAction>
               <SwitchButton
                 edge="end"
@@ -202,7 +218,11 @@ function Settings() {
             }}
           />
 
-          <PrivateRoute exact path={SETTINGS_NOTIFICATIONS_ROUTE} component={GeneralNotificationSettings} />
+          <PrivateRoute
+            exact
+            path={SETTINGS_NOTIFICATIONS_ROUTE}
+            component={GeneralNotificationSettings}
+          />
           <PrivateRoute
             exact
             path={SETTINGS_NOTIFICATIONS_PUSH_ROUTE}

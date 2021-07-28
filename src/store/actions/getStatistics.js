@@ -1,6 +1,6 @@
 import { generateUrl } from "../../helpers/functions";
 
-import data from "../../domain/PostStatistics/data";
+import tempData from "../../domain/PostStatistics/data";
 
 export const GET_STATISTICS_REQUEST = "GET_STATISTICS_REQUEST";
 export const GET_STATISTICS_SUCCESS = "GET_STATISTICS_SUCCESS";
@@ -54,11 +54,11 @@ export function getStatistics(api, id = null) {
     dispatch(requestGetStatistics());
 
     const url = generateUrl("getStatistics");
-//TODO: uncomment when backend will be ready
+    // TODO: uncomment when backend will be ready
     try {
       if (id) {
         // const { data } = await api.setMethod("GET").setParams({ id }).query(url);
-        dispatch(receiveGetStatistics(data));
+        dispatch(receiveGetStatistics(tempData));
       } else {
         const { data } = await api.setMethod("GET").query(url);
         dispatch(receiveGetStatistics(data));

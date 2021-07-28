@@ -6,7 +6,6 @@ import {
   Grid,
   Divider,
   Button,
-  FormGroup,
   TextField,
   Typography,
   Card,
@@ -14,7 +13,11 @@ import {
   CardContent,
 } from "@material-ui/core";
 
-import { EMPTY_VALUE_ERROR, MIN_AMOUNT, MAX_AMOUNT } from "../../constants/form_validations";
+import {
+  EMPTY_VALUE_ERROR,
+  MIN_AMOUNT,
+  MAX_AMOUNT,
+} from "../../constants/form_validations";
 
 import useStyles from "./styles";
 
@@ -53,7 +56,12 @@ function EditSubscriptionForm({
       <CardHeader title="Subscription" />
       <Divider />
       <CardContent>
-        <Grid container component="form" direction="column" spacing={2} onSubmit={handleSubmit(onSubmit)}>
+        <Grid
+          container
+          component="form"
+          direction="column"
+          spacing={2}
+          onSubmit={handleSubmit(onSubmit)}>
           <Grid item>
             <Typography variant="h6">Subscription price and bundles</Typography>
           </Grid>
@@ -73,7 +81,7 @@ function EditSubscriptionForm({
                   value={value}
                   error={!!errors[SUBSCRIPTION_PRICE_INPUT_ID]}
                   helperText={
-                    !!errors[SUBSCRIPTION_PRICE_INPUT_ID]
+                    errors[SUBSCRIPTION_PRICE_INPUT_ID]
                       ? errors[SUBSCRIPTION_PRICE_INPUT_ID].message
                       : SUBSCRIPTION_INPUT_HELPER
                   }
@@ -90,8 +98,7 @@ function EditSubscriptionForm({
               variant="contained"
               color="primary"
               disabled={!!errors[SUBSCRIPTION_PRICE_INPUT_ID]}
-              type="submit"
-            >
+              type="submit">
               Update
             </Button>
           </Grid>
@@ -105,8 +112,8 @@ function EditSubscriptionForm({
           <Grid item>
             <Typography variant="h6">Profile promotion campaign</Typography>
             <Typography variant="body2">
-              Offer a free trial or a discounted subscription on your profile for a limited number of new or already
-              expired subscribers
+              Offer a free trial or a discounted subscription on your profile
+              for a limited number of new or already expired subscribers
             </Typography>
           </Grid>
           <Grid item>

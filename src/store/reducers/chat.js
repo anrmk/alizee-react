@@ -26,7 +26,10 @@ import {
   RESET_CURRENT_ROOM,
 } from "../actions/chat";
 
-export default function chatReducer(state = { isFetching: false, data: [], current: {}, query: "" }, action) {
+export default function chatReducer(
+  state = { isFetching: false, data: [], current: {}, query: "" },
+  action
+) {
   switch (action.type) {
     // Get a room
     case GET_ROOM_REQUEST:
@@ -142,19 +145,19 @@ export default function chatReducer(state = { isFetching: false, data: [], curre
     case SHARE_MESSAGE_REQUEST: {
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
     }
     case SHARE_MESSAGE_SUCCESS: {
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
     }
     case SHARE_MESSAGE_FAILURE: {
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
     }
 

@@ -2,7 +2,14 @@ import React, { useCallback } from "react";
 import { Link } from "react-router-dom";
 // import { useTranslation } from "react-i18next";
 
-import { Box, Divider, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from "@material-ui/core";
+import {
+  Divider,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  IconButton,
+} from "@material-ui/core";
 
 import MoreVertIcon from "@material-ui/icons/MoreVertRounded";
 import BackIcon from "@material-ui/icons/ArrowBackRounded";
@@ -27,12 +34,13 @@ function Room({
   onMessageCreate,
   onMediaView,
   onVideoStreem,
-  onSendTip
+  onSendTip,
 }) {
   const classes = useStyles();
   // const { t } = useTranslation();
 
-  const {userName, name, avatarUrl, showActivity, offlineDate, messages} = current || {};
+  const { userName, name, avatarUrl, showActivity, offlineDate, messages } =
+    current || {};
 
   const handleMessageCreate = (data) => {
     onMessageCreate && onMessageCreate(data);
@@ -41,10 +49,10 @@ function Room({
   const handleVideoClick = (e) => {
     e.preventDefault();
     onVideoStreem && onVideoStreem(userName);
-  }
+  };
 
   const handleSendTipClick = useCallback(() => {
-    onSendTip && onSendTip({ name, userName, avatarUrl});
+    onSendTip && onSendTip({ name, userName, avatarUrl });
   }, [current]);
 
   return (
@@ -56,17 +64,19 @@ function Room({
           </Link>
         }
         title={name}
-        subheader={showActivity && (offlineDate ? formatDate(offlineDate) : "online")}
+        subheader={
+          showActivity && (offlineDate ? formatDate(offlineDate) : "online")
+        }
         action={
           <>
             <IconButton onClick={onClose}>
               <BackIcon />
             </IconButton>
-            {isVerified && 
+            {isVerified && (
               <IconButton onClick={handleVideoClick}>
                 <VoiceChatIcon />
               </IconButton>
-            }
+            )}
             <IconButton onClick={onMenuClick}>
               <MoreVertIcon />
             </IconButton>

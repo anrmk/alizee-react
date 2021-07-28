@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     left: "50%",
     height: "100%",
     position: "relative",
-    transform: "translateX(-50%)"
+    transform: "translateX(-50%)",
   },
   video: {
     width: "120px !important",
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   imagePreview: {
     objectFit: "contain",
     width: "100%",
-    height: "100%"
+    height: "100%",
   },
   videoPreview: {
     height: "100% !important",

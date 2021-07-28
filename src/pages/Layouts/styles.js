@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   base: {
-    height: ({ isFullScreenHeight }) => isFullScreenHeight ? "100vh" : "100%",
+    height: ({ isFullScreenHeight }) => (isFullScreenHeight ? "100vh" : "100%"),
   },
   container: {
     display: "flex",
@@ -10,8 +10,8 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       paddingLeft: theme.spacing(0.5),
       paddingRight: theme.spacing(0.5),
-      paddingBottom: theme.spacing(8)
-    }
+      paddingBottom: theme.spacing(8),
+    },
   },
   twoColumnGrid: {
     flex: "1",
@@ -21,11 +21,12 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(3),
     [theme.breakpoints.down("md")]: {
       paddingTop: theme.spacing(2),
-      paddingBottom: theme.spacing(2)
-    }
+      paddingBottom: theme.spacing(2),
+    },
   },
   twoColumnContainer: {
-    display: ({ isFullScreenHeight }) => isFullScreenHeight ? "flex" : "block",
+    display: ({ isFullScreenHeight }) =>
+      isFullScreenHeight ? "flex" : "block",
   },
   mainBase: {
     [theme.breakpoints.up("md")]: {
@@ -35,19 +36,19 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down("sm")]: {
       height: "100% !important",
-      paddingBottom: theme.spacing(7)
-    }
+      paddingBottom: theme.spacing(7),
+    },
   },
   mainInnerGrid: {
     height: "100%",
     scrollbarWidth: "none",
 
-    "& > .MuiGrid-item" : { 
+    "& > .MuiGrid-item": {
       paddingLeft: theme.spacing(3),
       [theme.breakpoints.down("sm")]: {
-        paddingLeft: theme.spacing(0)
-      }
-    }
+        paddingLeft: theme.spacing(0),
+      },
+    },
   },
   mainContainer: {
     // [theme.breakpoints.down("sm")]: {
@@ -63,9 +64,9 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down("md")]: {
       overflow: "hidden",
-      paddingBottom: theme.spacing(9)
-    }
-  }
+      paddingBottom: theme.spacing(9),
+    },
+  },
 }));
 
 export default useStyles;

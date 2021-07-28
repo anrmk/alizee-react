@@ -10,8 +10,8 @@ function requestGetUserStatistics() {
     payload: {
       isFetching: true,
       errorMessage: "",
-    }
-  }
+    },
+  };
 }
 
 function receiveGetUserStatistics(data) {
@@ -20,9 +20,9 @@ function receiveGetUserStatistics(data) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      statistics: data
-    }
-  }
+      statistics: data,
+    },
+  };
 }
 
 function errorGetUserStatistics(message) {
@@ -30,13 +30,13 @@ function errorGetUserStatistics(message) {
     type: GET_USER_STATISTICS_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message
-    }
-  }
+      errorMessage: message,
+    },
+  };
 }
 
 export function getUserStatistics(api, userId) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(requestGetUserStatistics());
 
     const url = generateUrl("getUserStatistics");
@@ -50,5 +50,5 @@ export function getUserStatistics(api, userId) {
     } catch {
       dispatch(errorGetUserStatistics("Error: something went wrong"));
     }
-  }
+  };
 }

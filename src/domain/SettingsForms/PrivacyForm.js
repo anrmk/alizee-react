@@ -34,7 +34,8 @@ const DELETE_ACCOUNT_HEADER = "Delete Account";
 const DELETE_ACCOUNT_HELPER =
   "If you want a break from us, you can temporarily disable your account instead of deleting it. Your profile won't appear on StudioXR while you're away.";
 const RESET_PASSWORD_HEADER = "Reset Password";
-const RESET_PASSWORD_HELPER = "Resetting your password using your email address or phone number";
+const RESET_PASSWORD_HELPER =
+  "Resetting your password using your email address or phone number";
 
 function PrivacyForm({
   accountPrivate = false,
@@ -50,7 +51,9 @@ function PrivacyForm({
 }) {
   const [lAccountPrivate, setLAccountPrivate] = useState(accountPrivate);
   const [lActivityStatus, setLActivityStatus] = useState(showActivity);
-  const [lOffensiveComments, setLOffensiveComments] = useState(offensiveCommentsHidden);
+  const [lOffensiveComments, setLOffensiveComments] = useState(
+    offensiveCommentsHidden
+  );
 
   useEffect(() => {
     setLAccountPrivate(accountPrivate);
@@ -65,19 +68,19 @@ function PrivacyForm({
   }, [offensiveCommentsHidden]);
 
   const handleAccountPrivateChange = (e) => {
-    const checked = e.target.checked;
+    const { checked } = e.target;
     setLAccountPrivate(checked);
     onAccountPrivateUpdate && onAccountPrivateUpdate(checked);
   };
 
   const handleActivityStatusChange = (e) => {
-    const checked = e.target.checked;
+    const { checked } = e.target;
     setLActivityStatus(checked);
     onActivityStatusUpdate && onActivityStatusUpdate(checked);
   };
 
   const handleOffensiveCommentsChange = (e) => {
-    const checked = e.target.checked;
+    const { checked } = e.target;
     setLOffensiveComments(checked);
     onOffensiveCommentsUpdate && onOffensiveCommentsUpdate(checked);
   };
@@ -91,21 +94,38 @@ function PrivacyForm({
       <CardContent>
         <List disablePadding>
           <ListItem>
-            <ListItemText primary={ACCOUNT_PRIVACY_HEADER} secondary={ACCOUNT_PRIVACY_HELPER} />
+            <ListItemText
+              primary={ACCOUNT_PRIVACY_HEADER}
+              secondary={ACCOUNT_PRIVACY_HELPER}
+            />
             <ListItemSecondaryAction>
-              <Switch checked={lAccountPrivate} name="accountPrivate" onChange={handleAccountPrivateChange} />
+              <Switch
+                checked={lAccountPrivate}
+                name="accountPrivate"
+                onChange={handleAccountPrivateChange}
+              />
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
-            <ListItemText primary={ACTIVITY_STATUS_HEADER} secondary={ACTIVITY_STATUS_HELPER} />
+            <ListItemText
+              primary={ACTIVITY_STATUS_HEADER}
+              secondary={ACTIVITY_STATUS_HELPER}
+            />
             <ListItemSecondaryAction>
-              <Switch checked={lActivityStatus} name="showActivity" onChange={handleActivityStatusChange} />
+              <Switch
+                checked={lActivityStatus}
+                name="showActivity"
+                onChange={handleActivityStatusChange}
+              />
             </ListItemSecondaryAction>
           </ListItem>
 
           <ListItem>
-            <ListItemText primary={COMMENTS_FILTERING_HEADER} secondary={COMMENTS_FILTERING_HELPER} />
+            <ListItemText
+              primary={COMMENTS_FILTERING_HEADER}
+              secondary={COMMENTS_FILTERING_HELPER}
+            />
             <ListItemSecondaryAction>
               <Switch
                 checked={lOffensiveComments}
@@ -123,10 +143,17 @@ function PrivacyForm({
         <Grid container direction="column" spacing={2}>
           <Grid item>
             <Typography variant="h6">{BLOCKED_ACCOUNTS_HEADER}</Typography>
-            <Typography variant="subtitle2">{BLOCKED_ACCOUNTS_HELPER}</Typography>
+            <Typography variant="subtitle2">
+              {BLOCKED_ACCOUNTS_HELPER}
+            </Typography>
           </Grid>
           <Grid item>
-            <Button disableElevation variant="outlined" color="primary" to={BLOCKED_USERNAME_ROUTE("userName")} component={Link}>
+            <Button
+              disableElevation
+              variant="outlined"
+              color="primary"
+              to={BLOCKED_USERNAME_ROUTE("userName")}
+              component={Link}>
               Blocked Accounts
             </Button>
           </Grid>
@@ -148,8 +175,7 @@ function PrivacyForm({
               variant="outlined"
               color="secondary"
               disabled={loading}
-              onClick={onPasswordReset}
-            >
+              onClick={onPasswordReset}>
               Reset Password
             </Button>
           </Grid>
@@ -171,8 +197,7 @@ function PrivacyForm({
               variant="outlined"
               color="secondary"
               disabled={loading}
-              onClick={onAccountDelete}
-            >
+              onClick={onAccountDelete}>
               Delete your Account
             </Button>
           </Grid>

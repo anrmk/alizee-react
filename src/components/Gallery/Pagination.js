@@ -20,7 +20,11 @@ function Pagination({
       <ol>
         {dots > 0 &&
           [...Array(dots)].map((_, i) => (
-            <li className={`${currentIndex === i ? "active" : ""}`} key={i} onClick={(e) => handleDotClick(e, i)} />
+            <li
+              className={`${currentIndex === i ? "active" : ""}`}
+              key={i}
+              onClick={(e) => handleDotClick(e, i)}
+            />
           ))}
       </ol>
     </div>

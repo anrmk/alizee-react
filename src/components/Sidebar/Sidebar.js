@@ -2,7 +2,17 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import { Grid, Box, List, ListItem, ListItemIcon, ListItemText, Typography, Badge, Divider } from "@material-ui/core";
+import {
+  Grid,
+  Box,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+  Badge,
+  Divider,
+} from "@material-ui/core";
 
 import PersonOutlineIcon from "@material-ui/icons/PersonOutlineOutlined";
 import HomeIcon from "@material-ui/icons/HomeOutlined";
@@ -23,7 +33,7 @@ import {
 } from "../../constants/routes";
 
 import UserCard from "./UserCard";
-import { Wallet } from "../Wallet";
+import Wallet from "../Wallet";
 import Animate from "../Animate/Animate";
 import Footer from "../Footer/Footer";
 
@@ -47,7 +57,11 @@ function Sidebar({
 
   return (
     <Box className={classes.rootBox}>
-      <Grid container direction="column" justify="space-between" alignItems="stretch">
+      <Grid
+        container
+        direction="column"
+        justify="space-between"
+        alignItems="stretch">
         <Grid item>
           <UserCard
             userName={user.userName}
@@ -71,27 +85,44 @@ function Sidebar({
         <Grid item>
           <List component="nav" dense>
             <Animate variant="rubberBand">
-              <ListItem button selected={location.pathname === HOME_ROUTE} to={HOME_ROUTE} component={Link}>
+              <ListItem
+                button
+                selected={location.pathname === HOME_ROUTE}
+                to={HOME_ROUTE}
+                component={Link}>
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
                 <ListItemText>
-                  <Typography color={location.pathname === HOME_ROUTE ? "textPrimary" : "textSecondary"} variant="h6">
+                  <Typography
+                    color={
+                      location.pathname === HOME_ROUTE
+                        ? "textPrimary"
+                        : "textSecondary"
+                    }
+                    variant="h6">
                     {t("SidebarFeedText")}
                   </Typography>
                 </ListItemText>
               </ListItem>
             </Animate>
             <Animate variant="rotate">
-              <ListItem button selected={location.pathname.includes(EXPLORE_ROUTE)} to={EXPLORE_ROUTE} component={Link}>
+              <ListItem
+                button
+                selected={location.pathname.includes(EXPLORE_ROUTE)}
+                to={EXPLORE_ROUTE}
+                component={Link}>
                 <ListItemIcon>
                   <ExploreIcon />
                 </ListItemIcon>
                 <ListItemText>
                   <Typography
-                    color={location.pathname === EXPLORE_ROUTE ? "textPrimary" : "textSecondary"}
-                    variant="h6"
-                  >
+                    color={
+                      location.pathname === EXPLORE_ROUTE
+                        ? "textPrimary"
+                        : "textSecondary"
+                    }
+                    variant="h6">
                     {t("SidebarExploreText")}
                   </Typography>
                 </ListItemText>
@@ -103,18 +134,23 @@ function Sidebar({
                 button
                 selected={location.pathname.includes(NOTIFICATION_ROUTE)}
                 to={NOTIFICATION_ROUTE_ALL}
-                component={Link}
-              >
+                component={Link}>
                 <ListItemIcon>
-                  <Badge variant="dot" invisible={!newNotification} color="primary">
+                  <Badge
+                    variant="dot"
+                    invisible={!newNotification}
+                    color="primary">
                     <NotificationsIcon />
                   </Badge>
                 </ListItemIcon>
                 <ListItemText>
                   <Typography
-                    color={location.pathname.includes(NOTIFICATION_ROUTE) ? "textPrimary" : "textSecondary"}
-                    variant="h6"
-                  >
+                    color={
+                      location.pathname.includes(NOTIFICATION_ROUTE)
+                        ? "textPrimary"
+                        : "textSecondary"
+                    }
+                    variant="h6">
                     {t("SidebarNotificationText")}
                   </Typography>
                 </ListItemText>
@@ -125,8 +161,7 @@ function Sidebar({
                 button
                 selected={location.pathname.includes(CHAT_USERNAME_ROUTE(""))}
                 to={CHAT_USERNAME_ROUTE("")}
-                component={Link}
-              >
+                component={Link}>
                 <ListItemIcon>
                   <Badge variant="dot" invisible={!newMessage} color="primary">
                     <MailIcon />
@@ -134,9 +169,12 @@ function Sidebar({
                 </ListItemIcon>
                 <ListItemText>
                   <Typography
-                    color={location.pathname.includes(CHAT_USERNAME_ROUTE("")) ? "textPrimary" : "textSecondary"}
-                    variant="h6"
-                  >
+                    color={
+                      location.pathname.includes(CHAT_USERNAME_ROUTE(""))
+                        ? "textPrimary"
+                        : "textSecondary"
+                    }
+                    variant="h6">
                     {t("SidebarChatText")}
                   </Typography>
                 </ListItemText>
@@ -146,22 +184,24 @@ function Sidebar({
             <Animate variant="pulse">
               <ListItem
                 button
-                selected={location.pathname.includes(PROFILE_USERNAME_ROUTE(user.userName))}
+                selected={location.pathname.includes(
+                  PROFILE_USERNAME_ROUTE(user.userName)
+                )}
                 to={PROFILE_USERNAME_ROUTE(user.userName)}
-                component={Link}
-              >
+                component={Link}>
                 <ListItemIcon>
                   <PersonOutlineIcon />
                 </ListItemIcon>
                 <ListItemText>
                   <Typography
                     color={
-                      location.pathname.includes(PROFILE_USERNAME_ROUTE(user.userName))
+                      location.pathname.includes(
+                        PROFILE_USERNAME_ROUTE(user.userName)
+                      )
                         ? "textPrimary"
                         : "textSecondary"
                     }
-                    variant="h6"
-                  >
+                    variant="h6">
                     {t("SidebarProfileText")}
                   </Typography>
                 </ListItemText>
@@ -177,18 +217,22 @@ function Sidebar({
             <Animate variant="rotate">
               <ListItem
                 button
-                selected={location.pathname.includes(SETTINGS_EDIT_PROFILE_ROUTE)}
+                selected={location.pathname.includes(
+                  SETTINGS_EDIT_PROFILE_ROUTE
+                )}
                 to={SETTINGS_EDIT_PROFILE_ROUTE}
-                component={Link}
-              >
+                component={Link}>
                 <ListItemIcon>
                   <SettingsIcon />
                 </ListItemIcon>
                 <ListItemText>
                   <Typography
-                    color={location.pathname.includes(SETTINGS_EDIT_PROFILE_ROUTE) ? "textPrimary" : "textSecondary"}
-                    variant="h6"
-                  >
+                    color={
+                      location.pathname.includes(SETTINGS_EDIT_PROFILE_ROUTE)
+                        ? "textPrimary"
+                        : "textSecondary"
+                    }
+                    variant="h6">
                     Settings
                   </Typography>
                 </ListItemText>
@@ -207,7 +251,7 @@ function Sidebar({
               </ListItem>
             </Animate>
           </List>
-		 <Footer open sidebarFooter/>
+          <Footer open sidebarFooter />
         </Grid>
       </Grid>
     </Box>

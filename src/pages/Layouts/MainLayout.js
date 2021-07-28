@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import clsx from "clsx";
 import { Grid, Hidden } from "@material-ui/core";
 
+import { useHistory } from "react-router";
 import { BottomBar, Navbar } from "../../domain/Navbar";
 import Sidebar from "../../components/Sidebar";
 import ContainerLayout from "./ContainerLayout";
@@ -13,7 +14,6 @@ import * as Routes from "../../constants/routes";
 import { usePostDialog, useStoryDialog, useMoodDialog } from "../../hooks/post";
 
 import useStyles from "./styles";
-import { useHistory } from "react-router";
 
 export default function MainLayout({
   baseClassName,
@@ -21,16 +21,18 @@ export default function MainLayout({
   innerGridClassName,
   leftColProps = { md: 3, lg: 2 },
   rightColProps = { xs: 12, md: 9, lg: 10 },
-  children
+  children,
 }) {
   const history = useHistory();
   const classes = useStyles();
 
-  const { userInfo, notificationData, isAuthenticated } = useSelector(state => ({
-    userInfo: state.signIn.userInfo,
-    notificationData: state.notification.data,
-    isAuthenticated: state.signIn.isAuthenticated
-  }))
+  const { userInfo, notificationData, isAuthenticated } = useSelector(
+    (state) => ({
+      userInfo: state.signIn.userInfo,
+      notificationData: state.notification.data,
+      isAuthenticated: state.signIn.isAuthenticated,
+    })
+  );
   const dispatch = useDispatch();
 
   const createPostDialog = usePostDialog();
@@ -43,7 +45,7 @@ export default function MainLayout({
 
   const handleSignOut = () => {
     dispatch(signOutUser());
-  }
+  };
 
   const handleNotificationToggle = async (...data) => {
     await dispatch(notificationAction.setNotification(...data));
@@ -61,11 +63,9 @@ export default function MainLayout({
             userName={userInfo.userName}
             avatarUrl={userInfo.avatarUrl}
             isAuthenticated={isAuthenticated}
-
             newMessage={notificationData?.newMessage}
             newNotification={notificationData?.newNotification}
             open
-            
             onChange={handleNotificationToggle}
             onSignOut={handleSignOut}
           />
@@ -80,18 +80,17 @@ export default function MainLayout({
             onCreateMood={createMoodDialog.toggle}
           />
         </Hidden>
-      }
-    >
-      <Grid container className={clsx(classes.mainInnerGrid, innerGridClassName)}>
+      }>
+      <Grid
+        container
+        className={clsx(classes.mainInnerGrid, innerGridClassName)}>
         <Hidden smDown>
           <Grid item {...leftColProps}>
             <Sidebar
               open
               user={userInfo}
-              
               newMessage={notificationData?.newMessage}
               newNotification={notificationData?.newNotification}
-
               onSignOut={handleSignOut}
               onCreateMeet={handleCreateMeet}
               onCreatePost={createPostDialog.toggle}

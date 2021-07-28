@@ -43,18 +43,20 @@ export function acceptFollow(api, userName) {
 
     const url = generateUrl("acceptFollow");
     try {
-      await api.setParams({ userName: userName }).query(url);
+      await api.setParams({ userName }).query(url);
 
       const list = [...getState().users.data];
       const index = list.findIndex((item) => item.userName === userName);
       if (index !== -1) {
-        list[index]["status"] = FOLLOW_ACCEPTED;
+        list[index].status = FOLLOW_ACCEPTED;
       }
 
       dispatch(receiveAcceptFollow(list));
       dispatch(getDeposit(api));
     } catch {
-      return dispatch(errorAcceptFollow("When follow was creating then something went wrong"));
+      dispatch(
+        errorAcceptFollow("When follow was creating then something went wrong")
+      );
     }
   };
 }

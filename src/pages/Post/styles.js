@@ -1,15 +1,15 @@
 import { makeStyles } from "@material-ui/core";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
-    height: "100%"
+    height: "100%",
   },
   card: {
-    height: "100%"
+    height: "100%",
   },
   cardMedia: {
     position: "relative",
-    height: "100%"
+    height: "100%",
   },
   userTags: {
     position: "absolute",
@@ -17,15 +17,15 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(1),
 
     "& .MuiChip-root": {
-      marginRight: theme.spacing(0.5)
-    }
+      marginRight: theme.spacing(0.5),
+    },
   },
   iconToggle: {
     position: "absolute",
     right: "10px",
     top: "10px",
-    zIndex: theme.zIndex.appBar
-  }
+    zIndex: theme.zIndex.appBar,
+  },
 }));
 
 export default useStyles;

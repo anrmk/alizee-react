@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import ScrollContainer from "react-indiana-drag-scroll";
 import PropTypes from "prop-types";
-import { Grid, GridList, GridListTile, GridListTileBar, IconButton, Typography } from "@material-ui/core";
+import {
+  Grid,
+  GridList,
+  GridListTile,
+  GridListTileBar,
+  IconButton,
+  Typography,
+} from "@material-ui/core";
 
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
 
@@ -26,7 +33,9 @@ function MediaEditorPreview({
 
   useEffect(() => {
     onChangeMediaFiles && onChangeMediaFiles(changedMediaFiles);
-    if (!changedMediaFiles.some((file) => file.name === selectedMediaFile.name)) {
+    if (
+      !changedMediaFiles.some((file) => file.name === selectedMediaFile.name)
+    ) {
       setSelectedMediaFile(changedMediaFiles[0]);
     }
   }, [changedMediaFiles]);
@@ -39,7 +48,9 @@ function MediaEditorPreview({
 
   const handleDeleteMediaFile = (fileName) => (e) => {
     e.stopPropagation();
-    setChangedMediaFiles(changedMediaFiles.filter((file) => file.name !== fileName));
+    setChangedMediaFiles(
+      changedMediaFiles.filter((file) => file.name !== fileName)
+    );
   };
 
   const mediaTypeToKind = (type) => {
@@ -50,55 +61,64 @@ function MediaEditorPreview({
       localType = 1;
     }
     return localType;
-  }
+  };
 
   const renderError = (file) => {
     if (
-      (MEDIA_TYPE[file.type] === MEDIA_GROUP_TYPE.IMAGE && file.size > MAX_SIZE_IMAGE_MEDIA_FILE) ||
-      (MEDIA_TYPE[file.type] === MEDIA_GROUP_TYPE.VIDEO && file.size > MAX_SIZE_VIDEO_MEDIA_FILE)
+      (MEDIA_TYPE[file.type] === MEDIA_GROUP_TYPE.IMAGE &&
+        file.size > MAX_SIZE_IMAGE_MEDIA_FILE) ||
+      (MEDIA_TYPE[file.type] === MEDIA_GROUP_TYPE.VIDEO &&
+        file.size > MAX_SIZE_VIDEO_MEDIA_FILE)
     ) {
       return (
         <Typography color="error" variant="caption">
           Size error
         </Typography>
       );
-    } else {
-      return;
     }
+
+    return null;
   };
 
   return (
     <>
       <Grid container direction="column" className={classes.gridContainer}>
         <Grid item className={classes.gridListPreviewItem}>
-          <MediaPreview type={mediaTypeToKind(selectedMediaFile.type)} url={selectedMediaFile.previewURL} fullWidth={true} />
+          <MediaPreview
+            type={mediaTypeToKind(selectedMediaFile.type)}
+            url={selectedMediaFile.previewURL}
+            fullWidth
+          />
         </Grid>
-        <GridList spacing={12} className={classes.gridList} component={ScrollContainer}>
+        <GridList
+          spacing={12}
+          className={classes.gridList}
+          component={ScrollContainer}>
           {mediaFiles.length > 0 &&
-            mediaFiles.map((file) => {
-              return (
-                <GridListTile
-                  key={file.name}
-                  onClick={() => handleSelectedMediaItem(file)}
-                  classes={{
-                    root: classes.gridListItem,
-                  }}
-                >
-                  <MediaPreview type={mediaTypeToKind(file.type)} url={file.previewURL} />
-                  <GridListTileBar
-                    title={renderError(file)}
-                    titlePosition="top"
-                    className={classes.titleBar}
-                    actionIcon={
-                      <IconButton onClick={handleDeleteMediaFile(file.name)}>
-                        <HighlightOffOutlinedIcon />
-                      </IconButton>
-                    }
-                    actionPosition="right"
-                  />
-                </GridListTile>
-              );
-            })}
+            mediaFiles.map((file) => (
+              <GridListTile
+                key={file.name}
+                onClick={() => handleSelectedMediaItem(file)}
+                classes={{
+                  root: classes.gridListItem,
+                }}>
+                <MediaPreview
+                  type={mediaTypeToKind(file.type)}
+                  url={file.previewURL}
+                />
+                <GridListTileBar
+                  title={renderError(file)}
+                  titlePosition="top"
+                  className={classes.titleBar}
+                  actionIcon={
+                    <IconButton onClick={handleDeleteMediaFile(file.name)}>
+                      <HighlightOffOutlinedIcon />
+                    </IconButton>
+                  }
+                  actionPosition="right"
+                />
+              </GridListTile>
+            ))}
         </GridList>
       </Grid>
     </>

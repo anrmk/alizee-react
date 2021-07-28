@@ -2,7 +2,13 @@ import React from "react";
 
 import { Bar } from "react-chartjs-2";
 
-import { Box, Card, CardContent, CardHeader, Divider } from "@material-ui/core/";
+import {
+  Box,
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+} from "@material-ui/core/";
 
 import { useConfig, useChartData } from "./config";
 

@@ -19,7 +19,7 @@ import MessageIcon from "@material-ui/icons/MessageOutlined";
 import DollarIcon from "@material-ui/icons/MonetizationOnOutlined";
 
 import { CHAT_USERNAME_ROUTE } from "../../constants/routes";
-import { SocialControl } from "../../components/Social";
+import SocialControl from "../../components/Social";
 import { getSubscriptionBtnText, isAwaitingConfirmation } from "./utils";
 import DisplayName from "../../components/DisplayName";
 
@@ -61,7 +61,7 @@ function ProfileUserInfo({
   };
 
   const handleAvatarUrlChange = () => {
-    const files = fileInputEl.current.files;
+    const { files } = fileInputEl.current;
 
     if (files.length === 1) {
       onAvatarUrlChange && onAvatarUrlChange(files[0]);
@@ -69,29 +69,49 @@ function ProfileUserInfo({
   };
 
   const renderFileInput = () => (
-    <input hidden type="file" name="avatarUrl" ref={fileInputEl} onChange={handleAvatarUrlChange} />
+    <input
+      hidden
+      type="file"
+      name="avatarUrl"
+      ref={fileInputEl}
+      onChange={handleAvatarUrlChange}
+    />
   );
 
   const renderChangeImg = () => {
     if (isOwner) {
       return user.avatarUrl ? (
         <CardActionArea onClick={handleNewImageClick}>
-          <CardMedia component="img" alt={user.name} image={user.avatarUrl} title={user.name} />
+          <CardMedia
+            component="img"
+            alt={user.name}
+            image={user.avatarUrl}
+            title={user.name}
+          />
           {renderFileInput()}
         </CardActionArea>
       ) : (
         <Box display="flex" justifyContent="center" marginTop={2}>
-          <Button disableElevation size="large" color="secondary" variant="contained" onClick={handleNewImageClick}>
+          <Button
+            disableElevation
+            size="large"
+            color="secondary"
+            variant="contained"
+            onClick={handleNewImageClick}>
             Load avatar
             {renderFileInput()}
           </Button>
         </Box>
       );
-    } else {
-      return user.avatarUrl ? (
-        <CardMedia component="img" alt={user.name} image={user.avatarUrl} title={user.name} />
-      ) : null;
     }
+    return user.avatarUrl ? (
+      <CardMedia
+        component="img"
+        alt={user.name}
+        image={user.avatarUrl}
+        title={user.name}
+      />
+    ) : null;
   };
 
   return (
@@ -114,8 +134,7 @@ function ProfileUserInfo({
               color="textSecondary"
               className={classes.mood}
               onClick={onMoodUpdateClick}
-              align="justify"
-            >
+              align="justify">
               {user.mood ? user.mood : isOwner && "What's on your mind?"}
             </Typography>
           ) : (
@@ -125,8 +144,7 @@ function ProfileUserInfo({
                 color="textSecondary"
                 align="justify"
                 className={classes.breakText}
-                component="p"
-              >
+                component="p">
                 {user.mood}
               </Typography>
             )
@@ -144,8 +162,7 @@ function ProfileUserInfo({
             variant="contained"
             to="statistics"
             component={Link}
-            className={classes.btnMargin}
-          >
+            className={classes.btnMargin}>
             Statistics
           </Button>
         ) : (
@@ -156,11 +173,15 @@ function ProfileUserInfo({
               size="large"
               color="primary"
               variant="contained"
-              onClick={handleSubscribeClick}
-            >
+              onClick={handleSubscribeClick}>
               {getSubscriptionBtnText(followStatus, subscriptionPrice, t)}
             </Button>
-            <Box width="100%" display="flex" marginTop={2} marginBottom={2} flexDirection="column">
+            <Box
+              width="100%"
+              display="flex"
+              marginTop={2}
+              marginBottom={2}
+              flexDirection="column">
               <Button
                 fullWidth
                 disableElevation
@@ -174,7 +195,7 @@ function ProfileUserInfo({
                 className={classes.btnMargin}>
                 Message
               </Button>
-              {isVerified && 
+              {isVerified && (
                 <Button
                   fullWidth
                   disableElevation
@@ -182,11 +203,10 @@ function ProfileUserInfo({
                   color="secondary"
                   variant="contained"
                   endIcon={<DollarIcon />}
-                  onClick={handleSendTipClick}
-                >
+                  onClick={handleSendTipClick}>
                   Send Tip
                 </Button>
-              }
+              )}
             </Box>
           </>
         )}

@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { connect } from "react-redux";
 import { Card, CardHeader, CardContent, Divider } from "@material-ui/core";
-import AccountOutlinedIcon from "@material-ui/icons/AccountBalanceOutlined";
 
 import ApiContext from "../../context/ApiContext";
 import * as settingsActions from "../../store/actions/settings";
@@ -10,10 +9,18 @@ import { EditBankForm, OndatoForm } from "../../domain/SettingsForms";
 
 import useAgreeDialog from "../../hooks/useAgreeDialog";
 
-function EditBankSettings({ identityVerified, data, isFetching, getBank, updateBank, veryfyMe, onSetAlertText }) {
+function EditBankSettings({
+  identityVerified,
+  data,
+  isFetching,
+  getBank,
+  updateBank,
+  veryfyMe,
+  onSetAlertText,
+}) {
   const apiClient = useContext(ApiContext);
 
-  const agreeDialog = useAgreeDialog((data) => {
+  const agreeDialog = useAgreeDialog(() => {
     veryfyMe(apiClient);
   });
 
@@ -21,9 +28,9 @@ function EditBankSettings({ identityVerified, data, isFetching, getBank, updateB
     getBank(apiClient);
   }, []);
 
-  const handleEditBankSubmit = (data) => {
+  const handleEditBankSubmit = (pData) => {
     (async () => {
-      const fulfilled = await updateBank(apiClient, data);
+      const fulfilled = await updateBank(apiClient, pData);
       onSetAlertText(fulfilled);
     })();
   };
@@ -34,7 +41,9 @@ function EditBankSettings({ identityVerified, data, isFetching, getBank, updateB
       <Divider />
       <CardContent>
         {identityVerified ? (
-          !isFetching && <EditBankForm {...data} onSubmit={handleEditBankSubmit} />
+          !isFetching && (
+            <EditBankForm {...data} onSubmit={handleEditBankSubmit} />
+          )
         ) : (
           <OndatoForm onSubmit={agreeDialog.toggle} />
         )}

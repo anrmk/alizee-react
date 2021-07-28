@@ -14,7 +14,7 @@ function CreditCards() {
     <Grid container justify="center">
       {cards.map((url, index) => (
         <Grid item key={index}>
-          <img src={url} width="48px" />
+          <img src={url} width="48px" alt="card-img" />
         </Grid>
       ))}
     </Grid>

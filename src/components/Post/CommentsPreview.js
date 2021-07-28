@@ -1,7 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Box, List, ListItem, ListItemText, ListItemAvatar, Typography } from "@material-ui/core";
-import Avatar from "../Avatar";
+import {
+  Box,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
+} from "@material-ui/core";
 
 import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 import { formatDate } from "../../helpers/functions";
@@ -16,14 +21,21 @@ export default function CommentsPreview({ items = [] }) {
       <List dense className={classes.commentsPreviewList}>
         {items.length > 0 &&
           items.map((item) => (
-            <ListItem disableGutters key={`cp_${item.id}`} className={classes.commentsPreviewItem}>
+            <ListItem
+              disableGutters
+              key={`cp_${item.id}`}
+              className={classes.commentsPreviewItem}>
               <ListItemText
                 primary={
                   <Box display="flex">
-                    <Link className={classes.commentsPreviewUsername} to={PROFILE_USERNAME_ROUTE(item.userName)}>
+                    <Link
+                      className={classes.commentsPreviewUsername}
+                      to={PROFILE_USERNAME_ROUTE(item.userName)}>
                       {item.name ?? `@${item.userName}`}
                     </Link>
-                    <Typography className={classes.commentsPreviewText} variant="body2">
+                    <Typography
+                      className={classes.commentsPreviewText}
+                      variant="body2">
                       {item.text}
                     </Typography>
                   </Box>

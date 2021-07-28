@@ -51,7 +51,10 @@ export function getHelpDetail(api, handle) {
 
     const url = generateUrl("getHelpDetails");
     try {
-      const { data } = await api.setMethod("GET").setParams({ name: handle }).query(url);
+      const { data } = await api
+        .setMethod("GET")
+        .setParams({ name: handle })
+        .query(url);
 
       dispatch(receiveGetHelpDetails(data));
     } catch {

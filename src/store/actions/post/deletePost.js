@@ -9,8 +9,8 @@ function requestDeletePost() {
     type: DELETE_POST_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: ""
-    }
+      errorMessage: "",
+    },
   };
 }
 
@@ -20,8 +20,8 @@ function receiveDeletePost(posts) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      data: posts
-    }
+      data: posts,
+    },
   };
 }
 
@@ -31,8 +31,8 @@ function receiveDeleteCurrentPost(currentPost) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      currentPost
-    }
+      currentPost,
+    },
   };
 }
 
@@ -42,7 +42,7 @@ function errorDeletePost(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
-    }
+    },
   };
 }
 
@@ -55,7 +55,7 @@ export function deletePost(api, postId) {
       const postsState = getState().followingPosts;
 
       if (!postsState.data.length && isEmptyObject(postsState.currentPost)) {
-        throw "There is no local data";
+        throw new Error("There is no local data");
       }
 
       if (postsState.data.length) {
@@ -63,7 +63,7 @@ export function deletePost(api, postId) {
         const postIndex = posts.findIndex((post) => post.id === postId);
 
         if (postIndex === -1) {
-          throw "Item not found!";
+          throw new Error("Item not found!");
         }
 
         await api.setMethod("DELETE").setParams({ id: postId }).query(url);

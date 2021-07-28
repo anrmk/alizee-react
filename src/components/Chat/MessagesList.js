@@ -35,15 +35,19 @@ const MessagesList = React.memo(
     };
 
     return (
-      <List id="messagerContainer" className={classes.messenger} ref={messagesContainer} disablePadding component="div">
+      <List
+        id="messagerContainer"
+        className={classes.messenger}
+        ref={messagesContainer}
+        disablePadding
+        component="div">
         <InfiniteScroll
           scrollableTarget="messagerContainer"
           scrollThreshold={1}
           dataLength={items.length}
           next={onFetchMore}
           hasMore={hasMore}
-          inverse
-        >
+          inverse>
           {items &&
             items.map((message) => (
               <Message

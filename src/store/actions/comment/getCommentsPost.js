@@ -1,5 +1,9 @@
 import { generateUrl } from "../../../helpers/functions";
-import { COMMENTS_POST_LENGTH, COMMENTS_POST_OFFSET, POSTS_DEFAULT_OFFSET } from "../../../constants/feed";
+import {
+  COMMENTS_POST_LENGTH,
+  COMMENTS_POST_OFFSET,
+  POSTS_DEFAULT_OFFSET,
+} from "../../../constants/feed";
 
 export const GET_COMMENTS_POST_REQUEST = "GET_COMMENTS_POST_REQUEST";
 export const GET_COMMENTS_POST_SUCCESS = "GET_COMMENTS_POST_SUCCESS";
@@ -22,7 +26,7 @@ function receiveCommentsPost(data, currentLength, start) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      offset: start + COMMENTS_POST_OFFSET, //getOffset(start, total, COMMENTS_POST_OFFSET),
+      offset: start + COMMENTS_POST_OFFSET, // getOffset(start, total, COMMENTS_POST_OFFSET),
       hasMore: currentLength === COMMENTS_POST_LENGTH,
       data: data || [],
     },
@@ -70,7 +74,13 @@ export function getCommentsPost(api, opts) {
         })
         .query(url);
 
-      dispatch(receiveCommentsPost([...data.reverse(), ...getState().comment.data], data.length, currentOffset));
+      dispatch(
+        receiveCommentsPost(
+          [...data.reverse(), ...getState().comment.data],
+          data.length,
+          currentOffset
+        )
+      );
     } catch (e) {
       dispatch(errorCommentsPost("Error: something went wrong"));
     }

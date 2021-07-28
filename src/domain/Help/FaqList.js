@@ -2,7 +2,6 @@ import React from "react";
 
 import { Box, Typography, Divider } from "@material-ui/core";
 
-
 import FaqQuestionList from "./FaqQuestionList";
 
 function FaqList({ data = [] }) {
@@ -21,7 +20,10 @@ function FaqList({ data = [] }) {
             (el) =>
               el.articles.length > 0 && (
                 <React.Fragment key={el.id}>
-                  <Box pt={1} pb={1} id={el.name.replace(/\s+/g, "-").toLowerCase()}>
+                  <Box
+                    pt={1}
+                    pb={1}
+                    id={el.name.replace(/\s+/g, "-").toLowerCase()}>
                     <Typography variant="h6">{el.name}</Typography>
                     <FaqQuestionList data={el.articles} />
                   </Box>

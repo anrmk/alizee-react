@@ -3,5 +3,5 @@ export {
   GET_ACTIVITY_PAYMENTS_SUCCESS,
   GET_ACTIVITY_PAYMENTS_FAILURE,
   getActivityPayments,
-  getActivityPaymentsChart
+  getActivityPaymentsChart,
 } from "./getActivityPayment";

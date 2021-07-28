@@ -1,18 +1,16 @@
 import React, { useContext, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { connect } from "react-redux";
-import { useParams } from "react-router-dom";
 
+import { Container, Card, CardHeader, Avatar } from "@material-ui/core";
 import ApiContext from "../context/ApiContext";
 
 import { PROFILE_USERNAME_ROUTE } from "../constants/routes";
 
-import { RelationshipList } from "../components/RelationshipList";
+import RelationshipList from "../components/RelationshipList";
 import * as userActions from "../store/actions/user";
 import * as accountActions from "../store/actions/account";
 import * as relationshipActions from "../store/actions/relationship";
-
-import { Container, Card, CardHeader, Avatar } from "@material-ui/core";
 
 function Favorites(props) {
   const { username } = useParams();
@@ -21,7 +19,13 @@ function Favorites(props) {
   const history = useHistory();
 
   const { user, me, favorites } = props;
-  const { fetchUser, fetchFavorites, createFollow, deleteFollow, resetFollowings } = props;
+  const {
+    fetchUser,
+    fetchFavorites,
+    createFollow,
+    deleteFollow,
+    resetFollowings,
+  } = props;
 
   useEffect(() => {
     if (username) {
@@ -32,14 +36,17 @@ function Favorites(props) {
     }
   }, [username]);
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       resetFollowings();
-    };
-  }, []);
+    },
+    []
+  );
 
   const handleFollowClick = ({ userName, isFollow }) => {
-    !favorites.isLoading && isFollow ? deleteFollow(apiClient, userName) : createFollow(apiClient, userName);
+    !favorites.isLoading && isFollow
+      ? deleteFollow(apiClient, userName)
+      : createFollow(apiClient, userName);
   };
 
   return (
@@ -52,13 +59,15 @@ function Favorites(props) {
           onClick={() => {
             history.push(PROFILE_USERNAME_ROUTE(user.userName));
           }}
-        ></CardHeader>
+        />
       </Card>
 
       <RelationshipList
         items={favorites.data}
         currentUserName={me.userName}
-        onSubscribeClick={(item) => handleFollowClick(item, favorites.isFetching)}
+        onSubscribeClick={(item) =>
+          handleFollowClick(item, favorites.isFetching)
+        }
       />
     </Container>
   );
@@ -80,9 +89,12 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchUser: (api, username) => dispatch(userActions.getUser(api, username)),
-    fetchFavorites: (api, userName) => dispatch(accountActions.getFavorites(api, userName)),
-    createFollow: (api, userName) => dispatch(relationshipActions.createFollow(api, userName)),
-    deleteFollow: (api, userName) => dispatch(relationshipActions.deleteFollow(api, userName)),
+    fetchFavorites: (api, userName) =>
+      dispatch(accountActions.getFavorites(api, userName)),
+    createFollow: (api, userName) =>
+      dispatch(relationshipActions.createFollow(api, userName)),
+    deleteFollow: (api, userName) =>
+      dispatch(relationshipActions.deleteFollow(api, userName)),
     resetFollowings: () => dispatch(relationshipActions.resetRelationship()),
   };
 }

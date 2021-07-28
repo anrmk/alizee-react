@@ -63,7 +63,7 @@ export function deleteBlock(api, userName) {
       }
 
       if (!isEmptyObject(getState().chat.current)) {
-        const current = getState().chat.current;
+        const { current } = getState().chat;
         current.isBlocked = false;
 
         dispatch(updateCurrentRoom(current));
@@ -75,7 +75,7 @@ export function deleteBlock(api, userName) {
         const index = list.findIndex((item) => item.userName === userName);
 
         if (index !== -1) {
-          list[index]["isBlocked"] = false;
+          list[index].isBlocked = false;
         }
 
         dispatch(receiveUnblockUser(list));

@@ -7,7 +7,7 @@ export default function useLocationHelper(routes) {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    if (routes.find(item => pathname.includes(item.toString()))) {
+    if (routes.find((item) => pathname.includes(item.toString()))) {
       setIsIncluded(true);
     } else if (isIncluded) {
       setIsIncluded(false);

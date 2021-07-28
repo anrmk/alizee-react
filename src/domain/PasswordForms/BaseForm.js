@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  Button
-} from "@material-ui/core";
+import { Box, Card, CardContent, Typography, Button } from "@material-ui/core";
 
 import useStyles from "./styles";
 
@@ -18,20 +12,15 @@ function BaseForm({
   children,
   footerComponent,
 
-  onSubmit
+  onSubmit,
 }) {
   const classes = useStyles();
 
   return (
     <Card>
       <CardContent className={classes.content}>
-        <Box className={classes.circleIcon}>
-          {icon}
-        </Box>
-        <Typography
-          variant="h6"
-          component="h6"
-          gutterBottom>
+        <Box className={classes.circleIcon}>{icon}</Box>
+        <Typography variant="h6" component="h6" gutterBottom>
           {title}
         </Typography>
         <Typography

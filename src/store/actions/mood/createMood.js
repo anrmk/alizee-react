@@ -21,7 +21,7 @@ function receiveCreateMood(userInfo) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      userInfo
+      userInfo,
     },
   };
 }
@@ -54,10 +54,10 @@ export function createMood(api, postData) {
       const userInfo = getState().signIn?.userInfo;
       userInfo.mood = postData.mood;
 
-       const user = getState().user?.data;
-       if(user && user.userName == userInfo.userName) {
+      const user = getState().user?.data;
+      if (user && user.userName === userInfo.userName) {
         dispatch(updateMood(postData.mood));
-       }
+      }
 
       dispatch(receiveCreateMood(userInfo));
     } catch (e) {

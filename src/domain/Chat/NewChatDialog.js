@@ -1,6 +1,14 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Box, List, ListItem, ListItemText, ListItemAvatar, Avatar, Typography } from "@material-ui/core/";
+import {
+  Box,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemAvatar,
+  Avatar,
+  Typography,
+} from "@material-ui/core/";
 
 import Search from "../Search";
 
@@ -13,23 +21,33 @@ function NewChatDialog({
 }) {
   const { t } = useTranslation();
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       resetQuery();
-    };
-  }, []);
+    },
+    []
+  );
 
   return (
     <Box display="flex" flexDirection="column">
-      <Search placeholder={t("ChatFollowingDialogSearchInputLabel")} onSendQuery={onSearchChange} />
+      <Search
+        placeholder={t("ChatFollowingDialogSearchInputLabel")}
+        onSendQuery={onSearchChange}
+      />
       <List>
         {items && items.length ? (
           items.map((follower) => (
-            <ListItem button key={`newchat_${follower.userName}`} onClick={() => onItemClick(follower.userName)}>
+            <ListItem
+              button
+              key={`newchat_${follower.userName}`}
+              onClick={() => onItemClick(follower.userName)}>
               <ListItemAvatar>
                 <Avatar src={follower.avatarUrl} />
               </ListItemAvatar>
-              <ListItemText primary={follower.name} secondary={`@${follower.userName}`}/>
+              <ListItemText
+                primary={follower.name}
+                secondary={`@${follower.userName}`}
+              />
             </ListItem>
           ))
         ) : (

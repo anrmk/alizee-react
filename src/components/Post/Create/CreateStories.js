@@ -22,27 +22,33 @@ import {
 import useStyles from "./styles";
 
 const MEDIA_ID = "medias";
-const supportedInputMediaType = [TYPE_JPEG, TYPE_PJPEG, TYPE_GIF, TYPE_XPNG, TYPE_PNG, TYPE_MP4, TYPE_MOV, TYPE_WEBM, TYPE_OGG];
+const supportedInputMediaType = [
+  TYPE_JPEG,
+  TYPE_PJPEG,
+  TYPE_GIF,
+  TYPE_XPNG,
+  TYPE_PNG,
+  TYPE_MP4,
+  TYPE_MOV,
+  TYPE_WEBM,
+  TYPE_OGG,
+];
 
 const schema = yup.object().shape({
-  [MEDIA_ID]: yup
-    .array()
-    .min(1)
-    .max(1)
-    .required()
+  [MEDIA_ID]: yup.array().min(1).max(1).required(),
 });
 
 export default function CreateStories({
   formId,
 
-  onSubmit 
+  onSubmit,
 }) {
   const classes = useStyles();
   const { errors, register, setValue, watch, handleSubmit } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       [MEDIA_ID]: [],
-    }
+    },
   });
   const mediaWatcher = watch(MEDIA_ID, []);
   const mediaRef = useRef();
@@ -52,27 +58,33 @@ export default function CreateStories({
 
     mediaRef.current.click();
     return () => {
-      mediaWatcher.forEach(file => URL.revokeObjectURL(file.previewUrl));
+      mediaWatcher.forEach((file) => URL.revokeObjectURL(file.previewUrl));
       setValue(MEDIA_ID, []);
-    }
-  }, [])
+    };
+  }, []);
 
   const handleFormSubmit = (data) => {
     onSubmit && onSubmit(data);
   };
 
   const handleMediaChange = (e) => {
-    const files = e.currentTarget.files;
+    const { files } = e.currentTarget;
 
     if (files.length > 0) {
       const mediaFiles = [...files];
-      mediaFiles.forEach((file) => (file.previewURL = URL.createObjectURL(file)));
+      mediaFiles.forEach((file) => {
+        file.previewURL = URL.createObjectURL(file);
+      });
       setValue(MEDIA_ID, mediaFiles);
     }
-  }
+  };
 
   return (
-    <form id={formId} className={classes.root} onSubmit={handleSubmit(handleFormSubmit)} autoComplete="off">
+    <form
+      id={formId}
+      className={classes.root}
+      onSubmit={handleSubmit(handleFormSubmit)}
+      autoComplete="off">
       <input
         type="file"
         multiple={false}
@@ -83,12 +95,14 @@ export default function CreateStories({
         style={{ display: mediaWatcher.length ? "none" : "block" }}
         onChange={handleMediaChange}
       />
-      
-      <Typography color="error">
-        {errors[MEDIA_ID]?.message}
-      </Typography>
 
-      <GridGalleryHorizontal items={mediaWatcher} tileCols={4} cellHeight={500} />
+      <Typography color="error">{errors[MEDIA_ID]?.message}</Typography>
+
+      <GridGalleryHorizontal
+        items={mediaWatcher}
+        tileCols={4}
+        cellHeight={500}
+      />
     </form>
   );
 }

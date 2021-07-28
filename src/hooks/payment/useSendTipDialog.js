@@ -1,13 +1,16 @@
 import { useContext, useCallback } from "react";
 import { useDispatch } from "react-redux";
 
+import { useSnackbar } from "notistack";
 import ApiContext from "../../context/ApiContext";
 import dialogs, { SEND_TIP_DIALOG_TYPE } from "../../constants/dialogs";
 import * as paymentActions from "../../store/actions/payment";
 import useDialog from "../useDialog";
-import { useSnackbar } from "notistack";
 
-import {SEND_TIP_ALERT_SUCCESS_TEXT, SEND_TIP_ALERT_ERROR_TEXT  } from "../../constants/alerts"
+import {
+  SEND_TIP_ALERT_SUCCESS_TEXT,
+  SEND_TIP_ALERT_ERROR_TEXT,
+} from "../../constants/alerts";
 
 const FORM_ID = "dialog-sendTip";
 
@@ -25,12 +28,14 @@ export default function useSendTipDialog() {
       enqueueSnackbar(SEND_TIP_ALERT_ERROR_TEXT, { variant: "error" });
     }
   };
-  
+
   const handleSendTip = useCallback(async ({ userName, amount, message }) => {
     dialog.setParams({ loading: true });
-    const fulfilled = await dispatch(paymentActions.sendTip(apiClient, userName, amount, message));
+    const fulfilled = await dispatch(
+      paymentActions.sendTip(apiClient, userName, amount, message)
+    );
     dialog.toggle({ open: false, loading: false });
-	handleSetAlertText(fulfilled)
+    handleSetAlertText(fulfilled);
   }, []);
 
   const handleDialogToggle = useCallback(async (user) => {

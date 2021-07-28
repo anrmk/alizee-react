@@ -1,10 +1,6 @@
 import { useCallback, useRef } from "react";
 
-export default function useDoubleTap(
-  callback,
-  threshold = 300,
-  options = {}
-) {
+export default function useDoubleTap(callback, threshold = 300, options = {}) {
   const timer = useRef(null);
 
   const handler = useCallback(

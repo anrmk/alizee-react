@@ -42,11 +42,17 @@ export function getRoom(api, userName) {
 
     const url = generateUrl("getRoom");
     try {
-      const { data } = await api.setMethod("GET").setParams({ userName }).query(url);
+      const { data } = await api
+        .setMethod("GET")
+        .setParams({ userName })
+        .query(url);
 
       const chatState = getState().chat;
       const roomIndex = chatState.data.findIndex((room) => room.id === data.id);
-      const rooms = roomIndex !== -1 || !data ? [...chatState.data] : [...chatState.data, { ...data }];
+      const rooms =
+        roomIndex !== -1 || !data
+          ? [...chatState.data]
+          : [...chatState.data, { ...data }];
 
       if (roomIndex !== -1) {
         rooms[roomIndex].unreadMessageCount = 0;
@@ -54,7 +60,7 @@ export function getRoom(api, userName) {
 
       dispatch(receiveGetRoom(rooms, data));
     } catch (e) {
-      return dispatch(errorGetRoom(e));
+      dispatch(errorGetRoom(e));
     }
   };
 }

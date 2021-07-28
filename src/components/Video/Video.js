@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Box } from "@material-ui/core";
 
-import VideoControlButtons from "./VideoControlButtons"
+import VideoControlButtons from "./VideoControlButtons";
 import useStyles from "./styles";
 
 function Video({
@@ -27,8 +27,8 @@ function Video({
         autoPlay
         playsInline
         allowFullScreen
-        controls={controls}>
-      </video>
+        controls={controls}
+      />
       {customControls && <VideoControlButtons />}
     </Box>
   );

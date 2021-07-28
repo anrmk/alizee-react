@@ -1,8 +1,11 @@
-import { generateUrl } from '../../helpers/functions';
+import { generateUrl } from "../../helpers/functions";
 
-export const RESENDEMAILVERIFICATION_REQUEST = 'RESENDEMAILVERIFICATION_REQUEST';
-export const RESENDEMAILVERIFICATION_SUCCESS = 'RESENDEMAILVERIFICATION_SUCCESS';
-export const RESENDEMAILVERIFICATION_FAILURE = 'RESENDEMAILVERIFICATION_FAILURE';
+export const RESENDEMAILVERIFICATION_REQUEST =
+  "RESENDEMAILVERIFICATION_REQUEST";
+export const RESENDEMAILVERIFICATION_SUCCESS =
+  "RESENDEMAILVERIFICATION_SUCCESS";
+export const RESENDEMAILVERIFICATION_FAILURE =
+  "RESENDEMAILVERIFICATION_FAILURE";
 
 function requestResendEmailVerification(email) {
   return {
@@ -10,10 +13,10 @@ function requestResendEmailVerification(email) {
     payload: {
       isFetching: true,
       isReceived: false,
-      errorMessage: '',
-      email: email
-    }
-  }
+      errorMessage: "",
+      email,
+    },
+  };
 }
 
 function receiveResendEmailVerification() {
@@ -22,9 +25,9 @@ function receiveResendEmailVerification() {
     payload: {
       isFetching: false,
       isReceived: true,
-      errorMessage: ''
-    }
-  }
+      errorMessage: "",
+    },
+  };
 }
 
 function errorResendEmailVerification(message, status) {
@@ -34,13 +37,13 @@ function errorResendEmailVerification(message, status) {
       isFetching: false,
       isReceived: false,
       errorMessage: message,
-      errorStatus: status
-    }
-  }
+      errorStatus: status,
+    },
+  };
 }
 
 export function resendEmailVerification(email, api) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(requestResendEmailVerification(email));
 
     const url = generateUrl("resendEmailVerification");
@@ -48,13 +51,15 @@ export function resendEmailVerification(email, api) {
       const { status, data } = await api
         .setMethod("GET")
         .setParams({
-          email: email
+          email,
         })
         .query(url);
 
       dispatch(receiveResendEmailVerification(data));
     } catch (e) {
-      dispatch(errorResendEmailVerification(e.message, e.response?.status || 500));
+      dispatch(
+        errorResendEmailVerification(e.message, e.response?.status || 500)
+      );
     }
-  }
+  };
 }

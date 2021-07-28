@@ -54,9 +54,13 @@ function FavoriteList() {
         <Box className={classes.content}>
           <List dense disablePadding>
             {data.map((item, idx) => (
-              <ListItem alignItems="center" key={idx} dense onClick={() => handleChangeRoute(item.userName)}>
+              <ListItem
+                alignItems="center"
+                key={idx}
+                dense
+                onClick={() => handleChangeRoute(item.userName)}>
                 <ListItemAvatar>
-                  <Avatar></Avatar>
+                  <Avatar />
                 </ListItemAvatar>
                 <ListItemText primary={item.name} secondary={item.userName} />
               </ListItem>

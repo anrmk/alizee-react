@@ -1,17 +1,17 @@
 import { generateUrl } from "../../../helpers/functions";
 
-export const GET_PRIVACY_REQUEST = 'GET_PRIVACY_REQUEST';
-export const GET_PRIVACY_SUCCESS = 'GET_PRIVACY_SUCCESS';
-export const GET_PRIVACY_FAILURE = 'GET_PRIVACY_FAILURE';
+export const GET_PRIVACY_REQUEST = "GET_PRIVACY_REQUEST";
+export const GET_PRIVACY_SUCCESS = "GET_PRIVACY_SUCCESS";
+export const GET_PRIVACY_FAILURE = "GET_PRIVACY_FAILURE";
 
 function requestGetPrivacy() {
   return {
     type: GET_PRIVACY_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: ''
-    }
-  }
+      errorMessage: "",
+    },
+  };
 }
 
 function receiveGetPrivacy(data) {
@@ -19,10 +19,10 @@ function receiveGetPrivacy(data) {
     type: GET_PRIVACY_SUCCESS,
     payload: {
       isFetching: false,
-      errorMessage: '',
-      data: data || {}
-    }
-  }
+      errorMessage: "",
+      data: data || {},
+    },
+  };
 }
 
 function errorGetPrivacy(message) {
@@ -30,24 +30,22 @@ function errorGetPrivacy(message) {
     type: GET_PRIVACY_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message
-    }
-  }
+      errorMessage: message,
+    },
+  };
 }
 
 export function getPrivacy(api) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(requestGetPrivacy());
 
-    const url = generateUrl('getPrivacy');
+    const url = generateUrl("getPrivacy");
     try {
-      const { data } = await api
-        .setMethod('GET')
-        .query(url);
+      const { data } = await api.setMethod("GET").query(url);
 
       dispatch(receiveGetPrivacy(data));
-  } catch (e) {
+    } catch (e) {
       dispatch(errorGetPrivacy("Error: something went wrong:", e));
     }
-  }
+  };
 }

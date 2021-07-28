@@ -1,8 +1,16 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 
 import { useHistory } from "react-router-dom";
 
-import { Hidden, Box, Typography, Link, List, ListItem } from "@material-ui/core";
+import {
+  Hidden,
+  Box,
+  Typography,
+  Link,
+  List,
+  ListItem,
+} from "@material-ui/core";
 
 import FaqQuestionList from "./FaqQuestionList";
 
@@ -21,8 +29,7 @@ function SidebarList({ childs = [], name = "" }) {
                   pathname: "/help",
                   hash: `#${item.name.replace(/\s+/g, "-").toLowerCase()}`,
                 });
-              }}
-            >
+              }}>
               {item.name}
             </Link>
           </Hidden>

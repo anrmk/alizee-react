@@ -1,17 +1,20 @@
 import { generateUrl } from "../../../helpers/functions";
 
-export const GET_ACCOUNT_PERSONALIZED_REQUEST = 'GET_ACCOUNT_PERSONALIZED_REQUEST';
-export const GET_ACCOUNT_PERSONALIZED_SUCCESS = 'GET_ACCOUNT_PERSONALIZED_SUCCESS';
-export const GET_ACCOUNT_PERSONALIZED_FAILURE = 'GET_ACCOUNT_PERSONALIZED_FAILURE';
+export const GET_ACCOUNT_PERSONALIZED_REQUEST =
+  "GET_ACCOUNT_PERSONALIZED_REQUEST";
+export const GET_ACCOUNT_PERSONALIZED_SUCCESS =
+  "GET_ACCOUNT_PERSONALIZED_SUCCESS";
+export const GET_ACCOUNT_PERSONALIZED_FAILURE =
+  "GET_ACCOUNT_PERSONALIZED_FAILURE";
 
 function requestGetAccountPersonalized() {
   return {
     type: GET_ACCOUNT_PERSONALIZED_REQUEST,
     payload: {
       isFetching: true,
-      errorMessage: ''
-    }
-  }
+      errorMessage: "",
+    },
+  };
 }
 
 export function receiveGetAccountPersonalized(personalized = false) {
@@ -19,10 +22,10 @@ export function receiveGetAccountPersonalized(personalized = false) {
     type: GET_ACCOUNT_PERSONALIZED_SUCCESS,
     payload: {
       isFetching: false,
-      errorMessage: '',
-      isAccountPersonalized: personalized
-    }
-  }
+      errorMessage: "",
+      isAccountPersonalized: personalized,
+    },
+  };
 }
 
 function errorGetAccountPersonalized(message) {
@@ -30,25 +33,22 @@ function errorGetAccountPersonalized(message) {
     type: GET_ACCOUNT_PERSONALIZED_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message
-    }
-  }
+      errorMessage: message,
+    },
+  };
 }
 
 export function getAccountPersonalized(api) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(requestGetAccountPersonalized());
 
     const url = generateUrl("getAccountPersonalized");
     try {
-      const { data } = await api
-        .setMethod("GET")
-        .query(url);
+      const { data } = await api.setMethod("GET").query(url);
 
       dispatch(receiveGetAccountPersonalized(data));
-  } catch (e) {
+    } catch (e) {
       dispatch(errorGetAccountPersonalized("Error: something went wrong:", e));
     }
-  }
+  };
 }
-

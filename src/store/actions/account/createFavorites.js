@@ -32,7 +32,7 @@ function receiveWihtouDataCreateUserFavorite() {
     type: CREATE_USER_FAVORITES_SUCCESS,
     payload: {
       isFetching: false,
-      errorMessage: ""
+      errorMessage: "",
     },
   };
 }
@@ -58,7 +58,7 @@ export function createFavorites(api, userName) {
       if (getState().followingPosts.data.length) {
         dispatch(addPostsUserFavorite(userName));
         dispatch(receiveWihtouDataCreateUserFavorite());
-      } 
+      }
 
       if (!isEmptyObject(getState().user.data)) {
         dispatch(addFavorite());
@@ -70,7 +70,7 @@ export function createFavorites(api, userName) {
         const index = list.findIndex((item) => item.userName === userName);
 
         if (index !== -1) {
-          list[index]["isFavorite"] = true;
+          list[index].isFavorite = true;
         }
 
         dispatch(receiveCreateUserFavorite(list));

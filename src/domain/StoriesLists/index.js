@@ -1,1 +1,3 @@
-export { default as PreviewStoriesList } from "./PreviewStoriesList";
+import PreviewStoriesList from "./PreviewStoriesList";
+
+export default PreviewStoriesList;

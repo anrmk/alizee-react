@@ -10,9 +10,9 @@ function requestResetPasswordConfirm() {
     payload: {
       isFetching: true,
       passwordUpdated: false,
-      errorMessage: ""
-    }
-  }
+      errorMessage: "",
+    },
+  };
 }
 
 function receiveResetPasswordConfirm() {
@@ -20,9 +20,9 @@ function receiveResetPasswordConfirm() {
     type: RESET_PASSWORD_CONFIRM_SUCCESS,
     payload: {
       isFetching: false,
-      errorMessage: ""
-    }
-  }
+      errorMessage: "",
+    },
+  };
 }
 
 function errorResetPasswordConfirm(message) {
@@ -30,25 +30,22 @@ function errorResetPasswordConfirm(message) {
     type: RESET_PASSWORD_CONFIRM_FAILURE,
     payload: {
       isFetching: false,
-      errorMessage: message
-    }
-  }
+      errorMessage: message,
+    },
+  };
 }
 
 export function getPasswordConfirm(api, email) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch(requestResetPasswordConfirm());
 
     const url = generateUrl("getPasswordConfirm");
     try {
-      await api
-        .setMethod("POST")
-        .setParams({ email })
-        .query(url);
+      await api.setMethod("POST").setParams({ email }).query(url);
 
       dispatch(receiveResetPasswordConfirm());
-    } catch(e) {
+    } catch (e) {
       dispatch(errorResetPasswordConfirm(e.message));
     }
-  }
+  };
 }

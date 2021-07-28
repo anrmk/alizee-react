@@ -27,7 +27,7 @@ export default {
     reportPost: "post/report",
     deletePost: "post/deletepost",
 
-    //PAYMENT
+    // PAYMENT
     buyPost: "payment/buyPost",
     sendTip: "payment/sendTip",
 
@@ -124,7 +124,7 @@ export default {
     // HASH TAGS
     getHashTags: "hashtag/gethashtags",
 
-    //STREAM
+    // STREAM
     createStreamRoom: "stream/room",
     updateStreamRoom: "stream/room",
     getHotStreamers: "stream/hotstreamers",
@@ -132,23 +132,23 @@ export default {
     // ACTIVITY
     getActivityPayments: "activity/payments",
 
-    //SEARCH
+    // SEARCH
     getSearchData: "search/search",
 
-    //NOTIFICATION
+    // NOTIFICATION
     notification: "/hubs/notification",
     notifyCall: "notification/call",
     getNotification: "activity/notifications",
 
-    //CHANGE LOG
+    // CHANGE LOG
     getChangeLog: "changelog/getLogs",
 
-    //HELP
+    // HELP
     getHelp: "help/getgroups",
     changeHelpRating: "help/vote",
     getHelpDetails: "help/getarticle",
 
-    //STATISTICS
+    // STATISTICS
     getStatistics: "statistics/getStatistics",
   },
 };

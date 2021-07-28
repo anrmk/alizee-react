@@ -1,7 +1,13 @@
 import React, { useState, useRef } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
-import { Avatar as MUIAvatar, IconButton, Fade, Box, Tooltip } from "@material-ui/core";
+import {
+  Avatar as MUIAvatar,
+  IconButton,
+  Fade,
+  Box,
+  Tooltip,
+} from "@material-ui/core";
 
 import CameraIcon from "@material-ui/icons/PhotoCamera";
 import ClearIcon from "@material-ui/icons/Clear";
@@ -27,7 +33,7 @@ function Avatar({
   children,
   onNewImageClick,
   onFileInputChange,
-  onDeleteImageClick
+  onDeleteImageClick,
 }) {
   const classes = useStyles({
     size,
@@ -36,13 +42,13 @@ function Avatar({
     variant,
     online,
     live,
-    dotWidth
+    dotWidth,
   });
   const fileInputEl = useRef(null);
   const [focusAvatar, setFocusAvatar] = useState(false);
 
   const handleAvatarUrlChange = () => {
-    const files = fileInputEl.current.files;
+    const { files } = fileInputEl.current;
 
     if (files.length === 1) {
       onFileInputChange && onFileInputChange(files[0]);
@@ -53,22 +59,38 @@ function Avatar({
     fileInputEl.current.click();
 
     onNewImageClick && onNewImageClick();
-  }
+  };
 
   const renderFileInput = () => (
-    <input hidden type="file" name="avatarUrl" ref={fileInputEl} {...fileInputProps} onChange={handleAvatarUrlChange} />
+    <input
+      hidden
+      type="file"
+      name="avatarUrl"
+      ref={fileInputEl}
+      {...fileInputProps}
+      onChange={handleAvatarUrlChange}
+    />
   );
 
   const renderWithBadge = () => (
-    <StyledBadge {...badgeProps} dotwidth={dotWidth} className={clsx(classes.badge, badgeClassName, className)}>
-      <MUIAvatar {...avatarBaseProps} className={clsx(classes.avatar)} src={src}>
+    <StyledBadge
+      {...badgeProps}
+      dotwidth={dotWidth}
+      className={clsx(classes.badge, badgeClassName, className)}>
+      <MUIAvatar
+        {...avatarBaseProps}
+        className={clsx(classes.avatar)}
+        src={src}>
         {children}
       </MUIAvatar>
     </StyledBadge>
-  )
+  );
 
   const renderBase = () => (
-    <MUIAvatar {...avatarBaseProps} className={clsx(classes.avatar, className)} src={src}>
+    <MUIAvatar
+      {...avatarBaseProps}
+      className={clsx(classes.avatar, className)}
+      src={src}>
       {children}
     </MUIAvatar>
   );
@@ -116,7 +138,7 @@ Avatar.propTypes = {
   live: PropTypes.bool,
   online: PropTypes.bool,
   badgeProps: PropTypes.object,
-  dotWidth: PropTypes.string
+  dotWidth: PropTypes.string,
 };
 
 Avatar.defaultProps = {
@@ -130,7 +152,7 @@ Avatar.defaultProps = {
     },
     variant: "dot",
   },
-  dotWidth: undefined
+  dotWidth: undefined,
 };
 
 export default Avatar;

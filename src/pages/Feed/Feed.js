@@ -12,15 +12,28 @@ import * as storyActions from "../../store/actions/story";
 // import * as streamActions from "../../store/actions/stream";
 import * as paymentActions from "../../store/actions/payment";
 
-import { PreviewStoriesList } from "../../domain/StoriesLists";
+import PreviewStoriesList from "../../domain/StoriesLists";
 import Nav from "./Nav";
 
 import ApiContext from "../../context/ApiContext";
 import { STORIES_LENGTH } from "../../constants/feed";
 
-import useShareDialog, { SHARE_DIALOG_POST_TYPE } from "../../hooks/useShareDialog";
-import { useLikeAction, useFavoriteAction, useStoryDialog, useMenuDialog, useCommentAction } from "../../hooks/post";
-import { useSendTipDialog, usePaymentDialog, usePurchaseDialog, useReceiptDialog } from "../../hooks/payment";
+import useShareDialog, {
+  SHARE_DIALOG_POST_TYPE,
+} from "../../hooks/useShareDialog";
+import {
+  useLikeAction,
+  useFavoriteAction,
+  useStoryDialog,
+  useMenuDialog,
+  useCommentAction,
+} from "../../hooks/post";
+import {
+  useSendTipDialog,
+  usePaymentDialog,
+  usePurchaseDialog,
+  useReceiptDialog,
+} from "../../hooks/payment";
 import useFullScreen from "../../hooks/useFullScreen";
 import useLightboxModal from "../../hooks/useLightboxModal";
 
@@ -35,13 +48,23 @@ function Feed(props) {
   const { people, getPeople, resetPeople } = props;
   const { posts, getPosts, resetPosts } = props;
   const { story, getFollowingStories, resetFollowingStories } = props;
+  const { buyPost, getReceipt, getPurchases } = props;
 
   const likeAction = useLikeAction();
   const favoriteAction = useFavoriteAction();
   const sendTipDialog = useSendTipDialog();
-  const buyPostDialog = usePaymentDialog({ isFetching: posts.isFetching, onPayment: props.buyPost });
-  const receiptDialog = useReceiptDialog({ isFetching: posts.isFetching, onReceipt: props.getReceipt });
-  const purchaseDialog = usePurchaseDialog({ isFetching: posts.isFetching, onPurchases: props.getPurchases });
+  const buyPostDialog = usePaymentDialog({
+    isFetching: posts.isFetching,
+    onPayment: buyPost,
+  });
+  const receiptDialog = useReceiptDialog({
+    isFetching: posts.isFetching,
+    onReceipt: getReceipt,
+  });
+  const purchaseDialog = usePurchaseDialog({
+    isFetching: posts.isFetching,
+    onPurchases: getPurchases,
+  });
   const createStoryDialog = useStoryDialog();
   const postMenuDialog = useMenuDialog();
   const fullScreen = useFullScreen("root");
@@ -177,18 +200,22 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getPosts: (api, opts) => dispatch(postActions.getFollowingPosts(api, opts)),
-    getPurchases: (api, id, callback) => dispatch(postActions.getPurchases(api, id, callback)),
-    getReceipt: (api, id, callback) => dispatch(postActions.getReceipt(api, id, callback)),
+    getPurchases: (api, id, callback) =>
+      dispatch(postActions.getPurchases(api, id, callback)),
+    getReceipt: (api, id, callback) =>
+      dispatch(postActions.getReceipt(api, id, callback)),
     resetPosts: () => dispatch(postActions.resetFollowingPosts()),
 
-    getPeople: (api) => dispatch(actionRelationship.getSuggestionPeople(api, 5)),
+    getPeople: (api) =>
+      dispatch(actionRelationship.getSuggestionPeople(api, 5)),
     resetPeople: () => dispatch(actionRelationship.resetSuggestionPeople()),
     buyPost: (api, id) => dispatch(paymentActions.buyPost(api, id)),
 
     getStory: (api, opts) => dispatch(storyActions.getStory(api, opts)),
     resetStory: (api, opts) => dispatch(storyActions.resetStory(api, opts)),
     resetFollowingStories: () => dispatch(storyActions.resetFollowingStories()),
-    getFollowingStories: (api, opts) => dispatch(storyActions.getFollowingStories(api, opts)),
+    getFollowingStories: (api, opts) =>
+      dispatch(storyActions.getFollowingStories(api, opts)),
 
     // getHotStreamers: (api) => dispatch(streamActions.getHotStreamers(api)),
   };

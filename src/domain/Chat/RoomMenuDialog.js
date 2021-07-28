@@ -2,7 +2,13 @@ import React from "react";
 
 import { useTranslation } from "react-i18next";
 
-import { List, ListItem, ListItemIcon, ListItemText, Divider } from "@material-ui/core";
+import {
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+} from "@material-ui/core";
 
 import DeleteIcon from "@material-ui/icons/DeleteOutline";
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircleOutline";
@@ -37,7 +43,13 @@ function RoomMenuDialog({
         <ListItemIcon>
           <BlockIcon />
         </ListItemIcon>
-        <ListItemText primary={t(isBlocked ? "ChatRoomMenuItemUnblockUserText" : "ChatRoomMenuItemBlockUserText")} />
+        <ListItemText
+          primary={t(
+            isBlocked
+              ? "ChatRoomMenuItemUnblockUserText"
+              : "ChatRoomMenuItemBlockUserText"
+          )}
+        />
       </ListItem>
 
       <Divider />
@@ -53,7 +65,10 @@ function RoomMenuDialog({
         <ListItemIcon>
           <DeleteIcon />
         </ListItemIcon>
-        <ListItemText primary={t("ChatRoomMenuItemDeleteText")} color="secondary" />
+        <ListItemText
+          primary={t("ChatRoomMenuItemDeleteText")}
+          color="secondary"
+        />
       </ListItem>
     </List>
   );

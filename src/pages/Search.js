@@ -43,7 +43,7 @@ function Search({ width }) {
     if (ttag?.length > 0) {
       history.push({
         pathname: EXPLORE_ROUTE,
-        search: search.currentQuery && "?tags=" + ttag,
+        search: search.currentQuery && `?tags=${ttag}`,
       });
     }
   };

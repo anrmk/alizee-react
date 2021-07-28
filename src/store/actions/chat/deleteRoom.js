@@ -49,7 +49,7 @@ export function deleteRoom(api, id) {
 
       dispatch(receiveDeleteRoom(rooms));
     } catch (e) {
-      return dispatch(errorDeleteRoom(e));
+      dispatch(errorDeleteRoom(e));
     }
   };
 }

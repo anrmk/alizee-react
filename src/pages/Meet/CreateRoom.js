@@ -27,8 +27,12 @@ function CreateRoom(props) {
   const [stream, setStream] = useState();
 
   const [isAlertError, setIsAlertError] = useState(true);
-  const [alertSuccessText, setAlertSuccessText] = useState(DEFAULT_ALERT_SUCCESS_TEXT);
-  const [alertErrorText, setAlertErrorText] = useState(DEFAULT_ALERT_ERROR_TEXT);
+  const [alertSuccessText, setAlertSuccessText] = useState(
+    DEFAULT_ALERT_SUCCESS_TEXT
+  );
+  const [alertErrorText, setAlertErrorText] = useState(
+    DEFAULT_ALERT_ERROR_TEXT
+  );
   const [alertOpen, setAlertOpen] = useState(false);
 
   const [roomId, setRoomId] = useState();
@@ -45,13 +49,13 @@ function CreateRoom(props) {
             minWidth: 208,
             minHeight: 117,
             maxWidth: 208,
-            maxHeight: 117
-          }
+            maxHeight: 117,
+          },
         },
-        audio: true
+        audio: true,
       })
-      .then((stream) => {
-        setStream(stream);
+      .then((newStream) => {
+        setStream(newStream);
       })
       .catch((res) => {
         setAlertErrorText(res.message);
@@ -89,9 +93,10 @@ function CreateRoom(props) {
         stream={stream}
         room={room}
         onCopyLinkRoom={handleCopyClickRoom}
-        onSubmit={joiningLiveStream} />
+        onSubmit={joiningLiveStream}
+      />
     </AlertContainer>
-  )
+  );
 }
 
 function mapStateToProps(state) {
@@ -104,7 +109,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     createStreamRoom: (api) => dispatch(actionStream.createStreamRoom(api)),
-    updateStreamRoom: (api, roomData) => dispatch(actionStream.updateStreamRoom(api, roomData)),
+    updateStreamRoom: (api, roomData) =>
+      dispatch(actionStream.updateStreamRoom(api, roomData)),
   };
 }
 

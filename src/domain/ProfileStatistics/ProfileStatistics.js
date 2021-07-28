@@ -28,29 +28,67 @@ function ProfileStatistics({
     <Box className={clsx(classes.root, className)}>
       {isOwner ? (
         <>
-          <Typography className={classes.text} to={FOLLOWERS_ROUTE(userName)} component={Link}>
+          <Typography
+            className={classes.text}
+            to={FOLLOWERS_ROUTE(userName)}
+            component={Link}>
             {followersCount || "0"} followers
           </Typography>
-          <Divider className={classes.divider} orientation="vertical" flexItem />
-          <Typography className={classes.text} to={FOLLOWINGS_ROUTE(userName)} component={Link}>
+          <Divider
+            className={classes.divider}
+            orientation="vertical"
+            flexItem
+          />
+          <Typography
+            className={classes.text}
+            to={FOLLOWINGS_ROUTE(userName)}
+            component={Link}>
             {followingsCount || "0"} followings
           </Typography>
-          <Divider className={classes.divider} orientation="vertical" flexItem />
-          <Typography className={classes.text} to={FAVORITES_USERNAME_ROUTE(userName)} component={Link}>
+          <Divider
+            className={classes.divider}
+            orientation="vertical"
+            flexItem
+          />
+          <Typography
+            className={classes.text}
+            to={FAVORITES_USERNAME_ROUTE(userName)}
+            component={Link}>
             {favoritesCount} favorites
           </Typography>
-          <Divider className={classes.divider} orientation="vertical" flexItem />
-          <Typography className={classes.text} to={BLOCKED_USERNAME_ROUTE(userName)} component={Link}>
+          <Divider
+            className={classes.divider}
+            orientation="vertical"
+            flexItem
+          />
+          <Typography
+            className={classes.text}
+            to={BLOCKED_USERNAME_ROUTE(userName)}
+            component={Link}>
             {blockedCount} blocked
           </Typography>
         </>
       ) : (
         <>
-          <Typography className={classes.text}>{postsCount || "0"} posts</Typography>
-          <Divider className={classes.divider} orientation="vertical" flexItem />
-          <Typography className={classes.text}>{followersCount || "0"} followers</Typography>
-          <Divider className={classes.divider} orientation="vertical" flexItem />
-          <Typography className={classes.text}>{followingsCount || "0"} followings</Typography>
+          <Typography className={classes.text}>
+            {postsCount || "0"} posts
+          </Typography>
+          <Divider
+            className={classes.divider}
+            orientation="vertical"
+            flexItem
+          />
+          <Typography className={classes.text}>
+            {followersCount || "0"} followers
+          </Typography>
+          <Divider
+            className={classes.divider}
+            orientation="vertical"
+            flexItem
+          />
+          <Typography className={classes.text}>
+            {followingsCount || "0"} followings
+          </Typography>
         </>
       )}
     </Box>

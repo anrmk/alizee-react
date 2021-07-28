@@ -27,8 +27,12 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    updateProfile: (api, data) => dispatch(settingsActions.updateProfile(api, data)),
+    updateProfile: (api, data) =>
+      dispatch(settingsActions.updateProfile(api, data)),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditProfileSettings);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditProfileSettings);

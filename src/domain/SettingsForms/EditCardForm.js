@@ -4,11 +4,24 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
 import * as yup from "yup";
-import { getDate } from "../../helpers/functions";
-import { Card, CardHeader, CardContent, Grid, TextField, Button, Typography, Switch, Divider } from "@material-ui/core";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Grid,
+  TextField,
+  Button,
+  Typography,
+  Switch,
+  Divider,
+} from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
+import { getDate } from "../../helpers/functions";
 
-import { VALUE_MIN_LENGTH, VALUE_MAX_LENGTH } from "../../constants/form_validations";
+import {
+  VALUE_MIN_LENGTH,
+  VALUE_MAX_LENGTH,
+} from "../../constants/form_validations";
 
 import CreditCards from "../../components/CreditCards";
 
@@ -48,11 +61,27 @@ const CARD_MASK = [
 
 const schema = yup.object().shape({
   [COUNTRY_INPUT_ID]: yup.string().max(16, VALUE_MAX_LENGTH(16)).required(),
-  [CITY_INPUT_ID]: yup.string().required().max(32, VALUE_MAX_LENGTH(32)).required(),
-  [STATE_INPUT_ID]: yup.string().required().max(16, VALUE_MAX_LENGTH(16)).required(),
+  [CITY_INPUT_ID]: yup
+    .string()
+    .required()
+    .max(32, VALUE_MAX_LENGTH(32))
+    .required(),
+  [STATE_INPUT_ID]: yup
+    .string()
+    .required()
+    .max(16, VALUE_MAX_LENGTH(16))
+    .required(),
   [EMAIL_INPUT_ID]: yup.string().email().required(),
-  [NUMBER_INPUT_ID]: yup.string().min(16, VALUE_MIN_LENGTH(16)).max(18, VALUE_MAX_LENGTH(18)).required(),
-  [NAME_INPUT_ID]: yup.string().min(2, VALUE_MIN_LENGTH(2)).max(64, VALUE_MAX_LENGTH(64)).required(),
+  [NUMBER_INPUT_ID]: yup
+    .string()
+    .min(16, VALUE_MIN_LENGTH(16))
+    .max(18, VALUE_MAX_LENGTH(18))
+    .required(),
+  [NAME_INPUT_ID]: yup
+    .string()
+    .min(2, VALUE_MIN_LENGTH(2))
+    .max(64, VALUE_MAX_LENGTH(64))
+    .required(),
   [EXPDATE_INPUT_ID]: yup.date().required(),
   [LEGALAGE_INPUT_ID]: yup.bool().oneOf([true], "Should be true").required(),
 });
@@ -97,7 +126,11 @@ function EditCardForm({
       <CardHeader title="Your Cards" />
       <Divider />
       <CardContent>
-        <Grid container component="form" spacing={2} onSubmit={handleSubmit(onSubmit)}>
+        <Grid
+          container
+          component="form"
+          spacing={2}
+          onSubmit={handleSubmit(onSubmit)}>
           <Grid container item xs={12} sm={6} direction="column" spacing={2}>
             <Grid item>
               <Typography variant="h6">Billing Details</Typography>
@@ -262,8 +295,9 @@ function EditCardForm({
                     disabled={false}
                     value={value || ""}
                     onBlur={onBlur}
-                    onChange={(e) => onChange(e.target.value.replace(/\D+/g, ""))}
-                  >
+                    onChange={(e) =>
+                      onChange(e.target.value.replace(/\D+/g, ""))
+                    }>
                     <TextField
                       id={NUMBER_INPUT_ID}
                       name={NUMBER_INPUT_ID}
@@ -319,11 +353,14 @@ function EditCardForm({
                       onChange={(e) => onChange(e.target.checked)}
                     />
                     <Typography component="span" variant="body2">
-                      Tick here to confirm that you are at least 18 years old and the age of majority in your place of
-                      residence
+                      Tick here to confirm that you are at least 18 years old
+                      and the age of majority in your place of residence
                     </Typography>
                     {!!errors[LEGALAGE_INPUT_ID] && (
-                      <Typography variant="caption" color="error" display="block">
+                      <Typography
+                        variant="caption"
+                        color="error"
+                        display="block">
                         {errors[LEGALAGE_INPUT_ID]?.message}
                       </Typography>
                     )}
@@ -334,7 +371,13 @@ function EditCardForm({
           </Grid>
 
           <Grid item>
-            <Button fullWidth type="submit" variant="contained" color="primary" disableElevation disabled={isFetching}>
+            <Button
+              fullWidth
+              type="submit"
+              variant="contained"
+              color="primary"
+              disableElevation
+              disabled={isFetching}>
               Update
             </Button>
           </Grid>
@@ -342,8 +385,9 @@ function EditCardForm({
       </CardContent>
       <CardContent>
         <Alert variant="outlined" severity="success">
-          Themembers will make a one-time charge of $0.10 when adding your payment card. The charges on your credit card
-          statement will appear as "Themembers".
+          Themembers will make a one-time charge of $0.10 when adding your
+          payment card. The charges on your credit card statement will appear as
+          &quot;Themembers&quot;.
         </Alert>
         <CreditCards />
       </CardContent>

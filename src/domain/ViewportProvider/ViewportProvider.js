@@ -9,7 +9,7 @@ export default function ViewportProvider({ children }) {
   const handleWindowResize = () => {
     setWidth(window.innerWidth);
     setHeight(window.innerHeight);
-  }
+  };
 
   useEffect(() => {
     window.addEventListener("resize", handleWindowResize);
@@ -21,4 +21,4 @@ export default function ViewportProvider({ children }) {
       {children}
     </ViewportContext.Provider>
   );
-};
+}

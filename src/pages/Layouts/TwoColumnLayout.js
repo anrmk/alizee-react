@@ -15,12 +15,14 @@ export default function TwoColumnLayout({
   footerBoxClassName,
   leftColProps = { sm: 6 },
   rightColProps = { sm: 6, md: 4, xs: 12 },
-  children
+  children,
 }) {
   const classes = useStyles({ isFullScreenHeight });
 
   if (!children || children.length < 2 || !Array.isArray(children)) {
-    console.warn(`Component(${TwoColumnLayout.name}) must have at least two children`);
+    console.warn(
+      `Component(${TwoColumnLayout.name}) must have at least two children`
+    );
     return null;
   }
 
@@ -31,22 +33,24 @@ export default function TwoColumnLayout({
       isFullScreenHeight
       baseClassName={clsx(classes.twoColumnContainer, baseClassName)}
       className={containerClassName}>
-      <Grid container className={clsx(classes.twoColumnGrid, innerGridClassName)}>
+      <Grid
+        container
+        className={clsx(classes.twoColumnGrid, innerGridClassName)}>
         <Hidden smDown>
           <Grid item {...leftColProps}>
             {FirstComponent}
           </Grid>
         </Hidden>
-  
+
         <Grid item {...rightColProps}>
           {SecondComponent}
         </Grid>
       </Grid>
       {RestChildren}
-  
+
       <Box className={footerBoxClassName}>
-        <Footer open={true} />
+        <Footer open />
       </Box>
     </ContainerLayout>
-  )
+  );
 }

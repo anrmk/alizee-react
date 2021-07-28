@@ -1,22 +1,38 @@
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-import { Grid, Box, Typography, Divider, Button, Breadcrumbs, Link } from "@material-ui/core";
+import {
+  Grid,
+  Box,
+  Typography,
+  Divider,
+  Button,
+  Breadcrumbs,
+  Link,
+} from "@material-ui/core";
 
 import FaqQuestionList from "./FaqQuestionList";
 
-function FaqDetails({ title, id, content, groupId, onVote, isVoted, data = [], currentQuestion }) {
+function FaqDetails({
+  title,
+  id,
+  content,
+  groupId,
+  onVote,
+  isVoted,
+  data = [],
+  currentQuestion,
+}) {
   const location = useLocation();
 
-  const transformData = () => {
-    return data.reduce((acc, item) => {
+  const transformData = () =>
+    data.reduce((acc, item) => {
       const res = item.childs.filter((el) => el.id === groupId);
       if (res.length > 0) {
         return res[0].articles;
       }
       return acc;
     }, []);
-  };
 
   useEffect(() => {
     if (location.hash) {
@@ -45,11 +61,14 @@ function FaqDetails({ title, id, content, groupId, onVote, isVoted, data = [], c
           component="p"
           color="textSecondary"
           dangerouslySetInnerHTML={{ __html: content }}
-        ></Typography>
+        />
       </Grid>
       <Grid item>
         <Typography variant="h5">Related articles</Typography>
-        <FaqQuestionList data={transformData()} currentQuestion={currentQuestion} />
+        <FaqQuestionList
+          data={transformData()}
+          currentQuestion={currentQuestion}
+        />
       </Grid>
 
       <Divider />
@@ -60,7 +79,9 @@ function FaqDetails({ title, id, content, groupId, onVote, isVoted, data = [], c
         </Typography>
         <Box display="flex" justifyContent="center">
           {isVoted ? (
-            <Typography variant="body1">Thank you for providing feedback!</Typography>
+            <Typography variant="body1">
+              Thank you for providing feedback!
+            </Typography>
           ) : (
             <>
               <Box>
@@ -69,8 +90,7 @@ function FaqDetails({ title, id, content, groupId, onVote, isVoted, data = [], c
                   size="medium"
                   color="primary"
                   variant="contained"
-                  onClick={() => onVote(id, true)}
-                >
+                  onClick={() => onVote(id, true)}>
                   Yes
                 </Button>
               </Box>
@@ -80,8 +100,7 @@ function FaqDetails({ title, id, content, groupId, onVote, isVoted, data = [], c
                   size="medium"
                   color="primary"
                   variant="outlined"
-                  onClick={() => onVote(id, false)}
-                >
+                  onClick={() => onVote(id, false)}>
                   No
                 </Button>
               </Box>

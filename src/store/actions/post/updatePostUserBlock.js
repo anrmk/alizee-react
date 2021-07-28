@@ -1,6 +1,7 @@
 import { isEmptyObject } from "../../../helpers/functions";
 
-export const UPDATE_POSTS_USER_BLOCK_SUCCESS = "UPDATE_POSTS_USER_BLOCK_SUCCESS";
+export const UPDATE_POSTS_USER_BLOCK_SUCCESS =
+  "UPDATE_POSTS_USER_BLOCK_SUCCESS";
 export const UPDATE_POST_USER_BLOCK_SUCCESS = "UPDATE_POST_USER_BLOCK_SUCCESS";
 
 function receivePostsUserBlock(data) {
@@ -28,11 +29,11 @@ function receivePostUserBlock(data) {
 function updatePostUserBlock(userName, isBlocked) {
   return (dispatch, getState) => {
     if (!isEmptyObject(getState().followingPosts.currentPost)) {
-      const currentPostState = {...getState().followingPosts.currentPost};
+      const currentPostState = { ...getState().followingPosts.currentPost };
       currentPostState.user.isBlocked = isBlocked;
 
       receivePostUserBlock(currentPostState);
-    } 
+    }
 
     const followingPosts = getState().followingPosts.data;
     if (followingPosts.length) {
@@ -46,14 +47,13 @@ function updatePostUserBlock(userName, isBlocked) {
       list[index].user.isBlocked = isBlocked;
       dispatch(receivePostsUserBlock(list));
     }
-  }
-};
-
+  };
+}
 
 export function addPostUserBlock(userName) {
   return updatePostUserBlock(userName, true);
-};
+}
 
 export function removePostUserBlock(userName) {
   return updatePostUserBlock(userName, false);
-};
+}

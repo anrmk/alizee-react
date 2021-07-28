@@ -7,14 +7,15 @@ export const AUTH_SOCIAL_FAILURE = "AUTH_SOCIAL_FAILURE";
 export const AUTH_SOCIAL_REDIRECT = "AUTH_SOCIAL_REDIRECT";
 
 export function requestSocialAuth() {
-  return async dispatch => dispatch({
-    type: AUTH_SOCIAL_REQUEST,
-    payload: {
-      isFetching: true,
-      isAuthSocial: false,
-      errorMessage: ""
-    }
-  });
+  return async (dispatch) =>
+    dispatch({
+      type: AUTH_SOCIAL_REQUEST,
+      payload: {
+        isFetching: true,
+        isAuthSocial: false,
+        errorMessage: "",
+      },
+    });
 }
 
 function receiveSocialAuth(userInfo) {
@@ -24,24 +25,26 @@ function receiveSocialAuth(userInfo) {
       isFetching: false,
       isAuthSocial: true,
       errorMessage: "",
-      data: userInfo || {}
-    }
-  }
+      data: userInfo || {},
+    },
+  };
 }
 
 export function errorSocialAuth(message) {
-  return async dispatch => dispatch({
-    type: AUTH_SOCIAL_FAILURE,
-    payload: {
-      isFetching: false,
-      isAuthSocial: false,
-      errorMessage: message
-    }
-  });
+  return async (dispatch) =>
+    dispatch({
+      type: AUTH_SOCIAL_FAILURE,
+      payload: {
+        isFetching: false,
+        isAuthSocial: false,
+        errorMessage: message,
+      },
+    });
 }
 
 export function socialAuth(api, socialType, opts) {
-  return async dispatch => {
+  // eslint-disable-next-line consistent-return
+  return async (dispatch) => {
     dispatch(requestSocialAuth());
 
     try {
@@ -49,18 +52,21 @@ export function socialAuth(api, socialType, opts) {
       if (socialType === SOCIAL_GOOGLE) {
         url = generateUrl("googleAuth");
       } else if (socialType === SOCIAL_TWITTER) {
-        url = wrapHttps(`${process.env.REACT_APP_DOMAIN}${generateUrl("signintwitter")}`, true);
+        url = wrapHttps(
+          `${process.env.REACT_APP_DOMAIN}${generateUrl("signintwitter")}`,
+          true
+        );
         return redirect(url);
       }
 
       if (!url) {
-        throw "Error: undefined social type";
+        throw new Error("Error: undefined social type");
       }
 
       const { data } = await api
         .setMethod("POST")
         .setData({
-          tokenId: opts?.tokenId
+          tokenId: opts?.tokenId,
         })
         .query(url);
 
@@ -68,5 +74,5 @@ export function socialAuth(api, socialType, opts) {
     } catch (e) {
       dispatch(errorSocialAuth("Error: social authentication"));
     }
-  }
+  };
 }

@@ -1,8 +1,11 @@
-import { generateUrl, toBase64 } from "../../../../helpers/functions";
+import { generateUrl } from "../../../../helpers/functions";
 
-export const UPDATE_PUSH_NOTIFICATION_REQUEST = "UPDATE_PUSH_NOTIFICATION_REQUEST";
-export const UPDATE_PUSH_NOTIFICATION_SUCCESS = "UPDATE_PUSH_NOTIFICATION_SUCCESS";
-export const UPDATE_PUSH_NOTIFICATION_FAILURE = "UPDATE_PUSH_NOTIFICATION_FAILURE";
+export const UPDATE_PUSH_NOTIFICATION_REQUEST =
+  "UPDATE_PUSH_NOTIFICATION_REQUEST";
+export const UPDATE_PUSH_NOTIFICATION_SUCCESS =
+  "UPDATE_PUSH_NOTIFICATION_SUCCESS";
+export const UPDATE_PUSH_NOTIFICATION_FAILURE =
+  "UPDATE_PUSH_NOTIFICATION_FAILURE";
 
 function requestUpdatePushNotification() {
   return {

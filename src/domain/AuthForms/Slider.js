@@ -13,10 +13,10 @@ function Slider() {
   return (
     <Box className={classes.authImage}>
       <AutoPlaySwipeableViews className={classes.swipe}>
-        <div className={clsx(classes.slide, classes.slide1)}></div>
-        <div className={clsx(classes.slide, classes.slide2)}></div>
-        <div className={clsx(classes.slide, classes.slide3)}></div>
-        <div className={clsx(classes.slide, classes.slide4)}></div>
+        <div className={clsx(classes.slide, classes.slide1)} />
+        <div className={clsx(classes.slide, classes.slide2)} />
+        <div className={clsx(classes.slide, classes.slide3)} />
+        <div className={clsx(classes.slide, classes.slide4)} />
       </AutoPlaySwipeableViews>
     </Box>
   );

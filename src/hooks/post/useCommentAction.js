@@ -10,10 +10,12 @@ export default function useCommentAction() {
   const dispatch = useDispatch();
 
   const handleCommentSendClick = useCallback(async ({ postId, text }) => {
-    await dispatch(commentActions.createCommentPost(apiClient, { postId, text }));
+    await dispatch(
+      commentActions.createCommentPost(apiClient, { postId, text })
+    );
   }, []);
 
   return {
-    handleCommentSendClick
+    handleCommentSendClick,
   };
 }

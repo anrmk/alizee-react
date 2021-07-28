@@ -1,10 +1,10 @@
 export default {
   palette: {
     primary: {
-      main: "#000"
+      main: "#000",
     },
     secondary: {
-      main: "#845DD7"
+      main: "#845DD7",
     },
     success: {
       main: "#58CD86",

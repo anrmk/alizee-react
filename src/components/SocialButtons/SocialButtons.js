@@ -29,8 +29,11 @@ function SocialButtons({
             color="primary"
             disableElevation
             fullWidth
-            startIcon={<Box className=""><Avatar src={GoogleIcon} className={classes.googleIcon} /></Box>}
-          >
+            startIcon={
+              <Box className="">
+                <Avatar src={GoogleIcon} className={classes.googleIcon} />
+              </Box>
+            }>
             SIGN IN WITH GOOGLE
           </Button>
         )}
@@ -38,15 +41,14 @@ function SocialButtons({
         onSuccess={(response) => onSuccess(response, SOCIAL_GOOGLE)}
         onFailure={onFailure}
       />
-      <Box m={1}></Box>
+      <Box m={1} />
       <Button
         variant="contained"
         color="secondary"
         disableElevation
         fullWidth
         onClick={() => onSuccess(null, SOCIAL_TWITTER)}
-        startIcon={<TwitterIcon />}
-      >
+        startIcon={<TwitterIcon />}>
         SIGN IN WITH TWITTER
       </Button>
     </Box>

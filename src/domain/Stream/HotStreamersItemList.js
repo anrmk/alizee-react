@@ -10,18 +10,20 @@ function HotStreamersItemList({
 
   onJoinStream,
 }) {
-
   return (
     <Box>
-      {items && items.length && items.map((item) => (
-        <HotStreamersItem
-          key={`hs-${item.user.userName}`}
-          item={item}
-          onJoinStream={onJoinStream} />
-      ))}
+      {items &&
+        items.length &&
+        items.map((item) => (
+          <HotStreamersItem
+            key={`hs-${item.user.userName}`}
+            item={item}
+            onJoinStream={onJoinStream}
+          />
+        ))}
     </Box>
   );
-};
+}
 
 HotStreamersItemList.propTypes = {
   items: PropTypes.array,

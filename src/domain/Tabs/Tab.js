@@ -1,28 +1,28 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 import "./Tabs.scss";
 
-function Tab({ 
+function Tab({
   eventKey,
   route,
   title,
   active,
   className,
 
-  onClick
+  onClick,
 }) {
   const activeClass = "c-tab--active active";
 
   return (
     <Link
-      className={`c-tab not-link ${className} ${active ? activeClass : ''}`}
+      className={`c-tab not-link ${className} ${active ? activeClass : ""}`}
       to={route}
       onClick={() => onClick(eventKey)}>
       {title}
     </Link>
-  )
+  );
 }
 
 Tab.propTypes = {
@@ -31,9 +31,9 @@ Tab.propTypes = {
   title: PropTypes.string,
   active: PropTypes.bool,
   className: PropTypes.string,
-  
-  onClick: PropTypes.func
-}
+
+  onClick: PropTypes.func,
+};
 
 Tab.defaultProps = {
   eventKey: "",
@@ -42,7 +42,7 @@ Tab.defaultProps = {
   active: false,
   className: "",
 
-  onClick: eventKey => {}
+  onClick: (eventKey) => {},
 };
 
 export default Tab;

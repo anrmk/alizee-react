@@ -1,31 +1,33 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
-import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
+import { createStore, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
-import rootReducer from './reducers';
+import rootReducer from "./reducers";
 
+// eslint-disable-next-line import/no-mutable-exports
 let store = null;
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage,
-  whitelist: ['signIn']
-}
- 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+  whitelist: ["signIn"],
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 // Add Redux devtools in development mode
-if (process.env.NODE_ENV === 'development') {
-  const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
-  store = createStore(persistedReducer, composeEnhancers(
-      applyMiddleware(thunk)
-  ));
-} else {
+if (process.env.NODE_ENV === "development") {
+  const composeEnhancers =
+    (typeof window !== "undefined" &&
+      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+    compose;
   store = createStore(
     persistedReducer,
-    applyMiddleware(thunk)
+    composeEnhancers(applyMiddleware(thunk))
   );
+} else {
+  store = createStore(persistedReducer, applyMiddleware(thunk));
 }
 
 const persistor = persistStore(store);

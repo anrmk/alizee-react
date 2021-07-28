@@ -1,9 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-	
-  },
+  root: {},
 
   tabsWrapper: {
     position: "sticky",
@@ -17,42 +15,42 @@ const useStyles = makeStyles((theme) => ({
   },
 
   tab: {
-    minWidth: '100px'
-  }
+    minWidth: "100px",
+  },
 }));
 
 export const tabsStyles = () => ({
   root: {
-    boxShadow: 'inset 0 1px 0 0 #efefef',
-    overflow: 'visible',
+    boxShadow: "inset 0 1px 0 0 #efefef",
+    overflow: "visible",
   },
   fixed: {
-    overflow: 'visible !important',
+    overflow: "visible !important",
   },
   indicator: {
     height: 1,
-    transform: 'translateY(-52px)',
-    backgroundColor: '#262626',
+    transform: "translateY(-52px)",
+    backgroundColor: "#262626",
   },
 });
 
-export const tabItemStyles = (breakpoints ) => ({
+export const tabItemStyles = (breakpoints) => ({
   root: {
-    lineHeight: 'inherit',
+    lineHeight: "inherit",
     minWidth: 0,
-    '&:not(:last-child)': {
+    "&:not(:last-child)": {
       marginRight: 24,
-      [breakpoints.up('sm')]: {
+      [breakpoints.up("sm")]: {
         marginRight: 60,
       },
     },
-    [breakpoints.up('md')]: {
+    [breakpoints.up("md")]: {
       minWidth: 0,
     },
   },
   labelIcon: {
     minHeight: 53,
-    '& $wrapper > *:first-child': {
+    "& $wrapper > *:first-child": {
       marginBottom: 0,
     },
   },
@@ -60,15 +58,14 @@ export const tabItemStyles = (breakpoints ) => ({
     opacity: 0.4,
   },
   wrapper: {
-    flexDirection: 'row',
-    letterSpacing: '1px',
-    textTransform: 'uppercase',
-    '& svg, .material-icons': {
+    flexDirection: "row",
+    letterSpacing: "1px",
+    textTransform: "uppercase",
+    "& svg, .material-icons": {
       fontSize: 16,
       marginRight: 8,
     },
   },
 });
-
 
 export default useStyles;

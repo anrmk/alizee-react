@@ -3,11 +3,11 @@ import { combineReducers } from "redux";
 import signUp from "./signUp";
 import signIn from "./signIn";
 import socialAuth from "./socialAuth";
-import confirmEmail from './confirmEmail';
+import confirmEmail from "./confirmEmail";
 import profilePosts from "./profilePosts";
-import followingPosts  from "./followingPosts";
-import suggestedPosts  from "./suggestedPosts";
-import media from './media';
+import followingPosts from "./followingPosts";
+import suggestedPosts from "./suggestedPosts";
+import media from "./media";
 import comment from "./comment";
 import users from "./users";
 import chat from "./chat";
@@ -22,7 +22,7 @@ import activity from "./activity";
 import notification from "./notification";
 import changeLog from "./changeLog";
 import help from "./help";
-import statistics from "./statistics"
+import statistics from "./statistics";
 
 import { SIGNOUT_SUCCESS } from "../actions/signIn";
 

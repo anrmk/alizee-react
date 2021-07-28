@@ -1,9 +1,5 @@
 import React, { useContext, useEffect } from "react";
 import { connect } from "react-redux";
-import * as changeLogActions from "../../store/actions/changeLog";
-import ApiContext from "../../context/ApiContext";
-import { formatDate } from "../../helpers/functions";
-
 import {
   List,
   ListItem,
@@ -15,11 +11,13 @@ import {
   ListItemText,
 } from "@material-ui/core/";
 import InfoIcon from "@material-ui/icons/Info";
+import * as changeLogActions from "../../store/actions/changeLog";
+import ApiContext from "../../context/ApiContext";
+import { formatDate } from "../../helpers/functions";
 
 import { PublicLayout } from "../Layouts";
 
 function ChangeLog({ data, isFetching, getLogs, resetLogs }) {
-
   const apiClient = useContext(ApiContext);
 
   useEffect(() => {
@@ -42,7 +40,10 @@ function ChangeLog({ data, isFetching, getLogs, resetLogs }) {
                   <ListItemIcon>
                     <InfoIcon color="primary" />
                   </ListItemIcon>
-                  <ListItemText primary={formatDate(log.createdDate)} secondary={log.content}></ListItemText>
+                  <ListItemText
+                    primary={formatDate(log.createdDate)}
+                    secondary={log.content}
+                  />
                 </ListItem>
                 <Divider variant="inset" component="li" />
               </React.Fragment>

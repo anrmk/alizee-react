@@ -5,21 +5,21 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   closeBtn: {
     position: "absolute",
     right: theme.spacing(1),
     top: theme.spacing(1),
     zIndex: theme.zIndex.tooltip,
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
   },
   loading: {
-    display: "flex"
+    display: "flex",
   },
   progress: {
-    margin: "auto"
-  }
+    margin: "auto",
+  },
 }));
 
 export default useStyles;

@@ -18,14 +18,22 @@ function SidebarList({
 
   return (
     <>
-    {items && items.length ? (
-      <List className={classes.sidebarList} disabled>
-        {items.map((item) => (
-          <SidebarListItem item={item} key={item.id} selected={selectedItemId === item.id} onItemClick={onItemClick} />
-        ))}
-      </List>) : (
-        <Typography variant="subtitle2">{t("ChatChatListEmptySubtitle")}</Typography>
-      )}    
+      {items && items.length ? (
+        <List className={classes.sidebarList} disabled>
+          {items.map((item) => (
+            <SidebarListItem
+              item={item}
+              key={item.id}
+              selected={selectedItemId === item.id}
+              onItemClick={onItemClick}
+            />
+          ))}
+        </List>
+      ) : (
+        <Typography variant="subtitle2">
+          {t("ChatChatListEmptySubtitle")}
+        </Typography>
+      )}
     </>
   );
 }

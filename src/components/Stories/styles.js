@@ -19,14 +19,14 @@ const getShadow = (theme) => ({
   backgroundColor: theme.palette.common.black,
   opacity: 0.2,
   filter: `blur(${theme.spacing(1)}px)`,
-  zIndex: theme.zIndex.mobileStepper
+  zIndex: theme.zIndex.mobileStepper,
 });
 
 const arrowIcons = (theme) => ({
   color: theme.palette.grey["400"],
   "&:hover": {
-    opacity: ".8"
-  }
+    opacity: ".8",
+  },
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -34,13 +34,13 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     display: "flex",
     background: theme.palette.common.black,
-    justifyContent: "center"
+    justifyContent: "center",
   },
   content: {
     width: "100%",
     maxWidth: "500px",
     position: "relative",
-    display: "flex"
+    display: "flex",
   },
   header: {
     position: "absolute",
@@ -52,11 +52,11 @@ const useStyles = makeStyles((theme) => ({
   headerInner: {
     display: "flex",
     justifyContent: "space-between",
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
   },
   headerShadow: {
     top: 0,
-    ...getShadow(theme)
+    ...getShadow(theme),
   },
   footer: {
     width: "100%",
@@ -65,34 +65,33 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     justifyContent: "flex-end",
     padding: theme.spacing(2),
-    zIndex: theme.zIndex.drawer
+    zIndex: theme.zIndex.drawer,
   },
   footerShadow: {
     bottom: 0,
-    ...getShadow(theme)
+    ...getShadow(theme),
   },
   userInfo: {
     display: "flex",
     alignItems: "center",
   },
-  tools: {
-  },
+  tools: {},
   btn: {
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
   },
   headerText: {
     marginLeft: theme.spacing(2),
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
   },
   overlay: {
     width: "100%",
     height: "100%",
     position: "absolute",
-    display: "flex"
+    display: "flex",
   },
   controls: {
     width: "50%",
-    zIndex: theme.zIndex.appBar
+    zIndex: theme.zIndex.appBar,
   },
   progressOuter: {
     width: ({ width }) => `${width * 100}%`,
@@ -127,40 +126,40 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "100%",
     flexWrap: "nowrap",
     width: "100%",
-    alignSelf: "center"
+    alignSelf: "center",
   },
   story: {
     width: "100%",
     height: "100%",
-		display: "flex",
-		position: "relative",
+    display: "flex",
+    position: "relative",
     overflow: "hidden",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   image: {
     width: "100%",
     height: "100%",
     objectFit: "cover",
     objectPosition: "center",
-    opacity: ({ loaded }) => loaded ? 1 : 0
+    opacity: ({ loaded }) => (loaded ? 1 : 0),
   },
   video: {
     width: "100%",
-    height: "100%"
+    height: "100%",
   },
   loader: {
     position: "absolute",
-    zIndex: theme.zIndex.appBar
+    zIndex: theme.zIndex.appBar,
   },
   arrowPreviousIcon: {
     ...arrowIcons(theme),
-    transform: "rotate(-90deg)"
+    transform: "rotate(-90deg)",
   },
   arrowNextIcon: {
     ...arrowIcons(theme),
-    transform: "rotate(90deg)"
-  }
+    transform: "rotate(90deg)",
+  },
 }));
 
 export default useStyles;

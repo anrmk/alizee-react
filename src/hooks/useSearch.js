@@ -29,22 +29,25 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
   useEffect(() => {
     if (suggestionPeople?.length > 0 || SEARCH_USER_TYPE !== type) return;
 
-    //TODO: need paggination
+    // TODO: need paggination
     dispatch(relationshipActions.getSuggestionPeople(apiClient));
   }, []);
   useEffect(() => {
-    let currentTags = location.search && new URLSearchParams(location.search).get("tags");
+    let currentTags =
+      location.search && new URLSearchParams(location.search).get("tags");
     if (currentTags) {
       currentTags = currentTags
         .split(" ")
-        .map((tag) => "#" + tag)
+        .map((tag) => `#${tag}`)
         .join(" ");
     }
 
     // TODO: change currentTag on backend from #tag to tag.
     if (currentTags) {
       (async () => {
-        await dispatch(searchActions.getDataByQuery(apiClient, { query: currentTags, type }));
+        await dispatch(
+          searchActions.getDataByQuery(apiClient, { query: currentTags, type })
+        );
       })();
       setCurrentQuery(currentTags);
     }
@@ -60,18 +63,23 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
   const handleFetchMore = async () => {
     //  TODO: func calls one more time when we firstly go to search page => find chip with many posts => explore + #tag => feed page => explore page.
     if (!search.isFetching) {
-      await dispatch(searchActions.getDataByQuery(apiClient, { query: currentQuery, type }));
+      await dispatch(
+        searchActions.getDataByQuery(apiClient, { query: currentQuery, type })
+      );
     }
   };
 
   const handleSearch = async (query) => {
     if (query.length > 2) {
-      await dispatch(searchActions.getDataByQuery(apiClient, { query: query, type }));
+      await dispatch(searchActions.getDataByQuery(apiClient, { query, type }));
     } else {
       dispatch(searchActions.resetSearch());
     }
     !isUserType(type) &&
-      history.push({ pathname: history.pathname, search: query && "?tags=" + query.replaceAll("#", "") });
+      history.push({
+        pathname: history.pathname,
+        search: query && `?tags=${query.replaceAll("#", "")}`,
+      });
     setCurrentQuery(query);
   };
 

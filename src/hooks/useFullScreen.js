@@ -4,21 +4,21 @@ export default function useFullScreen(elementOrElementId) {
   const exitFullScreen = useCallback(() => {
     if (document.exitFullscreen) {
       document.exitFullscreen();
-    } else if (document["mozCancelFullScreen"]) {
-      document["mozCancelFullScreen"]();
-    } else if (document["webkitExitFullscreen"]) {
-      document["webkitExitFullscreen"]();
-    } else if (document["msExitFullscreen"]) {
-      document["msExitFullscreen"]();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
     }
   }, []);
 
   const toggle = useCallback(async (showFullScreen) => {
     let fullScreenElement =
-      document["fullscreenElement"] ||
-      document["webkitFullscreenElement"] ||
-      document["mozFullScreenElement"] ||
-      document["msFullscreenElement"];
+      document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      document.mozFullScreenElement ||
+      document.msFullscreenElement;
 
     // exit full screen
     if (!showFullScreen) {
@@ -29,7 +29,10 @@ export default function useFullScreen(elementOrElementId) {
     }
 
     // get the element to make full screen
-    const element = typeof elementOrElementId === "string" ? document.getElementById(elementOrElementId) : elementOrElementId;
+    const element =
+      typeof elementOrElementId === "string"
+        ? document.getElementById(elementOrElementId)
+        : elementOrElementId;
 
     // if there's another element currently full screen, exit first
     if (fullScreenElement && fullScreenElement !== element) {
@@ -41,18 +44,19 @@ export default function useFullScreen(elementOrElementId) {
     if (!fullScreenElement) {
       if (element.requestFullscreen) {
         element.requestFullscreen();
-      } else if (element["mozRequestFullScreen"]) {
-        element["mozRequestFullScreen"]();
-      } else if (element["webkitRequestFullscreen"]) {
+      } else if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+      } else if (element.webkitRequestFullscreen) {
         // @ts-ignore
         element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-      } else if (element["msRequestFullscreen"]) {
-        element["msRequestFullscreen"]();
+      } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen();
       }
     }
 
     // if full screen, the exit on unmount
     if (showFullScreen) {
+      // eslint-disable-next-line consistent-return
       return exitFullScreen;
     }
 
@@ -60,4 +64,4 @@ export default function useFullScreen(elementOrElementId) {
   }, []);
 
   return { toggle };
-};
+}

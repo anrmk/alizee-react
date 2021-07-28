@@ -11,9 +11,8 @@ export default function MediaContent({
   playState,
   config,
 
-  onVideoDuration
+  onVideoDuration,
 }) {
-
   if (kind === MEDIA_VIDEO) {
     return (
       <VideoContent
@@ -21,15 +20,18 @@ export default function MediaContent({
         paused={playState}
         url={url}
         config={config}
-        onDuration={onVideoDuration} />
+        onDuration={onVideoDuration}
+      />
     );
-  } else if (kind === MEDIA_IMAGE) {
+  }
+  if (kind === MEDIA_IMAGE) {
     return (
       <ImageContent
         action={action}
         isPaused={playState}
         url={url}
-        config={config} />
+        config={config}
+      />
     );
   }
 

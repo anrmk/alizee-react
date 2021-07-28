@@ -21,7 +21,7 @@ function receiveGetHelp(data) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      data: data,
+      data,
     },
   };
 }

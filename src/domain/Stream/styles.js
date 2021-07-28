@@ -8,10 +8,10 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
   },
   itemCountText: {
-    marginLeft: theme.spacing(0.5)
+    marginLeft: theme.spacing(0.5),
   },
   itemActions: {
-    flexWrap: "wrap"
+    flexWrap: "wrap",
   },
   itemJoinTicketPriceText: {
     marginLeft: "auto",

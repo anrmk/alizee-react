@@ -35,6 +35,7 @@ function errorVerifyMe(message) {
 }
 
 export function verifyMe(api) {
+  // eslint-disable-next-line consistent-return
   return async (dispatch) => {
     dispatch(requestVerifyMe());
 

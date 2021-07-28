@@ -1,4 +1,9 @@
-import { SIGNIN_REQUEST, SIGNIN_SUCCESS, SIGNIN_FAILURE, SIGN_IN_RESET } from "../actions/signIn";
+import {
+  SIGNIN_REQUEST,
+  SIGNIN_SUCCESS,
+  SIGNIN_FAILURE,
+  SIGN_IN_RESET,
+} from "../actions/signIn";
 
 import {
   UPDATE_ACCOUNT_REQUEST,
@@ -7,24 +12,30 @@ import {
   UPDATE_PROFILE_REQUEST,
   UPDATE_PROFILE_SUCCESS,
   UPDATE_PROFILE_FAILURE,
-
   UPDATE_AVATAR_REQUEST,
   UPDATE_AVATAR_SUCCESS,
   UPDATE_AVATAR_FAILURE,
-
   UPDATE_COVER_REQUEST,
   UPDATE_COVER_SUCCESS,
-  UPDATE_COVER_FAILURE
+  UPDATE_COVER_FAILURE,
 } from "../actions/settings";
 
 import {
   GET_ME_REQUEST,
   GET_ME_SUCCESS,
-  GET_ME_FAILURE
+  GET_ME_FAILURE,
 } from "../actions/user";
 
-import { CREATE_MOOD_REQUEST, CREATE_MOOD_SUCCESS, CREATE_MOOD_FAILURE } from "../actions/mood";
-import { GET_USER_DEPOSIT_REQUEST, GET_USER_DEPOSIT_SUCCESS, GET_USER_DEPOSIT_FAILURE } from "../actions/account";
+import {
+  CREATE_MOOD_REQUEST,
+  CREATE_MOOD_SUCCESS,
+  CREATE_MOOD_FAILURE,
+} from "../actions/mood";
+import {
+  GET_USER_DEPOSIT_REQUEST,
+  GET_USER_DEPOSIT_SUCCESS,
+  GET_USER_DEPOSIT_FAILURE,
+} from "../actions/account";
 
 import { USER_TOKEN } from "../../constants/user";
 
@@ -118,7 +129,7 @@ export default function signIn(
       };
     }
 
-    //DEPOSIT
+    // DEPOSIT
     case GET_USER_DEPOSIT_REQUEST: {
       return {
         ...state,

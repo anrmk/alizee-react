@@ -1,10 +1,17 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  Grid,
+} from "@material-ui/core";
+import MailIcon from "@material-ui/icons/Mail";
 import { SIGN_IN_ROUTE } from "../../constants/routes";
 
-import { Box, Card, CardContent, Divider, Typography, Button, Grid } from "@material-ui/core";
 import useStyles from "./styles";
-import MailIcon from "@material-ui/icons/Mail";
 
 const RESEND_BTN_DISABLE_TIME = 30000;
 
@@ -16,11 +23,11 @@ function EmailCard({ onResendBtnClick }) {
   const handleResendBtnClick = (e) => {
     if (resendBtnDisable) return;
 
-    setResendBtnDisable(true)
+    setResendBtnDisable(true);
     setTimeout(() => setResendBtnDisable(false), RESEND_BTN_DISABLE_TIME);
 
     onResendBtnClick && onResendBtnClick(e);
-  }
+  };
 
   return (
     <Card>
@@ -38,7 +45,8 @@ function EmailCard({ onResendBtnClick }) {
           </Grid>
           <Grid item>
             <Typography variant="caption" component="span" gutterBottom>
-              Please check for an email and go to the link to verify your account
+              Please check for an email and go to the link to verify your
+              account
             </Typography>
           </Grid>
           <Grid item>
@@ -49,12 +57,15 @@ function EmailCard({ onResendBtnClick }) {
               size="large"
               color="primary"
               variant="contained"
-              onClick={handleResendBtnClick}
-            >
+              onClick={handleResendBtnClick}>
               Resend confirmation link
             </Button>
             <Box width="100%" textAlign="center">
-              {resendBtnDisable && <Typography variant="caption" color="textSecondary">You can resend the link in 30 seconds</Typography>}
+              {resendBtnDisable && (
+                <Typography variant="caption" color="textSecondary">
+                  You can resend the link in 30 seconds
+                </Typography>
+              )}
             </Box>
           </Grid>
           <Grid item>
@@ -62,8 +73,7 @@ function EmailCard({ onResendBtnClick }) {
               fullWidth
               disableElevation
               variant="contained"
-              onClick={() => history.push(SIGN_IN_ROUTE)}
-            >
+              onClick={() => history.push(SIGN_IN_ROUTE)}>
               Back To Login
             </Button>
           </Grid>

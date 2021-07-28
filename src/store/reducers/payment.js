@@ -1,10 +1,10 @@
-import { SEND_TIP_REQUEST, 
-  SEND_TIP_SUCCESS, 
+import {
+  SEND_TIP_REQUEST,
+  SEND_TIP_SUCCESS,
   SEND_TIP_FAILURE,
-  
   BUY_POST_REQUEST,
   BUY_POST_SUCCESS,
-  BUY_POST_FAILURE
+  BUY_POST_FAILURE,
 } from "../actions/payment";
 
 export default function paymentReducer(

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 import React, { useState, useEffect } from "react";
 import clsx from "clsx";
 import { Box, Chip, TextField, Typography } from "@material-ui/core";
@@ -22,7 +23,7 @@ function ChipsInput({
   const [localItems, setLocalItems] = useState(items);
   const [localValue, setLocalValue] = useState(value);
   const [localError, setLocalError] = useState(error);
-  const classes = useStyles({localItems});
+  const classes = useStyles({ localItems });
 
   useEffect(() => {
     if (max > 0) {
@@ -50,9 +51,13 @@ function ChipsInput({
         setLocalItems([...localItems, val]);
         setLocalValue("");
       }
-    } else if (evt.keyCode === BACKSPACE_KEY_CODE && !rest?.inputProps?.readOnly) {
-      !localValue.length && localItems.length > 0 &&
-        setLocalItems(prev => prev.slice(0, prev.length-1));
+    } else if (
+      evt.keyCode === BACKSPACE_KEY_CODE &&
+      !rest?.inputProps?.readOnly
+    ) {
+      !localValue.length &&
+        localItems.length > 0 &&
+        setLocalItems((prev) => prev.slice(0, prev.length - 1));
     }
   };
 
@@ -93,18 +98,18 @@ function ChipsInput({
     return true;
   };
 
-  const isInList = (email) => {
-    return localItems.includes(email);
-  };
+  const isInList = (email) => localItems.includes(email);
 
-  const renderChips = localItems && localItems.map((itemId) => (
-    <Chip
-      className={clsx(classes.chip, classChipName)}
-      key={itemId}
-      label={itemId}
-      onDelete={() => handleDelete(itemId)}
-    />
-  ));
+  const renderChips =
+    localItems &&
+    localItems.map((itemId) => (
+      <Chip
+        className={clsx(classes.chip, classChipName)}
+        key={itemId}
+        label={itemId}
+        onDelete={() => handleDelete(itemId)}
+      />
+    ));
 
   return (
     <Box>
@@ -118,13 +123,13 @@ function ChipsInput({
         helperText={localError}
         inputProps={{
           autoComplete: "off",
-          ...rest?.inputProps
+          ...rest?.inputProps,
         }}
         InputProps={{
           startAdornment: <>{renderChips}</>,
           className: classes.inputBase,
           classes: { input: classes.input },
-          ...rest?.InputProps
+          ...rest?.InputProps,
         }}
         onChange={handleChange}
         onKeyDown={handleKeyDown}

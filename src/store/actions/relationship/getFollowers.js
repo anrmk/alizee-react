@@ -41,7 +41,10 @@ export function getFollowers(api, userName, status) {
 
     const url = generateUrl("getFollowers");
     try {
-      const { data } = await api.setParams({ userName, status }).setMethod("GET").query(url);
+      const { data } = await api
+        .setParams({ userName, status })
+        .setMethod("GET")
+        .query(url);
 
       dispatch(receiveGetFollowers(data));
     } catch {

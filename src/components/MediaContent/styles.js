@@ -2,31 +2,31 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: "100%"
+    height: "100%",
   },
 
   mediaContent: {
     height: "100%",
-    objectFit: "cover"
+    objectFit: "cover",
   },
 
   imageContentWrapper: {
     height: "100%",
-    width: "100%"
+    width: "100%",
   },
 
   payable: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    //position: "relative",
+    // position: "relative",
     maxHeight: "600px",
     height: "100vh",
     cursor: "pointer",
     color: "rgba(226, 223, 223, 0.9)",
 
     "& .lock": {
-      fontSize: "8rem"
+      fontSize: "8rem",
     },
   },
 
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     position: "relative",
-    width: "100%"
+    width: "100%",
   },
 
   player: {
@@ -59,9 +59,9 @@ const useStyles = makeStyles((theme) => ({
 
     "&.play, &.lock": {
       "& svg": {
-        fontSize: "8rem"
+        fontSize: "8rem",
       },
-    }
+    },
   },
 
   favoriteIcon: {
@@ -76,8 +76,8 @@ const useStyles = makeStyles((theme) => ({
       top: "calc(50% - 4rem)",
       left: "calc(50% - 4rem)",
       fontSize: "8rem",
-    }
-  }
+    },
+  },
 }));
 
 export default useStyles;

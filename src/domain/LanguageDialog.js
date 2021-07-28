@@ -17,7 +17,11 @@ function LanguageDialog({ onChange }) {
         i18n.options.supportedLngs.map(
           (lang) =>
             lang !== "cimode" && (
-              <ListItem key={lang} button onClick={() => handleLanguageChange(lang)} selected={lang === i18n.language}>
+              <ListItem
+                key={lang}
+                button
+                onClick={() => handleLanguageChange(lang)}
+                selected={lang === i18n.language}>
                 <ListItemText>{t(lang)}</ListItemText>
               </ListItem>
             )

@@ -17,7 +17,9 @@ function Content({ data = [] }) {
           <Typography variant="h3">Looking for help?</Typography>
         </Box>
         <Box>
-          <Typography variant="body1">Explore our Help Center to get immediate assistance.</Typography>
+          <Typography variant="body1">
+            Explore our Help Center to get immediate assistance.
+          </Typography>
         </Box>
       </Box>
       <Hidden xsDown>

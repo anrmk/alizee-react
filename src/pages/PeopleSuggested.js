@@ -1,11 +1,10 @@
 import React, { useContext, useEffect } from "react";
 import { connect } from "react-redux";
 
+import { Container, Box, Typography, Divider } from "@material-ui/core";
 import ApiContext from "../context/ApiContext";
 
-import { Container, Box, Typography, Divider } from "@material-ui/core";
-
-import { RelationshipList } from "../components/RelationshipList";
+import RelationshipList from "../components/RelationshipList";
 import * as actionRelationship from "../store/actions/relationship";
 import { useFollowDialog } from "../hooks/payment";
 
@@ -26,7 +25,10 @@ function PeopleSuggested({ people, getPeople, resetPeople }) {
       <Box my={4}>
         <Typography variant="subtitle1">Suggestions For You</Typography>
         <Divider />
-        <RelationshipList items={people} onSubscribeClick={followDialog.toggle} />
+        <RelationshipList
+          items={people}
+          onSubscribeClick={followDialog.toggle}
+        />
       </Box>
     </Container>
   );

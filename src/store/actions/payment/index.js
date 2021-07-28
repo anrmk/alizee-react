@@ -1,14 +1,13 @@
-export { 
+export {
   SEND_TIP_REQUEST,
   SEND_TIP_SUCCESS,
   SEND_TIP_FAILURE,
-
   sendTip,
 } from "./sendTip";
 
-export { 
+export {
   BUY_POST_REQUEST,
   BUY_POST_SUCCESS,
   BUY_POST_FAILURE,
-  buyPost
+  buyPost,
 } from "./buyPost";

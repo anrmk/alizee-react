@@ -6,7 +6,10 @@ import { Link } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 
 import ApiContext from "../../context/ApiContext";
-import dialogs, { CREATE_POST_DIALOG_TYPE, CONFIRM_DIALOG_TYPE } from "../../constants/dialogs";
+import dialogs, {
+  CREATE_POST_DIALOG_TYPE,
+  CONFIRM_DIALOG_TYPE,
+} from "../../constants/dialogs";
 import * as postActions from "../../store/actions/post";
 import useDialog from "../useDialog";
 
@@ -34,14 +37,18 @@ export default function usePostDialog() {
   }));
   const usersDialog = useUsersDialog();
 
-  const handlePostCreate = useCallback(async (data) => {
-    dialog.setParams({ loading: true });
-    data.taggedUsers?.length && (data.userTags = data.taggedUsers.map(item => item.userName));
+  const handlePostCreate = useCallback(
+    async (data) => {
+      dialog.setParams({ loading: true });
+      data.taggedUsers?.length &&
+        (data.userTags = data.taggedUsers.map((item) => item.userName));
 
-    !isFetching && (await dispatch(postActions.createPost(apiClient, data)));
-    dialog.toggle({ open: false, loading: false });
-    location.pathname !== HOME_ROUTE && history.push(HOME_ROUTE);
-  }, [location, isFetching]);
+      !isFetching && (await dispatch(postActions.createPost(apiClient, data)));
+      dialog.toggle({ open: false, loading: false });
+      location.pathname !== HOME_ROUTE && history.push(HOME_ROUTE);
+    },
+    [location, isFetching]
+  );
 
   const handleTagUsersClick = useCallback((data) => {
     formData = data;
@@ -103,8 +110,9 @@ export default function usePostDialog() {
           dialogs[CONFIRM_DIALOG_TYPE](null, {
             contentText: (
               <Alert severity="warning">
-                You are unable to post any more content until you have uploaded a photo ID. To upload a photo ID, please
-                click <Link href={SETTINGS_BANK_ROUTE}>here</Link>
+                You are unable to post any more content until you have uploaded
+                a photo ID. To upload a photo ID, please click{" "}
+                <Link href={SETTINGS_BANK_ROUTE}>here</Link>
               </Alert>
             ),
             ...data,

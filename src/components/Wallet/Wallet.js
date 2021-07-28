@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { formatCurrency } from "../../helpers/functions";
 
 import {
   Box,
@@ -12,12 +11,13 @@ import {
   Typography,
   MenuItem,
   ListItemIcon,
-  ListItemText
+  ListItemText,
 } from "@material-ui/core";
 
 import MoreVertIcon from "@material-ui/icons/MoreVertOutlined";
 import SettingsIcon from "@material-ui/icons/SettingsOutlined";
 import TimelineIcon from "@material-ui/icons/TimelineOutlined";
+import { formatCurrency } from "../../helpers/functions";
 
 import useStyles from "./styles";
 import { STATISTICS_ROUTE, SETTINGS_CARD_ROUTE } from "../../constants/routes";
@@ -29,7 +29,7 @@ function Wallet({ deposit }) {
 
   const handleMenuCloseClick = () => {
     setMenuAnchor(null);
-  }
+  };
 
   return (
     <Box my={2}>
@@ -45,12 +45,12 @@ function Wallet({ deposit }) {
             </IconButton>
           }
           title={<Typography variant="h6">Wallet balance</Typography>}
-        ></CardHeader>
+        />
         <CardContent className={classes.content}>
           <Typography variant="h5">{formatCurrency(deposit || 0)}</Typography>
         </CardContent>
       </Card>
-      
+
       <Menu
         keepMounted
         id={menuId}
@@ -69,7 +69,7 @@ function Wallet({ deposit }) {
           <ListItemText primary="Statistics" />
         </MenuItem>
         <MenuItem
-          to={SETTINGS_CARD_ROUTE} 
+          to={SETTINGS_CARD_ROUTE}
           onClick={handleMenuCloseClick}
           component={Link}>
           <ListItemIcon>

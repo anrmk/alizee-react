@@ -1,7 +1,16 @@
 import React from "react";
 import clsx from "clsx";
 
-import { Container, Card, CardContent, CardHeader, Divider, Hidden, IconButton, withWidth } from "@material-ui/core";
+import {
+  Container,
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+  Hidden,
+  IconButton,
+  withWidth,
+} from "@material-ui/core";
 
 import ChatIcon from "@material-ui/icons/Chat";
 
@@ -17,8 +26,16 @@ import useStyles from "./styles";
 
 function StreamRoom(props) {
   const classes = useStyles();
-  const { stream, streamData, user, isPeerToPeer = false, roomId, width } = props;
-  const { currentSlidingViewsState, toggleSlidingViewsState } = useSlidingViews(RIGHT_OPEN_TYPE);
+  const {
+    stream,
+    streamData,
+    user,
+    isPeerToPeer = false,
+    roomId,
+    width,
+  } = props;
+  const { currentSlidingViewsState, toggleSlidingViewsState } =
+    useSlidingViews(RIGHT_OPEN_TYPE);
 
   const handleMessageCreate = async (message) => {
     console.log("handleMessageCreate", message);
@@ -34,26 +51,38 @@ function StreamRoom(props) {
         mobileOnly
         currentState={currentSlidingViewsState}
         firstSize={["md"].includes(width) ? 7 : 8}
-        secondSize={["md"].includes(width) ? 5 : 4}
-      >
+        secondSize={["md"].includes(width) ? 5 : 4}>
         <Card className={classes.roomVideoBox}>
           <CardHeader
-            avatar={<Avatar src={streamData ? streamData.avatarUrl : user.avatarUrl} />}
-            title={streamData ? streamData.name: user.username}
-            subheader={streamData?.showActivity && (streamData.offlineDate ? formatDate(streamData.offlineDate) : "online")}
+            avatar={
+              <Avatar
+                src={streamData ? streamData.avatarUrl : user.avatarUrl}
+              />
+            }
+            title={streamData ? streamData.name : user.username}
+            subheader={
+              streamData?.showActivity &&
+              (streamData.offlineDate
+                ? formatDate(streamData.offlineDate)
+                : "online")
+            }
             action={
               <Hidden mdUp>
-                <IconButton aria-label="new chat" onClick={handleSlidingViewToggle}>
+                <IconButton
+                  aria-label="new chat"
+                  onClick={handleSlidingViewToggle}>
                   <ChatIcon />
                 </IconButton>
               </Hidden>
-
             }
           />
           <Divider />
           <CardContent>
             <Video
-              classVideoName={clsx(classes.roomVideo, isPeerToPeer && classes.roomVideoDivider)}
+              classVideoName={clsx(
+                classes.roomVideo,
+                isPeerToPeer && classes.roomVideoDivider
+              )}
               key={roomId}
               stream={stream}
               controls={false}

@@ -10,16 +10,16 @@ import { SEARCH_ROUTE } from "../../constants/routes";
 
 export default function Nav() {
   const classes = useStyles();
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   return (
     <Box className={classes.navRoot}>
       <Box display="flex" alignItems="center" justifyContent="space-between">
-        <Typography variant="h6">
-          {t("SidebarFeedText")}
-        </Typography>
-        <IconButton to={SEARCH_ROUTE} component={Link}><SearchIcon /></IconButton>
+        <Typography variant="h6">{t("SidebarFeedText")}</Typography>
+        <IconButton to={SEARCH_ROUTE} component={Link}>
+          <SearchIcon />
+        </IconButton>
       </Box>
     </Box>
-  )
+  );
 }

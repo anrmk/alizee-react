@@ -6,7 +6,11 @@ export const VALUE_MAX_LENGTH = (max) => `Must be at most ${max} characters`;
 export const MIN_AMOUNT = (max) => `Must be at least ${max}$ USD`;
 export const MAX_AMOUNT = (max) => `Must be at most ${max}$ USD`;
 
-export const USERNAME_INPUT_HELPER = "In most cases, you'll be able to change your username back for another 14 days.";
-export const FULL_NAME_HELPER = "Help people discover your account by using the name you're known by: either your full name, nickname, or business name. You can only change your name twice within 14 days.";
-export const POST_AMOUNT_TEXT_HELPER = "You can't set amount if you didn't choose any media content."
-export const POST_GOAL_TEXT_HELPER = "You can't set fundraising if you didn't choose any media content."
+export const USERNAME_INPUT_HELPER =
+  "In most cases, you'll be able to change your username back for another 14 days.";
+export const FULL_NAME_HELPER =
+  "Help people discover your account by using the name you're known by: either your full name, nickname, or business name. You can only change your name twice within 14 days.";
+export const POST_AMOUNT_TEXT_HELPER =
+  "You can't set amount if you didn't choose any media content.";
+export const POST_GOAL_TEXT_HELPER =
+  "You can't set fundraising if you didn't choose any media content.";

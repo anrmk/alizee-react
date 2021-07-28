@@ -6,9 +6,19 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import { Box, Typography, TextField, Button, MenuItem } from "@material-ui/core";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  MenuItem,
+} from "@material-ui/core";
 
-import { EMPTY_VALUE_ERROR, VALUE_MIN_LENGTH, VALUE_MAX_LENGTH } from "../constants/form_validations";
+import {
+  EMPTY_VALUE_ERROR,
+  VALUE_MIN_LENGTH,
+  VALUE_MAX_LENGTH,
+} from "../constants/form_validations";
 
 import { PublicLayout } from "./Layouts";
 
@@ -25,9 +35,19 @@ const schema = yup.object().shape({
     .min(3, VALUE_MIN_LENGTH(3))
     .max(32, VALUE_MAX_LENGTH(32)),
   [EMAIL_INPUT_ID]: yup.string().email().required(),
-  [SUBJECT_SELECT_ID]: yup.string().required().min(3, VALUE_MIN_LENGTH(3)).max(80, VALUE_MAX_LENGTH(80)),
-  [MESSAGE_INPUT_ID]: yup.string().min(3, VALUE_MIN_LENGTH(3)).max(200, VALUE_MAX_LENGTH(200)),
-  [OTHER_SUBJECT_SELECT_ID]: yup.string().min(3, VALUE_MIN_LENGTH(3)).max(80, VALUE_MAX_LENGTH(80)),
+  [SUBJECT_SELECT_ID]: yup
+    .string()
+    .required()
+    .min(3, VALUE_MIN_LENGTH(3))
+    .max(80, VALUE_MAX_LENGTH(80)),
+  [MESSAGE_INPUT_ID]: yup
+    .string()
+    .min(3, VALUE_MIN_LENGTH(3))
+    .max(200, VALUE_MAX_LENGTH(200)),
+  [OTHER_SUBJECT_SELECT_ID]: yup
+    .string()
+    .min(3, VALUE_MIN_LENGTH(3))
+    .max(80, VALUE_MAX_LENGTH(80)),
 });
 
 function Contact() {
@@ -47,8 +67,7 @@ function Contact() {
     },
   });
 
-  const handleContactSubmit = (data) => {
-  };
+  const handleContactSubmit = (data) => {};
 
   return (
     <PublicLayout>
@@ -62,8 +81,7 @@ function Contact() {
         component="form"
         onSubmit={handleSubmit(handleContactSubmit)}
         width="100%"
-        maxWidth="460px"
-      >
+        maxWidth="460px">
         <Box mr={2} mb={2} width="100%">
           <Controller
             name={USERNAME_INPUT_ID}
@@ -128,16 +146,27 @@ function Contact() {
                 onChange={(e) => {
                   onChange(e.target.value);
                   setIsOtherSubject(e.target.value);
-                }}
-              >
-                <MenuItem value="registration and verification">Registration and Verification</MenuItem>
+                }}>
+                <MenuItem value="registration and verification">
+                  Registration and Verification
+                </MenuItem>
                 <MenuItem value="profile access">Profile Access</MenuItem>
-                <MenuItem value="credit card payments">Credit Card Payments</MenuItem>
+                <MenuItem value="credit card payments">
+                  Credit Card Payments
+                </MenuItem>
                 <MenuItem value="payouts">Payouts</MenuItem>
-                <MenuItem value="technical questions">Technical Questions</MenuItem>
-                <MenuItem value="reporting stolen content">Reporting Stolen Content</MenuItem>
-                <MenuItem value="law enforcement legal matter">Law Enforcement / Legal Matter</MenuItem>
-                <MenuItem value="report illegal material or behavior">Report Illegal Material or Behavior</MenuItem>
+                <MenuItem value="technical questions">
+                  Technical Questions
+                </MenuItem>
+                <MenuItem value="reporting stolen content">
+                  Reporting Stolen Content
+                </MenuItem>
+                <MenuItem value="law enforcement legal matter">
+                  Law Enforcement / Legal Matter
+                </MenuItem>
+                <MenuItem value="report illegal material or behavior">
+                  Report Illegal Material or Behavior
+                </MenuItem>
                 <MenuItem value="other">Other</MenuItem>
               </TextField>
             )}

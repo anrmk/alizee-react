@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -17,7 +18,10 @@ const INVALID_EMAIL_ERROR = "Must be a valid email";
 const EMPTY_VALUE_ERROR = "It is a required filed";
 
 const schema = yup.object().shape({
-  [EMAIL_INPUT_ID]: yup.string().required(EMPTY_VALUE_ERROR).email(INVALID_EMAIL_ERROR),
+  [EMAIL_INPUT_ID]: yup
+    .string()
+    .required(EMPTY_VALUE_ERROR)
+    .email(INVALID_EMAIL_ERROR),
   [PASSWORD_INPUT_ID]: yup.string().required(EMPTY_VALUE_ERROR),
 });
 
@@ -50,19 +54,25 @@ function SignInForm({
       onSocialSuccess={onSocialSuccess}
       onSocialFailure={onSocialFailure}
       helpComponent={
-        <Link variant="body1" display="block" onClick={() => history.push(RESET_PASSWORD_ROUTE)}>
+        <Link
+          variant="body1"
+          display="block"
+          onClick={() => history.push(RESET_PASSWORD_ROUTE)}>
           Forgot password?
         </Link>
       }
       endComponent={
         <Typography align="center">
-          Don't have an account? &nbsp;
-          <Link className={classes.link} color="primary" variant="body1" onClick={() => history.push(SIGN_UP_ROUTE)}>
+          Don&apos;t have an account? &nbsp;
+          <Link
+            className={classes.link}
+            color="primary"
+            variant="body1"
+            onClick={() => history.push(SIGN_UP_ROUTE)}>
             Sign Up
           </Link>
         </Typography>
-      }
-    >
+      }>
       <Controller
         name={EMAIL_INPUT_ID}
         control={control}

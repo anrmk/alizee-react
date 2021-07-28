@@ -1,1 +1,3 @@
-export { default as RelationshipList } from "./RelationshipList";
+import RelationshipList from "./RelationshipList";
+
+export default RelationshipList;

@@ -7,8 +7,9 @@ export default function useSharePostDialog() {
   const dialog = useDialog();
 
   const handleDialogToggle = useCallback(async (data) => {
-    dialog.toggleWithStack(dialogs[SHARE_POST_DIALOG_TYPE](null, {
-         ...data,
+    dialog.toggleWithStack(
+      dialogs[SHARE_POST_DIALOG_TYPE](null, {
+        ...data,
       })
     );
   }, []);
