@@ -3,14 +3,24 @@
     "react-app",
     "airbnb",
     "plugin:jsx-a11y/recommended",
-    "prettier"
+    "prettier",
+    "eslint:recommended"
   ],
   "plugins": [
     "jsx-a11y",
     "prettier",
-    "unused-imports"
+    "unused-imports",
+    "jest"
   ],
+  "env": {
+    "jest/globals": true
+  },
   "rules": {
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/prefer-to-have-length": "warn",
+    "jest/valid-expect": "error",
     "prettier/prettier": [
       "error",
       {

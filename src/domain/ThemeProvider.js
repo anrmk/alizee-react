@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  createMuiTheme,
+  createTheme,
   ThemeProvider as MuiThemeProvider,
 } from "@material-ui/core/styles";
 
@@ -31,7 +31,7 @@ const ThemeProvider = ({ children, theme }) => {
       return theme[themeOptions.paletteType];
     }
 
-    return createMuiTheme({
+    return createTheme({
       palette: {
         type: themeOptions.paletteType,
       },

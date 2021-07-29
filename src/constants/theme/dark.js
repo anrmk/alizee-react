@@ -1,8 +1,8 @@
-import { createMuiTheme } from "@material-ui/core";
+import { createTheme } from "@material-ui/core";
 
 import defaultTheme from "./default";
 
-export default createMuiTheme({
+export default createTheme({
   ...defaultTheme,
 
   palette: {

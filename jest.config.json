@@ -1,0 +1,12 @@
+{
+  "testRegex": "((\\.|/*.)(test))\\.js?$",
+  "transform": {
+    "^.+\\.svg$": "jest-svg-transformer",
+    "^.+\\.(js)$": "babel-jest"
+  },
+  "moduleNameMapper": {
+    ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "identity-obj-proxy"
+  },
+  "setupFiles": ["<rootDir>/test-config/set-env-vars.js"],
+  "setupFilesAfterEnv": ["<rootDir>/test-config/test-setup.js"]
+}
