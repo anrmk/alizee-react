@@ -7,7 +7,7 @@ trigger:
 - dev
 
 pool:
-  nam: React Pipeline
+  name: React Pipeline
 
 steps:
 
