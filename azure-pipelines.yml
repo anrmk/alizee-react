@@ -7,7 +7,7 @@ trigger:
 - dev
 
 pool:
-  name: _Frontend
+  name: Frontend
 
 steps:
 
