@@ -7,7 +7,7 @@ trigger:
 - dev
 
 pool:
-  name: React Pipeline
+  name: _Frontend
 
 steps:
 
