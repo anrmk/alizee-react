@@ -15,14 +15,14 @@ steps:
   inputs:
     versionSpec: '14.x'
     checkLatest: true
-- task: PublishPipelineArtifact@1
-  inputs:
-    targetPath: '$(Pipeline.Workspace)'
-    artifact: '_Frontend'
-    publishLocation: 'pipeline'
 
 - script: |
     npm install
     npm test
     npm run build
   displayName: 'npm install -> npm test -> npm build'
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Build.SourcesDirectory)'
+    artifact: 'react-spa'
