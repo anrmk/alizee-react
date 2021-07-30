@@ -1,4 +1,5 @@
 # Node.js with React
+
 # Build a Node.js project that uses React.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
@@ -14,6 +15,11 @@ steps:
   inputs:
     versionSpec: '14.x'
     checkLatest: true
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Pipeline.Workspace)'
+    artifact: '_Frontend'
+    publishLocation: 'pipeline'
 
 - script: |
     npm install
