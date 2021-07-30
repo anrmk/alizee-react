@@ -4,12 +4,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import {
   Grid,
-  Divider,
   Button,
   TextField,
   Typography,
-  Card,
-  CardHeader,
   CardContent,
 } from "@material-ui/core";
 
@@ -52,9 +49,7 @@ function EditSubscriptionForm({
   }, [price]);
 
   return (
-    <Card>
-      <CardHeader title="Subscription" />
-      <Divider />
+    <>
       <CardContent>
         <Grid
           container
@@ -104,45 +99,7 @@ function EditSubscriptionForm({
           </Grid>
         </Grid>
       </CardContent>
-
-      <Divider />
-
-      <CardContent>
-        <Grid container direction="column" spacing={2}>
-          <Grid item>
-            <Typography variant="h6">Profile promotion campaign</Typography>
-            <Typography variant="body2">
-              Offer a free trial or a discounted subscription on your profile
-              for a limited number of new or already expired subscribers
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Button disableElevation variant="outlined" color="primary">
-              Start Campaign
-            </Button>
-          </Grid>
-        </Grid>
-      </CardContent>
-
-      <Divider />
-
-      <CardContent>
-        <Grid container direction="column" spacing={2}>
-          <Grid item>
-            <Typography variant="h6">Following bundles</Typography>
-            <Typography variant="caption" color="textSecondary">
-              Offer several months of subscription as a discounted bundle
-            </Typography>
-          </Grid>
-
-          <Grid item>
-            <Button disableElevation variant="outlined" color="primary">
-              Create Bundle
-            </Button>
-          </Grid>
-        </Grid>
-      </CardContent>
-    </Card>
+    </>
   );
 }
 

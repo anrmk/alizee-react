@@ -453,3 +453,9 @@ export function toBase64(value, encode = true) {
 export function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+export function calcDiscount(price, discount, duration) {
+  const discountSum = (price * discount) / 100;
+  const totalPrice = (price - discountSum) * duration;
+  return totalPrice.toFixed(2);
+}

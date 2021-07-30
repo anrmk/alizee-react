@@ -121,6 +121,9 @@ export default {
     getSubscription: "accountsetting/subscriptionsettings",
     updateSubscription: "accountsetting/subscriptionsettings",
 
+    deleteSubscriptionBundle: "accountsetting/subscriptionbundle",
+    createSubscriptionBundle: "accountsetting/subscriptionbundle",
+
     // HASH TAGS
     getHashTags: "hashtag/gethashtags",
 

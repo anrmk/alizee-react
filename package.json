@@ -65,8 +65,7 @@
     "test:watch": "npm run test -- --watch",
     "eject": "react-scripts eject",
     "lint": "eslint --fix ./src/",
-    "prepare": "husky install",
-    "preinstall": "npx only-allow pnpm"
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": "react-app"

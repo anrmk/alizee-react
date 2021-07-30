@@ -69,6 +69,12 @@ import {
   UPDATE_SUBSCRIPTION_SUCCESS,
   UPDATE_SUBSCRIPTION_FAILURE,
   RESET_SETTINGS_REQUEST,
+  CREATE_SUBSCRIPTION_BUNDLE_REQUEST,
+  CREATE_SUBSCRIPTION_BUNDLE_SUCCESS,
+  CREATE_SUBSCRIPTION_BUNDLE_FAILURE,
+  DELETE_SUBSCRIPTION_BUNDLE_REQUEST,
+  DELETE_SUBSCRIPTION_BUNDLE_SUCCESS,
+  DELETE_SUBSCRIPTION_BUNDLE_FAILURE,
 } from "../actions/settings";
 
 export default function settings(
@@ -515,6 +521,44 @@ export default function settings(
       };
     }
     case UPDATE_SUBSCRIPTION_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case CREATE_SUBSCRIPTION_BUNDLE_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case CREATE_SUBSCRIPTION_BUNDLE_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case CREATE_SUBSCRIPTION_BUNDLE_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case DELETE_SUBSCRIPTION_BUNDLE_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case DELETE_SUBSCRIPTION_BUNDLE_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case DELETE_SUBSCRIPTION_BUNDLE_FAILURE: {
       return {
         ...state,
         ...action.payload,
