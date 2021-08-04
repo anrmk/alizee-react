@@ -26,6 +26,7 @@ steps:
     npm run build
   displayName: 'npm install -> npm test -> npm build'
   env:
+    NODE_OPTIONS: $(NODE_OPTIONS)
     REACT_APP_PORT: $(REACT_APP_PORT)
     REACT_APP_DOMAIN: $(REACT_APP_DOMAIN)
     REACT_APP_SS_DOMAIN: $(REACT_APP_SS_DOMAIN)
