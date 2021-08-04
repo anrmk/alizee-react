@@ -22,6 +22,9 @@ steps:
     artifact: 'react-spa'
 
 - script: |
+    echo $(REACT_APP_DOMAIN)
+
+- script: |
     npm install
     npm test
     npm run build
