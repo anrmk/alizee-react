@@ -12,6 +12,7 @@ export default {
     signintwitter: "account/signintwitter",
     onetimeauth: "account/onetimeauthenticate",
     createMood: "account/createmood",
+    sendTip: "account/sendTip",
 
     // POSTS
     getPost: "post/getpost",
@@ -26,10 +27,7 @@ export default {
     favoritePost: "post/favorite",
     reportPost: "post/report",
     deletePost: "post/deletepost",
-
-    // PAYMENT
-    buyPost: "payment/buyPost",
-    sendTip: "payment/sendTip",
+    buyPost: "post/buyPost",
 
     // POST COMMENTS
     getCommentsPost: "comment/comments",

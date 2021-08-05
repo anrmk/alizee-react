@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { fade } from "@material-ui/core/styles/colorManipulator";
+import { alpha } from "@material-ui/core/styles/colorManipulator";
 
 import DefaultCover from "../../assets/img/default-cover.png";
 
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     bottom: 0,
     padding: theme.spacing(0.5, 0.5, 0.5, 14),
-    backgroundColor: fade(theme.palette.common.black, 0.4),
+    backgroundColor: alpha(theme.palette.common.black, 0.4),
     color: theme.palette.common.white,
   },
 
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   label: {
-    backgroundColor: fade(theme.palette.primary.main, 0.8),
+    backgroundColor: alpha(theme.palette.primary.main, 0.8),
     borderRadius: theme.shape.borderRadius,
     padding: theme.spacing(0.1, 0.5),
     position: "absolute",

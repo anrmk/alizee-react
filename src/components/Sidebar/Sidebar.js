@@ -60,7 +60,7 @@ function Sidebar({
       <Grid
         container
         direction="column"
-        justify="space-between"
+        justifyContent="space-between"
         alignItems="stretch">
         <Grid item>
           <UserCard
