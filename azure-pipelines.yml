@@ -15,11 +15,6 @@ steps:
   inputs:
     versionSpec: '14.x'
 
-- task: PublishPipelineArtifact@1
-  inputs:
-    targetPath: '$(Build.SourcesDirectory)'
-    artifact: 'react-spa'
-
 - script: |
     npm install
     npm test
@@ -37,3 +32,16 @@ steps:
     REACT_APP_TURN_SERVER_URL: $(REACT_APP_TURN_SERVER_URL)
     REACT_APP_TURN_SERVER_USERNAME: $(REACT_APP_TURN_SERVER_USERNAME)
     REACT_APP_TURN_SERVER_CREDENTIAL: $(REACT_APP_TURN_SERVER_CREDENTIAL)
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)/build'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    CleanTargetFolder: true
+    OverWrite: true
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'react-spa'
