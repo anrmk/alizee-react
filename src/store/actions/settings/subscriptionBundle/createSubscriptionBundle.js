@@ -46,7 +46,7 @@ export function createSubscriptionBundle(api, opts) {
 
     // const url = generateUrl("createSubscriptionBundle");
     try {
-      const { bundles, price } = getState().settings.data;
+      const { bundles, price, campaigns } = getState().settings.data;
       const isBundleCreated = bundles.some(
         (item) => item.duration === opts.duration
       );
@@ -61,6 +61,7 @@ export function createSubscriptionBundle(api, opts) {
       dispatch(
         receiveCreateSubscriptionBundleReceive({
           price,
+          campaigns,
           bundles: [...bundles, opts],
         })
       );

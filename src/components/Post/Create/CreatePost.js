@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -9,7 +9,8 @@ import {
   TextField,
   InputAdornment,
   Box,
-  IconButton,
+  Checkbox,
+  FormControlLabel,
 } from "@material-ui/core";
 import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 
@@ -17,10 +18,7 @@ import CreateTools from "./CreateTools";
 import GridGalleryHorizontal from "../../GridGalleryHorizontal/GridGalleryHorizontal";
 import ChipsInput from "../../ChipsInput";
 
-import {
-  POST_AMOUNT_TEXT_HELPER,
-  POST_GOAL_TEXT_HELPER,
-} from "../../../constants/form_validations";
+import { POST_AMOUNT_TEXT_HELPER } from "../../../constants/form_validations";
 
 import useStyles from "./styles";
 
@@ -30,8 +28,7 @@ const COMMENTABLE_ID = "commentable";
 const EXPLORABLE_ID = "isExplorable";
 const AMOUNT_ID = "amount";
 const TAGGED_USERS_ID = "taggedUsers";
-const TARGET_FUNDS_ID = "targetFunds";
-const GOAL_BTN_ID = "goalBtn";
+const IS_TARGET_FUNDS_ID = "isTargetFunds";
 
 const schema = yup.object().shape({
   [MEDIA_ID]: yup.array().min(0).max(12).required("Media is required"),
@@ -42,6 +39,7 @@ const schema = yup.object().shape({
   [EXPLORABLE_ID]: yup.boolean(),
   [AMOUNT_ID]: yup.number().typeError("Must be a number").min(0).notRequired(),
   [TAGGED_USERS_ID]: yup.array().nullable().notRequired(),
+  [IS_TARGET_FUNDS_ID]: yup.bool().default(false),
 });
 
 export default function CreatePost({
@@ -52,14 +50,12 @@ export default function CreatePost({
   isExplorable = false,
   amount = 0,
   taggedUsers = [],
-  targetFunds = 0,
+  targetFunds = false,
 
   onTagUsersClick,
   onSubmit,
 }) {
   const classes = useStyles();
-
-  const [goalActive, setGoalActive] = useState(false);
 
   const {
     errors,
@@ -78,7 +74,7 @@ export default function CreatePost({
       [EXPLORABLE_ID]: isExplorable,
       [AMOUNT_ID]: amount,
       [TAGGED_USERS_ID]: taggedUsers,
-      [TARGET_FUNDS_ID]: targetFunds,
+      [IS_TARGET_FUNDS_ID]: targetFunds,
     },
   });
   const mediaWatcher = watch(MEDIA_ID, []);
@@ -91,7 +87,7 @@ export default function CreatePost({
     register({ name: COMMENTABLE_ID });
     register({ name: EXPLORABLE_ID });
     register({ name: TAGGED_USERS_ID });
-    register({ name: TARGET_FUNDS_ID });
+    register({ name: IS_TARGET_FUNDS_ID });
 
     return () => {
       mediaWatcher.forEach((file) => URL.revokeObjectURL(file.previewUrl));
@@ -129,8 +125,6 @@ export default function CreatePost({
           setValue(target.name, !privateWatcher);
         } else if (target.name === TAGGED_USERS_ID) {
           handleTagUsersClick();
-        } else if (target.name === GOAL_BTN_ID) {
-          setGoalActive((prev) => !prev);
         }
         break;
       case "file": {
@@ -184,7 +178,6 @@ export default function CreatePost({
       </FormControl>
       <CreateTools
         isTaggable
-        isGoal={goalActive}
         privateBtnName={EXPLORABLE_ID}
         commentBtnName={COMMENTABLE_ID}
         isExplorable={privateWatcher}
@@ -194,77 +187,60 @@ export default function CreatePost({
       <Typography color="error">{errors[MEDIA_ID]?.message}</Typography>
       <Box display="flex" flexWrap="wrap" my={1}>
         <FormControl className={classes.inputText} variant="filled">
-          {goalActive ? (
-            <Controller
-              name={TARGET_FUNDS_ID}
-              control={control}
-              render={({ onChange, onBlur, value }) => (
-                <TextField
-                  fullWidth
-                  placeholder="Fundraising"
-                  variant="outlined"
-                  inputMode="numeric"
-                  disabled={!mediaWatcher.length}
-                  value={value}
-                  error={!!errors[TARGET_FUNDS_ID]}
-                  helperText={
-                    errors[TARGET_FUNDS_ID]?.message || POST_GOAL_TEXT_HELPER
-                  }
-                  onBlur={onBlur}
-                  onChange={onChange}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">$</InputAdornment>
-                    ),
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          onClick={handleToolsChange}
-                          name={GOAL_BTN_ID}>
-                          <EmojiEventsIcon fontSize="small" color="secondary" />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              )}
-            />
-          ) : (
-            <Controller
-              name={AMOUNT_ID}
-              control={control}
-              render={({ onChange, onBlur, value }) => (
-                <TextField
-                  fullWidth
-                  placeholder="Amount"
-                  variant="outlined"
-                  inputMode="numeric"
-                  disabled={!mediaWatcher.length}
-                  value={value}
-                  error={!!errors[AMOUNT_ID]}
-                  helperText={
-                    errors[AMOUNT_ID]?.message || POST_AMOUNT_TEXT_HELPER
-                  }
-                  onBlur={onBlur}
-                  onChange={onChange}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">$</InputAdornment>
-                    ),
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          onClick={handleToolsChange}
-                          name={GOAL_BTN_ID}>
-                          <EmojiEventsIcon fontSize="small" />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              )}
-            />
-          )}
+          <Controller
+            name={AMOUNT_ID}
+            control={control}
+            render={({ onChange, onBlur, value }) => (
+              <TextField
+                fullWidth
+                placeholder="Amount"
+                variant="outlined"
+                inputMode="numeric"
+                disabled={!mediaWatcher.length}
+                value={value}
+                error={!!errors[AMOUNT_ID]}
+                helperText={
+                  errors[AMOUNT_ID]?.message || POST_AMOUNT_TEXT_HELPER
+                }
+                onBlur={onBlur}
+                onChange={onChange}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">$</InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Controller
+                        name={IS_TARGET_FUNDS_ID}
+                        control={control}
+                        render={({
+                          onChange: onTargetChange,
+                          value: targetValue,
+                        }) => (
+                          <FormControlLabel
+                            disabled={!mediaWatcher.length}
+                            name={IS_TARGET_FUNDS_ID}
+                            value={IS_TARGET_FUNDS_ID}
+                            id={IS_TARGET_FUNDS_ID}
+                            onChange={(e) => onTargetChange(e.target.checked)}
+                            control={<Checkbox style={{ display: "none" }} />}
+                            label={
+                              <Box display="flex" alignItems="center">
+                                <EmojiEventsIcon
+                                  fontSize="small"
+                                  color={targetValue ? "secondary" : "inherit"}
+                                />
+                              </Box>
+                            }
+                          />
+                        )}
+                      />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            )}
+          />
         </FormControl>
 
         {taggedUsersWatcher.length > 0 && (

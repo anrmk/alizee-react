@@ -7,14 +7,14 @@ import { Box, Typography, LinearProgress } from "@material-ui/core";
 import useStyles from "./styles";
 
 function FundraisingPost({
-  fundraising = 0,
-  targetFunds = 0,
+  targetProgress = 0,
+  amount = 0,
   positionDirection = "bottom",
 }) {
   const classes = useStyles();
 
   const findPercent = () => {
-    const result = (fundraising / targetFunds) * 100;
+    const result = (targetProgress / amount) * 100;
     return Math.floor(result);
   };
 
@@ -28,14 +28,14 @@ function FundraisingPost({
         className={classes.progressBar}
       />
       <Box position="absolute" lineHeight="16px" fontSize={12} component="span">
-        {`$${fundraising}`}
+        {`$${targetProgress}`}
       </Box>
       <Typography
         variant="body2"
         color="textPrimary"
         align="right"
         className={classes.targetFunds}>
-        {`$${targetFunds}`}
+        {`$${amount}`}
       </Typography>
     </Box>
   );

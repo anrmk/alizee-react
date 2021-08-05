@@ -39,7 +39,7 @@ function Bundle({
             primary={`$${calcDiscount(price, discount, duration)} USD`}
             secondary={`total for ${duration} months`}
           />
-          <ListItemSecondaryAction onClick={() => onDelete({ id })}>
+          <ListItemSecondaryAction onClick={() => onDelete(id)}>
             <IconButton edge="end" aria-label="delete">
               <DeleteForeverIcon />
             </IconButton>

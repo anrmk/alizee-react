@@ -25,6 +25,7 @@ import ConfirmDialog from "../domain/ConfirmationDialog.js/ConfirmDialog";
 import LightboxModal from "../domain/LightboxModal";
 import PostStatistics from "../domain/PostStatistics/PostStatistics";
 import SubscriptionBundleFormDialog from "../domain/SettingsForms/SubscriptionBundleFormDialog";
+import SubscriptionCampaignFormDialog from "../domain/SettingsForms/SubscriptionCampaignFormDialog";
 
 export const LANGUAGE_DIALOG_TYPE = "language";
 
@@ -67,6 +68,7 @@ export const INDENTITY_DIALOG_TYPE = "identity";
 export const POST_STATISTICS_DIALOG_TYPE = "postStatistics";
 
 export const SUBSCRIPTION_BUNDLE_DIALOG_TYPE = "subscriptionBundle";
+export const SUBSCRIPTION_CAMPAIGN_DIALOG_TYPE = "subscriptionCampaign";
 
 const baseDialogProps = {
   dialogProps: { fullWidth: true },
@@ -265,6 +267,12 @@ export default {
   [SUBSCRIPTION_BUNDLE_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     content: <SubscriptionBundleFormDialog {...contentProps} />,
     mainBtnText: "Save",
+    ...baseDialogProps,
+    ...dialogProps,
+  }),
+  [SUBSCRIPTION_CAMPAIGN_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+    content: <SubscriptionCampaignFormDialog {...contentProps} />,
+    mainBtnText: "Start Campaign",
     ...baseDialogProps,
     ...dialogProps,
   }),

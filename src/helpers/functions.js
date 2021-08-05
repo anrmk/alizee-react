@@ -459,3 +459,21 @@ export function calcDiscount(price, discount, duration) {
   const totalPrice = (price - discountSum) * duration;
   return totalPrice.toFixed(2);
 }
+
+export function customFormateDate(
+  value,
+  options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }
+) {
+  const longEnUSFormatter = new Intl.DateTimeFormat("en-US", options);
+  return longEnUSFormatter.format(value);
+}
+
+export function addDays(date, days) {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}

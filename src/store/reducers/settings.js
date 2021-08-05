@@ -75,6 +75,12 @@ import {
   DELETE_SUBSCRIPTION_BUNDLE_REQUEST,
   DELETE_SUBSCRIPTION_BUNDLE_SUCCESS,
   DELETE_SUBSCRIPTION_BUNDLE_FAILURE,
+  CREATE_CAMPAIGN_REQUEST,
+  CREATE_CAMPAIGN_SUCCESS,
+  CREATE_CAMPAIGN_FAILURE,
+  DELETE_CAMPAIGN_REQUEST,
+  DELETE_CAMPAIGN_SUCCESS,
+  DELETE_CAMPAIGN_FAILURE,
 } from "../actions/settings";
 
 export default function settings(
@@ -559,6 +565,44 @@ export default function settings(
       };
     }
     case DELETE_SUBSCRIPTION_BUNDLE_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case CREATE_CAMPAIGN_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case CREATE_CAMPAIGN_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case CREATE_CAMPAIGN_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case DELETE_CAMPAIGN_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case DELETE_CAMPAIGN_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case DELETE_CAMPAIGN_FAILURE: {
       return {
         ...state,
         ...action.payload,

@@ -113,9 +113,9 @@
   "DeleteCommentDialogTitle": "Delete Comment",
   "DeleteCommentDialogDescription": "The comment will be deleted without ability to restore its.",
 
-  "ProfileUserInfoSubscribeBtnTextFollow": "Follow",
-  "ProfileUserInfoSubscribeBtnTextUnfollow": "Unfollow",
-  "ProfileUserInfoSubscribeBtnTextFollowForFree": "Follow for free",
-  "ProfileUserInfoSubscribeBtnTextFollowForPrice": "Follow for",
+  "ProfileUserInfoSubscribeBtnTextSubscribe": "Subscribe",
+  "ProfileUserInfoSubscribeBtnTextUnsubscribe": "Unsubscribe",
+  "ProfileUserInfoSubscribeBtnTextSubscribeForFree": "Subscribe for free",
+  "ProfileUserInfoSubscribeBtnTextSubscribeForPrice": "Subscribe for",
   "ProfileUserInfoSubscribeBtnTextAwaitConfirm": "Awaiting confirmation"
 }

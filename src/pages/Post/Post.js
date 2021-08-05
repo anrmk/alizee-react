@@ -124,11 +124,11 @@ function PostPage(props) {
               isOwner={user.userName === post.owner?.userName}
               onClick={lightboxModal.toggle}
             />
-            {post.data.targetFunds > 0 && (
+            {post.data?.isTargetFunds && (
               <FundraisingPost
                 positionDirection="top"
-                fundraising={post.data.fundraising}
-                targetFunds={post.data.targetFunds}
+                targetProgress={post.data?.targetProgress}
+                amount={post.data.amount}
               />
             )}
             {post.data.userTags && post.data.userTags.length > 0 && (

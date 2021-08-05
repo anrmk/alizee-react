@@ -153,11 +153,11 @@ function Post(props) {
           onPayClick={onBuyPost}
           onChangeIndex={handleChangeSlideIndex}
         />
-        {post.targetFunds > 0 && (
+        {post?.isTargetFunds && (
           <FundraisingPost
             position="bottom"
-            fundraising={post.fundraising}
-            targetFunds={post.targetFunds}
+            targetProgress={post.targetProgress}
+            amount={post.amount}
           />
         )}
       </CardMedia>

@@ -40,11 +40,13 @@ function errorGetSubscription(message) {
 export function getSubscription(api) {
   return async (dispatch) => {
     dispatch(requestGetSubscription());
-
     const url = generateUrl("getSubscription");
     try {
       const { data } = await api.setMethod("GET").query(url);
-      data.bundles = [{ duration: 3, discount: 25, id: 1 }];
+      // TODO: DELETE HARD CODE AFTER CONNECT API
+
+      data.bundles = [];
+      data.campaigns = [];
       dispatch(receiveGetSubscription(data));
     } catch (e) {
       dispatch(errorGetSubscription("Error: something went wrong:", e));

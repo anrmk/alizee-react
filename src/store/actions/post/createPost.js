@@ -44,7 +44,7 @@ export function createPost(api, opts) {
     try {
       const {
         amount,
-        targetFunds,
+        isTargetFunds,
         description,
         commentable,
         isExplorable,
@@ -54,7 +54,7 @@ export function createPost(api, opts) {
 
       const formData = new FormData();
       formData.append("amount", (amount && Number(amount)) || 0);
-      formData.append("targetFunds", (targetFunds && Number(targetFunds)) || 0);
+      formData.append("isTargetFunds", isTargetFunds);
       formData.append("description", description);
       formData.append("isCommentable", commentable);
       formData.append("isExplorable", isExplorable);

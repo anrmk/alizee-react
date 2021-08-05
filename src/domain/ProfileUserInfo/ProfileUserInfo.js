@@ -175,6 +175,7 @@ function ProfileUserInfo({
               variant="contained"
               onClick={handleSubscribeClick}>
               {getSubscriptionBtnText(followStatus, subscriptionPrice, t)}
+              {/* <Typography>${subscriptionPrice}</Typography> */}
             </Button>
             <Box
               width="100%"

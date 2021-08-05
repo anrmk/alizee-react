@@ -51,6 +51,8 @@ export const PROFILE_USERNAME_ROUTE = (username) => `/${username}`;
 export const PROFILE_ROUTE = "/:username";
 export const PROFILE_FOLLOWERS_ROUTE = "/:username/followers";
 export const PROFILE_FOLLOWINGS_ROUTE = "/:username/followings";
+export const PROFILE_LINK_ROUTE = (username) =>
+  `https://themembers.com/${username}`;
 
 export const BLOCKED_USERNAME_ROUTE = (username) => `/${username}/blocked`;
 export const BLOCKED_ROUTE = "/:username/blocked";

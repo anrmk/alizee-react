@@ -45,17 +45,18 @@ export function deleteSubscriptionBundle(api, opts) {
 
     // const url = generateUrl("deleteSubscriptionBundle");
     try {
-      const { bundles, price } = getState().settings.data;
+      const { bundles, price, campaigns } = getState().settings.data;
 
       //   await api
       //     .setMethod("DELETE")
       //     .setParams(opts)
       //     .query(url);
-      const removedBundleArray = bundles.filter((item) => item.id !== opts.id);
+      const removedBundleArray = bundles.filter((item) => item.id !== opts);
 
       dispatch(
         receiveDeleteSubscriptionBundleReceive({
           price,
+          campaigns,
           bundles: removedBundleArray,
         })
       );

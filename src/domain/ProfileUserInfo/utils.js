@@ -7,15 +7,16 @@ import {
 } from "../../constants/follow_types";
 
 export function getSubscriptionBtnText(status, price, t) {
-  if (status === null && !price)
-    return t("ProfileUserInfoSubscribeBtnTextFollowForFree");
-  if (status === null && price)
-    return `${t("ProfileUserInfoSubscribeBtnTextFollowForPrice")} $${price}`;
+  if (!status && !price)
+    return t("ProfileUserInfoSubscribeBtnTextSubscribeForFree");
+  if (!status && price) {
+    return `${t("ProfileUserInfoSubscribeBtnTextSubscribeForPrice")} $${price}`;
+  }
   if (status === FOLLOW_ACCEPTED)
-    return t("ProfileUserInfoSubscribeBtnTextUnfollow");
+    return t("ProfileUserInfoSubscribeBtnTextUnsubscribe");
   if (status === FOLLOW_PENDING || status === FOLLOW_REJECTED)
     return t("ProfileUserInfoSubscribeBtnTextAwaitConfirm");
-  return t("ProfileUserInfoSubscribeBtnTextFollow");
+  return t("ProfileUserInfoSubscribeBtnTextSubscribe");
 }
 
 export function isAwaitingConfirmation(status) {
