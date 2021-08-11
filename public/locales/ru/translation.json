@@ -110,5 +110,6 @@
   "ProfileUserInfoSubscribeBtnTextUnfollow": "Отписаться",
   "ProfileUserInfoSubscribeBtnTextFollowForFree": "Подписаться бесплатно",
   "ProfileUserInfoSubscribeBtnTextFollowForPrice": "Подписаться за",
-  "ProfileUserInfoSubscribeBtnTextAwaitConfirm": "Ожидание подтверждения"
+  "ProfileUserInfoSubscribeBtnTextAwaitConfirm": "Ожидание подтверждения",
+  "ProfileContentGridGalleryStubTextSubscribeToSeePosts": "Подпишитесь чтобы увидеть посты пользователя"
 }

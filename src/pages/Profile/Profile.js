@@ -260,6 +260,7 @@ function Profile(props) {
             onFetchMore={handleFetchPosts}
             onItemClick={handleItemClick}
             onTabChange={handleTabChange}
+            onSubscribeClick={followDialog.toggle}
           />
         </Grid>
         <Hidden smDown>
@@ -272,12 +273,12 @@ function Profile(props) {
                 isVerified={user.data?.identityVerified}
                 followStatus={user.data?.followStatus}
                 subscriptionPrice={user.data?.subscriptionPrice}
+                sites={user.data.sites}
                 onSubscribeClick={followDialog.toggle}
                 onSendTipClick={sendTipDialog.toggle}
                 onMoodUpdateClick={handleMoodUpdateClick}
                 onDeleteAvatarImageClick={handleDeleteAvatarImageClick}
                 onAvatarUrlChange={handleAvatarImageChange}
-                sites={user.data.sites}
                 onClick={handleGoToSocialClick}
               />
             </Box>

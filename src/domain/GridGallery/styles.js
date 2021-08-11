@@ -1,5 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 
+import DefaultPattern from "../../assets/img/glamorous.svg";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     overflow: "hidden !important",
@@ -71,6 +73,19 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     alignSelf: "start",
     marginTop: theme.spacing(0.5),
+  },
+
+  stubCardContent: {
+    height: "200px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+
+    backgroundImage: `url("${DefaultPattern}")`,
+    backgroundPosition: " center",
+    backgroundRepeat: "repeat",
+    backgroundSize: "contain",
   },
 }));
 

@@ -3,13 +3,25 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import GridGalleryUserList from "./GridGalleryUserList";
 import GridGalleryPostList from "./GridGalleryPostList";
+import GridGalleryStub from "./GridGalleryStub";
 
 import useStyle from "./styles";
 
-function GridGallery(props) {
-  const { isUserView, items, hasMore } = props;
-  const { onFetchMore, onItemClick } = props;
+function GridGallery({
+  isStubShow,
+  isUserView,
+  items,
+  hasMore,
+
+  onFetchMore,
+  onItemClick,
+  onSubscribeClick,
+}) {
   const classes = useStyle();
+
+  if (isStubShow)
+    return <GridGalleryStub onSubscribeClick={onSubscribeClick} />;
+
   return (
     items &&
     !!items.length && (

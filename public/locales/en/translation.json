@@ -117,5 +117,6 @@
   "ProfileUserInfoSubscribeBtnTextUnsubscribe": "Unsubscribe",
   "ProfileUserInfoSubscribeBtnTextSubscribeForFree": "Subscribe for free",
   "ProfileUserInfoSubscribeBtnTextSubscribeForPrice": "Subscribe for",
-  "ProfileUserInfoSubscribeBtnTextAwaitConfirm": "Awaiting confirmation"
+  "ProfileUserInfoSubscribeBtnTextAwaitConfirm": "Awaiting confirmation",
+  "ProfileContentGridGalleryStubTextSubscribeToSeePosts": "Subscribe to see user's posts"
 }

@@ -7,7 +7,11 @@ import { ProfileStatisticsMobile } from "../ProfileStatistics";
 
 function ProfileContent(props) {
   const { isOwner, items, hasMore, tabIndex, disabled, user } = props;
-  const { onFetchMore, onTabChange, onItemClick } = props;
+  const { onFetchMore, onTabChange, onItemClick, onSubscribeClick } = props;
+
+  const handleSubscribeClick = () => {
+    onSubscribeClick && onSubscribeClick(user);
+  };
 
   return (
     <>
@@ -30,10 +34,12 @@ function ProfileContent(props) {
         disabled={disabled}
       />
       <GridGallery
+        isStubShow={!user.isFollow && !isOwner}
         items={items}
         hasMore={hasMore}
         onFetchMore={onFetchMore}
         onItemClick={onItemClick}
+        onSubscribeClick={handleSubscribeClick}
       />
     </>
   );
