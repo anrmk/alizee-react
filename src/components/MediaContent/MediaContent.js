@@ -20,6 +20,7 @@ function MediaContent({
   isPurchased,
   showThumbnail,
   isLiked = false,
+  isTargetFunds,
 
   onPayClick,
   onChangeIndex,
@@ -51,6 +52,7 @@ function MediaContent({
         <FavoriteIcon className={classes.favoriteIcon} />
       </Fade>
       <Gallery
+        isTargetFunds={isTargetFunds}
         className={classes.root}
         amount={amount}
         isPurchased={isPurchased}

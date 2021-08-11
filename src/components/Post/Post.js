@@ -36,7 +36,7 @@ function Post(props) {
   let timerLikeAnimation = useRef().current;
 
   const { id, user, owner, post, comments } = props;
-  const { likes, isLike, isFavorite, isUserFavorite } = props;
+  const { likes, isLike, isFavorite, isUserFavorite, isTargetFunds } = props;
   const {
     onLike,
     onFavorite,
@@ -148,6 +148,7 @@ function Post(props) {
           amount={post.amount}
           fundraising={post.fundraising}
           isPurchased={post.isPurchased}
+          isTargetFunds={isTargetFunds}
           isOwner={user.userName === owner.userName}
           isLiked={isLikeAnimation}
           onPayClick={onBuyPost}

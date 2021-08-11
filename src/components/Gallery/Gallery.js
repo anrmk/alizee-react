@@ -17,6 +17,7 @@ function Gallery({
   className,
   style,
   pagination = true,
+  isTargetFunds,
 
   onPayClick,
   onChangeIndex,
@@ -36,7 +37,7 @@ function Gallery({
 
   return (
     <Box className={clsx(classes.root, className)} style={style}>
-      {amount !== 0 && !isPurchased && (
+      {amount !== 0 && !isPurchased && !isTargetFunds && (
         <Box className={classes.payableDescription}>
           <IconButton onClick={handlePayClick}>
             <LockIcon fontSize="large" />

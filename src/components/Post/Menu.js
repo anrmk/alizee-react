@@ -27,6 +27,7 @@ function Menu({
   isFavorite,
   isBlocked,
   type = POST_TYPE,
+  isProfile,
 
   onBlock,
   onReport,
@@ -96,7 +97,7 @@ function Menu({
           <ListItemText primary="Report" />
         </ListItem>
       )}
-      {isOwner && (
+      {isOwner && !isProfile && (
         <ListItem button onClick={handlePostStatisticsClick}>
           <ListItemIcon>
             <BarChartIcon />

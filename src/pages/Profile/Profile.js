@@ -230,6 +230,7 @@ function Profile(props) {
             userName: user.data.userName,
             isOwner: username === me.userName,
             isFavorite: user.data.isFavorite,
+            isProfile: true,
           })
         }
       />

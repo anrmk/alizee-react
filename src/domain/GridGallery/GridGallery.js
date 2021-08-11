@@ -10,7 +10,6 @@ function GridGallery(props) {
   const { isUserView, items, hasMore } = props;
   const { onFetchMore, onItemClick } = props;
   const classes = useStyle();
-
   return (
     items &&
     !!items.length && (

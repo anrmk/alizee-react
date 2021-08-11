@@ -59,7 +59,6 @@ function PostPage(props) {
   const { user, post, comment } = props;
   const { getPost, getComments, resetComments, resetCurrentPost } = props;
   const { buyPost, getReceipt, getPurchases } = props;
-
   const likeAction = useLikeAction();
   const favoriteAction = useFavoriteAction();
   const sendTipDialog = useSendTipDialog();
@@ -121,6 +120,7 @@ function PostPage(props) {
               items={post.data.media}
               amount={post.data.amount}
               isPurchased={post.data.isPurchased}
+              isTargetFunds={post.data.isTargetFunds}
               isOwner={user.userName === post.owner?.userName}
               onClick={lightboxModal.toggle}
             />

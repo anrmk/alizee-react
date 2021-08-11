@@ -44,6 +44,7 @@ const PostsList = React.memo(
               comments={item.comments}
               likes={item.likes}
               isLike={item.iLike}
+              isTargetFunds={item.isTargetFunds}
               isFavorite={item.isFavorite}
               isUserFavorite={item.user?.isFavorite}
               onLike={onLike}

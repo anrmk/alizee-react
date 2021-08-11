@@ -1,6 +1,4 @@
-import { MEDIA_STORY } from "../../../constants/media_types";
 import { generateUrl } from "../../../helpers/functions";
-import { createMedia } from "../media";
 
 export const CREATE_STORY_SLIDE_REQUEST = "CREATE_STORY_SLIDE_REQUEST";
 export const CREATE_STORY_SLIDE_SUCCESS = "CREATE_STORY_SLIDE_SUCCESS";
@@ -45,40 +43,20 @@ export function createStorySlide(api, storyData) {
 
     try {
       const mediaData = storyData.medias;
-      let media = [];
-      if (mediaData.length > 0) {
-        await dispatch(createMedia(api, mediaData, MEDIA_STORY));
 
-        const mediaErrorMessage = getState().media.errorMessage;
-        if (mediaErrorMessage) {
-          throw mediaErrorMessage;
-        }
+      const formData = new FormData();
 
-        media = getState().media.data;
-      }
+      formData.append("externalLink", storyData?.link || null);
 
-      const { data } = await api
-        .setData({
-          externalLink: storyData?.link || null,
-          mediaId: media[0].id,
-        })
-        .query(url);
+      mediaData &&
+        mediaData.forEach((file) => {
+          formData.append("files", file);
+        });
+
+      await api.setData(formData).query(url);
 
       const currentStoryState = getState().story.currentStory;
       const updatedCurrentStoryState = { ...currentStoryState };
-
-      // if (isEmptyObject(currentStoryState)) {
-      //   const signInState = getState().signIn.userInfo;
-      //   updatedCurrentStoryState.user = {
-      //     userName: signInState.userName,
-      //     name: signInState.name,
-      //     avatarUrl: signInState.avatarUrl,
-      //   };
-      //   updatedCurrentStoryState.userId = signInState.id;
-      // }
-
-      // updatedCurrentStoryState.slides = [data, ...(updatedCurrentStoryState?.slides || [])];
-      // updatedCurrentStoryState.thumbnailUrl = data.media.thumbnailUrl;
 
       dispatch(receiveCreateStory(updatedCurrentStoryState));
     } catch (e) {
