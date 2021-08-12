@@ -43,7 +43,6 @@ import useStyles from "./style";
 function Profile(props) {
   const initPostsSettings = {
     index: 0,
-    tagged: false,
   };
 
   const classes = useStyles();
@@ -55,7 +54,7 @@ function Profile(props) {
 
   const { me, user, post, media, settings } = props;
   const { fetchUser, resetUser } = props;
-  const { fetchPosts, resetPosts, getFavoritePosts } = props;
+  const { fetchPosts, resetPosts, getFavoritePosts, getTaggedPosts } = props;
   const { createFollow, deleteFollow } = props;
   const { updateCover, updateAvatar } = props;
 
@@ -131,26 +130,32 @@ function Profile(props) {
       )
     );
   };
-
   async function handleFetchPosts() {
     if (post.isFetching) {
       return;
     }
 
-    if (postSettings.index === 2) {
-      getFavoritePosts(apiClient);
-    } else {
-      fetchPosts(apiClient, {
-        userName: username,
-        tagged: postSettings.tagged,
-      });
+    switch (postSettings.index) {
+      case 1:
+        getTaggedPosts(apiClient, {
+          userName: username,
+        });
+        break;
+      case 2:
+        getFavoritePosts(apiClient);
+        break;
+
+      default:
+        fetchPosts(apiClient, {
+          userName: username,
+        });
+        break;
     }
   }
 
   const handleTabChange = (index) => {
     setPostSettings({
       index,
-      tagged: index === 1 || false,
     });
   };
 
@@ -323,6 +328,9 @@ function mapDispatchToProps(dispatch) {
     fetchPosts: (api, opts) =>
       dispatch(profilePostsActions.getPosts(api, opts)),
     resetPosts: () => dispatch(profilePostsActions.resetPosts()),
+
+    getTaggedPosts: (api, opts) =>
+      dispatch(profilePostsActions.getTaggedPosts(api, opts)),
 
     getFavoritePosts: (api, opts) =>
       dispatch(profilePostsActions.getFavoritePosts(api, opts)),

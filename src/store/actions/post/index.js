@@ -18,6 +18,13 @@ export {
 } from "./getFavoritePosts";
 
 export {
+  GET_TAGGED_POSTS_REQUEST,
+  GET_TAGGED_POSTS_SUCCESS,
+  GET_TAGGED_POSTS_FAILURE,
+  getTaggedPosts,
+} from "./getTaggedPosts";
+
+export {
   GET_FOLLOWING_POSTS_REQUEST,
   GET_FOLLOWING_POSTS_SUCCESS,
   GET_FOLLOWING_POSTS_FAILURE,

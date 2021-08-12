@@ -22,6 +22,7 @@ export default {
     getFollowingPosts: "post/getfollowingposts",
     createPost: "post/createpost",
     getFavoritePosts: "post/getfavouriteposts",
+    getTaggedPosts: "post/gettaggedposts",
     getSuggestionPosts: "post/getsuggestedposts",
     likePost: "post/like",
     favoritePost: "post/favorite",

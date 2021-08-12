@@ -88,7 +88,6 @@ export function getPosts(api, opts) {
           userName: opts.userName,
           start: currentOffset,
           length: POSTS_LENGTH,
-          tagged: opts.tagged || false,
         })
         .query(url);
 

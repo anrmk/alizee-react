@@ -6,6 +6,9 @@ import {
   GET_FAVORITE_POSTS_REQUEST,
   GET_FAVORITE_POSTS_SUCCESS,
   GET_FAVORITE_POSTS_FAILURE,
+  GET_TAGGED_POSTS_REQUEST,
+  GET_TAGGED_POSTS_SUCCESS,
+  GET_TAGGED_POSTS_FAILURE,
 } from "../actions/post";
 
 import { POSTS_DEFAULT_OFFSET } from "../../constants/feed";
@@ -57,6 +60,24 @@ export default function post(
       };
     }
     case GET_FAVORITE_POSTS_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case GET_TAGGED_POSTS_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case GET_TAGGED_POSTS_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case GET_TAGGED_POSTS_FAILURE: {
       return {
         ...state,
         ...action.payload,
