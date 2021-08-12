@@ -28,7 +28,6 @@ const RelationshipItem = React.memo((props) => {
     subscriptionPrice,
     isFollow,
     isMe,
-    identityVerified,
   } = props;
   const {
     onItemClick,

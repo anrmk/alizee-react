@@ -27,7 +27,7 @@ function Purchase({ purchases }) {
             </ListItemAvatar>
             <ListItemText
               primary={
-                <Grid container justify="space-between">
+                <Grid container justifyContent="space-between">
                   <Grid item>
                     <Typography component="span">{item.name}</Typography>
                   </Grid>

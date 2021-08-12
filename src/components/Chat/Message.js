@@ -5,9 +5,9 @@ import {
   ListItemAvatar,
   ListItemText,
   ListItemSecondaryAction,
-  GridList,
-  GridListTile,
-  GridListTileBar,
+  ImageList,
+  ImageListItem,
+  ImageListItemBar,
   Typography,
   IconButton,
   Link,
@@ -42,14 +42,14 @@ const Message = React.memo(
     };
 
     const renderGridListTile = (file, cols = 1, rows = 1, index = 0) => (
-      <GridListTile
+      <ImageListItem
         key={file.id}
         cols={cols}
         rows={rows}
         onClick={() => handleMediaPreviewClick(index)}>
         <img src={file.thumbnailUrl} alt="message-img" />
         {file.kind === 1 && (
-          <GridListTileBar
+          <ImageListItemBar
             titlePosition="top"
             actionPosition="right"
             className={classes.gridListTileBar}
@@ -60,7 +60,7 @@ const Message = React.memo(
             }
           />
         )}
-      </GridListTile>
+      </ImageListItem>
     );
 
     const renderChatMediaItem = (mediaLength, file, index) => {
@@ -125,18 +125,18 @@ const Message = React.memo(
               )}
 
               {message.media?.length > 0 && (
-                <GridList
+                <ImageList
                   cols={
                     message.media.length === 2
                       ? 2
                       : Math.ceil(message.media.length / 2)
                   }
                   className={classes.media}
-                  spacing={1}>
+                  gap={1}>
                   {message.media.map((file, index) =>
                     renderChatMediaItem(message.media.length, file, index)
                   )}
-                </GridList>
+                </ImageList>
               )}
 
               <Typography

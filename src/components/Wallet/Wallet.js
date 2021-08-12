@@ -20,7 +20,10 @@ import TimelineIcon from "@material-ui/icons/TimelineOutlined";
 import { formatCurrency } from "../../helpers/functions";
 
 import useStyles from "./styles";
-import { STATISTICS_ROUTE, SETTINGS_CARD_ROUTE } from "../../constants/routes";
+import {
+  STATISTICS_ROUTE,
+  SETTINGS_PAYMENT_ROUTE,
+} from "../../constants/routes";
 
 function Wallet({ deposit }) {
   const classes = useStyles();
@@ -69,7 +72,7 @@ function Wallet({ deposit }) {
           <ListItemText primary="Statistics" />
         </MenuItem>
         <MenuItem
-          to={SETTINGS_CARD_ROUTE}
+          to={SETTINGS_PAYMENT_ROUTE}
           onClick={handleMenuCloseClick}
           component={Link}>
           <ListItemIcon>

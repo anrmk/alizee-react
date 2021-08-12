@@ -460,7 +460,7 @@ export function calcDiscount(price, discount, duration) {
   return totalPrice.toFixed(2);
 }
 
-export function customFormateDate(
+export function customFormatDate(
   value,
   options = {
     year: "numeric",
@@ -469,7 +469,7 @@ export function customFormateDate(
   }
 ) {
   const longEnUSFormatter = new Intl.DateTimeFormat("en-US", options);
-  return longEnUSFormatter.format(value);
+  return longEnUSFormatter.format(new Date(value));
 }
 
 export function addDays(date, days) {

@@ -50,12 +50,24 @@ import {
   UPDATE_TOAST_NOTIFICATION_REQUEST,
   UPDATE_TOAST_NOTIFICATION_SUCCESS,
   UPDATE_TOAST_NOTIFICATION_FAILURE,
-  GET_CARD_REQUEST,
-  GET_CARD_SUCCESS,
-  GET_CARD_FAILURE,
+  GET_CARDS_REQUEST,
+  GET_CARDS_SUCCESS,
+  GET_CARDS_FAILURE,
+  CREATE_CARD_REQUEST,
+  CREATE_CARD_SUCCESS,
+  CREATE_CARD_FAILURE,
   UPDATE_CARD_REQUEST,
   UPDATE_CARD_SUCCESS,
   UPDATE_CARD_FAILURE,
+  DELETE_CARD_REQUEST,
+  DELETE_CARD_SUCCESS,
+  DELETE_CARD_FAILURE,
+  VERIFY_CARD_REQUEST,
+  VERIFY_CARD_SUCCESS,
+  VERIFY_CARD_FAILURE,
+  UPDATE_WALLET_REQUEST,
+  UPDATE_WALLET_SUCCESS,
+  UPDATE_WALLET_FAILURE,
   GET_BANK_REQUEST,
   GET_BANK_SUCCESS,
   GET_BANK_FAILURE,
@@ -418,19 +430,38 @@ export default function settings(
     }
 
     // CARD SETTINGS
-    case GET_CARD_REQUEST: {
+    case GET_CARDS_REQUEST: {
       return {
         ...state,
         ...action.payload,
       };
     }
-    case GET_CARD_SUCCESS: {
+    case GET_CARDS_SUCCESS: {
       return {
         ...state,
         ...action.payload,
       };
     }
-    case GET_CARD_FAILURE: {
+    case GET_CARDS_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case CREATE_CARD_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case CREATE_CARD_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case CREATE_CARD_FAILURE: {
       return {
         ...state,
         ...action.payload,
@@ -450,6 +481,63 @@ export default function settings(
       };
     }
     case UPDATE_CARD_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case DELETE_CARD_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case DELETE_CARD_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case DELETE_CARD_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case VERIFY_CARD_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case VERIFY_CARD_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case VERIFY_CARD_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case UPDATE_WALLET_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case UPDATE_WALLET_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case UPDATE_WALLET_FAILURE: {
       return {
         ...state,
         ...action.payload,

@@ -62,7 +62,7 @@ export const SETTINGS_DEFAULT_ROUTE = "/settings/:type?";
 export const SETTINGS_ROUTE = "/settings";
 export const SETTINGS_EDIT_PROFILE_ROUTE = "/settings/edit-profile";
 export const SETTINGS_ACCOUNT_ROUTE = "/settings/account";
-export const SETTINGS_CARD_ROUTE = "/settings/card";
+export const SETTINGS_PAYMENT_ROUTE = "/settings/payment";
 export const SETTINGS_BANK_ROUTE = "/settings/bank";
 
 export const SETTINGS_NOTIFICATIONS_ROUTE = "/settings/notifications";

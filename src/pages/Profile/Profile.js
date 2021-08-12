@@ -36,7 +36,7 @@ import {
   ProfileUserInfoMobile,
 } from "../../domain/ProfileUserInfo";
 import { PROFILE_TYPE } from "../../components/Post/Menu";
-import { RedirectContent } from "../../domain/ConfirmationDialog.js";
+import { RedirectContent } from "../../domain/ConfirmationDialog";
 
 import useStyles from "./style";
 

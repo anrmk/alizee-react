@@ -1,6 +1,6 @@
 import React from "react";
 
-import { GridList, GridListTile } from "@material-ui/core";
+import { ImageList, ImageListItem } from "@material-ui/core";
 
 import MediaContent from "../Post/Create/MediaContent";
 
@@ -18,13 +18,13 @@ export default function GridGalleryHorizontal({
 
   return (
     items.length > 0 && (
-      <GridList cellHeight={cellHeight} cols={listCols} spacing={spacing}>
+      <ImageList rowHeight={cellHeight} cols={listCols} gap={spacing}>
         {items.map((item) => (
-          <GridListTile key={item.name} cols={tileCols} rows={tileRows}>
+          <ImageListItem key={item.name} cols={tileCols} rows={tileRows}>
             <MediaContent type={item.type} url={item.previewURL} />
-          </GridListTile>
+          </ImageListItem>
         ))}
-      </GridList>
+      </ImageList>
     )
   );
 }

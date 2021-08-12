@@ -72,7 +72,7 @@ function Navbar({
 
   return (
     <AppBar position="sticky" className={classes.root}>
-      <Grid container justify="space-between" alignItems="center">
+      <Grid container justifyContent="space-between" alignItems="center">
         {isAuthenticated &&
           location.pathname !== HOME_ROUTE &&
           location.pathname !== HELP_ROUTE &&

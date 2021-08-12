@@ -145,7 +145,7 @@ Avatar.defaultProps = {
   live: undefined,
   online: undefined,
   badgeProps: {
-    overlap: "circle",
+    overlap: "circular",
     anchorOrigin: {
       vertical: "bottom",
       horizontal: "right",

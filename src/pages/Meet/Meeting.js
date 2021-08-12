@@ -48,12 +48,12 @@ function Meeting() {
 
   return (
     <Container className={classes.meetingContainer} disableGutters>
-      <Grid container direction="row" justify="center" spacing={2}>
+      <Grid container direction="row" justifyContent="center" spacing={2}>
         <Grid
           item
           container
           direction="column"
-          justify="center"
+          justifyContent="center"
           xs={10}
           md={6}
           className={classes.meetingLinkItem}>
@@ -110,7 +110,7 @@ function Meeting() {
           item
           container
           direction="column"
-          justify="center"
+          justifyContent="center"
           xs={8}
           md={6}
           className={classes.meetingImageItem}>

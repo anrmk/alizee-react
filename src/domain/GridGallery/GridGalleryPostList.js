@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
-  GridList,
-  GridListTile,
-  GridListTileBar,
+  ImageList,
+  ImageListItem,
+  ImageListItemBar,
   Box,
 } from "@material-ui/core";
 
@@ -97,12 +97,12 @@ function GridGalleryPostList({ items, onItemClick }) {
   // }, [images]);
 
   return (
-    <GridList cols={3} className={classes.gridList}>
+    <ImageList cols={3} className={classes.gridList}>
       {items?.length > 0 &&
         items.map(
           (item, index) =>
             item.media?.length > 0 && (
-              <GridListTile
+              <ImageListItem
                 key={item.id + index}
                 onClick={() => onItemClick(item.id)}
                 className={classes.tile}>
@@ -113,8 +113,8 @@ function GridGalleryPostList({ items, onItemClick }) {
                   alt={item.title}
                 />
 
-                <GridListTileBar
-                  titlePosition="top"
+                <ImageListItemBar
+                  position="top"
                   actionPosition="right"
                   className={classes.tileBar}
                   actionIcon={
@@ -127,10 +127,10 @@ function GridGalleryPostList({ items, onItemClick }) {
                     </Box>
                   }
                 />
-              </GridListTile>
+              </ImageListItem>
             )
         )}
-    </GridList>
+    </ImageList>
   );
 }
 

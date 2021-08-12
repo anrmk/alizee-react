@@ -13,7 +13,7 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
 import { PROFILE_LINK_ROUTE } from "../../constants/routes";
 
-import { customFormateDate } from "../../helpers/functions";
+import { customFormatDate } from "../../helpers/functions";
 
 import useStyles from "./styles";
 
@@ -76,14 +76,14 @@ function Campaign(props) {
         <Box display="flex" justifyContent="space-between" mb={1}>
           <Typography variant="body2">Started</Typography>
           <Typography variant="body2">
-            {customFormateDate(data.createdAt)}
+            {customFormatDate(data.createdAt)}
           </Typography>
         </Box>
         <Divider />
         <Box display="flex" justifyContent="space-between" mt={1} mb={2}>
           <Typography variant="body2">Ends</Typography>
           <Typography variant="body2">
-            {customFormateDate(data.finishedAt)}
+            {customFormatDate(data.finishedAt)}
           </Typography>
         </Box>
 

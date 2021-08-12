@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
   },
 
-  drawerHeader: (props) => ({
+  drawerHeader: () => ({
     display: "none",
 
     [theme.breakpoints.up("sm")]: {
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }),
 
-  themeToggle: (props) => ({}),
+  themeToggle: () => ({}),
 
   drawerOpen: {
     transition: theme.transitions.create("width", {

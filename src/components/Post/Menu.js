@@ -21,7 +21,6 @@ export const PROFILE_TYPE = 1;
 
 function Menu({
   postId,
-  name,
   userName,
   isOwner,
   isFavorite,

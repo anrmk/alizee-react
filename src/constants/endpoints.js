@@ -112,8 +112,12 @@ export default {
     createAccountInterests: "accountsetting/interests",
 
     getPersonal: "accountsetting/personal",
-    getCard: "accountsetting/card",
+    getCards: "accountsetting/cards",
+    createCard: "accountsetting/card",
+    deleteCard: "accountsetting/card",
+    verifyCard: "accountsetting/verifyCard",
     updateCard: "accountsetting/card",
+    makeWalletDefault: "accountsetting/makeWalletDefault",
     getBank: "accountsetting/bankAccount",
     updateBank: "accountsetting/bankAccount",
     getSubscription: "accountsetting/subscriptionsettings",

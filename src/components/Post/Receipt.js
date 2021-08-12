@@ -20,7 +20,7 @@ function Receipt({
     <Grid
       container
       direction="column"
-      justify="space-around"
+      justifyContent="space-around"
       alignItems="center"
       className={classes.receipt}>
       <Grid item>

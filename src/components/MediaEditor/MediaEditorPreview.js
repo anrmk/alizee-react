@@ -3,9 +3,9 @@ import ScrollContainer from "react-indiana-drag-scroll";
 import PropTypes from "prop-types";
 import {
   Grid,
-  GridList,
-  GridListTile,
-  GridListTileBar,
+  ImageList,
+  ImageListItem,
+  ImageListItemBar,
   IconButton,
   Typography,
 } from "@material-ui/core";
@@ -90,13 +90,13 @@ function MediaEditorPreview({
             fullWidth
           />
         </Grid>
-        <GridList
-          spacing={12}
+        <ImageList
+          gap={12}
           className={classes.gridList}
           component={ScrollContainer}>
           {mediaFiles.length > 0 &&
             mediaFiles.map((file) => (
-              <GridListTile
+              <ImageListItem
                 key={file.name}
                 onClick={() => handleSelectedMediaItem(file)}
                 classes={{
@@ -106,9 +106,9 @@ function MediaEditorPreview({
                   type={mediaTypeToKind(file.type)}
                   url={file.previewURL}
                 />
-                <GridListTileBar
+                <ImageListItemBar
                   title={renderError(file)}
-                  titlePosition="top"
+                  position="top"
                   className={classes.titleBar}
                   actionIcon={
                     <IconButton onClick={handleDeleteMediaFile(file.name)}>
@@ -117,9 +117,9 @@ function MediaEditorPreview({
                   }
                   actionPosition="right"
                 />
-              </GridListTile>
+              </ImageListItem>
             ))}
-        </GridList>
+        </ImageList>
       </Grid>
     </>
   );

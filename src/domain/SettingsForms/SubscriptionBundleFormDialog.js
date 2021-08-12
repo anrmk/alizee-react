@@ -57,7 +57,7 @@ function SubscriptionBundleFormDialog({
           id={formId}
           container
           component="form"
-          justify="flex-end"
+          justifyContent="flex-end"
           spacing={1}
           onSubmit={handleSubmit(handleFormSubmit)}>
           <Grid item sm={6} xs={12}>

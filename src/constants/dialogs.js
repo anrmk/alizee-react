@@ -21,11 +21,14 @@ import StoryDialog from "../domain/StoryDialog";
 import AgreeDialog from "../domain/AgreeDialog";
 import ResetPasswordDialog from "../domain/ResetPasswordDialog";
 import LanguageDialog from "../domain/LanguageDialog";
-import ConfirmDialog from "../domain/ConfirmationDialog.js/ConfirmDialog";
+import ConfirmDialog from "../domain/ConfirmationDialog/ConfirmDialog";
 import LightboxModal from "../domain/LightboxModal";
 import PostStatistics from "../domain/PostStatistics/PostStatistics";
-import SubscriptionBundleFormDialog from "../domain/SettingsForms/SubscriptionBundleFormDialog";
-import SubscriptionCampaignFormDialog from "../domain/SettingsForms/SubscriptionCampaignFormDialog";
+import {
+  CreateCardForm,
+  SubscriptionCampaignFormDialog,
+  SubscriptionBundleFormDialog,
+} from "../domain/SettingsForms";
 
 export const LANGUAGE_DIALOG_TYPE = "language";
 
@@ -69,6 +72,8 @@ export const POST_STATISTICS_DIALOG_TYPE = "postStatistics";
 
 export const SUBSCRIPTION_BUNDLE_DIALOG_TYPE = "subscriptionBundle";
 export const SUBSCRIPTION_CAMPAIGN_DIALOG_TYPE = "subscriptionCampaign";
+
+export const PAYMENT_CARD_DIALOG_TYPE = "paymentCard";
 
 const baseDialogProps = {
   dialogProps: { fullWidth: true },
@@ -232,10 +237,6 @@ export default {
     title: "Media Preview",
     content: <MediaEditorPreview {...contentProps} />,
     mainBtnText: "Send",
-    dialogProps: {
-      disableBackdropClick: true,
-      fullWidth: false,
-    },
     ...dialogProps,
   }),
   [MEDIA_PREVIEW_DIALOG_TYPE]: (dialogProps, contentProps) => ({
@@ -273,6 +274,12 @@ export default {
   [SUBSCRIPTION_CAMPAIGN_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     content: <SubscriptionCampaignFormDialog {...contentProps} />,
     mainBtnText: "Start Campaign",
+    ...baseDialogProps,
+    ...dialogProps,
+  }),
+  [PAYMENT_CARD_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+    content: <CreateCardForm {...contentProps} />,
+    mainBtnText: "Create",
     ...baseDialogProps,
     ...dialogProps,
   }),

@@ -6,14 +6,11 @@ import { useTranslation } from "react-i18next";
 import * as yup from "yup";
 import {
   Card,
-  CardHeader,
   CardContent,
   Grid,
   TextField,
-  Button,
   Typography,
   Switch,
-  Divider,
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { getDate } from "../../helpers/functions";
@@ -86,7 +83,9 @@ const schema = yup.object().shape({
   [LEGALAGE_INPUT_ID]: yup.bool().oneOf([true], "Should be true").required(),
 });
 
-function EditCardForm({
+function CreateCardForm({
+  formId,
+
   email,
   name,
   number,
@@ -121,16 +120,19 @@ function EditCardForm({
     },
   });
 
+  const handleFormSubmit = (data) => {
+    onSubmit && onSubmit({ data });
+  };
+
   return (
     <Card>
-      <CardHeader title="Your Cards" />
-      <Divider />
       <CardContent>
         <Grid
+          id={formId}
           container
           component="form"
           spacing={2}
-          onSubmit={handleSubmit(onSubmit)}>
+          onSubmit={handleSubmit(handleFormSubmit)}>
           <Grid container item xs={12} sm={6} direction="column" spacing={2}>
             <Grid item>
               <Typography variant="h6">Billing Details</Typography>
@@ -369,18 +371,6 @@ function EditCardForm({
               />
             </Grid>
           </Grid>
-
-          <Grid item>
-            <Button
-              fullWidth
-              type="submit"
-              variant="contained"
-              color="primary"
-              disableElevation
-              disabled={isFetching}>
-              Update
-            </Button>
-          </Grid>
         </Grid>
       </CardContent>
       <CardContent>
@@ -395,4 +385,4 @@ function EditCardForm({
   );
 }
 
-export default EditCardForm;
+export default CreateCardForm;

@@ -18,7 +18,7 @@ function ProfileGeneralStatistics({
     <Grid
       container
       alignItems="center"
-      justify="space-evenly"
+      justifyContent="space-evenly"
       direction="row"
       className={className}
       spacing={1}>

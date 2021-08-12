@@ -35,7 +35,7 @@ function Search({
 Search.defaultProps = {
   className: "",
   placeholder: "Search ...",
-  onChange: (e) => {},
+  onChange: () => {},
 };
 
 export default Search;

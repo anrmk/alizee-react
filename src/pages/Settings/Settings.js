@@ -21,7 +21,7 @@ import NightIcon from "@material-ui/icons/NightsStayOutlined";
 
 import {
   SETTINGS_EDIT_PROFILE_ROUTE,
-  SETTINGS_CARD_ROUTE,
+  SETTINGS_PAYMENT_ROUTE,
   SETTINGS_BANK_ROUTE,
   SETTINGS_NOTIFICATIONS_ROUTE,
   SETTINGS_NOTIFICATIONS_PUSH_ROUTE,
@@ -37,7 +37,7 @@ import PrivateRoute from "../PrivateRoute";
 import SlidingViews from "../../components/SlidingViews";
 import EditProfileSettings from "./EditProfileSettings";
 import EditAccountSettings from "./EditAccountSettings";
-import EditCardSettings from "./EditCardSettings";
+import EditPaymentSettings from "./EditPaymentSettings";
 import EditSubscriptionSettings from "./EditSubscriptionSettings";
 import EditBankSettings from "./EditBankSettings";
 import PrivacySecuritySettings from "./PrivacySecuritySettings";
@@ -76,7 +76,7 @@ const TABS = [
     index: 2,
     name: "card",
     title: "Your Cards",
-    route: SETTINGS_CARD_ROUTE,
+    route: SETTINGS_PAYMENT_ROUTE,
   },
   {
     index: 3,
@@ -195,8 +195,8 @@ function Settings() {
           />
           <PrivateRoute
             exact
-            path={SETTINGS_CARD_ROUTE}
-            component={EditCardSettings}
+            path={SETTINGS_PAYMENT_ROUTE}
+            component={EditPaymentSettings}
             componentProps={{
               onSetAlertText: handleSetAlertText,
             }}

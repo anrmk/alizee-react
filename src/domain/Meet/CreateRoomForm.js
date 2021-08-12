@@ -150,7 +150,7 @@ function CreateRoomForm({
         item
         container
         direction="column"
-        justify="center"
+        justifyContent="center"
         wrap="nowrap"
         xs={12}
         md={4}>

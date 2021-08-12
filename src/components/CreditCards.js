@@ -11,7 +11,7 @@ import JCB from "../assets/img/cards/jcb.png";
 function CreditCards() {
   const cards = [Visa, MasterCard, Maestro, DinersClub, Discover, JCB];
   return (
-    <Grid container justify="center">
+    <Grid container justifyContent="center">
       {cards.map((url, index) => (
         <Grid item key={index}>
           <img src={url} width="48px" alt="card-img" />

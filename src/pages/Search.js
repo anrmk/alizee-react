@@ -8,8 +8,8 @@ import {
   Grid,
   Divider,
   withWidth,
-  GridList,
-  GridListTile,
+  ImageList,
+  ImageListItem,
   Typography,
 } from "@material-ui/core";
 
@@ -72,13 +72,13 @@ function Search({ width }) {
         {search.data.length > 0 && (
           <>
             <Grid item>
-              <GridList cols={handleChangeBreakpoint()} cellHeight="auto">
+              <ImageList cols={handleChangeBreakpoint()} rowHeight="auto">
                 {search.data.map((item, idx) => (
-                  <GridListTile key={idx}>
+                  <ImageListItem key={idx}>
                     <ProfileCard {...item} />
-                  </GridListTile>
+                  </ImageListItem>
                 ))}
-              </GridList>
+              </ImageList>
             </Grid>
             <Divider />
           </>
@@ -89,13 +89,13 @@ function Search({ width }) {
               Suggestions
             </Typography>
 
-            <GridList cols={handleChangeBreakpoint()} cellHeight="auto">
+            <ImageList cols={handleChangeBreakpoint()} rowHeight="auto">
               {search.suggestionPeople.map((item, idx) => (
-                <GridListTile key={idx}>
+                <ImageListItem key={idx}>
                   <ProfileCard {...item} />
-                </GridListTile>
+                </ImageListItem>
               ))}
-            </GridList>
+            </ImageList>
           </Grid>
         )}
       </Grid>

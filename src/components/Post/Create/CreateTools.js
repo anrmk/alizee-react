@@ -82,7 +82,7 @@ function CreateTools({
       )}
 
       <Tooltip title="Share up to 10 photos and videos in one Post">
-        <IconButton onClick={(e) => mediaRef.current.click()}>
+        <IconButton onClick={() => mediaRef.current.click()}>
           <PhotoLibraryIcon fontSize="small" />
           <input
             type="file"

@@ -1,4 +1,4 @@
-import { generateUrl } from "../../../helpers/functions";
+import { generateUrl } from "../../../../helpers/functions";
 
 export const UPDATE_CARD_REQUEST = "UPDATE_CARD_REQUEST";
 export const UPDATE_CARD_SUCCESS = "UPDATE_CARD_SUCCESS";
@@ -35,15 +35,19 @@ function errorUpdateCard(message) {
   };
 }
 
-export function updateCard(api, data) {
-  return async (dispatch) => {
+export function updateCard(api, id) {
+  return async (dispatch, getState) => {
     dispatch(requestUpdateCard());
+    const { cards = [], wallet = {} } = getState().settings.data;
 
     const url = generateUrl("updateCard");
     try {
-      await api.setMethod("PUT").setData(data).query(url);
+      await api.setMethod("PUT").setParams({ id }).query(url);
 
-      dispatch(receiveUpdateCard(data));
+      const updatedCards = cards.map((card) =>
+        card.id === id ? { ...card, is: !card.is } : { ...card, is: false }
+      );
+      dispatch(receiveUpdateCard({ wallet, cards: updatedCards }));
       return true;
     } catch (e) {
       dispatch(errorUpdateCard("Error: something went wrong:", e));
