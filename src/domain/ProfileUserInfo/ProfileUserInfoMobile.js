@@ -2,13 +2,15 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { Typography, Box, Button, IconButton } from "@material-ui/core/";
+import { Typography, Box, Button, IconButton, List } from "@material-ui/core/";
 
 import MessageIcon from "@material-ui/icons/MessageOutlined";
 import DollarIcon from "@material-ui/icons/MonetizationOnOutlined";
 
 import { CHAT_USERNAME_ROUTE } from "../../constants/routes";
 import { getSubscriptionBtnText, isAwaitingConfirmation } from "./utils";
+
+import { PublicBundle } from "../../components/Bundle";
 
 import useStyles from "./style";
 
@@ -56,6 +58,7 @@ function ProfileUserInfo({
               onClick={handleSubscribeClick}>
               {getSubscriptionBtnText(followStatus, subscriptionPrice, t)}
             </Button>
+
             <IconButton
               color="primary"
               disabled={!isFollow || isAwaitingConfirmation(followStatus)}
@@ -69,6 +72,17 @@ function ProfileUserInfo({
               </IconButton>
             )}
           </Box>
+          {user?.bundles && user.bundles.length > 0 && !followStatus && (
+            <List dense>
+              {user.bundles.map((item, idx) => (
+                <PublicBundle
+                  {...item}
+                  id={idx}
+                  onSubscribeClick={handleSubscribeClick}
+                />
+              ))}
+            </List>
+          )}
         </>
       )}
 

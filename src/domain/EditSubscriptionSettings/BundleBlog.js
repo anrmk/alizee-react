@@ -9,7 +9,7 @@ import {
   List,
 } from "@material-ui/core";
 
-import Bundle from "../../components/Bundle.js/Bundle";
+import { BundleSetting } from "../../components/Bundle";
 
 function BundleBlog({ onOpenDialogClick, price, data, onBundleDelete }) {
   const handleDeleteClick = (id) => {
@@ -50,7 +50,7 @@ function BundleBlog({ onOpenDialogClick, price, data, onBundleDelete }) {
           <CardContent>
             <List dense>
               {data.map((item) => (
-                <Bundle
+                <BundleSetting
                   isOwner
                   key={item.duration}
                   id={item.id}

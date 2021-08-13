@@ -13,6 +13,7 @@ import {
   Button,
   Divider,
   Box,
+  List,
 } from "@material-ui/core/";
 
 import MessageIcon from "@material-ui/icons/MessageOutlined";
@@ -24,6 +25,7 @@ import { getSubscriptionBtnText, isAwaitingConfirmation } from "./utils";
 import DisplayName from "../../components/DisplayName";
 
 import useStyles from "./style";
+import { PublicBundle } from "../../components/Bundle";
 
 function ProfileUserInfo({
   user,
@@ -177,6 +179,18 @@ function ProfileUserInfo({
               {getSubscriptionBtnText(followStatus, subscriptionPrice, t)}
               {/* <Typography>${subscriptionPrice}</Typography> */}
             </Button>
+
+            {user?.bundles && user.bundles.length > 0 && !followStatus && (
+              <List dense>
+                {user.bundles.map((item, idx) => (
+                  <PublicBundle
+                    {...item}
+                    id={idx}
+                    onSubscribeClick={handleSubscribeClick}
+                  />
+                ))}
+              </List>
+            )}
             <Box
               width="100%"
               display="flex"
@@ -211,6 +225,7 @@ function ProfileUserInfo({
             </Box>
           </>
         )}
+
         <Typography variant="body1" align="justify">
           {user.bio}
         </Typography>

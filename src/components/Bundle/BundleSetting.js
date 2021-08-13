@@ -15,7 +15,7 @@ import { calcDiscount } from "../../helpers/functions";
 
 import useStyles from "./styles";
 
-function Bundle({
+function BundleSetting({
   isOwner,
   duration,
   discount,
@@ -28,7 +28,7 @@ function Bundle({
 
   return (
     <>
-      {isOwner ? (
+      {isOwner && (
         <ListItem disabled={price < 0.1} dense disableGutters>
           <ListItemAvatar>
             <Avatar variant="circular" className={classes.avatar}>
@@ -45,11 +45,9 @@ function Bundle({
             </IconButton>
           </ListItemSecondaryAction>
         </ListItem>
-      ) : (
-        ""
       )}
     </>
   );
 }
 
-export default Bundle;
+export default BundleSetting;
