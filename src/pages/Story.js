@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import React, { useContext, useEffect } from "react";
 import { connect } from "react-redux";
 import {
@@ -16,7 +17,6 @@ import ApiContext from "../context/ApiContext";
 import * as storyActions from "../store/actions/story";
 import { DEFAULT_ROUTE, HOME_ROUTE } from "../constants/routes";
 import dialogs, { STORY_DIALOG_TYPE } from "../constants/dialogs";
-import { STORIES_LENGTH } from "../constants/feed";
 import useDialog from "../hooks/useDialog";
 import useStoriesSwitcher from "../hooks/useStoriesSwitcher";
 import useShareDialog, {
@@ -59,9 +59,7 @@ function Story(props) {
   useEffect(() => {
     if (username) {
       (async () => {
-        location.state?.from === HOME_ROUTE && !location.state?.me
-          ? await getFollowingStories(apiClient, { length: STORIES_LENGTH })
-          : await getStory(apiClient, { username, length: 10 });
+        await getStory(apiClient, { username, length: 10 });
       })();
     }
 

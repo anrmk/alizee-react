@@ -16,7 +16,6 @@ import PreviewStoriesList from "../../domain/StoriesLists";
 import Nav from "./Nav";
 
 import ApiContext from "../../context/ApiContext";
-import { STORIES_LENGTH } from "../../constants/feed";
 
 import useShareDialog, {
   SHARE_DIALOG_POST_TYPE,
@@ -47,7 +46,7 @@ function Feed(props) {
   const { userInfo } = props;
   const { people, getPeople, resetPeople } = props;
   const { posts, getPosts, resetPosts } = props;
-  const { story, getFollowingStories, resetFollowingStories } = props;
+  const { story, getStories, resetFollowingStories } = props;
   const { buyPost, getReceipt, getPurchases } = props;
 
   const likeAction = useLikeAction();
@@ -74,10 +73,10 @@ function Feed(props) {
 
   useEffect(() => {
     if (!posts.data.length) {
-      getPosts(apiClient, { userId: userInfo.id });
+      getPosts(apiClient);
     }
     getPeople(apiClient);
-    getFollowingStories(apiClient, { length: STORIES_LENGTH });
+    getStories(apiClient);
 
     return () => {
       resetFollowingStories();
@@ -87,14 +86,14 @@ function Feed(props) {
 
   const handleFetchMore = (isLoading) => {
     if (!isLoading) {
-      getPosts(apiClient, { id: userInfo.id });
+      getPosts(apiClient);
     }
   };
 
   const handleRefresh = (isLoading) => {
     if (!isLoading) {
       resetPosts();
-      getPosts(apiClient, { id: userInfo.id });
+      getPosts(apiClient);
     }
   };
 
@@ -199,7 +198,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getPosts: (api, opts) => dispatch(postActions.getFollowingPosts(api, opts)),
+    getPosts: (api) => dispatch(postActions.getFollowingPosts(api)),
     getPurchases: (api, id, callback) =>
       dispatch(postActions.getPurchases(api, id, callback)),
     getReceipt: (api, id, callback) =>
@@ -214,8 +213,7 @@ function mapDispatchToProps(dispatch) {
     getStory: (api, opts) => dispatch(storyActions.getStory(api, opts)),
     resetStory: (api, opts) => dispatch(storyActions.resetStory(api, opts)),
     resetFollowingStories: () => dispatch(storyActions.resetFollowingStories()),
-    getFollowingStories: (api, opts) =>
-      dispatch(storyActions.getFollowingStories(api, opts)),
+    getStories: (api) => dispatch(storyActions.getFollowingStories(api)),
 
     // getHotStreamers: (api) => dispatch(streamActions.getHotStreamers(api)),
   };
