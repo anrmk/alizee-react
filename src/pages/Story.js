@@ -24,7 +24,7 @@ import useShareDialog, {
 } from "../hooks/useShareDialog";
 import useFullScreen from "../hooks/useFullScreen";
 
-function Story(props) {
+function Story({ story, getStory, getFollowingStories, resetStory }) {
   const history = useHistory();
   const location = useLocation(DEFAULT_ROUTE);
   const { username, slideId } = useParams();
@@ -33,9 +33,7 @@ function Story(props) {
   const dialog = useDialog();
   const fullScreen = useFullScreen("root");
 
-  const { story } = props;
-  const { getStory, getFollowingStories, resetStory } = props;
-
+  debugger;
   const {
     currentSlideId,
     currentSlideIndex,
@@ -45,7 +43,7 @@ function Story(props) {
     handleNextStory,
     handleSlideChange,
   } = useStoriesSwitcher({
-    data: story.data.length ? story.data : story.current,
+    data: story.current, // story.data.length ? story.data : story.current,
     slideId,
     storyId: location.state?.storyId,
     onUpdatePath: handlePathUpdate,
@@ -95,9 +93,9 @@ function Story(props) {
       <Stories
         defaultInterval={4000}
         currentIndex={currentSlideIndex}
-        user={currentUser}
         avatarUrl={currentUser?.avatarUrl}
         fullName={currentUser?.name}
+        userName={currentUser.userName}
         stories={localSlides}
         onMoreClick={handleDialogToggle}
         onCloseClick={() => history.push(DEFAULT_ROUTE)}

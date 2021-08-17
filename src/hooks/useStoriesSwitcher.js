@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import { useState, useEffect } from "react";
 
 export default function useStoriesSwitcher({
@@ -31,22 +32,36 @@ export default function useStoriesSwitcher({
       }
     } else if (data?.slides?.length) {
       const index = data.slides.findIndex((item) => item.id === slideId);
-      setupStory(data.slides, data?.user, index !== -1 ? index : 0);
+      setupStory(
+        data.slides,
+        data.userName,
+        data.name,
+        data.avatarUrl,
+        index !== -1 ? index : 0
+      );
     }
   }, [data]);
 
-  const setupStory = (items, user, slideIndex = 0, storyIndex = 0) => {
+  const setupStory = (
+    items,
+    userName,
+    name,
+    avatarUrl,
+    slideIndex = 0,
+    storyIndex = 0
+  ) => {
     if (!items?.length) return;
+    debugger;
 
     const lSlideId = items[slideIndex].id;
 
     items && setLocalSlides(items);
-    user && setCurrentUser(user);
+    userName && setCurrentUser(userName);
     setCurrentStoryIndex(storyIndex);
     setCurrentSlideIndex(slideIndex);
     setCurrentSlideId(lSlideId);
 
-    onUpdatePath && onUpdatePath(user.userName, lSlideId);
+    onUpdatePath && onUpdatePath(userName, lSlideId);
   };
 
   const changeStory = (pStoryIndex, next = false) => {

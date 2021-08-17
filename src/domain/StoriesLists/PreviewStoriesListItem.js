@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import React, { useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Box, ListItem, Typography } from "@material-ui/core";
@@ -31,6 +32,7 @@ const PreviewStoryListItem = React.memo(
         };
 
     const handleItemClick = useCallback(() => {
+      debugger;
       onClick && onClick(userName);
     }, []);
 

@@ -16,13 +16,13 @@ function requestCreateStory() {
   };
 }
 
-function receiveCreateStory(currentStory) {
+function receiveCreateStory(data) {
   return {
     type: CREATE_STORY_SLIDE_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
-      //currentStory: currentStory || {},
+      data,
     },
   };
 }
@@ -54,17 +54,19 @@ export function createStorySlide(api, opts) {
           formData.append("files", file);
         });
 
-      await api.setData(formData).query(url);
+      const { data } = await api.setData(formData).query(url);
+      const stories = getState().story.data;
+      const storyIndex = stories.findIndex(
+        (story) => story.userName === data.userName
+      );
 
-      //const stories = getState().story.data;
-      //const postIndex = stories.findIndex((post) => post.id === postId);
-
-      // const currentStoryState = getState().story.currentStory;
-
-      // const updatedCurrentStoryState = { ...currentStoryState };
-
-      dispatch(receiveCreateStory());
-      // dispatch(receiveCreateStory(updatedCurrentStoryState));
+      if (storyIndex === -1) {
+        dispatch(receiveCreateStory([...stories, data]));
+      } else {
+        const currentStory = stories[storyIndex];
+        currentStory.url = data.thumbnailUrl;
+        dispatch(receiveCreateStory(stories));
+      }
     } catch (e) {
       dispatch(errorCreateStory("Error: something went wrong"));
     }
