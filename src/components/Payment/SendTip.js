@@ -10,6 +10,8 @@ import {
   TextField,
   InputAdornment,
   FormHelperText,
+  ButtonGroup,
+  Button,
 } from "@material-ui/core";
 import { formatCurrency } from "../../helpers/functions";
 
@@ -31,6 +33,7 @@ const schema = yup.object().shape({
 function SendTip({
   formId,
   user,
+  isDonate,
 
   onSubmit,
 }) {
@@ -47,6 +50,10 @@ function SendTip({
     register({ name: USER_ID });
   }, []);
 
+  const handleFormSubmit = (data) => {
+    onSubmit && onSubmit({ ...data, postId: user.id }, isDonate);
+  };
+
   return (
     <Card variant="outlined">
       <CardHeader
@@ -57,7 +64,7 @@ function SendTip({
       <CardContent
         component="form"
         id={formId}
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(handleFormSubmit)}
         autoComplete="off">
         <Controller
           name={AMOUNT_INPUT_ID}
@@ -87,6 +94,31 @@ function SendTip({
                   ),
                 }}
               />
+              {isDonate && (
+                <Box display="flex" mt={0.5} mb={0.5}>
+                  <ButtonGroup
+                    size="small"
+                    color="primary"
+                    aria-label="large outlined primary button group">
+                    <Button type="button" onClick={() => onChange(10)}>
+                      10$
+                    </Button>
+                    <Button type="button" onClick={() => onChange(20)}>
+                      20$
+                    </Button>
+                    <Button type="button" onClick={() => onChange(30)}>
+                      30$
+                    </Button>
+                    <Button type="button" onClick={() => onChange(40)}>
+                      40$
+                    </Button>
+                    <Button type="button" onClick={() => onChange(50)}>
+                      50$
+                    </Button>
+                  </ButtonGroup>
+                </Box>
+              )}
+
               <Box display="flex" alignItems="between">
                 <Box flexGrow={1}>
                   <FormHelperText>{INVALID_AMOUNT_MAX_ERROR}</FormHelperText>

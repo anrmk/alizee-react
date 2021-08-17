@@ -46,12 +46,10 @@ export default function useMenuDialog(props) {
   const { deletePostAction } = useDeleteAction();
   const { favoriteUserAction } = useFavoriteUserAction(props.favoriteProps);
   const [localData, setLocalData] = useState(null);
-
   const { isFavorite, followingPostsData } = useSelector((state) => ({
     isFavorite: state.user.data?.isFavorite,
     followingPostsData: state.followingPosts.data,
   }));
-
   useEffect(() => {
     if (localData) {
       const newFollowStatus = !localData.isFavorite;

@@ -1,4 +1,4 @@
-// import { generateUrl } from "../../../../helpers/functions";
+import { generateUrl } from "../../../../helpers/functions";
 
 export const CREATE_SUBSCRIPTION_BUNDLE_REQUEST =
   "CREATE_SUBSCRIPTION_BUNDLE_REQUEST";
@@ -42,21 +42,23 @@ export function createSubscriptionBundle(api, opts) {
   return async (dispatch, getState) => {
     dispatch(requestCreateSubscriptionBundleRequest());
 
-    //   TODO: connect api
+    const { bundles, price, campaigns } = getState().settings.data;
+    const url = generateUrl("createSubscriptionBundle");
 
-    // const url = generateUrl("createSubscriptionBundle");
     try {
-      const { bundles, price, campaigns } = getState().settings.data;
       const isBundleCreated = bundles.some(
         (item) => item.duration === opts.duration
       );
       if (isBundleCreated) {
         throw Error(" bundle with same duration  was created");
       }
-      //   await api
-      //     .setMethod("POST")
-      //     .setParams(opts)
-      //     .query(url);
+
+      const { data } = await api.setMethod("POST").setData(opts).query(url);
+
+      const isCreated = bundles.some((item) => item.id === data.id);
+      if (isCreated) {
+        throw Error(" bundle with same duration  was created");
+      }
 
       dispatch(
         receiveCreateSubscriptionBundleReceive({

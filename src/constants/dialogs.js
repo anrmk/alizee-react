@@ -46,6 +46,7 @@ export const REPORT_POST_DIALOG_TYPE = "reportPost";
 export const RECEIPT_DIALOG_TYPE = "receipt";
 export const PURCHASES_DIALOG_TYPE = "purchases";
 export const SEND_TIP_DIALOG_TYPE = "sentTip";
+export const SEND_DONATE_DIALOG_TYPE = "sendDonate";
 
 export const CHAT_NEW_TYPE = "chatNew";
 export const ROOM_MENU_DIALOG_TYPE = "roomMenu";
@@ -280,6 +281,12 @@ export default {
   [PAYMENT_CARD_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     content: <CreateCardForm {...contentProps} />,
     mainBtnText: "Create",
+    ...baseDialogProps,
+    ...dialogProps,
+  }),
+  [SEND_DONATE_DIALOG_TYPE]: (dialogProps, contentProps) => ({
+    title: "Send Donate",
+    content: <SendTip {...contentProps} />,
     ...baseDialogProps,
     ...dialogProps,
   }),

@@ -21,7 +21,7 @@ import NightIcon from "@material-ui/icons/NightsStayOutlined";
 
 import {
   SETTINGS_EDIT_PROFILE_ROUTE,
-  SETTINGS_PAYMENT_ROUTE,
+  SETTINGS_PAYMENTS_ROUTE,
   SETTINGS_BANK_ROUTE,
   SETTINGS_NOTIFICATIONS_ROUTE,
   SETTINGS_NOTIFICATIONS_PUSH_ROUTE,
@@ -75,8 +75,8 @@ const TABS = [
   {
     index: 2,
     name: "card",
-    title: "Your Cards",
-    route: SETTINGS_PAYMENT_ROUTE,
+    title: "Payments",
+    route: SETTINGS_PAYMENTS_ROUTE,
   },
   {
     index: 3,
@@ -195,7 +195,7 @@ function Settings() {
           />
           <PrivateRoute
             exact
-            path={SETTINGS_PAYMENT_ROUTE}
+            path={SETTINGS_PAYMENTS_ROUTE}
             component={EditPaymentSettings}
             componentProps={{
               onSetAlertText: handleSetAlertText,

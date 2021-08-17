@@ -91,7 +91,7 @@ function Campaign(props) {
           <Grid item>
             <Button
               onClick={() => onDelete(data.id)}
-              variant="outlined"
+              variant="contained"
               color="primary"
               startIcon={<HighlightOffIcon />}>
               Stop promotion
@@ -104,7 +104,7 @@ function Campaign(props) {
                   PROFILE_LINK_ROUTE(data.userName)
                 );
               }}
-              variant="outlined"
+              variant="contained"
               color="primary"
               startIcon={<ShareIcon />}>
               Copy link to profile

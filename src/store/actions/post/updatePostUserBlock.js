@@ -26,13 +26,31 @@ function receivePostUserBlock(data) {
   };
 }
 
+function receiveProfileUserBlock(data) {
+  return {
+    type: UPDATE_POST_USER_BLOCK_SUCCESS,
+    payload: {
+      isFetching: false,
+      data,
+      errorMessage: "",
+    },
+  };
+}
+
 function updatePostUserBlock(userName, isBlocked) {
   return (dispatch, getState) => {
     if (!isEmptyObject(getState().followingPosts.currentPost)) {
       const currentPostState = { ...getState().followingPosts.currentPost };
       currentPostState.user.isBlocked = isBlocked;
 
-      receivePostUserBlock(currentPostState);
+      dispatch(receivePostUserBlock(currentPostState));
+    }
+
+    if (!isEmptyObject(getState().user.data)) {
+      const currentUser = { ...getState().user.data };
+      currentUser.data.isBlocked = isBlocked;
+
+      dispatch(receiveProfileUserBlock(currentUser));
     }
 
     const followingPosts = getState().followingPosts.data;
@@ -43,7 +61,6 @@ function updatePostUserBlock(userName, isBlocked) {
       if (index === -1) {
         throw new Error();
       }
-
       list[index].user.isBlocked = isBlocked;
       dispatch(receivePostsUserBlock(list));
     }

@@ -1,4 +1,4 @@
-// import { generateUrl } from "../../../../helpers/functions";
+import { generateUrl } from "../../../../helpers/functions";
 
 export const DELETE_SUBSCRIPTION_BUNDLE_REQUEST =
   "DELETE_SUBSCRIPTION_BUNDLE_REQUEST";
@@ -41,16 +41,13 @@ function errorDeleteSubscriptionBundle(message) {
 export function deleteSubscriptionBundle(api, opts) {
   return async (dispatch, getState) => {
     dispatch(requestDeleteSubscriptionBundleRequest());
-    //   TODO: connect api
 
-    // const url = generateUrl("deleteSubscriptionBundle");
+    const url = generateUrl("deleteSubscriptionBundle");
+
+    const { bundles, price, campaigns } = getState().settings.data;
+
     try {
-      const { bundles, price, campaigns } = getState().settings.data;
-
-      //   await api
-      //     .setMethod("DELETE")
-      //     .setParams(opts)
-      //     .query(url);
+      await api.setMethod("DELETE").setParams({ id: opts }).query(url);
       const removedBundleArray = bundles.filter((item) => item.id !== opts);
 
       dispatch(

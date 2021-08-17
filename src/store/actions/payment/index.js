@@ -11,3 +11,10 @@ export {
   BUY_POST_FAILURE,
   buyPost,
 } from "./buyPost";
+
+export {
+  SEND_DONATION_REQUEST,
+  SEND_DONATION_SUCCESS,
+  SEND_DONATION_FAILURE,
+  sendDonation,
+} from "./sendDonation";

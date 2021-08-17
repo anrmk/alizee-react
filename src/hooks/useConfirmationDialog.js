@@ -7,7 +7,6 @@ export default function useConfirmationDialog() {
 
   const handleDialogToggle = (dialogOpts, contentOpts, withStack = false) => {
     const toggleType = getDialogToggleType(withStack);
-
     dialog[toggleType](
       dialogs[CONFIRM_DIALOG_TYPE](
         {

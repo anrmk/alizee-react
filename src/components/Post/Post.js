@@ -154,14 +154,24 @@ function Post(props) {
           onPayClick={onBuyPost}
           onChangeIndex={handleChangeSlideIndex}
         />
-        {post?.isTargetFunds && (
-          <FundraisingPost
-            position="bottom"
-            targetProgress={post.targetProgress}
-            amount={post.amount}
-          />
-        )}
       </CardMedia>
+
+      {post?.isTargetFunds && (
+        <>
+          <CardActions>
+            <FundraisingPost
+              targetProgress={post.targetProgress}
+              amount={post.amount}
+              onSendDonate={onSendTip}
+              user={owner}
+              id={id}
+              isOwner={user.userName === owner.userName}
+            />
+          </CardActions>
+
+          <Divider />
+        </>
+      )}
 
       <CardContent className={classes.postCardContent}>
         {post.media.length === 0 &&
@@ -179,6 +189,7 @@ function Post(props) {
           isPurchased={post.isPurchased}
           isOwner={user.userName === owner.userName}
           isCommentable={post.isCommentable}
+          isTargetFunds={post?.isTargetFunds}
           onLike={onLike}
           onFavorite={onFavorite}
           onSendTip={onSendTip}

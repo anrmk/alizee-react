@@ -3,7 +3,10 @@ import { useDispatch } from "react-redux";
 
 import { useSnackbar } from "notistack";
 import ApiContext from "../../context/ApiContext";
-import dialogs, { SEND_TIP_DIALOG_TYPE } from "../../constants/dialogs";
+import dialogs, {
+  SEND_TIP_DIALOG_TYPE,
+  SEND_DONATE_DIALOG_TYPE,
+} from "../../constants/dialogs";
 import * as paymentActions from "../../store/actions/payment";
 import useDialog from "../useDialog";
 
@@ -29,28 +32,44 @@ export default function useSendTipDialog() {
     }
   };
 
-  const handleSendTip = useCallback(async ({ userName, amount, message }) => {
+  const handleSendTip = useCallback(async (data, isDonate) => {
     dialog.setParams({ loading: true });
-    const fulfilled = await dispatch(
-      paymentActions.sendTip(apiClient, userName, amount, message)
-    );
+    const fulfilled = isDonate
+      ? await dispatch(paymentActions.sendDonation(apiClient, data))
+      : await dispatch(paymentActions.sendTip(apiClient, data));
+
     dialog.toggle({ open: false, loading: false });
     handleSetAlertText(fulfilled);
   }, []);
 
-  const handleDialogToggle = useCallback(async (user) => {
-    dialog.toggle(
-      dialogs[SEND_TIP_DIALOG_TYPE](
-        {
-          mainBtnProps: { type: "submit", form: FORM_ID },
-        },
-        {
-          formId: FORM_ID,
-          onSubmit: handleSendTip,
-          user,
-        }
-      )
-    );
+  const handleDialogToggle = useCallback(async (user, isDonate) => {
+    isDonate
+      ? dialog.toggle(
+          dialogs[SEND_DONATE_DIALOG_TYPE](
+            {
+              mainBtnProps: { type: "submit", form: FORM_ID },
+            },
+            {
+              formId: FORM_ID,
+              onSubmit: handleSendTip,
+              user,
+              isDonate,
+            }
+          )
+        )
+      : dialog.toggle(
+          dialogs[SEND_TIP_DIALOG_TYPE](
+            {
+              mainBtnProps: { type: "submit", form: FORM_ID },
+            },
+            {
+              formId: FORM_ID,
+              onSubmit: handleSendTip,
+              user,
+              isDonate,
+            }
+          )
+        );
   }, []);
 
   return {

@@ -43,10 +43,7 @@ export function getSubscription(api) {
     const url = generateUrl("getSubscription");
     try {
       const { data } = await api.setMethod("GET").query(url);
-      // TODO: DELETE HARD CODE AFTER CONNECT API
 
-      data.bundles = [];
-      data.campaigns = [];
       dispatch(receiveGetSubscription(data));
     } catch (e) {
       dispatch(errorGetSubscription("Error: something went wrong:", e));

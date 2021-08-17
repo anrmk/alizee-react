@@ -77,12 +77,13 @@ function EditPaymentSettings({
   return (
     <>
       <Card>
-        <CardHeader title="Payment" />
+        <CardHeader title="Payments" />
         <Divider />
 
         {!isFetching && (
           <>
             <WalletCard
+              data={cards}
               {...wallet}
               onDialogOpen={paymentCardDialog.toggle}
               onUpdateWallet={handleWalletUpdate}

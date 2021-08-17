@@ -37,6 +37,7 @@ const Tools = ({
   isPurchased,
   isOwner,
   isCommentable,
+  isTargetFunds,
 
   onLike,
   onFavorite,
@@ -81,7 +82,7 @@ const Tools = ({
     <Box width="100%">
       <Box display="flex" alignItems="center">
         <IconButton
-          disabled={!isPurchased && amount > 0}
+          disabled={!isTargetFunds && !isPurchased && amount > 0}
           onClick={handleLikeClick}
           aria-label="add to favorites">
           {isLike ? <FavoriteIcon htmlColor="red" /> : <FavoriteBorderIcon />}
@@ -126,7 +127,7 @@ const Tools = ({
           {isFavorite ? <BookmarkIcon /> : <BookmarkBorderIcon />}
         </IconButton>
 
-        {(isVerified || isOwner) && amount !== 0 ? (
+        {(isVerified || isOwner) && !isTargetFunds && amount !== 0 ? (
           !isPurchased ? (
             <Tooltip title="Unlock post">
               <Chip

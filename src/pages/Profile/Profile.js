@@ -233,6 +233,7 @@ function Profile(props) {
         onMenuClick={() =>
           postMenuDialog.toggle({
             userName: user.data.userName,
+            isBlocked: user.data.isBlocked,
             isOwner: username === me.userName,
             isFavorite: user.data.isFavorite,
             isProfile: true,

@@ -74,7 +74,7 @@ export function createBlock(api, userName, type) {
         dispatch(updateCurrentRoom(current));
         dispatch(receiveUpdateBlockUser());
       }
-      if (getState().users.data.length) {
+      if (getState().users.data?.length) {
         const list = [...getState().users.data];
         const index = list.findIndex((item) => item.userName === userName);
 
@@ -84,7 +84,11 @@ export function createBlock(api, userName, type) {
 
         dispatch(receiveBlockUser(list));
       }
+
       if (getState().followingPosts.data.length) {
+        dispatch(addPostUserBlock(userName));
+        dispatch(receiveUpdateBlockUser());
+      } else if (!isEmptyObject(getState().followingPosts.currentPost)) {
         dispatch(addPostUserBlock(userName));
         dispatch(receiveUpdateBlockUser());
       }

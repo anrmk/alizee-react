@@ -22,7 +22,7 @@ import { formatCurrency } from "../../helpers/functions";
 import useStyles from "./styles";
 import {
   STATISTICS_ROUTE,
-  SETTINGS_PAYMENT_ROUTE,
+  SETTINGS_PAYMENTS_ROUTE,
 } from "../../constants/routes";
 
 function Wallet({ deposit }) {
@@ -72,7 +72,7 @@ function Wallet({ deposit }) {
           <ListItemText primary="Statistics" />
         </MenuItem>
         <MenuItem
-          to={SETTINGS_PAYMENT_ROUTE}
+          to={SETTINGS_PAYMENTS_ROUTE}
           onClick={handleMenuCloseClick}
           component={Link}>
           <ListItemIcon>
