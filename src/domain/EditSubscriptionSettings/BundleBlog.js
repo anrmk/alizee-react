@@ -36,7 +36,7 @@ function BundleBlog({ onOpenDialogClick, price, data, onBundleDelete }) {
             <Button
               disabled={price < 0.1}
               disableElevation
-              variant="outlined"
+              variant="contained"
               color="primary"
               onClick={onOpenDialogClick}>
               Create Bundle

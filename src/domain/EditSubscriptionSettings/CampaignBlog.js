@@ -29,7 +29,7 @@ function CampaignBlog({
             <Button
               onClick={onOpenDialogClick}
               disableElevation
-              variant="outlined"
+              variant="contained"
               color="primary"
               disabled={price < 0.1}>
               Start Campaign

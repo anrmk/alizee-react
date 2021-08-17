@@ -124,13 +124,7 @@ function PostPage(props) {
               isOwner={user.userName === post.owner?.userName}
               onClick={lightboxModal.toggle}
             />
-            {post.data?.isTargetFunds && (
-              <FundraisingPost
-                positionDirection="top"
-                targetProgress={post.data?.targetProgress}
-                amount={post.data.amount}
-              />
-            )}
+
             {post.data.userTags && post.data.userTags.length > 0 && (
               <Box className={classes.userTags}>
                 {post.data.userTags?.map((item) => (
@@ -177,6 +171,7 @@ function PostPage(props) {
                   postMenuDialog.toggle({
                     postId: post.data.id,
                     userName: post.owner.userName,
+                    isBlocked: post.owner.isBlocked,
                     isOwner: user.userName === post.owner.userName,
                   })
                 }>
@@ -184,6 +179,18 @@ function PostPage(props) {
               </IconButton>
             </>
           }>
+          {post.data?.isTargetFunds && (
+            <Box width="100%" mb={1}>
+              <FundraisingPost
+                user={post.owner}
+                targetProgress={post.data?.targetProgress}
+                amount={post.data.amount}
+                onSendDonate={sendTipDialog.toggle}
+                id={post.data.id}
+                isOwner={user.userName === post.owner.userName}
+              />
+            </Box>
+          )}
           <Tools
             id={post.data.id}
             user={post.owner}
@@ -194,6 +201,7 @@ function PostPage(props) {
             amount={post.data.amount}
             isPurchased={post.data.isPurchased}
             isOwner={user.userName === post.owner.userName}
+            isTargetFunds={post.data.isTargetFunds}
             onLike={likeAction.toggle}
             onFavorite={favoriteAction.toggle}
             onSendTip={sendTipDialog.toggle}

@@ -70,7 +70,7 @@ export function deleteBlock(api, userName) {
         dispatch(receiveUpdateBlockUser());
       }
 
-      if (getState().users.data) {
+      if (getState().users?.data) {
         const list = [...getState().users.data];
         const index = list.findIndex((item) => item.userName === userName);
 
@@ -81,6 +81,9 @@ export function deleteBlock(api, userName) {
         dispatch(receiveUnblockUser(list));
       }
       if (getState().followingPosts.data.length) {
+        dispatch(removePostUserBlock(userName));
+        dispatch(receiveUpdateBlockUser());
+      } else if (!isEmptyObject(getState().followingPosts.currentPost)) {
         dispatch(removePostUserBlock(userName));
         dispatch(receiveUpdateBlockUser());
       }

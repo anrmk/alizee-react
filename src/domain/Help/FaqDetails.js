@@ -99,7 +99,7 @@ function FaqDetails({
                   disableElevation
                   size="medium"
                   color="primary"
-                  variant="outlined"
+                  variant="contained"
                   onClick={() => onVote(id, false)}>
                   No
                 </Button>

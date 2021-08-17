@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   iconToggle: {
     position: "absolute",
     right: "10px",
-    top: "10px",
+    top: "8px",
     zIndex: theme.zIndex.appBar,
   },
 }));

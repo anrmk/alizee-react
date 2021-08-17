@@ -23,7 +23,7 @@ function PublicBundle({ discount, total, duration, onSubscribeClick }) {
       />
       <Button
         color="primary"
-        variant="outlined"
+        variant="contained"
         size="small"
         onClick={onSubscribeClick}>
         Subscribe

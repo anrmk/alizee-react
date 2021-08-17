@@ -32,7 +32,7 @@ function CardBlog({
         <Button
           fullWidth
           disableElevation
-          variant="outlined"
+          variant="contained"
           color="primary"
           onClick={onDialogOpen}>
           Add card

@@ -83,6 +83,7 @@ function EditPaymentSettings({
         {!isFetching && (
           <>
             <WalletCard
+              data={cards}
               {...wallet}
               onDialogOpen={paymentCardDialog.toggle}
               onUpdateWallet={handleWalletUpdate}

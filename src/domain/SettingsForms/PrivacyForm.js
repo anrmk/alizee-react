@@ -150,7 +150,7 @@ function PrivacyForm({
           <Grid item>
             <Button
               disableElevation
-              variant="outlined"
+              variant="contained"
               color="primary"
               to={BLOCKED_USERNAME_ROUTE("userName")}
               component={Link}>
@@ -172,7 +172,7 @@ function PrivacyForm({
             <Button
               startIcon={<WarningIcon />}
               disableElevation
-              variant="outlined"
+              variant="contained"
               color="secondary"
               disabled={loading}
               onClick={onPasswordReset}>
@@ -194,7 +194,7 @@ function PrivacyForm({
             <Button
               startIcon={<WarningIcon />}
               disableElevation
-              variant="outlined"
+              variant="contained"
               color="secondary"
               disabled={loading}
               onClick={onAccountDelete}>

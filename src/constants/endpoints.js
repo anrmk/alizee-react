@@ -29,6 +29,7 @@ export default {
     reportPost: "post/report",
     deletePost: "post/deletepost",
     buyPost: "post/buyPost",
+    sendDonation: "post/sendDonation",
 
     // POST COMMENTS
     getCommentsPost: "comment/comments",
@@ -124,8 +125,8 @@ export default {
     getSubscription: "accountsetting/subscriptionsettings",
     updateSubscription: "accountsetting/subscriptionsettings",
 
-    deleteSubscriptionBundle: "accountsetting/subscriptionbundle",
-    createSubscriptionBundle: "accountsetting/subscriptionbundle",
+    createSubscriptionBundle: "accountsetting/bundle",
+    deleteSubscriptionBundle: "accountsetting/bundle",
 
     createCampaign: "accountsetting/subscriptionCampaign",
     deleteCampaign: "accountsetting/subscriptionCampaign",

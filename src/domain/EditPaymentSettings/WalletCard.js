@@ -4,7 +4,6 @@ import {
   CardHeader,
   Grid,
   Switch,
-  Button,
   Typography,
   Box,
   Card,
@@ -16,7 +15,7 @@ import useStyles from "./styles";
 function WalletCardSettings({
   isDefault = false,
   total = 0,
-  onDialogOpen,
+  data,
   onUpdateWallet,
 }) {
   const classes = useStyles();
@@ -42,7 +41,7 @@ function WalletCardSettings({
               WALLET CREDITS
             </Typography>
             <Typography variant="body1" align="right">
-              {total}
+              ${total}
             </Typography>
           </Box>
         }
@@ -63,18 +62,10 @@ function WalletCardSettings({
                   name="isDefault"
                   color="primary"
                   checked={lWalletCard}
+                  disabled={data?.length === 0 || !data?.length}
                 />
               }
             />
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={onDialogOpen}
-              disableElevation>
-              Add a payment card
-            </Button>
           </Grid>
         </Grid>
       </CardContent>
