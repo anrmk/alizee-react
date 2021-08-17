@@ -12,7 +12,7 @@ import * as storyActions from "../../store/actions/story";
 import useDialog from "../useDialog";
 
 import { SETTINGS_BANK_ROUTE } from "../../constants/routes";
-import { STORIES_LENGTH } from "../../constants/feed";
+// import { STORIES_LENGTH } from "../../constants/feed";
 
 const FORM_ID = "create-story-form";
 
@@ -31,13 +31,13 @@ export default function useStoryDialog() {
       dialog.setParams({ loading: true });
       !isFetching &&
         (await dispatch(storyActions.createStorySlide(apiClient, data)));
-      !isFetching &&
-        (await dispatch(
-          storyActions.getFollowingStories(apiClient, {
-            start: 0,
-            length: STORIES_LENGTH,
-          })
-        ));
+      // !isFetching &&
+      //   (await dispatch(
+      //     storyActions.getFollowingStories(apiClient, {
+      //       start: 0,
+      //       length: STORIES_LENGTH,
+      //     })
+      //   ));
       dialog.toggle({ open: false, loading: false });
     },
     [isFetching]

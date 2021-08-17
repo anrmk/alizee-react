@@ -1,7 +1,8 @@
+/* eslint-disable no-debugger */
 import { createSelector } from "reselect";
 
-import { generateUrl, getOffset } from "../../../helpers/functions";
-import { STORIES_OFFSET } from "../../../constants/feed";
+import { generateUrl } from "../../../helpers/functions";
+import { STORIES_OFFSET, STORIES_LENGTH } from "../../../constants/feed";
 
 export const GET_FOLLOWING_STORIES_REQUEST = "GET_FOLLOWING_STORIES_REQUEST";
 export const GET_FOLLOWING_STORIES_SUCCESS = "GET_FOLLOWING_STORIES_SUCCESS";
@@ -19,14 +20,14 @@ function requestGetFollowingStories() {
   };
 }
 
-function receiveGetFollowingStories(posts, total, start, hasMore) {
+function receiveGetFollowingStories(posts, length, start) {
   return {
     type: GET_FOLLOWING_STORIES_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
-      offset: getOffset(start, total, STORIES_OFFSET),
-      hasMore,
+      offset: start + STORIES_OFFSET,
+      hasMore: length === STORIES_LENGTH,
       data: posts || [],
     },
   };
@@ -61,30 +62,21 @@ export function getFollowingStories(api, opts) {
     dispatch(requestGetFollowingStories());
 
     const url = generateUrl("getFollowingStories");
-    const currentOffset =
-      opts.start !== undefined ? opts.start : getState().story.offset;
+    const currentOffset = getState().story.offset;
     try {
       const { data } = await api
         .setMethod("GET")
         .setParams({
           start: currentOffset,
-          length: opts.length,
+          length: STORIES_LENGTH,
         })
         .query(url);
 
-      let extendedList = [];
-      if (opts.start === 0) {
-        extendedList = [...data.data];
-      } else {
-        extendedList = [...getState().story.data, ...data.data];
-      }
-
       dispatch(
         receiveGetFollowingStories(
-          extendedList,
-          data.recordsTotal,
-          currentOffset,
-          !!data.data.length
+          [...getState().story.data, ...data],
+          data.length,
+          currentOffset
         )
       );
     } catch (e) {

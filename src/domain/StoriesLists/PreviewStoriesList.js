@@ -3,6 +3,7 @@ import ScrollContainer from "react-indiana-drag-scroll";
 import { List } from "@material-ui/core";
 import Skeleton from "@material-ui/lab/Skeleton";
 
+import CreateStoryItem from "./CreateStoryItem";
 import PreviewStoriesListItem from "./PreviewStoriesListItem";
 import useStyles from "./styles";
 
@@ -43,23 +44,18 @@ const PreviewStoriesList = React.memo(
           renderSkeletons()
         ) : (
           <>
-            <PreviewStoriesListItem
-              me
-              id={user?.userId}
-              username={user?.userName}
-              name={user?.name}
+            <CreateStoryItem
               previewUrl={user?.avatarUrl}
-              onCreateStoryClick={onCreateStoryClick}
+              onClick={onCreateStoryClick}
             />
             {items.length > 0 &&
               items.map((item) => (
                 <PreviewStoriesListItem
-                  key={item?.userId}
-                  id={item?.userId}
-                  username={item?.user?.userName}
-                  name={item?.user?.name}
-                  previewUrl={item?.thumbnailUrl}
-                  avatarUrl={item?.user?.avatarUrl}
+                  key={`story_${item?.userName}`}
+                  userName={item.userName}
+                  name={item.name}
+                  previewUrl={item.url}
+                  avatarUrl={item.avatarUrl}
                   onClick={onItemClick}
                 />
               ))}

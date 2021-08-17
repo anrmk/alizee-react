@@ -78,17 +78,6 @@ export function createPost(api, opts) {
 
       const posts = getState().followingPosts.data;
       dispatch(receiveCreatePost([data, ...posts]));
-
-      // if (getState().user.data?.userName && getState().signIn.userInfo.userName !== getState().user.data.userName) {
-      // dispatch(receiveCreatePost(posts));
-      // } else {
-      //   const avatarUrl = getState().signIn?.userInfo?.avatarUrl;
-      //   if (avatarUrl) {
-      //     data.user.avatarUrl = avatarUrl;
-      //   }
-
-      //   dispatch(receiveCreatePost([data, ...posts]));
-      // }
     } catch (e) {
       dispatch(errorCreatePost("Error: something went wrong"));
     }

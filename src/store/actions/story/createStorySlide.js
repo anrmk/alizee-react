@@ -1,3 +1,5 @@
+/* eslint-disable spaced-comment */
+/* eslint-disable no-debugger */
 import { generateUrl } from "../../../helpers/functions";
 
 export const CREATE_STORY_SLIDE_REQUEST = "CREATE_STORY_SLIDE_REQUEST";
@@ -14,13 +16,13 @@ function requestCreateStory() {
   };
 }
 
-function receiveCreateStory(currentStory) {
+function receiveCreateStory(data) {
   return {
     type: CREATE_STORY_SLIDE_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
-      currentStory: currentStory || {},
+      data,
     },
   };
 }
@@ -35,30 +37,36 @@ function errorCreateStory(message) {
   };
 }
 
-export function createStorySlide(api, storyData) {
+export function createStorySlide(api, opts) {
   return async (dispatch, getState) => {
     dispatch(requestCreateStory());
 
     const url = generateUrl("createStorySlide");
 
     try {
-      const mediaData = storyData.medias;
+      const mediaData = opts.medias;
 
       const formData = new FormData();
-
-      formData.append("externalLink", storyData?.link || null);
+      formData.append("externalLink", opts?.link || null);
 
       mediaData &&
         mediaData.forEach((file) => {
           formData.append("files", file);
         });
 
-      await api.setData(formData).query(url);
+      const { data } = await api.setData(formData).query(url);
+      const stories = getState().story.data;
+      const storyIndex = stories.findIndex(
+        (story) => story.userName === data.userName
+      );
 
-      const currentStoryState = getState().story.currentStory;
-      const updatedCurrentStoryState = { ...currentStoryState };
-
-      dispatch(receiveCreateStory(updatedCurrentStoryState));
+      if (storyIndex === -1) {
+        dispatch(receiveCreateStory([...stories, data]));
+      } else {
+        const currentStory = stories[storyIndex];
+        currentStory.url = data.thumbnailUrl;
+        dispatch(receiveCreateStory(stories));
+      }
     } catch (e) {
       dispatch(errorCreateStory("Error: something went wrong"));
     }

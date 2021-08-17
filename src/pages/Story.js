@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import React, { useContext, useEffect } from "react";
 import { connect } from "react-redux";
 import {
@@ -16,7 +17,6 @@ import ApiContext from "../context/ApiContext";
 import * as storyActions from "../store/actions/story";
 import { DEFAULT_ROUTE, HOME_ROUTE } from "../constants/routes";
 import dialogs, { STORY_DIALOG_TYPE } from "../constants/dialogs";
-import { STORIES_LENGTH } from "../constants/feed";
 import useDialog from "../hooks/useDialog";
 import useStoriesSwitcher from "../hooks/useStoriesSwitcher";
 import useShareDialog, {
@@ -24,7 +24,7 @@ import useShareDialog, {
 } from "../hooks/useShareDialog";
 import useFullScreen from "../hooks/useFullScreen";
 
-function Story(props) {
+function Story({ story, getStory, getFollowingStories, resetStory }) {
   const history = useHistory();
   const location = useLocation(DEFAULT_ROUTE);
   const { username, slideId } = useParams();
@@ -33,9 +33,7 @@ function Story(props) {
   const dialog = useDialog();
   const fullScreen = useFullScreen("root");
 
-  const { story } = props;
-  const { getStory, getFollowingStories, resetStory } = props;
-
+  debugger;
   const {
     currentSlideId,
     currentSlideIndex,
@@ -45,7 +43,7 @@ function Story(props) {
     handleNextStory,
     handleSlideChange,
   } = useStoriesSwitcher({
-    data: story.data.length ? story.data : story.current,
+    data: story.current, // story.data.length ? story.data : story.current,
     slideId,
     storyId: location.state?.storyId,
     onUpdatePath: handlePathUpdate,
@@ -59,9 +57,7 @@ function Story(props) {
   useEffect(() => {
     if (username) {
       (async () => {
-        location.state?.from === HOME_ROUTE && !location.state?.me
-          ? await getFollowingStories(apiClient, { length: STORIES_LENGTH })
-          : await getStory(apiClient, { username, length: 10 });
+        await getStory(apiClient, { username, length: 10 });
       })();
     }
 
@@ -97,9 +93,9 @@ function Story(props) {
       <Stories
         defaultInterval={4000}
         currentIndex={currentSlideIndex}
-        user={currentUser}
         avatarUrl={currentUser?.avatarUrl}
         fullName={currentUser?.name}
+        userName={currentUser.userName}
         stories={localSlides}
         onMoreClick={handleDialogToggle}
         onCloseClick={() => history.push(DEFAULT_ROUTE)}

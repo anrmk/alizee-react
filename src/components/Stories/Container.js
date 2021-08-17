@@ -215,7 +215,7 @@ export default function Container() {
                 onClick={handleBtnPlayClick}>
                 {pause ? <PlayIcon /> : <PauseIcon />}
               </IconButton>
-              {stories[currentId]?.media?.kind === MEDIA_VIDEO && (
+              {stories[currentId]?.kind === MEDIA_VIDEO && (
                 <IconButton
                   className={classes.btn}
                   size="small"
@@ -237,8 +237,8 @@ export default function Container() {
           action={toggleState}
           bufferAction={bufferAction}
           playState={pause}
-          url={stories[currentId]?.media.url}
-          kind={stories[currentId]?.media?.kind}
+          url={stories[currentId]?.url}
+          kind={stories[currentId]?.kind}
           onVideoDuration={handleVideoDuration}
         />
         <Box className={classes.footer}>
