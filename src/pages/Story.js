@@ -37,7 +37,6 @@ function Story({ story }) {
     handleNextStory,
     handleSlideChange,
     resetStory,
-    resetFollowingStories,
   } = useStoriesSwitcher({
     username,
     slideId,
@@ -52,9 +51,8 @@ function Story({ story }) {
 
   useEffect(
     () => () => {
-      fullScreen.toggle(false);
       resetStory();
-      resetFollowingStories();
+      fullScreen.toggle(false);
     },
     []
   );

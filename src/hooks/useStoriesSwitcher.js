@@ -36,9 +36,10 @@ export default function useStoriesSwitcher({
     await dispatch(storyActions.resetStory());
   };
 
-  const resetFollowingStories = async () => {
-    await dispatch(storyActions.resetFollowingStories());
-  };
+  // obsolete
+  //   const resetFollowingStories = async () => {
+  //     await dispatch(storyActions.resetFollowingStories());
+  //   };
 
   const getStory = async (userName) => {
     await resetStory();
@@ -136,6 +137,5 @@ export default function useStoriesSwitcher({
     handleNextStory,
     handleSlideChange,
     resetStory,
-    resetFollowingStories,
   };
 }

@@ -83,10 +83,10 @@ function Feed(props) {
   }, []);
 
   useEffect(() => {
-    if (!story?.data.length && !story.isFetching) {
+    if (!story.data.length) {
       getStories(apiClient);
     }
-  }, [story.data]);
+  }, []);
 
   const handleFetchMore = (isLoading) => {
     if (!isLoading) {
@@ -119,7 +119,8 @@ function Feed(props) {
           <Nav />
         </Hidden>
         <PreviewStoriesList
-          loading={story?.data.length > 0}
+          loading={!story.isFetching}
+          isFetching={story.isFetching}
           user={userInfo}
           items={story.data}
           onItemClick={handleStoryClick}
