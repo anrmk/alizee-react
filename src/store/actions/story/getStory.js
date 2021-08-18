@@ -37,12 +37,13 @@ function errorGetStory(message) {
   };
 }
 
-function successResetStory() {
+function successResetStory(data) {
   return {
     type: RESET_STORY_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
+      data: data || [],
       currentStory: {},
     },
   };
@@ -51,16 +52,14 @@ function successResetStory() {
 export function getStory(api, opts) {
   return async (dispatch) => {
     dispatch(requestGetStory());
-
     const url = generateUrl("getStory");
     try {
       const { data } = await api
         .setMethod("GET")
         .setParams({
-          userName: opts.username,
+          userName: opts.userName,
         })
         .query(url);
-
       dispatch(receiveGetStory(data));
     } catch (e) {
       dispatch(errorGetStory("Error: something went wrong:", e));
@@ -69,5 +68,9 @@ export function getStory(api, opts) {
 }
 
 export function resetStory() {
-  return (dispatch) => dispatch(successResetStory());
+  return (dispatch, getState) => {
+    const { data } = getState().story;
+
+    dispatch(successResetStory(data));
+  };
 }

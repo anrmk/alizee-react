@@ -1,80 +1,109 @@
 /* eslint-disable no-debugger */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import * as storyActions from "../store/actions/story";
+import ApiContext from "../context/ApiContext";
 
 export default function useStoriesSwitcher({
-  data,
-  slideId,
-  storyId,
+  username,
+  slideId = 0,
+  storyId = 0,
   onUpdatePath,
 }) {
+  const apiClient = useContext(ApiContext);
+  const dispatch = useDispatch();
+
+  const data = useSelector((state) => state.story);
+
   const [currentSlideId, setCurrentSlideId] = useState(slideId);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [currentUser, setCurrentUser] = useState();
-  const [currentStoryIndex, setCurrentStoryIndex] = useState(0);
+  const [currentStoryIndex, setCurrentStoryIndex] = useState(null);
   const [localSlides, setLocalSlides] = useState([]);
 
   useEffect(() => {
-    if (data?.length) {
-      if (slideId) {
-        const index = data.findIndex(
-          (item) => !!item.slides.find((slide) => slide.id === slideId)
+    if (username) {
+      (async () => {
+        await dispatch(
+          storyActions.getStory(apiClient, { userName: username })
         );
-        if (index !== -1) {
-          setupStory(data[index]?.slides, data[index]?.user, 0, index);
-        }
-      } else if (storyId) {
-        const index = data.findIndex((item) => item.userId === storyId);
-        if (index !== -1) {
-          setupStory(data[index]?.slides, data[index]?.user, 0, index);
-        }
-      } else {
-        setupStory(data[0]?.slides, data[0]?.user, 0, 0);
-      }
-    } else if (data?.slides?.length) {
-      const index = data.slides.findIndex((item) => item.id === slideId);
-      setupStory(
-        data.slides,
-        data.userName,
-        data.name,
-        data.avatarUrl,
-        index !== -1 ? index : 0
-      );
+      })();
     }
-  }, [data]);
+  }, []);
 
-  const setupStory = (
-    items,
-    userName,
-    name,
-    avatarUrl,
-    slideIndex = 0,
-    storyIndex = 0
-  ) => {
+  const resetStory = async () => {
+    await dispatch(storyActions.resetStory());
+  };
+
+  const resetFollowingStories = async () => {
+    await dispatch(storyActions.resetFollowingStories());
+  };
+
+  const getStory = async (userName) => {
+    await resetStory();
+    await dispatch(storyActions.getStory(apiClient, { userName }));
+  };
+
+  useEffect(() => {
+    if (data?.currentStory?.slides?.length) {
+      const user = {
+        userName: data.currentStory.userName,
+        name: data.currentStory.name,
+        avatarUrl: data.currentStory.avatarUrl,
+      };
+
+      const slideIndex = data.currentStory.slides.findIndex(
+        (item) => item.id === slideId
+      );
+
+      if (currentStoryIndex === null) {
+        const storyIndex = storyId;
+
+        setupStory(
+          data?.currentStory.slides,
+          user,
+          slideIndex !== -1 ? slideIndex : 0,
+          storyIndex
+        );
+      } else {
+        setupStory(
+          data?.currentStory.slides,
+          user,
+          slideIndex !== -1 ? slideIndex : 0
+        );
+      }
+    }
+  }, [data, username]);
+
+  const handleSetStoryIndex = (index) => {
+    setCurrentStoryIndex(index);
+  };
+
+  const setupStory = (items, user, slideIndex = 0, storyIndex = null) => {
     if (!items?.length) return;
-    debugger;
-
     const lSlideId = items[slideIndex].id;
-
     items && setLocalSlides(items);
-    userName && setCurrentUser(userName);
-    setCurrentStoryIndex(storyIndex);
+    user && setCurrentUser(user);
     setCurrentSlideIndex(slideIndex);
     setCurrentSlideId(lSlideId);
+    if (storyIndex !== null) {
+      handleSetStoryIndex(storyIndex);
+    }
 
-    onUpdatePath && onUpdatePath(userName, lSlideId);
+    onUpdatePath && onUpdatePath(user.userName, lSlideId);
   };
 
   const changeStory = (pStoryIndex, next = false) => {
     if (
       (!next && pStoryIndex >= 0) ||
-      (next && pStoryIndex <= data?.length - 1)
+      (next && pStoryIndex <= data.data?.length - 1)
     ) {
-      const userInfo = data[pStoryIndex]?.user;
-      let slideIndex = 0;
-
-      !next && (slideIndex = data[pStoryIndex]?.slides?.length - 1);
-
-      setupStory(data[pStoryIndex]?.slides, userInfo, slideIndex, pStoryIndex);
+      const { userName } = data.data[pStoryIndex];
+      if (userName !== username) {
+        handleSetStoryIndex(pStoryIndex);
+        getStory(userName);
+      }
     }
   };
 
@@ -85,14 +114,14 @@ export default function useStoriesSwitcher({
   };
 
   const handleNextStory = () => {
-    if (data.length) {
+    if (data.data.length) {
       const nextStoryIndex = currentStoryIndex + 1;
       changeStory(nextStoryIndex, true);
     }
   };
 
   const handlePreviousStory = () => {
-    if (data.length) {
+    if (data.data.length) {
       const previousStoryIndex = currentStoryIndex - 1;
       changeStory(previousStoryIndex);
     }
@@ -106,5 +135,7 @@ export default function useStoriesSwitcher({
     handlePreviousStory,
     handleNextStory,
     handleSlideChange,
+    resetStory,
+    resetFollowingStories,
   };
 }

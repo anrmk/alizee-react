@@ -1,5 +1,4 @@
-/* eslint-disable no-debugger */
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import {
   useHistory,
@@ -13,8 +12,6 @@ import { Box } from "@material-ui/core";
 
 import Stories from "../components/Stories";
 
-import ApiContext from "../context/ApiContext";
-import * as storyActions from "../store/actions/story";
 import { DEFAULT_ROUTE, HOME_ROUTE } from "../constants/routes";
 import dialogs, { STORY_DIALOG_TYPE } from "../constants/dialogs";
 import useDialog from "../hooks/useDialog";
@@ -24,16 +21,13 @@ import useShareDialog, {
 } from "../hooks/useShareDialog";
 import useFullScreen from "../hooks/useFullScreen";
 
-function Story({ story, getStory, getFollowingStories, resetStory }) {
+function Story({ story }) {
   const history = useHistory();
   const location = useLocation(DEFAULT_ROUTE);
   const { username, slideId } = useParams();
   const { path } = useRouteMatch();
-  const apiClient = useContext(ApiContext);
   const dialog = useDialog();
   const fullScreen = useFullScreen("root");
-
-  debugger;
   const {
     currentSlideId,
     currentSlideIndex,
@@ -42,10 +36,12 @@ function Story({ story, getStory, getFollowingStories, resetStory }) {
     handlePreviousStory,
     handleNextStory,
     handleSlideChange,
+    resetStory,
+    resetFollowingStories,
   } = useStoriesSwitcher({
-    data: story.current, // story.data.length ? story.data : story.current,
+    username,
     slideId,
-    storyId: location.state?.storyId,
+    storyId: location?.state?.storyIndex,
     onUpdatePath: handlePathUpdate,
   });
 
@@ -54,18 +50,14 @@ function Story({ story, getStory, getFollowingStories, resetStory }) {
     type: SHARE_DIALOG_STORY_TYPE,
   });
 
-  useEffect(() => {
-    if (username) {
-      (async () => {
-        await getStory(apiClient, { username, length: 10 });
-      })();
-    }
-
-    return () => {
+  useEffect(
+    () => () => {
       fullScreen.toggle(false);
       resetStory();
-    };
-  }, []);
+      resetFollowingStories();
+    },
+    []
+  );
 
   function handlePathUpdate(userName, pSlideId) {
     history.replace({
@@ -87,15 +79,12 @@ function Story({ story, getStory, getFollowingStories, resetStory }) {
       })
     );
   };
-
   return (
     <Box display="flex" justifyContent="center" height="100vh">
       <Stories
         defaultInterval={4000}
         currentIndex={currentSlideIndex}
-        avatarUrl={currentUser?.avatarUrl}
-        fullName={currentUser?.name}
-        userName={currentUser.userName}
+        user={currentUser}
         stories={localSlides}
         onMoreClick={handleDialogToggle}
         onCloseClick={() => history.push(DEFAULT_ROUTE)}
@@ -119,13 +108,4 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    getStory: (api, opts) => dispatch(storyActions.getStory(api, opts)),
-    resetStory: () => dispatch(storyActions.resetStory()),
-    getFollowingStories: (api, opts) =>
-      dispatch(storyActions.getFollowingStories(api, opts)),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Story);
+export default connect(mapStateToProps)(Story);
