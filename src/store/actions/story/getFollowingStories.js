@@ -43,6 +43,7 @@ function errorGetFollowingStories(message) {
   };
 }
 
+// obsolete
 function successResetFollowingStories() {
   return {
     type: RESET_FOLLOWING_STORIES_SUCCESS,
@@ -84,6 +85,7 @@ export function getFollowingStories(api, opts) {
   };
 }
 
+// obsolete
 export function resetFollowingStories() {
   return (dispatch) => dispatch(successResetFollowingStories());
 }

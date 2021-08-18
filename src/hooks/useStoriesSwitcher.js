@@ -36,11 +36,6 @@ export default function useStoriesSwitcher({
     await dispatch(storyActions.resetStory());
   };
 
-  // obsolete
-  //   const resetFollowingStories = async () => {
-  //     await dispatch(storyActions.resetFollowingStories());
-  //   };
-
   const getStory = async (userName) => {
     await resetStory();
     await dispatch(storyActions.getStory(apiClient, { userName }));

@@ -120,7 +120,6 @@ function Feed(props) {
         </Hidden>
         <PreviewStoriesList
           loading={!story.isFetching}
-          isFetching={story.isFetching}
           user={userInfo}
           items={story.data}
           onItemClick={handleStoryClick}

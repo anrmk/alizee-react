@@ -14,7 +14,6 @@ export {
   RESET_FOLLOWING_STORIES_SUCCESS,
   getFollowingStories,
   getFollowingsStoriesWithMyself,
-  resetFollowingStories,
 } from "./getFollowingStories";
 
 export {
