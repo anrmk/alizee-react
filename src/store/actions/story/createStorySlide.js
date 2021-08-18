@@ -1,5 +1,3 @@
-/* eslint-disable spaced-comment */
-/* eslint-disable no-debugger */
 import { generateUrl } from "../../../helpers/functions";
 
 export const CREATE_STORY_SLIDE_REQUEST = "CREATE_STORY_SLIDE_REQUEST";

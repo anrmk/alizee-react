@@ -29,8 +29,6 @@ export default function Container() {
     loop,
     currentIndex,
     isPaused,
-    avatarUrl,
-    fullName,
     user,
     createdDate,
     onMoreClick,
@@ -188,14 +186,14 @@ export default function Container() {
           </ProgressContext.Provider>
           <Box className={classes.headerInner}>
             <Box className={classes.userInfo}>
-              <Avatar src={avatarUrl} />
+              <Avatar src={user?.avatarUrl} />
               <Box>
-                {fullName && (
+                {user?.name && (
                   <Typography
                     className={classes.headerText}
                     variant="body1"
                     noWrap>
-                    {fullName}
+                    {user.name}
                   </Typography>
                 )}
                 {createdDate && (

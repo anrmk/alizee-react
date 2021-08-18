@@ -18,7 +18,6 @@ const PreviewStoriesList = React.memo(
   }) => {
     const classes = useStyles({ loading });
     const [loadingFlag, setLoadingFlag] = useState(false);
-
     useEffect(() => {
       if (loading && !loadingFlag) {
         setLoadingFlag(true);
@@ -26,7 +25,7 @@ const PreviewStoriesList = React.memo(
     }, [loading]);
 
     const renderSkeletons = () =>
-      [...Array(8)].map((_, index) => (
+      [...Array(4)].map((_, index) => (
         <Skeleton
           key={`${index}-skeleton`}
           className={classes.previewStoryListItemSkeleton}
@@ -40,16 +39,16 @@ const PreviewStoriesList = React.memo(
         className={classes.previewStoryList}
         component={ScrollContainer}
         disablePadding>
-        {loading || !loadingFlag ? (
+        <CreateStoryItem
+          previewUrl={user?.avatarUrl}
+          onClick={onCreateStoryClick}
+        />
+        {!loading || !loadingFlag ? (
           renderSkeletons()
         ) : (
           <>
-            <CreateStoryItem
-              previewUrl={user?.avatarUrl}
-              onClick={onCreateStoryClick}
-            />
             {items.length > 0 &&
-              items.map((item) => (
+              items.map((item, idx) => (
                 <PreviewStoriesListItem
                   key={`story_${item?.userName}`}
                   userName={item.userName}
@@ -57,6 +56,7 @@ const PreviewStoriesList = React.memo(
                   previewUrl={item.url}
                   avatarUrl={item.avatarUrl}
                   onClick={onItemClick}
+                  storyIndex={idx}
                 />
               ))}
           </>

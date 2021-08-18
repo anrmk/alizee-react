@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import { createSelector } from "reselect";
 
 import { generateUrl } from "../../../helpers/functions";

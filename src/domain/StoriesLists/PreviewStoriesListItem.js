@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import React, { useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Box, ListItem, Typography } from "@material-ui/core";
@@ -14,6 +13,7 @@ const PreviewStoryListItem = React.memo(
     previewUrl,
     avatarUrl,
     me = false,
+    storyIndex,
 
     onClick,
   }) => {
@@ -26,14 +26,13 @@ const PreviewStoryListItem = React.memo(
       : {
           to: {
             pathname: previewUrl ? STORIES_ROUTE(userName) : "#",
-            state: { from: location.pathname, me },
+            state: { from: location.pathname, me, storyIndex },
           },
           component: Link,
         };
 
     const handleItemClick = useCallback(() => {
-      debugger;
-      onClick && onClick(userName);
+      onClick && onClick();
     }, []);
 
     const renderContent = () => (

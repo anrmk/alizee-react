@@ -46,7 +46,7 @@ function Feed(props) {
   const { userInfo } = props;
   const { people, getPeople, resetPeople } = props;
   const { posts, getPosts, resetPosts } = props;
-  const { story, getStories, resetFollowingStories } = props;
+  const { story, getStories } = props;
   const { buyPost, getReceipt, getPurchases } = props;
 
   const likeAction = useLikeAction();
@@ -76,13 +76,17 @@ function Feed(props) {
       getPosts(apiClient);
     }
     getPeople(apiClient);
-    getStories(apiClient);
 
     return () => {
-      resetFollowingStories();
       resetPeople();
     };
   }, []);
+
+  useEffect(() => {
+    if (!story?.data.length && !story.isFetching) {
+      getStories(apiClient);
+    }
+  }, [story.data]);
 
   const handleFetchMore = (isLoading) => {
     if (!isLoading) {
@@ -108,7 +112,6 @@ function Feed(props) {
   const handlePeopleRefreshClick = () => {
     getPeople(apiClient);
   };
-
   return (
     <Grid container>
       <Grid item xs={12} md={8} className={classes.mainBox}>
@@ -116,7 +119,7 @@ function Feed(props) {
           <Nav />
         </Hidden>
         <PreviewStoriesList
-          loading={story.isFetching}
+          loading={story?.data.length > 0}
           user={userInfo}
           items={story.data}
           onItemClick={handleStoryClick}
@@ -212,7 +215,6 @@ function mapDispatchToProps(dispatch) {
 
     getStory: (api, opts) => dispatch(storyActions.getStory(api, opts)),
     resetStory: (api, opts) => dispatch(storyActions.resetStory(api, opts)),
-    resetFollowingStories: () => dispatch(storyActions.resetFollowingStories()),
     getStories: (api) => dispatch(storyActions.getFollowingStories(api)),
 
     // getHotStreamers: (api) => dispatch(streamActions.getHotStreamers(api)),
