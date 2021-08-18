@@ -25,7 +25,7 @@ const PreviewStoriesList = React.memo(
     }, [loading]);
 
     const renderSkeletons = () =>
-      [...Array(8)].map((_, index) => (
+      [...Array(4)].map((_, index) => (
         <Skeleton
           key={`${index}-skeleton`}
           className={classes.previewStoryListItemSkeleton}
@@ -39,14 +39,14 @@ const PreviewStoriesList = React.memo(
         className={classes.previewStoryList}
         component={ScrollContainer}
         disablePadding>
+        <CreateStoryItem
+          previewUrl={user?.avatarUrl}
+          onClick={onCreateStoryClick}
+        />
         {!loading || !loadingFlag ? (
           renderSkeletons()
         ) : (
           <>
-            <CreateStoryItem
-              previewUrl={user?.avatarUrl}
-              onClick={onCreateStoryClick}
-            />
             {items.length > 0 &&
               items.map((item, idx) => (
                 <PreviewStoriesListItem

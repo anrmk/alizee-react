@@ -46,11 +46,7 @@ function Feed(props) {
   const { userInfo } = props;
   const { people, getPeople, resetPeople } = props;
   const { posts, getPosts, resetPosts } = props;
-  const {
-    story,
-    getStories,
-    // resetFollowingStories
-  } = props;
+  const { story, getStories } = props;
   const { buyPost, getReceipt, getPurchases } = props;
 
   const likeAction = useLikeAction();
@@ -87,7 +83,7 @@ function Feed(props) {
   }, []);
 
   useEffect(() => {
-    if (!story?.data.length) {
+    if (!story?.data.length && !story.isFetching) {
       getStories(apiClient);
     }
   }, [story.data]);
@@ -219,7 +215,6 @@ function mapDispatchToProps(dispatch) {
 
     getStory: (api, opts) => dispatch(storyActions.getStory(api, opts)),
     resetStory: (api, opts) => dispatch(storyActions.resetStory(api, opts)),
-    // resetFollowingStories: () => dispatch(storyActions.resetFollowingStories()),
     getStories: (api) => dispatch(storyActions.getFollowingStories(api)),
 
     // getHotStreamers: (api) => dispatch(streamActions.getHotStreamers(api)),

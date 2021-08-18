@@ -14,7 +14,7 @@ export default function useStoriesSwitcher({
   const apiClient = useContext(ApiContext);
   const dispatch = useDispatch();
 
-  const data = useSelector((state) => state.story);
+  const { data, currentStory } = useSelector((state) => state.story);
 
   const [currentSlideId, setCurrentSlideId] = useState(slideId);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
@@ -46,14 +46,14 @@ export default function useStoriesSwitcher({
   };
 
   useEffect(() => {
-    if (data?.currentStory?.slides?.length) {
+    if (currentStory?.slides?.length) {
       const user = {
-        userName: data.currentStory.userName,
-        name: data.currentStory.name,
-        avatarUrl: data.currentStory.avatarUrl,
+        userName: currentStory.userName,
+        name: currentStory.name,
+        avatarUrl: currentStory.avatarUrl,
       };
 
-      const slideIndex = data.currentStory.slides.findIndex(
+      const slideIndex = currentStory.slides.findIndex(
         (item) => item.id === slideId
       );
 
@@ -61,20 +61,20 @@ export default function useStoriesSwitcher({
         const storyIndex = storyId;
 
         setupStory(
-          data?.currentStory.slides,
+          currentStory.slides,
           user,
           slideIndex !== -1 ? slideIndex : 0,
           storyIndex
         );
       } else {
         setupStory(
-          data?.currentStory.slides,
+          currentStory.slides,
           user,
           slideIndex !== -1 ? slideIndex : 0
         );
       }
     }
-  }, [data, username]);
+  }, [username, currentStory]);
 
   const handleSetStoryIndex = (index) => {
     setCurrentStoryIndex(index);
@@ -97,9 +97,9 @@ export default function useStoriesSwitcher({
   const changeStory = (pStoryIndex, next = false) => {
     if (
       (!next && pStoryIndex >= 0) ||
-      (next && pStoryIndex <= data.data?.length - 1)
+      (next && pStoryIndex <= data?.length - 1)
     ) {
-      const { userName } = data.data[pStoryIndex];
+      const { userName } = data[pStoryIndex];
       if (userName !== username) {
         handleSetStoryIndex(pStoryIndex);
         getStory(userName);
@@ -114,14 +114,14 @@ export default function useStoriesSwitcher({
   };
 
   const handleNextStory = () => {
-    if (data.data.length) {
+    if (data.length) {
       const nextStoryIndex = currentStoryIndex + 1;
       changeStory(nextStoryIndex, true);
     }
   };
 
   const handlePreviousStory = () => {
-    if (data.data.length) {
+    if (data.length) {
       const previousStoryIndex = currentStoryIndex - 1;
       changeStory(previousStoryIndex);
     }

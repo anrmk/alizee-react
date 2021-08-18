@@ -76,9 +76,7 @@ const useStyles = makeStyles((theme) => ({
   previewStoryListItemSkeleton: {
     ...previewStoryListItemBase,
     borderRadius: theme.shape.borderRadius,
-    "& + &": {
-      marginLeft: theme.spacing(1),
-    },
+    marginLeft: theme.spacing(1),
   },
   bottomContainer: {
     width: "100%",
