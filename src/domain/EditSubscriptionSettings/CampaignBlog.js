@@ -6,7 +6,7 @@ import Campaign from "../Campaign/Campaign";
 
 function CampaignBlog({
   onOpenDialogClick,
-  price,
+  price = 0,
   data,
   userName,
   onCampaignDelete,

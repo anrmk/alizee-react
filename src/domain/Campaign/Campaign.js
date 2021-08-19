@@ -27,26 +27,25 @@ function Campaign(props) {
   const { onDelete } = props;
 
   const generateText = () => {
-    if (data.newSubscribers && data.expiredSubscribers) {
-      return "For expired and new subscribers";
+    switch (data.subscribersType) {
+      case 2:
+        return "For expired and new subscribers";
+
+      case 1:
+        return "For expired subscribers";
+
+      default:
+        return "For new subscribers";
     }
-    if (data.newSubscribers) {
-      return "For new subscribers";
-    }
-    return "For expired subscribers";
   };
 
   return (
     <>
       <Divider />
       <CardHeader
-        title={`${
-          data.subscribeCounts > 0 ? "Limited" : "No limited"
-        } offer - ${
-          data.subscribeDiscount > 0
-            ? `${data.subscribeDiscount}% off`
-            : "Free trial"
-        } for ${data.subscribeDays} days!`}
+        title={`${data.limit > 0 ? "Limited" : "No limited"} offer - ${
+          data.discount > 0 ? `${data.discount}% off` : "Free trial"
+        } for ${data.duration} days!`}
         subheader={
           <Box display="flex">
             <Typography variant="body2">{generateText()}</Typography>
@@ -56,7 +55,7 @@ function Campaign(props) {
               className={classes.divider}
             />
             <Typography variant="body2">Claims {data.claimsCount}</Typography>
-            {data.subscribeCounts > 0 && (
+            {data.limit > 0 && (
               <>
                 <Divider
                   orientation="vertical"
@@ -64,7 +63,7 @@ function Campaign(props) {
                   className={classes.divider}
                 />
                 <Typography variant="body2">
-                  Left {data.subscribeCounts - data.claimsCount}
+                  Left {data.limit - data.claimsCount}
                 </Typography>
               </>
             )}
@@ -83,7 +82,7 @@ function Campaign(props) {
         <Box display="flex" justifyContent="space-between" mt={1} mb={2}>
           <Typography variant="body2">Ends</Typography>
           <Typography variant="body2">
-            {customFormatDate(data.finishedAt)}
+            {customFormatDate(data.endAt)}
           </Typography>
         </Box>
 

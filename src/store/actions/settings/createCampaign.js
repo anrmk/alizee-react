@@ -1,5 +1,4 @@
-// import { generateUrl } from "../../../../helpers/functions";
-import { addDays } from "../../../helpers/functions";
+import { generateUrl } from "../../../helpers/functions";
 
 export const CREATE_CAMPAIGN_REQUEST = "CREATE_CAMPAIGN_REQUEST";
 export const CREATE_CAMPAIGN_SUCCESS = "CREATE_CAMPAIGN_SUCCESS";
@@ -40,48 +39,26 @@ export function createCampaign(api, opts) {
   return async (dispatch, getState) => {
     dispatch(requestCreateCampaignRequest());
 
-    //   TODO: connect api
+    const url = generateUrl("createCampaign");
+    const { bundles = [], price, campaigns = [] } = getState().settings.data;
 
-    // const url = generateUrl("createCampaign");
     try {
-      const { bundles, price, campaigns } = getState().settings.data;
-      // TODO: delete create generate date, claims, id if api return these data.
-      const createdAt = new Date();
-      const finishedAt = addDays(createdAt, opts.finishDays);
+      const data = await api.setMethod("POST").setData(opts).query(url);
 
-      const campaignObj = {
-        ...opts,
-        claimsCount: 0,
-        createdAt,
-        finishedAt,
-        id: new Date(),
-      };
       let changedCampaigns = [...campaigns];
 
-      if (!opts.newSubscribers && !opts.expiredSubscribers) {
-        throw Error("can not created without type of subscribers");
-      }
-
-      if (opts.newSubscribers && opts.expiredSubscribers) {
-        changedCampaigns = [campaignObj];
+      if (opts.subscribersType === 2) {
+        changedCampaigns = [data];
       } else {
         const index = changedCampaigns.findIndex(
-          (item) =>
-            (item.newSubscribers === true && opts.newSubscribers === true) ||
-            (item.expiredSubscribers === true &&
-              opts.expiredSubscribers === true)
+          (item) => item.subscribersType === opts.subscribersType
         );
-        if (index !== -1) {
-          changedCampaigns[index] = campaignObj;
+        if (index === -1) {
+          changedCampaigns = [...changedCampaigns, data];
         } else {
-          changedCampaigns = [...changedCampaigns, campaignObj];
+          changedCampaigns[index] = data;
         }
       }
-
-      //   await api
-      //     .setMethod("POST")
-      //     .setParams(opts)
-      //     .query(url);
 
       dispatch(
         receiveCreateCampaignReceive({

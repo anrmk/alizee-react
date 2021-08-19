@@ -11,7 +11,7 @@ import {
 
 import { BundleSetting } from "../../components/Bundle";
 
-function BundleBlog({ onOpenDialogClick, price, data, onBundleDelete }) {
+function BundleBlog({ onOpenDialogClick, price = 0, data, onBundleDelete }) {
   const handleDeleteClick = (id) => {
     onBundleDelete(
       id,

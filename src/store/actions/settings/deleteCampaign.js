@@ -1,4 +1,4 @@
-// import { generateUrl } from "../../../../helpers/functions";
+import { generateUrl } from "../../../helpers/functions";
 
 export const DELETE_CAMPAIGN_REQUEST = "DELETE_CAMPAIGN_REQUEST";
 export const DELETE_CAMPAIGN_SUCCESS = "DELETE_CAMPAIGN_SUCCESS";
@@ -39,18 +39,13 @@ export function deleteCampaign(api, opts) {
   return async (dispatch, getState) => {
     dispatch(requestDeleteCampaignRequest());
 
-    //   TODO: connect api
+    const url = generateUrl("deleteCampaign");
+    const { bundles, price, campaigns } = getState().settings.data;
 
-    // const url = generateUrl("deleteCampaign");
     try {
-      const { bundles, price, campaigns } = getState().settings.data;
+      await api.setMethod("DELETE").setParams(opts).query(url);
 
       const removedCampaignArr = campaigns.filter((item) => item.id !== opts);
-
-      //   await api
-      //     .setMethod("DELETE")
-      //     .setParams(opts)
-      //     .query(url);
 
       dispatch(
         receiveDeleteCampaignReceive({

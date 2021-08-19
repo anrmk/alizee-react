@@ -11,7 +11,6 @@ import {
   MenuItem,
   RadioGroup,
   Radio,
-  Checkbox,
   FormControlLabel,
   Chip,
   Divider,
@@ -88,18 +87,20 @@ const durationList = [
   23, 24, 25, 26, 27, 28, 29, 30,
 ];
 
-const NEW_SUBSCRIBERS_CHECKBOX_ID = "newSubscribers";
-const EXPIRED_SUBSCRIBERS_CHECKBOX_ID = "expiredSubscribers";
+const SUBSCRIBERS_TYPE_RADIO_GROUP_ID = "subscribersType";
+const NEW_SUBSCRIBERS_RADIO_ID = 0;
+const EXPIRED_SUBSCRIBERS_RADIO_ID = 1;
+const BOTH_SUBSCRIBERS_RADIO_ID = 2;
 
 const CAMPAIGN_TYPE_RADIO_GROUP_ID = "campaignType";
-const DISCOUNT_MONTH_TYPE_RADIO_ID = "discount";
-const FREE_TYPE_RADIO_ID = "free";
+const DISCOUNT_MONTH_TYPE_RADIO_ID = 0;
+const FREE_TYPE_RADIO_ID = 1;
 
-const OFFER_LIMIT_INPUT_ID = "subscribeCounts";
-const OFFER_EXPIRATION_INPUT_ID = "finishDays";
+const OFFER_LIMIT_INPUT_ID = "limit";
+const OFFER_EXPIRATION_INPUT_ID = "expiration";
 
-const DISCOUNT_INPUT_ID = "subscribeDiscount";
-const SUBSCRIBE_DAYS_ID = "subscribeDays";
+const DISCOUNT_INPUT_ID = "discount";
+const DURATION_ID = "duration";
 const MESSAGE_ID = "message";
 
 const DEFAULT_OFFER_EXPIRATION_VALUE = "No expiration";
@@ -118,8 +119,14 @@ const MAX_OFFER_EXPIRATION_VALUE = 30;
 const MIN_OFFER_EXPIRATION_VALUE = 0;
 
 const schema = yup.object().shape({
-  [NEW_SUBSCRIBERS_CHECKBOX_ID]: yup.bool().default(false).required(),
-  [EXPIRED_SUBSCRIBERS_CHECKBOX_ID]: yup.bool().default(false).required(),
+  [SUBSCRIBERS_TYPE_RADIO_GROUP_ID]: yup
+    .number()
+    .required()
+    .oneOf([
+      NEW_SUBSCRIBERS_RADIO_ID,
+      EXPIRED_SUBSCRIBERS_RADIO_ID,
+      BOTH_SUBSCRIBERS_RADIO_ID,
+    ]),
 
   [DISCOUNT_INPUT_ID]: yup
     .number()
@@ -127,7 +134,7 @@ const schema = yup.object().shape({
     .required()
     .max(MAX_DISCOUNT_VALUE)
     .min(MIN_DISCOUNT_VALUE),
-  [SUBSCRIBE_DAYS_ID]: yup
+  [DURATION_ID]: yup
     .number()
     .default(MAX_DURATION_VALUE)
     .required()
@@ -135,7 +142,7 @@ const schema = yup.object().shape({
     .min(MIN_DURATION_VALUE),
 
   [CAMPAIGN_TYPE_RADIO_GROUP_ID]: yup
-    .string()
+    .number()
     .required()
     .oneOf([DISCOUNT_MONTH_TYPE_RADIO_ID, FREE_TYPE_RADIO_ID]),
   [OFFER_LIMIT_INPUT_ID]: yup
@@ -162,12 +169,11 @@ function SubscriptionBundleFormDialog({
 
   discount = 5,
   duration = 7,
-  campaignType = "discount",
+  campaignType = 0,
   offerLimit = 10,
   offerExpiration = 7,
   description = "",
-  newSubscribers = true,
-  expiredSubscribers = false,
+  subscribersType = 0,
 
   onSubmit,
 }) {
@@ -179,10 +185,9 @@ function SubscriptionBundleFormDialog({
   const { errors, register, setValue, watch, control, handleSubmit } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      [NEW_SUBSCRIBERS_CHECKBOX_ID]: newSubscribers,
-      [EXPIRED_SUBSCRIBERS_CHECKBOX_ID]: expiredSubscribers,
+      [SUBSCRIBERS_TYPE_RADIO_GROUP_ID]: subscribersType,
       [DISCOUNT_INPUT_ID]: discount,
-      [SUBSCRIBE_DAYS_ID]: duration,
+      [DURATION_ID]: duration,
       [CAMPAIGN_TYPE_RADIO_GROUP_ID]: campaignType,
       [OFFER_LIMIT_INPUT_ID]: offerLimit,
       [OFFER_EXPIRATION_INPUT_ID]: offerExpiration,
@@ -204,50 +209,78 @@ function SubscriptionBundleFormDialog({
           justifyContent="center"
           spacing={2}
           onSubmit={handleSubmit(handleFormSubmit)}>
-          <Grid item>
+          <Grid item sm={12} xs={12}>
             <Controller
-              name={NEW_SUBSCRIBERS_CHECKBOX_ID}
+              name={SUBSCRIBERS_TYPE_RADIO_GROUP_ID}
               control={control}
               render={({ onChange, onBlur, value }) => (
-                <FormControlLabel
-                  name={NEW_SUBSCRIBERS_CHECKBOX_ID}
-                  onChange={(e) => onChange(e.target.checked)}
-                  value={NEW_SUBSCRIBERS_CHECKBOX_ID}
-                  id={NEW_SUBSCRIBERS_CHECKBOX_ID}
-                  control={
-                    <Checkbox style={{ display: "none" }} defaultChecked />
-                  }
-                  label={
-                    <Chip
-                      color={value ? "secondary" : "default"}
-                      clickable
-                      label="New subscribers"
-                    />
-                  }
-                />
-              )}
-            />
-          </Grid>
+                <RadioGroup
+                  name={SUBSCRIBERS_TYPE_RADIO_GROUP_ID}
+                  value={value}
+                  onChange={onChange}
+                  id={SUBSCRIBERS_TYPE_RADIO_GROUP_ID}>
+                  <Grid
+                    container
+                    justifyContent="center"
+                    direction="row"
+                    spacing={2}>
+                    <Grid item>
+                      <FormControlLabel
+                        value={NEW_SUBSCRIBERS_RADIO_ID}
+                        id={NEW_SUBSCRIBERS_RADIO_ID}
+                        control={<Radio style={{ display: "none" }} />}
+                        label={
+                          <Chip
+                            color={
+                              Number(value) === NEW_SUBSCRIBERS_RADIO_ID
+                                ? "secondary"
+                                : "default"
+                            }
+                            clickable
+                            label="New subscribers"
+                          />
+                        }
+                      />
+                    </Grid>
 
-          <Grid item>
-            <Controller
-              name={EXPIRED_SUBSCRIBERS_CHECKBOX_ID}
-              control={control}
-              render={({ onChange, onBlur, value }) => (
-                <FormControlLabel
-                  name={EXPIRED_SUBSCRIBERS_CHECKBOX_ID}
-                  onChange={(e) => onChange(e.target.checked)}
-                  value={EXPIRED_SUBSCRIBERS_CHECKBOX_ID}
-                  id={EXPIRED_SUBSCRIBERS_CHECKBOX_ID}
-                  control={<Checkbox style={{ display: "none" }} />}
-                  label={
-                    <Chip
-                      clickable
-                      label="Expired subscribers"
-                      color={value ? "secondary" : "default"}
-                    />
-                  }
-                />
+                    <Grid item>
+                      <FormControlLabel
+                        value={EXPIRED_SUBSCRIBERS_RADIO_ID}
+                        id={EXPIRED_SUBSCRIBERS_RADIO_ID}
+                        control={<Radio style={{ display: "none" }} />}
+                        label={
+                          <Chip
+                            clickable
+                            label="Expired subscribers"
+                            color={
+                              Number(value) === EXPIRED_SUBSCRIBERS_RADIO_ID
+                                ? "secondary"
+                                : "default"
+                            }
+                          />
+                        }
+                      />
+                    </Grid>
+                    <Grid item>
+                      <FormControlLabel
+                        value={BOTH_SUBSCRIBERS_RADIO_ID}
+                        id={BOTH_SUBSCRIBERS_RADIO_ID}
+                        control={<Radio style={{ display: "none" }} />}
+                        label={
+                          <Chip
+                            clickable
+                            label="Both new and expired"
+                            color={
+                              Number(value) === BOTH_SUBSCRIBERS_RADIO_ID
+                                ? "secondary"
+                                : "default"
+                            }
+                          />
+                        }
+                      />
+                    </Grid>
+                  </Grid>
+                </RadioGroup>
               )}
             />
           </Grid>
@@ -264,7 +297,9 @@ function SubscriptionBundleFormDialog({
                   name={CAMPAIGN_TYPE_RADIO_GROUP_ID}
                   value={value}
                   onChange={(e) => {
-                    setIsFreeTrial(e.target.value === FREE_TYPE_RADIO_ID);
+                    setIsFreeTrial(
+                      Number(e.target.value) === FREE_TYPE_RADIO_ID
+                    );
                     onChange(e.target.value);
                   }}
                   id={CAMPAIGN_TYPE_RADIO_GROUP_ID}>
@@ -281,7 +316,7 @@ function SubscriptionBundleFormDialog({
                         label={
                           <Chip
                             color={
-                              value === DISCOUNT_MONTH_TYPE_RADIO_ID
+                              Number(value) === DISCOUNT_MONTH_TYPE_RADIO_ID
                                 ? "secondary"
                                 : "default"
                             }
@@ -302,7 +337,7 @@ function SubscriptionBundleFormDialog({
                             clickable
                             label="Free trial"
                             color={
-                              value === FREE_TYPE_RADIO_ID
+                              Number(value) === FREE_TYPE_RADIO_ID
                                 ? "secondary"
                                 : "default"
                             }
@@ -377,19 +412,19 @@ function SubscriptionBundleFormDialog({
           <Grid item xs={12}>
             {isFreeTrial ? (
               <Controller
-                name={SUBSCRIBE_DAYS_ID}
+                name={DURATION_ID}
                 control={control}
                 render={({ onChange, onBlur, value }) => (
                   <>
                     <TextField
-                      id={SUBSCRIBE_DAYS_ID}
+                      id={DURATION_ID}
                       label={t("Free trial duration")}
                       fullWidth
                       variant="outlined"
                       select
                       value={value}
-                      error={!!errors[SUBSCRIBE_DAYS_ID]}
-                      helperText={errors[SUBSCRIBE_DAYS_ID]?.message}
+                      error={!!errors[DURATION_ID]}
+                      helperText={errors[DURATION_ID]?.message}
                       InputLabelProps={{
                         shrink: true,
                       }}

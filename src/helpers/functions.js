@@ -471,9 +471,3 @@ export function customFormatDate(
   const longEnUSFormatter = new Intl.DateTimeFormat("en-US", options);
   return longEnUSFormatter.format(new Date(value));
 }
-
-export function addDays(date, days) {
-  const result = new Date(date);
-  result.setDate(result.getDate() + days);
-  return result;
-}
