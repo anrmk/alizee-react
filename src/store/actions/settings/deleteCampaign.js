@@ -43,7 +43,7 @@ export function deleteCampaign(api, opts) {
     const { bundles, price, campaigns } = getState().settings.data;
 
     try {
-      await api.setMethod("DELETE").setParams(opts).query(url);
+      await api.setMethod("DELETE").setParams({ id: opts }).query(url);
 
       const removedCampaignArr = campaigns.filter((item) => item.id !== opts);
 

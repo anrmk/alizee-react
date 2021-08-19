@@ -21,6 +21,13 @@ import {
 import * as yup from "yup";
 
 import { calcDiscount } from "../../helpers/functions";
+import {
+  NEW_SUBSCRIBERS_RADIO_ID,
+  EXPIRED_SUBSCRIBERS_RADIO_ID,
+  BOTH_SUBSCRIBERS_RADIO_ID,
+  DISCOUNT_MONTH_TYPE_RADIO_ID,
+  FREE_TYPE_RADIO_ID,
+} from "../../constants/campaign";
 
 const offerLimitList = [
   "No limits",
@@ -88,13 +95,8 @@ const durationList = [
 ];
 
 const SUBSCRIBERS_TYPE_RADIO_GROUP_ID = "subscribersType";
-const NEW_SUBSCRIBERS_RADIO_ID = 0;
-const EXPIRED_SUBSCRIBERS_RADIO_ID = 1;
-const BOTH_SUBSCRIBERS_RADIO_ID = 2;
 
-const CAMPAIGN_TYPE_RADIO_GROUP_ID = "campaignType";
-const DISCOUNT_MONTH_TYPE_RADIO_ID = 0;
-const FREE_TYPE_RADIO_ID = 1;
+const CAMPAIGN_TYPE_RADIO_GROUP_ID = "type";
 
 const OFFER_LIMIT_INPUT_ID = "limit";
 const OFFER_EXPIRATION_INPUT_ID = "expiration";
@@ -107,16 +109,10 @@ const DEFAULT_OFFER_EXPIRATION_VALUE = "No expiration";
 const DEFAULT_OFFER_LIMIT_VALUE = "No limits";
 
 const MAX_DISCOUNT_VALUE = 85;
-const MIN_DISCOUNT_VALUE = 0;
+const MIN_DISCOUNT_VALUE = 5;
 
 const MAX_DURATION_VALUE = 30;
-const MIN_DURATION_VALUE = 0;
-
-const MAX_OFFER_LIMIT_VALUE = 100;
-const MIN_OFFER_LIMIT_VALUE = 0;
-
-const MAX_OFFER_EXPIRATION_VALUE = 30;
-const MIN_OFFER_EXPIRATION_VALUE = 0;
+const MIN_DURATION_VALUE = 1;
 
 const schema = yup.object().shape({
   [SUBSCRIBERS_TYPE_RADIO_GROUP_ID]: yup
@@ -130,8 +126,6 @@ const schema = yup.object().shape({
 
   [DISCOUNT_INPUT_ID]: yup
     .number()
-    .default(MIN_DISCOUNT_VALUE)
-    .required()
     .max(MAX_DISCOUNT_VALUE)
     .min(MIN_DISCOUNT_VALUE),
   [DURATION_ID]: yup
@@ -145,23 +139,10 @@ const schema = yup.object().shape({
     .number()
     .required()
     .oneOf([DISCOUNT_MONTH_TYPE_RADIO_ID, FREE_TYPE_RADIO_ID]),
-  [OFFER_LIMIT_INPUT_ID]: yup
-    .number()
-    .transform((value, originalValue) =>
-      originalValue === DEFAULT_OFFER_LIMIT_VALUE ? 0 : value
-    )
-    .required()
-    .max(MAX_OFFER_LIMIT_VALUE)
-    .min(MIN_OFFER_LIMIT_VALUE),
-  [OFFER_EXPIRATION_INPUT_ID]: yup
-    .number()
-    .transform((value, originalValue) =>
-      originalValue === DEFAULT_OFFER_EXPIRATION_VALUE ? 0 : value
-    )
-    .required()
-    .max(MAX_OFFER_EXPIRATION_VALUE)
-    .min(MIN_OFFER_EXPIRATION_VALUE),
-  [MESSAGE_ID]: yup.string().max(500, "Must be no more than 500 characters"),
+  [OFFER_LIMIT_INPUT_ID]: yup.mixed().notRequired(),
+
+  [OFFER_EXPIRATION_INPUT_ID]: yup.mixed().notRequired(),
+  [MESSAGE_ID]: yup.string().max(256, "Must be no more than 256 characters"),
 });
 
 function SubscriptionBundleFormDialog({
@@ -196,6 +177,13 @@ function SubscriptionBundleFormDialog({
   });
 
   const handleFormSubmit = (data) => {
+    if (data.limit === DEFAULT_OFFER_LIMIT_VALUE) {
+      delete data.limit;
+    }
+    if (data.expiration === DEFAULT_OFFER_EXPIRATION_VALUE) {
+      delete data.expiration;
+    }
+
     onSubmit && onSubmit({ data });
   };
 

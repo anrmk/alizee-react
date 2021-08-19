@@ -1,13 +1,6 @@
 import React from "react";
 
-import {
-  Grid,
-  Divider,
-  Button,
-  Typography,
-  CardContent,
-  List,
-} from "@material-ui/core";
+import { Grid, Button, Typography, CardContent, List } from "@material-ui/core";
 
 import { BundleSetting } from "../../components/Bundle";
 
@@ -46,7 +39,6 @@ function BundleBlog({ onOpenDialogClick, price = 0, data, onBundleDelete }) {
       </CardContent>
       {data?.length > 0 && (
         <>
-          <Divider />
           <CardContent>
             <List dense>
               {data.map((item) => (

@@ -8,12 +8,11 @@ import {
   Button,
   Grid,
 } from "@material-ui/core";
-import ShareIcon from "@material-ui/icons/Share";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
-import { PROFILE_LINK_ROUTE } from "../../constants/routes";
-
 import { customFormatDate } from "../../helpers/functions";
+
+import { DISCOUNT_MONTH_TYPE_RADIO_ID } from "../../constants/campaign";
 
 import useStyles from "./styles";
 
@@ -38,13 +37,13 @@ function Campaign(props) {
         return "For new subscribers";
     }
   };
-
   return (
     <>
-      <Divider />
       <CardHeader
         title={`${data.limit > 0 ? "Limited" : "No limited"} offer - ${
-          data.discount > 0 ? `${data.discount}% off` : "Free trial"
+          data.type === DISCOUNT_MONTH_TYPE_RADIO_ID
+            ? `${data.discount}% off`
+            : "Free trial"
         } for ${data.duration} days!`}
         subheader={
           <Box display="flex">
@@ -75,14 +74,16 @@ function Campaign(props) {
         <Box display="flex" justifyContent="space-between" mb={1}>
           <Typography variant="body2">Started</Typography>
           <Typography variant="body2">
-            {customFormatDate(data.createdAt)}
+            {customFormatDate(data.createdDate)}
           </Typography>
         </Box>
         <Divider />
         <Box display="flex" justifyContent="space-between" mt={1} mb={2}>
           <Typography variant="body2">Ends</Typography>
           <Typography variant="body2">
-            {customFormatDate(data.endAt)}
+            {data.endDate
+              ? customFormatDate(data.endDate)
+              : "Not expiration days"}
           </Typography>
         </Box>
 
@@ -94,19 +95,6 @@ function Campaign(props) {
               color="primary"
               startIcon={<HighlightOffIcon />}>
               Stop promotion
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button
-              onClick={() => {
-                navigator?.clipboard.writeText(
-                  PROFILE_LINK_ROUTE(data.userName)
-                );
-              }}
-              variant="contained"
-              color="primary"
-              startIcon={<ShareIcon />}>
-              Copy link to profile
             </Button>
           </Grid>
         </Grid>

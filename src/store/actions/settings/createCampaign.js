@@ -43,28 +43,15 @@ export function createCampaign(api, opts) {
     const { bundles = [], price, campaigns = [] } = getState().settings.data;
 
     try {
-      const data = await api.setMethod("POST").setData(opts).query(url);
+      const { data } = await api.setMethod("POST").setData(opts).query(url);
 
-      let changedCampaigns = [...campaigns];
-
-      if (opts.subscribersType === 2) {
-        changedCampaigns = [data];
-      } else {
-        const index = changedCampaigns.findIndex(
-          (item) => item.subscribersType === opts.subscribersType
-        );
-        if (index === -1) {
-          changedCampaigns = [...changedCampaigns, data];
-        } else {
-          changedCampaigns[index] = data;
-        }
-      }
+      const changedCampaigns = [...campaigns, data];
 
       dispatch(
         receiveCreateCampaignReceive({
           price,
           bundles,
-          campaigns: [...changedCampaigns],
+          campaigns: changedCampaigns,
         })
       );
       return true;

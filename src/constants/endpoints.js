@@ -128,8 +128,8 @@ export default {
     createSubscriptionBundle: "accountsetting/bundle",
     deleteSubscriptionBundle: "accountsetting/bundle",
 
-    createCampaign: "accountsetting/subscriptionCampaign",
-    deleteCampaign: "accountsetting/subscriptionCampaign",
+    createCampaign: "accountsetting/campaign",
+    deleteCampaign: "accountsetting/campaign",
 
     // HASH TAGS
     getHashTags: "hashtag/gethashtags",

@@ -64,7 +64,7 @@ export function createSubscriptionBundle(api, opts) {
         receiveCreateSubscriptionBundleReceive({
           price,
           campaigns,
-          bundles: [...bundles, opts],
+          bundles: [...bundles, data],
         })
       );
       return true;
