@@ -13,7 +13,6 @@ import {
   Button,
   Divider,
   Box,
-  List,
 } from "@material-ui/core/";
 
 import MessageIcon from "@material-ui/icons/MessageOutlined";
@@ -25,7 +24,8 @@ import { getSubscriptionBtnText, isAwaitingConfirmation } from "./utils";
 import DisplayName from "../../components/DisplayName";
 
 import useStyles from "./style";
-import { PublicBundle } from "../../components/Bundle";
+import { BundleList } from "../../components/Bundle";
+import { CampaignList, PublicCampaign } from "../../components/Campaign";
 
 function ProfileUserInfo({
   user,
@@ -35,6 +35,7 @@ function ProfileUserInfo({
   subscriptionPrice,
   followStatus,
   sites,
+  campaign,
 
   onSubscribeClick,
   onSendTipClick,
@@ -43,6 +44,7 @@ function ProfileUserInfo({
   onDeleteAvatarImageClick,
   onAvatarUrlChange,
   onClick,
+  onDeleteCampaignClick,
 }) {
   const fileInputEl = useRef(null);
   const classes = useStyles({ isOwner });
@@ -52,8 +54,8 @@ function ProfileUserInfo({
     onSendTipClick && onSendTipClick(user);
   };
 
-  const handleSubscribeClick = () => {
-    onSubscribeClick && onSubscribeClick(user);
+  const handleSubscribeClick = (e, data = user) => {
+    onSubscribeClick && onSubscribeClick(data);
   };
 
   const handleNewImageClick = () => {
@@ -115,130 +117,163 @@ function ProfileUserInfo({
       />
     ) : null;
   };
-
   return (
-    <Card>
-      {renderChangeImg()}
-      <CardHeader
-        className={classes.cardHeader}
-        title={
-          <DisplayName
-            name={user.name}
-            userName={user.userName}
-            identityVerified={user.identityVerified}
-            noWrap={false}
-          />
-        }
-        subheader={
-          isOwner ? (
-            <Typography
-              variant="subtitle1"
-              color="textSecondary"
-              className={classes.mood}
-              onClick={onMoodUpdateClick}
-              align="justify">
-              {user.mood ? user.mood : isOwner && "What's on your mind?"}
-            </Typography>
-          ) : (
-            user.mood && (
+    <>
+      <Card>
+        {renderChangeImg()}
+        <CardHeader
+          className={classes.cardHeader}
+          title={
+            <DisplayName
+              name={user.name}
+              userName={user.userName}
+              identityVerified={user.identityVerified}
+              noWrap={false}
+            />
+          }
+          subheader={
+            isOwner ? (
               <Typography
                 variant="subtitle1"
                 color="textSecondary"
-                align="justify"
-                className={classes.breakText}
-                component="p">
-                {user.mood}
+                className={classes.mood}
+                onClick={onMoodUpdateClick}
+                align="justify">
+                {user.mood ? user.mood : isOwner && "What's on your mind?"}
               </Typography>
+            ) : (
+              user.mood && (
+                <Typography
+                  variant="subtitle1"
+                  color="textSecondary"
+                  align="justify"
+                  className={classes.breakText}
+                  component="p">
+                  {user.mood}
+                </Typography>
+              )
             )
-          )
-        }
-      />
+          }
+        />
+      </Card>
 
-      <Divider />
-      <CardContent className={classes.content}>
-        {isOwner ? (
-          <Button
-            disableElevation
-            size="large"
-            color="primary"
-            variant="contained"
-            to="statistics"
-            component={Link}
-            className={classes.btnMargin}>
-            Statistics
-          </Button>
-        ) : (
-          <>
-            <Button
-              className={classes.subscribeBtn}
-              disableElevation
-              size="large"
-              color="primary"
-              variant="contained"
-              onClick={handleSubscribeClick}>
-              {getSubscriptionBtnText(followStatus, subscriptionPrice, t)}
-              {/* <Typography>${subscriptionPrice}</Typography> */}
-            </Button>
+      {user?.campaigns &&
+        user.campaigns.length > 0 &&
+        isOwner &&
+        !followStatus && (
+          <CampaignList
+            isProfile
+            data={user.campaigns}
+            onDelete={onDeleteCampaignClick}
+          />
+        )}
+      {user?.campaigns?.length > 0 && !isOwner && (
+        <Card>
+          <CardContent>
+            <PublicCampaign
+              user={user}
+              campaign={campaign}
+              price={user.subscriptionPrice}
+              followStatus={followStatus}
+              getSubscriptionBtnText={getSubscriptionBtnText}
+              t={t}
+              onClick={handleSubscribeClick}
+            />
+          </CardContent>
+        </Card>
+      )}
 
-            {user?.bundles && user.bundles.length > 0 && !followStatus && (
-              <List dense>
-                {user.bundles.map((item, idx) => (
-                  <PublicBundle
-                    {...item}
-                    id={idx}
-                    onSubscribeClick={handleSubscribeClick}
-                  />
-                ))}
-              </List>
-            )}
-            <Box
-              width="100%"
-              display="flex"
-              marginTop={2}
-              marginBottom={2}
-              flexDirection="column">
+      {user?.bundles &&
+        user.bundles.length > 0 &&
+        !followStatus &&
+        !isOwner && (
+          <BundleList
+            user={user}
+            isProfile
+            price={user.subscriptionPrice}
+            data={user.bundles}
+            onSubscribeClick={handleSubscribeClick}
+          />
+        )}
+
+      <Card>
+        <CardContent className={classes.content}>
+          {isOwner ? (
+            <>
               <Button
-                fullWidth
                 disableElevation
-                disabled={!isFollow || isAwaitingConfirmation(followStatus)}
                 size="large"
-                color="secondary"
+                color="primary"
                 variant="contained"
-                endIcon={<MessageIcon />}
-                to={CHAT_USERNAME_ROUTE(user.userName)}
+                to="statistics"
                 component={Link}
                 className={classes.btnMargin}>
-                Message
+                Statistics
               </Button>
-              {isVerified && (
+            </>
+          ) : (
+            <>
+              {!user?.campaigns?.length > 0 && (
+                <Button
+                  className={classes.subscribeBtn}
+                  disableElevation
+                  size="large"
+                  color="primary"
+                  variant="contained"
+                  onClick={handleSubscribeClick}>
+                  {getSubscriptionBtnText(followStatus, subscriptionPrice, t)}
+                </Button>
+              )}
+
+              <Box
+                width="100%"
+                display="flex"
+                marginTop={2}
+                marginBottom={2}
+                flexDirection="column">
                 <Button
                   fullWidth
                   disableElevation
+                  disabled={!isFollow || isAwaitingConfirmation(followStatus)}
                   size="large"
                   color="secondary"
                   variant="contained"
-                  endIcon={<DollarIcon />}
-                  onClick={handleSendTipClick}>
-                  Send Tip
+                  endIcon={<MessageIcon />}
+                  to={CHAT_USERNAME_ROUTE(user.userName)}
+                  component={Link}
+                  className={classes.btnMargin}>
+                  Message
                 </Button>
-              )}
-            </Box>
+                {isVerified && (
+                  <Button
+                    fullWidth
+                    disableElevation
+                    size="large"
+                    color="secondary"
+                    variant="contained"
+                    endIcon={<DollarIcon />}
+                    onClick={handleSendTipClick}>
+                    Send Tip
+                  </Button>
+                )}
+              </Box>
+            </>
+          )}
+
+          <Typography variant="body1" align="justify">
+            {user.bio}
+          </Typography>
+        </CardContent>
+        {sites?.length > 0 && (
+          <>
+            <Divider />
+            <CardActions>
+              <SocialControl urls={sites} onClick={onClick} />
+            </CardActions>
           </>
         )}
-
-        <Typography variant="body1" align="justify">
-          {user.bio}
-        </Typography>
-      </CardContent>
-      {sites?.length > 0 && (
-        <>
-          <Divider />
-          <CardActions>
-            <SocialControl urls={sites} onClick={onClick} />
-          </CardActions>
-        </>
-      )}
-    </Card>
+      </Card>
+    </>
   );
 }
 

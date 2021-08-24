@@ -1,11 +1,11 @@
 export { RESET_RELATIONSHIP, resetRelationship } from "./resetRelationship";
 
 export {
-  CREATE_FOLLOW_REQUEST,
-  CREATE_FOLLOW_SUCCESS,
-  CREATE_FOLLOW_FAILURE,
-  createFollow,
-} from "./createFollow";
+  CREATE_SUBSCRIBE_REQUEST,
+  CREATE_SUBSCRIBE_SUCCESS,
+  CREATE_SUBSCRIBE_FAILURE,
+  createSubscribe,
+} from "./createSubscribe";
 
 export {
   ACCEPT_FOLLOW_REQUEST,
@@ -15,11 +15,11 @@ export {
 } from "./acceptFollow";
 
 export {
-  DELETE_FOLLOW_REQUEST,
-  DELETE_FOLLOW_SUCCESS,
-  DELETE_FOLLOW_FAILURE,
-  deleteFollow,
-} from "./deleteFollow";
+  DELETE_SUBSCRIBE_REQUEST,
+  DELETE_SUBSCRIBE_SUCCESS,
+  DELETE_SUBSCRIBE_FAILURE,
+  deleteSubscribe,
+} from "./deleteSubscribe";
 
 export {
   REJECT_FOLLOW_REQUEST,

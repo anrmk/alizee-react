@@ -454,7 +454,12 @@ export function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export function calcDiscount(price, discount, duration) {
+export function calcDiscount(price, discount, duration, isCampaign = false) {
+  if (isCampaign) {
+    const discountSum = (price * discount) / 100;
+    const totalPrice = price - discountSum;
+    return totalPrice.toFixed(2);
+  }
   const discountSum = (price * discount) / 100;
   const totalPrice = (price - discountSum) * duration;
   return totalPrice.toFixed(2);
@@ -463,11 +468,16 @@ export function calcDiscount(price, discount, duration) {
 export function customFormatDate(
   value,
   options = {
-    year: "numeric",
-    month: "long",
+    month: "short",
     day: "numeric",
   }
 ) {
   const longEnUSFormatter = new Intl.DateTimeFormat("en-US", options);
   return longEnUSFormatter.format(new Date(value));
+}
+
+export function addDays(date, days) {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
 }

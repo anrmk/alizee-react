@@ -10,12 +10,12 @@ import {
   RESET_FOLLOWINGS_USERS,
   RESET_FOLLOWINGS_FILTER,
   RESET_RELATIONSHIP,
-  CREATE_FOLLOW_REQUEST,
-  CREATE_FOLLOW_SUCCESS,
-  CREATE_FOLLOW_FAILURE,
-  DELETE_FOLLOW_REQUEST,
-  DELETE_FOLLOW_SUCCESS,
-  DELETE_FOLLOW_FAILURE,
+  CREATE_SUBSCRIBE_REQUEST,
+  CREATE_SUBSCRIBE_SUCCESS,
+  CREATE_SUBSCRIBE_FAILURE,
+  DELETE_SUBSCRIBE_REQUEST,
+  DELETE_SUBSCRIBE_SUCCESS,
+  DELETE_SUBSCRIBE_FAILURE,
   ACCEPT_FOLLOW_REQUEST,
   ACCEPT_FOLLOW_SUCCESS,
   ACCEPT_FOLLOW_FAILURE,
@@ -123,17 +123,17 @@ export default function usersReducer(
       };
 
     // Follow
-    case CREATE_FOLLOW_REQUEST:
+    case CREATE_SUBSCRIBE_REQUEST:
       return {
         ...state,
         ...action.payload,
       };
-    case CREATE_FOLLOW_SUCCESS:
+    case CREATE_SUBSCRIBE_SUCCESS:
       return {
         ...state,
         ...action.payload,
       };
-    case CREATE_FOLLOW_FAILURE:
+    case CREATE_SUBSCRIBE_FAILURE:
       return {
         ...state,
         ...action.payload,
@@ -144,17 +144,17 @@ export default function usersReducer(
         ...action.payload,
       };
     // Unfollow
-    case DELETE_FOLLOW_REQUEST:
+    case DELETE_SUBSCRIBE_REQUEST:
       return {
         ...state,
         ...action.payload,
       };
-    case DELETE_FOLLOW_SUCCESS:
+    case DELETE_SUBSCRIBE_SUCCESS:
       return {
         ...state,
         ...action.payload,
       };
-    case DELETE_FOLLOW_FAILURE:
+    case DELETE_SUBSCRIBE_FAILURE:
       return {
         ...state,
         ...action.payload,

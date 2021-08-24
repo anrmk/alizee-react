@@ -2,7 +2,7 @@ import React from "react";
 
 import { Grid, Button, Typography, CardContent } from "@material-ui/core";
 
-import Campaign from "../Campaign/Campaign";
+import { CampaignList } from "../../components/Campaign";
 
 function CampaignBlog({
   onOpenDialogClick,
@@ -32,21 +32,19 @@ function CampaignBlog({
               variant="contained"
               color="primary"
               disabled={price < 0.1}>
-              Start Campaign
+              Create Campaign
             </Button>
           </Grid>
         </Grid>
       </CardContent>
-      {data &&
-        data.length > 0 &&
-        data.map((item) => (
-          <Campaign
-            key={item.id}
-            {...item}
-            userName={userName}
-            onDelete={handleDeleteClick}
-          />
-        ))}
+
+      {data && data.length > 0 && (
+        <CampaignList
+          data={data}
+          userName={userName}
+          onDelete={handleDeleteClick}
+        />
+      )}
     </>
   );
 }

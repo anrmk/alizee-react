@@ -22,8 +22,8 @@ function Favorites(props) {
   const {
     fetchUser,
     fetchFavorites,
-    createFollow,
-    deleteFollow,
+    createSubscribe,
+    deleteSubscribe,
     resetFollowings,
   } = props;
 
@@ -45,8 +45,8 @@ function Favorites(props) {
 
   const handleFollowClick = ({ userName, isFollow }) => {
     !favorites.isLoading && isFollow
-      ? deleteFollow(apiClient, userName)
-      : createFollow(apiClient, userName);
+      ? deleteSubscribe(apiClient, userName)
+      : createSubscribe(apiClient, userName);
   };
 
   return (
@@ -91,10 +91,10 @@ function mapDispatchToProps(dispatch) {
     fetchUser: (api, username) => dispatch(userActions.getUser(api, username)),
     fetchFavorites: (api, userName) =>
       dispatch(accountActions.getFavorites(api, userName)),
-    createFollow: (api, userName) =>
-      dispatch(relationshipActions.createFollow(api, userName)),
-    deleteFollow: (api, userName) =>
-      dispatch(relationshipActions.deleteFollow(api, userName)),
+    createSubscribe: (api, userName) =>
+      dispatch(relationshipActions.createSubscribe(api, userName)),
+    deleteSubscribe: (api, userName) =>
+      dispatch(relationshipActions.deleteSubscribe(api, userName)),
     resetFollowings: () => dispatch(relationshipActions.resetRelationship()),
   };
 }

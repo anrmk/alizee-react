@@ -1,4 +1,4 @@
-import BundleSetting from "./BundleSetting";
-import PublicBundle from "./PublicBundle";
+import BundleItem from "./BundleItem";
+import BundleList from "./BundleList";
 
-export { BundleSetting, PublicBundle };
+export { BundleItem, BundleList };

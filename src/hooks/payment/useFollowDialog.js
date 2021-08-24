@@ -17,15 +17,20 @@ export default function useFollowDialog() {
   }));
   const dialog = useDialog();
 
-  const handleFollowBuy = async ({ userName, isFollow, isPrivate }) => {
+  const handleSubscribeBuy = async ({
+    userName,
+    isFollow,
+    isPrivate,
+    campaignId,
+    bundleId,
+  }) => {
+    const opts = { userName, isFollow, isPrivate, campaignId, bundleId };
     dialog.toggle({ open: false });
 
     if (!isFetching) {
       isFollow
-        ? await dispatch(relationshipActions.deleteFollow(apiClient, userName))
-        : await dispatch(
-            relationshipActions.createFollow(apiClient, userName, isPrivate)
-          );
+        ? await dispatch(relationshipActions.deleteSubscribe(apiClient, opts))
+        : await dispatch(relationshipActions.createSubscribe(apiClient, opts));
     }
   };
 
@@ -35,7 +40,7 @@ export default function useFollowDialog() {
       if (!isFollow) {
         dialog.toggle(
           dialogs[FOLLOW_DIALOG_TYPE](
-            { onMainClick: handleFollowBuy, state: { ...data } },
+            { onMainClick: handleSubscribeBuy, state: data },
             { user: data, amount: subscriptionPrice }
           )
         );
@@ -45,7 +50,7 @@ export default function useFollowDialog() {
         dialog.toggle(
           dialogs[CONFIRM_DIALOG_TYPE](
             {
-              onMainClick: handleFollowBuy,
+              onMainClick: handleSubscribeBuy,
               state: { ...data },
               title: "Unfollow",
             },

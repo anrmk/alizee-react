@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useMemo } from "react";
 import {
   Redirect,
   useHistory,
@@ -32,6 +32,10 @@ import { useSendTipDialog } from "../../hooks/payment";
 import useFollowDialog from "../../hooks/payment/useFollowDialog";
 import dialogs, { PROFILE_EDIT_COVER } from "../../constants/dialogs";
 import {
+  NEW_SUBSCRIBERS_RADIO_ID,
+  EXPIRED_SUBSCRIBERS_RADIO_ID,
+} from "../../constants/campaign";
+import {
   ProfileUserInfo,
   ProfileUserInfoMobile,
 } from "../../domain/ProfileUserInfo";
@@ -55,9 +59,9 @@ function Profile(props) {
   const { me, user, post, media, settings } = props;
   const { fetchUser, resetUser } = props;
   const { fetchPosts, resetPosts, getFavoritePosts, getTaggedPosts } = props;
-  const { createFollow, deleteFollow } = props;
+  const { createSubscribe, deleteSubscribe } = props;
   const { updateCover, updateAvatar } = props;
-
+  const { deleteCampaign } = props;
   const dialog = useDialog();
 
   const confirmationDialog = useConfirmationDialog();
@@ -98,6 +102,20 @@ function Profile(props) {
       handleFetchPosts();
     }
   }, [postSettings, user.data?.isFollow]);
+
+  const findCorrectCampaign = useMemo(
+    () =>
+      user?.data?.campaigns &&
+      user.data.campaigns.find((item) =>
+        (item.subscribersType === NEW_SUBSCRIBERS_RADIO_ID &&
+          !!user.data?.isFollow) ||
+        (item.subscribersType === EXPIRED_SUBSCRIBERS_RADIO_ID &&
+          user.data?.isFollow)
+          ? item
+          : item
+      ),
+    [user]
+  );
 
   if (url.includes(SETTINGS_ROUTE)) {
     return <Redirect to={SETTINGS_EDIT_PROFILE_ROUTE} />;
@@ -161,8 +179,8 @@ function Profile(props) {
 
   const handlePeopleFollowClick = async (userName) => {
     user.data.isFollow
-      ? await deleteFollow(apiClient, userName)
-      : await createFollow(apiClient, userName, user.data?.isPrivate);
+      ? await deleteSubscribe(apiClient, userName)
+      : await createSubscribe(apiClient, userName, user.data?.isPrivate);
 
     resetPosts();
     handleFetchPosts();
@@ -196,6 +214,28 @@ function Profile(props) {
   const handleMoodUpdateClick = () => {
     createMoodDialog.toggle &&
       createMoodDialog.toggle({ ...user.data, defaultValue: user.data.mood });
+  };
+
+  const handleCampaignDelete = async (pData) => {
+    dialog.setParams({ loading: true });
+    await deleteCampaign(apiClient, pData);
+    dialog.toggle({ open: false, loading: false });
+  };
+
+  const handleDeleteCampaignClick = (
+    pData,
+    contentText = "Do you really want to stop promotion campaign?"
+  ) => {
+    confirmationDialog.toggle(
+      {
+        mainBtnText: "Delete",
+        title: "Campaign",
+        onMainClick: () => handleCampaignDelete(pData),
+      },
+      {
+        contentText,
+      }
+    );
   };
 
   const handleGoToSocialClick = (link) => {
@@ -243,6 +283,7 @@ function Profile(props) {
       <Hidden mdUp>
         <ProfileUserInfoMobile
           user={user.data}
+          campaign={findCorrectCampaign}
           isOwner={username === me.userName}
           isFollow={user.data?.isFollow}
           isVerified={user.data?.identityVerified}
@@ -251,6 +292,7 @@ function Profile(props) {
           onSubscribeClick={followDialog.toggle}
           onSendTipClick={sendTipDialog.toggle}
           onMoodUpdateClick={handleMoodUpdateClick}
+          onDeleteCampaignClick={handleDeleteCampaignClick}
         />
       </Hidden>
 
@@ -273,6 +315,7 @@ function Profile(props) {
           <Grid item xs={12} md={4}>
             <Box position="sticky" top="24px" paddingLeft="8px">
               <ProfileUserInfo
+                campaign={findCorrectCampaign}
                 user={user.data}
                 isOwner={username === me.userName}
                 isFollow={user.data?.isFollow}
@@ -286,6 +329,7 @@ function Profile(props) {
                 onDeleteAvatarImageClick={handleDeleteAvatarImageClick}
                 onAvatarUrlChange={handleAvatarImageChange}
                 onClick={handleGoToSocialClick}
+                onDeleteCampaignClick={handleDeleteCampaignClick}
               />
             </Box>
           </Grid>
@@ -336,17 +380,19 @@ function mapDispatchToProps(dispatch) {
     getFavoritePosts: (api, opts) =>
       dispatch(profilePostsActions.getFavoritePosts(api, opts)),
 
-    createFollow: (api, userName, isPrivateAccount) =>
+    createSubscribe: (api, userName, isPrivateAccount) =>
       dispatch(
-        relationshipActions.createFollow(api, userName, isPrivateAccount)
+        relationshipActions.createSubscribe(api, userName, isPrivateAccount)
       ),
-    deleteFollow: (api, userName) =>
-      dispatch(relationshipActions.deleteFollow(api, userName)),
+    deleteSubscribe: (api, userName) =>
+      dispatch(relationshipActions.deleteSubscribe(api, userName)),
 
     updateCover: (api, opts) =>
       dispatch(settingsActions.updateCover(api, opts)),
     updateAvatar: (api, opts) =>
       dispatch(settingsActions.updateAvatar(api, opts)),
+    deleteCampaign: (api, opts) =>
+      dispatch(settingsActions.deleteCampaign(api, opts)),
   };
 }
 

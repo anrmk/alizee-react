@@ -1,8 +1,8 @@
 import React from "react";
 
-import { Grid, Button, Typography, CardContent, List } from "@material-ui/core";
+import { Grid, Button, Typography, CardContent } from "@material-ui/core";
 
-import { BundleSetting } from "../../components/Bundle";
+import { BundleList } from "../../components/Bundle";
 
 function BundleBlog({ onOpenDialogClick, price = 0, data, onBundleDelete }) {
   const handleDeleteClick = (id) => {
@@ -38,23 +38,12 @@ function BundleBlog({ onOpenDialogClick, price = 0, data, onBundleDelete }) {
         </Grid>
       </CardContent>
       {data?.length > 0 && (
-        <>
-          <CardContent>
-            <List dense>
-              {data.map((item) => (
-                <BundleSetting
-                  isOwner
-                  key={item.duration}
-                  id={item.id}
-                  onDelete={handleDeleteClick}
-                  duration={item.duration}
-                  discount={item.discount}
-                  price={price}
-                />
-              ))}
-            </List>
-          </CardContent>
-        </>
+        <BundleList
+          isOwner
+          price={price}
+          data={data}
+          onDelete={handleDeleteClick}
+        />
       )}
     </>
   );
