@@ -40,10 +40,10 @@ export function verifyCard(api, id) {
     dispatch(requestVerifyCard());
     const { cards = [], wallet = {} } = getState().settings.data;
 
-    const url = generateUrl("verifyCard");
+    const url = generateUrl("cardVerify");
 
     try {
-      await api.setMethod("PUT").setParams({ id }).query(url);
+      await api.setMethod("POST").setParams({ id }).query(url);
 
       const updatedCards = cards.map((card) =>
         card.id === id

@@ -1,4 +1,4 @@
-import { generateUrl } from "../../../helpers/functions";
+import { generateUrl } from "../../../../helpers/functions";
 
 export const UPDATE_WALLET_REQUEST = "UPDATE_WALLET_REQUEST";
 export const UPDATE_WALLET_SUCCESS = "UPDATE_WALLET_SUCCESS";
@@ -43,7 +43,7 @@ export function updateWallet(api, status) {
     const url = generateUrl("makeWalletDefault");
     try {
       await api
-        .setMethod("PUT")
+        .setMethod("POST")
         .setParams({
           isDefault: status,
         })

@@ -126,11 +126,11 @@ export {
 } from "./notifications";
 
 export {
-  GET_CARDS_REQUEST,
-  GET_CARDS_SUCCESS,
-  GET_CARDS_FAILURE,
-  getCards,
-} from "./payments/getCards";
+  GET_PAYMENTS_REQUEST,
+  GET_PAYMENTS_SUCCESS,
+  GET_PAYMENTS_FAILURE,
+  getPayments,
+} from "./payments/getPayments";
 
 export {
   CREATE_CARD_REQUEST,
@@ -165,7 +165,7 @@ export {
   UPDATE_WALLET_SUCCESS,
   UPDATE_WALLET_FAILURE,
   updateWallet,
-} from "./updateWallet";
+} from "./payments/updateWallet";
 
 export {
   GET_BANK_REQUEST,

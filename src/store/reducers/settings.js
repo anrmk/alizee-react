@@ -50,9 +50,9 @@ import {
   UPDATE_TOAST_NOTIFICATION_REQUEST,
   UPDATE_TOAST_NOTIFICATION_SUCCESS,
   UPDATE_TOAST_NOTIFICATION_FAILURE,
-  GET_CARDS_REQUEST,
-  GET_CARDS_SUCCESS,
-  GET_CARDS_FAILURE,
+  GET_PAYMENTS_REQUEST,
+  GET_PAYMENTS_SUCCESS,
+  GET_PAYMENTS_FAILURE,
   CREATE_CARD_REQUEST,
   CREATE_CARD_SUCCESS,
   CREATE_CARD_FAILURE,
@@ -430,19 +430,19 @@ export default function settings(
     }
 
     // CARD SETTINGS
-    case GET_CARDS_REQUEST: {
+    case GET_PAYMENTS_REQUEST: {
       return {
         ...state,
         ...action.payload,
       };
     }
-    case GET_CARDS_SUCCESS: {
+    case GET_PAYMENTS_SUCCESS: {
       return {
         ...state,
         ...action.payload,
       };
     }
-    case GET_CARDS_FAILURE: {
+    case GET_PAYMENTS_FAILURE: {
       return {
         ...state,
         ...action.payload,

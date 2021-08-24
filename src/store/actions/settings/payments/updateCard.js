@@ -42,7 +42,7 @@ export function updateCard(api, id) {
 
     const url = generateUrl("updateCard");
     try {
-      await api.setMethod("PUT").setParams({ id }).query(url);
+      await api.setMethod("POST").setParams({ id }).query(url);
 
       const updatedCards = cards.map((card) =>
         card.id === id ? { ...card, is: !card.is } : { ...card, is: false }

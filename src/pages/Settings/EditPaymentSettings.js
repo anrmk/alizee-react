@@ -12,7 +12,7 @@ import * as settingsActions from "../../store/actions/settings";
 import { WalletCard, CardBlog } from "../../domain/EditPaymentSettings/index";
 
 function EditPaymentSettings({
-  getCards,
+  getPayments,
   deleteCard,
   updateCard,
   verifyCard,
@@ -31,7 +31,7 @@ function EditPaymentSettings({
   const dialog = useDialog();
 
   useEffect(() => {
-    getCards(apiClient);
+    getPayments(apiClient);
   }, []);
 
   const handleUpdateCard = useCallback(async (id) => {
@@ -115,7 +115,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getCards: (api) => dispatch(settingsActions.getCards(api)),
+    getPayments: (api) => dispatch(settingsActions.getPayments(api)),
     deleteCard: (api, id) => dispatch(settingsActions.deleteCard(api, id)),
     updateCard: (api, id) => dispatch(settingsActions.updateCard(api, id)),
     verifyCard: (api, id) => dispatch(settingsActions.verifyCard(api, id)),
