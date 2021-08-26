@@ -7,9 +7,6 @@ import {
   Button,
 } from "@material-ui/core/";
 
-// import CreditCardOutlinedIcon from "@material-ui/icons/CreditCardOutlined";
-// import DoneIcon from "@material-ui/icons/Done";
-
 import Visa from "../../assets/img/cards/visa.png";
 import MasterCard from "../../assets/img/cards/mastercard.png";
 import Maestro from "../../assets/img/cards/maestro.png";

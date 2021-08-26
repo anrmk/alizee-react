@@ -45,7 +45,9 @@ export function updateCard(api, id) {
       await api.setMethod("POST").setParams({ id }).query(url);
 
       const updatedCards = cards.map((card) =>
-        card.id === id ? { ...card, is: !card.is } : { ...card, is: false }
+        card.id === id
+          ? { ...card, isDefault: !card.isDefault }
+          : { ...card, isDefault: false }
       );
       dispatch(receiveUpdateCard({ wallet, cards: updatedCards }));
       return true;

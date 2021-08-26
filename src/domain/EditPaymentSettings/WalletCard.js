@@ -14,7 +14,7 @@ import useStyles from "./styles";
 
 function WalletCardSettings({
   isDefault = false,
-  total = 0,
+  balance = 0,
   data,
   onUpdateWallet,
 }) {
@@ -41,7 +41,7 @@ function WalletCardSettings({
               WALLET CREDITS
             </Typography>
             <Typography variant="body1" align="right">
-              ${total}
+              ${balance}
             </Typography>
           </Box>
         }

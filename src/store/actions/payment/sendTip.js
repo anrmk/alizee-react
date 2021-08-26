@@ -35,20 +35,13 @@ function errorSendTip(message) {
   };
 }
 
-export function sendTip(api, userName, amount, message) {
+export function sendTip(api, opts) {
   return async (dispatch, getState) => {
     dispatch(requestSendTip());
 
     try {
       const url = generateUrl("sendTip");
-
-      await api
-        .setData({
-          userName,
-          amount,
-          message,
-        })
-        .query(url);
+      await api.setData(opts).query(url);
 
       dispatch(receiveSendTip());
       dispatch(getDeposit(api));

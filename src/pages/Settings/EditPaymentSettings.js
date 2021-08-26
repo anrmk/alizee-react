@@ -75,33 +75,27 @@ function EditPaymentSettings({
   }, []);
 
   return (
-    <>
-      <Card>
-        <CardHeader title="Payments" />
-        <Divider />
+    <Card>
+      <CardHeader title="Payments" />
+      <Divider />
 
-        {!isFetching && (
-          <>
-            <WalletCard
-              data={cards}
-              {...wallet}
-              onDialogOpen={paymentCardDialog.toggle}
-              onUpdateWallet={handleWalletUpdate}
-            />
-            <Divider />
-            <CardContent>
-              <CardBlog
-                onDialogOpen={paymentCardDialog.toggle}
-                data={cards}
-                onClick={handleUpdateCard}
-                onDelete={handleDeleteClick}
-                onVerifyClick={handleVerifyClick}
-              />
-            </CardContent>
-          </>
-        )}
-      </Card>
-    </>
+      <WalletCard
+        data={cards}
+        {...wallet}
+        onDialogOpen={paymentCardDialog.toggle}
+        onUpdateWallet={handleWalletUpdate}
+      />
+      <Divider />
+      <CardContent>
+        <CardBlog
+          onDialogOpen={paymentCardDialog.toggle}
+          data={cards}
+          onClick={handleUpdateCard}
+          onDelete={handleDeleteClick}
+          onVerifyClick={handleVerifyClick}
+        />
+      </CardContent>
+    </Card>
   );
 }
 
