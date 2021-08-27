@@ -42,19 +42,11 @@ export function deleteSubscribe(api, opts) {
   return async (dispatch, getState) => {
     dispatch(requestDeleteSubscribe());
 
-    const data = { userName: opts.userName };
-
-    if (opts.campaignId) {
-      data.campaignId = opts.campaignId;
-    }
-    if (opts.bundleId) {
-      data.bundleId = opts.bundleId;
-    }
     try {
       const url = generateUrl("deleteSubscribe");
       await api
         .setMethod("DELETE")
-        .setParams({ userName: data.userName })
+        .setParams({ userName: opts.userName })
         .query(url);
 
       const updatedData = toggleFollowStatus(
