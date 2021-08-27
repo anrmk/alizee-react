@@ -50,10 +50,12 @@ export function deleteSubscribe(api, opts) {
     if (opts.bundleId) {
       data.bundleId = opts.bundleId;
     }
-
     try {
-      const url = generateUrl("unsubscribe");
-      await api.setMethod("DELETE").setData(data).query(url);
+      const url = generateUrl("deleteSubscribe");
+      await api
+        .setMethod("DELETE")
+        .setParams({ userName: data.userName })
+        .query(url);
 
       const updatedData = toggleFollowStatus(
         getState().users.data,

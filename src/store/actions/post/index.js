@@ -127,3 +127,8 @@ export {
   addPostUserBlock,
   removePostUserBlock,
 } from "./updatePostUserBlock";
+
+export {
+  UPDATE_PROFILE_POSTS_SUCCESS,
+  updateProfilePosts,
+} from "./updateProfilePosts";

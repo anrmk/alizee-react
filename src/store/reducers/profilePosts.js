@@ -9,6 +9,7 @@ import {
   GET_TAGGED_POSTS_REQUEST,
   GET_TAGGED_POSTS_SUCCESS,
   GET_TAGGED_POSTS_FAILURE,
+  UPDATE_PROFILE_POSTS_SUCCESS,
 } from "../actions/post";
 
 import { POSTS_DEFAULT_OFFSET } from "../../constants/feed";
@@ -78,6 +79,12 @@ export default function post(
       };
     }
     case GET_TAGGED_POSTS_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case UPDATE_PROFILE_POSTS_SUCCESS: {
       return {
         ...state,
         ...action.payload,

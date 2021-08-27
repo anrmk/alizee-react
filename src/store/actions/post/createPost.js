@@ -1,5 +1,6 @@
 import { generateUrl } from "../../../helpers/functions";
 import { MEDIA_CONTENT } from "../../../constants/media_types";
+import { updateProfilePosts } from "./updateProfilePosts";
 
 export const CREATE_POST_REQUEST = "CREATE_POST_REQUEST";
 export const CREATE_POST_SUCCESS = "CREATE_POST_SUCCESS";
@@ -40,6 +41,9 @@ export function createPost(api, opts) {
   return async (dispatch, getState) => {
     dispatch(requestCreatePost());
 
+    const posts = getState().followingPosts.data;
+    const user = getState().user.data;
+
     const url = generateUrl("createPost");
     try {
       const {
@@ -76,8 +80,12 @@ export function createPost(api, opts) {
 
       if (!data) throw new Error("Data is undefined");
 
-      const posts = getState().followingPosts.data;
-      dispatch(receiveCreatePost([data, ...posts]));
+      if (user?.userName === data.user.userName) {
+        dispatch(updateProfilePosts(data));
+      }
+      opts.location || posts.length > 0
+        ? dispatch(receiveCreatePost([data, ...posts]))
+        : dispatch(receiveCreatePost([]));
     } catch (e) {
       dispatch(errorCreatePost("Error: something went wrong"));
     }

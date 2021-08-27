@@ -42,6 +42,7 @@ export default function usePostDialog() {
       dialog.setParams({ loading: true });
       data.taggedUsers?.length &&
         (data.userTags = data.taggedUsers.map((item) => item.userName));
+      data.location = location.pathname === HOME_ROUTE;
 
       !isFetching && (await dispatch(postActions.createPost(apiClient, data)));
       dialog.toggle({ open: false, loading: false });

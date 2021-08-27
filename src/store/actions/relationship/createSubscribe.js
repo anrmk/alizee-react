@@ -40,7 +40,7 @@ function errorCreateSubscribe(message) {
 export function createSubscribe(api, opts) {
   return async (dispatch, getState) => {
     dispatch(requestCreateSubscribe());
-    const url = generateUrl("subscribe");
+    const url = generateUrl("createSubscribe");
 
     const data = { userName: opts.userName };
 
