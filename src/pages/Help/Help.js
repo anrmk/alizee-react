@@ -8,7 +8,7 @@ import { Sidebar, Content } from "../../domain/Help/index";
 import ApiContext from "../../context/ApiContext";
 import { getHelp } from "../../store/actions/help";
 import useStyles from "../../domain/Help/styles";
-import { PublicLayout } from "../Layouts";
+import { PublicLayout } from "../../layouts";
 
 function Help() {
   const classes = useStyles();

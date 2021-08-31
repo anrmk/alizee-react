@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import clsx from "clsx";
 import { Link } from "react-router-dom";
 // import { useTranslation } from "react-i18next";
 
@@ -56,7 +57,7 @@ function Room({
   }, [current]);
 
   return (
-    <Card className={classes.card}>
+    <Card className={clsx(classes.card, classes.roomRoot)}>
       <CardHeader
         avatar={
           <Link to={PROFILE_USERNAME_ROUTE(userName)}>
@@ -99,6 +100,7 @@ function Room({
       <CardActions className={classes.cardFooter}>
         <MessageSenderInput
           disabled={isLoading}
+          currentFocus={false}
           onSendMessageClick={handleMessageCreate}
           onSendTip={handleSendTipClick}
         />

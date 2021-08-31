@@ -22,7 +22,7 @@ function ProfileStatistics({
   blockedCount,
   className,
 }) {
-  const classes = useStyles();
+  const classes = useStyles({ isOwner });
 
   return (
     <Box className={clsx(classes.root, className)}>

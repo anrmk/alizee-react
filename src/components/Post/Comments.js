@@ -86,6 +86,7 @@ function Comments(props) {
         <CardActions className={classes.cardFooter}>
           <MessageSenderInput
             hideMediaEditor
+            currentFocus={false}
             hidePayment={isOwner}
             onSendMessageClick={handleCommentSendClick}
             onSendTip={handleSendTipClick}

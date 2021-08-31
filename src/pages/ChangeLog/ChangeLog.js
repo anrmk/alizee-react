@@ -15,7 +15,7 @@ import * as changeLogActions from "../../store/actions/changeLog";
 import ApiContext from "../../context/ApiContext";
 import { formatDate } from "../../helpers/functions";
 
-import { PublicLayout } from "../Layouts";
+import { PublicLayout } from "../../layouts";
 
 function ChangeLog({ data, isFetching, getLogs, resetLogs }) {
   const apiClient = useContext(ApiContext);

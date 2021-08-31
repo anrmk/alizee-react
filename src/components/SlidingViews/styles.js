@@ -14,13 +14,7 @@ const useStyles = makeStyles((theme) => ({
     "& + &": {
       marginRight: "30px !important",
     },
-    [theme.breakpoints.up("md")]: {
-      padding: theme.spacing(0, 1),
-    },
     [theme.breakpoints.down("sm")]: {
-      minHeight: `calc(100vh - ${
-        theme.mixins.toolbar.minHeight * 2 + theme.spacing(3)
-      }px)`,
       overflow: "hidden",
       zIndex: 1000,
     },

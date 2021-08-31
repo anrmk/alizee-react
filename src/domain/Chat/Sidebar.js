@@ -1,4 +1,5 @@
 import React from "react";
+import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -34,7 +35,7 @@ function Sidebar({
   const { t } = useTranslation();
 
   return (
-    <Card className={classes.card}>
+    <Card className={clsx(classes.card, classes.sideBarRoot)}>
       <CardHeader
         avatar={
           <Link to={PROFILE_USERNAME_ROUTE(user.userName)}>

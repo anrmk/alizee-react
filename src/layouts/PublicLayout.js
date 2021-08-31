@@ -2,10 +2,10 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Hidden } from "@material-ui/core";
 import ContainerLayout from "./ContainerLayout";
-import { Navbar } from "../../domain/Navbar";
-import Footer from "../../components/Footer";
+import { Navbar } from "../domain/Navbar";
+import Footer from "../components/Footer";
 
-import { signOutUser } from "../../store/actions/signIn";
+import { signOutUser } from "../store/actions/signIn";
 
 import useStyles from "./styles";
 

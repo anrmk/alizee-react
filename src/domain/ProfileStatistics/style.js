@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     ...textBase(theme),
     fontSize: theme.typography.subtitle1.fontSize,
     "&:hover": {
-      color: theme.palette.grey["300"],
+      color: ({ isOwner }) => isOwner && theme.palette.grey["300"],
     },
   },
   mood: {

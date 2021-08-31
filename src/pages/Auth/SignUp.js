@@ -5,7 +5,7 @@ import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 import { Hidden } from "@material-ui/core";
 import { SignUpForm, Slider } from "../../domain/AuthForms";
-import { TwoColumnLayout } from "../Layouts";
+import { TwoColumnLayout } from "../../layouts";
 
 import * as signUpActions from "../../store/actions/signUp";
 import * as signInActions from "../../store/actions/signIn";

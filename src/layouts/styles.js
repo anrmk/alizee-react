@@ -8,9 +8,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     [theme.breakpoints.down("sm")]: {
-      paddingLeft: theme.spacing(0.5),
-      paddingRight: theme.spacing(0.5),
-      paddingBottom: theme.spacing(8),
+      paddingLeft: theme.spacing(0),
+      paddingRight: theme.spacing(0),
     },
   },
   twoColumnGrid: {
@@ -36,19 +35,22 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down("sm")]: {
       height: "100% !important",
-      paddingBottom: theme.spacing(7),
+      paddingBottom: theme.spacing(9),
     },
   },
   mainInnerGrid: {
     height: "100%",
     scrollbarWidth: "none",
 
-    "& > .MuiGrid-item": {
+    "& > .MuiGrid-item:nth-child(2)": {
       paddingLeft: theme.spacing(3),
       [theme.breakpoints.down("sm")]: {
         paddingLeft: theme.spacing(0),
       },
     },
+  },
+  mainInnerGridItem: {
+    height: "100%",
   },
   mainContainer: {
     // [theme.breakpoints.down("sm")]: {

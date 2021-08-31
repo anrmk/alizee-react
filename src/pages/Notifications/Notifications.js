@@ -8,8 +8,11 @@ import { Navbar, Content } from "../../domain/Notification";
 import ApiContext from "../../context/ApiContext";
 import * as notificationActions from "../../store/actions/notification";
 
+import useStyles from "./styles";
+
 function Notifications({ notification, getNotifications, resetNotifications }) {
   const apiClient = useContext(ApiContext);
+  const classes = useStyles();
   const { type } = useParams();
 
   // const [filter, setFilter] = useState("all");
@@ -22,7 +25,7 @@ function Notifications({ notification, getNotifications, resetNotifications }) {
 
   return (
     <Grid container direction="column">
-      <Grid item>
+      <Grid item className={classes.tabsContainer}>
         <Navbar type={type} />
       </Grid>
       <Divider component="div" />

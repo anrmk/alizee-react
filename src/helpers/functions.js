@@ -7,8 +7,11 @@ import ENDPOINTS from "../constants/endpoints";
 import { MEDIA_IMAGE, MEDIA_VIDEO } from "../constants/media_types";
 import { EMAIL_REGEX, NUMBER_REGEX } from "../constants/regexs";
 import {
+  DEFAULT_ROUTE,
   EMAIL_CONFIRMATION_ROUTE,
   EMAIL_VERIFY_ROUTE,
+  EXPLORE_ROUTE,
+  NOTIFICATION_ROUTE,
   PASSWORD_CHANGE_ROUTE,
   RESET_PASSWORD_ROUTE,
   SIGN_IN_ROUTE,
@@ -480,4 +483,9 @@ export function addDays(date, days) {
   const result = new Date(date);
   result.setDate(result.getDate() + days);
   return result;
+}
+
+export function isFullHeightPage(pathname) {
+  const fullHeightPages = [DEFAULT_ROUTE, EXPLORE_ROUTE, NOTIFICATION_ROUTE];
+  return !fullHeightPages.find((item) => pathname.includes(item));
 }

@@ -20,7 +20,7 @@ import {
   VALUE_MAX_LENGTH,
 } from "../constants/form_validations";
 
-import { PublicLayout } from "./Layouts";
+import { PublicLayout } from "../layouts";
 
 const USERNAME_INPUT_ID = "userName";
 const EMAIL_INPUT_ID = "email";

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import { PublicLayout } from "./Layouts";
+import { PublicLayout } from "../layouts";
 
 function About() {
   return (

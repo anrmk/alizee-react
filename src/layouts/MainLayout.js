@@ -4,16 +4,17 @@ import clsx from "clsx";
 import { Grid, Hidden } from "@material-ui/core";
 
 import { useHistory } from "react-router";
-import { BottomBar, Navbar } from "../../domain/Navbar";
-import Sidebar from "../../components/Sidebar";
+import { BottomBar, Navbar } from "../domain/Navbar";
+import Sidebar from "../components/Sidebar";
 import ContainerLayout from "./ContainerLayout";
 
-import { signOutUser } from "../../store/actions/signIn";
-import * as notificationAction from "../../store/actions/notification";
-import * as Routes from "../../constants/routes";
-import { usePostDialog, useStoryDialog, useMoodDialog } from "../../hooks/post";
+import { signOutUser } from "../store/actions/signIn";
+import * as notificationAction from "../store/actions/notification";
+import * as Routes from "../constants/routes";
+import { usePostDialog, useStoryDialog, useMoodDialog } from "../hooks/post";
 
 import useStyles from "./styles";
+import { isFullHeightPage } from "../helpers/functions";
 
 export default function MainLayout({
   baseClassName,
@@ -24,7 +25,7 @@ export default function MainLayout({
   children,
 }) {
   const history = useHistory();
-  const classes = useStyles();
+  const classes = useStyles({ pathname: history.location.pathname });
 
   const { userInfo, notificationData, isAuthenticated } = useSelector(
     (state) => ({
@@ -53,7 +54,7 @@ export default function MainLayout({
 
   return (
     <ContainerLayout
-      isFullScreenHeight
+      isFullScreenHeight={isFullHeightPage(history.location.pathname)}
       baseClassName={clsx(classes.mainBase, baseClassName)}
       className={clsx(classes.mainContainer, containerClassName)}
       containerProps={{ maxWidth: "xl" }}
@@ -85,7 +86,7 @@ export default function MainLayout({
         container
         className={clsx(classes.mainInnerGrid, innerGridClassName)}>
         <Hidden smDown>
-          <Grid item {...leftColProps}>
+          <Grid item className={classes.mainInnerGridItem} {...leftColProps}>
             <Sidebar
               open
               user={userInfo}
@@ -98,7 +99,7 @@ export default function MainLayout({
             />
           </Grid>
         </Hidden>
-        <Grid item {...rightColProps}>
+        <Grid item className={classes.mainInnerGridItem} {...rightColProps}>
           {children}
         </Grid>
       </Grid>

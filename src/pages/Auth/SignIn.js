@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { Hidden } from "@material-ui/core";
 import { SignInForm, Slider } from "../../domain/AuthForms";
-import { TwoColumnLayout } from "../Layouts";
+import { TwoColumnLayout } from "../../layouts";
 
 import * as signInActions from "../../store/actions/signIn";
 import * as socialAuthActions from "../../store/actions/socialAuth";

@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   rootBox: {
     position: "sticky",
     overflowY: "auto",
-    height: `calc(100vh - ${theme.spacing(4.5)}px)`,
+    height: `calc(100vh - ${theme.spacing(6)}px)`,
     top: theme.spacing(3),
 
     "&::-webkit-scrollbar": {

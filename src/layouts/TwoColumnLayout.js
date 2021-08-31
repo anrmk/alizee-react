@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import { Grid, Box, Hidden } from "@material-ui/core";
 
-import Footer from "../../components/Footer";
+import Footer from "../components/Footer";
 import ContainerLayout from "./ContainerLayout";
 
 import useStyles from "./styles";

@@ -32,7 +32,7 @@ import About from "../About";
 import Contact from "../Contact";
 import { Help, HelpDetails } from "../Help";
 import Notifications from "../Notifications";
-import { MainLayout } from "../Layouts";
+import { MainLayout } from "../../layouts";
 
 import { signOutUser } from "../../store/actions/signIn";
 import * as userActions from "../../store/actions/user";

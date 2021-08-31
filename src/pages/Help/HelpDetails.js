@@ -8,7 +8,7 @@ import { Sidebar, FaqDetails } from "../../domain/Help/index";
 
 import ApiContext from "../../context/ApiContext";
 
-import { PublicLayout } from "../Layouts";
+import { PublicLayout } from "../../layouts";
 
 import {
   createHelpRating,
