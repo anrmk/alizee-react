@@ -4,7 +4,13 @@ import { Grid, Button, Typography, CardContent } from "@material-ui/core";
 
 import { BundleList } from "../../components/Bundle";
 
-function BundleBlog({ onOpenDialogClick, price = 0, data, onBundleDelete }) {
+function BundleBlog({
+  onOpenDialogClick,
+  price = 0,
+  data,
+  disabled,
+  onBundleDelete,
+}) {
   const handleDeleteClick = (id) => {
     onBundleDelete(
       id,
@@ -27,7 +33,7 @@ function BundleBlog({ onOpenDialogClick, price = 0, data, onBundleDelete }) {
 
           <Grid item>
             <Button
-              disabled={price < 0.1}
+              disabled={disabled}
               disableElevation
               variant="contained"
               color="primary"
@@ -41,6 +47,7 @@ function BundleBlog({ onOpenDialogClick, price = 0, data, onBundleDelete }) {
         <BundleList
           isOwner
           price={price}
+          disabled={disabled}
           data={data}
           onDelete={handleDeleteClick}
         />

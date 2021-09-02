@@ -10,6 +10,7 @@ function BundleList({
   user,
   isProfile = false,
   price,
+  disabled,
 
   onDelete,
   onSubscribeClick,
@@ -29,6 +30,7 @@ function BundleList({
           discount={item.discount}
           price={price}
           user={user}
+          disabled={disabled}
         />
       ))}
     </List>

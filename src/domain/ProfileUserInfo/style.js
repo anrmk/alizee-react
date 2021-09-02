@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     "& > .MuiButtonBase-root + .MuiButtonBase-root": {
       marginLeft: theme.spacing(1),
     },
+    flexWrap: "wrap",
   },
   mood: {
     cursor: "pointer",

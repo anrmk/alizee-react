@@ -85,12 +85,14 @@ function EditSubscriptionSettings({
         price={data.price}
         userName={userInfo.userName}
         onCampaignDelete={handleDeleteClick}
+        disabled={data.price === 0}
       />
       <Divider />
       <BundleBlog
         data={bundles}
         onOpenDialogClick={subscriptionBundleDialog.toggle}
         price={data.price}
+        disabled={data.price === 0}
         onBundleDelete={handleDeleteClick}
       />
     </Card>

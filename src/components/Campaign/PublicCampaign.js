@@ -15,8 +15,6 @@ import {
 import useStyles from "./styles";
 
 function PublicCampaign({
-  data,
-  followStatus,
   price,
   children,
   user,
@@ -63,8 +61,8 @@ function PublicCampaign({
           }}>
           {`
 		  		${
-            campaign.type === DISCOUNT_MONTH_TYPE_RADIO_ID
-              ? getSubscriptionBtnText(followStatus, subscriptionPrice, t)
+            campaign.type === DISCOUNT_MONTH_TYPE_RADIO_ID && price > 0
+              ? getSubscriptionBtnText(false, subscriptionPrice, t)
               : "Subscribe Free"
           }
 		 

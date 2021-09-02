@@ -1,7 +1,5 @@
 import { generateUrl } from "../../../helpers/functions";
 
-import { getRoom } from "./index";
-
 export const CREATE_MESSAGE_REQUEST = "CREATE_MESSAGE_REQUEST";
 export const CREATE_MESSAGE_SUCCESS = "CREATE_MESSAGE_SUCCESS";
 export const CREATE_MESSAGE_FAILURE = "CREATE_MESSAGE_FAILURE";
@@ -50,16 +48,15 @@ function addMessageSuccess(room, rooms) {
 export function addMessage(api, data) {
   return async (dispatch, getState) => {
     try {
-      let current = { ...getState().chat.current };
+      const current = { ...getState().chat.current };
       const rooms = [...getState().chat.data];
       let updatedRooms = [];
       const index = rooms.findIndex((item) => item.id === data.roomId);
 
       if (index !== -1) {
-        const hasStateMessage = current.messages.some(
-          (item) => item.id === data.id
-        );
-
+        const hasStateMessage =
+          current.messages &&
+          current.messages.some((item) => item.id === data.id);
         if (hasStateMessage) {
           return;
         }
@@ -82,11 +79,15 @@ export function addMessage(api, data) {
 
         dispatch(addMessageSuccess(current, updatedRooms));
       } else {
-        await dispatch(getRoom(api, data.userName));
+        const newRoom = {
+          ...data,
+          lastMessageText: data.text,
+          unreadMessageCount: 1,
+          id: data.roomId,
+        };
 
-        current = { ...current, lastMessageText: data.text };
         updatedRooms = [
-          current,
+          newRoom,
           ...(rooms.filter((item) => item.id !== data.roomId) || []),
         ];
 

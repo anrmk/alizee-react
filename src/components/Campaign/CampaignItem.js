@@ -37,7 +37,7 @@ function CampaignItem({ isProfile = false, ...rest }) {
     }
   };
   return (
-    <ListItem className={classes.item}>
+    <ListItem className={classes.item} disabled={data.disabled}>
       <ListItemText
         primary={
           <Typography variant="body1">
@@ -66,14 +66,15 @@ function CampaignItem({ isProfile = false, ...rest }) {
       />
 
       {isProfile ? (
-        <IconButton onClick={() => onDelete(data.id)}>
+        <IconButton onClick={() => onDelete(data.id)} disabled={data.disabled}>
           <HighlightOffIcon />
         </IconButton>
       ) : (
         <Button
           onClick={() => onDelete(data.id)}
           variant="contained"
-          color="primary">
+          color="primary"
+          disabled={data.disabled}>
           Delete
         </Button>
       )}

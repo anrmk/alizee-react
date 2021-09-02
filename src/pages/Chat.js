@@ -13,10 +13,11 @@ import { ESC_KEY_CODE } from "../constants/key_codes";
 import {
   CHAT_USERNAME_ROUTE,
   PEAR_TO_PEAR_ID_ROUTE,
+  CHAT_ROUTE,
 } from "../constants/routes";
 
 import { useNewChatDialog, useRoomMenuDialog, useChatHub } from "../hooks/chat";
-import useSlidingViews, { RIGHT_OPEN_TYPE } from "../hooks/useSlidingViews";
+import useSlidingViews, { LEFT_OPEN_TYPE } from "../hooks/useSlidingViews";
 import useDialog from "../hooks/useDialog";
 import useFullScreen from "../hooks/useFullScreen";
 import { useSendTipDialog } from "../hooks/payment";
@@ -33,12 +34,12 @@ function Chat(props) {
     props;
   const { createMessage } = props;
 
+  const { currentSlidingViewsState, toggleSlidingViewsState } =
+    useSlidingViews(LEFT_OPEN_TYPE);
   const sendTipDialog = useSendTipDialog();
   const newChatDialog = useNewChatDialog();
-  const roomMenuDialog = useRoomMenuDialog();
+  const roomMenuDialog = useRoomMenuDialog(toggleSlidingViewsState);
   const lightboxModal = useLightboxModal();
-  const { currentSlidingViewsState, toggleSlidingViewsState } =
-    useSlidingViews(RIGHT_OPEN_TYPE);
   const dialog = useDialog();
   const fullScreen = useFullScreen("root");
 
@@ -84,6 +85,7 @@ function Chat(props) {
   const handleRoomClose = (e) => {
     toggleSlidingViewsState();
     resetCurrentRoom();
+    history.replace(CHAT_ROUTE);
   };
 
   const handleMessageCreate = async (data) => {

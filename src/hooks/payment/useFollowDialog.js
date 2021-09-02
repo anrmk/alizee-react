@@ -26,18 +26,19 @@ export default function useFollowDialog() {
   }) => {
     const opts = { userName, isFollow, isPrivate, campaignId, bundleId };
     dialog.toggle({ open: false });
-
     if (!isFetching) {
-      isFollow
-        ? await dispatch(relationshipActions.deleteSubscribe(apiClient, opts))
-        : await dispatch(relationshipActions.createSubscribe(apiClient, opts));
+      if (!isFollow || campaignId || bundleId) {
+        await dispatch(relationshipActions.createSubscribe(apiClient, opts));
+      } else {
+        await dispatch(relationshipActions.deleteSubscribe(apiClient, opts));
+      }
     }
   };
 
   const handleDialogToggle = useCallback(
     (data) => {
-      const { isFollow, subscriptionPrice } = data;
-      if (!isFollow) {
+      const { isFollow, subscriptionPrice, campaignId, bundleId } = data;
+      if (!isFollow || campaignId || bundleId) {
         dialog.toggle(
           dialogs[FOLLOW_DIALOG_TYPE](
             { onMainClick: handleSubscribeBuy, state: data },

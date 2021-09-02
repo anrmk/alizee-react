@@ -41,6 +41,7 @@ import {
 } from "../../domain/ProfileUserInfo";
 import { PROFILE_TYPE } from "../../components/Post/Menu";
 import { RedirectContent } from "../../domain/ConfirmationDialog";
+import { addDays } from "../../helpers/functions";
 
 import useStyles from "./style";
 
@@ -114,6 +115,12 @@ function Profile(props) {
           ? item
           : item
       ),
+    [user]
+  );
+  const determinedTerm = useMemo(
+    () =>
+      user?.data?.subscribedByExpireDate &&
+      addDays(new Date(), 7) > new Date(user.data.subscribedByExpireDate),
     [user]
   );
 
@@ -289,6 +296,8 @@ function Profile(props) {
           isVerified={user.data?.identityVerified}
           followStatus={user.data?.followStatus}
           subscriptionPrice={user.data?.subscriptionPrice}
+          disabled={user.data?.subscriptionPrice === 0}
+          determinedTerm={determinedTerm}
           onSubscribeClick={followDialog.toggle}
           onSendTipClick={sendTipDialog.toggle}
           onMoodUpdateClick={handleMoodUpdateClick}
@@ -323,6 +332,8 @@ function Profile(props) {
                 followStatus={user.data?.followStatus}
                 subscriptionPrice={user.data?.subscriptionPrice}
                 sites={user.data.sites}
+                disabled={user.data?.subscriptionPrice === 0}
+                determinedTerm={determinedTerm}
                 onSubscribeClick={followDialog.toggle}
                 onSendTipClick={sendTipDialog.toggle}
                 onMoodUpdateClick={handleMoodUpdateClick}

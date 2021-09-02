@@ -1,10 +1,12 @@
 import { useCallback, useContext } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import ApiContext from "../../context/ApiContext";
 import * as actionChat from "../../store/actions/chat";
 
 import dialogs, { ROOM_MENU_DIALOG_TYPE } from "../../constants/dialogs";
+import { CHAT_ROUTE } from "../../constants/routes";
 
 import useDialog from "../useDialog";
 import useBlockDialog from "../useBlockDialog";
@@ -13,6 +15,7 @@ export default function useRoomMenuDialog(callback) {
   const dialog = useDialog();
   const dispatch = useDispatch();
   const apiClient = useContext(ApiContext);
+  const history = useHistory();
 
   const blockDialog = useBlockDialog();
 
@@ -27,7 +30,8 @@ export default function useRoomMenuDialog(callback) {
 
     dialog.toggle({ open: false });
     await dispatch(actionChat.deleteRoom(apiClient, id));
-    callback && callback(id);
+    history.replace(CHAT_ROUTE);
+    callback && callback();
   }, []);
 
   const handlerClearChat = useCallback(async (id) => {
@@ -37,7 +41,6 @@ export default function useRoomMenuDialog(callback) {
 
     dialog.toggle({ open: false });
     await dispatch(actionChat.deleteRoomHistory(apiClient, id));
-    callback && callback(id);
   }, []);
 
   const handleDialogToggle = useCallback(async (data) => {

@@ -4,7 +4,7 @@ import { List, ListSubheader } from "@material-ui/core/";
 
 import CampaignItem from "./CampaignItem";
 
-function CampaignList({ data, onDelete, isProfile }) {
+function CampaignList({ data, disabled, onDelete, isProfile }) {
   return (
     <List dense>
       {isProfile && <ListSubheader>Subscription Campaign</ListSubheader>}
@@ -12,6 +12,7 @@ function CampaignList({ data, onDelete, isProfile }) {
       {data.map((item) => (
         <CampaignItem
           {...item}
+          disabled={disabled}
           key={item.id}
           isProfile={isProfile}
           onDelete={onDelete}

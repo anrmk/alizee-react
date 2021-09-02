@@ -36,6 +36,8 @@ function ProfileUserInfo({
   followStatus,
   sites,
   campaign,
+  disabled,
+  determinedTerm,
 
   onSubscribeClick,
   onSendTipClick,
@@ -162,35 +164,43 @@ function ProfileUserInfo({
         isOwner &&
         !followStatus && (
           <CampaignList
+            price={user.subscriptionPrice}
+            disabled={disabled}
             isProfile
             data={user.campaigns}
             onDelete={onDeleteCampaignClick}
           />
         )}
-      {user?.campaigns?.length > 0 && !isOwner && (
-        <Card>
-          <CardContent>
-            <PublicCampaign
-              user={user}
-              campaign={campaign}
-              price={user.subscriptionPrice}
-              followStatus={followStatus}
-              getSubscriptionBtnText={getSubscriptionBtnText}
-              t={t}
-              onClick={handleSubscribeClick}
-            />
-          </CardContent>
-        </Card>
-      )}
+      {user?.campaigns?.length > 0 &&
+        !isOwner &&
+        subscriptionPrice > 0 &&
+        (!isFollow || determinedTerm) && (
+          <Card>
+            <CardContent>
+              <PublicCampaign
+                user={user}
+                campaign={campaign}
+                disabled={disabled}
+                price={user.subscriptionPrice}
+                followStatus={followStatus}
+                getSubscriptionBtnText={getSubscriptionBtnText}
+                t={t}
+                onClick={handleSubscribeClick}
+              />
+            </CardContent>
+          </Card>
+        )}
 
       {user?.bundles &&
+        subscriptionPrice > 0 &&
         user.bundles.length > 0 &&
-        !followStatus &&
-        !isOwner && (
+        !isOwner &&
+        (!isFollow || determinedTerm) && (
           <BundleList
             user={user}
             isProfile
             price={user.subscriptionPrice}
+            disabled={disabled}
             data={user.bundles}
             onSubscribeClick={handleSubscribeClick}
           />
@@ -213,7 +223,7 @@ function ProfileUserInfo({
             </>
           ) : (
             <>
-              {!user?.campaigns?.length > 0 && (
+              {(disabled || !user?.campaigns?.length > 0 || isFollow) && (
                 <Button
                   className={classes.subscribeBtn}
                   disableElevation

@@ -6,10 +6,10 @@ import { CampaignList } from "../../components/Campaign";
 
 function CampaignBlog({
   onOpenDialogClick,
-  price = 0,
   data,
   userName,
   onCampaignDelete,
+  disabled,
 }) {
   const handleDeleteClick = (id) => {
     onCampaignDelete(id, "Stop promotion campaign", false);
@@ -31,7 +31,7 @@ function CampaignBlog({
               disableElevation
               variant="contained"
               color="primary"
-              disabled={price < 0.1}>
+              disabled={disabled}>
               Create Campaign
             </Button>
           </Grid>
@@ -43,6 +43,7 @@ function CampaignBlog({
           data={data}
           userName={userName}
           onDelete={handleDeleteClick}
+          disabled={disabled}
         />
       )}
     </>

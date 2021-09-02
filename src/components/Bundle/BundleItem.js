@@ -14,6 +14,7 @@ function BundleItem({
   price,
   id,
   user,
+  disabled,
 
   onSubscribeClick,
   onDelete,
@@ -23,7 +24,7 @@ function BundleItem({
   const subscriptionPrice = calcDiscount(price, discount, duration);
 
   return (
-    <ListItem className={classes.item}>
+    <ListItem className={classes.item} disabled={disabled}>
       <ListItemText
         className={classes.itemBundleText}
         primary={
@@ -49,6 +50,7 @@ function BundleItem({
         </Button>
       ) : (
         <Button
+          disabled={disabled}
           onClick={() => onDelete(id)}
           variant="contained"
           color="primary">

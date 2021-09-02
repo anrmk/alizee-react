@@ -38,13 +38,13 @@ function errorUpdateSubscription(message) {
 export function updateSubscription(api, opts) {
   return async (dispatch, getState) => {
     dispatch(requestUpdateSubscription());
-    const { bundles } = getState().settings.data;
+    const { bundles, campaigns } = getState().settings.data;
     const url = generateUrl("updateSubscription");
     try {
       const { price } = opts;
       await api.setMethod("PUT").setParams({ price }).query(url);
 
-      dispatch(receiveUpdateSubscription({ price, bundles }));
+      dispatch(receiveUpdateSubscription({ price, bundles, campaigns }));
       return true;
     } catch (e) {
       dispatch(errorUpdateSubscription("Error: something went wrong:", e));
