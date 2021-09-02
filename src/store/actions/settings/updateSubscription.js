@@ -49,7 +49,6 @@ export function updateSubscription(api, opts) {
       await api.setMethod("PUT").setParams({ price }).query(url);
 
       dispatch(receiveUpdateSubscription({ price, bundles, campaigns }));
-      return true;
     } catch (e) {
       dispatch(errorUpdateSubscription("Error: something went wrong:", e));
     }
