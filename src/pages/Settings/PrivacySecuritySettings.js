@@ -12,6 +12,7 @@ import dialogs, {
   RESET_PWD_ACCOUNT_DIALOG_TYPE,
 } from "../../constants/dialogs";
 import useDialog from "../../hooks/useDialog";
+import useAlert from "../../hooks/useAlert";
 
 function PrivacySecuritySettings(props) {
   const apiClient = useContext(ApiContext);
@@ -25,9 +26,9 @@ function PrivacySecuritySettings(props) {
     updateOffensiveComments,
     deleteAccount,
     getSettingsResetPasswordConfirm,
-    onSetAlertText,
   } = props;
   const dialog = useDialog();
+  useAlert(privacySettings.requestStatus);
 
   useEffect(() => {
     getPrivacy(apiClient);
@@ -36,8 +37,7 @@ function PrivacySecuritySettings(props) {
   const handleAccountPrivateChange = (status) => {
     if (!privacySettings.isFetching) {
       (async () => {
-        const fulfilled = await updatePrivateStatus(apiClient, status);
-        onSetAlertText(fulfilled);
+        await updatePrivateStatus(apiClient, status);
       })();
     }
   };
@@ -45,8 +45,7 @@ function PrivacySecuritySettings(props) {
   const handleActivityStatusChange = (status) => {
     if (!privacySettings.isFetching) {
       (async () => {
-        const fulfilled = await updateActivityStatus(apiClient, status);
-        onSetAlertText(fulfilled);
+        await updateActivityStatus(apiClient, status);
       })();
     }
   };
@@ -54,16 +53,14 @@ function PrivacySecuritySettings(props) {
   const handleOffensiveCommentsChange = (status) => {
     if (!privacySettings.isFetching) {
       (async () => {
-        const fulfilled = await updateOffensiveComments(apiClient, status);
-        onSetAlertText(fulfilled);
+        await updateOffensiveComments(apiClient, status);
       })();
     }
   };
 
   const handlePasswordResetConfirmClick = () => {
     (async () => {
-      const fulfilled = await getSettingsResetPasswordConfirm(apiClient);
-      onSetAlertText(fulfilled);
+      await getSettingsResetPasswordConfirm(apiClient);
     })();
   };
 
@@ -77,8 +74,7 @@ function PrivacySecuritySettings(props) {
 
   const handleAccountDeleteConfirmClick = () => {
     (async () => {
-      const fulfilled = await deleteAccount(apiClient);
-      onSetAlertText(fulfilled);
+      await deleteAccount(apiClient);
     })();
   };
 
@@ -113,6 +109,7 @@ function mapStateToProps(state) {
   return {
     privacySettings: {
       isFetching: state.settings.isFetching,
+      requestStatus: state.settings.requestStatus,
       data: {
         ...state.settings.data,
         email: state.signIn?.userInfo?.email,

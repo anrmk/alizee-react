@@ -1,4 +1,5 @@
 import { generateUrl } from "../../../../helpers/functions";
+import { IDLE, SUCCESS, FAILURE } from "../../../../constants/request_status";
 
 export const VERIFY_CARD_REQUEST = "VERIFY_CARD_REQUEST";
 export const VERIFY_CARD_SUCCESS = "VERIFY_CARD_SUCCESS";
@@ -10,6 +11,7 @@ function requestVerifyCard() {
     payload: {
       isFetching: true,
       errorMessage: "",
+      requestStatus: IDLE,
     },
   };
 }
@@ -21,6 +23,7 @@ function receiveVerifyCard(data) {
       isFetching: false,
       errorMessage: "",
       data: data || {},
+      requestStatus: SUCCESS,
     },
   };
 }
@@ -31,6 +34,7 @@ function errorVerifyCard(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+      requestStatus: FAILURE,
     },
   };
 }
@@ -52,10 +56,8 @@ export function verifyCard(api, id) {
       );
 
       dispatch(receiveVerifyCard({ wallet, cards: updatedCards }));
-      return true;
     } catch (e) {
       dispatch(errorVerifyCard("Error: something went wrong:", e));
-      return false;
     }
   };
 }

@@ -25,6 +25,7 @@ import help from "./help";
 import statistics from "./statistics";
 
 import { SIGNOUT_SUCCESS } from "../actions/signIn";
+import { IDLE } from "../../constants/request_status";
 
 const appReducer = combineReducers({
   signUp,
@@ -55,6 +56,8 @@ const appReducer = combineReducers({
 export default function (state, action) {
   if (action.type === SIGNOUT_SUCCESS) {
     state = undefined;
+  } else if (action.type === "persist/REHYDRATE") {
+    action.payload.signIn.requestStatus = IDLE;
   }
   return appReducer(state, action);
 }

@@ -8,17 +8,20 @@ import * as userActions from "../../store/actions/user";
 import { EditBankForm, OndatoForm } from "../../domain/SettingsForms";
 
 import useAgreeDialog from "../../hooks/useAgreeDialog";
+import useAlert from "../../hooks/useAlert";
 
 function EditBankSettings({
   identityVerified,
   data,
   isFetching,
+  requestStatus,
+
   getBank,
   updateBank,
   veryfyMe,
-  onSetAlertText,
 }) {
   const apiClient = useContext(ApiContext);
+  useAlert(requestStatus);
 
   const agreeDialog = useAgreeDialog(() => {
     veryfyMe(apiClient);
@@ -30,8 +33,7 @@ function EditBankSettings({
 
   const handleEditBankSubmit = (pData) => {
     (async () => {
-      const fulfilled = await updateBank(apiClient, pData);
-      onSetAlertText(fulfilled);
+      await updateBank(apiClient, pData);
     })();
   };
 
@@ -57,6 +59,7 @@ function mapStateToProps(state) {
     identityVerified: state.signIn?.userInfo.identityVerified,
     data: state.settings.data,
     isFetching: state.settings.isFetching,
+    requestStatus: state.settings.requestStatus,
   };
 }
 

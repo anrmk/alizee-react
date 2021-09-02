@@ -1,5 +1,6 @@
 import { generateUrl } from "../../../helpers/functions";
 import { signOutUser } from "../signIn";
+import { IDLE, SUCCESS, FAILURE } from "../../../constants/request_status";
 
 export const DELETE_ACCOUNT_REQUEST = "DELETE_ACCOUNT_REQUEST";
 export const DELETE_ACCOUNT_SUCCESS = "DELETE_ACCOUNT_SUCCESS";
@@ -11,6 +12,7 @@ function requestDeleteAccount() {
     payload: {
       isFetching: true,
       errorMessage: "",
+      requestStatus: IDLE,
     },
   };
 }
@@ -21,6 +23,7 @@ function receiveDeleteAccount() {
     payload: {
       isFetching: false,
       errorMessage: "",
+      requestStatus: SUCCESS,
     },
   };
 }
@@ -31,6 +34,7 @@ function errorDeleteAccount(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+      requestStatus: FAILURE,
     },
   };
 }
@@ -46,10 +50,8 @@ export function deleteAccount(api) {
       dispatch(receiveDeleteAccount());
 
       dispatch(signOutUser());
-      return true;
     } catch (e) {
       dispatch(errorDeleteAccount("Error: something went wrong:", e));
-      return false;
     }
   };
 }

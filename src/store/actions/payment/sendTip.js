@@ -1,5 +1,6 @@
 import { generateUrl } from "../../../helpers/functions";
 import { getDeposit } from "../account";
+import { IDLE, SUCCESS, FAILURE } from "../../../constants/request_status";
 
 export const SEND_TIP_REQUEST = "SEND_TIP_REQUEST";
 export const SEND_TIP_SUCCESS = "SEND_TIP_SUCCESS";
@@ -11,6 +12,7 @@ function requestSendTip() {
     payload: {
       isFetching: true,
       errorMessage: "",
+      requestStatus: IDLE,
     },
   };
 }
@@ -21,6 +23,7 @@ function receiveSendTip() {
     payload: {
       isFetching: false,
       errorMessage: "",
+      requestStatus: SUCCESS,
     },
   };
 }
@@ -31,6 +34,7 @@ function errorSendTip(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+      requestStatus: FAILURE,
     },
   };
 }
@@ -45,10 +49,8 @@ export function sendTip(api, opts) {
 
       dispatch(receiveSendTip());
       dispatch(getDeposit(api));
-      return true;
     } catch (e) {
       dispatch(errorSendTip("Error: something went wrong"));
-      return false;
     }
   };
 }

@@ -1,5 +1,6 @@
 import { generateUrl, isEmptyObject } from "../../../helpers/functions";
 import { changeCover } from "../user";
+import { IDLE, SUCCESS, FAILURE } from "../../../constants/request_status";
 
 export const UPDATE_COVER_REQUEST = "UPDATE_COVER_REQUEST";
 export const UPDATE_COVER_SUCCESS = "UPDATE_COVER_SUCCESS";
@@ -11,6 +12,7 @@ function requestUpdateCover() {
     payload: {
       isFetching: true,
       errorMessage: "",
+      requestStatus: IDLE,
     },
   };
 }
@@ -22,6 +24,7 @@ function receiveUpdateCover(data) {
       isFetching: false,
       errorMessage: "",
       userInfo: data,
+      requestStatus: SUCCESS,
     },
   };
 }
@@ -32,6 +35,7 @@ function errorUpdateCover(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+      requestStatus: FAILURE,
     },
   };
 }

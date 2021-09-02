@@ -1,4 +1,5 @@
 import { generateUrl } from "../../../../helpers/functions";
+import { IDLE, SUCCESS, FAILURE } from "../../../../constants/request_status";
 
 export const CREATE_SUBSCRIPTION_BUNDLE_REQUEST =
   "CREATE_SUBSCRIPTION_BUNDLE_REQUEST";
@@ -13,6 +14,7 @@ function requestCreateSubscriptionBundleRequest() {
     payload: {
       isFetching: true,
       errorMessage: "",
+      requestStatus: IDLE,
     },
   };
 }
@@ -24,6 +26,7 @@ function receiveCreateSubscriptionBundleReceive(data) {
       isFetching: false,
       errorMessage: "",
       data: data || {},
+      requestStatus: SUCCESS,
     },
   };
 }
@@ -34,6 +37,7 @@ function errorCreateSubscriptionBundle(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+      requestStatus: FAILURE,
     },
   };
 }
@@ -67,12 +71,10 @@ export function createSubscriptionBundle(api, opts) {
           bundles: [...bundles, data],
         })
       );
-      return true;
     } catch (e) {
       dispatch(
         errorCreateSubscriptionBundle("Error: something went wrong:", e)
       );
-      return false;
     }
   };
 }

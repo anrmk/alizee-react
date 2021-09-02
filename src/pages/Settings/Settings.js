@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { useSnackbar } from "notistack";
 
 import { Switch, useParams, useHistory, useLocation } from "react-router-dom";
 import {
@@ -50,10 +49,10 @@ import {
   ToastNotificationSettings,
 } from "./Notifications";
 
-import {
-  DEFAULT_ALERT_SUCCESS_TEXT,
-  DEFAULT_ALERT_ERROR_TEXT,
-} from "../../constants/alerts";
+// import {
+//   DEFAULT_ALERT_SUCCESS_TEXT,
+//   DEFAULT_ALERT_ERROR_TEXT,
+// } from "../../constants/alerts";
 
 import useSlidingViews, { RIGHT_OPEN_TYPE } from "../../hooks/useSlidingViews";
 import useChangeTheme from "../../hooks/useChangeTheme";
@@ -113,7 +112,6 @@ function Settings() {
   const location = useLocation();
   const { t } = useTranslation();
   const theme = useChangeTheme();
-  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     if (type) {
@@ -122,14 +120,6 @@ function Settings() {
   }, [type]);
 
   useEffect(() => () => dispatch(resetSettings()), []);
-
-  const handleSetAlertText = (fulfilled) => {
-    if (fulfilled) {
-      enqueueSnackbar(DEFAULT_ALERT_SUCCESS_TEXT, { variant: "success" });
-    } else {
-      enqueueSnackbar(DEFAULT_ALERT_ERROR_TEXT, { variant: "error" });
-    }
-  };
 
   return (
     <SlidingViews
@@ -181,41 +171,26 @@ function Settings() {
             exact
             path={SETTINGS_EDIT_PROFILE_ROUTE}
             component={EditProfileSettings}
-            componentProps={{
-              onSetAlertText: handleSetAlertText,
-            }}
           />
           <PrivateRoute
             exact
             path={SETTINGS_ACCOUNT_ROUTE}
             component={EditAccountSettings}
-            componentProps={{
-              onSetAlertText: handleSetAlertText,
-            }}
           />
           <PrivateRoute
             exact
             path={SETTINGS_PAYMENTS_ROUTE}
             component={EditPaymentSettings}
-            componentProps={{
-              onSetAlertText: handleSetAlertText,
-            }}
           />
           <PrivateRoute
             exact
             path={SETTINGS_BANK_ROUTE}
             component={EditBankSettings}
-            componentProps={{
-              onSetAlertText: handleSetAlertText,
-            }}
           />
           <PrivateRoute
             exact
             path={SETTINGS_SUBSCRIPTION_ROUTE}
             component={EditSubscriptionSettings}
-            componentProps={{
-              onSetAlertText: handleSetAlertText,
-            }}
           />
 
           <PrivateRoute
@@ -227,42 +202,27 @@ function Settings() {
             exact
             path={SETTINGS_NOTIFICATIONS_PUSH_ROUTE}
             component={PushNotificationSettings}
-            componentProps={{
-              onSetAlertText: handleSetAlertText,
-            }}
           />
           <PrivateRoute
             exact
             path={SETTINGS_NOTIFICATIONS_EMAIL_ROUTE}
             component={EmailNotificationSettings}
-            componentProps={{
-              onSetAlertText: handleSetAlertText,
-            }}
           />
           <PrivateRoute
             exact
             path={SETTINGS_NOTIFICATIONS_SITE_ROUTE}
             component={SiteNotificationSettings}
-            componentProps={{
-              onSetAlertText: handleSetAlertText,
-            }}
           />
           <PrivateRoute
             exact
             path={SETTINGS_NOTIFICATIONS_TOAST_ROUTE}
             component={ToastNotificationSettings}
-            componentProps={{
-              onSetAlertText: handleSetAlertText,
-            }}
           />
 
           <PrivateRoute
             exact
             path={SETTINGS_PRIVACY_SECURITY_ROUTE}
             component={PrivacySecuritySettings}
-            componentProps={{
-              onSetAlertText: handleSetAlertText,
-            }}
           />
         </Switch>
       </Box>

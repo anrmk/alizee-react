@@ -25,14 +25,15 @@ import { isEmptyObject } from "../../../helpers/functions";
 import * as settingsActions from "../../../store/actions/settings";
 
 import { ALLOW_PUSH_NOTIFICATION } from "../../../constants/permissions";
+import useAlert from "../../../hooks/useAlert";
 
 function PushNotificationSettings({
   data,
+  requestStatus,
 
   getNotification,
   updateNotification,
   resetSettings,
-  onSetAlertText,
 }) {
   const apiClient = useContext(ApiContext);
   const [settings, setSettings] = useState({
@@ -57,6 +58,7 @@ function PushNotificationSettings({
   } = usePushNotifications();
 
   const history = useHistory();
+  useAlert(requestStatus);
 
   useEffect(() => {
     getNotification(apiClient);
@@ -99,11 +101,10 @@ function PushNotificationSettings({
     setSettings(value);
     if (!settings.isFetching) {
       (async () => {
-        const fulfilled = await updateNotification(apiClient, {
+        updateNotification(apiClient, {
           ...value,
           ...subscriptionValue,
         });
-        onSetAlertText(fulfilled);
       })();
     }
   };
@@ -243,6 +244,7 @@ function mapStateToProps(state) {
   return {
     isFetching: state.settings.isFetching,
     data: state.settings.data,
+    requestStatus: state.settings.requestStatus,
   };
 }
 

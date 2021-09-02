@@ -1,4 +1,5 @@
 import { generateUrl } from "../../../../helpers/functions";
+import { IDLE, SUCCESS, FAILURE } from "../../../../constants/request_status";
 
 export const UPDATE_WALLET_REQUEST = "UPDATE_WALLET_REQUEST";
 export const UPDATE_WALLET_SUCCESS = "UPDATE_WALLET_SUCCESS";
@@ -10,6 +11,7 @@ function requestUpdateWallet() {
     payload: {
       isFetching: true,
       errorMessage: "",
+      requestStatus: IDLE,
     },
   };
 }
@@ -21,6 +23,7 @@ function receiveUpdateWallet(data) {
       isFetching: false,
       errorMessage: "",
       data: data || [],
+      requestStatus: SUCCESS,
     },
   };
 }
@@ -31,6 +34,7 @@ function errorUpdateWallet(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+      requestStatus: FAILURE,
     },
   };
 }
@@ -55,10 +59,8 @@ export function updateWallet(api, status) {
       };
 
       dispatch(receiveUpdateWallet(updatedSettings));
-      return true;
     } catch (e) {
       dispatch(errorUpdateWallet("Error: something went wrong:", e));
-      return false;
     }
   };
 }

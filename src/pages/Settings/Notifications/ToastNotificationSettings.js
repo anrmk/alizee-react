@@ -17,15 +17,18 @@ import {
 import ApiContext from "../../../context/ApiContext";
 import { isEmptyObject } from "../../../helpers/functions";
 import * as settingsActions from "../../../store/actions/settings";
+import useAlert from "../../../hooks/useAlert";
 
 function ToastNotificationSettings({
   data,
+  requestStatus,
+
   getNotification,
   updateNotification,
-  onSetAlertText,
   resetSettings,
 }) {
   const apiClient = useContext(ApiContext);
+  useAlert(requestStatus);
   const [settings, setSettings] = useState({
     isActive: false,
     purchase: false,
@@ -55,8 +58,7 @@ function ToastNotificationSettings({
 
     if (!settings.isFetching) {
       (async () => {
-        const fulfilled = await updateNotification(apiClient, value);
-        onSetAlertText(fulfilled);
+        updateNotification(apiClient, value);
       })();
     }
   };
@@ -139,6 +141,7 @@ function mapStateToProps(state) {
   return {
     isFetching: state.settings.isFetching,
     data: state.settings.data,
+    requestStatus: state.setSettings.requestStatus,
   };
 }
 

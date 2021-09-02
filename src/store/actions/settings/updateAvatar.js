@@ -1,5 +1,6 @@
 import { generateUrl, isEmptyObject } from "../../../helpers/functions";
 import { changeAvatar } from "../user";
+import { IDLE, SUCCESS, FAILURE } from "../../../constants/request_status";
 
 export const UPDATE_AVATAR_REQUEST = "UPDATE_AVATAR_REQUEST";
 export const UPDATE_AVATAR_SUCCESS = "UPDATE_AVATAR_SUCCESS";
@@ -11,6 +12,7 @@ function requestUpdateAvatar() {
     payload: {
       isFetching: true,
       errorMessage: "",
+      requestStatus: IDLE,
     },
   };
 }
@@ -22,6 +24,7 @@ function receiveUpdateAvatar(data) {
       isFetching: false,
       errorMessage: "",
       userInfo: data || {},
+      requestStatus: SUCCESS,
     },
   };
 }
@@ -32,6 +35,7 @@ function errorUpdateAvatar(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+      requestStatus: FAILURE,
     },
   };
 }

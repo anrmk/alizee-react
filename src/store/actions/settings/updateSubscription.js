@@ -1,4 +1,5 @@
 import { generateUrl } from "../../../helpers/functions";
+import { IDLE, SUCCESS, FAILURE } from "../../../constants/request_status";
 
 export const UPDATE_SUBSCRIPTION_REQUEST = "UPDATE_SUBSCRIPTION_REQUEST";
 export const UPDATE_SUBSCRIPTION_SUCCESS = "UPDATE_SUBSCRIPTION_SUCCESS";
@@ -10,6 +11,7 @@ function requestUpdateSubscription() {
     payload: {
       isFetching: true,
       errorMessage: "",
+      requestStatus: IDLE,
     },
   };
 }
@@ -21,6 +23,7 @@ function receiveUpdateSubscription(data) {
       isFetching: false,
       errorMessage: "",
       data: data || {},
+      requestStatus: SUCCESS,
     },
   };
 }
@@ -31,6 +34,7 @@ function errorUpdateSubscription(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+      requestStatus: FAILURE,
     },
   };
 }
@@ -48,7 +52,6 @@ export function updateSubscription(api, opts) {
       return true;
     } catch (e) {
       dispatch(errorUpdateSubscription("Error: something went wrong:", e));
-      return false;
     }
   };
 }

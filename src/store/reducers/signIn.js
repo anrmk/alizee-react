@@ -19,6 +19,7 @@ import {
   UPDATE_COVER_SUCCESS,
   UPDATE_COVER_FAILURE,
 } from "../actions/settings";
+import { IDLE } from "../../constants/request_status";
 
 import {
   GET_ME_REQUEST,
@@ -46,6 +47,7 @@ export default function signIn(
     isVerified: false,
     isSocial: false,
     userInfo: { deposit: 0 },
+    requestStatus: IDLE,
   },
   action
 ) {

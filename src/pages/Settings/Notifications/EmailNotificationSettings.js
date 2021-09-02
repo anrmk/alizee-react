@@ -22,6 +22,7 @@ import {
 import ApiContext from "../../../context/ApiContext";
 import { isEmptyObject } from "../../../helpers/functions";
 import * as settingsActions from "../../../store/actions/settings";
+import useAlert from "../../../hooks/useAlert";
 
 const ISACTIVE_INPUT_ID = "isActive";
 const NEWSLETTER_INPUT_ID = "newsletter";
@@ -64,12 +65,14 @@ const schema = yup.object().shape({
 function EmailNotificationsSettings({
   isFetching,
   data,
+  requestStatus,
+
   getNotification,
   updateNotification,
-  onSetAlertText,
   resetSettings,
 }) {
   const apiClient = useContext(ApiContext);
+  useAlert(requestStatus);
 
   const { reset, watch, control, handleSubmit } = useForm({
     resolver: yupResolver(schema),
@@ -111,8 +114,7 @@ function EmailNotificationsSettings({
   const handleSettingsChange = (pData) => {
     if (!isFetching) {
       (async () => {
-        const fulfilled = await updateNotification(apiClient, pData);
-        onSetAlertText(fulfilled);
+        updateNotification(apiClient, pData);
       })();
     }
   };
@@ -324,6 +326,7 @@ function mapStateToProps(state) {
   return {
     isFetching: state.settings.isFetching,
     data: state.settings.data,
+    requestStatus: state.settings.requestStatus,
   };
 }
 

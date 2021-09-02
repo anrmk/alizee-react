@@ -1,4 +1,5 @@
 import { generateUrl } from "../../../helpers/functions";
+import { IDLE, SUCCESS, FAILURE } from "../../../constants/request_status";
 
 export const UPDATE_PRIVATE_STATUS_REQUEST = "UPDATE_PRIVATE_STATUS_REQUEST";
 export const UPDATE_PRIVATE_STATUS_SUCCESS = "UPDATE_PRIVATE_STATUS_SUCCESS";
@@ -10,6 +11,7 @@ function requestUpdatePrivateStatus() {
     payload: {
       isFetching: true,
       errorMessage: "",
+      requestStatus: IDLE,
     },
   };
 }
@@ -21,6 +23,7 @@ function receiveUpdatePrivateStatus(data) {
       isFetching: false,
       errorMessage: "",
       data: data || {},
+      requestStatus: SUCCESS,
     },
   };
 }
@@ -31,6 +34,7 @@ function errorUpdatePrivateStatus(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+      requestStatus: FAILURE,
     },
   };
 }
@@ -53,10 +57,8 @@ export function updatePrivateStatus(api, status) {
       };
 
       dispatch(receiveUpdatePrivateStatus(updatedSettings));
-      return true;
     } catch (e) {
       dispatch(errorUpdatePrivateStatus("Error: something went wrong:", e));
-      return false;
     }
   };
 }

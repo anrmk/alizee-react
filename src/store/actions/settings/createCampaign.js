@@ -1,4 +1,5 @@
 import { generateUrl } from "../../../helpers/functions";
+import { IDLE, SUCCESS, FAILURE } from "../../../constants/request_status";
 
 export const CREATE_CAMPAIGN_REQUEST = "CREATE_CAMPAIGN_REQUEST";
 export const CREATE_CAMPAIGN_SUCCESS = "CREATE_CAMPAIGN_SUCCESS";
@@ -10,6 +11,7 @@ function requestCreateCampaignRequest() {
     payload: {
       isFetching: true,
       errorMessage: "",
+      requestStatus: IDLE,
     },
   };
 }
@@ -21,6 +23,7 @@ function receiveCreateCampaignReceive(data) {
       isFetching: false,
       errorMessage: "",
       data: data || {},
+      requestStatus: SUCCESS,
     },
   };
 }
@@ -31,6 +34,7 @@ function errorCreateCampaign(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+      requestStatus: FAILURE,
     },
   };
 }
@@ -54,10 +58,8 @@ export function createCampaign(api, opts) {
           campaigns: changedCampaigns,
         })
       );
-      return true;
     } catch (e) {
       dispatch(errorCreateCampaign("Error: something went wrong:", e));
-      return false;
     }
   };
 }

@@ -1,4 +1,5 @@
 import { generateUrl } from "../../../../helpers/functions";
+import { IDLE, SUCCESS, FAILURE } from "../../../../constants/request_status";
 
 export const DELETE_SUBSCRIPTION_BUNDLE_REQUEST =
   "DELETE_SUBSCRIPTION_BUNDLE_REQUEST";
@@ -13,6 +14,7 @@ function requestDeleteSubscriptionBundleRequest() {
     payload: {
       isFetching: true,
       errorMessage: "",
+      requestStatus: IDLE,
     },
   };
 }
@@ -24,6 +26,7 @@ function receiveDeleteSubscriptionBundleReceive(data) {
       isFetching: false,
       errorMessage: "",
       data: data || {},
+      requestStatus: SUCCESS,
     },
   };
 }
@@ -34,6 +37,7 @@ function errorDeleteSubscriptionBundle(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+      requestStatus: FAILURE,
     },
   };
 }
@@ -57,12 +61,10 @@ export function deleteSubscriptionBundle(api, opts) {
           bundles: removedBundleArray,
         })
       );
-      return true;
     } catch (e) {
       dispatch(
         errorDeleteSubscriptionBundle("Error: something went wrong:", e)
       );
-      return false;
     }
   };
 }

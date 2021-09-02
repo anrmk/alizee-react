@@ -1,4 +1,5 @@
 import { generateUrl } from "../../../helpers/functions";
+import { IDLE, SUCCESS, FAILURE } from "../../../constants/request_status";
 
 export const UPDATE_PRIVACY_REQUEST = "UPDATE_PRIVACY_REQUEST";
 export const UPDATE_PRIVACY_SUCCESS = "UPDATE_PRIVACY_SUCCESS";
@@ -10,6 +11,7 @@ function requestUpdatePrivacy() {
     payload: {
       isFetching: true,
       errorMessage: "",
+      requestStatus: IDLE,
     },
   };
 }
@@ -21,6 +23,7 @@ function receiveUpdatePrivacy(data) {
       isFetching: false,
       errorMessage: "",
       data: data || {},
+      requestStatus: SUCCESS,
     },
   };
 }
@@ -31,6 +34,7 @@ function errorUpdatePrivacy(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+      requestStatus: FAILURE,
     },
   };
 }

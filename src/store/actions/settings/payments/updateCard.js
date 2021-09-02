@@ -1,4 +1,5 @@
 import { generateUrl } from "../../../../helpers/functions";
+import { IDLE, SUCCESS, FAILURE } from "../../../../constants/request_status";
 
 export const UPDATE_CARD_REQUEST = "UPDATE_CARD_REQUEST";
 export const UPDATE_CARD_SUCCESS = "UPDATE_CARD_SUCCESS";
@@ -10,6 +11,7 @@ function requestUpdateCard() {
     payload: {
       isFetching: true,
       errorMessage: "",
+      requestStatus: IDLE,
     },
   };
 }
@@ -21,6 +23,7 @@ function receiveUpdateCard(data) {
       isFetching: false,
       errorMessage: "",
       data: data || {},
+      requestStatus: SUCCESS,
     },
   };
 }
@@ -31,6 +34,7 @@ function errorUpdateCard(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+      requestStatus: FAILURE,
     },
   };
 }
@@ -50,10 +54,8 @@ export function updateCard(api, id) {
           : { ...card, isDefault: false }
       );
       dispatch(receiveUpdateCard({ wallet, cards: updatedCards }));
-      return true;
     } catch (e) {
       dispatch(errorUpdateCard("Error: something went wrong:", e));
-      return false;
     }
   };
 }

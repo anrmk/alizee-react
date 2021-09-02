@@ -1,4 +1,5 @@
 import { generateUrl } from "../../../../helpers/functions";
+import { IDLE, SUCCESS, FAILURE } from "../../../../constants/request_status";
 
 export const CREATE_CARD_REQUEST = "CREATE_CARD_REQUEST";
 export const CREATE_CARD_SUCCESS = "CREATE_CARD_SUCCESS";
@@ -10,6 +11,7 @@ function requestCreateCard() {
     payload: {
       isFetching: true,
       errorMessage: "",
+      requestStatus: IDLE,
     },
   };
 }
@@ -21,6 +23,7 @@ function receiveCreateCard(data) {
       isFetching: false,
       errorMessage: "",
       data: data || {},
+      requestStatus: SUCCESS,
     },
   };
 }
@@ -31,6 +34,7 @@ function errorCreateCard(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+      requestStatus: FAILURE,
     },
   };
 }
@@ -52,10 +56,8 @@ export function createCard(api, opts) {
           cards: [...cards, data],
         })
       );
-      return true;
     } catch (e) {
       dispatch(errorCreateCard("Error: something went wrong:", e));
-      return false;
     }
   };
 }

@@ -10,6 +10,7 @@ import useDialog from "../../hooks/useDialog";
 import ApiContext from "../../context/ApiContext";
 import * as settingsActions from "../../store/actions/settings";
 import { WalletCard, CardBlog } from "../../domain/EditPaymentSettings/index";
+import useAlert from "../../hooks/useAlert";
 
 function EditPaymentSettings({
   getPayments,
@@ -17,46 +18,39 @@ function EditPaymentSettings({
   updateCard,
   verifyCard,
   updateWallet,
+  requestStatus,
 
   cards,
   wallet,
   isFetching,
-
-  onSetAlertText,
 }) {
   const apiClient = useContext(ApiContext);
 
   const paymentCardDialog = usePaymentCardDialog();
   const confirmationDialog = useConfirmationDialog();
   const dialog = useDialog();
+  useAlert(requestStatus);
 
   useEffect(() => {
     getPayments(apiClient);
   }, []);
 
   const handleUpdateCard = useCallback(async (id) => {
-    const fulfilled = await updateCard(apiClient, id);
-
-    onSetAlertText(fulfilled);
+    await updateCard(apiClient, id);
   }, []);
 
   const handleVerifyClick = useCallback(async (id) => {
-    const fulfilled = await verifyCard(apiClient, id);
-
-    onSetAlertText(fulfilled);
+    await verifyCard(apiClient, id);
   }, []);
 
   const handleWalletUpdate = useCallback(async (status) => {
-    const fulfilled = await updateWallet(apiClient, status);
-
-    onSetAlertText(fulfilled);
+    await updateWallet(apiClient, status);
   }, []);
 
   const handleDeleteConfirm = useCallback(async (id) => {
     dialog.setParams({ loading: true });
-    const fulfilled = await deleteCard(apiClient, id);
+    await deleteCard(apiClient, id);
     dialog.toggle({ open: false, loading: false });
-    onSetAlertText(fulfilled);
   }, []);
 
   const handleDeleteClick = useCallback(async (id) => {
@@ -104,6 +98,7 @@ function mapStateToProps(state) {
     cards: state.settings.data.cards,
     wallet: state.settings.data.wallet,
     isFetching: state.settings.isFetching,
+    requestStatus: state.settings.requestStatus,
   };
 }
 

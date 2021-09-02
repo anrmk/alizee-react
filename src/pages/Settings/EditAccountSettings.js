@@ -4,15 +4,17 @@ import { connect } from "react-redux";
 import ApiContext from "../../context/ApiContext";
 import * as settingsActions from "../../store/actions/settings";
 import EditAccountForm from "../../domain/SettingsForms/EditAccountForm";
+import useAlert from "../../hooks/useAlert";
 
 function EditAccountSettings({
   data,
+  requestStatus,
   isFetching,
   getAccount,
   updateAccount,
-  onSetAlertText,
 }) {
   const apiClient = useContext(ApiContext);
+  useAlert(requestStatus);
 
   useEffect(() => {
     getAccount(apiClient);
@@ -20,8 +22,7 @@ function EditAccountSettings({
 
   const handleEditAccountSubmit = (pData) => {
     (async () => {
-      const fulfilled = await updateAccount(apiClient, pData);
-      onSetAlertText(fulfilled);
+      await updateAccount(apiClient, pData);
     })();
   };
   return (
@@ -34,6 +35,7 @@ function EditAccountSettings({
 function mapStateToProps(state) {
   return {
     data: state.settings.data,
+    requestStatus: state.signIn.requestStatus,
     isFetching: state.settings.isFetching,
   };
 }

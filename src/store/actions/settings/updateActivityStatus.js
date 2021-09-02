@@ -1,4 +1,5 @@
 import { generateUrl } from "../../../helpers/functions";
+import { IDLE, SUCCESS, FAILURE } from "../../../constants/request_status";
 
 export const UPDATE_ACTIVITY_STATUS_REQUEST = "UPDATE_ACTIVITY_STATUS_REQUEST";
 export const UPDATE_ACTIVITY_STATUS_SUCCESS = "UPDATE_ACTIVITY_STATUS_SUCCESS";
@@ -10,6 +11,7 @@ function requestUpdateActivityStatus() {
     payload: {
       isFetching: true,
       errorMessage: "",
+      requestStatus: IDLE,
     },
   };
 }
@@ -21,6 +23,7 @@ function receiveUpdateActivityStatus(data) {
       isFetching: false,
       errorMessage: "",
       data: data || {},
+      requestStatus: SUCCESS,
     },
   };
 }
@@ -31,6 +34,7 @@ function errorUpdateActivityStatus(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+      requestStatus: FAILURE,
     },
   };
 }
@@ -53,11 +57,8 @@ export function updateActivityStatus(api, status) {
       };
 
       dispatch(receiveUpdateActivityStatus(updatedSettings));
-
-      return true;
     } catch (e) {
       dispatch(errorUpdateActivityStatus("Error: something went wrong:", e));
-      return false;
     }
   };
 }

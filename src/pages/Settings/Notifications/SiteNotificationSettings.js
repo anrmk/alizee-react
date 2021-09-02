@@ -17,15 +17,18 @@ import {
 import ApiContext from "../../../context/ApiContext";
 import { isEmptyObject } from "../../../helpers/functions";
 import * as settingsActions from "../../../store/actions/settings";
+import useAlert from "../../../hooks/useAlert";
 
 function SiteNotificationSettings({
   data,
+  requestStatus,
+
   getNotification,
   updateNotification,
-  onSetAlertText,
   resetSettings,
 }) {
   const apiClient = useContext(ApiContext);
+  useAlert(requestStatus);
   const [settings, setSettings] = useState({
     isActive: false,
     like: false,
@@ -59,8 +62,7 @@ function SiteNotificationSettings({
 
     if (!settings.isFetching) {
       (async () => {
-        const fulfilled = await updateNotification(apiClient, value);
-        onSetAlertText(fulfilled);
+        updateNotification(apiClient, value);
       })();
     }
   };
@@ -168,6 +170,7 @@ function mapStateToProps(state) {
   return {
     isFetching: state.settings.isFetching,
     data: state.settings.data,
+    requestStatus: state.settings.requestStatus,
   };
 }
 

@@ -1,4 +1,5 @@
 import { generateUrl } from "../../../helpers/functions";
+import { IDLE, SUCCESS, FAILURE } from "../../../constants/request_status";
 
 export const UPDATE_OFFENSIVE_COMMENTS_REQUEST =
   "UPDATE_OFFENSIVE_COMMENTS_REQUEST";
@@ -13,6 +14,7 @@ function requestUpdateOffensiveComments() {
     payload: {
       isFetching: true,
       errorMessage: "",
+      requestStatus: IDLE,
     },
   };
 }
@@ -24,6 +26,7 @@ function receiveUpdateOffensiveComments(data) {
       isFetching: false,
       errorMessage: "",
       data: data || {},
+      requestStatus: SUCCESS,
     },
   };
 }
@@ -34,6 +37,7 @@ function errorUpdateOffensiveComments(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+      requestStatus: FAILURE,
     },
   };
 }
@@ -56,10 +60,8 @@ export function updateOffensiveComments(api, status) {
       };
 
       dispatch(receiveUpdateOffensiveComments(updatedSettings));
-      return true;
     } catch (e) {
       dispatch(errorUpdateOffensiveComments("Error: something went wrong:", e));
-      return false;
     }
   };
 }

@@ -1,4 +1,5 @@
 import { generateUrl } from "../../../../helpers/functions";
+import { IDLE, SUCCESS, FAILURE } from "../../../../constants/request_status";
 
 export const UPDATE_PUSH_NOTIFICATION_REQUEST =
   "UPDATE_PUSH_NOTIFICATION_REQUEST";
@@ -13,6 +14,7 @@ function requestUpdatePushNotification() {
     payload: {
       isFetching: true,
       errorMessage: "",
+      requestStatus: IDLE,
     },
   };
 }
@@ -24,6 +26,7 @@ function receiveUpdatePushNotification(data) {
       isFetching: false,
       errorMessage: "",
       data: data || {},
+      requestStatus: SUCCESS,
     },
   };
 }
@@ -34,6 +37,7 @@ function errorUpdatePushNotification(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+      requestStatus: FAILURE,
     },
   };
 }
@@ -46,10 +50,8 @@ export function updatePushNotification(api, opts) {
       await api.setData(opts).setParams({ id: opts.id }).query(url);
 
       dispatch(receiveUpdatePushNotification(opts));
-      return true;
     } catch (e) {
       dispatch(errorUpdatePushNotification("Error: something went wrong:", e));
-      return false;
     }
   };
 }

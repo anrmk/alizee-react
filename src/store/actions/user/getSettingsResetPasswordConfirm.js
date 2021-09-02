@@ -47,10 +47,8 @@ export function getSettingsResetPasswordConfirm(api) {
       await api.setMethod("POST").query(url);
 
       dispatch(receiveGetSettingsResetPasswordConfirm());
-      return true;
     } catch (e) {
       dispatch(errorGetSettingsResetPasswordConfirm(e.message));
-      return false;
     }
   };
 }

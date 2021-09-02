@@ -1,7 +1,6 @@
 import { useContext, useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { useSnackbar } from "notistack";
 import ApiContext from "../../context/ApiContext";
 import dialogs, {
   SEND_TIP_DIALOG_TYPE,
@@ -14,32 +13,30 @@ import {
   SEND_TIP_ALERT_SUCCESS_TEXT,
   SEND_TIP_ALERT_ERROR_TEXT,
 } from "../../constants/alerts";
+import useAlert from "../useAlert";
 
 const FORM_ID = "dialog-sendTip";
 
 export default function useSendTipDialog() {
+  const { requestStatus } = useSelector((state) => state.payment);
+
   const apiClient = useContext(ApiContext);
   const dialog = useDialog();
-  const { enqueueSnackbar } = useSnackbar();
+  useAlert(
+    requestStatus,
+    SEND_TIP_ALERT_SUCCESS_TEXT,
+    SEND_TIP_ALERT_ERROR_TEXT
+  );
 
   const dispatch = useDispatch();
 
-  const handleSetAlertText = (fulfilled) => {
-    if (fulfilled) {
-      enqueueSnackbar(SEND_TIP_ALERT_SUCCESS_TEXT, { variant: "success" });
-    } else {
-      enqueueSnackbar(SEND_TIP_ALERT_ERROR_TEXT, { variant: "error" });
-    }
-  };
-
   const handleSendTip = useCallback(async (data, isDonate) => {
     dialog.setParams({ loading: true });
-    const fulfilled = isDonate
+    isDonate
       ? await dispatch(paymentActions.sendDonation(apiClient, data))
       : await dispatch(paymentActions.sendTip(apiClient, data));
 
     dialog.toggle({ open: false, loading: false });
-    handleSetAlertText(fulfilled);
   }, []);
 
   const handleDialogToggle = useCallback(async (user, isDonate) => {

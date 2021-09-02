@@ -1,4 +1,5 @@
 import { generateUrl } from "../../../helpers/functions";
+import { IDLE, SUCCESS, FAILURE } from "../../../constants/request_status";
 
 export const UPDATE_BANK_REQUEST = "UPDATE_BANK_REQUEST";
 export const UPDATE_BANK_SUCCESS = "UPDATE_BANK_SUCCESS";
@@ -10,6 +11,7 @@ function requestUpdateBank() {
     payload: {
       isFetching: true,
       errorMessage: "",
+      requestStatus: IDLE,
     },
   };
 }
@@ -21,6 +23,7 @@ function receiveUpdateBank(data) {
       isFetching: false,
       errorMessage: "",
       data: data || {},
+      requestStatus: SUCCESS,
     },
   };
 }
@@ -31,6 +34,7 @@ function errorUpdateBank(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+      requestStatus: FAILURE,
     },
   };
 }
@@ -44,10 +48,8 @@ export function updateBank(api, data) {
       await api.setMethod("PUT").setData(data).query(url);
 
       dispatch(receiveUpdateBank(data));
-      return true;
     } catch (e) {
       dispatch(errorUpdateBank("Error: something went wrong:", e));
-      return false;
     }
   };
 }

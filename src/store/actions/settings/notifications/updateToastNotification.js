@@ -1,4 +1,5 @@
 import { generateUrl } from "../../../../helpers/functions";
+import { IDLE, SUCCESS, FAILURE } from "../../../../constants/request_status";
 
 export const UPDATE_TOAST_NOTIFICATION_REQUEST =
   "UPDATE_TOAST_NOTIFICATION_REQUEST";
@@ -13,6 +14,7 @@ function requestUpdateToastNotification() {
     payload: {
       isFetching: true,
       errorMessage: "",
+      requestStatus: IDLE,
     },
   };
 }
@@ -24,6 +26,7 @@ function receiveUpdateToastNotification(data) {
       isFetching: false,
       errorMessage: "",
       data: data || {},
+      requestStatus: SUCCESS,
     },
   };
 }
@@ -34,6 +37,7 @@ function errorUpdateToastNotification(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+      requestStatus: FAILURE,
     },
   };
 }
@@ -47,10 +51,8 @@ export function updateToastNotification(api, opts) {
       await api.setData(opts).query(url);
 
       dispatch(receiveUpdateToastNotification(opts));
-      return true;
     } catch (e) {
       dispatch(errorUpdateToastNotification("Error: something went wrong:", e));
-      return false;
     }
   };
 }

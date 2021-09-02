@@ -94,6 +94,7 @@ import {
   DELETE_CAMPAIGN_SUCCESS,
   DELETE_CAMPAIGN_FAILURE,
 } from "../actions/settings";
+import { IDLE } from "../../constants/request_status";
 
 export default function settings(
   state = {
@@ -101,6 +102,7 @@ export default function settings(
     isAccountPersonalized: null,
     data: {},
     interests: [],
+    requestStatus: IDLE,
   },
   action
 ) {

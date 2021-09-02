@@ -1,4 +1,5 @@
 import { generateUrl } from "../../../../helpers/functions";
+import { IDLE, SUCCESS, FAILURE } from "../../../../constants/request_status";
 
 export const DELETE_CARD_REQUEST = "DELETE_CARD_REQUEST";
 export const DELETE_CARD_SUCCESS = "DELETE_CARD_SUCCESS";
@@ -10,6 +11,7 @@ function requestDeleteCard() {
     payload: {
       isFetching: true,
       errorMessage: "",
+      requestStatus: IDLE,
     },
   };
 }
@@ -21,6 +23,7 @@ function receiveDeleteCard(data) {
       isFetching: false,
       errorMessage: "",
       data: data || {},
+      requestStatus: SUCCESS,
     },
   };
 }
@@ -31,6 +34,7 @@ function errorDeleteCard(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+      requestStatus: FAILURE,
     },
   };
 }
@@ -47,10 +51,8 @@ export function deleteCard(api, id) {
       const filteredCards = cards.filter((card) => card.id !== id);
 
       dispatch(receiveDeleteCard({ wallet, cards: filteredCards }));
-      return true;
     } catch (e) {
       dispatch(errorDeleteCard("Error: something went wrong:", e));
-      return false;
     }
   };
 }

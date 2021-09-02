@@ -1,4 +1,5 @@
 import { generateUrl } from "../../../helpers/functions";
+import { IDLE, SUCCESS, FAILURE } from "../../../constants/request_status";
 
 export const DELETE_CAMPAIGN_REQUEST = "DELETE_CAMPAIGN_REQUEST";
 export const DELETE_CAMPAIGN_SUCCESS = "DELETE_CAMPAIGN_SUCCESS";
@@ -10,6 +11,7 @@ function requestDeleteCampaignRequest() {
     payload: {
       isFetching: true,
       errorMessage: "",
+      requestStatus: IDLE,
     },
   };
 }
@@ -21,6 +23,7 @@ function receiveDeleteCampaignReceive(data) {
       isFetching: false,
       errorMessage: "",
       data: data || {},
+      requestStatus: SUCCESS,
     },
   };
 }
@@ -31,6 +34,7 @@ function errorDeleteCampaign(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+      requestStatus: FAILURE,
     },
   };
 }
@@ -54,10 +58,8 @@ export function deleteCampaign(api, opts) {
           campaigns: removedCampaignArr,
         })
       );
-      return true;
     } catch (e) {
       dispatch(errorDeleteCampaign("Error: something went wrong:", e));
-      return false;
     }
   };
 }

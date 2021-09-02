@@ -1,5 +1,6 @@
 import { generateUrl } from "../../../helpers/functions";
 import { getDeposit } from "../account";
+import { IDLE, SUCCESS, FAILURE } from "../../../constants/request_status";
 
 export const SEND_DONATION_REQUEST = "SEND_DONATION_REQUEST";
 export const SEND_DONATION_SUCCESS = "SEND_DONATION_SUCCESS";
@@ -11,6 +12,7 @@ function requestSendDonation() {
     payload: {
       isFetching: true,
       errorMessage: "",
+      requestStatus: IDLE,
     },
   };
 }
@@ -21,6 +23,7 @@ function receiveSendDonation() {
     payload: {
       isFetching: false,
       errorMessage: "",
+      requestStatus: SUCCESS,
     },
   };
 }
@@ -31,6 +34,7 @@ function errorSendDonation(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+      requestStatus: FAILURE,
     },
   };
 }
@@ -46,10 +50,8 @@ export function sendDonation(api, opts) {
 
       dispatch(receiveSendDonation());
       dispatch(getDeposit(api));
-      return true;
     } catch (e) {
       dispatch(errorSendDonation("Error: something went wrong"));
-      return false;
     }
   };
 }

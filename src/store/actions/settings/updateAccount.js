@@ -1,5 +1,6 @@
 import { generateUrl } from "../../../helpers/functions";
 import { USER_TOKEN } from "../../../constants/user";
+import { IDLE, SUCCESS, FAILURE } from "../../../constants/request_status";
 
 export const UPDATE_ACCOUNT_REQUEST = "UPDATE_ACCOUNT_REQUEST";
 export const UPDATE_ACCOUNT_SUCCESS = "UPDATE_ACCOUNT_SUCCESS";
@@ -12,6 +13,7 @@ function requestUpdateAccount() {
     payload: {
       isFetching: true,
       errorMessage: "",
+      requestStatus: IDLE,
     },
   };
 }
@@ -23,6 +25,7 @@ function receiveUpdateAccount(data) {
       isFetching: false,
       errorMessage: "",
       userInfo: data || {},
+      requestStatus: SUCCESS,
     },
   };
 }
@@ -33,6 +36,7 @@ function errorUpdateAccount(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+      requestStatus: FAILURE,
     },
   };
 }
@@ -55,10 +59,8 @@ export function updateAccount(api, opts) {
           refresh: data.token.refreshToken,
         })
       );
-      return true;
     } catch (e) {
       dispatch(errorUpdateAccount("Error: something went wrong:", e));
-      return false;
     }
   };
 }

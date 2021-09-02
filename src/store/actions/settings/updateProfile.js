@@ -1,6 +1,7 @@
 import { generateUrl, getProfileSnapshot } from "../../../helpers/functions";
 import { updateAvatar } from ".";
 import { updateCover } from "./updateCover";
+import { IDLE, SUCCESS, FAILURE } from "../../../constants/request_status";
 
 export const UPDATE_PROFILE_REQUEST = "UPDATE_PROFILE_REQUEST";
 export const UPDATE_PROFILE_SUCCESS = "UPDATE_PROFILE_SUCCESS";
@@ -13,6 +14,7 @@ function requestUpdateProfile() {
     payload: {
       isFetching: true,
       errorMessage: "",
+      requestStatus: IDLE,
     },
   };
 }
@@ -24,6 +26,7 @@ function receiveUpdateProfile(data) {
       isFetching: false,
       errorMessage: "",
       userInfo: data || {},
+      requestStatus: SUCCESS,
     },
   };
 }
@@ -34,6 +37,7 @@ function errorUpdateProfile(message) {
     payload: {
       isFetching: false,
       errorMessage: message,
+      requestStatus: FAILURE,
     },
   };
 }
@@ -78,11 +82,8 @@ export function updateProfile(api, opts) {
       } else {
         dispatch(resetUpdateProfile());
       }
-
-      return true;
     } catch (e) {
       dispatch(errorUpdateProfile("Error: something went wrong:", e));
-      return false;
     }
   };
 }

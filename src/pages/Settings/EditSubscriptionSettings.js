@@ -11,6 +11,7 @@ import useSubscriptionBundleDialog from "../../hooks/useSubscriptionBundleDialog
 import useSubscriptionCampaignDialog from "../../hooks/useSubscriptionCampaignDialog";
 import useConfirmationDialog from "../../hooks/useConfirmationDialog";
 import useDialog from "../../hooks/useDialog";
+import useAlert from "../../hooks/useAlert";
 
 import {
   BundleBlog,
@@ -22,34 +23,33 @@ function EditSubscriptionSettings({
   bundles,
   campaigns,
   userInfo,
+  requestStatus,
 
   getSubscription,
   updateSubscription,
   deleteSubscriptionBundle,
   deleteCampaign,
-  onSetAlertText,
 }) {
   const apiClient = useContext(ApiContext);
   const dialog = useDialog();
   const subscriptionBundleDialog = useSubscriptionBundleDialog();
   const subscriptionCampaignDialog = useSubscriptionCampaignDialog();
   const confirmationDialog = useConfirmationDialog();
+  useAlert(requestStatus);
   useEffect(() => {
     getSubscription(apiClient);
   }, []);
 
   const handleEditProfileSubmit = async (pData) => {
-    const fulfilled = await updateSubscription(apiClient, pData);
-    onSetAlertText(fulfilled);
+    updateSubscription(apiClient, pData);
   };
 
   const handleDelete = async (pData, isBundle) => {
     dialog.setParams({ loading: true });
-    const fulfilled = isBundle
+    isBundle
       ? await deleteSubscriptionBundle(apiClient, pData)
       : await deleteCampaign(apiClient, pData);
     dialog.toggle({ open: false, loading: false });
-    onSetAlertText(fulfilled);
   };
 
   const handleDeleteClick = (
@@ -106,6 +106,7 @@ function mapStateToProps(state) {
     bundles: settingsActions.getSortedBundles(state),
     campaigns: state.settings.data.campaigns,
     userInfo: state.signIn.userInfo,
+    requestStatus: state.settings.requestStatus,
   };
 }
 
