@@ -25,6 +25,12 @@ import {
   CHANGE_COVER_SUCCESS,
 } from "../actions/user";
 
+import {
+  GET_SUBSCRIBE_REQUEST,
+  GET_SUBSCRIBE_SUCCESS,
+  GET_SUBSCRIBE_FAILURE,
+} from "../actions/relationship";
+
 export default function user(
   state = {
     isFetching: false,
@@ -51,6 +57,22 @@ export default function user(
         ...action.payload,
       };
     case RESET_USER:
+      return {
+        ...state,
+        ...action.payload,
+      };
+
+    case GET_SUBSCRIBE_REQUEST:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case GET_SUBSCRIBE_SUCCESS:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case GET_SUBSCRIBE_FAILURE:
       return {
         ...state,
         ...action.payload,

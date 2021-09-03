@@ -9,6 +9,7 @@ import useStyles from "./styles";
 
 function Cover({
   src,
+  height = "220",
   showControls,
   fileInputProps,
   rootClassName = null,
@@ -39,6 +40,7 @@ function Cover({
     <>
       <Hidden smDown>
         <Box
+          height={`${height}px`}
           className={clsx(classes.cover, rootClassName)}
           onMouseEnter={() => setFocusCover(true)}
           onMouseLeave={() => setFocusCover(false)}>

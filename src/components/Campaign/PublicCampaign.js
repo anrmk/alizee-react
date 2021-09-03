@@ -1,16 +1,9 @@
 import React from "react";
-import { Typography, Button, Box } from "@material-ui/core";
+import { Typography, Box } from "@material-ui/core";
 
-import {
-  customFormatDate,
-  addDays,
-  calcDiscount,
-} from "../../helpers/functions";
+import { customFormatDate, addDays } from "../../helpers/functions";
 
-import {
-  DISCOUNT_MONTH_TYPE_RADIO_ID,
-  FREE_TYPE_RADIO_ID,
-} from "../../constants/campaign";
+import { DISCOUNT_MONTH_TYPE_RADIO_ID } from "../../constants/campaign";
 
 import useStyles from "./styles";
 
@@ -26,10 +19,6 @@ function PublicCampaign({
 }) {
   const classes = useStyles();
 
-  const subscriptionPrice =
-    FREE_TYPE_RADIO_ID === campaign.type
-      ? 0
-      : calcDiscount(price, campaign.discount, campaign.duration, true);
   return (
     <Box width="100%">
       <Typography variant="body1">
@@ -45,31 +34,9 @@ function PublicCampaign({
       <Typography variant="caption" color="textSecondary">
         Your offer ends {customFormatDate(addDays(campaign.createdDate, 30))}{" "}
         {campaign.limit > 0 &&
-          ` - ${campaign.limit - campaign.claimsCount} offers left`}
+          ` - ${campaign.limit - campaign.claimsCount} offers left `}
       </Typography>
-      <Box mt={2} display="flex" alignItems="center">
-        <Button
-          fullWidth
-          variant="contained"
-          color="primary"
-          onClick={(e) => {
-            onClick(e, {
-              ...user,
-              campaignId: campaign.id,
-              subscriptionPrice,
-            });
-          }}>
-          {`
-		  		${
-            campaign.type === DISCOUNT_MONTH_TYPE_RADIO_ID && price > 0
-              ? getSubscriptionBtnText(false, subscriptionPrice, t)
-              : "Subscribe Free"
-          }
-		 
-		 `}
-        </Button>
-        {children}
-      </Box>
+
       <Typography variant="caption" color="textSecondary">
         {`${
           campaign?.endDate

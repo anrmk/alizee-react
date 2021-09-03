@@ -35,9 +35,7 @@ function ProfileUserInfo({
   subscriptionPrice,
   followStatus,
   sites,
-  campaign,
   disabled,
-  determinedTerm,
 
   onSubscribeClick,
   onSendTipClick,
@@ -171,31 +169,28 @@ function ProfileUserInfo({
             onDelete={onDeleteCampaignClick}
           />
         )}
-      {user?.campaigns?.length > 0 &&
-        !isOwner &&
-        subscriptionPrice > 0 &&
-        (!isFollow || determinedTerm) && (
-          <Card>
-            <CardContent>
-              <PublicCampaign
-                user={user}
-                campaign={campaign}
-                disabled={disabled}
-                price={user.subscriptionPrice}
-                followStatus={followStatus}
-                getSubscriptionBtnText={getSubscriptionBtnText}
-                t={t}
-                onClick={handleSubscribeClick}
-              />
-            </CardContent>
-          </Card>
-        )}
+      {user?.campaign && !isOwner && subscriptionPrice > 0 && !isFollow && (
+        <Card>
+          <CardContent>
+            <PublicCampaign
+              user={user}
+              campaign={user.campaign}
+              disabled={disabled}
+              price={user.subscriptionPrice}
+              followStatus={followStatus}
+              getSubscriptionBtnText={getSubscriptionBtnText}
+              t={t}
+              onClick={handleSubscribeClick}
+            />
+          </CardContent>
+        </Card>
+      )}
 
       {user?.bundles &&
         subscriptionPrice > 0 &&
         user.bundles.length > 0 &&
         !isOwner &&
-        (!isFollow || determinedTerm) && (
+        !isFollow && (
           <BundleList
             user={user}
             isProfile
@@ -223,17 +218,15 @@ function ProfileUserInfo({
             </>
           ) : (
             <>
-              {(disabled || !user?.campaigns?.length > 0 || isFollow) && (
-                <Button
-                  className={classes.subscribeBtn}
-                  disableElevation
-                  size="large"
-                  color="primary"
-                  variant="contained"
-                  onClick={handleSubscribeClick}>
-                  {getSubscriptionBtnText(followStatus, subscriptionPrice, t)}
-                </Button>
-              )}
+              <Button
+                className={classes.subscribeBtn}
+                disableElevation
+                size="large"
+                color="primary"
+                variant="contained"
+                onClick={handleSubscribeClick}>
+                {getSubscriptionBtnText(followStatus, subscriptionPrice, t)}
+              </Button>
 
               <Box
                 width="100%"

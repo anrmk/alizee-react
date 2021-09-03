@@ -9,6 +9,8 @@ import dialogs, {
 import * as relationshipActions from "../../store/actions/relationship";
 import useDialog from "../useDialog";
 
+const FORM_ID = "create-subscription-dialog";
+
 export default function useFollowDialog() {
   const apiClient = useContext(ApiContext);
   const dispatch = useDispatch();
@@ -36,13 +38,21 @@ export default function useFollowDialog() {
   };
 
   const handleDialogToggle = useCallback(
-    (data) => {
-      const { isFollow, subscriptionPrice, campaignId, bundleId } = data;
-      if (!isFollow || campaignId || bundleId) {
+    async (data) => {
+      const { isFollow, subscriptionPrice } = data;
+      if (!isFollow) {
         dialog.toggle(
           dialogs[FOLLOW_DIALOG_TYPE](
-            { onMainClick: handleSubscribeBuy, state: data },
-            { user: data, amount: subscriptionPrice }
+            {
+              state: data,
+              mainBtnProps: { type: "submit", form: FORM_ID },
+            },
+            {
+              user: data,
+              amount: subscriptionPrice,
+              formId: FORM_ID,
+              onSubmit: handleSubscribeBuy,
+            }
           )
         );
       } else {
@@ -57,6 +67,7 @@ export default function useFollowDialog() {
             },
             {
               contentText: confirmText,
+              data,
             }
           )
         );

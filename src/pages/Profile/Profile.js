@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useMemo } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Redirect,
   useHistory,
@@ -31,17 +31,13 @@ import { useMenuDialog, useMoodDialog } from "../../hooks/post";
 import { useSendTipDialog } from "../../hooks/payment";
 import useFollowDialog from "../../hooks/payment/useFollowDialog";
 import dialogs, { PROFILE_EDIT_COVER } from "../../constants/dialogs";
-import {
-  NEW_SUBSCRIBERS_RADIO_ID,
-  EXPIRED_SUBSCRIBERS_RADIO_ID,
-} from "../../constants/campaign";
+
 import {
   ProfileUserInfo,
   ProfileUserInfoMobile,
 } from "../../domain/ProfileUserInfo";
 import { PROFILE_TYPE } from "../../components/Post/Menu";
 import { RedirectContent } from "../../domain/ConfirmationDialog";
-import { addDays } from "../../helpers/functions";
 
 import useStyles from "./style";
 
@@ -103,26 +99,6 @@ function Profile(props) {
       handleFetchPosts();
     }
   }, [postSettings, user.data?.isFollow]);
-
-  const findCorrectCampaign = useMemo(
-    () =>
-      user?.data?.campaigns &&
-      user.data.campaigns.find((item) =>
-        (item.subscribersType === NEW_SUBSCRIBERS_RADIO_ID &&
-          !!user.data?.isFollow) ||
-        (item.subscribersType === EXPIRED_SUBSCRIBERS_RADIO_ID &&
-          user.data?.isFollow)
-          ? item
-          : item
-      ),
-    [user]
-  );
-  const determinedTerm = useMemo(
-    () =>
-      user?.data?.subscribedByExpireDate &&
-      addDays(new Date(), 7) > new Date(user.data.subscribedByExpireDate),
-    [user]
-  );
 
   if (url.includes(SETTINGS_ROUTE)) {
     return <Redirect to={SETTINGS_EDIT_PROFILE_ROUTE} />;
@@ -290,14 +266,12 @@ function Profile(props) {
       <Hidden mdUp>
         <ProfileUserInfoMobile
           user={user.data}
-          campaign={findCorrectCampaign}
           isOwner={username === me.userName}
           isFollow={user.data?.isFollow}
           isVerified={user.data?.identityVerified}
           followStatus={user.data?.followStatus}
           subscriptionPrice={user.data?.subscriptionPrice}
           disabled={user.data?.subscriptionPrice === 0}
-          determinedTerm={determinedTerm}
           onSubscribeClick={followDialog.toggle}
           onSendTipClick={sendTipDialog.toggle}
           onMoodUpdateClick={handleMoodUpdateClick}
@@ -324,7 +298,6 @@ function Profile(props) {
           <Grid item xs={12} md={4}>
             <Box position="sticky" top="24px" paddingLeft="8px">
               <ProfileUserInfo
-                campaign={findCorrectCampaign}
                 user={user.data}
                 isOwner={username === me.userName}
                 isFollow={user.data?.isFollow}
@@ -333,7 +306,6 @@ function Profile(props) {
                 subscriptionPrice={user.data?.subscriptionPrice}
                 sites={user.data.sites}
                 disabled={user.data?.subscriptionPrice === 0}
-                determinedTerm={determinedTerm}
                 onSubscribeClick={followDialog.toggle}
                 onSendTipClick={sendTipDialog.toggle}
                 onMoodUpdateClick={handleMoodUpdateClick}

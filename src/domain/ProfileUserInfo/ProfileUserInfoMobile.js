@@ -22,9 +22,7 @@ function ProfileUserInfo({
   isFollow,
   subscriptionPrice,
   followStatus,
-  campaign,
   disabled,
-  determinedTerm,
 
   onSubscribeClick,
   onSendTipClick,
@@ -64,61 +62,16 @@ function ProfileUserInfo({
       ) : (
         <>
           <Box className={classes.btnsGroupMobile}>
-            {user?.campaigns?.length > 0 &&
-              subscriptionPrice > 0 &&
-              (!isFollow || determinedTerm) && (
-                <PublicCampaign
-                  user={user}
-                  campaign={campaign}
-                  price={subscriptionPrice}
-                  followStatus={followStatus}
-                  getSubscriptionBtnText={getSubscriptionBtnText}
-                  t={t}
-                  onClick={handleSubscribeClick}>
-                  <Box display="flex">
-                    <IconButton
-                      color="primary"
-                      disabled={
-                        !isFollow || isAwaitingConfirmation(followStatus)
-                      }
-                      to={CHAT_USERNAME_ROUTE(user.userName)}
-                      component={Link}>
-                      <MessageIcon />
-                    </IconButton>
-                    {isVerified && (
-                      <IconButton color="primary" onClick={handleSendTipClick}>
-                        <DollarIcon />
-                      </IconButton>
-                    )}
-                  </Box>
-                </PublicCampaign>
-              )}
-          </Box>
-
-          {user?.bundles &&
-            user.bundles.length > 0 &&
-            subscriptionPrice > 0 &&
-            (!isFollow || determinedTerm) && (
-              <BundleList
+            {user?.campaign && subscriptionPrice > 0 && !isFollow && (
+              <PublicCampaign
                 user={user}
-                isProfile
-                price={user.subscriptionPrice}
-                data={user.bundles}
-                onSubscribeClick={handleSubscribeClick}
-              />
-            )}
-          {(disabled || !user?.campaigns?.length > 0 || isFollow) && (
-            <Box display="flex" alignItems="center" width="100%">
-              <Button
-                fullWidth
-                disableElevation
-                color="primary"
-                variant="contained"
+                campaign={user.campaign}
+                price={subscriptionPrice}
+                followStatus={followStatus}
+                getSubscriptionBtnText={getSubscriptionBtnText}
+                t={t}
                 onClick={handleSubscribeClick}>
-                {getSubscriptionBtnText(followStatus, subscriptionPrice, t)}
-              </Button>
-              {(!isFollow || !determinedTerm) && (
-                <>
+                <Box display="flex">
                   <IconButton
                     color="primary"
                     disabled={!isFollow || isAwaitingConfirmation(followStatus)}
@@ -131,10 +84,47 @@ function ProfileUserInfo({
                       <DollarIcon />
                     </IconButton>
                   )}
-                </>
-              )}
-            </Box>
-          )}
+                </Box>
+              </PublicCampaign>
+            )}
+          </Box>
+
+          {user?.bundles &&
+            user.bundles.length > 0 &&
+            subscriptionPrice > 0 &&
+            !isFollow && (
+              <BundleList
+                user={user}
+                isProfile
+                price={user.subscriptionPrice}
+                data={user.bundles}
+                onSubscribeClick={handleSubscribeClick}
+              />
+            )}
+
+          <Box display="flex" alignItems="center" width="100%">
+            <Button
+              fullWidth
+              disableElevation
+              color="primary"
+              variant="contained"
+              onClick={handleSubscribeClick}>
+              {getSubscriptionBtnText(followStatus, subscriptionPrice, t)}
+            </Button>
+
+            <IconButton
+              color="primary"
+              disabled={!isFollow || isAwaitingConfirmation(followStatus)}
+              to={CHAT_USERNAME_ROUTE(user.userName)}
+              component={Link}>
+              <MessageIcon />
+            </IconButton>
+            {isVerified && (
+              <IconButton color="primary" onClick={handleSendTipClick}>
+                <DollarIcon />
+              </IconButton>
+            )}
+          </Box>
         </>
       )}
 

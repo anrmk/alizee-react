@@ -15,6 +15,7 @@ function BundleItem({
   id,
   user,
   disabled,
+  selected,
 
   onSubscribeClick,
   onDelete,
@@ -24,7 +25,7 @@ function BundleItem({
   const subscriptionPrice = calcDiscount(price, discount, duration);
 
   return (
-    <ListItem className={classes.item} disabled={disabled}>
+    <ListItem className={classes.item} disabled={disabled} selected={selected}>
       <ListItemText
         className={classes.itemBundleText}
         primary={
@@ -38,17 +39,7 @@ function BundleItem({
           </Typography>
         }
       />
-      {isProfile ? (
-        <Button
-          color="primary"
-          variant="contained"
-          size="small"
-          onClick={(e) => {
-            onSubscribeClick(e, { ...user, bundleId: id, subscriptionPrice });
-          }}>
-          Subscribe
-        </Button>
-      ) : (
+      {!isProfile && (
         <Button
           disabled={disabled}
           onClick={() => onDelete(id)}

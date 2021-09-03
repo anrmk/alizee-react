@@ -24,6 +24,7 @@ import LanguageDialog from "../domain/LanguageDialog";
 import ConfirmDialog from "../domain/ConfirmationDialog/ConfirmDialog";
 import LightboxModal from "../domain/LightboxModal";
 import PostStatistics from "../domain/PostStatistics/PostStatistics";
+import SubscriptionDialog from "../domain/SubscriptionDialog";
 import {
   CreateCardForm,
   SubscriptionCampaignFormDialog,
@@ -129,7 +130,7 @@ export default {
 
   [FOLLOW_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Subscribe",
-    content: <Payment {...contentProps} />,
+    content: <SubscriptionDialog {...contentProps} />,
     mainBtnText: "Pay",
     ...baseDialogProps,
     ...dialogProps,
