@@ -1,6 +1,6 @@
 import { generateUrl } from "../../../helpers/functions";
 import { removeFollower } from "../user";
-import { getDeposit } from "../account";
+import { getBalance } from "../account";
 import { toggleFollowStatus } from "./createSubscribe";
 
 export const DELETE_SUBSCRIBE_REQUEST = "DELETE_SUBSCRIBE_REQUEST";
@@ -57,7 +57,7 @@ export function deleteSubscribe(api, opts) {
 
       dispatch(removeFollower());
       dispatch(receiveDeleteSubscribe(updatedData));
-      dispatch(getDeposit(api));
+      dispatch(getBalance(api));
     } catch (e) {
       dispatch(
         errorDeleteSubscribe(

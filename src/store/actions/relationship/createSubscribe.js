@@ -1,6 +1,6 @@
 import { generateUrl } from "../../../helpers/functions";
 import { addFollower } from "../user";
-import { getDeposit } from "../account";
+import { getBalance } from "../account";
 
 export const CREATE_SUBSCRIBE_REQUEST = "CREATE_SUBSCRIBE_REQUEST";
 export const CREATE_SUBSCRIBE_SUCCESS = "CREATE_SUBSCRIBE_SUCCESS";
@@ -61,7 +61,7 @@ export function createSubscribe(api, opts) {
       );
       dispatch(addFollower(opts.isPrivateAccount));
       dispatch(receiveCreateSubscribe(updatedData));
-      dispatch(getDeposit(api));
+      dispatch(getBalance(api));
     } catch {
       dispatch(
         errorCreateSubscribe(

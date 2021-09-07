@@ -1,5 +1,5 @@
 import { generateUrl } from "../../../helpers/functions";
-import { getDeposit } from "../account";
+import { getBalance } from "../account";
 import { IDLE, SUCCESS, FAILURE } from "../../../constants/request_status";
 
 export const SEND_DONATION_REQUEST = "SEND_DONATION_REQUEST";
@@ -49,7 +49,7 @@ export function sendDonation(api, opts) {
       await api.setData(opts).query(url);
 
       dispatch(receiveSendDonation());
-      dispatch(getDeposit(api));
+      dispatch(getBalance(api));
     } catch (e) {
       dispatch(errorSendDonation("Error: something went wrong"));
     }

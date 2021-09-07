@@ -93,6 +93,12 @@ import {
   DELETE_CAMPAIGN_REQUEST,
   DELETE_CAMPAIGN_SUCCESS,
   DELETE_CAMPAIGN_FAILURE,
+  VERIFY_BANK_ACCOUNT_REQUEST,
+  VERIFY_BANK_ACCOUNT_SUCCESS,
+  VERIFY_BANK_ACCOUNT_FAILURE,
+  WITHDRAW_REQUEST,
+  WITHDRAW_SUCCESS,
+  WITHDRAW_FAILURE,
 } from "../actions/settings";
 import { IDLE } from "../../constants/request_status";
 
@@ -693,6 +699,44 @@ export default function settings(
       };
     }
     case DELETE_CAMPAIGN_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case VERIFY_BANK_ACCOUNT_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case VERIFY_BANK_ACCOUNT_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case VERIFY_BANK_ACCOUNT_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case WITHDRAW_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case WITHDRAW_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case WITHDRAW_FAILURE: {
       return {
         ...state,
         ...action.payload,

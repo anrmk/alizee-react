@@ -1,0 +1,3 @@
+export const BANK_VERIF_STATUS_NONE = 0;
+export const BANK_VERIF_STATUS_PENDING = 1;
+export const BANK_VERIF_STATUS_VERIFIED = 2;

@@ -57,6 +57,7 @@ import {
 import useSlidingViews, { RIGHT_OPEN_TYPE } from "../../hooks/useSlidingViews";
 import useChangeTheme from "../../hooks/useChangeTheme";
 import { resetSettings } from "../../store/actions/settings";
+import useStyles from "./styles";
 
 const TABS = [
   {
@@ -105,6 +106,7 @@ const TABS = [
 
 function Settings() {
   const { type } = useParams();
+  const classes = useStyles();
   const { currentSlidingViewsState, toggleSlidingViewsState } =
     useSlidingViews(RIGHT_OPEN_TYPE);
   const dispatch = useDispatch();
@@ -165,7 +167,7 @@ function Settings() {
         </List>
       </Card>
 
-      <Box>
+      <Box className={classes.contentRoot}>
         <Switch>
           <PrivateRoute
             exact

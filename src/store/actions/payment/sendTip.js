@@ -1,5 +1,5 @@
 import { generateUrl } from "../../../helpers/functions";
-import { getDeposit } from "../account";
+import { getBalance } from "../account";
 import { IDLE, SUCCESS, FAILURE } from "../../../constants/request_status";
 
 export const SEND_TIP_REQUEST = "SEND_TIP_REQUEST";
@@ -48,7 +48,7 @@ export function sendTip(api, opts) {
       await api.setData(opts).query(url);
 
       dispatch(receiveSendTip());
-      dispatch(getDeposit(api));
+      dispatch(getBalance(api));
     } catch (e) {
       dispatch(errorSendTip("Error: something went wrong"));
     }

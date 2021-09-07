@@ -34,21 +34,6 @@ const useStyles = makeStyles((theme) => {
       },
     },
 
-    sideBarRoot: {
-      borderRadius: theme.spacing(0.5),
-      [theme.breakpoints.up("md")]: {
-        borderRight: `1px solid ${theme.palette.divider}`,
-        borderRadius: `${theme.spacing(0.5)}px 0 0 ${theme.spacing(0.5)}px`,
-      },
-    },
-
-    roomRoot: {
-      borderRadius: theme.spacing(0.5),
-      [theme.breakpoints.up("md")]: {
-        borderRadius: `0 ${theme.spacing(0.5)}px ${theme.spacing(0.5)}px 0`,
-      },
-    },
-
     cardContent: {
       position: "relative",
       zIndex: "1",
@@ -63,6 +48,21 @@ const useStyles = makeStyles((theme) => {
       order: 3,
       boxSizing: "border-box",
       width: "100%",
+    },
+
+    sideBarRoot: {
+      borderRadius: theme.spacing(0.5),
+      [theme.breakpoints.up("md")]: {
+        borderRight: `1px solid ${theme.palette.divider}`,
+        borderRadius: `${theme.spacing(0.5)}px 0 0 ${theme.spacing(0.5)}px`,
+      },
+    },
+
+    roomRoot: {
+      borderRadius: theme.spacing(0.5),
+      [theme.breakpoints.up("md")]: {
+        borderRadius: `0 ${theme.spacing(0.5)}px ${theme.spacing(0.5)}px 0`,
+      },
     },
 
     sidebarList: {

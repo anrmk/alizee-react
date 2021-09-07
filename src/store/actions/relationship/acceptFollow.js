@@ -1,6 +1,6 @@
 import { generateUrl } from "../../../helpers/functions";
 import { FOLLOW_ACCEPTED } from "../../../constants/follow_types";
-import { getDeposit } from "../account";
+import { getBalance } from "../account";
 
 export const ACCEPT_FOLLOW_REQUEST = "ACCEPT_FOLLOW_REQUEST";
 export const ACCEPT_FOLLOW_SUCCESS = "ACCEPT_FOLLOW_SUCCESS";
@@ -52,7 +52,7 @@ export function acceptFollow(api, userName) {
       }
 
       dispatch(receiveAcceptFollow(list));
-      dispatch(getDeposit(api));
+      dispatch(getBalance(api));
     } catch {
       dispatch(
         errorAcceptFollow("When follow was creating then something went wrong")

@@ -1,6 +1,6 @@
 import { generateUrl } from "../../../helpers/functions";
 import { getPost } from "../post/getPost";
-import { getDeposit } from "../account";
+import { getBalance } from "../account";
 
 export const BUY_POST_REQUEST = "BUY_POST_REQUEST";
 export const BUY_POST_SUCCESS = "BUY_POST_SUCCESS";
@@ -47,7 +47,7 @@ export function buyPost(api, id) {
       dispatch(receiveBuyPost());
 
       await dispatch(getPost(api, id));
-      await dispatch(getDeposit(api));
+      await dispatch(getBalance(api));
     } catch (e) {
       dispatch(errorBuyPost("Error: something went wrong"));
     }

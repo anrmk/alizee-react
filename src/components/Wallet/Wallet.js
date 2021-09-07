@@ -47,10 +47,29 @@ function Wallet({ deposit }) {
               <MoreVertIcon htmlColor="white" />
             </IconButton>
           }
-          title={<Typography variant="h6">Wallet balance</Typography>}
+          title={<Typography variant="h6">Balances</Typography>}
         />
         <CardContent className={classes.content}>
-          <Typography variant="h5">{formatCurrency(deposit || 0)}</Typography>
+          {deposit?.saving && (
+            <>
+              <Typography variant="body1" color="textSecondary">
+                Saving
+              </Typography>
+              <Typography variant="h6">
+                {formatCurrency(deposit.saving?.balance || 0)}
+              </Typography>
+            </>
+          )}
+          {deposit?.wallet && (
+            <>
+              <Typography variant="body1" color="textSecondary">
+                Wallet
+              </Typography>
+              <Typography variant="h6">
+                {formatCurrency(deposit.wallet?.balance || 0)}
+              </Typography>
+            </>
+          )}
         </CardContent>
       </Card>
 

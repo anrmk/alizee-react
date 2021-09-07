@@ -33,9 +33,9 @@ import {
   CREATE_MOOD_FAILURE,
 } from "../actions/mood";
 import {
-  GET_USER_DEPOSIT_REQUEST,
-  GET_USER_DEPOSIT_SUCCESS,
-  GET_USER_DEPOSIT_FAILURE,
+  GET_USER_BALANCE_REQUEST,
+  GET_USER_BALANCE_SUCCESS,
+  GET_USER_BALANCE_FAILURE,
 } from "../actions/account";
 
 import { USER_TOKEN } from "../../constants/user";
@@ -132,21 +132,21 @@ export default function signIn(
     }
 
     // DEPOSIT
-    case GET_USER_DEPOSIT_REQUEST: {
+    case GET_USER_BALANCE_REQUEST: {
       return {
         ...state,
         ...action.payload,
       };
     }
 
-    case GET_USER_DEPOSIT_SUCCESS: {
+    case GET_USER_BALANCE_SUCCESS: {
       return {
         ...state,
         ...action.payload,
       };
     }
 
-    case GET_USER_DEPOSIT_FAILURE: {
+    case GET_USER_BALANCE_FAILURE: {
       return {
         ...state,
         ...action.payload,

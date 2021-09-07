@@ -144,6 +144,7 @@ function PostPage(props) {
         </Card>
 
         <Comments
+          className={classes.commentsRoot}
           postId={post.data.id}
           isOwner={user.userName === post.owner?.userName}
           user={user}

@@ -1,4 +1,4 @@
-import { getDeposit } from "../account";
+import { getBalance } from "../account";
 
 export const SET_NOTIFICATION_SUCCESS = "SET_NOTIFICATION_SUCCESS";
 
@@ -20,7 +20,7 @@ export function setNotification(api, data) {
     dispatch(receiveNotify({ ...notification, ...data }));
 
     if (data?.amount > 0) {
-      await dispatch(getDeposit(api));
+      await dispatch(getBalance(api));
     }
   };
 }

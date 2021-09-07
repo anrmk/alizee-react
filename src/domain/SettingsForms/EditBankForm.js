@@ -31,10 +31,11 @@ function EditBankForm({
   accountNumber = "",
   routingNumber = "",
   type = 0,
-  isVerified,
+  isUpdate,
 
   isFetching,
   onSubmit,
+  onClose,
 }) {
   const { t } = useTranslation();
   const { errors, register, setValue, watch, control, handleSubmit } = useForm({
@@ -129,14 +130,30 @@ function EditBankForm({
         />
       </Grid>
       <Grid item>
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          disableElevation
-          disabled={isFetching}>
-          Update
-        </Button>
+        <Grid container spacing={2}>
+          <Grid item>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disableElevation
+              disabled={isFetching}>
+              {isUpdate ? "Update" : "Verify"}
+            </Button>
+          </Grid>
+          {onClose && (
+            <Grid item>
+              <Button
+                variant="contained"
+                color="primary"
+                disableElevation
+                disabled={isFetching}
+                onClick={onClose}>
+                Cancel
+              </Button>
+            </Grid>
+          )}
+        </Grid>
       </Grid>
     </Grid>
   );

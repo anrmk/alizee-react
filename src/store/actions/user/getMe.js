@@ -42,6 +42,12 @@ export function getMe(api) {
     const url = generateUrl("getMe");
     try {
       const { data } = await api.setMethod("GET").query(url);
+      data.deposit = {
+        balance: 0,
+        name: "Default",
+        type: 0,
+        isDefault: false,
+      };
 
       dispatch(receiveGetMe(data));
     } catch {

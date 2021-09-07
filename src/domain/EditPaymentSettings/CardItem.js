@@ -97,6 +97,7 @@ function CardItem({
       <Box mt={1} display="flex" justifyContent="space-between">
         {!isVerified && !isDefault && (
           <Button
+            disableElevation
             disabled={!clickable}
             color="primary"
             variant="contained"
@@ -119,6 +120,7 @@ function CardItem({
           </Button>
         )}
         <Button
+          disableElevation
           color="primary"
           size="small"
           variant="contained"

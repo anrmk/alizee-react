@@ -385,6 +385,13 @@ export function isEmptyObject(obj) {
   return JSON.stringify(obj) === JSON.stringify({});
 }
 
+export function isNotEmptyObjectProperties(obj, properties) {
+  if (!obj || isEmptyObject(obj) || !properties || !properties.length)
+    return false;
+
+  return properties.every((property) => !!obj[property]);
+}
+
 export function isSameObjects(obj1, obj2) {
   return JSON.stringify(obj1) === JSON.stringify(obj2);
 }

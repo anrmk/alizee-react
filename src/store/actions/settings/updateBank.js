@@ -1,3 +1,4 @@
+import { BANK_VERIF_STATUS_PENDING } from "../../../constants/banking_form_types";
 import { generateUrl } from "../../../helpers/functions";
 import { IDLE, SUCCESS, FAILURE } from "../../../constants/request_status";
 
@@ -47,7 +48,16 @@ export function updateBank(api, data) {
     try {
       await api.setMethod("PUT").setData(data).query(url);
 
-      dispatch(receiveUpdateBank(data));
+      const userInfo = {
+        account: {
+          accountNumber: data.accountNumber,
+          routingNumber: data.routingNumber,
+          type: data.type,
+          verifyStatus: BANK_VERIF_STATUS_PENDING,
+        },
+      };
+
+      dispatch(receiveUpdateBank(userInfo));
     } catch (e) {
       dispatch(errorUpdateBank("Error: something went wrong:", e));
     }

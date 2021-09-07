@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import clsx from "clsx";
 
 import {
   Avatar,
@@ -28,6 +29,7 @@ function Comments(props) {
     isPurchased,
     isFollowed,
     hasMore,
+    className,
   } = props;
   const { onFetchMore, onCommentSendClick, onSendTip, onDeleteMessage } = props;
 
@@ -50,7 +52,7 @@ function Comments(props) {
   }, [owner]);
 
   return (
-    <Card className={classes.card}>
+    <Card className={clsx(classes.card, className)}>
       <CardHeader
         avatar={
           <Link to={PROFILE_USERNAME_ROUTE(owner.userName)}>

@@ -8,7 +8,6 @@ export default {
     googleAuth: "account/signingoogle",
     confirmEmail: "account/confirmemail",
     resendEmailVerification: "account/resendemailverification",
-    getCurrentDeposit: "deposit/current",
     signintwitter: "account/signintwitter",
     onetimeauth: "account/onetimeauthenticate",
     createMood: "account/createmood",
@@ -80,6 +79,7 @@ export default {
     getSettingsPasswordConfirm: "account/passwordchangeconfirm",
     getUserStatistics: "account/statistics",
     verifyMe: "account/verify",
+    getBalance: "account/getbalance",
 
     // ACCOUNT FAVORITES
     getAccountFavorites: "account/favorites",
@@ -123,6 +123,8 @@ export default {
     makeWalletDefault: "accountsetting/makeWalletDefault",
     getBank: "accountsetting/bankAccount",
     updateBank: "accountsetting/bankAccount",
+    verifyBankAccount: "accountsetting/verifyBankAccount",
+    withdraw: "accountsetting/withdraw",
     getSubscription: "accountsetting/subscriptionsettings",
     updateSubscription: "accountsetting/subscriptionsettings",
 
