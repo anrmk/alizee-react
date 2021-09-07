@@ -57,7 +57,9 @@ export default function (state, action) {
   if (action.type === SIGNOUT_SUCCESS) {
     state = undefined;
   } else if (action.type === "persist/REHYDRATE") {
-    action.payload.signIn.requestStatus = IDLE;
+    if (action.payload) {
+      action.payload.signIn.requestStatus = IDLE;
+    }
   }
   return appReducer(state, action);
 }

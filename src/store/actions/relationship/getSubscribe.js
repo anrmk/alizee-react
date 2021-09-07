@@ -40,11 +40,10 @@ export function getSubscribe(api, userName) {
     const user = getState().user.data;
     dispatch(requestGetSubscribe());
     const url = generateUrl("getSubscribe");
-
     try {
       const { data } = await api
-        .setParams({ userName })
         .setMethod("GET")
+        .setParams({ userName })
         .query(url);
 
       dispatch(receiveGetSubscribe({ ...user, ...data }));

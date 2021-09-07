@@ -62,7 +62,7 @@ export default {
     getBlocked: "relationship/getblocked",
     createSubscribe: "relationship/subscribe",
     deleteSubscribe: "relationship/subscribe",
-    getSubscribe: "relationship/getSubscription",
+    getSubscribe: "relationship/getsubscription",
     acceptFollow: "relationship/accept",
     rejectFollow: "relationship/reject",
     createBlock: "relationship/block",

@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Box, Card, CardContent } from "@material-ui/core";
 
 import Benefits from "./Benefits";
+
+import ApiContext from "../../context/ApiContext";
 
 import Cover from "../../components/Cover";
 import Avatar from "../../components/Avatar";
@@ -14,12 +16,15 @@ import SubscriptionForm from "./SubscriptionForm";
 
 function SubscriptionDialog({ user, onSubmit, formId }) {
   const dispatch = useDispatch();
-  const { campaign, bundles, subscriptionPrice } = useSelector(
+
+  const apiClient = useContext(ApiContext);
+
+  const { campaign, bundles, subscriptionPrice, userName } = useSelector(
     (state) => state.user.data
   );
 
   useEffect(() => {
-    dispatch(getSubscribe());
+    dispatch(getSubscribe(apiClient, userName));
   }, []);
 
   return (
