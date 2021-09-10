@@ -8,7 +8,7 @@ import GridGalleryStub from "./GridGalleryStub";
 import useStyle from "./styles";
 
 function GridGallery({
-  isStubShow,
+  isStubShow = true,
   isUserView,
   items,
   hasMore,
