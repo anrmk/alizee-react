@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Box, Grid, Hidden } from "@material-ui/core";
 
 import { PostsList } from "../../domain/PostsList";
@@ -16,6 +17,8 @@ import PreviewStoriesList from "../../domain/StoriesLists";
 import Nav from "./Nav";
 
 import ApiContext from "../../context/ApiContext";
+
+import { POST_ID_ROUTE } from "../../constants/routes";
 
 import useShareDialog, {
   SHARE_DIALOG_POST_TYPE,
@@ -49,6 +52,7 @@ function Feed(props) {
   const { story, getStories } = props;
   const { buyPost, getReceipt, getPurchases } = props;
 
+  const history = useHistory();
   const likeAction = useLikeAction();
   const favoriteAction = useFavoriteAction();
   const sendTipDialog = useSendTipDialog();
@@ -112,6 +116,11 @@ function Feed(props) {
   const handlePeopleRefreshClick = () => {
     getPeople(apiClient);
   };
+
+  const handleOpenPostClick = (id) => {
+    history.push(POST_ID_ROUTE(id));
+  };
+
   return (
     <Grid container>
       <Grid item xs={12} md={8} className={classes.mainBox}>
@@ -142,6 +151,7 @@ function Feed(props) {
           onMenu={postMenuDialog.toggle}
           onCommentSend={handleCommentSendClick}
           onFullScreen={lightboxModal.toggle}
+          onOpenPostClick={handleOpenPostClick}
         />
       </Grid>
 

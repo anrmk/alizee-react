@@ -74,6 +74,7 @@ function Comments(props) {
       {isPurchased && (
         <CardContent className={classes.cardContent}>
           <MessagesList
+            isOwner={isOwner}
             isSendMessage={isSendMessage}
             userName={user.userName}
             items={items}

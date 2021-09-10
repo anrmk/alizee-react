@@ -48,6 +48,7 @@ function Post(props) {
     onMenu,
     onCommentSend,
     onFullScreen,
+    onClick,
   } = props;
 
   const handleMenuClick = () => {
@@ -212,7 +213,14 @@ function Post(props) {
             user.userName === owner.userName ||
             post.isPurchased) && (
             <>
-              {comments.length > 0 && <CommentsPreview items={comments} />}
+              {comments.length > 0 && (
+                <CommentsPreview
+                  items={comments}
+                  commentsCount={post.commentsCount}
+                  postId={post.id}
+                  onClick={onClick}
+                />
+              )}
               <Divider className={classes.divider} />
               <MessageSenderInput
                 hideMediaEditor

@@ -41,30 +41,15 @@ export function deleteComment(api, commentId) {
 
     const url = generateUrl("deleteCommentPost");
     try {
+      await api.setMethod("DELETE").setParams({ id: commentId }).query(url);
+
       const comments = getState().comment.data;
 
-      if (!comments.length) {
-        throw new Error("There is no local data");
-      }
-
       if (comments.length) {
-        const commentIndex = comments.findIndex(
-          (post) => post.id === commentId
+        const updatedComments = comments.filter(
+          (comment) => comment.id !== commentId
         );
-
-        if (commentIndex === -1) {
-          throw new Error("Item not found!");
-        }
-
-        await api.setMethod("DELETE").setParams({ id: commentId }).query(url);
-
-        dispatch(
-          receiveDeleteComment(
-            comments.filter((comment) => comment.id !== commentId)
-          )
-        );
-      } else {
-        throw new Error("Comments don't exist");
+        dispatch(receiveDeleteComment(updatedComments));
       }
     } catch (e) {
       dispatch(errorDeleteComment("Error: something went wrong"));

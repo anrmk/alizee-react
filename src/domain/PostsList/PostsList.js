@@ -22,6 +22,7 @@ const PostsList = React.memo(
     onPurchase,
     onShare,
     onMenu,
+    onClick,
     // onRefresh
   }) => (
     <>
@@ -58,6 +59,7 @@ const PostsList = React.memo(
               onShare={onShare}
               onCommentSend={onCommentSend}
               onFullScreen={onFullScreen}
+              onClick={onClick}
             />
           ))}
       </InfiniteScroll>

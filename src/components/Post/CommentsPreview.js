@@ -6,6 +6,7 @@ import {
   ListItem,
   ListItemText,
   Typography,
+  Link as MaterialLink,
 } from "@material-ui/core";
 
 import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
@@ -13,12 +14,31 @@ import { formatDate } from "../../helpers/functions";
 
 import useStyles from "./styles";
 
-export default function CommentsPreview({ items = [] }) {
+export default function CommentsPreview({
+  items = [],
+  commentsCount,
+  postId,
+  onClick,
+}) {
   const classes = useStyles();
-
   return (
     <Box className={classes.commentsPreviewRoot}>
       <List dense className={classes.commentsPreviewList}>
+        {commentsCount > 3 && (
+          <ListItem
+            disableGutters
+            className={classes.commentsPreviewItem}
+            onClick={() => onClick(postId)}>
+            <ListItemText
+              primary={
+                <MaterialLink variant="caption" color="textSecondary" href="#">
+                  View all {commentsCount} comments
+                </MaterialLink>
+              }
+            />
+          </ListItem>
+        )}
+
         {items.length > 0 &&
           items.map((item) => (
             <ListItem

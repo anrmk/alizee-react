@@ -13,6 +13,7 @@ const MessagesList = React.memo(
     userName,
     items = [],
     liveChat = false,
+    isOwner,
 
     onFetchMore,
     onMediaView,
@@ -53,7 +54,7 @@ const MessagesList = React.memo(
               <Message
                 key={message.id}
                 message={message}
-                isOwner={message.userName === userName}
+                canDelete={message.userName === userName || isOwner}
                 liveChat={liveChat}
                 onMediaView={onMediaView}
                 onMessageClick={handleMessageClick}

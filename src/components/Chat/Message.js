@@ -14,7 +14,7 @@ import {
 } from "@material-ui/core/";
 
 import PlayArrowIcon from "@material-ui/icons/PlayArrowOutlined";
-import ClearIcon from "@material-ui/icons/Clear";
+import MoreVertIcon from "@material-ui/icons/MoreVertOutlined";
 import Avatar from "../Avatar";
 
 import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
@@ -25,7 +25,7 @@ import useStyles from "./styles";
 const Message = React.memo(
   ({
     message,
-    isOwner,
+    canDelete,
 
     onMediaView,
     onDelete,
@@ -149,13 +149,13 @@ const Message = React.memo(
           }
         />
 
-        {onDelete && isOwner && (
+        {onDelete && canDelete && (
           <ListItemSecondaryAction>
             <IconButton
               edge="end"
               aria-label="delete"
               onClick={handleDeleteClick}>
-              <ClearIcon fontSize="small" color="error" />
+              <MoreVertIcon fontSize="small" />
             </IconButton>
           </ListItemSecondaryAction>
         )}
