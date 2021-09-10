@@ -2,13 +2,13 @@ import { generateUrl } from "../../../helpers/functions";
 import { addFollower } from "../user";
 import { getBalance } from "../account";
 
-export const CREATE_SUBSCRIBE_REQUEST = "CREATE_SUBSCRIBE_REQUEST";
-export const CREATE_SUBSCRIBE_SUCCESS = "CREATE_SUBSCRIBE_SUCCESS";
-export const CREATE_SUBSCRIBE_FAILURE = "CREATE_SUBSCRIBE_FAILURE";
+export const CREATE_SUBSCRIPTION_REQUEST = "CREATE_SUBSCRIPTION_REQUEST";
+export const CREATE_SUBSCRIPTION_SUCCESS = "CREATE_SUBSCRIPTION_SUCCESS";
+export const CREATE_SUBSCRIPTION_FAILURE = "CREATE_SUBSCRIPTION_FAILURE";
 
-function requestCreateSubscribe() {
+function requestCreateSubscription() {
   return {
-    type: CREATE_SUBSCRIBE_REQUEST,
+    type: CREATE_SUBSCRIPTION_REQUEST,
     payload: {
       isFetching: true,
       errorMessage: "",
@@ -16,9 +16,9 @@ function requestCreateSubscribe() {
   };
 }
 
-function receiveCreateSubscribe(data) {
+function receiveCreateSubscription(data) {
   return {
-    type: CREATE_SUBSCRIBE_SUCCESS,
+    type: CREATE_SUBSCRIPTION_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
@@ -27,9 +27,9 @@ function receiveCreateSubscribe(data) {
   };
 }
 
-function errorCreateSubscribe(message) {
+function errorCreateSubscription(message) {
   return {
-    type: CREATE_SUBSCRIBE_FAILURE,
+    type: CREATE_SUBSCRIPTION_FAILURE,
     payload: {
       isFetching: false,
       errorMessage: message,
@@ -37,10 +37,10 @@ function errorCreateSubscribe(message) {
   };
 }
 
-export function createSubscribe(api, opts) {
+export function createSubscription(api, opts) {
   return async (dispatch, getState) => {
-    dispatch(requestCreateSubscribe());
-    const url = generateUrl("createSubscribe");
+    dispatch(requestCreateSubscription());
+    const url = generateUrl("createSubscription");
 
     const data = { userName: opts.userName };
 
@@ -60,11 +60,11 @@ export function createSubscribe(api, opts) {
         true
       );
       dispatch(addFollower(opts.isPrivateAccount));
-      dispatch(receiveCreateSubscribe(updatedData));
+      dispatch(receiveCreateSubscription(updatedData));
       dispatch(getBalance(api));
     } catch {
       dispatch(
-        errorCreateSubscribe(
+        errorCreateSubscription(
           "When follow was creating then something went wrong"
         )
       );

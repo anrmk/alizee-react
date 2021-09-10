@@ -102,7 +102,6 @@ export function addMessage(api, data) {
 export function createMessage(api, opts) {
   return async (dispatch) => {
     dispatch(requestCreateMessage());
-
     const url = generateUrl("createMessage");
     try {
       const { id, text, mediaFiles, userName } = opts;

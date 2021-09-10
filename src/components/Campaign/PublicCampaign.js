@@ -5,20 +5,7 @@ import { customFormatDate, addDays } from "../../helpers/functions";
 
 import { DISCOUNT_MONTH_TYPE_RADIO_ID } from "../../constants/campaign";
 
-import useStyles from "./styles";
-
-function PublicCampaign({
-  price,
-  children,
-  user,
-
-  getSubscriptionBtnText,
-  t,
-  onClick,
-  campaign,
-}) {
-  const classes = useStyles();
-
+function PublicCampaign({ campaign }) {
   return (
     <Box width="100%">
       <Typography variant="body1">

@@ -8,7 +8,6 @@ import ApiContext from "../context/ApiContext";
 import { PROFILE_USERNAME_ROUTE } from "../constants/routes";
 
 import RelationshipList from "../components/RelationshipList";
-import * as userActions from "../store/actions/user";
 import * as relationshipActions from "../store/actions/relationship";
 
 import { useFollowDialog } from "../hooks/payment";
@@ -21,13 +20,12 @@ function Followings(props) {
 
   const followDialog = useFollowDialog();
 
-  const { user, me, following } = props;
-  const { fetchUser, fetchFollowings, resetFollowings } = props;
+  const { me, following } = props;
+  const { fetchFollowings, resetFollowings } = props;
 
   useEffect(() => {
     if (username) {
       (async () => {
-        await fetchUser(apiClient, username);
         await fetchFollowings(apiClient, username);
       })();
     }
@@ -44,11 +42,11 @@ function Followings(props) {
     <Container maxWidth="sm">
       <Card>
         <CardHeader
-          avatar={<Avatar src={user.avatarUrl} />}
-          title={user.name}
+          avatar={<Avatar src={me.avatarUrl} />}
+          title={me.name}
           subheader={`Following [${following.data?.length}]`}
           onClick={() => {
-            history.push(PROFILE_USERNAME_ROUTE(user.userName));
+            history.push(PROFILE_USERNAME_ROUTE(me.userName));
           }}
         />
       </Card>
@@ -66,8 +64,9 @@ function mapStateToProps(state) {
   return {
     me: {
       userName: state.signIn?.userInfo.userName,
+      name: state.signIn?.userInfo.name,
+      avatarUrl: state.signIn?.userInfo.avatarUrl,
     },
-    user: state.user.data,
     following: {
       isFetching: state.users.isFetching,
       data: state.users.data,
@@ -77,7 +76,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchUser: (api, username) => dispatch(userActions.getUser(api, username)),
     fetchFollowings: (api, userName) =>
       dispatch(relationshipActions.getFollowings(api, userName)),
     resetFollowings: () => dispatch(relationshipActions.resetRelationship()),

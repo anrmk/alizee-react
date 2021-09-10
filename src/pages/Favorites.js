@@ -7,8 +7,9 @@ import ApiContext from "../context/ApiContext";
 
 import { PROFILE_USERNAME_ROUTE } from "../constants/routes";
 
+import { useFollowDialog } from "../hooks/payment";
+
 import RelationshipList from "../components/RelationshipList";
-import * as userActions from "../store/actions/user";
 import * as accountActions from "../store/actions/account";
 import * as relationshipActions from "../store/actions/relationship";
 
@@ -17,20 +18,14 @@ function Favorites(props) {
 
   const apiClient = useContext(ApiContext);
   const history = useHistory();
+  const followDialog = useFollowDialog();
 
-  const { user, me, favorites } = props;
-  const {
-    fetchUser,
-    fetchFavorites,
-    createSubscribe,
-    deleteSubscribe,
-    resetFollowings,
-  } = props;
+  const { me, favorites } = props;
+  const { fetchFavorites, resetFollowings } = props;
 
   useEffect(() => {
     if (username) {
       (async () => {
-        await fetchUser(apiClient, username);
         await fetchFavorites(apiClient, username);
       })();
     }
@@ -43,21 +38,15 @@ function Favorites(props) {
     []
   );
 
-  const handleFollowClick = ({ userName, isFollow }) => {
-    !favorites.isLoading && isFollow
-      ? deleteSubscribe(apiClient, userName)
-      : createSubscribe(apiClient, userName);
-  };
-
   return (
     <Container maxWidth="sm">
       <Card>
         <CardHeader
-          avatar={<Avatar src={user.avatarUrl} />}
-          title={user.name}
+          avatar={<Avatar src={me.avatarUrl} />}
+          title={me.name}
           subheader={`Favorites [${favorites.data?.length}]`}
           onClick={() => {
-            history.push(PROFILE_USERNAME_ROUTE(user.userName));
+            history.push(PROFILE_USERNAME_ROUTE(me.userName));
           }}
         />
       </Card>
@@ -65,9 +54,7 @@ function Favorites(props) {
       <RelationshipList
         items={favorites.data}
         currentUserName={me.userName}
-        onSubscribeClick={(item) =>
-          handleFollowClick(item, favorites.isFetching)
-        }
+        onSubscribeClick={followDialog.toggle}
       />
     </Container>
   );
@@ -77,8 +64,10 @@ function mapStateToProps(state) {
   return {
     me: {
       userName: state.signIn?.userInfo?.userName,
+      name: state.signIn?.userInfo?.name,
+      avatarUrl: state.signIn?.userInfo?.avatarUrl,
     },
-    user: state.user.data,
+
     favorites: {
       isFetching: state.users.isFetching,
       data: state.users.data,
@@ -88,13 +77,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchUser: (api, username) => dispatch(userActions.getUser(api, username)),
     fetchFavorites: (api, userName) =>
       dispatch(accountActions.getFavorites(api, userName)),
-    createSubscribe: (api, userName) =>
-      dispatch(relationshipActions.createSubscribe(api, userName)),
-    deleteSubscribe: (api, userName) =>
-      dispatch(relationshipActions.deleteSubscribe(api, userName)),
     resetFollowings: () => dispatch(relationshipActions.resetRelationship()),
   };
 }

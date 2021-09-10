@@ -13,11 +13,9 @@ function BundleItem({
   duration,
   price,
   id,
-  user,
   disabled,
   selected,
 
-  onSubscribeClick,
   onDelete,
 }) {
   const classes = useStyles();

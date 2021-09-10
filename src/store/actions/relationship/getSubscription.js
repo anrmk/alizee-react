@@ -1,5 +1,3 @@
-import { createSelector } from "reselect";
-
 import { generateUrl } from "../../../helpers/functions";
 
 export const GET_SUBSCRIPTION_REQUEST = "GET_SUBSCRIPTION_REQUEST";
@@ -22,7 +20,7 @@ function receiveGetSubscription(data) {
     payload: {
       isFetching: false,
       errorMessage: "",
-      data: data || {},
+      data,
     },
   };
 }
@@ -37,24 +35,25 @@ function errorGetSubscription(message) {
   };
 }
 
-export function getSubscription(api) {
-  return async (dispatch) => {
+export function getSubscription(api, userName) {
+  return async (dispatch, getState) => {
+    const user = getState().user.data;
     dispatch(requestGetSubscription());
-    const url = generateUrl("getSubscriptionSettings");
+    const url = generateUrl("getSubscription");
     try {
-      const { data } = await api.setMethod("GET").query(url);
+      const { data } = await api
+        .setMethod("GET")
+        .setParams({ userName })
+        .query(url);
 
-      dispatch(receiveGetSubscription(data));
+      dispatch(
+        receiveGetSubscription({
+          ...user,
+          ...data,
+        })
+      );
     } catch (e) {
       dispatch(errorGetSubscription("Error: something went wrong:", e));
     }
   };
 }
-
-// SELECTOR SORT
-const dataSelector = (state) => state.settings.data.bundles;
-
-export const getSortedBundles = createSelector(
-  [dataSelector],
-  (data) => data && data.sort((a, b) => a.duration - b.duration)
-);

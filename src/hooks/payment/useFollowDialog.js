@@ -7,6 +7,7 @@ import dialogs, {
   FOLLOW_DIALOG_TYPE,
 } from "../../constants/dialogs";
 import * as relationshipActions from "../../store/actions/relationship";
+
 import useDialog from "../useDialog";
 
 const FORM_ID = "create-subscription-dialog";
@@ -17,7 +18,12 @@ export default function useFollowDialog() {
   const { isFetching } = useSelector((state) => ({
     isFetching: state.user.isFetching,
   }));
+
   const dialog = useDialog();
+
+  const handleGetSubscription = async (userName) => {
+    await dispatch(relationshipActions.getSubscription(apiClient, userName));
+  };
 
   const handleSubscribeBuy = async ({
     userName,
@@ -29,10 +35,10 @@ export default function useFollowDialog() {
     const opts = { userName, isFollow, isPrivate, campaignId, bundleId };
     dialog.toggle({ open: false });
     if (!isFetching) {
-      if (!isFollow || campaignId || bundleId) {
-        await dispatch(relationshipActions.createSubscribe(apiClient, opts));
+      if (!isFollow) {
+        await dispatch(relationshipActions.createSubscription(apiClient, opts));
       } else {
-        await dispatch(relationshipActions.deleteSubscribe(apiClient, opts));
+        await dispatch(relationshipActions.deleteSubscription(apiClient, opts));
       }
     }
   };
@@ -52,6 +58,7 @@ export default function useFollowDialog() {
               amount: subscriptionPrice,
               formId: FORM_ID,
               onSubmit: handleSubscribeBuy,
+              onGetSubscription: handleGetSubscription,
             }
           )
         );
@@ -62,7 +69,7 @@ export default function useFollowDialog() {
           dialogs[CONFIRM_DIALOG_TYPE](
             {
               onMainClick: handleSubscribeBuy,
-              state: { ...data },
+              state: data,
               title: "Unfollow",
             },
             {

@@ -14,7 +14,6 @@ import ProfileHeader from "../../domain/ProfileHeader";
 import ProfileContent from "../../domain/ProfileContent";
 
 import * as profilePostsActions from "../../store/actions/post";
-import * as relationshipActions from "../../store/actions/relationship";
 import * as userActions from "../../store/actions/user";
 import * as settingsActions from "../../store/actions/settings";
 
@@ -56,7 +55,6 @@ function Profile(props) {
   const { me, user, post, media, settings } = props;
   const { fetchUser, resetUser } = props;
   const { fetchPosts, resetPosts, getFavoritePosts, getTaggedPosts } = props;
-  const { createSubscribe, deleteSubscribe } = props;
   const { updateCover, updateAvatar } = props;
   const { deleteCampaign } = props;
   const dialog = useDialog();
@@ -96,7 +94,13 @@ function Profile(props) {
   useEffect(() => {
     if (username) {
       resetPosts();
-      handleFetchPosts();
+      if (
+        username === me.userName ||
+        user.data?.isFollow ||
+        user.data?.subscribedByExpireDate
+      ) {
+        handleFetchPosts();
+      }
     }
   }, [postSettings, user.data?.isFollow]);
 
@@ -158,15 +162,6 @@ function Profile(props) {
     setPostSettings({
       index,
     });
-  };
-
-  const handlePeopleFollowClick = async (userName) => {
-    user.data.isFollow
-      ? await deleteSubscribe(apiClient, userName)
-      : await createSubscribe(apiClient, userName, user.data?.isPrivate);
-
-    resetPosts();
-    handleFetchPosts();
   };
 
   const handleItemClick = (id) => {
@@ -249,7 +244,6 @@ function Profile(props) {
         user={user.data}
         isOwner={username === me.userName}
         disabled={media.isFetching}
-        onFollowClick={() => handlePeopleFollowClick(user.data.userName)}
         onSendGiftClick={() => handleGiftSendClick(user.data.userName)}
         onCoverUrlChange={handleCoverEditDialog}
         onDeleteCoverImageClick={handleDeleteCoverImageClick}
@@ -362,13 +356,6 @@ function mapDispatchToProps(dispatch) {
 
     getFavoritePosts: (api, opts) =>
       dispatch(profilePostsActions.getFavoritePosts(api, opts)),
-
-    createSubscribe: (api, userName, isPrivateAccount) =>
-      dispatch(
-        relationshipActions.createSubscribe(api, userName, isPrivateAccount)
-      ),
-    deleteSubscribe: (api, userName) =>
-      dispatch(relationshipActions.deleteSubscribe(api, userName)),
 
     updateCover: (api, opts) =>
       dispatch(settingsActions.updateCover(api, opts)),

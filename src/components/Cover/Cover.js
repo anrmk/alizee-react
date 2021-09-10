@@ -21,7 +21,6 @@ function Cover({
   const classes = useStyles({ imageUrl: src });
   const fileInputEl = useRef(null);
   const [focusCover, setFocusCover] = useState(false);
-
   const handleCoverChange = (e) => {
     const { files } = e.target;
 

@@ -20,7 +20,7 @@ import { getSubscriptionBtnText } from "../ProfileUserInfo";
 function SubscriptionForm({
   formId,
   user,
-  campaign,
+  campaigns,
   bundles,
   subscriptionPrice,
 
@@ -91,64 +91,65 @@ function SubscriptionForm({
 
         {subscriptionPrice > 0 && (
           <>
-            {campaign && (
+            {campaigns.length > 0 && (
               <>
                 <ListSubheader>Campaign</ListSubheader>
+                {campaigns.map((campaign) => (
+                  <ListItem
+                    key={campaign.id}
+                    button
+                    selected={discount.campaignId === campaign.id}
+                    onClick={() =>
+                      handleItemClick({
+                        bundleId: "",
+                        campaignId: campaign.id,
+                        general: false,
+                      })
+                    }>
+                    <ListItemIcon>
+                      <Checkbox
+                        edge="start"
+                        checked={discount.campaignId === campaign.id}
+                      />
+                    </ListItemIcon>
 
-                <ListItem
-                  key={campaign.id}
-                  button
-                  selected={discount.campaignId === campaign.id}
-                  onClick={() =>
-                    handleItemClick({
-                      bundleId: "",
-                      campaignId: campaign.id,
-                      general: false,
-                    })
-                  }>
-                  <ListItemIcon>
-                    <Checkbox
-                      edge="start"
-                      checked={discount.campaignId === campaign.id}
+                    <ListItemText
+                      primary={
+                        <Typography variant="body1">
+                          {campaign.type === 0
+                            ? "First month discount -"
+                            : "Free Trial -"}
+                        </Typography>
+                      }
+                      secondary={
+                        <Typography
+                          variant="caption"
+                          component="p"
+                          color="textSecondary">
+                          {campaign.type === 0
+                            ? `Promotional subscription $${calcDiscount(
+                                subscriptionPrice,
+                                campaign.discount,
+                                1
+                              )} USD per month.`
+                            : `Promotional subscription $0.00 USD for ${campaign.duration} days.
+						  User will not be subscribed for $${subscriptionPrice} automatically, only by choice`}
+                        </Typography>
+                      }
                     />
-                  </ListItemIcon>
-
-                  <ListItemText
-                    primary={
-                      <Typography variant="body1">
+                    <ListItemSecondaryAction>
+                      <Typography>
                         {campaign.type === 0
-                          ? "First month discount -"
-                          : "Free Trial -"}
-                      </Typography>
-                    }
-                    secondary={
-                      <Typography
-                        variant="caption"
-                        component="p"
-                        color="textSecondary">
-                        {campaign.type === 0
-                          ? `Promotional subscription $${calcDiscount(
+                          ? `$${calcDiscount(
                               subscriptionPrice,
                               campaign.discount,
                               1
-                            )} USD per month.`
-                          : `Promotional subscription $0.00 USD for ${campaign.duration} days.
-						  User will not be subscribed for $${subscriptionPrice} automatically, only by choice`}
+                            )}/mo`
+                          : "Free"}
                       </Typography>
-                    }
-                  />
-                  <ListItemSecondaryAction>
-                    <Typography>
-                      {campaign.type === 0
-                        ? `$${calcDiscount(
-                            subscriptionPrice,
-                            campaign.discount,
-                            1
-                          )}/mo`
-                        : "Free"}
-                    </Typography>
-                  </ListItemSecondaryAction>
-                </ListItem>
+                    </ListItemSecondaryAction>
+                  </ListItem>
+                ))}
               </>
             )}
 

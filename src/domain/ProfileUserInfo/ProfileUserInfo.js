@@ -54,8 +54,8 @@ function ProfileUserInfo({
     onSendTipClick && onSendTipClick(user);
   };
 
-  const handleSubscribeClick = (e, data = user) => {
-    onSubscribeClick && onSubscribeClick(data);
+  const handleSubscribeClick = () => {
+    onSubscribeClick && onSubscribeClick(user);
   };
 
   const handleNewImageClick = () => {
@@ -169,22 +169,18 @@ function ProfileUserInfo({
             onDelete={onDeleteCampaignClick}
           />
         )}
-      {user?.campaign && !isOwner && subscriptionPrice > 0 && !isFollow && (
-        <Card>
-          <CardContent>
-            <PublicCampaign
-              user={user}
-              campaign={user.campaign}
-              disabled={disabled}
-              price={user.subscriptionPrice}
-              followStatus={followStatus}
-              getSubscriptionBtnText={getSubscriptionBtnText}
-              t={t}
-              onClick={handleSubscribeClick}
-            />
-          </CardContent>
-        </Card>
-      )}
+      {user?.campaigns?.length > 0 &&
+        !isOwner &&
+        subscriptionPrice > 0 &&
+        !isFollow && (
+          <Card>
+            {user.campaigns.map((item) => (
+              <CardContent>
+                <PublicCampaign key={item.id} campaign={item} />
+              </CardContent>
+            ))}
+          </Card>
+        )}
 
       {user?.bundles &&
         subscriptionPrice > 0 &&
@@ -197,7 +193,6 @@ function ProfileUserInfo({
             price={user.subscriptionPrice}
             disabled={disabled}
             data={user.bundles}
-            onSubscribeClick={handleSubscribeClick}
           />
         )}
 

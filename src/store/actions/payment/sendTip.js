@@ -42,7 +42,6 @@ function errorSendTip(message) {
 export function sendTip(api, opts) {
   return async (dispatch, getState) => {
     dispatch(requestSendTip());
-
     try {
       const url = generateUrl("sendTip");
       await api.setData(opts).query(url);

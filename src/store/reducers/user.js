@@ -26,9 +26,9 @@ import {
 } from "../actions/user";
 
 import {
-  GET_SUBSCRIBE_REQUEST,
-  GET_SUBSCRIBE_SUCCESS,
-  GET_SUBSCRIBE_FAILURE,
+  GET_SUBSCRIPTION_REQUEST,
+  GET_SUBSCRIPTION_SUCCESS,
+  GET_SUBSCRIPTION_FAILURE,
 } from "../actions/relationship";
 
 export default function user(
@@ -62,17 +62,17 @@ export default function user(
         ...action.payload,
       };
 
-    case GET_SUBSCRIBE_REQUEST:
+    case GET_SUBSCRIPTION_REQUEST:
       return {
         ...state,
         ...action.payload,
       };
-    case GET_SUBSCRIBE_SUCCESS:
+    case GET_SUBSCRIPTION_SUCCESS:
       return {
         ...state,
         ...action.payload,
       };
-    case GET_SUBSCRIBE_FAILURE:
+    case GET_SUBSCRIPTION_FAILURE:
       return {
         ...state,
         ...action.payload,

@@ -34,8 +34,8 @@ function ProfileUserInfo({
     onSendTipClick && onSendTipClick(user);
   };
 
-  const handleSubscribeClick = (e, data = user) => {
-    onSubscribeClick && onSubscribeClick(data);
+  const handleSubscribeClick = () => {
+    onSubscribeClick && onSubscribeClick(user);
   };
 
   return (
@@ -61,33 +61,30 @@ function ProfileUserInfo({
         </>
       ) : (
         <>
-          <Box className={classes.btnsGroupMobile}>
-            {user?.campaign && subscriptionPrice > 0 && !isFollow && (
-              <PublicCampaign
-                user={user}
-                campaign={user.campaign}
-                price={subscriptionPrice}
-                followStatus={followStatus}
-                getSubscriptionBtnText={getSubscriptionBtnText}
-                t={t}
-                onClick={handleSubscribeClick}>
-                <Box display="flex">
-                  <IconButton
-                    color="primary"
-                    disabled={!isFollow || isAwaitingConfirmation(followStatus)}
-                    to={CHAT_USERNAME_ROUTE(user.userName)}
-                    component={Link}>
-                    <MessageIcon />
-                  </IconButton>
-                  {isVerified && (
-                    <IconButton color="primary" onClick={handleSendTipClick}>
-                      <DollarIcon />
+          {user?.campaigns?.length > 0 && subscriptionPrice > 0 && !isFollow && (
+            <Box className={classes.btnsGroupMobile}>
+              {user.campaigns.map((item) => (
+                <PublicCampaign campaign={item}>
+                  <Box display="flex">
+                    <IconButton
+                      color="primary"
+                      disabled={
+                        !isFollow || isAwaitingConfirmation(followStatus)
+                      }
+                      to={CHAT_USERNAME_ROUTE(user.userName)}
+                      component={Link}>
+                      <MessageIcon />
                     </IconButton>
-                  )}
-                </Box>
-              </PublicCampaign>
-            )}
-          </Box>
+                    {isVerified && (
+                      <IconButton color="primary" onClick={handleSendTipClick}>
+                        <DollarIcon />
+                      </IconButton>
+                    )}
+                  </Box>
+                </PublicCampaign>
+              ))}
+            </Box>
+          )}
 
           {user?.bundles &&
             user.bundles.length > 0 &&
@@ -98,7 +95,6 @@ function ProfileUserInfo({
                 isProfile
                 price={user.subscriptionPrice}
                 data={user.bundles}
-                onSubscribeClick={handleSubscribeClick}
               />
             )}
 

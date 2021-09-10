@@ -26,6 +26,8 @@ const RelationshipItem = React.memo((props) => {
     name,
     subtitle,
     subscriptionPrice,
+    identityVerified,
+
     isFollow,
     isMe,
   } = props;
@@ -48,6 +50,8 @@ const RelationshipItem = React.memo((props) => {
         isFollow,
         subscriptionPrice,
         avatarUrl,
+        coverUrl,
+        identityVerified,
       });
   };
 

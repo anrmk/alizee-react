@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, Redirect, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 
 import {
@@ -12,10 +12,9 @@ import {
 } from "@material-ui/core";
 import ApiContext from "../context/ApiContext";
 
-import * as userActions from "../store/actions/user";
 import * as relationshipActions from "../store/actions/relationship";
 
-import { NOT_FOUND_ROUTE, PROFILE_USERNAME_ROUTE } from "../constants/routes";
+import { PROFILE_USERNAME_ROUTE } from "../constants/routes";
 import {
   FOLLOW_PENDING,
   FOLLOW_ACCEPTED,
@@ -29,9 +28,8 @@ function Followers(props) {
   const apiClient = useContext(ApiContext);
   const followDialog = useFollowDialog();
 
-  const { user, me, followers } = props;
+  const { me, followers } = props;
   const {
-    fetchUser,
     fetchFollowers,
     acceptFollow,
     rejectFollow,
@@ -40,14 +38,6 @@ function Followers(props) {
   } = props;
 
   const [status, setStatus] = useState(FOLLOW_ACCEPTED);
-
-  useEffect(() => {
-    if (username) {
-      (async () => {
-        await fetchUser(apiClient, username);
-      })();
-    }
-  }, [username]);
 
   useEffect(() => {
     (async () => {
@@ -61,10 +51,6 @@ function Followers(props) {
     },
     []
   );
-
-  if (user.errorMessage) {
-    return <Redirect exact to={NOT_FOUND_ROUTE} />;
-  }
 
   const handleConfirmClick = ({ userName }) => {
     !followers.isFetching && acceptFollow(apiClient, userName);
@@ -83,14 +69,14 @@ function Followers(props) {
       <Card>
         <CardHeader
           avatar={
-            <Link to={PROFILE_USERNAME_ROUTE(user.data.userName)}>
-              <Avatar src={user.data.avatarUrl} />
+            <Link to={PROFILE_USERNAME_ROUTE(me.userName)}>
+              <Avatar src={me.avatarUrl} />
             </Link>
           }
-          title={user.data.name}
+          title={me.name}
           subheader={`Followers [${followers.data?.length}]`}
         />
-        {me.userName === user.data.userName && (
+        {me?.userName && (
           <Tabs
             value={status}
             indicatorColor="primary"
@@ -130,10 +116,9 @@ function mapStateToProps(state) {
   return {
     me: {
       userName: state.signIn?.userInfo.userName,
-    },
-    user: {
-      data: state.user.data,
-      errorMessage: state.user?.errorMessage,
+      name: state.signIn?.userInfo.name,
+      avatarUrl: state.signIn?.userInfo.avatarUrl,
+      errorMessage: state.signIn?.errorMessage,
     },
     followers: {
       isFetching: state.users.isFetching,
@@ -144,7 +129,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchUser: (api, userName) => dispatch(userActions.getUser(api, userName)),
     fetchFollowers: (api, userName, status) =>
       dispatch(relationshipActions.getFollowers(api, userName, status)),
     acceptFollow: (api, userName) =>

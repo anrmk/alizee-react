@@ -34,7 +34,7 @@ function ProfileContent(props) {
         disabled={disabled}
       />
       <GridGallery
-        isStubShow={!user?.subscribedByExpireDate && !isOwner}
+        isStubShow={isOwner || user.isFollow || items?.length !== 0}
         items={items}
         hasMore={hasMore}
         onFetchMore={onFetchMore}

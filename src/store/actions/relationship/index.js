@@ -1,18 +1,18 @@
 export { RESET_RELATIONSHIP, resetRelationship } from "./resetRelationship";
 
 export {
-  GET_SUBSCRIBE_REQUEST,
-  GET_SUBSCRIBE_SUCCESS,
-  GET_SUBSCRIBE_FAILURE,
-  getSubscribe,
-} from "./getSubscribe";
+  GET_SUBSCRIPTION_REQUEST,
+  GET_SUBSCRIPTION_SUCCESS,
+  GET_SUBSCRIPTION_FAILURE,
+  getSubscription,
+} from "./getSubscription";
 
 export {
-  CREATE_SUBSCRIBE_REQUEST,
-  CREATE_SUBSCRIBE_SUCCESS,
-  CREATE_SUBSCRIBE_FAILURE,
-  createSubscribe,
-} from "./createSubscribe";
+  CREATE_SUBSCRIPTION_REQUEST,
+  CREATE_SUBSCRIPTION_SUCCESS,
+  CREATE_SUBSCRIPTION_FAILURE,
+  createSubscription,
+} from "./createSubscription";
 
 export {
   ACCEPT_FOLLOW_REQUEST,
@@ -22,11 +22,11 @@ export {
 } from "./acceptFollow";
 
 export {
-  DELETE_SUBSCRIBE_REQUEST,
-  DELETE_SUBSCRIBE_SUCCESS,
-  DELETE_SUBSCRIBE_FAILURE,
-  deleteSubscribe,
-} from "./deleteSubscribe";
+  DELETE_SUBSCRIPTION_REQUEST,
+  DELETE_SUBSCRIPTION_SUCCESS,
+  DELETE_SUBSCRIPTION_FAILURE,
+  deleteSubscription,
+} from "./deleteSubscription";
 
 export {
   REJECT_FOLLOW_REQUEST,

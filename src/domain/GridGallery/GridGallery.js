@@ -19,7 +19,7 @@ function GridGallery({
 }) {
   const classes = useStyle();
 
-  if (isStubShow)
+  if (!isStubShow)
     return <GridGalleryStub onSubscribeClick={onSubscribeClick} />;
 
   return (

@@ -1,15 +1,15 @@
 import { generateUrl } from "../../../helpers/functions";
 import { removeFollower } from "../user";
 import { getBalance } from "../account";
-import { toggleFollowStatus } from "./createSubscribe";
+import { toggleFollowStatus } from "./createSubscription";
 
-export const DELETE_SUBSCRIBE_REQUEST = "DELETE_SUBSCRIBE_REQUEST";
-export const DELETE_SUBSCRIBE_SUCCESS = "DELETE_SUBSCRIBE_SUCCESS";
-export const DELETE_SUBSCRIBE_FAILURE = "DELETE_SUBSCRIBE_FAILURE";
+export const DELETE_SUBSCRIPTION_REQUEST = "DELETE_SUBSCRIPTION_REQUEST";
+export const DELETE_SUBSCRIPTION_SUCCESS = "DELETE_SUBSCRIPTION_SUCCESS";
+export const DELETE_SUBSCRIPTION_FAILURE = "DELETE_SUBSCRIPTION_FAILURE";
 
-function requestDeleteSubscribe() {
+function requestDeleteSubscription() {
   return {
-    type: DELETE_SUBSCRIBE_REQUEST,
+    type: DELETE_SUBSCRIPTION_REQUEST,
     payload: {
       isFetching: true,
       errorMessage: "",
@@ -17,9 +17,9 @@ function requestDeleteSubscribe() {
   };
 }
 
-function receiveDeleteSubscribe(data) {
+function receiveDeleteSubscription(data) {
   return {
-    type: DELETE_SUBSCRIBE_SUCCESS,
+    type: DELETE_SUBSCRIPTION_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
@@ -28,9 +28,9 @@ function receiveDeleteSubscribe(data) {
   };
 }
 
-function errorDeleteSubscribe(message) {
+function errorDeleteSubscription(message) {
   return {
-    type: DELETE_SUBSCRIBE_FAILURE,
+    type: DELETE_SUBSCRIPTION_FAILURE,
     payload: {
       isFetching: false,
       errorMessage: message,
@@ -38,12 +38,12 @@ function errorDeleteSubscribe(message) {
   };
 }
 
-export function deleteSubscribe(api, opts) {
+export function deleteSubscription(api, opts) {
   return async (dispatch, getState) => {
-    dispatch(requestDeleteSubscribe());
+    dispatch(requestDeleteSubscription());
 
     try {
-      const url = generateUrl("deleteSubscribe");
+      const url = generateUrl("deleteSubscription");
       await api
         .setMethod("DELETE")
         .setParams({ userName: opts.userName })
@@ -56,11 +56,11 @@ export function deleteSubscribe(api, opts) {
       );
 
       dispatch(removeFollower());
-      dispatch(receiveDeleteSubscribe(updatedData));
+      dispatch(receiveDeleteSubscription(updatedData));
       dispatch(getBalance(api));
     } catch (e) {
       dispatch(
-        errorDeleteSubscribe(
+        errorDeleteSubscription(
           "When follow was deleting then something went wrong"
         )
       );
