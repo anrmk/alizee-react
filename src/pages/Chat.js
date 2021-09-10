@@ -10,6 +10,7 @@ import SlidingViews from "../components/SlidingViews";
 import * as actionChat from "../store/actions/chat";
 
 import { ESC_KEY_CODE } from "../constants/key_codes";
+import { isEmptyObject } from "../helpers/functions";
 import {
   CHAT_USERNAME_ROUTE,
   PEAR_TO_PEAR_ID_ROUTE,
@@ -30,8 +31,7 @@ function Chat(props) {
   const { username } = useParams();
 
   const { user } = props;
-  const { chat, current, getRoom, getRooms, filterRooms, resetCurrentRoom } =
-    props;
+  const { chat, current, getRoom, getRooms, resetCurrentRoom } = props;
   const { createMessage } = props;
 
   const { currentSlidingViewsState, toggleSlidingViewsState } =
@@ -52,9 +52,7 @@ function Chat(props) {
   };
 
   useEffect(() => {
-    (async () => {
-      await getRooms(apiClient);
-    })();
+    getRooms(apiClient);
 
     document.addEventListener("keydown", handleModalCloseKeyPress, false);
     return () => {
@@ -72,8 +70,8 @@ function Chat(props) {
     }
   }, [username]);
 
-  const handleRoomsFilter = (e) => {
-    filterRooms(e.target.value.toLowerCase());
+  const handleRoomsFilter = (value) => {
+    getRooms(apiClient, value);
   };
 
   const handleRoomGet = async (userName) => {
@@ -103,6 +101,10 @@ function Chat(props) {
     history.push(PEAR_TO_PEAR_ID_ROUTE(userName));
   };
 
+  const handleRoomsFetchMore = () => {
+    getRooms(apiClient);
+  };
+
   return (
     <SlidingViews
       mobileOnly
@@ -110,16 +112,17 @@ function Chat(props) {
       firstSize={4}
       secondSize={8}>
       <Sidebar
-        isLoading={chat.isFetching}
+        loading={chat.isFetching}
         user={user}
         items={chat.data}
         selectedItemId={current?.id}
+        roomsHasMore={chat.hasMore}
+        onRoomsFetchMore={handleRoomsFetchMore}
         onItemClick={handleRoomGet}
         onSearchChange={handleRoomsFilter}
         onNewChatClick={newChatDialog.toggle}
       />
-
-      {current ? (
+      {!isEmptyObject(current) ? (
         <Room
           current={current}
           user={user}
@@ -139,7 +142,7 @@ function Chat(props) {
           onSendTip={sendTipDialog.toggle}
         />
       ) : (
-        <NoRoom />
+        <NoRoom onClick={newChatDialog.toggle} />
       )}
     </SlidingViews>
   );
@@ -156,10 +159,11 @@ function mapStateToProps(state) {
     },
     isAuthenticated: state.signIn.isAuthenticated,
     chat: {
+      data: state.chat.data,
       isFetching: state.chat.isFetching,
-      data: actionChat.getFilteredRooms(state),
       errorMessage: state.chat.errorMessage,
       keywords: state.keywords,
+      hasMore: state.chat.hasMore,
     },
     current: state.chat?.current,
   };
@@ -167,9 +171,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getRooms: (api) => dispatch(actionChat.getRooms(api)),
+    getRooms: (api, query) => dispatch(actionChat.getRooms(api, query)),
     getRoom: (api, userName) => dispatch(actionChat.getRoom(api, userName)),
-    filterRooms: (query) => dispatch(actionChat.filter(query)),
     resetCurrentRoom: () => dispatch(actionChat.resetCurrentRoom()),
 
     createMessage: (api, data) => dispatch(actionChat.createMessage(api, data)),

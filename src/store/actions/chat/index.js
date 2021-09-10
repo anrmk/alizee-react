@@ -13,8 +13,6 @@ export {
   FILTER_ROOMS,
   getRooms,
   removeRoom,
-  getFilteredRooms,
-  filter,
 } from "./getRooms";
 
 export {

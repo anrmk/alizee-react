@@ -1,5 +1,4 @@
-import { createSelector } from "reselect";
-
+import { ROOMS_LENGTH, ROOMS_OFFSET } from "../../../constants/chat";
 import { generateUrl } from "../../../helpers/functions";
 
 export const GET_ROOMS_REQUEST = "GET_ROOMS_REQUEST";
@@ -17,12 +16,15 @@ function requestGetRooms() {
   };
 }
 
-function receiveGetRooms(rooms) {
+function receiveGetRooms(rooms, query, length, start) {
   return {
     type: GET_ROOMS_SUCCESS,
     payload: {
       isFetching: false,
       errorMessage: "",
+      offset: start + ROOMS_OFFSET,
+      query,
+      hasMore: length === ROOMS_LENGTH,
       data: rooms || [],
     },
   };
@@ -33,40 +35,49 @@ function errorGetRooms(message) {
     type: GET_ROOMS_FAILURE,
     payload: {
       isFetching: false,
+      hasMore: false,
+      offset: 0,
       errorMessage: message,
     },
   };
 }
 
-function filterRooms(query) {
-  return {
-    type: FILTER_ROOMS,
-    payload: {
-      isFetching: false,
-      errorMessage: "",
-      query,
-    },
-  };
-}
-
-export function getRooms(api) {
-  return async (dispatch) => {
+export function getRooms(api, query) {
+  return async (dispatch, getState) => {
     dispatch(requestGetRooms());
 
     const url = generateUrl("getRooms");
-    try {
-      const { data } = await api.setMethod("GET").query(url);
+    const isMore = query === getState().chat.query;
+    let currentOffset = getState().chat.offset;
+    let currentQuery;
 
-      dispatch(receiveGetRooms(data));
+    if (!isMore && query) {
+      currentOffset = 0;
+      currentQuery = query;
+    } else if (isMore) {
+      currentQuery = getState().chat.query;
+    } else {
+      currentOffset = 0;
+    }
+
+    try {
+      const { data } = await api
+        .setMethod("GET")
+        .setParams({
+          start: currentOffset,
+          length: ROOMS_LENGTH,
+          search: currentQuery,
+        })
+        .query(url);
+
+      const newData = isMore ? [...getState().chat.data, ...data] : data;
+
+      dispatch(
+        receiveGetRooms(newData, currentQuery, data.length, currentOffset)
+      );
     } catch {
       dispatch(errorGetRooms("Error: GetRooms"));
     }
-  };
-}
-
-export function filter(query) {
-  return async (dispatch) => {
-    dispatch(filterRooms(query));
   };
 }
 
@@ -78,18 +89,3 @@ export function removeRoom(roomId) {
     dispatch(receiveGetRooms(updatedRooms));
   };
 }
-
-// SELECTOR FILTER
-const querySelector = (state) => state.chat.query;
-const dataSelector = (state) => state.chat.data;
-
-export const getFilteredRooms = createSelector(
-  [querySelector, dataSelector],
-  (query, data) => {
-    if (!query) return data;
-
-    return data
-      .filter((item) => item && item.name.toLowerCase().includes(query))
-      .sort((a, b) => b.unreadMessageCount - a.unreadMessageCount);
-  }
-);

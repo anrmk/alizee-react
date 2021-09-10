@@ -1,3 +1,4 @@
+import { ROOMS_DEFAULT_OFFSET } from "../../constants/chat";
 import {
   GET_ROOM_REQUEST,
   GET_ROOM_SUCCESS,
@@ -27,7 +28,14 @@ import {
 } from "../actions/chat";
 
 export default function chatReducer(
-  state = { isFetching: false, data: [], current: {}, query: "" },
+  state = {
+    isFetching: false,
+    data: [],
+    current: {},
+    hasMore: false,
+    offset: ROOMS_DEFAULT_OFFSET,
+    query: "",
+  },
   action
 ) {
   switch (action.type) {

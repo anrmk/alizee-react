@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => {
 
       [theme.breakpoints.down("sm")]: {
         height: `calc(100vh - ${
-          theme.mixins.toolbar.minHeight * 2 + theme.spacing(0.7)
+          theme.mixins.toolbar.minHeight * 1.9 + theme.spacing(3)
         }px)`,
       },
     },
@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => {
       zIndex: "1",
       flex: "1 1 0",
       order: 2,
+      padding: `${theme.spacing(0)} !important`,
     },
 
     cardFooter: {
@@ -66,15 +67,20 @@ const useStyles = makeStyles((theme) => {
     },
 
     sidebarList: {
-      position: "absolute",
       width: "100%",
-      height: "100%",
-      overflowY: "auto",
-      left: 0,
-      top: 0,
+      height: `calc(100vh - ${
+        theme.mixins.toolbar.minHeight * 3.2 + theme.spacing(3)
+      }px)`,
       display: "flex",
       flexDirection: "column",
+      overflowY: "auto",
+      padding: "0",
       ...hideScroll,
+      [theme.breakpoints.down("sm")]: {
+        height: `calc(100vh - ${
+          theme.mixins.toolbar.minHeight * 5.1 + theme.spacing(3)
+        }px)`,
+      },
     },
     sidebarListItemText: {
       width: "100%",

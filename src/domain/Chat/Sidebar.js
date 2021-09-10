@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -9,30 +9,41 @@ import {
   CardHeader,
   IconButton,
   Divider,
+  LinearProgress,
 } from "@material-ui/core/";
 
 import ChatIcon from "@material-ui/icons/ChatOutlined";
 
-import { Search } from "../../components/Search";
 import Avatar from "../../components/Avatar";
 
 import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 import SidebarList from "./SidebarList";
+import HeaderSidebarList from "./HeaderSidebarList";
 
 import useStyles from "./styles";
+import SearchInput from "../Search";
 
 function Sidebar({
-  isLoading,
   user,
   selectedItemId,
   items,
+  roomsHasMore,
+  loading,
 
+  onRoomsFetchMore,
   onSearchChange,
   onItemClick,
   onNewChatClick,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
+  const [isSearch, setIsSearch] = useState();
+
+  const handleSearch = (val) => {
+    // setIsSearch(val !== "");
+
+    onSearchChange && onSearchChange(val || null);
+  };
 
   return (
     <Card className={clsx(classes.card, classes.sideBarRoot)}>
@@ -50,21 +61,28 @@ function Sidebar({
           </IconButton>
         }
       />
+      {loading && <LinearProgress />}
       <Divider />
 
       <CardContent>
-        <Search
-          placeholder={t("ChatSidebarSearchInputLabel")}
-          onChange={onSearchChange}
-        />
+        <SearchInput loading={loading} onSendQuery={handleSearch} />
       </CardContent>
       <CardContent className={classes.cardContent}>
-        <SidebarList
-          isLoading={isLoading}
-          items={items}
-          selectedItemId={selectedItemId}
-          onItemClick={onItemClick}
-        />
+        {isSearch ? (
+          <HeaderSidebarList
+            items={items}
+            selectedItemId={selectedItemId}
+            onItemClick={onItemClick}
+          />
+        ) : (
+          <SidebarList
+            items={items}
+            selectedItemId={selectedItemId}
+            hasMore={roomsHasMore}
+            onFetchMore={onRoomsFetchMore}
+            onItemClick={onItemClick}
+          />
+        )}
       </CardContent>
     </Card>
   );
