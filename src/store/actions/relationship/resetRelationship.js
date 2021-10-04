@@ -6,8 +6,10 @@ export function resetRelationship() {
       type: RESET_RELATIONSHIP,
       payload: {
         isFetching: false,
-        errorMessage: "",
         data: [],
+        offset: 0,
+        hasMore: false,
+        errorMessage: "",
       },
     });
 }

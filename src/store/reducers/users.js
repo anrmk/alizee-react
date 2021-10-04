@@ -59,7 +59,7 @@ import { SEARCH_DEFAULT_OFFSET } from "../../constants/search";
 export default function usersReducer(
   state = {
     isFetching: false,
-    data: null,
+    data: [],
     share: null,
     query: "",
     hasMore: false,

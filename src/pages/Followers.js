@@ -29,13 +29,8 @@ function Followers(props) {
   const followDialog = useFollowDialog();
 
   const { me, followers } = props;
-  const {
-    fetchFollowers,
-    acceptFollow,
-    rejectFollow,
-    unrejectFollow,
-    resetFollowers,
-  } = props;
+  const { fetchFollowers, acceptFollow, rejectFollow, unrejectFollow, reset } =
+    props;
 
   const [status, setStatus] = useState(FOLLOW_ACCEPTED);
 
@@ -47,10 +42,18 @@ function Followers(props) {
 
   useEffect(
     () => () => {
-      resetFollowers();
+      reset();
     },
     []
   );
+
+  const handleRefresh = () => {
+    console.log("refresh");
+  };
+
+  const handleFetchMore = () => {
+    fetchFollowers(apiClient, username, status);
+  };
 
   const handleConfirmClick = ({ userName }) => {
     !followers.isFetching && acceptFollow(apiClient, userName);
@@ -62,6 +65,11 @@ function Followers(props) {
 
   const handleUnrejectClick = ({ userName }) => {
     unrejectFollow(apiClient, userName);
+  };
+
+  const handleTabChange = (e, newValue) => {
+    reset();
+    setStatus(newValue);
   };
 
   return (
@@ -82,9 +90,7 @@ function Followers(props) {
             indicatorColor="primary"
             textColor="primary"
             variant="fullWidth"
-            onChange={(e, newValue) => {
-              setStatus(newValue);
-            }}>
+            onChange={handleTabChange}>
             <Tab
               label="Accepted"
               aria-label="accepted"
@@ -107,6 +113,9 @@ function Followers(props) {
         onConfirmClick={(item) => handleConfirmClick(item)}
         onRejectClick={(item) => handleRejectClick(item)}
         onUnrejectClick={(item) => handleUnrejectClick(item)}
+        hasMore={followers.hasMore}
+        onRefresh={handleRefresh}
+        onFetchMore={handleFetchMore}
       />
     </Container>
   );
@@ -123,6 +132,7 @@ function mapStateToProps(state) {
     followers: {
       isFetching: state.users.isFetching,
       data: state.users.data,
+      hasMore: state.users.hasMore,
     },
   };
 }
@@ -137,7 +147,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(relationshipActions.rejectFollow(api, userName)),
     unrejectFollow: (api, userName) =>
       dispatch(relationshipActions.unrejectFollow(api, userName)),
-    resetFollowers: () => dispatch(relationshipActions.resetRelationship()),
+    reset: () => dispatch(relationshipActions.resetRelationship()),
   };
 }
 
