@@ -38,6 +38,14 @@ function Followings(props) {
     []
   );
 
+  const handleRefresh = () => {
+    console.log("refresh");
+  };
+
+  const handleFetchMore = () => {
+    fetchFollowings(apiClient, username);
+  };
+
   return (
     <Container maxWidth="sm">
       <Card>
@@ -55,6 +63,9 @@ function Followings(props) {
         items={following.data}
         currentUserName={me.userName}
         onSubscribeClick={followDialog.toggle}
+        hasMore={following.hasMore}
+        onRefresh={handleRefresh}
+        onFetchMore={handleFetchMore}
       />
     </Container>
   );
@@ -70,6 +81,7 @@ function mapStateToProps(state) {
     following: {
       isFetching: state.users.isFetching,
       data: state.users.data,
+      hasMore: state.users.hasMore,
     },
   };
 }

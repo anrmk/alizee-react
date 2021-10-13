@@ -175,8 +175,8 @@ function ProfileUserInfo({
         !isFollow && (
           <Card>
             {user.campaigns.map((item) => (
-              <CardContent>
-                <PublicCampaign key={item.id} campaign={item} />
+              <CardContent key={`campaign_${item.id}`}>
+                <PublicCampaign campaign={item} />
               </CardContent>
             ))}
           </Card>
