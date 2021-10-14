@@ -9,6 +9,7 @@ import { PROFILE_USERNAME_ROUTE } from "../constants/routes";
 
 import RelationshipList from "../components/RelationshipList";
 import * as relationshipActions from "../store/actions/relationship";
+import * as userActions from "../store/actions/user";
 
 import { useFollowDialog } from "../hooks/payment";
 
@@ -20,12 +21,13 @@ function Followings(props) {
 
   const followDialog = useFollowDialog();
 
-  const { me, following } = props;
-  const { fetchFollowings, resetFollowings } = props;
+  const { user, me, following } = props;
+  const { fetchUser, fetchFollowings, resetFollowings } = props;
 
   useEffect(() => {
     if (username) {
       (async () => {
+        await fetchUser(apiClient, username);
         await fetchFollowings(apiClient, username);
       })();
     }
@@ -50,11 +52,11 @@ function Followings(props) {
     <Container maxWidth="sm">
       <Card>
         <CardHeader
-          avatar={<Avatar src={me.avatarUrl} />}
-          title={me.name}
-          subheader={`Following [${following.data?.length}]`}
+          avatar={<Avatar src={user.avatarUrl} />}
+          title={user.name}
+          subheader={`Following [${user.followingsCount}]`}
           onClick={() => {
-            history.push(PROFILE_USERNAME_ROUTE(me.userName));
+            history.push(PROFILE_USERNAME_ROUTE(user.userName));
           }}
         />
       </Card>
@@ -73,6 +75,7 @@ function Followings(props) {
 
 function mapStateToProps(state) {
   return {
+    user: state.user.data,
     me: {
       userName: state.signIn?.userInfo.userName,
       name: state.signIn?.userInfo.name,
@@ -88,6 +91,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    fetchUser: (api, username) => dispatch(userActions.getUser(api, username)),
     fetchFollowings: (api, userName) =>
       dispatch(relationshipActions.getFollowings(api, userName)),
     resetFollowings: () => dispatch(relationshipActions.resetRelationship()),

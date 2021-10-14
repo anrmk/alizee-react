@@ -13,6 +13,7 @@ import {
 import ApiContext from "../context/ApiContext";
 
 import * as relationshipActions from "../store/actions/relationship";
+import * as userActions from "../store/actions/user";
 
 import { PROFILE_USERNAME_ROUTE } from "../constants/routes";
 import {
@@ -28,11 +29,25 @@ function Followers(props) {
   const apiClient = useContext(ApiContext);
   const followDialog = useFollowDialog();
 
-  const { me, followers } = props;
-  const { fetchFollowers, acceptFollow, rejectFollow, unrejectFollow, reset } =
-    props;
+  const { user, me, followers } = props;
+  const {
+    fetchUser,
+    fetchFollowers,
+    acceptFollow,
+    rejectFollow,
+    unrejectFollow,
+    reset,
+  } = props;
 
   const [status, setStatus] = useState(FOLLOW_ACCEPTED);
+
+  useEffect(() => {
+    if (username) {
+      (async () => {
+        await fetchUser(apiClient, username);
+      })();
+    }
+  }, [username]);
 
   useEffect(() => {
     (async () => {
@@ -77,14 +92,14 @@ function Followers(props) {
       <Card>
         <CardHeader
           avatar={
-            <Link to={PROFILE_USERNAME_ROUTE(me.userName)}>
-              <Avatar src={me.avatarUrl} />
+            <Link to={PROFILE_USERNAME_ROUTE(user.userName)}>
+              <Avatar src={user.avatarUrl} />
             </Link>
           }
-          title={me.name}
-          subheader={`Followers [${followers.data?.length}]`}
+          title={user.name}
+          subheader={`Followers [${user.followersCount}]`}
         />
-        {me?.userName && (
+        {me?.userName === user.userName && (
           <Tabs
             value={status}
             indicatorColor="primary"
@@ -129,6 +144,7 @@ function mapStateToProps(state) {
       avatarUrl: state.signIn?.userInfo.avatarUrl,
       errorMessage: state.signIn?.errorMessage,
     },
+    user: state.user.data,
     followers: {
       isFetching: state.users.isFetching,
       data: state.users.data,
@@ -139,6 +155,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    fetchUser: (api, userName) => dispatch(userActions.getUser(api, userName)),
     fetchFollowers: (api, userName, status) =>
       dispatch(relationshipActions.getFollowers(api, userName, status)),
     acceptFollow: (api, userName) =>
