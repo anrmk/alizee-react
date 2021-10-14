@@ -31,6 +31,9 @@ import {
   DELETE_POST_REQUEST,
   DELETE_POST_SUCCESS,
   DELETE_POST_FAILURE,
+  HIDE_POST_REQUEST,
+  HIDE_POST_SUCCESS,
+  HIDE_POST_FAILURE,
   ADD_POSTS_USER_FAVORITE_SUCCESS,
   ADD_POST_USER_FAVORITE_SUCCESS,
   DELETE_POSTS_USER_FAVORITE_SUCCESS,
@@ -245,6 +248,25 @@ export default function post(
       };
     }
     case DELETE_POST_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case HIDE_POST_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case HIDE_POST_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case HIDE_POST_FAILURE: {
       return {
         ...state,
         ...action.payload,

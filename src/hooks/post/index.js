@@ -1,5 +1,6 @@
 export { default as useLikeAction } from "./useLikeAction";
 export { default as useFavoriteAction } from "./useFavoriteAction";
+export { default as useHideDialog } from "./useHideDialog";
 
 export { default as useReportDialog } from "./useReportDialog";
 export { default as useMoodDialog } from "./useMoodDialog";

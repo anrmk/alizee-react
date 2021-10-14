@@ -11,6 +11,7 @@ import useBlockDialog from "../useBlockDialog";
 import useConfirmationDialog from "../useConfirmationDialog";
 import useShareDialog, { SHARE_DIALOG_PROFILE_TYPE } from "../useShareDialog";
 import useDeleteAction from "./useDeleteAction";
+import useHideDialog from "./useHideDialog";
 import usePostStatistics from "./usePostStatistics";
 import useFavoriteUserAction from "../useFavoriteUserAction";
 import { DEFAULT_ROUTE } from "../../constants/routes";
@@ -24,6 +25,7 @@ const initProps = {
   isChatShare: false,
   isDelete: true,
   isFavorite: true,
+  isHide: true,
   isPostStatistics: true,
   useFavoriteProps: null,
   type: POST_TYPE,
@@ -44,6 +46,7 @@ export default function useMenuDialog(props) {
     type: SHARE_DIALOG_PROFILE_TYPE,
   });
   const { deletePostAction } = useDeleteAction();
+  const hidePostDialog = useHideDialog();
   const { favoriteUserAction } = useFavoriteUserAction(props.favoriteProps);
   const [localData, setLocalData] = useState(null);
   const { isFavorite, followingPostsData } = useSelector((state) => ({
@@ -61,6 +64,7 @@ export default function useMenuDialog(props) {
           onChatShare: props.isChatShare && chatShareDialog.toggle,
           onDelete: props.isDelete && handleDeleteClick,
           onFavorite: props.isFavorite && handleFavoriteUserClick,
+          onHide: props.isHide && hidePostDialog.toggle,
           type: props.type,
           ...localData,
           isFavorite: newFollowStatus,
@@ -115,6 +119,7 @@ export default function useMenuDialog(props) {
         onDelete: props.isDelete && handleDeleteClick,
         onFavorite: props.isFavorite && handleFavoriteUserClick,
         onPostStatistics: props.isPostStatistics && postStatistics.toggle,
+        onHide: props.isHide && hidePostDialog.toggle,
         type: props.type,
         ...data,
       }),

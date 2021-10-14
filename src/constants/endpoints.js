@@ -27,6 +27,7 @@ export default {
     favoritePost: "post/favorite",
     reportPost: "post/report",
     deletePost: "post/deletepost",
+    hidePost: "post/hide",
     buyPost: "post/buyPost",
     sendDonation: "post/sendDonation",
 

@@ -15,6 +15,7 @@ import SendIcon from "@material-ui/icons/SendOutlined";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import BarChartIcon from "@material-ui/icons/BarChart";
+import ThumbDownOutlinedIcon from "@material-ui/icons/ThumbDownOutlined";
 
 export const POST_TYPE = 0;
 export const PROFILE_TYPE = 1;
@@ -35,6 +36,7 @@ function Menu({
   onDelete,
   onFavorite,
   onPostStatistics,
+  onHide,
 }) {
   const handleBlockClick = () => {
     onBlock && onBlock({ userName, isBlocked });
@@ -62,6 +64,10 @@ function Menu({
 
   const handlePostStatisticsClick = () => {
     onPostStatistics && onPostStatistics({ postId });
+  };
+
+  const handleHideClick = () => {
+    onHide && onHide({ postId });
   };
 
   return (
@@ -94,6 +100,14 @@ function Menu({
             <ReportIcon />
           </ListItemIcon>
           <ListItemText primary="Report" />
+        </ListItem>
+      )}
+      {!isOwner && onHide && (
+        <ListItem button onClick={handleHideClick}>
+          <ListItemIcon>
+            <ThumbDownOutlinedIcon />
+          </ListItemIcon>
+          <ListItemText primary="I don't like this post" />
         </ListItem>
       )}
       {isOwner && !isProfile && (

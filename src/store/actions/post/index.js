@@ -110,6 +110,13 @@ export {
 } from "./deletePost";
 
 export {
+  HIDE_POST_REQUEST,
+  HIDE_POST_SUCCESS,
+  HIDE_POST_FAILURE,
+  hidePost,
+} from "./hidePost";
+
+export {
   ADD_POSTS_USER_FAVORITE_SUCCESS,
   ADD_POST_USER_FAVORITE_SUCCESS,
   addPostsUserFavorite,
