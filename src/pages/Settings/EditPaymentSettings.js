@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useCallback } from "react";
 import { connect } from "react-redux";
 
-import { Card, CardHeader, Divider, CardContent } from "@material-ui/core";
+import { Card, Divider, CardContent } from "@material-ui/core";
 
 import usePaymentCardDialog from "../../hooks/usePaymentCardDialog";
 import useConfirmationDialog from "../../hooks/useConfirmationDialog";
 import useDialog from "../../hooks/useDialog";
+import SettingsHeader from "../../domain/SettingsForms/SettingsHeader";
 
 import ApiContext from "../../context/ApiContext";
 import * as settingsActions from "../../store/actions/settings";
@@ -23,6 +24,7 @@ function EditPaymentSettings({
   cards,
   wallet,
   isFetching,
+  onBackClick,
 }) {
   const apiClient = useContext(ApiContext);
 
@@ -70,7 +72,7 @@ function EditPaymentSettings({
 
   return (
     <Card>
-      <CardHeader title="Payments" />
+      <SettingsHeader onBackClick={onBackClick} title="Payments" />
       <Divider />
 
       <WalletCard

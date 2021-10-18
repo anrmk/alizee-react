@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import {
   Card,
   CardContent,
-  CardHeader,
   Divider,
   List,
   ListItem,
@@ -22,13 +21,17 @@ import {
   SETTINGS_NOTIFICATIONS_SITE_ROUTE,
   SETTINGS_NOTIFICATIONS_TOAST_ROUTE,
 } from "../../../constants/routes";
+import SettingsHeader from "../../../domain/SettingsForms/SettingsHeader";
 
-function GeneralNotificationSettings() {
+function GeneralNotificationSettings({ onBackClick }) {
   const history = useHistory();
 
   return (
     <Card>
-      <CardHeader title="Notifications Settings" />
+      <SettingsHeader
+        onBackClick={onBackClick}
+        title="Notifications Settings"
+      />
       <Divider />
       <CardContent>
         <List disablePadding>

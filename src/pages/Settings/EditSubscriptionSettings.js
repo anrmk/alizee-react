@@ -1,11 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import { connect } from "react-redux";
 
-import { Divider, Card, CardHeader } from "@material-ui/core";
+import { Divider, Card } from "@material-ui/core";
 
 import ApiContext from "../../context/ApiContext";
 import * as settingsActions from "../../store/actions/settings";
 import { EditSubscriptionForm } from "../../domain/SettingsForms";
+import SettingsHeader from "../../domain/SettingsForms/SettingsHeader";
 
 import useSubscriptionBundleDialog from "../../hooks/useSubscriptionBundleDialog";
 import useSubscriptionCampaignDialog from "../../hooks/useSubscriptionCampaignDialog";
@@ -29,6 +30,7 @@ function EditSubscriptionSettings({
   updateSubscription,
   deleteSubscriptionBundle,
   deleteCampaign,
+  onBackClick,
 }) {
   const apiClient = useContext(ApiContext);
   const dialog = useDialog();
@@ -71,14 +73,13 @@ function EditSubscriptionSettings({
   };
   return (
     <Card>
-      <CardHeader title="Subscription" />
+      <SettingsHeader onBackClick={onBackClick} title="Subscription" />
       <Divider />
       <EditSubscriptionForm
         price={data.price}
         onSubmit={handleEditProfileSubmit}
       />
       <Divider />
-
       <CampaignBlog
         data={campaigns}
         onOpenDialogClick={subscriptionCampaignDialog.toggle}

@@ -9,10 +9,10 @@ import {
   Button,
   Card,
   CardContent,
-  CardHeader,
   Divider,
 } from "@material-ui/core";
 import { PHONE_REGEX } from "../../constants/regexs";
+import SettingsHeader from "./SettingsHeader";
 
 import {
   EMPTY_VALUE_ERROR,
@@ -40,6 +40,7 @@ function EditAccountForm({
   phoneNumber,
 
   onSubmit,
+  onBackClick,
 }) {
   const { errors, register, setValue, watch, control, handleSubmit } = useForm({
     resolver: yupResolver(schema),
@@ -52,7 +53,7 @@ function EditAccountForm({
 
   return (
     <Card>
-      <CardHeader title="Account" />
+      <SettingsHeader onBackClick={onBackClick} title="Account" />
       <Divider />
       <CardContent>
         <Grid

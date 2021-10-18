@@ -26,6 +26,7 @@ function PrivacySecuritySettings(props) {
     updateOffensiveComments,
     deleteAccount,
     getSettingsResetPasswordConfirm,
+    onBackClick,
   } = props;
   const dialog = useDialog();
   useAlert(privacySettings.requestStatus);
@@ -101,6 +102,7 @@ function PrivacySecuritySettings(props) {
       onOffensiveCommentsUpdate={handleOffensiveCommentsChange}
       onPasswordReset={handlePasswordResetClick}
       onAccountDelete={handleAccountDeleteClick}
+      onBackClick={onBackClick}
     />
   );
 }

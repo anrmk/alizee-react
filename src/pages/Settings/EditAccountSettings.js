@@ -12,6 +12,7 @@ function EditAccountSettings({
   isFetching,
   getAccount,
   updateAccount,
+  onBackClick,
 }) {
   const apiClient = useContext(ApiContext);
   useAlert(requestStatus);
@@ -27,7 +28,11 @@ function EditAccountSettings({
   };
   return (
     !isFetching && (
-      <EditAccountForm {...data} onSubmit={handleEditAccountSubmit} />
+      <EditAccountForm
+        {...data}
+        onSubmit={handleEditAccountSubmit}
+        onBackClick={onBackClick}
+      />
     )
   );
 }

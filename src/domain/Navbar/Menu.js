@@ -23,7 +23,7 @@ import {
   HELP_ROUTE,
   CHANGE_LOG_ROUTE,
   PROFILE_USERNAME_ROUTE,
-  SETTINGS_EDIT_PROFILE_ROUTE,
+  SETTINGS_ROUTE,
 } from "../../constants/routes";
 
 import useChangeTheme from "../../hooks/useChangeTheme";
@@ -81,8 +81,7 @@ export default function NavMenu({
         <ListItemText primary={t("NavbarMenuItemPostSavedText")} />
       </MenuItem>
 
-      <MenuItem
-        onClick={() => handleMenuItemClick(SETTINGS_EDIT_PROFILE_ROUTE)}>
+      <MenuItem onClick={() => handleMenuItemClick(SETTINGS_ROUTE)}>
         <ListItemIcon>
           <SettingsIcon />
         </ListItemIcon>

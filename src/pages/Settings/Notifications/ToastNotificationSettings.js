@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import {
   Card,
   CardContent,
-  CardHeader,
   List,
   ListSubheader,
   ListItem,
@@ -13,6 +12,7 @@ import {
   Switch,
   Divider,
 } from "@material-ui/core";
+import SettingsHeader from "../../../domain/SettingsForms/SettingsHeader";
 
 import ApiContext from "../../../context/ApiContext";
 import { isEmptyObject } from "../../../helpers/functions";
@@ -26,6 +26,7 @@ function ToastNotificationSettings({
   getNotification,
   updateNotification,
   resetSettings,
+  onBackClick,
 }) {
   const apiClient = useContext(ApiContext);
   useAlert(requestStatus);
@@ -65,7 +66,7 @@ function ToastNotificationSettings({
 
   return (
     <Card>
-      <CardHeader title="Toast Notifications" />
+      <SettingsHeader onBackClick={onBackClick} title="Toast Notifications" />
       <Divider />
       <CardContent>
         <List disablePadding onChange={handleSettingsChange}>
@@ -141,7 +142,7 @@ function mapStateToProps(state) {
   return {
     isFetching: state.settings.isFetching,
     data: state.settings.data,
-    requestStatus: state.setSettings.requestStatus,
+    requestStatus: state.settings.requestStatus,
   };
 }
 

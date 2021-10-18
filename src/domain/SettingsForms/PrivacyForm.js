@@ -6,7 +6,6 @@ import {
   Typography,
   Grid,
   Card,
-  CardHeader,
   CardContent,
   List,
   ListItem,
@@ -15,6 +14,7 @@ import {
   Switch,
 } from "@material-ui/core";
 import WarningIcon from "@material-ui/icons/Warning";
+import SettingsHeader from "./SettingsHeader";
 
 import { BLOCKED_USERNAME_ROUTE } from "../../constants/routes";
 
@@ -48,6 +48,7 @@ function PrivacyForm({
   onOffensiveCommentsUpdate,
   onPasswordReset,
   onAccountDelete,
+  onBackClick,
 }) {
   const [lAccountPrivate, setLAccountPrivate] = useState(accountPrivate);
   const [lActivityStatus, setLActivityStatus] = useState(showActivity);
@@ -87,8 +88,7 @@ function PrivacyForm({
 
   return (
     <Card>
-      <CardHeader title="Privacy and Safety" />
-
+      <SettingsHeader onBackClick={onBackClick} title="Privacy and Safety" />
       <Divider />
 
       <CardContent>

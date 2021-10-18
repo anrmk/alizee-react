@@ -4,7 +4,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import {
   Card,
-  CardHeader,
   CardContent,
   Grid,
   Button,
@@ -27,6 +26,7 @@ import {
 
 import useStyles from "./styles";
 import Cover from "../../components/Cover";
+import SettingsHeader from "./SettingsHeader";
 
 const DISPLAY_NAME_INPUT_ID = "name";
 const USERNAME_INPUT_ID = "userName";
@@ -64,6 +64,7 @@ function EditProfileForm({
   isFetching,
 
   onSubmit,
+  onBackClick,
 }) {
   const classes = useStyles();
   const { errors, register, setValue, watch, control, handleSubmit } = useForm({
@@ -145,7 +146,8 @@ function EditProfileForm({
 
   return (
     <Card>
-      <CardHeader title="Edit Profile" />
+      <SettingsHeader onBackClick={onBackClick} title="Edit Profile" />
+
       <Divider />
       <CardContent>
         <Grid container direction="column" spacing={2} alignItems="center">

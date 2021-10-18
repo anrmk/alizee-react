@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import {
   Card,
   CardContent,
-  CardHeader,
   List,
   ListSubheader,
   ListItem,
@@ -13,6 +12,7 @@ import {
   Switch,
   Divider,
 } from "@material-ui/core";
+import SettingsHeader from "../../../domain/SettingsForms/SettingsHeader";
 
 import ApiContext from "../../../context/ApiContext";
 import { isEmptyObject } from "../../../helpers/functions";
@@ -26,6 +26,7 @@ function SiteNotificationSettings({
   getNotification,
   updateNotification,
   resetSettings,
+  onBackClick,
 }) {
   const apiClient = useContext(ApiContext);
   useAlert(requestStatus);
@@ -69,7 +70,7 @@ function SiteNotificationSettings({
 
   return (
     <Card>
-      <CardHeader title="Site Notifications" />
+      <SettingsHeader onBackClick={onBackClick} title="Site Notifications" />
       <Divider />
       <CardContent>
         <List disablePadding onChange={handleSettingsChange}>

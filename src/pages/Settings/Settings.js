@@ -49,11 +49,6 @@ import {
   ToastNotificationSettings,
 } from "./Notifications";
 
-// import {
-//   DEFAULT_ALERT_SUCCESS_TEXT,
-//   DEFAULT_ALERT_ERROR_TEXT,
-// } from "../../constants/alerts";
-
 import useSlidingViews, { RIGHT_OPEN_TYPE } from "../../hooks/useSlidingViews";
 import useChangeTheme from "../../hooks/useChangeTheme";
 import { resetSettings } from "../../store/actions/settings";
@@ -123,6 +118,11 @@ function Settings() {
 
   useEffect(() => () => dispatch(resetSettings()), []);
 
+  const handleBackClick = () => {
+    toggleSlidingViewsState();
+    history.goBack();
+  };
+
   return (
     <SlidingViews
       mobileOnly
@@ -173,58 +173,71 @@ function Settings() {
             exact
             path={SETTINGS_EDIT_PROFILE_ROUTE}
             component={EditProfileSettings}
+            componentProps={{
+              onBackClick: handleBackClick,
+            }}
           />
           <PrivateRoute
             exact
             path={SETTINGS_ACCOUNT_ROUTE}
             component={EditAccountSettings}
+            componentProps={{ onBackClick: handleBackClick }}
           />
           <PrivateRoute
             exact
             path={SETTINGS_PAYMENTS_ROUTE}
             component={EditPaymentSettings}
+            componentProps={{ onBackClick: handleBackClick }}
           />
           <PrivateRoute
             exact
             path={SETTINGS_BANK_ROUTE}
             component={EditBankSettings}
+            componentProps={{ onBackClick: handleBackClick }}
           />
           <PrivateRoute
             exact
             path={SETTINGS_SUBSCRIPTION_ROUTE}
             component={EditSubscriptionSettings}
+            componentProps={{ onBackClick: handleBackClick }}
           />
 
           <PrivateRoute
             exact
             path={SETTINGS_NOTIFICATIONS_ROUTE}
             component={GeneralNotificationSettings}
+            componentProps={{ onBackClick: handleBackClick }}
           />
           <PrivateRoute
             exact
             path={SETTINGS_NOTIFICATIONS_PUSH_ROUTE}
             component={PushNotificationSettings}
+            componentProps={{ onBackClick: handleBackClick }}
           />
           <PrivateRoute
             exact
             path={SETTINGS_NOTIFICATIONS_EMAIL_ROUTE}
             component={EmailNotificationSettings}
+            componentProps={{ onBackClick: handleBackClick }}
           />
           <PrivateRoute
             exact
             path={SETTINGS_NOTIFICATIONS_SITE_ROUTE}
             component={SiteNotificationSettings}
+            componentProps={{ onBackClick: handleBackClick }}
           />
           <PrivateRoute
             exact
             path={SETTINGS_NOTIFICATIONS_TOAST_ROUTE}
             component={ToastNotificationSettings}
+            componentProps={{ onBackClick: handleBackClick }}
           />
 
           <PrivateRoute
             exact
             path={SETTINGS_PRIVACY_SECURITY_ROUTE}
             component={PrivacySecuritySettings}
+            componentProps={{ onBackClick: handleBackClick }}
           />
         </Switch>
       </Box>

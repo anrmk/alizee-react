@@ -6,7 +6,12 @@ import * as settingsActions from "../../store/actions/settings";
 import { EditProfileForm } from "../../domain/SettingsForms";
 import useAlert from "../../hooks/useAlert";
 
-function EditProfileSettings({ user, requestStatus, updateProfile }) {
+function EditProfileSettings({
+  user,
+  requestStatus,
+  updateProfile,
+  onBackClick,
+}) {
   const apiClient = useContext(ApiContext);
   useAlert(requestStatus);
 
@@ -16,7 +21,13 @@ function EditProfileSettings({ user, requestStatus, updateProfile }) {
     })();
   };
 
-  return <EditProfileForm {...user} onSubmit={handleEditProfileSubmit} />;
+  return (
+    <EditProfileForm
+      {...user}
+      onSubmit={handleEditProfileSubmit}
+      onBackClick={onBackClick}
+    />
+  );
 }
 
 function mapStateToProps(state) {

@@ -1,12 +1,13 @@
 import React, { useContext, useEffect } from "react";
 import { connect } from "react-redux";
-import { Card, CardHeader, CardContent, Divider } from "@material-ui/core";
+import { Card, CardContent, Divider } from "@material-ui/core";
 
 import ApiContext from "../../context/ApiContext";
 import * as settingsActions from "../../store/actions/settings";
 import * as accountActions from "../../store/actions/account";
 import * as userActions from "../../store/actions/user";
 import { EditBankForm, OndatoForm } from "../../domain/SettingsForms";
+import SettingsHeader from "../../domain/SettingsForms/SettingsHeader";
 
 import useAgreeDialog from "../../hooks/useAgreeDialog";
 import useBankAccountStatuses from "../../hooks/settings/useBankAccountStatuses";
@@ -27,6 +28,7 @@ function EditBankSettings({
   verifyBankAccount,
   withdraw,
   veryfyMe,
+  onBackClick,
 }) {
   const apiClient = useContext(ApiContext);
   const classes = useStyles();
@@ -60,7 +62,7 @@ function EditBankSettings({
 
   return (
     <Card>
-      <CardHeader title="Banking" />
+      <SettingsHeader onBackClick={onBackClick} title="Banking" />
       <Divider />
       <CardContent>
         {isVerified && (

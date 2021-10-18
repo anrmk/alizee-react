@@ -7,7 +7,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Card,
   CardContent,
-  CardHeader,
   List,
   ListSubheader,
   ListItem,
@@ -18,6 +17,8 @@ import {
   Divider,
   Typography,
 } from "@material-ui/core";
+
+import SettingsHeader from "../../../domain/SettingsForms/SettingsHeader";
 
 import ApiContext from "../../../context/ApiContext";
 import { isEmptyObject } from "../../../helpers/functions";
@@ -70,6 +71,7 @@ function EmailNotificationsSettings({
   getNotification,
   updateNotification,
   resetSettings,
+  onBackClick,
 }) {
   const apiClient = useContext(ApiContext);
   useAlert(requestStatus);
@@ -160,11 +162,11 @@ function EmailNotificationsSettings({
 
   return (
     <Card>
-      <CardHeader
+      <SettingsHeader
+        onBackClick={onBackClick}
         title="Email Notifications"
         subheader="Get emails to find out what’s going on when you’re not on site. You can turn them off anytime."
       />
-
       <Divider />
 
       <CardContent>

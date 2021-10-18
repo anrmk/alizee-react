@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import {
   Card,
   CardContent,
-  CardHeader,
   List,
   ListSubheader,
   ListItem,
@@ -23,6 +22,7 @@ import ApiContext from "../../../context/ApiContext";
 import usePushNotifications from "../../../hooks/usePushNotifications";
 import { isEmptyObject } from "../../../helpers/functions";
 import * as settingsActions from "../../../store/actions/settings";
+import SettingsHeader from "../../../domain/SettingsForms/SettingsHeader";
 
 import { ALLOW_PUSH_NOTIFICATION } from "../../../constants/permissions";
 import useAlert from "../../../hooks/useAlert";
@@ -34,6 +34,7 @@ function PushNotificationSettings({
   getNotification,
   updateNotification,
   resetSettings,
+  onBackClick,
 }) {
   const apiClient = useContext(ApiContext);
   const [settings, setSettings] = useState({
@@ -110,7 +111,8 @@ function PushNotificationSettings({
   };
   return (
     <Card>
-      <CardHeader
+      <SettingsHeader
+        onBackClick={onBackClick}
         title="Push Notifications"
         subheader="Get push notifications to find out what’s going on when you’re not on site. You can turn them off anytime."
       />
