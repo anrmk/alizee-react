@@ -1,3 +1,5 @@
+import { SEARCH_DEFAULT_OFFSET } from "../../../constants/search";
+
 export const RESET_RELATIONSHIP = "RESET_RELATIONSHIP";
 
 export function resetRelationship() {
@@ -6,10 +8,11 @@ export function resetRelationship() {
       type: RESET_RELATIONSHIP,
       payload: {
         isFetching: false,
-        data: [],
-        offset: 0,
+        offset: SEARCH_DEFAULT_OFFSET,
         hasMore: false,
         errorMessage: "",
+        data: [],
+        query: "",
       },
     });
 }

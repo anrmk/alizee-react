@@ -8,21 +8,27 @@ import ApiContext from "../context/ApiContext";
 import { PROFILE_USERNAME_ROUTE } from "../constants/routes";
 
 import RelationshipList from "../components/RelationshipList";
+import SearchInput from "../domain/Search";
 import * as relationshipActions from "../store/actions/relationship";
 import * as userActions from "../store/actions/user";
 
 import { useFollowDialog } from "../hooks/payment";
+import useUsersSearch from "../hooks/useUsersSearch";
 
 function Followings(props) {
+  const { user, me, following } = props;
+  const { fetchUser, fetchFollowings } = props;
+
   const { username } = useParams();
 
   const apiClient = useContext(ApiContext);
   const history = useHistory();
 
   const followDialog = useFollowDialog();
-
-  const { user, me, following } = props;
-  const { fetchUser, fetchFollowings, resetFollowings } = props;
+  const { onSearch, onFetchMore, onClearInput } = useUsersSearch(
+    fetchFollowings,
+    username
+  );
 
   useEffect(() => {
     if (username) {
@@ -33,19 +39,8 @@ function Followings(props) {
     }
   }, [username]);
 
-  useEffect(
-    () => () => {
-      resetFollowings();
-    },
-    []
-  );
-
   const handleRefresh = () => {
     console.log("refresh");
-  };
-
-  const handleFetchMore = () => {
-    fetchFollowings(apiClient, username);
   };
 
   return (
@@ -59,6 +54,11 @@ function Followings(props) {
             history.push(PROFILE_USERNAME_ROUTE(user.userName));
           }}
         />
+        <CardHeader
+          title={
+            <SearchInput onSendQuery={onSearch} onClearInput={onClearInput} />
+          }
+        />
       </Card>
 
       <RelationshipList
@@ -67,7 +67,7 @@ function Followings(props) {
         onSubscribeClick={followDialog.toggle}
         hasMore={following.hasMore}
         onRefresh={handleRefresh}
-        onFetchMore={handleFetchMore}
+        onFetchMore={onFetchMore}
       />
     </Container>
   );
@@ -92,9 +92,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchUser: (api, username) => dispatch(userActions.getUser(api, username)),
-    fetchFollowings: (api, userName) =>
-      dispatch(relationshipActions.getFollowings(api, userName)),
-    resetFollowings: () => dispatch(relationshipActions.resetRelationship()),
+    fetchFollowings: (api, userName, query) =>
+      dispatch(relationshipActions.getFollowings(api, userName, query)),
   };
 }
 

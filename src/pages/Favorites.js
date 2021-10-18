@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import { Container, Card, CardHeader, Avatar } from "@material-ui/core";
 import ApiContext from "../context/ApiContext";
+import SearchInput from "../domain/Search";
 
 import { PROFILE_USERNAME_ROUTE } from "../constants/routes";
 
@@ -11,7 +12,7 @@ import { useFollowDialog } from "../hooks/payment";
 
 import RelationshipList from "../components/RelationshipList";
 import * as accountActions from "../store/actions/account";
-import * as relationshipActions from "../store/actions/relationship";
+import useUsersSearch from "../hooks/useUsersSearch";
 
 function Favorites(props) {
   const { username } = useParams();
@@ -21,7 +22,12 @@ function Favorites(props) {
   const followDialog = useFollowDialog();
 
   const { me, favorites } = props;
-  const { fetchFavorites, resetFollowings } = props;
+  const { fetchFavorites } = props;
+
+  const { onSearch, onFetchMore, onClearInput } = useUsersSearch(
+    fetchFavorites,
+    username
+  );
 
   useEffect(() => {
     if (username) {
@@ -30,13 +36,6 @@ function Favorites(props) {
       })();
     }
   }, [username]);
-
-  useEffect(
-    () => () => {
-      resetFollowings();
-    },
-    []
-  );
 
   return (
     <Container maxWidth="sm">
@@ -49,12 +48,18 @@ function Favorites(props) {
             history.push(PROFILE_USERNAME_ROUTE(me.userName));
           }}
         />
+        <CardHeader
+          title={
+            <SearchInput onSendQuery={onSearch} onClearInput={onClearInput} />
+          }
+        />
       </Card>
 
       <RelationshipList
         items={favorites.data}
         currentUserName={me.userName}
         onSubscribeClick={followDialog.toggle}
+        onFetchMore={onFetchMore}
       />
     </Container>
   );
@@ -77,9 +82,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchFavorites: (api, userName) =>
-      dispatch(accountActions.getFavorites(api, userName)),
-    resetFollowings: () => dispatch(relationshipActions.resetRelationship()),
+    fetchFavorites: (api, userName, query) =>
+      dispatch(accountActions.getFavorites(api, userName, query)),
   };
 }
 

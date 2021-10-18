@@ -496,3 +496,8 @@ export function isFullHeightPage(pathname) {
   const fullHeightPages = [DEFAULT_ROUTE, EXPLORE_ROUTE, NOTIFICATION_ROUTE];
   return !fullHeightPages.find((item) => pathname.includes(item));
 }
+
+export function isSpecialCharacter(query) {
+  const regex = "[^A-Za-z0-9]";
+  return query.match(regex);
+}

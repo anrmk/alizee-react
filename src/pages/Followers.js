@@ -14,6 +14,7 @@ import ApiContext from "../context/ApiContext";
 
 import * as relationshipActions from "../store/actions/relationship";
 import * as userActions from "../store/actions/user";
+import SearchInput from "../domain/Search";
 
 import { PROFILE_USERNAME_ROUTE } from "../constants/routes";
 import {
@@ -23,6 +24,7 @@ import {
 } from "../constants/follow_types";
 import RelationshipList from "../components/RelationshipList";
 import { useFollowDialog } from "../hooks/payment";
+import useUsersSearch from "../hooks/useUsersSearch";
 
 function Followers(props) {
   const { username } = useParams();
@@ -36,10 +38,15 @@ function Followers(props) {
     acceptFollow,
     rejectFollow,
     unrejectFollow,
-    reset,
   } = props;
 
   const [status, setStatus] = useState(FOLLOW_ACCEPTED);
+
+  const { onSearch, onFetchMore, onClearInput } = useUsersSearch(
+    fetchFollowers,
+    username,
+    status
+  );
 
   useEffect(() => {
     if (username) {
@@ -51,23 +58,12 @@ function Followers(props) {
 
   useEffect(() => {
     (async () => {
-      await fetchFollowers(apiClient, username, status);
+      await fetchFollowers(apiClient, username, "", status);
     })();
   }, [status]);
 
-  useEffect(
-    () => () => {
-      reset();
-    },
-    []
-  );
-
   const handleRefresh = () => {
     console.log("refresh");
-  };
-
-  const handleFetchMore = () => {
-    fetchFollowers(apiClient, username, status);
   };
 
   const handleConfirmClick = ({ userName }) => {
@@ -83,7 +79,6 @@ function Followers(props) {
   };
 
   const handleTabChange = (e, newValue) => {
-    reset();
     setStatus(newValue);
   };
 
@@ -98,6 +93,11 @@ function Followers(props) {
           }
           title={user.name}
           subheader={`Followers [${user.followersCount}]`}
+        />
+        <CardHeader
+          title={
+            <SearchInput onSendQuery={onSearch} onClearInput={onClearInput} />
+          }
         />
         {me?.userName === user.userName && (
           <Tabs
@@ -130,7 +130,7 @@ function Followers(props) {
         onUnrejectClick={(item) => handleUnrejectClick(item)}
         hasMore={followers.hasMore}
         onRefresh={handleRefresh}
-        onFetchMore={handleFetchMore}
+        onFetchMore={onFetchMore}
       />
     </Container>
   );
@@ -156,15 +156,14 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchUser: (api, userName) => dispatch(userActions.getUser(api, userName)),
-    fetchFollowers: (api, userName, status) =>
-      dispatch(relationshipActions.getFollowers(api, userName, status)),
+    fetchFollowers: (api, userName, query, status) =>
+      dispatch(relationshipActions.getFollowers(api, userName, query, status)),
     acceptFollow: (api, userName) =>
       dispatch(relationshipActions.acceptFollow(api, userName)),
     rejectFollow: (api, userName) =>
       dispatch(relationshipActions.rejectFollow(api, userName)),
     unrejectFollow: (api, userName) =>
       dispatch(relationshipActions.unrejectFollow(api, userName)),
-    reset: () => dispatch(relationshipActions.resetRelationship()),
   };
 }
 

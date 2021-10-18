@@ -1,5 +1,6 @@
 import { generateUrl } from "../../../helpers/functions";
 import { FOLLOWERS_OFFSET, FOLLOWERS_LENGTH } from "../../../constants/feed";
+import { resetRelationship } from "./resetRelationship";
 
 export const GET_FOLLOWERS_REQUEST = "GET_FOLLOWERS_REQUEST";
 export const GET_FOLLOWERS_SUCCESS = "GET_FOLLOWERS_SUCCESS";
@@ -15,7 +16,7 @@ function requestGetFollowers() {
   };
 }
 
-function receiveGetFollowers(data, start, length) {
+function receiveGetFollowers(data, query, start, length) {
   return {
     type: GET_FOLLOWERS_SUCCESS,
     payload: {
@@ -24,6 +25,7 @@ function receiveGetFollowers(data, start, length) {
       errorMessage: "",
       offset: start + FOLLOWERS_OFFSET,
       hasMore: length === FOLLOWERS_OFFSET,
+      query,
     },
   };
 }
@@ -39,14 +41,19 @@ function errorGetFollowers(message) {
   };
 }
 
-export function getFollowers(api, userName, status) {
+export function getFollowers(api, userName, query, status) {
   return async (dispatch, getState) => {
     dispatch(requestGetFollowers());
 
     const url = generateUrl("getFollowers");
-    const currentOffset = getState().users.offset;
 
     try {
+      if (getState().users.query !== query) {
+        dispatch(resetRelationship());
+      }
+
+      const currentOffset = getState().users.offset;
+
       const { data } = await api
         .setMethod("GET")
         .setParams({
@@ -54,12 +61,14 @@ export function getFollowers(api, userName, status) {
           status,
           start: currentOffset,
           length: FOLLOWERS_LENGTH,
+          query,
         })
         .query(url);
 
       dispatch(
         receiveGetFollowers(
           [...getState().users.data, ...data],
+          query || "",
           currentOffset,
           data.length
         )

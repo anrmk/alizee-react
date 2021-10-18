@@ -1,4 +1,7 @@
 import { generateUrl } from "../../../helpers/functions";
+import { FOLLOWERS_LENGTH, FOLLOWERS_OFFSET } from "../../../constants/feed";
+
+import { resetRelationship } from "./resetRelationship";
 
 export const GET_BLOCK_LIST_REQUEST = "GET_BLOCK_LIST_REQUEST";
 export const GET_BLOCK_LIST_SUCCESS = "GET_BLOCK_LIST_SUCCESS";
@@ -14,13 +17,16 @@ function requestGetBlocked() {
   };
 }
 
-function receiveGetBlocked(data) {
+function receiveGetBlocked(data, query, start, length) {
   return {
     type: GET_BLOCK_LIST_SUCCESS,
     payload: {
       isFetching: false,
-      errorMessage: "",
       data,
+      errorMessage: "",
+      query,
+      offset: start + FOLLOWERS_OFFSET,
+      hasMore: length === FOLLOWERS_OFFSET,
     },
   };
 }
@@ -30,20 +36,40 @@ function errorGetBlocked(message) {
     type: GET_BLOCK_LIST_FAILURE,
     payload: {
       isFetching: false,
+      hasMore: false,
       errorMessage: message,
     },
   };
 }
 
-export function getBlocked(api) {
-  return async (dispatch) => {
+export function getBlocked(api, userName, query) {
+  return async (dispatch, getState) => {
     dispatch(requestGetBlocked());
 
     const url = generateUrl("getBlocked");
     try {
-      const { data } = await api.setMethod("GET").query(url);
+      if (getState().users.query !== query) {
+        dispatch(resetRelationship());
+      }
 
-      dispatch(receiveGetBlocked(data));
+      const currentOffset = getState().users.offset;
+      const { data } = await api
+        .setMethod("GET")
+        .setParams({
+          start: currentOffset,
+          length: FOLLOWERS_LENGTH,
+          query,
+        })
+        .query(url);
+
+      dispatch(
+        receiveGetBlocked(
+          [...getState().users.data, ...data],
+          query || "",
+          currentOffset,
+          data.length
+        )
+      );
     } catch (e) {
       dispatch(errorGetBlocked("Error: something went wrong:", e));
     }

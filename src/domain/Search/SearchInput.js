@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { OutlinedInput, InputAdornment } from "@material-ui/core";
+import { OutlinedInput, InputAdornment, IconButton } from "@material-ui/core";
 
 import SearchIcon from "@material-ui/icons/SearchOutlined";
+import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
 
 import { debounce } from "../../helpers/functions";
 
@@ -12,6 +13,7 @@ function SearchInput({
   interval = 500,
 
   onSendQuery,
+  onClearInput,
 }) {
   const classes = useStyles();
   const [value, setValue] = useState(defaultValue);
@@ -33,6 +35,10 @@ function SearchInput({
     myDebounce(e.target.value.trim());
   };
 
+  const handleClearInput = () => {
+    onClearInput();
+    setValue(defaultValue);
+  };
   return (
     <OutlinedInput
       fullWidth
@@ -45,6 +51,15 @@ function SearchInput({
         <InputAdornment position="start">
           <SearchIcon />
         </InputAdornment>
+      }
+      endAdornment={
+        onClearInput && (
+          <InputAdornment position="end">
+            <IconButton onClick={handleClearInput} disabled={!value}>
+              <CloseOutlinedIcon />
+            </IconButton>
+          </InputAdornment>
+        )
       }
       onChange={handleChange}
     />

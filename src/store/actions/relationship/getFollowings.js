@@ -2,6 +2,7 @@ import { createSelector } from "reselect";
 import { FOLLOWERS_LENGTH, FOLLOWERS_OFFSET } from "../../../constants/feed";
 
 import { generateUrl } from "../../../helpers/functions";
+import { resetRelationship } from "./resetRelationship";
 
 export const GET_FOLLOWINGS_REQUEST = "GET_FOLLOWINGS_REQUEST";
 export const GET_FOLLOWINGS_SUCCESS = "GET_FOLLOWINGS_SUCCESS";
@@ -92,27 +93,32 @@ export function receiveGetFollowingsShare(data) {
   };
 }
 
-export function getFollowings(api, userName) {
+export function getFollowings(api, userName, query) {
   return async (dispatch, getState) => {
     dispatch(requestGetFollowings());
 
     const url = generateUrl("getFollowings");
-    const currentOffset = getState().users.offset;
-
     try {
+      if (getState().users.query !== query) {
+        dispatch(resetRelationship());
+      }
+
+      const currentOffset = getState().users.offset;
+
       const { data } = await api
         .setMethod("GET")
         .setParams({
           userName,
           start: currentOffset,
           length: FOLLOWERS_LENGTH,
+          query,
         })
         .query(url);
 
       dispatch(
         receiveGetFollowings(
           [...getState().users.data, ...data],
-          "",
+          query || "",
           currentOffset,
           data.length
         )
