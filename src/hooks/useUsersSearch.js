@@ -45,12 +45,13 @@ export default function useUsersSearch(onUsersSearch, username, status) {
   const handleClearInput = async () => {
     dispatch(relationshipActions.resetRelationship());
     setCurrentQuery("");
-    await onUsersSearch(apiClient, username);
+    await onUsersSearch(apiClient, username, "", status);
   };
 
   return {
     onFetchMore: handleFetchMore,
     onSearch: handleSearch,
     onClearInput: handleClearInput,
+    query: currentQuery,
   };
 }

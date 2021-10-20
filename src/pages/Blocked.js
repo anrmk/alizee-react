@@ -20,7 +20,6 @@ import * as relationshipActions from "../store/actions/relationship";
 import SearchInput from "../domain/Search";
 
 import { PROFILE_USERNAME_ROUTE } from "../constants/routes";
-import { formatDate } from "../helpers/functions";
 import useBlockDialog from "../hooks/useBlockDialog";
 import useUsersSearch from "../hooks/useUsersSearch";
 
@@ -61,17 +60,16 @@ function BlackList({ me, blocked, fetchBlocked }) {
           {blocked.data &&
             blocked.data.map((item) => (
               <ListItem
-                alignItems="flex-start"
+                button
                 key={`blf_${item.userName}`}
-                to={PROFILE_USERNAME_ROUTE(item.userName)}>
+                to={PROFILE_USERNAME_ROUTE(item.userName)}
+                component={Link}>
                 <ListItemAvatar>
                   <Avatar src={item.avatarUrl} />
                 </ListItemAvatar>
                 <ListItemText
                   primary={item.name}
-                  secondary={`${item.userName} - ${formatDate(
-                    item.createdDate
-                  )}`}
+                  secondary={`@${item.userName}`}
                 />
                 <ListItemSecondaryAction>
                   <Button

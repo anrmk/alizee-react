@@ -48,7 +48,10 @@ export function getFollowers(api, userName, query, status) {
     const url = generateUrl("getFollowers");
 
     try {
-      if (getState().users.query !== query) {
+      if (
+        getState().users.query !== query ||
+        getState().users.status !== status
+      ) {
         dispatch(resetRelationship());
       }
 

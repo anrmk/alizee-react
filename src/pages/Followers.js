@@ -42,7 +42,7 @@ function Followers(props) {
 
   const [status, setStatus] = useState(FOLLOW_ACCEPTED);
 
-  const { onSearch, onFetchMore, onClearInput } = useUsersSearch(
+  const { onSearch, onFetchMore, onClearInput, query } = useUsersSearch(
     fetchFollowers,
     username,
     status
@@ -58,7 +58,7 @@ function Followers(props) {
 
   useEffect(() => {
     (async () => {
-      await fetchFollowers(apiClient, username, "", status);
+      await fetchFollowers(apiClient, username, query, status);
     })();
   }, [status]);
 
