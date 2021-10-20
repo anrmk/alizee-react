@@ -69,6 +69,11 @@ export default {
     deleteBlock: "relationship/unblock",
     getFollowingsSearch: "relationship/followingssearch",
 
+    // FAVORITES
+    getAccountFavorites: "relationship/favorites",
+    createAccountFavorites: "relationship/favorites",
+    deleteAccountFavorites: "relationship/favorites",
+
     // SUGGESTIONS
     getPeopleSuggestions: "suggestion/people",
 
@@ -81,11 +86,6 @@ export default {
     getUserStatistics: "account/statistics",
     verifyMe: "account/verify",
     getBalance: "account/getbalance",
-
-    // ACCOUNT FAVORITES
-    getAccountFavorites: "account/favorites",
-    createAccountFavorites: "account/favorites",
-    deleteAccountFavorites: "account/favorites",
 
     // SETTINGS
     getAccount: "accountsetting/account",
