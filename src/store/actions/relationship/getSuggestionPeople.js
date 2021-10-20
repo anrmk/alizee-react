@@ -53,7 +53,7 @@ export function getSuggestionPeople(api, count) {
     dispatch(requestGetSuggestionPeople());
 
     try {
-      const url = generateUrl("getPeopleSuggestions");
+      const url = generateUrl("getRecommended");
       const { data } = await api
         .setMethod("GET")
         .setParams({ length: count })

@@ -75,7 +75,7 @@ export default {
     deleteAccountFavorites: "relationship/favorites",
 
     // SUGGESTIONS
-    getPeopleSuggestions: "suggestion/people",
+    getRecommended: "relationship/getrecommended",
 
     // USER
     getUser: "account/getaccountbyusername",
