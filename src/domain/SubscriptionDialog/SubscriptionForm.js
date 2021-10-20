@@ -44,6 +44,7 @@ function SubscriptionForm({
     onSubmit &&
       onSubmit({
         userName: user.userName,
+        isFollow: user.isFollow,
         followStatus: user.followStatus,
         isPrivate: user.isPrivate,
         subscriptionPrice: user.subscriptionPrice || price,

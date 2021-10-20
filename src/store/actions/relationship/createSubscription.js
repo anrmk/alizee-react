@@ -1,11 +1,11 @@
 import { generateUrl } from "../../../helpers/functions";
 import { addFollower } from "../user";
 import { getBalance } from "../account";
-import {
-  FOLLOW_ACCEPTED,
-  FOLLOW_PENDING,
-  FOLLOW_NONE,
-} from "../../../constants/follow_types";
+// import {
+//   FOLLOW_ACCEPTED,
+//   FOLLOW_PENDING,
+//   FOLLOW_NONE,
+// } from "../../../constants/follow_types";
 
 export const CREATE_SUBSCRIPTION_REQUEST = "CREATE_SUBSCRIPTION_REQUEST";
 export const CREATE_SUBSCRIPTION_SUCCESS = "CREATE_SUBSCRIPTION_SUCCESS";
@@ -77,7 +77,7 @@ export function createSubscription(api, opts) {
 
 export function toggleFollowStatus(
   data,
-  { userName, isPrivate, subscriptionPrice }
+  { userName, isPrivate, subscriptionPrice, isFollow }
 ) {
   if (!data || !data.length) return [];
 
@@ -85,16 +85,19 @@ export function toggleFollowStatus(
   const index = list.findIndex((item) => item.userName === userName);
 
   if (index !== -1) {
-    if (
-      list[index].followStatus === FOLLOW_ACCEPTED ||
-      list[index].followStatus === FOLLOW_PENDING
-    ) {
-      list[index].followStatus === FOLLOW_NONE;
-    } else {
-      isPrivate || subscriptionPrice
-        ? (list[index].followStatus = FOLLOW_PENDING)
-        : (list[index].followStatus = FOLLOW_ACCEPTED);
-    }
+    isFollow ? (list[index].isFollow = false) : (list[index].isFollow = true);
+
+    // TODO: logic for btn if using in followings, favorites...
+    // if (
+    //   list[index].followStatus === FOLLOW_ACCEPTED ||
+    //   list[index].followStatus === FOLLOW_PENDING
+    // ) {
+    //   list[index].followStatus === FOLLOW_NONE;
+    // } else {
+    //   isPrivate || subscriptionPrice
+    //     ? (list[index].followStatus = FOLLOW_PENDING)
+    //     : (list[index].followStatus = FOLLOW_ACCEPTED);
+    // }
   }
 
   return list;

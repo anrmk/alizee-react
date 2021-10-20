@@ -41,7 +41,6 @@ function errorDeleteSubscription(message) {
 export function deleteSubscription(api, opts) {
   return async (dispatch, getState) => {
     dispatch(requestDeleteSubscription());
-
     try {
       const url = generateUrl("deleteSubscription");
       await api

@@ -29,6 +29,7 @@ export default function useFollowDialog(isProfile) {
   const handleSubscribeBuy = async ({
     userName,
     followStatus,
+    isFollow,
     isPrivate,
     campaignId,
     bundleId,
@@ -38,6 +39,7 @@ export default function useFollowDialog(isProfile) {
     const opts = {
       userName,
       followStatus,
+      isFollow,
       isPrivate,
       campaignId,
       bundleId,

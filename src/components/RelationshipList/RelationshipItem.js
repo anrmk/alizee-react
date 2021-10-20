@@ -12,6 +12,7 @@ import {
   FOLLOW_PENDING,
   FOLLOW_REJECTED,
   FOLLOW_ACCEPTED,
+  FOLLOW_NONE,
 } from "../../constants/follow_types";
 
 import Avatar from "../Avatar";
@@ -32,7 +33,7 @@ const RelationshipItem = React.memo((props) => {
     subscriptionPrice,
     identityVerified,
 
-    followStatus,
+    isFollow,
     isMe,
   } = props;
   const {
@@ -51,11 +52,12 @@ const RelationshipItem = React.memo((props) => {
       onSubscribeClick({
         userName,
         name,
-        followStatus,
         subscriptionPrice,
         avatarUrl,
         coverUrl,
         identityVerified,
+        isFollow,
+        followStatus: isFollow ? FOLLOW_ACCEPTED : FOLLOW_NONE,
       });
   };
 
@@ -121,7 +123,7 @@ const RelationshipItem = React.memo((props) => {
             variant="contained"
             color="primary"
             onClick={handleSubscribeClick}>
-            {followStatus === FOLLOW_ACCEPTED
+            {isFollow
               ? t("FollowingBtnTextFollowerItem")
               : t("FollowerBtnTextFollowerItem")}
           </Button>
