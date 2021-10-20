@@ -7,12 +7,13 @@ import dialogs, {
   FOLLOW_DIALOG_TYPE,
 } from "../../constants/dialogs";
 import * as relationshipActions from "../../store/actions/relationship";
+import { FOLLOW_ACCEPTED } from "../../constants/follow_types";
 
 import useDialog from "../useDialog";
 
 const FORM_ID = "create-subscription-dialog";
 
-export default function useFollowDialog() {
+export default function useFollowDialog(isProfile) {
   const apiClient = useContext(ApiContext);
   const dispatch = useDispatch();
   const { isFetching } = useSelector((state) => ({
@@ -27,15 +28,25 @@ export default function useFollowDialog() {
 
   const handleSubscribeBuy = async ({
     userName,
-    isFollow,
+    followStatus,
     isPrivate,
     campaignId,
     bundleId,
+    subscriptionPrice,
+    price,
   }) => {
-    const opts = { userName, isFollow, isPrivate, campaignId, bundleId };
+    const opts = {
+      userName,
+      followStatus,
+      isPrivate,
+      campaignId,
+      bundleId,
+      subscriptionPrice,
+      price,
+    };
     dialog.toggle({ open: false });
     if (!isFetching) {
-      if (!isFollow) {
+      if (isProfile || !(followStatus === FOLLOW_ACCEPTED)) {
         await dispatch(relationshipActions.createSubscription(apiClient, opts));
       } else {
         await dispatch(relationshipActions.deleteSubscription(apiClient, opts));
@@ -45,8 +56,8 @@ export default function useFollowDialog() {
 
   const handleDialogToggle = useCallback(
     async (data) => {
-      const { isFollow, subscriptionPrice } = data;
-      if (!isFollow) {
+      const { followStatus, subscriptionPrice } = data;
+      if (isProfile || !(followStatus === FOLLOW_ACCEPTED)) {
         dialog.toggle(
           dialogs[FOLLOW_DIALOG_TYPE](
             {

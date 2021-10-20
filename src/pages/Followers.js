@@ -38,6 +38,7 @@ function Followers(props) {
     acceptFollow,
     rejectFollow,
     unrejectFollow,
+    reset,
   } = props;
 
   const [status, setStatus] = useState(FOLLOW_ACCEPTED);
@@ -79,6 +80,7 @@ function Followers(props) {
   };
 
   const handleTabChange = (e, newValue) => {
+    reset();
     setStatus(newValue);
   };
 
@@ -164,6 +166,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(relationshipActions.rejectFollow(api, userName)),
     unrejectFollow: (api, userName) =>
       dispatch(relationshipActions.unrejectFollow(api, userName)),
+    reset: () => dispatch(relationshipActions.resetRelationship()),
   };
 }
 

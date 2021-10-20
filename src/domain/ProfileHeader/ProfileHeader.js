@@ -49,14 +49,16 @@ function ProfileHeader(props) {
               postsCount={user?.postsCount}
             />
           </Box>
-          <Box>
-            <IconButton
-              onClick={onMenuClick}
-              aria-label="Profile menu"
-              aria-haspopup="true">
-              <MoreVertIcon htmlColor="white" />
-            </IconButton>
-          </Box>
+          {onMenuClick && (
+            <Box>
+              <IconButton
+                onClick={onMenuClick}
+                aria-label="Profile menu"
+                aria-haspopup="true">
+                <MoreVertIcon htmlColor="white" />
+              </IconButton>
+            </Box>
+          )}
         </Box>
       </Hidden>
       <Hidden mdUp>
@@ -66,14 +68,17 @@ function ProfileHeader(props) {
           onFileInputChange={onCoverUrlChange}
           onNewImageClick={onNewCoverImageClick}
           onDeleteImageClick={onDeleteCoverImageClick}>
-          <Box position="absolute" top="0px" right="0px">
-            <IconButton
-              aria-label="Profile menu"
-              aria-haspopup="true"
-              onClick={onMenuClick}>
-              <MoreVertIcon htmlColor="white" />
-            </IconButton>
-          </Box>
+          {onMenuClick && (
+            <Box position="absolute" top="0px" right="0px">
+              <IconButton
+                aria-label="Profile menu"
+                aria-haspopup="true"
+                onClick={onMenuClick}>
+                <MoreVertIcon htmlColor="white" />
+              </IconButton>
+            </Box>
+          )}
+
           <Box
             display="flex"
             width="100%"

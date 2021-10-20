@@ -4,6 +4,7 @@ import { Hidden, Divider } from "@material-ui/core";
 import PostTabs from "./PostTabs";
 import GridGallery from "../GridGallery";
 import { ProfileStatisticsMobile } from "../ProfileStatistics";
+import { FOLLOW_ACCEPTED } from "../../constants/follow_types";
 
 function ProfileContent(props) {
   const { isOwner, items, hasMore, tabIndex, disabled, user } = props;
@@ -34,7 +35,11 @@ function ProfileContent(props) {
         disabled={disabled}
       />
       <GridGallery
-        isStubShow={isOwner || user.isFollow || items?.length !== 0}
+        isStubShow={
+          isOwner ||
+          user.followStatus === FOLLOW_ACCEPTED ||
+          items?.length !== 0
+        }
         items={items}
         hasMore={hasMore}
         onFetchMore={onFetchMore}

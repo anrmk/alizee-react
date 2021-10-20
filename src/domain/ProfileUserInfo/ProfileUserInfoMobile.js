@@ -8,10 +8,13 @@ import MessageIcon from "@material-ui/icons/MessageOutlined";
 import DollarIcon from "@material-ui/icons/MonetizationOnOutlined";
 
 import { CHAT_USERNAME_ROUTE } from "../../constants/routes";
-import { getSubscriptionBtnText, isAwaitingConfirmation } from "./utils";
+import { isAwaitingConfirmation } from "./utils";
+import SubscriptionBtn from "./SubscriptionBtn";
+import { customFormatDate } from "../../helpers/functions";
 
 import { BundleList } from "../../components/Bundle";
 import { CampaignList, PublicCampaign } from "../../components/Campaign";
+import { FOLLOW_ACCEPTED } from "../../constants/follow_types";
 
 import useStyles from "./style";
 
@@ -19,10 +22,10 @@ function ProfileUserInfo({
   user,
   isOwner,
   isVerified,
-  isFollow,
   subscriptionPrice,
   followStatus,
   disabled,
+  subscriptionStatus,
 
   onSubscribeClick,
   onSendTipClick,
@@ -42,7 +45,7 @@ function ProfileUserInfo({
     <Box display="flex" flexDirection="column" padding={1}>
       {isOwner ? (
         <>
-          {user?.campaigns && user.campaigns.length > 0 && !followStatus && (
+          {user?.campaigns && user.campaigns.length > 0 && (
             <CampaignList
               isProfile
               disabled={disabled}
@@ -61,7 +64,7 @@ function ProfileUserInfo({
         </>
       ) : (
         <>
-          {user?.campaigns?.length > 0 && subscriptionPrice > 0 && !isFollow && (
+          {user?.campaigns?.length > 0 && subscriptionPrice > 0 && (
             <Box className={classes.btnsGroupMobile}>
               {user.campaigns.map((item) => (
                 <PublicCampaign campaign={item}>
@@ -69,7 +72,8 @@ function ProfileUserInfo({
                     <IconButton
                       color="primary"
                       disabled={
-                        !isFollow || isAwaitingConfirmation(followStatus)
+                        !(followStatus === FOLLOW_ACCEPTED) ||
+                        isAwaitingConfirmation(followStatus)
                       }
                       to={CHAT_USERNAME_ROUTE(user.userName)}
                       component={Link}>
@@ -85,11 +89,9 @@ function ProfileUserInfo({
               ))}
             </Box>
           )}
-
           {user?.bundles &&
             user.bundles.length > 0 &&
-            subscriptionPrice > 0 &&
-            !isFollow && (
+            subscriptionPrice > 0 && (
               <BundleList
                 user={user}
                 isProfile
@@ -97,20 +99,21 @@ function ProfileUserInfo({
                 data={user.bundles}
               />
             )}
-
           <Box display="flex" alignItems="center" width="100%">
-            <Button
-              fullWidth
-              disableElevation
-              color="primary"
-              variant="contained"
-              onClick={handleSubscribeClick}>
-              {getSubscriptionBtnText(followStatus, subscriptionPrice, t)}
-            </Button>
+            <SubscriptionBtn
+              onSubscribeClick={handleSubscribeClick}
+              followStatus={followStatus}
+              subscriptionPrice={subscriptionPrice}
+              subscriptionStatus={subscriptionStatus}
+              subscriptionExpireDate={user.subscriptionExpireDate}
+            />
 
             <IconButton
               color="primary"
-              disabled={!isFollow || isAwaitingConfirmation(followStatus)}
+              disabled={
+                !(followStatus === FOLLOW_ACCEPTED) ||
+                isAwaitingConfirmation(followStatus)
+              }
               to={CHAT_USERNAME_ROUTE(user.userName)}
               component={Link}>
               <MessageIcon />
@@ -121,6 +124,11 @@ function ProfileUserInfo({
               </IconButton>
             )}
           </Box>
+          {user?.subscriptionExpireDate && (
+            <Typography variant="caption" color="textSecondary" component="p">
+              Expired {customFormatDate(user.subscriptionExpireDate)}
+            </Typography>
+          )}
         </>
       )}
 

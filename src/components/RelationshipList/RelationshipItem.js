@@ -8,7 +8,11 @@ import {
   ListItemText,
   Button,
 } from "@material-ui/core";
-import { FOLLOW_PENDING, FOLLOW_REJECTED } from "../../constants/follow_types";
+import {
+  FOLLOW_PENDING,
+  FOLLOW_REJECTED,
+  FOLLOW_ACCEPTED,
+} from "../../constants/follow_types";
 
 import Avatar from "../Avatar";
 
@@ -28,7 +32,7 @@ const RelationshipItem = React.memo((props) => {
     subscriptionPrice,
     identityVerified,
 
-    isFollow,
+    followStatus,
     isMe,
   } = props;
   const {
@@ -47,7 +51,7 @@ const RelationshipItem = React.memo((props) => {
       onSubscribeClick({
         userName,
         name,
-        isFollow,
+        followStatus,
         subscriptionPrice,
         avatarUrl,
         coverUrl,
@@ -117,7 +121,7 @@ const RelationshipItem = React.memo((props) => {
             variant="contained"
             color="primary"
             onClick={handleSubscribeClick}>
-            {isFollow
+            {followStatus === FOLLOW_ACCEPTED
               ? t("FollowingBtnTextFollowerItem")
               : t("FollowerBtnTextFollowerItem")}
           </Button>

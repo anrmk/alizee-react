@@ -15,7 +15,6 @@ export function addFavorite() {
   return (dispatch, getState) => {
     const user = getState().user.data;
     user.isFavorite = true;
-
     dispatch(receiveFavorite(user));
   };
 }

@@ -501,3 +501,10 @@ export function isSpecialCharacter(query) {
   const regex = "[^A-Za-z0-9]";
   return query.match(regex);
 }
+
+export function isExpiredSubscription(subscriptionExpireDate) {
+  if (!subscriptionExpireDate) return false;
+  const expDate = new Date(subscriptionExpireDate);
+  const currentDate = new Date();
+  return currentDate >= expDate.setDate(expDate.getDate() - 7);
+}

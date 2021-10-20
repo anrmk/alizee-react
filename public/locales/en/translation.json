@@ -50,7 +50,7 @@
   "SidebarExploreText": "Explore",
   "SidebarActivityText": "Activity",
   "SidebarPopularTagsText": "Popular tags",
-  "SidebarWalletText" : "Wallet",
+  "SidebarWalletText": "Wallet",
   "SidebarHotTipsText": "Hot tips",
   "SidebarSearchText": "Search",
   "SidebarNotificationText": "Notification",
@@ -78,7 +78,6 @@
   "NavbarMenuItemChangeLogText": "What's News",
   "NavbarMenuItemDarkMode": "Dark mode",
   "NavbarMenuItemLightMode": "Light mode",
-  
 
   "GoToProfile": "Go to profile",
   "ShareTo": "Share to...",
@@ -95,7 +94,7 @@
   "Bithdate": "Date of birth",
   "ExpDate": "Experation date",
   "DocType": "Document Type",
-  "Country" : "Country",
+  "Country": "Country",
   "Address": "Address",
   "City": "City",
   "State": "State/Province",
@@ -103,8 +102,8 @@
 
   "CardNumber": "Card number",
   "NameOnCard": "Name on card",
-  "AccountNumber": "Account Number", 
-  "RoutingNumber": "Routing Number", 
+  "AccountNumber": "Account Number",
+  "RoutingNumber": "Routing Number",
   "BankAccountType": "Type of Bank Account",
 
   "DeleteAccountDialogTitle": "Delete Account",
@@ -114,9 +113,11 @@
   "DeleteCommentDialogDescription": "The comment will be deleted without ability to restore its.",
 
   "ProfileUserInfoSubscribeBtnTextSubscribe": "Subscribe",
-  "ProfileUserInfoSubscribeBtnTextUnsubscribe": "Unsubscribe",
+  "ProfileUserInfoSubscribeBtnTextSubscription": "Subscription",
   "ProfileUserInfoSubscribeBtnTextSubscribeForFree": "Subscribe for free",
   "ProfileUserInfoSubscribeBtnTextSubscribeForPrice": "Subscribe for",
   "ProfileUserInfoSubscribeBtnTextAwaitConfirm": "Awaiting confirmation",
-  "ProfileContentGridGalleryStubTextSubscribeToSeePosts": "Subscribe to see user's posts"
+  "ProfileUserInfoSubscribeBtnTextRejected": "Subscribe rejected",
+  "ProfileContentGridGalleryStubTextSubscribeToSeePosts": "Subscribe to see user's posts",
+  "ProfileUserInfoSubscribeBtnTextPaymentProcessing": "Payment processing"
 }

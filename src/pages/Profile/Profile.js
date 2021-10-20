@@ -30,6 +30,7 @@ import { useMenuDialog, useMoodDialog } from "../../hooks/post";
 import { useSendTipDialog } from "../../hooks/payment";
 import useFollowDialog from "../../hooks/payment/useFollowDialog";
 import dialogs, { PROFILE_EDIT_COVER } from "../../constants/dialogs";
+import { FOLLOW_ACCEPTED } from "../../constants/follow_types";
 
 import {
   ProfileUserInfo,
@@ -39,6 +40,7 @@ import { PROFILE_TYPE } from "../../components/Post/Menu";
 import { RedirectContent } from "../../domain/ConfirmationDialog";
 
 import useStyles from "./style";
+import useInteractionDialog from "../../hooks/useInteractionDialog";
 
 function Profile(props) {
   const initPostsSettings = {
@@ -60,7 +62,7 @@ function Profile(props) {
   const dialog = useDialog();
 
   const confirmationDialog = useConfirmationDialog();
-  const followDialog = useFollowDialog();
+  const followDialog = useFollowDialog(true);
   const sendTipDialog = useSendTipDialog();
   const createMoodDialog = useMoodDialog();
   const postMenuDialog = useMenuDialog({
@@ -70,6 +72,7 @@ function Profile(props) {
     isFavorite: true,
     type: PROFILE_TYPE,
   });
+  const interactionUserDialog = useInteractionDialog();
 
   useEffect(
     () => () => {
@@ -94,15 +97,16 @@ function Profile(props) {
   useEffect(() => {
     if (username) {
       resetPosts();
+
       if (
         username === me.userName ||
-        user.data?.isFollow ||
-        user.data?.subscribedByExpireDate
+        user.data.followStatus === FOLLOW_ACCEPTED ||
+        user.data?.subscriptionExpireDate
       ) {
         handleFetchPosts();
       }
     }
-  }, [postSettings, user.data?.isFollow]);
+  }, [postSettings, user.data.followStatus]);
 
   if (url.includes(SETTINGS_ROUTE)) {
     return <Redirect to={SETTINGS_EDIT_PROFILE_ROUTE} />;
@@ -238,6 +242,10 @@ function Profile(props) {
   //   );
   // }
 
+  const handleUserMenuClick = () => {
+    interactionUserDialog.toggle(user);
+  };
+
   return (
     <>
       <ProfileHeader
@@ -247,25 +255,26 @@ function Profile(props) {
         onSendGiftClick={() => handleGiftSendClick(user.data.userName)}
         onCoverUrlChange={handleCoverEditDialog}
         onDeleteCoverImageClick={handleDeleteCoverImageClick}
-        onMenuClick={() =>
-          postMenuDialog.toggle({
-            userName: user.data.userName,
-            isBlocked: user.data.isBlocked,
-            isOwner: username === me.userName,
-            isFavorite: user.data.isFavorite,
-            isProfile: true,
-          })
-        }
+        // onMenuClick={() =>
+        //   postMenuDialog.toggle({
+        //     userName: user.data.userName,
+        //     isBlocked: user.data.isBlocked,
+        //     isOwner: username === me.userName,
+        //     isFavorite: user.data.isFavorite,
+        //     isProfile: true,
+        //   })
+        // }
       />
       <Hidden mdUp>
         <ProfileUserInfoMobile
           user={user.data}
           isOwner={username === me.userName}
-          isFollow={user.data?.isFollow}
+          followStatus={user.data.followStatus}
           isVerified={user.data?.identityVerified}
-          followStatus={user.data?.followStatus}
           subscriptionPrice={user.data?.subscriptionPrice}
+          subscriptionStatus={user.data?.subscriptionStatus}
           disabled={user.data?.subscriptionPrice === 0}
+          onMenuClick={handleUserMenuClick}
           onSubscribeClick={followDialog.toggle}
           onSendTipClick={sendTipDialog.toggle}
           onMoodUpdateClick={handleMoodUpdateClick}
@@ -294,12 +303,13 @@ function Profile(props) {
               <ProfileUserInfo
                 user={user.data}
                 isOwner={username === me.userName}
-                isFollow={user.data?.isFollow}
+                followStatus={user.data.followStatus}
                 isVerified={user.data?.identityVerified}
-                followStatus={user.data?.followStatus}
                 subscriptionPrice={user.data?.subscriptionPrice}
                 sites={user.data.sites}
+                subscriptionStatus={user.data?.subscriptionStatus}
                 disabled={user.data?.subscriptionPrice === 0}
+                onMenuClick={handleUserMenuClick}
                 onSubscribeClick={followDialog.toggle}
                 onSendTipClick={sendTipDialog.toggle}
                 onMoodUpdateClick={handleMoodUpdateClick}

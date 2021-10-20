@@ -16,6 +16,7 @@ import {
 
 import { calcDiscount } from "../../helpers/functions";
 import { getSubscriptionBtnText } from "../ProfileUserInfo";
+import { FOLLOW_NONE } from "../../constants/follow_types";
 
 function SubscriptionForm({
   formId,
@@ -23,6 +24,7 @@ function SubscriptionForm({
   campaigns,
   bundles,
   subscriptionPrice,
+  price,
 
   onSubmit,
 }) {
@@ -42,8 +44,9 @@ function SubscriptionForm({
     onSubmit &&
       onSubmit({
         userName: user.userName,
-        isFollow: user.isFollow,
+        followStatus: user.followStatus,
         isPrivate: user.isPrivate,
+        subscriptionPrice: user.subscriptionPrice || price,
         bundleId: discount.bundleId,
         campaignId: discount.campaignId,
       });
@@ -82,7 +85,12 @@ function SubscriptionForm({
           <ListItemText
             primary={
               <Typography variant="body1">
-                {getSubscriptionBtnText(false, subscriptionPrice, t)}
+                {getSubscriptionBtnText(
+                  FOLLOW_NONE,
+                  subscriptionPrice || price,
+                  t,
+                  user?.subscriptionStatus
+                )}
                 {subscriptionPrice > 0 && " per month"}
               </Typography>
             }

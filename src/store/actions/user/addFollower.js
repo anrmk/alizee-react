@@ -14,12 +14,12 @@ function receiveUserFollowerCountIncrement(data) {
   };
 }
 
-export function addFollower(isPrivateAccount) {
+export function addFollower(isPrivate, subscriptionPrice) {
   return (dispatch, getState) => {
     const { data } = getState().user;
     data.followersCount += 1;
-    data.isFollow = true;
-    data.followStatus = isPrivateAccount ? FOLLOW_PENDING : FOLLOW_ACCEPTED;
+    data.followStatus =
+      isPrivate || subscriptionPrice ? FOLLOW_PENDING : FOLLOW_ACCEPTED;
 
     dispatch(receiveUserFollowerCountIncrement(data));
   };

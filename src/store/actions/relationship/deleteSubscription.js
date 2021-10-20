@@ -49,11 +49,7 @@ export function deleteSubscription(api, opts) {
         .setParams({ userName: opts.userName })
         .query(url);
 
-      const updatedData = toggleFollowStatus(
-        getState().users.data,
-        opts.userName,
-        false
-      );
+      const updatedData = toggleFollowStatus(getState().users.data, opts);
 
       dispatch(removeFollower());
       dispatch(receiveDeleteSubscription(updatedData));

@@ -1,6 +1,11 @@
 import { generateUrl } from "../../../helpers/functions";
 import { addFollower } from "../user";
 import { getBalance } from "../account";
+import {
+  FOLLOW_ACCEPTED,
+  FOLLOW_PENDING,
+  FOLLOW_NONE,
+} from "../../../constants/follow_types";
 
 export const CREATE_SUBSCRIPTION_REQUEST = "CREATE_SUBSCRIPTION_REQUEST";
 export const CREATE_SUBSCRIPTION_SUCCESS = "CREATE_SUBSCRIPTION_SUCCESS";
@@ -54,12 +59,10 @@ export function createSubscription(api, opts) {
     try {
       await api.setData(data).query(url);
 
-      const updatedData = toggleFollowStatus(
-        getState().users.data,
-        opts.userName,
-        true
+      const updatedData = toggleFollowStatus(getState().users.data, opts);
+      dispatch(
+        addFollower(opts.isPrivate, opts.subscriptionPrice || opts.price)
       );
-      dispatch(addFollower(opts.isPrivateAccount));
       dispatch(receiveCreateSubscription(updatedData));
       dispatch(getBalance(api));
     } catch {
@@ -72,14 +75,26 @@ export function createSubscription(api, opts) {
   };
 }
 
-export function toggleFollowStatus(data, userName, status) {
+export function toggleFollowStatus(
+  data,
+  { userName, isPrivate, subscriptionPrice }
+) {
   if (!data || !data.length) return [];
 
   const list = [...data];
   const index = list.findIndex((item) => item.userName === userName);
 
   if (index !== -1) {
-    list[index].isFollow = status;
+    if (
+      list[index].followStatus === FOLLOW_ACCEPTED ||
+      list[index].followStatus === FOLLOW_PENDING
+    ) {
+      list[index].followStatus === FOLLOW_NONE;
+    } else {
+      isPrivate || subscriptionPrice
+        ? (list[index].followStatus = FOLLOW_PENDING)
+        : (list[index].followStatus = FOLLOW_ACCEPTED);
+    }
   }
 
   return list;

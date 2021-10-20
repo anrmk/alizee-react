@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import {
@@ -20,8 +19,11 @@ import DollarIcon from "@material-ui/icons/MonetizationOnOutlined";
 
 import { CHAT_USERNAME_ROUTE } from "../../constants/routes";
 import SocialControl from "../../components/Social";
-import { getSubscriptionBtnText, isAwaitingConfirmation } from "./utils";
+import { isAwaitingConfirmation } from "./utils";
 import DisplayName from "../../components/DisplayName";
+import SubscriptionBtn from "./SubscriptionBtn";
+import { FOLLOW_ACCEPTED } from "../../constants/follow_types";
+import { customFormatDate } from "../../helpers/functions";
 
 import useStyles from "./style";
 import { BundleList } from "../../components/Bundle";
@@ -30,12 +32,12 @@ import { CampaignList, PublicCampaign } from "../../components/Campaign";
 function ProfileUserInfo({
   user,
   isOwner,
-  isFollow,
+  followStatus,
   isVerified,
   subscriptionPrice,
-  followStatus,
   sites,
   disabled,
+  subscriptionStatus,
 
   onSubscribeClick,
   onSendTipClick,
@@ -45,10 +47,10 @@ function ProfileUserInfo({
   onAvatarUrlChange,
   onClick,
   onDeleteCampaignClick,
+  onMenuClick,
 }) {
   const fileInputEl = useRef(null);
   const classes = useStyles({ isOwner });
-  const { t } = useTranslation();
 
   const handleSendTipClick = () => {
     onSendTipClick && onSendTipClick(user);
@@ -157,36 +159,29 @@ function ProfileUserInfo({
         />
       </Card>
 
-      {user?.campaigns &&
-        user.campaigns.length > 0 &&
-        isOwner &&
-        !followStatus && (
-          <CampaignList
-            price={user.subscriptionPrice}
-            disabled={disabled}
-            isProfile
-            data={user.campaigns}
-            onDelete={onDeleteCampaignClick}
-          />
-        )}
-      {user?.campaigns?.length > 0 &&
-        !isOwner &&
-        subscriptionPrice > 0 &&
-        !isFollow && (
-          <Card>
-            {user.campaigns.map((item) => (
-              <CardContent key={`campaign_${item.id}`}>
-                <PublicCampaign campaign={item} />
-              </CardContent>
-            ))}
-          </Card>
-        )}
+      {user?.campaigns && user.campaigns.length > 0 && isOwner && (
+        <CampaignList
+          price={user.subscriptionPrice}
+          disabled={disabled}
+          isProfile
+          data={user.campaigns}
+          onDelete={onDeleteCampaignClick}
+        />
+      )}
+      {user?.campaigns?.length > 0 && !isOwner && subscriptionPrice > 0 && (
+        <Card>
+          {user.campaigns.map((item) => (
+            <CardContent key={`campaign_${item.id}`}>
+              <PublicCampaign campaign={item} />
+            </CardContent>
+          ))}
+        </Card>
+      )}
 
       {user?.bundles &&
         subscriptionPrice > 0 &&
         user.bundles.length > 0 &&
-        !isOwner &&
-        !isFollow && (
+        !isOwner && (
           <BundleList
             user={user}
             isProfile
@@ -213,16 +208,22 @@ function ProfileUserInfo({
             </>
           ) : (
             <>
-              <Button
-                className={classes.subscribeBtn}
-                disableElevation
-                size="large"
-                color="primary"
-                variant="contained"
-                onClick={handleSubscribeClick}>
-                {getSubscriptionBtnText(followStatus, subscriptionPrice, t)}
-              </Button>
-
+              <SubscriptionBtn
+                onSubscribeClick={handleSubscribeClick}
+                followStatus={followStatus}
+                subscriptionPrice={subscriptionPrice}
+                subscriptionStatus={subscriptionStatus}
+                subscriptionExpireDate={user.subscriptionExpireDate}
+                onMenuClick={onMenuClick}
+              />
+              {user?.subscriptionExpireDate && (
+                <Typography
+                  variant="caption"
+                  color="textSecondary"
+                  component="p">
+                  Expired {customFormatDate(user.subscriptionExpireDate)}
+                </Typography>
+              )}
               <Box
                 width="100%"
                 display="flex"
@@ -232,7 +233,10 @@ function ProfileUserInfo({
                 <Button
                   fullWidth
                   disableElevation
-                  disabled={!isFollow || isAwaitingConfirmation(followStatus)}
+                  disabled={
+                    !(followStatus === FOLLOW_ACCEPTED) ||
+                    isAwaitingConfirmation(followStatus)
+                  }
                   size="large"
                   color="secondary"
                   variant="contained"

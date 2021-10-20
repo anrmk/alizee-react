@@ -25,6 +25,7 @@ import ConfirmDialog from "../domain/ConfirmationDialog/ConfirmDialog";
 import LightboxModal from "../domain/LightboxModal";
 import PostStatistics from "../domain/PostStatistics/PostStatistics";
 import SubscriptionDialog from "../domain/SubscriptionDialog";
+import InteractionUserMenuDialog from "../domain/InteractionUserMenuDialog";
 import {
   CreateCardForm,
   SubscriptionCampaignFormDialog,
@@ -40,6 +41,7 @@ export const CREATE_MOOD_DIALOG_TYPE = "createMood";
 export const POST_MENU_DIALOG_TYPE = "postmenu";
 export const PAYMENT_DIALOG_TYPE = "payment";
 export const FOLLOW_DIALOG_TYPE = "follow";
+export const INTERACTION_USER_MENU_TYPE = "interactionUserMenu";
 export const BLOCK_DIALOG_TYPE = "block";
 export const UNBLOCK_DIALOG_TYPE = "unblock";
 export const SHARE_POST_DIALOG_TYPE = "share";
@@ -135,6 +137,14 @@ export default {
     ...baseDialogProps,
     ...dialogProps,
   }),
+
+  [INTERACTION_USER_MENU_TYPE]: (dialogProps, contentProps) => ({
+    title: "User menu",
+    content: <InteractionUserMenuDialog {...contentProps} />,
+    ...baseDialogProps,
+    ...dialogProps,
+  }),
+
   [SHARE_POST_DIALOG_TYPE]: (dialogProps, contentProps) => ({
     title: "Share post",
     content: <SocialList {...contentProps} />,
