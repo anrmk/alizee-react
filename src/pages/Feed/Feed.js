@@ -218,9 +218,8 @@ function mapDispatchToProps(dispatch) {
       dispatch(postActions.getReceipt(api, id, callback)),
     resetPosts: () => dispatch(postActions.resetFollowingPosts()),
 
-    getPeople: (api) =>
-      dispatch(actionRelationship.getSuggestionPeople(api, 5)),
-    resetPeople: () => dispatch(actionRelationship.resetSuggestionPeople()),
+    getPeople: (api) => dispatch(actionRelationship.getRecommended(api, 5)),
+    resetPeople: () => dispatch(actionRelationship.resetRecommended()),
     buyPost: (api, id) => dispatch(paymentActions.buyPost(api, id)),
 
     getStory: (api, opts) => dispatch(storyActions.getStory(api, opts)),

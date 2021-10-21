@@ -8,17 +8,29 @@ import RelationshipList from "../components/RelationshipList";
 import * as actionRelationship from "../store/actions/relationship";
 import { useFollowDialog } from "../hooks/payment";
 
-function PeopleSuggested({ people, getPeople, resetPeople }) {
+function PeopleSuggested({
+  isFetching,
+  people,
+  fetchRecommended,
+  resetPeople,
+}) {
   const apiClient = useContext(ApiContext);
   const followDialog = useFollowDialog();
 
   useEffect(() => {
-    getPeople(apiClient);
+    fetchRecommended(apiClient);
 
     return () => {
       resetPeople();
     };
   }, []);
+
+  const handleFetchMore = async () => {
+    console.log("IsFetching", isFetching);
+    if (!isFetching) {
+      await fetchRecommended(apiClient);
+    }
+  };
 
   return (
     <Container maxWidth="sm">
@@ -28,6 +40,7 @@ function PeopleSuggested({ people, getPeople, resetPeople }) {
         <RelationshipList
           items={people}
           onSubscribeClick={followDialog.toggle}
+          onFetchMore={handleFetchMore}
         />
       </Box>
     </Container>
@@ -44,8 +57,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getPeople: (api) => dispatch(actionRelationship.getSuggestionPeople(api)),
-    resetPeople: () => dispatch(actionRelationship.resetSuggestionPeople()),
+    fetchRecommended: (api) => dispatch(actionRelationship.getRecommended(api)),
+    resetPeople: () => dispatch(actionRelationship.resetRecommended()),
   };
 }
 
