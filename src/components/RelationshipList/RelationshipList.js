@@ -13,6 +13,7 @@ const RelationshipList = React.memo(
     onConfirmClick,
     onRejectClick,
     onUnrejectClick,
+    onFavoriteClick,
     hasMore,
     onRefresh,
     onFetchMore,
@@ -34,6 +35,7 @@ const RelationshipList = React.memo(
               coverUrl={item.coverUrl}
               subtitle={item.mood || `@${item.userName}`}
               isFollow={item.isFollow}
+              isFavorite={item.isFavorite}
               status={item.status}
               subscriptionPrice={item.subscriptionPrice}
               identityVerified={item.identityVerified}
@@ -42,6 +44,7 @@ const RelationshipList = React.memo(
               onConfirmClick={onConfirmClick}
               onRejectClick={onRejectClick}
               onUnrejectClick={onUnrejectClick}
+              onFavoriteClick={onFavoriteClick}
             />
           ))}
         </List>

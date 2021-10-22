@@ -34,6 +34,7 @@ const RelationshipItem = React.memo((props) => {
     identityVerified,
 
     isFollow,
+    isFavorite,
     isMe,
   } = props;
   const {
@@ -42,6 +43,7 @@ const RelationshipItem = React.memo((props) => {
     onConfirmClick,
     onRejectClick,
     onUnrejectClick,
+    onFavoriteClick,
   } = props;
 
   const classes = useStyles({ url: coverUrl });
@@ -76,7 +78,26 @@ const RelationshipItem = React.memo((props) => {
     onUnrejectClick && onUnrejectClick({ userName });
   };
 
+  const handleFavoriteClick = (e) => {
+    e.preventDefault();
+    onFavoriteClick && onFavoriteClick({ userName, isFavorite });
+  };
   const renderActionButtons = () => {
+    if (onFavoriteClick) {
+      return (
+        <Button
+          disableElevation
+          disableRipple
+          size="small"
+          variant="contained"
+          color="primary"
+          onClick={handleFavoriteClick}>
+          {isFavorite
+            ? t("FavoriteUserInfoBtnTextUnfavorite")
+            : t("FavoriteUserInfoBtnTextFavorite")}
+        </Button>
+      );
+    }
     switch (status) {
       case FOLLOW_PENDING:
         return (
@@ -130,7 +151,6 @@ const RelationshipItem = React.memo((props) => {
         );
     }
   };
-
   return (
     <ListItem
       className={classes.item}

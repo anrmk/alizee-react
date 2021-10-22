@@ -119,5 +119,7 @@
   "ProfileUserInfoSubscribeBtnTextAwaitConfirm": "Awaiting confirmation",
   "ProfileUserInfoSubscribeBtnTextRejected": "Subscribe rejected",
   "ProfileContentGridGalleryStubTextSubscribeToSeePosts": "Subscribe to see user's posts",
-  "ProfileUserInfoSubscribeBtnTextPaymentProcessing": "Payment processing"
+  "ProfileUserInfoSubscribeBtnTextPaymentProcessing": "Payment processing",
+  "FavoriteUserInfoBtnTextFavorite": "add",
+  "FavoriteUserInfoBtnTextUnfavorite": "remove"
 }
