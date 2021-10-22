@@ -14,7 +14,7 @@ import SearchInput from "../domain/Search";
 
 import { PROFILE_USERNAME_ROUTE } from "../constants/routes";
 
-import { useFollowDialog } from "../hooks/payment";
+import useFavoriteUserAction from "../hooks/useFavoriteUserAction";
 
 import RelationshipList from "../components/RelationshipList";
 import * as accountActions from "../store/actions/account";
@@ -25,7 +25,7 @@ function Favorites(props) {
 
   const apiClient = useContext(ApiContext);
   const history = useHistory();
-  const followDialog = useFollowDialog();
+  const { favoriteUserAction } = useFavoriteUserAction();
 
   const { me, favorites } = props;
   const { fetchFavorites } = props;
@@ -42,6 +42,10 @@ function Favorites(props) {
       })();
     }
   }, [username]);
+
+  const handleFavorite = async (data) => {
+    await favoriteUserAction(data);
+  };
 
   return (
     <Container maxWidth="sm">
@@ -62,7 +66,7 @@ function Favorites(props) {
       <RelationshipList
         items={favorites.data}
         currentUserName={me.userName}
-        onSubscribeClick={followDialog.toggle}
+        onFavoriteClick={handleFavorite}
         onFetchMore={onFetchMore}
       />
     </Container>

@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -7,6 +6,7 @@ import {
   ListItemAvatar,
   ListItemText,
   Button,
+  ListItemSecondaryAction,
 } from "@material-ui/core";
 import {
   FOLLOW_PENDING,
@@ -16,9 +16,9 @@ import {
 } from "../../constants/follow_types";
 
 import Avatar from "../Avatar";
+import DisplayName from "../DisplayName";
 
 import useStyles from "./styles";
-import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 
 const RelationshipItem = React.memo((props) => {
   const { t } = useTranslation();
@@ -34,14 +34,16 @@ const RelationshipItem = React.memo((props) => {
     identityVerified,
 
     isFollow,
+    isFavorite,
     isMe,
   } = props;
   const {
-    onItemClick,
     onSubscribeClick,
     onConfirmClick,
     onRejectClick,
     onUnrejectClick,
+    onItemClick,
+    onFavoriteClick,
   } = props;
 
   const classes = useStyles({ url: coverUrl });
@@ -61,22 +63,41 @@ const RelationshipItem = React.memo((props) => {
       });
   };
 
-  const handleConfirmClick = (e) => {
-    e.preventDefault();
+  const handleConfirmClick = () => {
     onConfirmClick && onConfirmClick({ userName, status });
   };
 
-  const handleRejectClick = (e) => {
-    e.preventDefault();
+  const handleRejectClick = () => {
     onRejectClick && onRejectClick({ userName, status });
   };
 
-  const handleUnrejectClick = (e) => {
-    e.preventDefault();
+  const handleUnrejectClick = () => {
     onUnrejectClick && onUnrejectClick({ userName });
   };
 
+  const handleItemClick = () => {
+    onItemClick && onItemClick(userName);
+  };
+
+  const handleFavoriteClick = () => {
+    onFavoriteClick && onFavoriteClick({ userName, isFavorite });
+  };
   const renderActionButtons = () => {
+    if (onFavoriteClick) {
+      return (
+        <Button
+          disableElevation
+          disableRipple
+          size="small"
+          variant="contained"
+          color="primary"
+          onClick={handleFavoriteClick}>
+          {isFavorite
+            ? t("FavoriteUserInfoBtnTextUnfavorite")
+            : t("FavoriteUserInfoBtnTextFavorite")}
+        </Button>
+      );
+    }
     switch (status) {
       case FOLLOW_PENDING:
         return (
@@ -130,18 +151,30 @@ const RelationshipItem = React.memo((props) => {
         );
     }
   };
-
   return (
     <ListItem
-      className={classes.item}
       button
-      to={PROFILE_USERNAME_ROUTE(userName)}
-      component={Link}>
+      className={classes.item}
+      onClick={handleItemClick}
+      component="li">
       <ListItemAvatar>
         <Avatar borderColor="silver" src={avatarUrl} />
       </ListItemAvatar>
-      <ListItemText primary={name} secondary={subtitle} onClick={onItemClick} />
-      {!isMe && renderActionButtons()}
+      <ListItemText>
+        <DisplayName
+          name={name}
+          userName={userName}
+          identityVerified={identityVerified}
+          noWrap={false}
+          typographyProps={{ variant: "body1" }}
+        />
+      </ListItemText>
+
+      {!isMe && (
+        <ListItemSecondaryAction>
+          {renderActionButtons()}
+        </ListItemSecondaryAction>
+      )}
     </ListItem>
   );
 });
