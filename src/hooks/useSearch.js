@@ -30,7 +30,7 @@ export default function useSearch({ type = SEARCH_USER_TYPE }) {
     if (suggestionPeople?.length > 0 || SEARCH_USER_TYPE !== type) return;
 
     // TODO: need paggination
-    dispatch(relationshipActions.getSuggestionPeople(apiClient));
+    dispatch(relationshipActions.getRecommended(apiClient));
   }, []);
   useEffect(() => {
     let currentTags =

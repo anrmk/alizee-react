@@ -90,8 +90,8 @@ export {
   GET_SUGGESTIONS_PEOPLE_FAILURE,
   GET_SUGGESTIONS_PEOPLE_SUCCESS,
   RESET_SUGGESTIONS_PEOPLE,
-  getSuggestionPeople,
-  resetSuggestionPeople,
+  getRecommended,
+  resetRecommended,
 } from "./getSuggestionPeople";
 
 export {

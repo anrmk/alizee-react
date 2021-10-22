@@ -2,7 +2,13 @@ import React, { useContext, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { Container, Card, CardHeader, Avatar } from "@material-ui/core";
+import {
+  Container,
+  Card,
+  CardHeader,
+  CardContent,
+  Avatar,
+} from "@material-ui/core";
 import ApiContext from "../context/ApiContext";
 import SearchInput from "../domain/Search";
 
@@ -52,11 +58,9 @@ function Favorites(props) {
             history.push(PROFILE_USERNAME_ROUTE(me.userName));
           }}
         />
-        <CardHeader
-          title={
-            <SearchInput onSendQuery={onSearch} onClearInput={onClearInput} />
-          }
-        />
+        <CardContent>
+          <SearchInput onSendQuery={onSearch} onClearInput={onClearInput} />
+        </CardContent>
       </Card>
 
       <RelationshipList
