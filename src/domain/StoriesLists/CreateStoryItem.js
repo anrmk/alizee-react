@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { Box, IconButton, ListItem, Typography } from "@material-ui/core";
 
 import AddIcon from "@material-ui/icons/AddRounded";
@@ -9,10 +9,6 @@ function CreateStoryItem({ previewUrl, onClick }) {
   const classes = useStyles({
     previewUrl,
   });
-
-  const handleItemClick = useCallback(() => {
-    onClick && onClick();
-  }, []);
 
   const renderContent = () => (
     <Box className={classes.previewStoryItemUserInfo}>
@@ -30,10 +26,7 @@ function CreateStoryItem({ previewUrl, onClick }) {
   );
 
   return (
-    <ListItem
-      button
-      className={classes.previewStoryListItem}
-      onClick={handleItemClick}>
+    <ListItem button className={classes.previewStoryListItem} onClick={onClick}>
       {renderContent()}
     </ListItem>
   );

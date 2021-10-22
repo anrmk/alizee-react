@@ -19,7 +19,7 @@ import CONTROLLERS from "../../constants/endpoints";
 import AuthBaseForm from "./AuthBaseForm";
 import useStyles from "./styles";
 
-const USERNAME_INPUT_ID = "username";
+const DISPLAY_NAME_INPUT_ID = "displayName";
 const EMAIL_INPUT_ID = "email";
 const PRIVACY_POLICY_CHECKBOX_ID = "privacyPolicy";
 
@@ -30,7 +30,7 @@ const VALUE_MIN_LENGTH = (min) => `Must be at least ${min} characters`;
 const VALUE_MAX_LENGTH = (max) => `Must be at most ${max} characters`;
 
 const schema = yup.object().shape({
-  [USERNAME_INPUT_ID]: yup
+  [DISPLAY_NAME_INPUT_ID]: yup
     .string()
     .required(EMPTY_VALUE_ERROR)
     .min(3, VALUE_MIN_LENGTH(3))
@@ -59,7 +59,7 @@ function SignUpForm({
   const { errors, control, handleSubmit } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      [USERNAME_INPUT_ID]: "",
+      [DISPLAY_NAME_INPUT_ID]: "",
       [EMAIL_INPUT_ID]: "",
       [PRIVACY_POLICY_CHECKBOX_ID]: false,
     },
@@ -115,18 +115,18 @@ function SignUpForm({
       <Box m={1} />
 
       <Controller
-        name={USERNAME_INPUT_ID}
+        name={DISPLAY_NAME_INPUT_ID}
         control={control}
         render={({ onChange, onBlur, value }) => (
           <TextField
             variant="outlined"
             fullWidth
-            id={USERNAME_INPUT_ID}
-            label="Username"
+            id={DISPLAY_NAME_INPUT_ID}
+            label="Display Name"
             type="text"
             value={value}
-            error={!!errors[USERNAME_INPUT_ID]}
-            helperText={errors[USERNAME_INPUT_ID]?.message}
+            error={!!errors[DISPLAY_NAME_INPUT_ID]}
+            helperText={errors[DISPLAY_NAME_INPUT_ID]?.message}
             onBlur={onBlur}
             inputProps={{
               autoComplete: "new-password",
