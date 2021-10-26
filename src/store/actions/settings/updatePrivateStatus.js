@@ -47,7 +47,7 @@ export function updatePrivateStatus(api, status) {
     try {
       await api
         .setParams({
-          isPrivate: status,
+          status,
         })
         .query(url);
 

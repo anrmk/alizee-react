@@ -47,7 +47,7 @@ export function updateActivityStatus(api, status) {
     try {
       await api
         .setParams({
-          showStatus: status,
+          status,
         })
         .query(url);
 
