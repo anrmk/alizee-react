@@ -88,17 +88,20 @@ export default {
     getBalance: "account/getbalance",
 
     // SETTINGS
-    getAccount: "accountsetting/account",
-    updateAccount: "accountsetting/updateaccount",
+    updateAvatar: "accountsetting/updateavatar",
+    updateCover: "accountsetting/updatecover",
     updateProfile: "accountsetting/updateProfile",
 
+    // ACCOUNT
+    getAccount: "accountsetting/account",
+    updateAccount: "accountsetting/updateaccount",
+
+    // PRIVACY SETTINGS
+    getPrivacy: "accountsetting/privacysettings",
     updatePrivacy: "accountsetting/privacysettings",
     updateActivityStatus: "accountsetting/activitystatus",
     updatePrivateStatus: "accountsetting/privatestatus",
     updateOffensiveComments: "accountsetting/offensivecontentstatus",
-    updateAvatar: "accountsetting/updateavatar",
-    updateCover: "accountsetting/updatecover",
-    getPrivacy: "accountsetting/privacysettings",
 
     getPushNotification: "accountsetting/pushNotification",
     getSiteNotification: "accountsetting/siteNotification",

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { connect } from "react-redux";
 
-import { Container, Box, Typography, Divider } from "@material-ui/core";
+import { Container, Typography, Divider } from "@material-ui/core";
 import ApiContext from "../context/ApiContext";
 
 import RelationshipList from "../components/RelationshipList";
@@ -11,6 +11,7 @@ import { useFollowDialog } from "../hooks/payment";
 function PeopleSuggested({
   isFetching,
   people,
+  hasMore,
   fetchRecommended,
   resetPeople,
 }) {
@@ -26,7 +27,6 @@ function PeopleSuggested({
   }, []);
 
   const handleFetchMore = async () => {
-    console.log("IsFetching", isFetching);
     if (!isFetching) {
       await fetchRecommended(apiClient);
     }
@@ -34,15 +34,14 @@ function PeopleSuggested({
 
   return (
     <Container maxWidth="sm">
-      <Box my={4}>
-        <Typography variant="subtitle1">Suggestions For You</Typography>
-        <Divider />
-        <RelationshipList
-          items={people}
-          onSubscribeClick={followDialog.toggle}
-          onFetchMore={handleFetchMore}
-        />
-      </Box>
+      <Typography variant="subtitle1">Suggestions For You</Typography>
+      <Divider />
+      <RelationshipList
+        items={people}
+        onSubscribeClick={followDialog.toggle}
+        hasMore={hasMore}
+        onFetchMore={handleFetchMore}
+      />
     </Container>
   );
 }
@@ -51,7 +50,7 @@ function mapStateToProps(state) {
   return {
     isFetching: state.users.isFetching,
     people: state.users.data,
-    errorMessage: state.users.errorMessage,
+    hasMore: state.users.hasMore,
   };
 }
 

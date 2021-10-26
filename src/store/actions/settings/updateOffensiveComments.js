@@ -50,7 +50,7 @@ export function updateOffensiveComments(api, status) {
     try {
       await api
         .setParams({
-          hide: status,
+          status,
         })
         .query(url);
 
