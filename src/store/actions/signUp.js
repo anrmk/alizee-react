@@ -19,12 +19,13 @@ function requestSignUp() {
   };
 }
 
-function receiveSignUp() {
+function receiveSignUp(data) {
   return {
     type: SIGNUP_SUCCESS,
     payload: {
       isFetching: false,
       isSignUp: true,
+      userInfo: data,
       errorMessage: "",
     },
   };
@@ -49,7 +50,7 @@ export function signUpUser(api, creds) {
     try {
       const { status, data } = await api
         .setData({
-          userName: creds.username,
+          name: creds.displayName,
           email: creds.email,
         })
         .query(url, { "g-recaptcha-response": creds.token });
@@ -59,7 +60,7 @@ export function signUpUser(api, creds) {
         return;
       }
 
-      dispatch(receiveSignUp());
+      dispatch(receiveSignUp(creds.email));
     } catch (e) {
       dispatch(
         errorSignUp(e.response?.data || e.message, e.response?.status || 500)
