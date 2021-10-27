@@ -18,15 +18,22 @@ import { formatCurrency } from "../../helpers/functions";
 import Avatar from "../Avatar";
 import { TAX_PERCENTAGE } from "../../constants/payment";
 
+const MESSAGE_MAX_LENGTH = 255;
+const AMOUNT_MIN_SIZE = 1;
+const AMOUNT_MAX_SIZE = 50;
 const AMOUNT_INPUT_ID = "amount";
 const MESSAGE_INPUT_ID = "message";
 const USER_ID = "userName";
 const EMPTY_VALUE_ERROR = "It is a required filed";
-const INVALID_AMOUNT_MAX_ERROR = "Maximum $200 USD";
+const INVALID_AMOUNT_MAX_ERROR = "Maximum $50 USD";
 
 const schema = yup.object().shape({
-  [AMOUNT_INPUT_ID]: yup.number().required(EMPTY_VALUE_ERROR),
-  [MESSAGE_INPUT_ID]: yup.string(),
+  [AMOUNT_INPUT_ID]: yup
+    .number()
+    .min(AMOUNT_MIN_SIZE)
+    .max(AMOUNT_MAX_SIZE)
+    .required(EMPTY_VALUE_ERROR),
+  [MESSAGE_INPUT_ID]: yup.string().max(MESSAGE_MAX_LENGTH),
   [USER_ID]: yup.string(),
 });
 
@@ -84,6 +91,10 @@ function SendTip({
                 onBlur={onBlur}
                 onChange={onChange}
                 InputProps={{
+                  inputProps: {
+                    min: AMOUNT_MIN_SIZE,
+                    max: AMOUNT_MAX_SIZE,
+                  },
                   startAdornment: (
                     <InputAdornment position="start">$</InputAdornment>
                   ),
@@ -142,6 +153,8 @@ function SendTip({
             <TextField
               variant="outlined"
               fullWidth
+              multiline
+              maxRows="3"
               id={MESSAGE_INPUT_ID}
               name={MESSAGE_INPUT_ID}
               label="Message"
@@ -151,6 +164,11 @@ function SendTip({
               helperText={errors[MESSAGE_INPUT_ID]?.message}
               onBlur={onBlur}
               onChange={(e) => onChange(e.target.value)}
+              InputProps={{
+                inputProps: {
+                  maxLength: MESSAGE_MAX_LENGTH,
+                },
+              }}
             />
           )}
         />
