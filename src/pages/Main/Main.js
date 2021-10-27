@@ -36,6 +36,7 @@ import { MainLayout } from "../../layouts";
 
 import { signOutUser } from "../../store/actions/signIn";
 import * as userActions from "../../store/actions/user";
+import * as accountActions from "../../store/actions/account";
 import * as Routes from "../../constants/routes";
 
 import useChangeTheme from "../../hooks/useChangeTheme";
@@ -47,7 +48,7 @@ function Main(props) {
   const apiClient = useContext(ApiContext);
 
   const { isAuthenticated } = props;
-  const { getMe } = props;
+  const { getMe, getBalance } = props;
   const { pathname } = useLocation();
   const theme = useChangeTheme(true);
   useNotification();
@@ -62,6 +63,7 @@ function Main(props) {
     if (isAuthenticated) {
       (async () => {
         await getMe(apiClient);
+        await getBalance(apiClient);
       })();
     }
   }, [isAuthenticated]);
@@ -182,6 +184,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getMe: (api) => dispatch(userActions.getMe(api)),
+    getBalance: (api) => dispatch(accountActions.getBalance(api)),
     signOut: (api) => dispatch(signOutUser(api)),
   };
 }
