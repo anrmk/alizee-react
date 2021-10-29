@@ -1,5 +1,5 @@
-import { BANK_VERIF_STATUS_PENDING } from "../../../constants/banking_form_types";
-import { generateUrl } from "../../../helpers/functions";
+import { BANK_VERIF_STATUS_PENDING } from "../../../../constants/banking_form_types";
+import { generateUrl } from "../../../../helpers/functions";
 
 export const VERIFY_BANK_ACCOUNT_REQUEST = "VERIFY_BANK_ACCOUNT_REQUEST";
 export const VERIFY_BANK_ACCOUNT_SUCCESS = "VERIFY_BANK_ACCOUNT_SUCCESS";

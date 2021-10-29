@@ -68,12 +68,15 @@ import {
   UPDATE_WALLET_REQUEST,
   UPDATE_WALLET_SUCCESS,
   UPDATE_WALLET_FAILURE,
-  GET_BANK_REQUEST,
-  GET_BANK_SUCCESS,
-  GET_BANK_FAILURE,
-  UPDATE_BANK_REQUEST,
-  UPDATE_BANK_SUCCESS,
-  UPDATE_BANK_FAILURE,
+  GET_BANK_ACCOUNT_REQUEST,
+  GET_BANK_ACCOUNT_SUCCESS,
+  GET_BANK_ACCOUNT_FAILURE,
+  UPDATE_BANK_ACCOUNT_REQUEST,
+  UPDATE_BANK_ACCOUNT_SUCCESS,
+  UPDATE_BANK_ACCOUNT_FAILURE,
+  RESET_BANK_ACCOUNT_REQUEST,
+  RESET_BANK_ACCOUNT_SUCCESS,
+  RESET_BANK_ACCOUNT_FAILURE,
   GET_SUBSCRIPTION_REQUEST,
   GET_SUBSCRIPTION_SUCCESS,
   GET_SUBSCRIPTION_FAILURE,
@@ -553,44 +556,62 @@ export default function settings(
     }
 
     // BANK SETTINGS
-    case GET_BANK_REQUEST: {
+    case GET_BANK_ACCOUNT_REQUEST: {
       return {
         ...state,
         ...action.payload,
       };
     }
-    case GET_BANK_SUCCESS: {
+    case GET_BANK_ACCOUNT_SUCCESS: {
       return {
         ...state,
         ...action.payload,
       };
     }
-    case GET_BANK_FAILURE: {
-      return {
-        ...state,
-        ...action.payload,
-      };
-    }
-
-    case UPDATE_BANK_REQUEST: {
-      return {
-        ...state,
-        ...action.payload,
-      };
-    }
-    case UPDATE_BANK_SUCCESS: {
-      return {
-        ...state,
-        ...action.payload,
-      };
-    }
-    case UPDATE_BANK_FAILURE: {
+    case GET_BANK_ACCOUNT_FAILURE: {
       return {
         ...state,
         ...action.payload,
       };
     }
 
+    case UPDATE_BANK_ACCOUNT_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case UPDATE_BANK_ACCOUNT_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case UPDATE_BANK_ACCOUNT_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+
+    case RESET_BANK_ACCOUNT_REQUEST: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case RESET_BANK_ACCOUNT_SUCCESS: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
+    case RESET_BANK_ACCOUNT_FAILURE: {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    }
     case GET_SUBSCRIPTION_REQUEST: {
       return {
         ...state,

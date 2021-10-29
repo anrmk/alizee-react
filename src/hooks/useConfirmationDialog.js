@@ -20,6 +20,7 @@ export default function useConfirmationDialog() {
   };
 
   return {
+    dialog,
     toggle: handleDialogToggle,
   };
 }

@@ -4,26 +4,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
 
 import { Grid, TextField, Button, MenuItem } from "@material-ui/core";
-
 import * as yup from "yup";
 
-import { VALUE_MAX_LENGTH } from "../../constants/form_validations";
-
-const ACCTOUNT_NUMBER_INPUT_ID = "accountNumber";
+const ACCOUNT_NUMBER_INPUT_ID = "accountNumber";
 const ROUTING_NUMBER_INPUT_ID = "routingNumber";
 const TYPE_INPUT_ID = "type";
 
 const schema = yup.object().shape({
-  [ACCTOUNT_NUMBER_INPUT_ID]: yup
-    .string()
-    .max(16, VALUE_MAX_LENGTH(16))
-    .required(),
-
-  [ROUTING_NUMBER_INPUT_ID]: yup
-    .string()
-    .max(16, VALUE_MAX_LENGTH(16))
-    .required(),
-
+  [ACCOUNT_NUMBER_INPUT_ID]: yup.string().min(8).max(12).required(),
+  [ROUTING_NUMBER_INPUT_ID]: yup.string().min(8).max(12).required(),
   [TYPE_INPUT_ID]: yup.number().required(),
 });
 
@@ -31,21 +20,27 @@ function EditBankForm({
   accountNumber = "",
   routingNumber = "",
   type = 0,
-  isUpdate,
+  verifyStatus,
 
   isFetching,
   onSubmit,
-  onClose,
+  onReset,
 }) {
   const { t } = useTranslation();
-  const { errors, register, setValue, watch, control, handleSubmit } = useForm({
+  const { errors, control, handleSubmit } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      [ACCTOUNT_NUMBER_INPUT_ID]: accountNumber,
+      [ACCOUNT_NUMBER_INPUT_ID]: accountNumber,
       [ROUTING_NUMBER_INPUT_ID]: routingNumber,
       [TYPE_INPUT_ID]: type || 0,
     },
   });
+  const isDisabled = isFetching || verifyStatus !== 0;
+
+  const handleResetForm = (e) => {
+    e.preventDefault();
+    onReset && onReset();
+  };
 
   return (
     <Grid
@@ -56,22 +51,24 @@ function EditBankForm({
       onSubmit={handleSubmit(onSubmit)}>
       <Grid item>
         <Controller
-          name={ACCTOUNT_NUMBER_INPUT_ID}
+          name={ACCOUNT_NUMBER_INPUT_ID}
           control={control}
           render={({ onChange, onBlur, value }) => (
             <TextField
-              id={ACCTOUNT_NUMBER_INPUT_ID}
+              id={ACCOUNT_NUMBER_INPUT_ID}
               label={t("AccountNumber")}
               fullWidth
               variant="outlined"
+              disabled={isFetching || verifyStatus !== 0}
               value={value}
-              error={!!errors[ACCTOUNT_NUMBER_INPUT_ID]}
-              helperText={errors[ACCTOUNT_NUMBER_INPUT_ID]?.message}
+              error={!!errors[ACCOUNT_NUMBER_INPUT_ID]}
+              helperText={errors[ACCOUNT_NUMBER_INPUT_ID]?.message}
               InputLabelProps={{
                 shrink: true,
               }}
               inputProps={{
-                maxLength: 16,
+                minLength: 8,
+                maxLength: 12,
               }}
               onBlur={onBlur}
               onChange={(e) => onChange(e.target.value)}
@@ -89,6 +86,7 @@ function EditBankForm({
               label={t("RoutingNumber")}
               fullWidth
               variant="outlined"
+              disabled={isFetching || verifyStatus !== 0}
               value={value}
               error={!!errors[ROUTING_NUMBER_INPUT_ID]}
               helperText={errors[ROUTING_NUMBER_INPUT_ID]?.message}
@@ -96,7 +94,8 @@ function EditBankForm({
                 shrink: true,
               }}
               inputProps={{
-                maxLength: 16,
+                minLength: 8,
+                maxLength: 12,
               }}
               onBlur={onBlur}
               onChange={(e) => onChange(e.target.value)}
@@ -114,6 +113,7 @@ function EditBankForm({
               label={t("BankAccountType")}
               fullWidth
               variant="outlined"
+              disabled={verifyStatus !== 0}
               select
               value={value}
               error={!!errors[TYPE_INPUT_ID]}
@@ -130,29 +130,29 @@ function EditBankForm({
         />
       </Grid>
       <Grid item>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} justifyContent="space-between">
           <Grid item>
             <Button
               type="submit"
               variant="contained"
               color="primary"
               disableElevation
-              disabled={isFetching}>
-              {isUpdate ? "Update" : "Verify"}
+              disabled={isDisabled}>
+              Update
             </Button>
           </Grid>
-          {onClose && (
-            <Grid item>
+          <Grid item>
+            {verifyStatus !== 0 && (
               <Button
+                type="submit"
                 variant="contained"
                 color="primary"
                 disableElevation
-                disabled={isFetching}
-                onClick={onClose}>
-                Cancel
+                onClick={handleResetForm}>
+                Change
               </Button>
-            </Grid>
-          )}
+            )}
+          </Grid>
         </Grid>
       </Grid>
     </Grid>

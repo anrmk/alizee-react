@@ -168,20 +168,6 @@ export {
 } from "./payments/updateWallet";
 
 export {
-  GET_BANK_REQUEST,
-  GET_BANK_SUCCESS,
-  GET_BANK_FAILURE,
-  getBank,
-} from "./getBank";
-
-export {
-  UPDATE_BANK_REQUEST,
-  UPDATE_BANK_SUCCESS,
-  UPDATE_BANK_FAILURE,
-  updateBank,
-} from "./updateBank";
-
-export {
   GET_SUBSCRIPTION_REQUEST,
   GET_SUBSCRIPTION_SUCCESS,
   GET_SUBSCRIPTION_FAILURE,
@@ -226,16 +212,26 @@ export {
 
 export { RESET_SETTINGS_REQUEST, resetSettings } from "./resetSettings";
 
+// BANKING
 export {
+  GET_BANK_ACCOUNT_REQUEST,
+  GET_BANK_ACCOUNT_SUCCESS,
+  GET_BANK_ACCOUNT_FAILURE,
+  getBankAccount,
+  UPDATE_BANK_ACCOUNT_REQUEST,
+  UPDATE_BANK_ACCOUNT_SUCCESS,
+  UPDATE_BANK_ACCOUNT_FAILURE,
+  updateBankAccount,
+  RESET_BANK_ACCOUNT_REQUEST,
+  RESET_BANK_ACCOUNT_SUCCESS,
+  RESET_BANK_ACCOUNT_FAILURE,
+  resetBankAccount,
   VERIFY_BANK_ACCOUNT_REQUEST,
   VERIFY_BANK_ACCOUNT_SUCCESS,
   VERIFY_BANK_ACCOUNT_FAILURE,
   verifyBankAccount,
-} from "./verifyBankAccount";
-
-export {
   WITHDRAW_REQUEST,
   WITHDRAW_SUCCESS,
   WITHDRAW_FAILURE,
   withdraw,
-} from "./withdraw";
+} from "./banking";

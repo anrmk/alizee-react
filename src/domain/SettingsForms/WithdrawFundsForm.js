@@ -18,7 +18,6 @@ import {
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import useStyles from "./styles";
-import EditBankForm from "./EditBankForm";
 
 const WITHDRAW_FUNDS_INPUT_ID = "withdrawFunds";
 const WITHDRAW_AUTOMATICALLY_INPUT_ID = "withdrawAutomatically";
@@ -29,15 +28,13 @@ const schema = yup.object().shape({
 });
 
 export default function WithdrawFundsForm({
+  name = "",
   accountNumber = "",
-  routingNumber = "",
-  type,
   deposit,
+  verifyStatus,
   isFetching,
-  isVerificationPending,
   className,
   onSubmit,
-  onUpdateAccountNumber,
 }) {
   const classes = useStyles();
   const [isUpdate, setIsUpdate] = useState(false);
@@ -49,9 +46,11 @@ export default function WithdrawFundsForm({
     },
   });
 
+  const isVerificationPending = verifyStatus === 1;
+
   return (
     <Grid container className={className} spacing={2}>
-      <Grid item xs={12} sm={4}>
+      <Grid item sm={12} lg={4}>
         <Typography variant="subtitle1">Selected Payout System</Typography>
         <Card className={classes.withdrawFundsCardRoot}>
           <CardHeader
@@ -84,11 +83,8 @@ export default function WithdrawFundsForm({
           </CardContent>
         </Card>
       </Grid>
-      <Grid item xs={12} sm={8}>
+      <Grid item sm={12} lg={8}>
         <Box mb={2}>
-          <Typography variant="subtitle1">
-            Your Account Has Been Approved
-          </Typography>
           <Alert icon={false} severity="info">
             <Typography variant="body2">
               To edit W9 form <Link to="sf">Click here</Link>
@@ -114,28 +110,14 @@ export default function WithdrawFundsForm({
                     : `Bank Connected(${accountNumber})`}
                 </Typography>
                 {!isVerificationPending && (
-                  <Typography variant="body2">
-                    WELLS FARGO BANK NAs {deposit}
-                  </Typography>
+                  <Typography variant="body2">{name}</Typography>
                 )}
               </Box>
-              {!isVerificationPending && (
-                <Box>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    size="small"
-                    disableElevation
-                    onClick={() => setIsUpdate(true)}>
-                    Change
-                  </Button>
-                </Box>
-              )}
             </Box>
           </Alert>
         </Box>
 
-        {!isUpdate && !isVerificationPending ? (
+        {!isUpdate && !isVerificationPending && (
           <>
             <Grid
               container
@@ -163,6 +145,12 @@ export default function WithdrawFundsForm({
                       }
                       onBlur={onBlur}
                       onChange={(e) => onChange(e.target.value)}
+                      InputProps={{
+                        inputProps: {
+                          min: 5,
+                          max: 20,
+                        },
+                      }}
                     />
                   )}
                 />
@@ -199,17 +187,6 @@ export default function WithdrawFundsForm({
               )}
             />
           </>
-        ) : (
-          !isVerificationPending && (
-            <EditBankForm
-              accountNumber={accountNumber}
-              routingNumber={routingNumber}
-              type={type}
-              isUpdate
-              onSubmit={onUpdateAccountNumber}
-              onClose={() => setIsUpdate(false)}
-            />
-          )
         )}
       </Grid>
     </Grid>

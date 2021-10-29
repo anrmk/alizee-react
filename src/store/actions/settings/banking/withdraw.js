@@ -1,5 +1,5 @@
-import { generateUrl } from "../../../helpers/functions";
-import { getBalance } from "../account";
+import { generateUrl } from "../../../../helpers/functions";
+import { getBalance } from "../../account";
 
 export const WITHDRAW_REQUEST = "WITHDRAW_REQUEST";
 export const WITHDRAW_SUCCESS = "WITHDRAW_SUCCESS";

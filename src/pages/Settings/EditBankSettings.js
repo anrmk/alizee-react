@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useCallback } from "react";
 import { connect } from "react-redux";
 import { Card, CardContent, Divider } from "@material-ui/core";
 
@@ -6,26 +6,39 @@ import ApiContext from "../../context/ApiContext";
 import * as settingsActions from "../../store/actions/settings";
 import * as accountActions from "../../store/actions/account";
 import * as userActions from "../../store/actions/user";
-import { EditBankForm, OndatoForm } from "../../domain/SettingsForms";
-import SettingsHeader from "../../domain/SettingsForms/SettingsHeader";
 
-import useAgreeDialog from "../../hooks/useAgreeDialog";
-import useBankAccountStatuses from "../../hooks/settings/useBankAccountStatuses";
-import WithdrawFundsForm from "../../domain/SettingsForms/WithdrawFundsForm";
-import TransactionsTable from "../../domain/TransactionsTable/TransactionsTable";
+import {
+  BANK_VERIF_STATUS_NONE,
+  BANK_VERIF_STATUS_VERIFIED,
+} from "../../constants/banking_form_types";
+
 import useAlert from "../../hooks/useAlert";
+import useAgreeDialog from "../../hooks/useAgreeDialog";
+
+import useConfirmationDialog from "../../hooks/useConfirmationDialog";
+
+import {
+  EditBankForm,
+  OndatoForm,
+  SettingsHeader,
+  WithdrawFundsForm,
+} from "../../domain/SettingsForms";
+
+import { ConfirmDialog } from "../../domain/ConfirmationDialog";
+import TransactionsTable from "../../domain/TransactionsTable/TransactionsTable";
+
 import useStyles from "./styles";
 
 function EditBankSettings({
   identityVerified,
   data,
   isFetching,
-  getBalance,
   requestStatus,
 
-  getBank,
+  getBankAccount,
   updateBankAccount,
   verifyBankAccount,
+  resetBankAccount,
   withdraw,
   veryfyMe,
   onBackClick,
@@ -34,16 +47,14 @@ function EditBankSettings({
   const classes = useStyles();
   const agreeDialog = useAgreeDialog(() => veryfyMe(apiClient));
   const { account, transactions } = data;
-  const { isNotVerified, isPending, isVerified } = useBankAccountStatuses(
-    identityVerified,
-    account
-  );
+
+  const confirmationDialog = useConfirmationDialog();
+
   useAlert(requestStatus);
 
   useEffect(() => {
     (async () => {
-      await getBalance(apiClient);
-      await getBank(apiClient);
+      await getBankAccount(apiClient);
     })();
   }, []);
 
@@ -52,8 +63,29 @@ function EditBankSettings({
     await verifyBankAccount(apiClient, pData);
   };
 
-  const handleEditBankSubmit = async (pData) => {
-    await verifyBankAccount(apiClient, pData);
+  const handleResetBankAccount = useCallback(async () => {
+    confirmationDialog.dialog.setParams({ loading: true });
+    await resetBankAccount(apiClient);
+    confirmationDialog.dialog.toggle({ open: false, loading: false });
+  }, []);
+
+  const handleResetBankAccountClick = () => {
+    confirmationDialog.toggle(
+      {
+        title: "Reset Bank Account",
+        mainBtnText: "Confirm",
+        onMainClick: handleResetBankAccount,
+      },
+      {
+        contentText: (
+          <ConfirmDialog
+            helpText="Do you really want to reset Bank Account data?"
+            textProp={{ variant: "subtitle1", align: "center" }}
+          />
+        ),
+      },
+      true
+    );
   };
 
   const handleWithdrawFundsSubmit = async (pData) => {
@@ -64,24 +96,27 @@ function EditBankSettings({
     <Card>
       <SettingsHeader onBackClick={onBackClick} title="Banking" />
       <Divider />
-      <CardContent>
-        {isVerified && (
-          <>
+      {!isFetching && (
+        <CardContent>
+          {account && account.verifyStatus !== BANK_VERIF_STATUS_NONE && (
             <WithdrawFundsForm
               className={classes.withdrawFormRoot}
               {...account}
-              isVerificationPending={isPending}
               onSubmit={handleWithdrawFundsSubmit}
-              onUpdateAccountNumber={handleEditBankSubmit}
             />
-            {!isPending && <TransactionsTable rows={transactions} />}
-          </>
-        )}
-        {isNotVerified && !isFetching && (
-          <EditBankForm {...account} onSubmit={handleVerifyBankAccountSubmit} />
-        )}
-        {!identityVerified && <OndatoForm onSubmit={agreeDialog.toggle} />}
-      </CardContent>
+          )}
+          {account && account.verifyStatus === BANK_VERIF_STATUS_VERIFIED && (
+            <TransactionsTable rows={transactions} />
+          )}
+
+          <EditBankForm
+            {...account}
+            onSubmit={handleVerifyBankAccountSubmit}
+            onReset={handleResetBankAccountClick}
+          />
+          {!identityVerified && <OndatoForm onSubmit={agreeDialog.toggle} />}
+        </CardContent>
+      )}
     </Card>
   );
 }
@@ -101,11 +136,12 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getBalance: (api) => dispatch(accountActions.getBalance(api)),
-    getBank: (api) => dispatch(settingsActions.getBank(api)),
+    getBankAccount: (api) => dispatch(settingsActions.getBankAccount(api)),
     updateBankAccount: (api, data) =>
-      dispatch(settingsActions.updateBank(api, data)),
+      dispatch(settingsActions.updateBankAccount(api, data)),
     verifyBankAccount: (api, opts) =>
       dispatch(settingsActions.verifyBankAccount(api, opts)),
+    resetBankAccount: (api) => dispatch(settingsActions.resetBankAccount(api)),
     withdraw: (api, opts) => dispatch(settingsActions.withdraw(api, opts)),
     veryfyMe: (api) => dispatch(userActions.verifyMe(api)),
   };
