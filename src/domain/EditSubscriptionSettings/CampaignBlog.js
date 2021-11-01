@@ -2,7 +2,7 @@ import React from "react";
 
 import { Grid, Button, Typography, CardContent } from "@material-ui/core";
 
-import { CampaignList } from "../../components/Campaign";
+import CampaignList from "../../components/Campaign";
 
 function CampaignBlog({
   onOpenDialogClick,

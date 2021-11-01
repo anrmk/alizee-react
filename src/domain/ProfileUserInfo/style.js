@@ -11,7 +11,15 @@ const useStyles = makeStyles((theme) => ({
   },
 
   btnMargin: {
-    marginBottom: theme.spacing(2),
+    [theme.breakpoints.up("md")]: {
+      marginBottom: theme.spacing(2),
+    },
+  },
+
+  bio: {
+    [theme.breakpoints.down("md")]: {
+      marginTop: theme.spacing(2),
+    },
   },
 
   btnsGroupMobile: {

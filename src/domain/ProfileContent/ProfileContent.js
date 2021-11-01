@@ -10,10 +10,6 @@ function ProfileContent(props) {
   const { isOwner, items, hasMore, tabIndex, disabled, user } = props;
   const { onFetchMore, onTabChange, onItemClick, onSubscribeClick } = props;
 
-  const handleSubscribeClick = () => {
-    onSubscribeClick && onSubscribeClick(user);
-  };
-
   return (
     <>
       <Hidden mdUp>
@@ -44,7 +40,7 @@ function ProfileContent(props) {
         hasMore={hasMore}
         onFetchMore={onFetchMore}
         onItemClick={onItemClick}
-        onSubscribeClick={handleSubscribeClick}
+        onSubscribeClick={onSubscribeClick}
       />
     </>
   );

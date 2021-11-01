@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import {
   Redirect,
   useHistory,
@@ -32,15 +32,12 @@ import useFollowDialog from "../../hooks/payment/useFollowDialog";
 import dialogs, { PROFILE_EDIT_COVER } from "../../constants/dialogs";
 import { FOLLOW_ACCEPTED } from "../../constants/follow_types";
 
-import {
-  ProfileUserInfo,
-  ProfileUserInfoMobile,
-} from "../../domain/ProfileUserInfo";
+import { ProfileUserInfo, ProfileInfo } from "../../domain/ProfileUserInfo";
 import { PROFILE_TYPE } from "../../components/Post/Menu";
-import { RedirectContent } from "../../domain/ConfirmationDialog";
 
 import useStyles from "./style";
 import useInteractionDialog from "../../hooks/useInteractionDialog";
+import { isEmptyObject } from "../../helpers/functions";
 
 function Profile(props) {
   const initPostsSettings = {
@@ -95,7 +92,7 @@ function Profile(props) {
   }, [username]);
 
   useEffect(() => {
-    if (username) {
+    if (username && !isEmptyObject(user.data)) {
       resetPosts();
 
       if (
@@ -107,6 +104,65 @@ function Profile(props) {
       }
     }
   }, [postSettings, user.data.followStatus]);
+
+  const handleCampaignDelete = async (pData) => {
+    dialog.setParams({ loading: true });
+    await deleteCampaign(apiClient, pData);
+    dialog.toggle({ open: false, loading: false });
+  };
+
+  const handleDeleteCampaignClick = useCallback(
+    (pData, contentText = "Do you really want to stop promotion campaign?") => {
+      confirmationDialog.toggle(
+        {
+          mainBtnText: "Delete",
+          title: "Campaign",
+          onMainClick: () => handleCampaignDelete(pData),
+        },
+        {
+          contentText,
+        }
+      );
+    },
+    []
+  );
+
+  const handleFetchPosts = useCallback(async () => {
+    if (post.isFetching) {
+      return;
+    }
+
+    switch (postSettings.index) {
+      case 1:
+        getTaggedPosts(apiClient, {
+          userName: username,
+        });
+        break;
+      case 2:
+        getFavoritePosts(apiClient);
+        break;
+
+      default:
+        fetchPosts(apiClient, {
+          userName: username,
+        });
+        break;
+    }
+  }, [postSettings]);
+
+  const handleTabChange = useCallback((index) => {
+    setPostSettings({
+      index,
+    });
+  }, []);
+
+  const handleItemClick = useCallback((id) => {
+    history.push(POST_ID_ROUTE(id));
+  }, []);
+
+  const handleSubscribeClick = useCallback(() => {
+    followDialog.toggle(user.data);
+  }, []);
 
   if (url.includes(SETTINGS_ROUTE)) {
     return <Redirect to={SETTINGS_EDIT_PROFILE_ROUTE} />;
@@ -139,40 +195,6 @@ function Profile(props) {
       )
     );
   };
-  async function handleFetchPosts() {
-    if (post.isFetching) {
-      return;
-    }
-
-    switch (postSettings.index) {
-      case 1:
-        getTaggedPosts(apiClient, {
-          userName: username,
-        });
-        break;
-      case 2:
-        getFavoritePosts(apiClient);
-        break;
-
-      default:
-        fetchPosts(apiClient, {
-          userName: username,
-        });
-        break;
-    }
-  }
-
-  const handleTabChange = (index) => {
-    setPostSettings({
-      index,
-    });
-  };
-
-  const handleItemClick = (id) => {
-    history.push(POST_ID_ROUTE(id));
-  };
-
-  const handleGiftSendClick = (userName) => {};
 
   const handleAvatarImageChange = (file) => {
     !user.isFetching && updateAvatar(apiClient, { file });
@@ -193,46 +215,6 @@ function Profile(props) {
     user.data.coverUrl = null;
   };
 
-  const handleMoodUpdateClick = () => {
-    createMoodDialog.toggle &&
-      createMoodDialog.toggle({ ...user.data, defaultValue: user.data.mood });
-  };
-
-  const handleCampaignDelete = async (pData) => {
-    dialog.setParams({ loading: true });
-    await deleteCampaign(apiClient, pData);
-    dialog.toggle({ open: false, loading: false });
-  };
-
-  const handleDeleteCampaignClick = (
-    pData,
-    contentText = "Do you really want to stop promotion campaign?"
-  ) => {
-    confirmationDialog.toggle(
-      {
-        mainBtnText: "Delete",
-        title: "Campaign",
-        onMainClick: () => handleCampaignDelete(pData),
-      },
-      {
-        contentText,
-      }
-    );
-  };
-
-  const handleGoToSocialClick = (link) => {
-    confirmationDialog.toggle(
-      {
-        mainBtnText: "Link",
-        title: "Leaving TheMembers",
-        onMainClick: () => window.open(link, "_blank"),
-      },
-      {
-        contentText: <RedirectContent link={link} />,
-      }
-    );
-  };
-
   // if (user.data.isBlocked) {
   //   return (
   //     <Box width="100%" textAlign="center">
@@ -242,17 +224,12 @@ function Profile(props) {
   //   );
   // }
 
-  const handleUserMenuClick = () => {
-    interactionUserDialog.toggle(user);
-  };
-
   return (
     <>
       <ProfileHeader
         user={user.data}
         isOwner={username === me.userName}
         disabled={media.isFetching}
-        onSendGiftClick={() => handleGiftSendClick(user.data.userName)}
         onCoverUrlChange={handleCoverEditDialog}
         onDeleteCoverImageClick={handleDeleteCoverImageClick}
         // onMenuClick={() =>
@@ -266,18 +243,14 @@ function Profile(props) {
         // }
       />
       <Hidden mdUp>
-        <ProfileUserInfoMobile
+        <ProfileInfo
           user={user.data}
           isOwner={username === me.userName}
-          followStatus={user.data.followStatus}
-          isVerified={user.data?.identityVerified}
-          subscriptionPrice={user.data?.subscriptionPrice}
-          subscriptionStatus={user.data?.subscriptionStatus}
           disabled={user.data?.subscriptionPrice === 0}
-          onMenuClick={handleUserMenuClick}
-          onSubscribeClick={followDialog.toggle}
           onSendTipClick={sendTipDialog.toggle}
-          onMoodUpdateClick={handleMoodUpdateClick}
+          onSubscribeClick={followDialog.toggle}
+          onMenuClick={interactionUserDialog.toggle}
+          onClick={confirmationDialog.toggle}
           onDeleteCampaignClick={handleDeleteCampaignClick}
         />
       </Hidden>
@@ -294,7 +267,7 @@ function Profile(props) {
             onFetchMore={handleFetchPosts}
             onItemClick={handleItemClick}
             onTabChange={handleTabChange}
-            onSubscribeClick={followDialog.toggle}
+            onSubscribeClick={handleSubscribeClick}
           />
         </Grid>
         <Hidden smDown>
@@ -303,21 +276,20 @@ function Profile(props) {
               <ProfileUserInfo
                 user={user.data}
                 isOwner={username === me.userName}
-                followStatus={user.data.followStatus}
-                isVerified={user.data?.identityVerified}
-                subscriptionPrice={user.data?.subscriptionPrice}
-                sites={user.data.sites}
-                subscriptionStatus={user.data?.subscriptionStatus}
-                disabled={user.data?.subscriptionPrice === 0}
-                onMenuClick={handleUserMenuClick}
-                onSubscribeClick={followDialog.toggle}
-                onSendTipClick={sendTipDialog.toggle}
-                onMoodUpdateClick={handleMoodUpdateClick}
+                onMoodUpdateClick={createMoodDialog.toggle}
                 onDeleteAvatarImageClick={handleDeleteAvatarImageClick}
-                onAvatarUrlChange={handleAvatarImageChange}
-                onClick={handleGoToSocialClick}
-                onDeleteCampaignClick={handleDeleteCampaignClick}
-              />
+                onAvatarUrlChange={handleAvatarImageChange}>
+                <ProfileInfo
+                  user={user.data}
+                  isOwner={username === me.userName}
+                  disabled={user.data?.subscriptionPrice === 0}
+                  onSendTipClick={sendTipDialog.toggle}
+                  onSubscribeClick={followDialog.toggle}
+                  onMenuClick={interactionUserDialog.toggle}
+                  onClick={confirmationDialog.toggle}
+                  onDeleteCampaignClick={handleDeleteCampaignClick}
+                />
+              </ProfileUserInfo>
             </Box>
           </Grid>
         </Hidden>

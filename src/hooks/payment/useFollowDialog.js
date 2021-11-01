@@ -46,6 +46,7 @@ export default function useFollowDialog(isProfile) {
       subscriptionPrice,
       price,
     };
+
     dialog.toggle({ open: false });
     if (!isFetching) {
       if (isProfile || !(followStatus === FOLLOW_ACCEPTED)) {

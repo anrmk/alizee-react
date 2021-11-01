@@ -7,37 +7,39 @@ import GridGalleryStub from "./GridGalleryStub";
 
 import useStyle from "./styles";
 
-function GridGallery({
-  isStubShow = true,
-  isUserView,
-  items,
-  hasMore,
+const GridGallery = React.memo(
+  ({
+    isStubShow = true,
+    isUserView,
+    items,
+    hasMore,
 
-  onFetchMore,
-  onItemClick,
-  onSubscribeClick,
-}) {
-  const classes = useStyle();
+    onFetchMore,
+    onItemClick,
+    onSubscribeClick,
+  }) => {
+    const classes = useStyle();
 
-  if (!isStubShow)
-    return <GridGalleryStub onSubscribeClick={onSubscribeClick} />;
+    if (!isStubShow)
+      return <GridGalleryStub onSubscribeClick={onSubscribeClick} />;
 
-  return (
-    items &&
-    !!items.length && (
-      <InfiniteScroll
-        className={classes.root}
-        dataLength={items.length}
-        next={onFetchMore}
-        hasMore={hasMore}>
-        {isUserView ? (
-          <GridGalleryUserList items={items} onItemClick={onItemClick} />
-        ) : (
-          <GridGalleryPostList items={items} onItemClick={onItemClick} />
-        )}
-      </InfiniteScroll>
-    )
-  );
-}
+    return (
+      items &&
+      !!items.length && (
+        <InfiniteScroll
+          className={classes.root}
+          dataLength={items.length}
+          next={onFetchMore}
+          hasMore={hasMore}>
+          {isUserView ? (
+            <GridGalleryUserList items={items} onItemClick={onItemClick} />
+          ) : (
+            <GridGalleryPostList items={items} onItemClick={onItemClick} />
+          )}
+        </InfiniteScroll>
+      )
+    );
+  }
+);
 
 export default GridGallery;

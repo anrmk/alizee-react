@@ -16,7 +16,6 @@ import useStyles from "./styles";
 export default function GridGalleryStub({ onSubscribeClick }) {
   const classes = useStyles();
   const { t } = useTranslation();
-
   return (
     <Box className={classes.stubRoot} width="100%" height="200px">
       <Card>
