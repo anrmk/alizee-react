@@ -6,6 +6,8 @@ import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
+import { FOLLOW_NONE } from "../constants/follow_types";
+
 function InteractionUserMenuDialog({
   userName,
   isBlocked,
@@ -61,7 +63,7 @@ function InteractionUserMenuDialog({
         </ListItem>
       )}
 
-      {onUnsubscribe && (
+      {onUnsubscribe && followStatus !== FOLLOW_NONE && (
         <ListItem button onClick={handleUnsubscribeClick} disableGutters>
           <ListItemIcon>
             <DeleteForeverIcon />

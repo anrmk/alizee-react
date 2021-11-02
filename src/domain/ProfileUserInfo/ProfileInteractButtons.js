@@ -47,7 +47,7 @@ function ProfileInteractButtons({
         <SubscriptionBtn
           onSubscribeClick={handleSubscribeClick}
           followStatus={followStatus}
-          subscriptionPrice={subscriptionPrice}
+          subscriptionPrice={user.subscriptionPrice}
           subscriptionStatus={subscriptionStatus}
           subscriptionExpireDate={subscriptionExpireDate}
           onMenuClick={onMenuClick}

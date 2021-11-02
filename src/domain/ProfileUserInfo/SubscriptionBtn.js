@@ -9,6 +9,7 @@ import {
   FOLLOW_ACCEPTED,
   FOLLOW_PENDING,
   SUBSCRIPTION_STATUS_PENDING,
+  SUBSCRIPTION_STATUS_SUCCESS,
 } from "../../constants/follow_types";
 
 import useStyles from "./style";
@@ -29,57 +30,55 @@ function SubscriptionBtn({
     setIsExpired(isExpiredSubscription(subscriptionExpireDate));
   }, [subscriptionExpireDate]);
 
-  return (
-    <>
-      {(isExpired && followStatus === FOLLOW_ACCEPTED) ||
-      followStatus === FOLLOW_ACCEPTED ||
+  const handleDisableBtn = () => {
+    if (
+      (followStatus === FOLLOW_ACCEPTED &&
+        subscriptionPrice &&
+        !subscriptionStatus &&
+        !isExpired) ||
+      (isExpired && subscriptionStatus === SUBSCRIPTION_STATUS_SUCCESS)
+    ) {
+      return false;
+    }
+
+    if (
+      subscriptionStatus === SUBSCRIPTION_STATUS_PENDING ||
       followStatus === FOLLOW_PENDING ||
-      subscriptionStatus === SUBSCRIPTION_STATUS_PENDING ? (
-        <ButtonGroup
-          disableElevation
-          color="primary"
-          variant="contained"
-          size="large"
-          fullWidth>
-          <Button
-            disabled={!(isExpired && followStatus === FOLLOW_ACCEPTED)}
-            fullWidth
-            onClick={onSubscribeClick}>
-            {getSubscriptionBtnText(
-              isExpired && followStatus === FOLLOW_ACCEPTED
-                ? FOLLOW_NONE
-                : followStatus,
-              subscriptionPrice,
-              t,
-              subscriptionStatus
-            )}
-          </Button>
-          <Button
-            size="small"
-            color="primary"
-            onClick={onMenuClick}
-            style={{ maxWidth: "max-content" }}>
-            <ArrowDropDownIcon />
-          </Button>
-        </ButtonGroup>
-      ) : (
-        <Button
-          className={classes.subscribeBtn}
-          disableElevation
-          size="large"
-          color="primary"
-          variant="contained"
-          fullWidth
-          onClick={onSubscribeClick}>
-          {getSubscriptionBtnText(
-            followStatus,
-            subscriptionPrice,
-            t,
-            subscriptionStatus
-          )}
-        </Button>
-      )}
-    </>
+      followStatus === FOLLOW_ACCEPTED
+    ) {
+      return true;
+    }
+    return false;
+  };
+  return (
+    <ButtonGroup
+      disableElevation
+      color="primary"
+      variant="contained"
+      size="large"
+      fullWidth>
+      <Button
+        disabled={handleDisableBtn()}
+        fullWidth
+        onClick={onSubscribeClick}>
+        {getSubscriptionBtnText(
+          isExpired && followStatus === FOLLOW_ACCEPTED
+            ? FOLLOW_NONE
+            : followStatus,
+          subscriptionPrice,
+          t,
+          subscriptionStatus,
+          isExpired
+        )}
+      </Button>
+      <Button
+        size="small"
+        color="primary"
+        onClick={onMenuClick}
+        style={{ maxWidth: "max-content" }}>
+        <ArrowDropDownIcon />
+      </Button>
+    </ButtonGroup>
   );
 }
 

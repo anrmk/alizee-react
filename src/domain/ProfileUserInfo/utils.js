@@ -14,8 +14,27 @@ export function getSubscriptionBtnText(
   followStatus,
   subscriptionPrice,
   t,
-  subscriptionStatus
+  subscriptionStatus,
+  isExpired
 ) {
+  if (
+    subscriptionStatus === SUBSCRIPTION_STATUS_SUCCESS &&
+    isExpired &&
+    subscriptionPrice
+  ) {
+    return `${t(
+      "ProfileUserInfoSubscribeBtnTextSubscribeForPrice"
+    )} $${subscriptionPrice}`;
+  }
+
+  if (
+    subscriptionStatus === SUBSCRIPTION_STATUS_SUCCESS &&
+    !isExpired &&
+    followStatus === FOLLOW_NONE
+  ) {
+    return t("ProfileUserInfoSubscribeBtnTextSubscribeForFree");
+  }
+
   if (subscriptionPrice && followStatus === FOLLOW_NONE) {
     return `${t(
       "ProfileUserInfoSubscribeBtnTextSubscribeForPrice"
@@ -31,8 +50,21 @@ export function getSubscriptionBtnText(
   )
     return t("ProfileUserInfoSubscribeBtnTextAwaitConfirm");
 
-  if (followStatus === FOLLOW_ACCEPTED && !subscriptionStatus)
+  if (
+    followStatus === FOLLOW_ACCEPTED &&
+    !subscriptionStatus &&
+    !subscriptionPrice
+  )
     return t("ProfileUserInfoSubscribeBtnTextSubscription");
+
+  if (
+    followStatus === FOLLOW_ACCEPTED &&
+    !subscriptionStatus &&
+    subscriptionPrice
+  )
+    return `${t(
+      "ProfileUserInfoSubscribeBtnTextSubscribeForPrice"
+    )} $${subscriptionPrice}`;
 
   if (
     followStatus === FOLLOW_ACCEPTED &&
