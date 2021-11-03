@@ -37,6 +37,7 @@ import {
   GET_SUGGESTIONS_PEOPLE_REQUEST,
   GET_SUGGESTIONS_PEOPLE_FAILURE,
   GET_SUGGESTIONS_PEOPLE_SUCCESS,
+  GET_SUGGESTIONS_REFRESH_PEOPLE_SUCCESS,
   RESET_SUGGESTIONS_PEOPLE,
   GET_FOLLOWINGS_BY_QUERY_REQUEST,
   GET_FOLLOWINGS_BY_QUERY_SUCCESS,
@@ -305,6 +306,11 @@ export default function usersReducer(
         ...action.payload,
       };
     case GET_SUGGESTIONS_PEOPLE_SUCCESS:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case GET_SUGGESTIONS_REFRESH_PEOPLE_SUCCESS:
       return {
         ...state,
         ...action.payload,

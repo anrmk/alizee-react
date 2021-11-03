@@ -1,8 +1,16 @@
 import { generateUrl } from "../../../helpers/functions";
-import { FOLLOWERS_LENGTH, FOLLOWERS_OFFSET } from "../../../constants/feed";
+import {
+  FOLLOWERS_LENGTH,
+  FOLLOWERS_OFFSET,
+  POSTS_DEFAULT_OFFSET,
+  FOLLOWERS_REFRESH_OFFSET,
+  FOLLOWERS_REFRESH_LENGTH,
+} from "../../../constants/feed";
 
 export const GET_SUGGESTIONS_PEOPLE_REQUEST = "GET_SUGGESTIONS_PEOPLE_REQUEST";
 export const GET_SUGGESTIONS_PEOPLE_SUCCESS = "GET_SUGGESTIONS_PEOPLE_SUCCESS";
+export const GET_SUGGESTIONS_REFRESH_PEOPLE_SUCCESS =
+  "GET_SUGGESTIONS_REFRESH_PEOPLE_SUCCESS";
 export const GET_SUGGESTIONS_PEOPLE_FAILURE = "GET_SUGGESTIONS_PEOPLE_FAILURE";
 export const RESET_SUGGESTIONS_PEOPLE = "RESET_SUGGESTIONS_PEOPLE";
 
@@ -29,6 +37,18 @@ function receiveGetRecommended(data, start, length) {
   };
 }
 
+function receiveGetRefreshRecommended(data, start) {
+  return {
+    type: GET_SUGGESTIONS_REFRESH_PEOPLE_SUCCESS,
+    payload: {
+      isFetching: false,
+      data,
+      errorMessage: "",
+      offset: start + FOLLOWERS_REFRESH_OFFSET,
+    },
+  };
+}
+
 function errorGetRecommended(message) {
   return {
     type: GET_SUGGESTIONS_PEOPLE_FAILURE,
@@ -47,12 +67,14 @@ export function resetRecommended() {
       payload: {
         isFetching: false,
         data: [],
+        offset: POSTS_DEFAULT_OFFSET,
+        hasMore: false,
         errorMessage: "",
       },
     });
 }
 
-export function getRecommended(api, count) {
+export function getRefreshRecommended(api) {
   return async (dispatch, getState) => {
     dispatch(requestGetRecommended());
 
@@ -64,7 +86,34 @@ export function getRecommended(api, count) {
         .setMethod("GET")
         .setParams({
           start: currentOffset,
-          length: count ?? FOLLOWERS_LENGTH,
+          length: FOLLOWERS_REFRESH_LENGTH,
+        })
+        .query(url);
+
+      if (data.length < FOLLOWERS_REFRESH_LENGTH) {
+        dispatch(receiveGetRefreshRecommended([...data], POSTS_DEFAULT_OFFSET));
+      } else {
+        dispatch(receiveGetRefreshRecommended([...data], currentOffset));
+      }
+    } catch (e) {
+      dispatch(errorGetRecommended("Error: something went wrong:", e));
+    }
+  };
+}
+
+export function getRecommended(api) {
+  return async (dispatch, getState) => {
+    dispatch(requestGetRecommended());
+
+    try {
+      const url = generateUrl("getRecommended");
+      const currentOffset = getState().users.offset;
+
+      const { data } = await api
+        .setMethod("GET")
+        .setParams({
+          start: currentOffset,
+          length: FOLLOWERS_LENGTH,
         })
         .query(url);
 

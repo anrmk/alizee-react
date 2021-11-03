@@ -89,9 +89,11 @@ export {
   GET_SUGGESTIONS_PEOPLE_REQUEST,
   GET_SUGGESTIONS_PEOPLE_FAILURE,
   GET_SUGGESTIONS_PEOPLE_SUCCESS,
+  GET_SUGGESTIONS_REFRESH_PEOPLE_SUCCESS,
   RESET_SUGGESTIONS_PEOPLE,
   getRecommended,
   resetRecommended,
+  getRefreshRecommended,
 } from "./getSuggestionPeople";
 
 export {

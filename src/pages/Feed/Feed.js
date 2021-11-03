@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Box, Grid, Hidden } from "@material-ui/core";
+import withWidth from "@material-ui/core/withWidth";
 
 import { PostsList } from "../../domain/PostsList";
 // import { HotStreamersItemList } from "../../domain/Stream";
@@ -46,7 +47,7 @@ function Feed(props) {
   const classes = useStyles();
   const apiClient = useContext(ApiContext);
 
-  const { userInfo } = props;
+  const { userInfo, width } = props;
   const { people, getPeople, resetPeople } = props;
   const { posts, getPosts, resetPosts } = props;
   const { story, getStories } = props;
@@ -79,12 +80,17 @@ function Feed(props) {
     if (!posts.data.length) {
       getPosts(apiClient);
     }
-    getPeople(apiClient);
 
     return () => {
       resetPeople();
     };
   }, []);
+
+  useEffect(() => {
+    if (width !== "xs" && width !== "sm" && !people?.data?.length) {
+      getPeople(apiClient);
+    }
+  }, [width]);
 
   useEffect(() => {
     if (!story.data.length) {
@@ -217,8 +223,7 @@ function mapDispatchToProps(dispatch) {
     getReceipt: (api, id, callback) =>
       dispatch(postActions.getReceipt(api, id, callback)),
     resetPosts: () => dispatch(postActions.resetFollowingPosts()),
-
-    getPeople: (api) => dispatch(actionRelationship.getRecommended(api, 5)),
+    getPeople: (api) => dispatch(actionRelationship.getRefreshRecommended(api)),
     resetPeople: () => dispatch(actionRelationship.resetRecommended()),
     buyPost: (api, id) => dispatch(paymentActions.buyPost(api, id)),
 
@@ -230,4 +235,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Feed);
+export default withWidth()(connect(mapStateToProps, mapDispatchToProps)(Feed));

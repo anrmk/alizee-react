@@ -26,3 +26,5 @@ export const NOTIFICATIONS_DEFAULT_OFFSET = 0;
 
 export const FOLLOWERS_OFFSET = 20;
 export const FOLLOWERS_LENGTH = 20;
+export const FOLLOWERS_REFRESH_OFFSET = 5;
+export const FOLLOWERS_REFRESH_LENGTH = 5;
