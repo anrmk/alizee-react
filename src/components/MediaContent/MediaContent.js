@@ -21,10 +21,12 @@ function MediaContent({
   showThumbnail,
   isLiked = false,
   isTargetFunds,
+  isLoaded,
 
   onPayClick,
   onChangeIndex,
   onClick,
+  onLoaded,
 }) {
   const classes = useStyles();
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
@@ -71,6 +73,8 @@ function MediaContent({
                   wrapperClassName={classes.imageContentWrapper}
                   key={item.id}
                   url={url}
+                  isLoaded={isLoaded}
+                  onLoaded={onLoaded}
                 />
               );
             }

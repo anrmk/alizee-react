@@ -5,6 +5,7 @@ export const GET_FOLLOWING_POSTS_REQUEST = "GET_FOLLOWING_POSTS_REQUEST";
 export const GET_FOLLOWING_POSTS_SUCCESS = "GET_FOLLOWING_POSTS_SUCCESS";
 export const GET_FOLLOWING_POSTS_FAILURE = "GET_FOLLOWING_POSTS_FAILURE";
 export const RESET_FOLLOWING_POSTS = "RESET_FOLLOWING_POSTS";
+export const SET_SCROLL_POSITION = "SET_SCROLL_POSITION";
 
 function requestGetFollowingPosts() {
   return {
@@ -36,6 +37,15 @@ function errorGetFollowingPosts(message) {
       isFetching: false,
       hasMore: false,
       errorMessage: message,
+    },
+  };
+}
+
+export function setScrollPosition(position) {
+  return {
+    type: SET_SCROLL_POSITION,
+    payload: {
+      scrollPosition: position,
     },
   };
 }

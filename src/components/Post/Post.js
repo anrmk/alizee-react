@@ -33,6 +33,7 @@ function Post(props) {
   const classes = useStyles();
   const [isLikeAnimation, setIsLikeAnimation] = useState(false);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
   let timerLikeAnimation = useRef().current;
 
   const { id, user, owner, post, comments } = props;
@@ -81,6 +82,10 @@ function Post(props) {
     if (post?.media[index]) {
       setCurrentSlideIndex(index);
     }
+  };
+
+  const handleLoadImg = () => {
+    setIsLoaded(true);
   };
 
   const doubleTap = useDoubleTap(
@@ -139,10 +144,10 @@ function Post(props) {
           </IconButton>
         }
       />
-
       <CardMedia {...doubleTap} className={classes.cardMedia}>
         <MediaContent
           className={classes.mediaContent}
+          isLoaded={isLoaded}
           id={id}
           user={owner}
           items={post.media}
@@ -154,6 +159,7 @@ function Post(props) {
           isLiked={isLikeAnimation}
           onPayClick={onBuyPost}
           onChangeIndex={handleChangeSlideIndex}
+          onLoaded={handleLoadImg}
         />
       </CardMedia>
 

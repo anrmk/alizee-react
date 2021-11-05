@@ -4,13 +4,17 @@ import PropTypes from "prop-types";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
+import skeleton from "../../assets/img/skeleton.png";
+
 function ImagesContent({
   id,
   url,
   altText,
-  lazyLoad,
   className,
   wrapperClassName,
+  isLoaded = true,
+
+  onLoaded,
 }) {
   return (
     <LazyLoadImage
@@ -18,9 +22,12 @@ function ImagesContent({
       wrapperClassName={wrapperClassName}
       id={id}
       effect="blur"
-      src={url}
+      src={isLoaded ? url : skeleton}
       alt={altText}
-      visibleByDefault={!lazyLoad}
+      visibleByDefault
+      afterLoad={() => {
+        onLoaded && onLoaded();
+      }}
     />
   );
 }
@@ -28,13 +35,11 @@ function ImagesContent({
 ImagesContent.propTypes = {
   id: PropTypes.string,
   altText: PropTypes.string,
-  lazyLoad: PropTypes.bool,
 };
 
 ImagesContent.defaultProps = {
   id: null,
   altText: "",
-  lazyLoad: true,
 };
 
 export default ImagesContent;

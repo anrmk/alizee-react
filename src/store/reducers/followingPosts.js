@@ -6,6 +6,7 @@ import {
   GET_FOLLOWING_POSTS_REQUEST,
   GET_FOLLOWING_POSTS_SUCCESS,
   GET_FOLLOWING_POSTS_FAILURE,
+  SET_SCROLL_POSITION,
   RESET_FOLLOWING_POSTS,
   REFRESH_POST,
   CREATE_POST_REQUEST,
@@ -69,6 +70,11 @@ export default function post(
         ...action.payload,
       };
     case GET_FOLLOWING_POSTS_FAILURE:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case SET_SCROLL_POSITION:
       return {
         ...state,
         ...action.payload,

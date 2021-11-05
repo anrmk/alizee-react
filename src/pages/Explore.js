@@ -31,6 +31,10 @@ function Explore() {
   }));
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (suggestedPosts.data.length > 0) {
       return;
     }

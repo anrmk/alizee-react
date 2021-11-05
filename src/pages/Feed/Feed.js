@@ -13,6 +13,7 @@ import * as postActions from "../../store/actions/post";
 import * as storyActions from "../../store/actions/story";
 // import * as streamActions from "../../store/actions/stream";
 import * as paymentActions from "../../store/actions/payment";
+import useWindowScrollPosition from "../../hooks/useWindowScrollPosition";
 
 import PreviewStoriesList from "../../domain/StoriesLists";
 import Nav from "./Nav";
@@ -75,6 +76,15 @@ function Feed(props) {
   const { handleCommentSendClick } = useCommentAction();
   const lightboxModal = useLightboxModal();
   const shareDialog = useShareDialog({ type: SHARE_DIALOG_POST_TYPE });
+  const scroll = useWindowScrollPosition(
+    posts.data,
+    posts.scrollPosition,
+    postActions.setScrollPosition
+  );
+
+  useEffect(() => {
+    scroll();
+  }, []);
 
   useEffect(() => {
     if (!posts.data.length) {
@@ -187,6 +197,7 @@ function mapStateToProps(state) {
       data: state.followingPosts.data,
       errorMessage: state.followingPosts.errorMessage,
       hasMore: state.followingPosts.hasMore,
+      scrollPosition: state.followingPosts.scrollPosition,
     },
 
     media: {

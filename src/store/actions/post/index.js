@@ -29,6 +29,8 @@ export {
   GET_FOLLOWING_POSTS_SUCCESS,
   GET_FOLLOWING_POSTS_FAILURE,
   RESET_FOLLOWING_POSTS,
+  SET_SCROLL_POSITION,
+  setScrollPosition,
   getFollowingPosts,
   resetFollowingPosts,
 } from "./getFollowingPosts";
