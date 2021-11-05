@@ -19,6 +19,9 @@ function FundraisingPost({
   }, [user]);
 
   const findPercent = () => {
+    if (targetProgress > amount) {
+      return 100;
+    }
     const result = (targetProgress / amount) * 100;
     return Math.floor(result);
   };

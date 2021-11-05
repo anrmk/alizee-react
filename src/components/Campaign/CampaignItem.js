@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Typography,
-  ListItem,
-  ListItemText,
-  IconButton,
-  Button,
-} from "@material-ui/core";
-
-import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import { Typography, ListItem, ListItemText, Button } from "@material-ui/core";
 
 import { customFormatDate, addDays } from "../../helpers/functions";
 
@@ -67,13 +59,7 @@ function CampaignItem({ isProfile = false, isOwner = true, ...rest }) {
             }
           />
 
-          {isProfile ? (
-            <IconButton
-              onClick={() => onDelete(data.id)}
-              disabled={data.disabled}>
-              <HighlightOffIcon />
-            </IconButton>
-          ) : (
+          {!isProfile && (
             <Button
               onClick={() => onDelete(data.id)}
               variant="contained"
@@ -114,31 +100,6 @@ function CampaignItem({ isProfile = false, isOwner = true, ...rest }) {
             }
           />
         </ListItem>
-        // 	<Box width="100%">
-        //   <Typography variant="body1">
-        //     {`${campaign.limit > 0 ? "Limited" : "No limited"} offer - ${
-        //       campaign.type === DISCOUNT_MONTH_TYPE_RADIO_ID
-        //         ? `${campaign.discount}% off`
-        //         : "Free trial"
-        //     } for ${campaign.duration} days `}
-        //   </Typography>
-        //   {campaign?.message && (
-        //     <Typography variant="body2">{campaign.message}</Typography>
-        //   )}
-        //   <Typography variant="caption" color="textSecondary">
-        //     Your offer ends {customFormatDate(addDays(campaign.createdDate, 30))}{" "}
-        //     {campaign.limit > 0 &&
-        //       ` - ${campaign.limit - campaign.claimsCount} offers left `}
-        //   </Typography>
-
-        //   <Typography variant="caption" color="textSecondary">
-        //     {`${
-        //       campaign?.endDate
-        //         ? `Offer expired ${customFormatDate(campaign.endDate)}`
-        //         : "Offer not expired"
-        //     }`}
-        //   </Typography>
-        // </Box>
       )}
     </>
   );
