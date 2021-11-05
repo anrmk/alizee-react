@@ -8,6 +8,7 @@ import {
 
 import Avatar from "../../components/Avatar";
 import { formatDate } from "../../helpers/functions";
+import DisplayName from "../../components/DisplayName";
 
 import useStyles, { StyledBadge } from "./styles";
 
@@ -36,9 +37,13 @@ function SidebarListItem({
       <ListItemText
         className={classes.sidebarListItemText}
         primary={
-          <Typography noWrap variant="body1" color="textPrimary">
-            {item.name}
-          </Typography>
+          <DisplayName
+            typographyProps={{ variant: "body1", color: "textPrimary" }}
+            name={item.name}
+            identityVerified={item.identityVerified}
+            noWrap={false}
+            alignItems="flex-start"
+          />
         }
         secondary={
           <Typography noWrap variant="body2" color="textPrimary">

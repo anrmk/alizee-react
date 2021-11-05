@@ -10,11 +10,14 @@ import {
   IconButton,
   Divider,
   LinearProgress,
+  Box,
 } from "@material-ui/core/";
 
 import ChatIcon from "@material-ui/icons/ChatOutlined";
 
 import Avatar from "../../components/Avatar";
+
+import DisplayName from "../../components/DisplayName";
 
 import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 import SidebarList from "./SidebarList";
@@ -53,12 +56,19 @@ function Sidebar({
             <Avatar src={user.avatarUrl} />
           </Link>
         }
-        title={user.name}
-        subheader={user.userName}
-        action={
-          <IconButton aria-label="new chat" onClick={onNewChatClick}>
-            <ChatIcon />
-          </IconButton>
+        title={
+          <Box display="flex" justifyContent="space-between">
+            <DisplayName
+              name={user.name}
+              userName={user.userName}
+              identityVerified={user.identityVerified}
+              noWrap={false}
+              alignItems="flex-start"
+            />
+            <IconButton aria-label="new chat" onClick={onNewChatClick}>
+              <ChatIcon />
+            </IconButton>
+          </Box>
         }
       />
       {loading && <LinearProgress />}

@@ -18,6 +18,7 @@ import VoiceChatIcon from "@material-ui/icons/VoiceChat";
 
 import Avatar from "../../components/Avatar";
 import { MessageSenderInput, MessagesList } from "../../components/Chat";
+import DisplayName from "../../components/DisplayName";
 
 import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
 import { formatDate } from "../../helpers/functions";
@@ -40,8 +41,15 @@ function Room({
   const classes = useStyles();
   // const { t } = useTranslation();
 
-  const { userName, name, avatarUrl, showActivity, offlineDate, messages } =
-    current || {};
+  const {
+    userName,
+    name,
+    avatarUrl,
+    showActivity,
+    offlineDate,
+    messages,
+    identityVerified,
+  } = current || {};
 
   const handleMessageCreate = (data) => {
     onMessageCreate && onMessageCreate(data);
@@ -64,7 +72,16 @@ function Room({
             <Avatar src={avatarUrl} />
           </Link>
         }
-        title={name}
+        title={
+          <DisplayName
+            name={name}
+            userName={userName}
+            typographyProps={{ variant: "body2" }}
+            identityVerified={identityVerified}
+            noWrap={false}
+            alignItems="flex-start"
+          />
+        }
         subheader={
           showActivity && (offlineDate ? formatDate(offlineDate) : "online")
         }
@@ -100,7 +117,7 @@ function Room({
       <CardActions className={classes.cardFooter}>
         <MessageSenderInput
           disabled={isLoading}
-          currentFocus={false}
+          isSendTip={identityVerified}
           onSendMessageClick={handleMessageCreate}
           onSendTip={handleSendTipClick}
         />

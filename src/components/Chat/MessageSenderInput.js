@@ -17,6 +17,7 @@ function MessageSenderInput({
   hideEmojiPicker,
   disabled,
   currentFocus = true,
+  isSendTip,
 
   onSendTip,
   onSendMessageClick,
@@ -86,7 +87,7 @@ function MessageSenderInput({
                 onChangeInputValue={handleChangeInputValue}
               />
             )}
-            {onSendTip && (
+            {onSendTip && isSendTip && (
               <IconButton onClick={onSendTip}>
                 <MonetizationOnIcon />
               </IconButton>
