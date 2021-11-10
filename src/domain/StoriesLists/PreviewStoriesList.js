@@ -47,10 +47,13 @@ const PreviewStoriesList = React.memo(
           renderSkeletons()
         ) : (
           <>
-            {items.length > 0 &&
+            {items?.length > 0 &&
+              user &&
               items.map((item, idx) => (
                 <PreviewStoriesListItem
                   key={`story_${item?.userName}`}
+                  isWatched={item.isWatched}
+                  isOwner={item.userName === user.userName}
                   userName={item.userName}
                   name={item.name}
                   previewUrl={item.url}

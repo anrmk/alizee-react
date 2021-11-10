@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Box, ListItem, Typography } from "@material-ui/core";
+import clsx from "clsx";
 
 import Avatar from "../../components/Avatar";
 import { STORIES_ROUTE } from "../../constants/routes";
@@ -14,6 +15,7 @@ const PreviewStoryListItem = React.memo(
     avatarUrl,
     me = false,
     storyIndex,
+    isWatched,
 
     onClick,
   }) => {
@@ -55,7 +57,10 @@ const PreviewStoryListItem = React.memo(
     return (
       <ListItem
         button
-        className={classes.previewStoryListItem}
+        className={clsx(
+          classes.previewStoryListItem,
+          isWatched && classes.watchedStory
+        )}
         {...additionalProps}
         onClick={handleItemClick}>
         {renderContent()}

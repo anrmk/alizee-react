@@ -57,6 +57,9 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(1),
     },
   },
+
+  watchedStory: { opacity: 0.5 },
+
   previewStoryItemUserInfo: {
     alignItems: "center",
     display: "flex",

@@ -12,8 +12,10 @@ export {
   GET_FOLLOWING_STORIES_SUCCESS,
   GET_FOLLOWING_STORIES_FAILURE,
   RESET_FOLLOWING_STORIES_SUCCESS,
+  SET_ORDER_STORIES,
   getFollowingStories,
   getFollowingsStoriesWithMyself,
+  setFollowingStories,
 } from "./getFollowingStories";
 
 export {

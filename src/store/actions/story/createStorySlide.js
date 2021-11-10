@@ -35,6 +35,14 @@ function errorCreateStory(message) {
   };
 }
 
+const updateLocalStorage = (userName) => {
+  const watchedStories =
+    JSON.parse(localStorage.getItem("WatchedStories")) || {};
+  const updatedWatchedStories = { ...watchedStories };
+  delete updatedWatchedStories[userName];
+  localStorage.setItem("WatchedStories", JSON.stringify(updatedWatchedStories));
+};
+
 export function createStorySlide(api, opts) {
   return async (dispatch, getState) => {
     dispatch(requestCreateStory());
@@ -59,10 +67,12 @@ export function createStorySlide(api, opts) {
       );
 
       if (storyIndex === -1) {
-        dispatch(receiveCreateStory([...stories, data]));
+        dispatch(receiveCreateStory([data, ...stories]));
       } else {
+        updateLocalStorage(data.userName);
         const currentStory = stories[storyIndex];
         currentStory.url = data.thumbnailUrl;
+        currentStory.isWatched = false;
         dispatch(receiveCreateStory(stories));
       }
     } catch (e) {

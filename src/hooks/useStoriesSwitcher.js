@@ -41,8 +41,18 @@ export default function useStoriesSwitcher({
     await dispatch(storyActions.getStory(apiClient, { userName }));
   };
 
+  useEffect(
+    () => () => {
+      dispatch(storyActions.setFollowingStories());
+    },
+    []
+  );
+
   useEffect(() => {
     if (currentStory?.slides?.length) {
+      if (currentStory.slides.length === 1) {
+        handleSaveStory();
+      }
       const user = {
         userName: currentStory.userName,
         name: currentStory.name,
@@ -76,6 +86,19 @@ export default function useStoriesSwitcher({
     setCurrentStoryIndex(index);
   };
 
+  const handleSaveStory = () => {
+    const savedStories =
+      JSON.parse(localStorage.getItem("WatchedStories")) || {};
+
+    const showedStory = {
+      [currentStory.userName]: currentStory.lastSlideDate,
+    };
+    localStorage.setItem(
+      "WatchedStories",
+      JSON.stringify({ ...savedStories, ...showedStory })
+    );
+  };
+
   const setupStory = (items, user, slideIndex = 0, storyIndex = null) => {
     if (!items?.length) return;
     const lSlideId = items[slideIndex].id;
@@ -105,6 +128,10 @@ export default function useStoriesSwitcher({
 
   const handleSlideChange = (slides, userInfo, pSlideIndex) => {
     if (slides.length && userInfo) {
+      if (pSlideIndex + 1 === slides.length) {
+        handleSaveStory();
+      }
+
       setupStory(slides, userInfo, pSlideIndex, currentStoryIndex);
     }
   };

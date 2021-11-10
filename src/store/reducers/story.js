@@ -9,6 +9,7 @@ import {
   GET_FOLLOWING_STORIES_REQUEST,
   GET_FOLLOWING_STORIES_SUCCESS,
   GET_FOLLOWING_STORIES_FAILURE,
+  SET_ORDER_STORIES,
   RESET_FOLLOWING_STORIES_SUCCESS,
   CREATE_STORY_SLIDE_REQUEST,
   CREATE_STORY_SLIDE_SUCCESS,
@@ -75,6 +76,11 @@ export default function signIn(
         ...action.payload,
       };
     case GET_FOLLOWING_STORIES_FAILURE:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case SET_ORDER_STORIES:
       return {
         ...state,
         ...action.payload,

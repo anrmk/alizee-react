@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 
-import { generateUrl } from "../../../helpers/functions";
+import { generateUrl, addDays } from "../../../helpers/functions";
 import { STORIES_OFFSET, STORIES_LENGTH } from "../../../constants/feed";
 
 export const GET_FOLLOWING_STORIES_REQUEST = "GET_FOLLOWING_STORIES_REQUEST";
@@ -8,6 +8,7 @@ export const GET_FOLLOWING_STORIES_SUCCESS = "GET_FOLLOWING_STORIES_SUCCESS";
 export const GET_FOLLOWING_STORIES_FAILURE = "GET_FOLLOWING_STORIES_FAILURE";
 export const RESET_FOLLOWING_STORIES_SUCCESS =
   "RESET_FOLLOWING_STORIES_SUCCESS";
+export const SET_ORDER_STORIES = "SET_ORDER_STORIES";
 
 function requestGetFollowingStories() {
   return {
@@ -57,12 +58,66 @@ function successResetFollowingStories() {
   };
 }
 
+export function setOrderStories(data) {
+  return {
+    type: SET_ORDER_STORIES,
+    payload: {
+      data,
+    },
+  };
+}
+
+const modifyStories = (data, userName) => {
+  const watchedStories =
+    JSON.parse(localStorage.getItem("WatchedStories")) || {};
+
+  const currentDate = new Date();
+
+  const updatedStories = [];
+  const showedStories = [];
+
+  for (let index = 0; index < data.length; index += 1) {
+    const currentElement = data[index];
+    const isOwner = currentElement.userName === userName;
+    const storyShowedDate = watchedStories[currentElement.userName];
+    let isExpiredDate = true;
+
+    if (storyShowedDate) {
+      isExpiredDate = addDays(storyShowedDate, 1) < currentDate;
+      if (isExpiredDate) {
+        const updatedWatchedStories = { ...watchedStories };
+        delete updatedWatchedStories[currentElement.userName];
+        localStorage.setItem(
+          "WatchedStories",
+          JSON.stringify(updatedWatchedStories)
+        );
+      }
+    }
+    if (isOwner) {
+      updatedStories.unshift({
+        ...currentElement,
+        isWatched: storyShowedDate ? !isExpiredDate : false,
+      });
+    } else {
+      isExpiredDate
+        ? updatedStories.push({
+            ...currentElement,
+            isWatched: storyShowedDate ? !isExpiredDate : false,
+          })
+        : showedStories.push({ ...currentElement, isWatched: true });
+    }
+  }
+
+  return [...updatedStories, ...showedStories];
+};
+
 export function getFollowingStories(api, opts) {
   return async (dispatch, getState) => {
     dispatch(requestGetFollowingStories());
 
     const url = generateUrl("getFollowingStories");
     const currentOffset = getState().story.offset;
+    const { userName } = getState().signIn.userInfo;
     try {
       const { data } = await api
         .setMethod("GET")
@@ -72,9 +127,11 @@ export function getFollowingStories(api, opts) {
         })
         .query(url);
 
+      const updatedData = modifyStories(data, userName);
+
       dispatch(
         receiveGetFollowingStories(
-          [...getState().story.data, ...data],
+          [...getState().story.data, ...updatedData],
           data.length,
           currentOffset
         )
@@ -88,6 +145,16 @@ export function getFollowingStories(api, opts) {
 // obsolete
 export function resetFollowingStories() {
   return (dispatch) => dispatch(successResetFollowingStories());
+}
+
+export function setFollowingStories() {
+  return (dispatch, getState) => {
+    const { data } = getState().story;
+    const { userName } = getState().signIn.userInfo;
+
+    const updatedData = modifyStories(data, userName);
+    dispatch(setOrderStories([...updatedData]));
+  };
 }
 
 // Selectors
