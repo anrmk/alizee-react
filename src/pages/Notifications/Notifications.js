@@ -10,7 +10,12 @@ import * as notificationActions from "../../store/actions/notification";
 
 import useStyles from "./styles";
 
-function Notifications({ notification, getNotifications, resetNotifications }) {
+function Notifications({
+  notification,
+  getNotifications,
+  resetNotifications,
+  setNotification,
+}) {
   const apiClient = useContext(ApiContext);
   const classes = useStyles();
   const { type } = useParams();
@@ -22,6 +27,12 @@ function Notifications({ notification, getNotifications, resetNotifications }) {
       resetNotifications();
     };
   }, [type]);
+
+  useEffect(() => {
+    if (notification.data.newNotification) {
+      setNotification(apiClient);
+    }
+  }, [notification]);
 
   return (
     <Grid container direction="column">
@@ -54,6 +65,12 @@ function mapDispatchToProps(dispatch) {
       dispatch(notificationActions.getNotificationsList(api, opts)),
     resetNotifications: (api) =>
       dispatch(notificationActions.resetCurrentNotificationList(api)),
+    setNotification: (api) =>
+      dispatch(
+        notificationActions.setNotification(api, {
+          newNotification: false,
+        })
+      ),
   };
 }
 
