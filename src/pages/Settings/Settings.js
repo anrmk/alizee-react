@@ -34,12 +34,12 @@ import {
 
 import PrivateRoute from "../PrivateRoute";
 import SlidingViews from "../../components/SlidingViews";
-import EditProfileSettings from "./EditProfileSettings";
-import EditAccountSettings from "./EditAccountSettings";
-import EditPaymentSettings from "./EditPaymentSettings";
-import EditSubscriptionSettings from "./EditSubscriptionSettings";
-import EditBankSettings from "./EditBankSettings";
-import PrivacySecuritySettings from "./PrivacySecuritySettings";
+import EditProfileSettings from "./ProfileSettings/index";
+import EditAccountSettings from "./AccountSettings/index";
+import EditPaymentSettings from "./PaymentSettings/index";
+import EditSubscriptionSettings from "./SubscriptionSettings/index";
+import EditBankSettings from "./BankSettings/index";
+import PrivacySecuritySettings from "./PrivacySecuritySettings/index";
 
 import {
   GeneralNotificationSettings,

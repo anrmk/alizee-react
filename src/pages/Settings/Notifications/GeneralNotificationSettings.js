@@ -21,7 +21,7 @@ import {
   SETTINGS_NOTIFICATIONS_SITE_ROUTE,
   SETTINGS_NOTIFICATIONS_TOAST_ROUTE,
 } from "../../../constants/routes";
-import SettingsHeader from "../../../domain/SettingsForms/SettingsHeader";
+import SettingsHeader from "../../../components/SettingsHeader/index";
 
 function GeneralNotificationSettings({ onBackClick }) {
   const history = useHistory();

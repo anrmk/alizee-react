@@ -16,7 +16,7 @@ export default function useSingleR(endpoint) {
       const token = getToken()?.access;
       const newConnection = new signalR.HubConnectionBuilder()
         .withUrl(
-          wrapHttps(`${process.env.REACT_APP_DOMAIN}${endpoint}`, true),
+          wrapHttps(`${process.env.REACT_APP_DOMAIN}${endpoint}`, false),
           {
             accessTokenFactory: () => token,
           }

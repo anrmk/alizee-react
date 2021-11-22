@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { Box, Grid, Hidden } from "@material-ui/core/";
 
 import ApiContext from "../../context/ApiContext";
-import ProfileHeader from "../../domain/ProfileHeader";
+import ProfileHeader from "../../domain/ProfileHeader/ProfileHeader/index";
 import ProfileContent from "../../domain/ProfileContent";
 
 import * as profilePostsActions from "../../store/actions/post";

@@ -12,7 +12,7 @@ import {
   Switch,
   Divider,
 } from "@material-ui/core";
-import SettingsHeader from "../../../domain/SettingsForms/SettingsHeader";
+import SettingsHeader from "../../../components/SettingsHeader/SettingsHeader";
 
 import ApiContext from "../../../context/ApiContext";
 import { isEmptyObject } from "../../../helpers/functions";

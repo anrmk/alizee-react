@@ -18,7 +18,7 @@ import {
   Typography,
 } from "@material-ui/core";
 
-import SettingsHeader from "../../../domain/SettingsForms/SettingsHeader";
+import SettingsHeader from "../../../components/SettingsHeader/index";
 
 import ApiContext from "../../../context/ApiContext";
 import { isEmptyObject } from "../../../helpers/functions";

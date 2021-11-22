@@ -22,7 +22,7 @@ import ApiContext from "../../../context/ApiContext";
 import usePushNotifications from "../../../hooks/usePushNotifications";
 import { isEmptyObject } from "../../../helpers/functions";
 import * as settingsActions from "../../../store/actions/settings";
-import SettingsHeader from "../../../domain/SettingsForms/SettingsHeader";
+import SettingsHeader from "../../../components/SettingsHeader/index";
 
 import { ALLOW_PUSH_NOTIFICATION } from "../../../constants/permissions";
 import useAlert from "../../../hooks/useAlert";
