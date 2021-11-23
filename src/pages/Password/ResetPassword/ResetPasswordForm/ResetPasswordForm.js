@@ -3,9 +3,9 @@ import { useHistory } from "react-router-dom";
 import { Button, Divider, TextField } from "@material-ui/core";
 import LockIcon from "@material-ui/icons/VerifiedUserOutlined";
 
-import { isCorrectEmail } from "../../helpers/functions";
-import { SIGN_UP_ROUTE, SIGN_IN_ROUTE } from "../../constants/routes";
-import BaseForm from "./BaseForm";
+import { isCorrectEmail } from "../../../../helpers/functions";
+import { SIGN_UP_ROUTE, SIGN_IN_ROUTE } from "../../../../constants/routes";
+import { BaseForm } from "../../../../components/PasswordForms";
 import useStyles from "./styles";
 
 const EMAIL_INPUT_ID = "email";

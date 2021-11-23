@@ -8,9 +8,9 @@ import FavoriteBorderOutlinedIcon from "@material-ui/icons/FavoriteBorderOutline
 import SubscriptionsOutlinedIcon from "@material-ui/icons/SubscriptionsOutlined";
 import PaymentOutlinedIcon from "@material-ui/icons/PaymentOutlined";
 import ReportProblemOutlinedIcon from "@material-ui/icons/ReportProblemOutlined";
-import { NOTIFICATION_ID_ROUTE } from "../../constants/routes";
+import { NOTIFICATION_ID_ROUTE } from "../../../constants/routes";
 
-import useViewport from "../../hooks/useViewport";
+import useViewport from "../../../hooks/useViewport";
 
 import useStyles from "./styles";
 

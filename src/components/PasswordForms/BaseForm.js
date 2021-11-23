@@ -3,7 +3,7 @@ import { Box, Card, CardContent, Typography, Button } from "@material-ui/core";
 
 import useStyles from "./styles";
 
-function BaseForm({
+const BaseForm = ({
   title,
   icon,
   helperText,
@@ -13,7 +13,7 @@ function BaseForm({
   footerComponent,
 
   onSubmit,
-}) {
+}) => {
   const classes = useStyles();
 
   return (
@@ -48,6 +48,6 @@ function BaseForm({
       </CardContent>
     </Card>
   );
-}
+};
 
 export default BaseForm;

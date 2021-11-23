@@ -7,7 +7,7 @@ import ApiContext from "../context/ApiContext";
 import AlertContainer from "../components/AlertContainer";
 import * as emailActions from "../store/actions/confirmEmail";
 import StatusError from "../components/StatusError";
-import { ChangePasswordForm } from "../domain/PasswordForms";
+import { ChangePasswordForm } from "../components/PasswordForms";
 import * as signActions from "../store/actions/signIn";
 import { getUrlParams } from "../helpers/functions";
 import { HOME_ROUTE } from "../constants/routes";

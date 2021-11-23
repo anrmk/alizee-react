@@ -15,12 +15,15 @@ import {
 // import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import ChevronRightIcon from "@material-ui/icons/ChevronRightOutlined";
 
-import Avatar from "../../components/Avatar";
-import DisplayName from "../../components/DisplayName";
+import Avatar from "../../../components/Avatar";
+import DisplayName from "../../../components/DisplayName";
 
-import { POST_ID_ROUTE, PROFILE_USERNAME_ROUTE } from "../../constants/routes";
-import { ACTIVITY_LOG_TYPE } from "../../constants/activity";
-import { formatDate } from "../../helpers/functions";
+import {
+  POST_ID_ROUTE,
+  PROFILE_USERNAME_ROUTE,
+} from "../../../constants/routes";
+import { ACTIVITY_LOG_TYPE } from "../../../constants/activity";
+import { formatDate } from "../../../helpers/functions";
 
 function Content({ data = [] }) {
   const history = useHistory();

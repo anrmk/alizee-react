@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import ApiContext from "../../../context/ApiContext";
 import * as userActions from "../../../store/actions/user";
-import { ResetPasswordForm } from "../../../domain/PasswordForms";
+import ResetPasswordForm from "./ResetPasswordForm";
 import AlertContainer from "../../../components/AlertContainer";
 import useStyles from "../styles";
 import { HOME_ROUTE } from "../../../constants/routes";

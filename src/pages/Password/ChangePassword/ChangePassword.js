@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import ApiContext from "../../../context/ApiContext";
 import * as userActions from "../../../store/actions/user";
-import { ChangePasswordForm } from "../../../domain/PasswordForms";
+import { ChangePasswordForm } from "../../../components/PasswordForms";
 import AlertContainer from "../../../components/AlertContainer";
 import { getUrlParams } from "../../../helpers/functions";
 import { SIGN_IN_ROUTE } from "../../../constants/routes";

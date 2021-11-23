@@ -3,7 +3,8 @@ import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { Divider, Grid } from "@material-ui/core";
-import { Navbar, Content } from "../../domain/Notification";
+import Navbar from "./Navbar";
+import { Content } from "./Content";
 
 import ApiContext from "../../context/ApiContext";
 import * as notificationActions from "../../store/actions/notification";
