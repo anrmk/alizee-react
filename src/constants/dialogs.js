@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Error } from "../components/ErrorDialog";
+import Error from "../components/ErrorDialog";
 import { MediaEditorPreview, MediaPreview } from "../components/MediaEditor";
 import UsersDialog from "../domain/UsersDialog";
 import {
@@ -27,10 +27,10 @@ import PostStatistics from "../domain/PostStatistics/PostStatistics";
 import SubscriptionDialog from "../domain/SubscriptionDialog";
 import InteractionUserMenuDialog from "../domain/InteractionUserMenuDialog";
 import {
-  CreateCardForm,
   SubscriptionCampaignFormDialog,
   SubscriptionBundleFormDialog,
-} from "../domain/SettingsForms";
+} from "../components/DialogForms";
+import CreateCardForm from "../components/DialogForms/CreateCardForm";
 
 export const LANGUAGE_DIALOG_TYPE = "language";
 

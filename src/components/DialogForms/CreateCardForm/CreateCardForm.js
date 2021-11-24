@@ -13,14 +13,14 @@ import {
   Switch,
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
-import { getDate } from "../../helpers/functions";
+import { getDate } from "../../../helpers/functions";
 
 import {
   VALUE_MIN_LENGTH,
   VALUE_MAX_LENGTH,
-} from "../../constants/form_validations";
+} from "../../../constants/form_validations";
 
-import CreditCards from "../../components/CreditCards";
+import CreditCards from "../../CreditCards";
 
 const COUNTRY_INPUT_ID = "country";
 const ADDRESS_INPUT_ID = "address";

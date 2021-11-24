@@ -2,8 +2,8 @@ import { useCallback } from "react";
 
 import dialogs, {
   UPLOAD_FILE_AMOUNT_ERROR_DIALOG_TYPE,
-} from "../../constants/dialogs";
-import useDialog from "../../hooks/useDialog";
+} from "../constants/dialogs";
+import useDialog from "./useDialog";
 
 export default function useErrorDialog({ errorText }) {
   const dialog = useDialog();

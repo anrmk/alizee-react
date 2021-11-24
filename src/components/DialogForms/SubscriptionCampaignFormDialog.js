@@ -145,7 +145,7 @@ const schema = yup.object().shape({
   [MESSAGE_ID]: yup.string().max(256, "Must be no more than 256 characters"),
 });
 
-function SubscriptionBundleFormDialog({
+function SubscriptionCampaignFormDialog({
   formId,
 
   discount = 5,
@@ -503,4 +503,4 @@ function SubscriptionBundleFormDialog({
   );
 }
 
-export default SubscriptionBundleFormDialog;
+export default SubscriptionCampaignFormDialog;

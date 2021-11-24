@@ -4,7 +4,7 @@ import { IconButton } from "@material-ui/core";
 
 import ImageIcon from "@material-ui/icons/ImageOutlined";
 
-import { useErrorDialog } from "../ErrorDialog";
+import useErrorDialog from "../../hooks/useErrorDialog";
 import useMediaEditorDialog from "../../hooks/media/useMediaEditorDialog";
 import {
   TYPE_JPEG,
