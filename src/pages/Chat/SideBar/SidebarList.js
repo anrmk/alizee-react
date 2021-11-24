@@ -4,8 +4,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { List, Typography, Box } from "@material-ui/core";
 
 import SidebarListItem from "./SidebarListItem";
-import { ROOMS_LIST_ID } from "./mixins";
-import useStyles from "./styles";
+import ROOMS_LIST_ID from "./mixins";
+import useStyles from "../styles";
 
 function SidebarList({
   items,

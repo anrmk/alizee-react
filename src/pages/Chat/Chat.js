@@ -2,29 +2,34 @@ import React, { useEffect, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 
-import ApiContext from "../context/ApiContext";
+import ApiContext from "../../context/ApiContext";
 
-import { Room, Sidebar, NoRoom } from "../domain/Chat";
-import SlidingViews from "../components/SlidingViews";
+import { Room, NoRoom } from "./Room";
+import Sidebar from "./SideBar";
+import SlidingViews from "../../components/SlidingViews";
 
-import * as actionChat from "../store/actions/chat";
+import * as actionChat from "../../store/actions/chat";
 
-import { ESC_KEY_CODE } from "../constants/key_codes";
-import { isEmptyObject } from "../helpers/functions";
+import { ESC_KEY_CODE } from "../../constants/key_codes";
+import { isEmptyObject } from "../../helpers/functions";
 import {
   CHAT_USERNAME_ROUTE,
   PEAR_TO_PEAR_ID_ROUTE,
   CHAT_ROUTE,
-} from "../constants/routes";
+} from "../../constants/routes";
 
-import { useNewChatDialog, useRoomMenuDialog, useChatHub } from "../hooks/chat";
-import useSlidingViews, { LEFT_OPEN_TYPE } from "../hooks/useSlidingViews";
-import useDialog from "../hooks/useDialog";
-import useFullScreen from "../hooks/useFullScreen";
-import { useSendTipDialog } from "../hooks/payment";
-import useLightboxModal from "../hooks/useLightboxModal";
+import {
+  useNewChatDialog,
+  useRoomMenuDialog,
+  useChatHub,
+} from "../../hooks/chat";
+import useSlidingViews, { LEFT_OPEN_TYPE } from "../../hooks/useSlidingViews";
+import useDialog from "../../hooks/useDialog";
+import useFullScreen from "../../hooks/useFullScreen";
+import { useSendTipDialog } from "../../hooks/payment";
+import useLightboxModal from "../../hooks/useLightboxModal";
 
-function Chat(props) {
+const Chat = (props) => {
   const apiClient = useContext(ApiContext);
   const history = useHistory();
 
@@ -146,7 +151,7 @@ function Chat(props) {
       )}
     </SlidingViews>
   );
-}
+};
 
 function mapStateToProps(state) {
   return {

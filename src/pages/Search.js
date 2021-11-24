@@ -18,7 +18,7 @@ import { SEARCH_USER_TYPE } from "../constants/search";
 
 import useSearch from "../hooks/useSearch";
 
-import SearchInput from "../domain/Search";
+import SearchInput from "../components/SearchInput";
 import ProfileCard from "../components/ProfileCard/ProfileCard";
 
 function Search({ width }) {

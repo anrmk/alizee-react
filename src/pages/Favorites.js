@@ -10,7 +10,7 @@ import {
   Avatar,
 } from "@material-ui/core";
 import ApiContext from "../context/ApiContext";
-import SearchInput from "../domain/Search";
+import SearchInput from "../components/SearchInput";
 
 import { PROFILE_USERNAME_ROUTE } from "../constants/routes";
 

@@ -6,11 +6,11 @@ import {
   Typography,
 } from "@material-ui/core";
 
-import Avatar from "../../components/Avatar";
-import { formatDate } from "../../helpers/functions";
-import DisplayName from "../../components/DisplayName";
+import Avatar from "../../../components/Avatar";
+import { formatDate } from "../../../helpers/functions";
+import DisplayName from "../../../components/DisplayName";
 
-import useStyles, { StyledBadge } from "./styles";
+import useStyles, { StyledBadge } from "../styles";
 
 function SidebarListItem({
   item,

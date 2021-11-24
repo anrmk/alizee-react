@@ -15,16 +15,16 @@ import {
 
 import ChatIcon from "@material-ui/icons/ChatOutlined";
 
-import Avatar from "../../components/Avatar";
+import Avatar from "../../../components/Avatar";
 
-import DisplayName from "../../components/DisplayName";
+import DisplayName from "../../../components/DisplayName";
 
-import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
+import { PROFILE_USERNAME_ROUTE } from "../../../constants/routes";
 import SidebarList from "./SidebarList";
 import HeaderSidebarList from "./HeaderSidebarList";
 
-import useStyles from "./styles";
-import SearchInput from "../Search";
+import useStyles from "../styles";
+import SearchInput from "../../../components/SearchInput";
 
 function Sidebar({
   user,

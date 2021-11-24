@@ -14,7 +14,7 @@ import ApiContext from "../context/ApiContext";
 
 import * as relationshipActions from "../store/actions/relationship";
 import * as userActions from "../store/actions/user";
-import SearchInput from "../domain/Search";
+import SearchInput from "../components/SearchInput";
 
 import { PROFILE_USERNAME_ROUTE } from "../constants/routes";
 import {

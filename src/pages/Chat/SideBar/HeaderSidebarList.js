@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { List, ListSubheader, Typography, Box } from "@material-ui/core";
 import SidebarListItem from "./SidebarListItem";
 
-import useStyles from "./styles";
+import useStyles from "../styles";
 
 function HeaderSidebarList({
   items,

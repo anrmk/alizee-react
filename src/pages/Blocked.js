@@ -17,7 +17,7 @@ import {
 } from "@material-ui/core";
 import ApiContext from "../context/ApiContext";
 import * as relationshipActions from "../store/actions/relationship";
-import SearchInput from "../domain/Search";
+import SearchInput from "../components/SearchInput";
 
 import { PROFILE_USERNAME_ROUTE } from "../constants/routes";
 import useBlockDialog from "../hooks/useBlockDialog";

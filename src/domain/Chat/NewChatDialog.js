@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@material-ui/core/";
 
-import Search from "../Search";
+import Search from "../../components/SearchInput";
 
 function NewChatDialog({
   items,

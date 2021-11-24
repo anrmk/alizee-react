@@ -16,14 +16,14 @@ import MoreVertIcon from "@material-ui/icons/MoreVertRounded";
 import BackIcon from "@material-ui/icons/ArrowBackRounded";
 import VoiceChatIcon from "@material-ui/icons/VoiceChat";
 
-import Avatar from "../../components/Avatar";
-import { MessageSenderInput, MessagesList } from "../../components/Chat";
-import DisplayName from "../../components/DisplayName";
+import Avatar from "../../../components/Avatar";
+import { MessageSenderInput, MessagesList } from "../../../components/Chat";
+import DisplayName from "../../../components/DisplayName";
 
-import { PROFILE_USERNAME_ROUTE } from "../../constants/routes";
-import { formatDate } from "../../helpers/functions";
+import { PROFILE_USERNAME_ROUTE } from "../../../constants/routes";
+import { formatDate } from "../../../helpers/functions";
 
-import useStyles from "./styles";
+import useStyles from "../styles";
 
 function Room({
   user,
