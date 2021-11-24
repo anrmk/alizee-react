@@ -2,11 +2,11 @@ import React, { useContext } from "react";
 import { connect } from "react-redux";
 
 import { Box } from "@material-ui/core";
-import EmailCard from "../domain/EmailCard/EmailCard";
+import EmailCard from "./EmailCard/index";
 
-import * as emailActions from "../store/actions/resendEmailVerification";
+import * as emailActions from "../../store/actions/resendEmailVerification";
 
-import ApiContext from "../context/ApiContext";
+import ApiContext from "../../context/ApiContext";
 
 function EmailConfirmation(props) {
   const apiClient = useContext(ApiContext);

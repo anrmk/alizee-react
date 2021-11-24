@@ -9,7 +9,7 @@ import {
   Grid,
 } from "@material-ui/core";
 import MailIcon from "@material-ui/icons/Mail";
-import { SIGN_IN_ROUTE } from "../../constants/routes";
+import { SIGN_IN_ROUTE } from "../../../constants/routes";
 
 import useStyles from "./styles";
 
