@@ -10,11 +10,12 @@ import {
   Divider,
 } from "@material-ui/core/";
 
-import { useConfig, useChartData } from "./config";
+import useChartData from "../../../hooks/useChartDataStatistic";
+import useConfig from "../../../hooks/useConfig";
 
 import useStyles from "./styles";
 
-function ChartPie({ dataset = [], name, date, total = "" }) {
+function ChartBar({ dataset = [], name, date, total = "" }) {
   const classes = useStyles();
 
   const chartConfig = useConfig();
@@ -33,4 +34,4 @@ function ChartPie({ dataset = [], name, date, total = "" }) {
   );
 }
 
-export default ChartPie;
+export default ChartBar;

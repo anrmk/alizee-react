@@ -10,4 +10,3 @@ export { default as PaymentChart } from "./PaymentChart";
 export { default as SortChartDate } from "./SortChartDate";
 export { default as ChartLine } from "./ChartLine";
 export { default as ChartBar } from "./ChartBar";
-export { default as FavoriteList } from "./FavoriteList";

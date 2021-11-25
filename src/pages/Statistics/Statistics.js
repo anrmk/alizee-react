@@ -6,12 +6,8 @@ import { Grid, Typography, Box } from "@material-ui/core/";
 import ApiContext from "../../context/ApiContext";
 import * as activityPaymentsActions from "../../store/actions/activity";
 
-import {
-  SortChartDate,
-  ChartLine,
-  ChartBar,
-  FavoriteList,
-} from "../../domain/Statistics";
+import { SortChartDate, ChartLine, ChartBar } from "./Charts";
+import FavoriteList from "./FavoriteList";
 
 import {
   FILTER_BY_DAYS,
@@ -24,7 +20,7 @@ import {
   dailyDateChart,
   yearsDateChart,
   weeksDateChart,
-} from "../../domain/Statistics/data";
+} from "./Data/data";
 
 import useStyles from "./styles";
 

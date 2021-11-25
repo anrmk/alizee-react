@@ -15,7 +15,7 @@ import {
   CardHeader,
 } from "@material-ui/core/";
 
-import useStyles from "./styles";
+import useStyles from "../Charts/styles";
 
 function FavoriteList() {
   const classes = useStyles();

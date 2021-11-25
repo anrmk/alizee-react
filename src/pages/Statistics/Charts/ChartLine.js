@@ -10,7 +10,8 @@ import {
   Divider,
 } from "@material-ui/core/";
 
-import { useConfig, useChartData } from "./config";
+import useChartData from "../../../hooks/useChartDataStatistic";
+import useConfig from "../../../hooks/useConfig";
 
 import useStyles from "./styles";
 

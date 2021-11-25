@@ -6,7 +6,7 @@ import {
   FILTER_BY_MONTHS,
   FILTER_BY_WEEKS,
   FILTER_BY_YEARS,
-} from "../../constants/chart_sort_date";
+} from "../../../constants/chart_sort_date";
 
 function SortChartDate({ onFilter, filter }) {
   return (
