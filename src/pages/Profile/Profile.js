@@ -10,8 +10,8 @@ import { connect } from "react-redux";
 import { Box, Grid, Hidden } from "@material-ui/core/";
 
 import ApiContext from "../../context/ApiContext";
-import ProfileHeader from "../../domain/ProfileHeader/ProfileHeader/index";
-import ProfileContent from "../../domain/ProfileContent";
+import ProfileHeader from "./ProfileHeader/ProfileHeader";
+import ProfileContent from "./ProfileContent";
 
 import * as profilePostsActions from "../../store/actions/post";
 import * as userActions from "../../store/actions/user";
@@ -32,7 +32,7 @@ import useFollowDialog from "../../hooks/payment/useFollowDialog";
 import dialogs, { PROFILE_EDIT_COVER } from "../../constants/dialogs";
 import { FOLLOW_ACCEPTED } from "../../constants/follow_types";
 
-import { ProfileUserInfo, ProfileInfo } from "../../domain/ProfileUserInfo";
+import { ProfileUserInfo, ProfileInfo } from "./ProfileUserInfo";
 import { PROFILE_TYPE } from "../../components/Post/Menu";
 
 import useStyles from "./style";

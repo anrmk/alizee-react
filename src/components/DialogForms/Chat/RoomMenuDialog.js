@@ -14,7 +14,7 @@ import DeleteIcon from "@material-ui/icons/DeleteOutline";
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircleOutline";
 import BlockIcon from "@material-ui/icons/BlockOutlined";
 
-function RoomMenuDialog({
+const RoomMenuDialog = ({
   postId,
   userName,
   isBlocked,
@@ -22,7 +22,7 @@ function RoomMenuDialog({
   onBlockClick,
   onDeleteClick,
   onClearClick,
-}) {
+}) => {
   const { t } = useTranslation();
 
   const handleBlockClick = () => {
@@ -72,6 +72,6 @@ function RoomMenuDialog({
       </ListItem>
     </List>
   );
-}
+};
 
 export default RoomMenuDialog;

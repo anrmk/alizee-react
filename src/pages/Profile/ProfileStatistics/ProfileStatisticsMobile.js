@@ -8,7 +8,7 @@ import {
   FOLLOWINGS_ROUTE,
   FAVORITES_USERNAME_ROUTE,
   BLOCKED_USERNAME_ROUTE,
-} from "../../constants/routes";
+} from "../../../constants/routes";
 
 import useStyles from "./style";
 

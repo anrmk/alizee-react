@@ -3,11 +3,11 @@ import { Box, IconButton, Hidden } from "@material-ui/core";
 
 import MoreVertIcon from "@material-ui/icons/MoreVertRounded";
 
-import Cover from "../../../components/Cover";
-import Avatar from "../../../components/Avatar";
+import Cover from "../../../../components/Cover";
+import Avatar from "../../../../components/Avatar";
 
 import { ProfileStatistics } from "../../ProfileStatistics";
-import DisplayName from "../../../components/DisplayName";
+import DisplayName from "../../../../components/DisplayName";
 
 import useStyles from "../styles";
 

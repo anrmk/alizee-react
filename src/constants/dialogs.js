@@ -15,7 +15,7 @@ import { SendTip, Payment } from "../components/Payment";
 import { ReportPost, BlockUser, UnblockUser } from "../components/Report";
 
 import SocialList from "../domain/SocialList";
-import { NewChatDialog, RoomMenuDialog } from "../domain/Chat";
+import { NewChatDialog, RoomMenuDialog } from "../components/DialogForms/Chat";
 import EditCoverDialog from "../domain/EditCoverDialog";
 import StoryDialog from "../domain/StoryDialog";
 import AgreeDialog from "../domain/AgreeDialog";

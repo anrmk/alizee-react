@@ -15,10 +15,10 @@ import useStyles from "./style";
 
 import SubscriptionBtn from "./SubscriptionBtn";
 
-import { CHAT_USERNAME_ROUTE } from "../../constants/routes";
-import { isAwaitingConfirmation } from "./utils";
-import { customFormatDate } from "../../helpers/functions";
-import { FOLLOW_ACCEPTED } from "../../constants/follow_types";
+import { CHAT_USERNAME_ROUTE } from "../../../constants/routes";
+import { isAwaitingConfirmation } from "../../../components/Utils/utils";
+import { customFormatDate } from "../../../helpers/functions";
+import { FOLLOW_ACCEPTED } from "../../../constants/follow_types";
 
 function ProfileInteractButtons({
   followStatus,

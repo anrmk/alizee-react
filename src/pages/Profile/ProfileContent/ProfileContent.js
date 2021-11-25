@@ -2,9 +2,9 @@ import React from "react";
 
 import { Hidden, Divider } from "@material-ui/core";
 import PostTabs from "./PostTabs";
-import GridGallery from "../GridGallery";
+import GridGallery from "../../../domain/GridGallery";
 import { ProfileStatisticsMobile } from "../ProfileStatistics";
-import { FOLLOW_ACCEPTED } from "../../constants/follow_types";
+import { FOLLOW_ACCEPTED } from "../../../constants/follow_types";
 
 function ProfileContent(props) {
   const { isOwner, items, hasMore, tabIndex, disabled, user } = props;

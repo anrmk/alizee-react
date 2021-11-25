@@ -10,15 +10,15 @@ import {
   Typography,
 } from "@material-ui/core/";
 
-import Search from "../../components/SearchInput";
+import Search from "../../SearchInput";
 
-function NewChatDialog({
+const NewChatDialog = ({
   items,
 
   onSearchChange,
   onItemClick,
   resetQuery,
-}) {
+}) => {
   const { t } = useTranslation();
 
   useEffect(
@@ -58,6 +58,6 @@ function NewChatDialog({
       </List>
     </Box>
   );
-}
+};
 
 export default NewChatDialog;

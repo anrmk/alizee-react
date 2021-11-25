@@ -20,7 +20,7 @@ import {
   isExpiredSubscription,
   customFormatDate,
 } from "../../helpers/functions";
-import { getSubscriptionBtnText } from "../ProfileUserInfo";
+import getSubscriptionBtnText from "../../components/Utils";
 import {
   FOLLOW_NONE,
   SUBSCRIPTION_STATUS_SUCCESS,

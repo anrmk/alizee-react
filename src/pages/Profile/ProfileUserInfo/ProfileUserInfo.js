@@ -10,7 +10,7 @@ import {
   Box,
 } from "@material-ui/core/";
 
-import DisplayName from "../../components/DisplayName";
+import DisplayName from "../../../components/DisplayName";
 
 import useStyles from "./style";
 

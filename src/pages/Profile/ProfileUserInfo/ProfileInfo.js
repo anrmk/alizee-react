@@ -14,11 +14,11 @@ import {
 
 import useStyles from "./style";
 
-import { BundleList } from "../../components/Bundle";
-import CampaignList from "../../components/Campaign";
+import { BundleList } from "../../../components/Bundle";
+import CampaignList from "../../../components/Campaign";
 import ProfileInteractButtons from "./ProfileInteractButtons";
-import SocialControl from "../../components/Social";
-import { RedirectContent } from "../ConfirmationDialog";
+import SocialControl from "../../../components/Social";
+import { RedirectContent } from "../../../domain/ConfirmationDialog";
 
 function ProfileInfo({
   user,

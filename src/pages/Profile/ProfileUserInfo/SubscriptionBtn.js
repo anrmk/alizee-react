@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, ButtonGroup } from "@material-ui/core/";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import { getSubscriptionBtnText } from "./utils";
-import { isExpiredSubscription } from "../../helpers/functions";
+import getSubscriptionBtnText from "../../../components/Utils";
+import { isExpiredSubscription } from "../../../helpers/functions";
 import {
   FOLLOW_NONE,
   FOLLOW_ACCEPTED,
   FOLLOW_PENDING,
   SUBSCRIPTION_STATUS_PENDING,
   SUBSCRIPTION_STATUS_SUCCESS,
-} from "../../constants/follow_types";
+} from "../../../constants/follow_types";
 
 import useStyles from "./style";
 
