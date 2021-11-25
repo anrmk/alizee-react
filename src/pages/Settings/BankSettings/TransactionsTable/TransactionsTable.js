@@ -9,9 +9,9 @@ import {
   Paper,
 } from "@material-ui/core";
 import useStyles from "./styles";
-import { getDate } from "../../helpers/functions";
+import { getDate } from "../../../../helpers/functions";
 
-export default function TransactionsTable({ rows, className }) {
+const TransactionsTable = ({ rows, className }) => {
   const classes = useStyles();
 
   return (
@@ -42,4 +42,6 @@ export default function TransactionsTable({ rows, className }) {
       </Table>
     </TableContainer>
   );
-}
+};
+
+export default TransactionsTable;

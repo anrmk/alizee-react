@@ -13,7 +13,7 @@ import {
 
 import FaqQuestionList from "./FaqQuestionList";
 
-function FaqDetails({
+const FaqDetails = ({
   title,
   id,
   content,
@@ -22,7 +22,7 @@ function FaqDetails({
   isVoted,
   data = [],
   currentQuestion,
-}) {
+}) => {
   const location = useLocation();
 
   const transformData = () =>
@@ -110,6 +110,6 @@ function FaqDetails({
       </Grid>
     </Grid>
   );
-}
+};
 
 export default FaqDetails;

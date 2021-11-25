@@ -12,9 +12,9 @@ import {
   ListItem,
 } from "@material-ui/core";
 
-import FaqQuestionList from "./FaqQuestionList";
+import { FaqQuestionList } from "../Faq";
 
-function SidebarList({ childs = [], name = "" }) {
+const SidebarList = ({ childs = [], name = "" }) => {
   const history = useHistory();
   return (
     <List disablePadding>
@@ -46,6 +46,6 @@ function SidebarList({ childs = [], name = "" }) {
       ))}
     </List>
   );
-}
+};
 
 export default SidebarList;

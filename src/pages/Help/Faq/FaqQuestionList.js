@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 
 import { Grid, Link } from "@material-ui/core";
 
-function FaqQuestionList({ data = [], currentQuestion }) {
+const FaqQuestionList = ({ data = [], currentQuestion }) => {
   const history = useHistory();
 
   return (
@@ -26,6 +26,6 @@ function FaqQuestionList({ data = [], currentQuestion }) {
       )}
     </Grid>
   );
-}
+};
 
 export default FaqQuestionList;

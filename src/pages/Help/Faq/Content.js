@@ -4,9 +4,9 @@ import { Box, Typography, Hidden } from "@material-ui/core";
 
 import FaqList from "./FaqList";
 
-import useStyles from "./styles";
+import useStyles from "../styles";
 
-function Content({ data = [] }) {
+const Content = ({ data = [] }) => {
   const classes = useStyles();
 
   return (
@@ -29,6 +29,6 @@ function Content({ data = [] }) {
       </Hidden>
     </Box>
   );
-}
+};
 
 export default Content;

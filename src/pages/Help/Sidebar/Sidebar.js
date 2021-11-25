@@ -8,7 +8,7 @@ import { Box } from "@material-ui/core";
 
 import SidebarList from "./SidebarList";
 
-const Sidebar = function ({ data = [] }) {
+const Sidebar = ({ data = [] }) => {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {

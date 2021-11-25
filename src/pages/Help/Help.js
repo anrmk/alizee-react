@@ -3,14 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Grid, Hidden } from "@material-ui/core";
 
-import { Sidebar, Content } from "../../domain/Help/index";
+import Sidebar from "./Sidebar";
+import { Content } from "./Faq";
 
 import ApiContext from "../../context/ApiContext";
 import { getHelp } from "../../store/actions/help";
-import useStyles from "../../domain/Help/styles";
+import useStyles from "./styles";
 import { PublicLayout } from "../../layouts";
 
-function Help() {
+const Help = () => {
   const classes = useStyles();
   const apiClient = useContext(ApiContext);
   const help = useSelector((state) => state.help);
@@ -48,6 +49,6 @@ function Help() {
       </Grid>
     </PublicLayout>
   );
-}
+};
 
 export default Help;

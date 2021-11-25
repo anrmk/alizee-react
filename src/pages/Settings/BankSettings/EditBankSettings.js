@@ -17,12 +17,12 @@ import useAgreeDialog from "../../../hooks/useAgreeDialog";
 
 import useConfirmationDialog from "../../../hooks/useConfirmationDialog";
 
-import SettingsHeader from "../../../components/SettingsHeader/index";
+import SettingsHeader from "../../../components/SettingsHeader";
 
-import { EditBankForm, OndatoForm, WithdrawFundsForm } from "./Forms/index";
+import { EditBankForm, OndatoForm, WithdrawFundsForm } from "./Forms";
 
 import ConfirmDialog from "../../../components/DialogForms/ConfirmDialog";
-import TransactionsTable from "../../../domain/TransactionsTable/TransactionsTable";
+import TransactionsTable from "./TransactionsTable";
 
 import useStyles from "../styles";
 

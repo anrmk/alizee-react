@@ -4,7 +4,8 @@ import { useParams } from "react-router-dom";
 
 import { Grid, Hidden } from "@material-ui/core";
 
-import { Sidebar, FaqDetails } from "../../domain/Help/index";
+import Sidebar from "./Sidebar";
+import { FaqDetails } from "./Faq";
 
 import ApiContext from "../../context/ApiContext";
 
@@ -18,9 +19,9 @@ import {
 } from "../../store/actions/help";
 import { isEmptyObject } from "../../helpers/functions";
 
-import useStyles from "../../domain/Help/styles";
+import useStyles from "./styles";
 
-function HelpDetails() {
+const HelpDetails = () => {
   const classes = useStyles();
 
   const apiClient = useContext(ApiContext);
@@ -73,6 +74,6 @@ function HelpDetails() {
       </Grid>
     </PublicLayout>
   );
-}
+};
 
 export default HelpDetails;
