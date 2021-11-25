@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Box, CircularProgress, Typography } from "@material-ui/core";
 
-import SelectableList from "../components/SelectableList/SelectableList";
-import SearchInput from "../components/SearchInput";
+import SelectableList from "../../SelectableList/SelectableList";
+import SearchInput from "../../SearchInput";
 
 function UsersDialog({
   items,

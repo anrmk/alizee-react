@@ -6,7 +6,7 @@ import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
-import { FOLLOW_NONE } from "../constants/follow_types";
+import { FOLLOW_NONE } from "../../../constants/follow_types";
 
 function InteractionUserMenuDialog({
   userName,

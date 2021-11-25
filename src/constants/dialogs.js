@@ -2,7 +2,7 @@ import React from "react";
 
 import Error from "../components/ErrorDialog";
 import { MediaEditorPreview, MediaPreview } from "../components/MediaEditor";
-import UsersDialog from "../domain/UsersDialog";
+import UsersDialog from "../components/DialogForms/UsersDialog";
 import {
   Receipt,
   Purchase,
@@ -14,22 +14,20 @@ import {
 import { SendTip, Payment } from "../components/Payment";
 import { ReportPost, BlockUser, UnblockUser } from "../components/Report";
 
-import SocialList from "../domain/SocialList";
+import SocialList from "../components/DialogForms/SocialList";
 import { NewChatDialog, RoomMenuDialog } from "../components/DialogForms/Chat";
-import EditCoverDialog from "../domain/EditCoverDialog";
-import StoryDialog from "../domain/StoryDialog";
-import AgreeDialog from "../domain/AgreeDialog";
-import ResetPasswordDialog from "../domain/ResetPasswordDialog";
-import LanguageDialog from "../domain/LanguageDialog";
+import EditCoverDialog from "../components/DialogForms/EditCoverDialog";
+import StoryDialog from "../components/DialogForms/StoryDialog";
+import AgreeDialog from "../components/DialogForms/AgreeDialog";
+import ResetPasswordDialog from "../components/DialogForms/ResetPasswordDialog";
+import LanguageDialog from "../components/DialogForms/LanguageDialog";
 import ConfirmDialog from "../components/DialogForms/ConfirmDialog";
-import LightboxModal from "../domain/LightboxModal";
+import LightboxModal from "../components/DialogForms/LightboxModal";
 import PostStatistics from "../domain/PostStatistics/PostStatistics";
-import SubscriptionDialog from "../domain/SubscriptionDialog";
-import InteractionUserMenuDialog from "../domain/InteractionUserMenuDialog";
-import {
-  SubscriptionCampaignFormDialog,
-  SubscriptionBundleFormDialog,
-} from "../components/DialogForms";
+import SubscriptionDialog from "../components/DialogForms/SubscriptionDialog";
+import InteractionUserMenuDialog from "../components/DialogForms/InteractionUserMenuDialog";
+import SubscriptionCampaignFormDialog from "../components/DialogForms/SubscriptionCampaignForm";
+import SubscriptionBundleFormDialog from "../components/DialogForms/SubscriptionBundleForm";
 import CreateCardForm from "../components/DialogForms/CreateCardForm";
 
 export const LANGUAGE_DIALOG_TYPE = "language";

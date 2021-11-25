@@ -11,9 +11,12 @@ import FacebookIcon from "@material-ui/icons/Facebook";
 import TelegramIcon from "@material-ui/icons/Telegram";
 import TwitterIcon from "@material-ui/icons/Twitter";
 
-import { getUrlTo } from "../../helpers/functions";
-import { POST_ID_ROUTE, PROFILE_USERNAME_ROUTE } from "../../constants/routes";
-import { POST_TYPE } from "../../components/Post/Menu";
+import { getUrlTo } from "../../../helpers/functions";
+import {
+  POST_ID_ROUTE,
+  PROFILE_USERNAME_ROUTE,
+} from "../../../constants/routes";
+import { POST_TYPE } from "../../Post/Menu";
 
 export default function SocialList({
   postId,

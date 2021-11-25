@@ -5,9 +5,9 @@ import { Box, Card, CardContent } from "@material-ui/core";
 
 import Benefits from "./Benefits";
 
-import Cover from "../../components/Cover";
-import Avatar from "../../components/Avatar";
-import DisplayName from "../../components/DisplayName";
+import Cover from "../../Cover";
+import Avatar from "../../Avatar";
+import DisplayName from "../../DisplayName";
 
 import SubscriptionForm from "./SubscriptionForm";
 

@@ -19,12 +19,12 @@ import {
   calcDiscount,
   isExpiredSubscription,
   customFormatDate,
-} from "../../helpers/functions";
-import getSubscriptionBtnText from "../../components/Utils";
+} from "../../../helpers/functions";
+import getSubscriptionBtnText from "../../Utils";
 import {
   FOLLOW_NONE,
   SUBSCRIPTION_STATUS_SUCCESS,
-} from "../../constants/follow_types";
+} from "../../../constants/follow_types";
 
 function SubscriptionForm({
   formId,

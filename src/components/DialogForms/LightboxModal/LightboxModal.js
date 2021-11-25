@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Box } from "@material-ui/core";
 
-import Gallery from "../../components/Gallery";
-import { MEDIA_IMAGE, MEDIA_VIDEO } from "../../constants/media_types";
-import { VideoContent } from "../../components/MediaContent";
+import Gallery from "../../Gallery";
+import { MEDIA_IMAGE, MEDIA_VIDEO } from "../../../constants/media_types";
+import { VideoContent } from "../../MediaContent";
 
 import useStyles from "./styles";
 

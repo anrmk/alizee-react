@@ -20,14 +20,14 @@ import {
 
 import * as yup from "yup";
 
-import { calcDiscount } from "../../helpers/functions";
+import { calcDiscount } from "../../../helpers/functions";
 import {
   NEW_SUBSCRIBERS_RADIO_ID,
   EXPIRED_SUBSCRIBERS_RADIO_ID,
   BOTH_SUBSCRIBERS_RADIO_ID,
   DISCOUNT_MONTH_TYPE_RADIO_ID,
   FREE_TYPE_RADIO_ID,
-} from "../../constants/campaign";
+} from "../../../constants/campaign";
 
 const offerLimitList = [
   "No limits",
