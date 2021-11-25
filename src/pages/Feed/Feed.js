@@ -5,7 +5,7 @@ import { Box, Grid, Hidden } from "@material-ui/core";
 import withWidth from "@material-ui/core/withWidth";
 
 import { PostsList } from "../../domain/PostsList";
-// import { HotStreamersItemList } from "../../domain/Stream";
+// import { HotStreamersItemList } from "./Stream";
 
 import * as actionRelationship from "../../store/actions/relationship";
 
@@ -15,7 +15,7 @@ import * as storyActions from "../../store/actions/story";
 import * as paymentActions from "../../store/actions/payment";
 import useWindowScrollPosition from "../../hooks/useWindowScrollPosition";
 
-import PreviewStoriesList from "../../domain/StoriesLists";
+import PreviewStoriesList from "./StoriesLists";
 import Nav from "./Nav";
 
 import ApiContext from "../../context/ApiContext";

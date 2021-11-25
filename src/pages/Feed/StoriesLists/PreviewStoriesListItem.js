@@ -3,11 +3,11 @@ import { Link, useLocation } from "react-router-dom";
 import { Box, ListItem, Typography } from "@material-ui/core";
 import clsx from "clsx";
 
-import Avatar from "../../components/Avatar";
-import { STORIES_ROUTE } from "../../constants/routes";
+import Avatar from "../../../components/Avatar";
+import { STORIES_ROUTE } from "../../../constants/routes";
 import useStyles from "./styles";
 
-const PreviewStoryListItem = React.memo(
+const PreviewStoriesListItem = React.memo(
   ({
     userName,
     name,
@@ -69,4 +69,4 @@ const PreviewStoryListItem = React.memo(
   }
 );
 
-export default PreviewStoryListItem;
+export default PreviewStoriesListItem;

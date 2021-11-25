@@ -12,9 +12,9 @@ import {
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ChatOutlinedIcon from "@material-ui/icons/ChatOutlined";
 
-import Avatar from "../../components/Avatar";
+import Avatar from "../../../components/Avatar";
 
-import { formatDate } from "../../helpers/functions";
+import { formatDate } from "../../../helpers/functions";
 
 import useStyles from "./styles";
 
