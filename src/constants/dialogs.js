@@ -21,7 +21,7 @@ import StoryDialog from "../domain/StoryDialog";
 import AgreeDialog from "../domain/AgreeDialog";
 import ResetPasswordDialog from "../domain/ResetPasswordDialog";
 import LanguageDialog from "../domain/LanguageDialog";
-import ConfirmDialog from "../domain/ConfirmationDialog/ConfirmDialog";
+import ConfirmDialog from "../components/DialogForms/ConfirmDialog";
 import LightboxModal from "../domain/LightboxModal";
 import PostStatistics from "../domain/PostStatistics/PostStatistics";
 import SubscriptionDialog from "../domain/SubscriptionDialog";

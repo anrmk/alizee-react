@@ -8,7 +8,7 @@ import useConfirmationDialog from "../useConfirmationDialog";
 import ApiContext from "../../context/ApiContext";
 import * as postActions from "../../store/actions/post";
 
-import { ConfirmDialog } from "../../domain/ConfirmationDialog";
+import ConfirmDialog from "../../components/DialogForms/ConfirmDialog";
 
 import { DEFAULT_ROUTE } from "../../constants/routes";
 

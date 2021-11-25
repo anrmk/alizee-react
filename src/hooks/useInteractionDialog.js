@@ -9,7 +9,7 @@ import useBlockDialog from "./useBlockDialog";
 import * as relationshipActions from "../store/actions/relationship";
 import useConfirmationDialog from "./useConfirmationDialog";
 import useFavoriteUserAction from "./useFavoriteUserAction";
-import { ConfirmDialog } from "../domain/ConfirmationDialog";
+import ConfirmDialog from "../components/DialogForms/ConfirmDialog";
 
 const initProps = {
   isBlock: true,

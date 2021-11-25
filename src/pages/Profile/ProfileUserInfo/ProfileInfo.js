@@ -18,9 +18,9 @@ import { BundleList } from "../../../components/Bundle";
 import CampaignList from "../../../components/Campaign";
 import ProfileInteractButtons from "./ProfileInteractButtons";
 import SocialControl from "../../../components/Social";
-import { RedirectContent } from "../../../domain/ConfirmationDialog";
+import RedirectContent from "./RedirectContent";
 
-function ProfileInfo({
+const ProfileInfo = ({
   user,
   disabled,
   isOwner,
@@ -30,7 +30,7 @@ function ProfileInfo({
   onSubscribeClick,
   onSendTipClick,
   onClick,
-}) {
+}) => {
   const classes = useStyles();
   const {
     campaigns,
@@ -196,6 +196,6 @@ function ProfileInfo({
       )}
     </>
   );
-}
+};
 
 export default ProfileInfo;

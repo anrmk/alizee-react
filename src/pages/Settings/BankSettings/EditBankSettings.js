@@ -21,7 +21,7 @@ import SettingsHeader from "../../../components/SettingsHeader/index";
 
 import { EditBankForm, OndatoForm, WithdrawFundsForm } from "./Forms/index";
 
-import { ConfirmDialog } from "../../../domain/ConfirmationDialog";
+import ConfirmDialog from "../../../components/DialogForms/ConfirmDialog";
 import TransactionsTable from "../../../domain/TransactionsTable/TransactionsTable";
 
 import useStyles from "../styles";

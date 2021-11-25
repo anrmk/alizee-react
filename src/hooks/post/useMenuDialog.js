@@ -16,7 +16,7 @@ import usePostStatistics from "./usePostStatistics";
 import useFavoriteUserAction from "../useFavoriteUserAction";
 import { DEFAULT_ROUTE } from "../../constants/routes";
 import { POST_TYPE } from "../../components/Post/Menu";
-import { ConfirmDialog } from "../../domain/ConfirmationDialog";
+import ConfirmDialog from "../../components/DialogForms/ConfirmDialog";
 
 const initProps = {
   isBlock: true,
