@@ -8,7 +8,7 @@ import ApiContext from "../../context/ApiContext";
 import * as actionStream from "../../store/actions/stream";
 
 import AlertContainer from "../../components/AlertContainer";
-import { CreateRoomForm } from "../../domain/Meet";
+import { CreateRoomForm } from "./MeetForms";
 
 import useStyles from "./styles";
 

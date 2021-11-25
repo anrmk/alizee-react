@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { StreamRoom } from "../../domain/Meet";
+import { StreamRoom } from "./MeetForms";
 
 function Room(props) {
   const streamTabsData = undefined;

@@ -15,7 +15,7 @@ import BackIcon from "@material-ui/icons/ArrowBackRounded";
 import MoreVertIcon from "@material-ui/icons/MoreVertRounded";
 
 import RoomChatTab from "./RoomChatTab";
-import { MessageSenderInput, MessagesList } from "../../components/Chat";
+import { MessageSenderInput, MessagesList } from "../../../components/Chat";
 import useStyles, { StyledTab, StyledTabs } from "./styles";
 
 const CHAT_TABS = {

@@ -15,12 +15,14 @@ import {
 import ChatIcon from "@material-ui/icons/Chat";
 
 import StreamTabs from "./StreamTabs";
-import Avatar from "../../components/Avatar";
-import { Video } from "../../components/Video";
-import SlidingViews from "../../components/SlidingViews";
+import Avatar from "../../../components/Avatar";
+import { Video } from "../../../components/Video";
+import SlidingViews from "../../../components/SlidingViews";
 
-import useSlidingViews, { RIGHT_OPEN_TYPE } from "../../hooks/useSlidingViews";
-import { formatDate } from "../../helpers/functions";
+import useSlidingViews, {
+  RIGHT_OPEN_TYPE,
+} from "../../../hooks/useSlidingViews";
+import { formatDate } from "../../../helpers/functions";
 
 import useStyles from "./styles";
 

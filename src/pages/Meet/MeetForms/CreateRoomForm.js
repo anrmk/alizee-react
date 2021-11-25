@@ -19,7 +19,7 @@ import {
 
 import FileCopyOutlined from "@material-ui/icons/FileCopyOutlined";
 
-import ChipsInput from "../../components/ChipsInput";
+import ChipsInput from "../../../components/ChipsInput";
 import useStyles from "./styles";
 
 const ROOM_ID = "id";
