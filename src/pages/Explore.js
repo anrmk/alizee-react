@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { Divider, Typography, Box } from "@material-ui/core";
 import { POST_ID_ROUTE } from "../constants/routes";
 
-import GridGallery from "../domain/GridGallery";
+import GridGallery from "../components/GridGallery";
 import useSearch from "../hooks/useSearch";
 import { SEARCH_TAG_TYPE } from "../constants/search";
 import { POSTS_LENGTH } from "../constants/feed";

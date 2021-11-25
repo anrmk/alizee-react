@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import VideoLibraryIcon from "@material-ui/icons/VideoLibraryOutlined";
-import CustomLink from "../../../components/CustomLink";
-import MediaContent from "../../../components/MediaContent";
+import CustomLink from "../../CustomLink";
+import MediaContent from "../../MediaContent";
 import { POST_ID_ROUTE } from "../../../constants/routes";
 
 import "./GridGallery.scss";
